@@ -239,11 +239,11 @@
 > [참고] RDS DB 인스턴스별 모니터링 데이터는 사용자 DB 인스턴스의 'rds_maintenance'라는 database에 임시 저장 및 삭제됩니다. 따라서 생성한 뒤 아무 동작도 하지 않은 인스턴스임에도 몇몇 모니터링 항목들이 규칙적으로 움직이는 그래프 형태를 가질 수 있습니다. 
 > [참고] 만약 rds_maintenance database의 데이터를 조작할 경우, 정확하지 않은 모니터링 데이터가 수집될 수 있습니다.
 
-### DB 스키마 & 사용자 관리
+### DB 스키마 & DB User 관리
 
-* DB 스키마와 사용자를 웹콘솔을 통해 관리할 수 있습니다.
+* DB 스키마와 DB User를 웹콘솔을 통해 관리할 수 있습니다.
 
-> [참고] 더이상 DB 스키마와 사용자를 쿼리를 통해 생성, 수정, 삭제할 수 없습니다.
+> [참고] 더이상 DB 스키마와 DB User를 쿼리를 통해 생성, 수정, 삭제할 수 없습니다.
 
 ![db_schema_and_user_list_20210209_ko](https://static.toastoven.net/prod_rds/21.02.09/db_schema_and_user_list_20210209_ko.png)
 
@@ -251,13 +251,13 @@
 
 ![db_schema_and_user_modify_20210209_ko](https://static.toastoven.net/prod_rds/21.02.09/db_schema_and_user_modify_20210209_ko.png)
 
-* **추가** 버튼 클릭 시, DB 스키마와 사용자의 변경사항이 한꺼번에 적용됩니다.
+* **추가** 버튼 클릭 시, DB 스키마와 DB User의 변경사항이 한꺼번에 적용됩니다.
 * DB 스키마의 이름 변경은 지원하지 않습니다.
-* 사용자의 권한은 4개의 권한으로 구성됩니다.
+* DB User의 권한은 4개의 권한으로 구성됩니다.
   * READ : 데이터를 조회할 수 있습니다.
   * CRUD : READ 권한에 더해 DML 질의를 실행할 수 있습니다.
   * DDL : CRUD 권한에 더해 DDL 질의를 실행할 수 있습니다.
-  * ALL : 기존에 사용 중이던 사용자의 권한입니다. 모든 권한을 다 가지고 있습니다. ALL 권한으로의 변경은 불가능하며 ALL 권한인 사용자는 READ, CRUD, DDL로 권한을 변경할 수 있습니다.
+  * CUSTOM : 기존에 사용 중이던 사용자의 권한입니다. CUSTOM 권한으로의 변경은 불가능하며 CUSTOM 권한인 사용자는 READ, CRUD, DDL로 권한을 변경할 수 있습니다.
 
 ### 모니터링 항목
 
