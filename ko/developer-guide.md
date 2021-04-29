@@ -177,6 +177,7 @@ mysql> call mysql.tcrds_repl_init();
   * https://www.percona.com/doc/percona-xtrabackup/8.0/index.html
 
 > [주의] 권장 하는 XtraBackup 이외의 버전을 사용 시, 정상 동작을 보장하지 않습니다.
+> [주의] DB 파일 암호화 기능을 사용할 경우 백업을 오브젝트 스토리지로 내보낼 수 없습니다.
 
 ### 오브젝트 스토리지에 백업 내보내기
 
