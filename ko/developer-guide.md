@@ -12,7 +12,7 @@
 * NHN Cloud의 외부로 데이터를 내보내야할 경우, Floating IP를 생성하여 데이터를 내보낼 RDS 인스턴스에 연결합니다.
 * 아래의 mysqldump 명령어를 통하여 외부로 데이터를 내보냅니다.
 
-#### 파일로 내보낼 경우.
+#### 파일로 내보낼 경우
 ```
 mysqldump -h{rds_insance_floating_ip} -u{db_id} -p{db_password} --port={db_port} --single-transaction --routines --events --triggers --databases {database_name1, database_name2, ...} > {local_path_and_file_name}
 ```
@@ -40,9 +40,9 @@ mysqldump -h{external_db_host} -u{external_db_id} -p{external_db_password} --por
 
 #### 데이터 가져오는 도중 `ERROR 1418` 오류가 발생할 경우
 
-* `ERROR 1418` 오류는 mysqldump 파일의 함수 선언에 NO SQL, READS SQL DATA, DETERMINISTIC가 없으며 바이너리 로그가 활성화된 상태일 때 발생합니다.
+* `ERROR 1418` 오류는 mysqldump 파일의 함수 선언에 NO SQL, READS SQL DATA, DETERMINISTIC이 없으며 바이너리 로그가 활성화된 상태일 때 발생합니다.
     * 자세한 설명은 [The Binary Log](https://dev.mysql.com/doc/refman/8.0/en/binary-log.html) MySQL 문서를 참고합니다.
-* 이를 해결하기 위해서는 mysqldump 파일을 적용할 DB 인스턴스의 `log_bin_trust_function_creators`파라미터의 값을 `1`로 변경해야 합니다.
+* 이를 해결하기 위해서는 mysqldump 파일을 적용할 DB 인스턴스의 `log_bin_trust_function_creators` 파라미터의 값을 `1`로 변경해야 합니다.
 
 ### 복제를 이용하여 내보내기
 
