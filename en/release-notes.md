@@ -150,7 +150,7 @@
 
 ### July 13, 2021
 
-#### Feature Improvements
+#### Feature Updates
 
 * Additional MySQL 8.0.23 version support
 * Improved to allow checking the Enable status in the event subscription list
@@ -164,7 +164,7 @@
 
 ### June 15, 2021
 
-#### Feature Improvements
+#### Feature Updates
 
 * Monitoring system reorganized
 
@@ -175,12 +175,12 @@
 
 ### May 11, 2021
 
-#### More Features
+#### Added Features
 
 * Exporting and importing backup using object storage provided
 * Force restart provided
 
-#### Feature Improvements
+#### Feature Updates
 
 * Improved feature to check and download xtrabackup log file
 
@@ -191,11 +191,11 @@
 
 ### April 13, 2021
 
-#### More Features
+#### Added Features
 
 * Provides audit log function for MySQL versions 5.6.33 to 5.7.26
 
-#### Feature Improvements
+#### Feature Updates
 
 * Permission of project members subdivided into RDS for MySQL ADMIN / RDS for MySQL MEMBER
 * Modified the system to allow restart during MySQL down
@@ -211,7 +211,7 @@
 
 ### March 9, 2021
 
-#### Feature Improvements
+#### Feature Updates
 - Improved the feature to limit the resource quota per project
 
 #### Bug Fixes
@@ -219,11 +219,11 @@
 
 ### February 16, 2021
 
-#### More Features
+#### Added Features
 
 - Added a feature that controls DB User and DB Schema through web console
 
-#### Feature Improvements
+#### Feature Updates
 
 - Tooltip provided when the DB file encryption feature is selected
 - Verification message displayed if query latency value is abnormal
@@ -234,7 +234,7 @@
 
 ### January 19, 2021
 
-#### More Features
+#### Added Features
 
 - Added a feature to set Ping Interval (an interval to check the status of master instance) when using the high availability (HA) feature
 - Added HA suspend/resume features
@@ -244,7 +244,7 @@
 
 ### December 15, 2020
 
-#### More Features
+#### Added Features
 
 - Added a feature that enables users to set the --ftwrl-wait-timeout option value
 
@@ -265,13 +265,13 @@
 
 ### September 22, 2020
 
-#### More Features
+#### Added Features
 
 - New region opened in Korea (Pyeongchon)
 
 ### September 15, 2020
 
-#### More Features
+#### Added Features
 
 - Supports Monitoring API
 
@@ -283,19 +283,19 @@
 
 ### July 14, 2020
 
-#### More Features
+#### Added Features
 
 - Further supports MySQL 8.0.18
 
 ### December 10, 2019
 
-#### More Features
+#### Added Features
 
 - Added the feature of database file encryption (Korea Region)
 
 ### November 12, 2019
 
-#### Feature Improvements
+#### Feature Updates
 
 - Updated failure detection and restoration of candidate master
 
@@ -305,7 +305,7 @@
 
 ### September 24, 2019
 
-#### Feature Improvements
+#### Feature Updates
 
 - Improved speed for creating an instance (About 28 minutes -> 13 minutes, for HA instances)
 - Updated UX to allow new backups for point-in-time restoration, at the restart by using failover
@@ -313,7 +313,7 @@
 
 ### August 13, 2019
 
-#### Feature Improvements
+#### Feature Updates
 
 - Allowed to view event logs related to high availability more intuitively
 
@@ -324,28 +324,28 @@
 
 ### July 23, 2019
 
-#### More Features
+#### Added Features
 
 - Default Alarm added
 - Monitoring Item added
 
-#### Feature Improvements
+#### Feature Updates
 
 - Backup-related events no longer support alarms.
 
 ### June 27, 2019
 
-#### More Features
+#### Added Features
 
 - Japan Region added
 
 ### June 25, 2019
 
-#### More Features
+#### Added Features
 
 - High Availability added
 
-#### Feature Improvements
+#### Feature Updates
 
 - Event period exposed on the page of instance details changed from 1 day to 7 days
 
@@ -355,7 +355,7 @@
 
 ### May 14, 2019
 
-#### Feature Improvements
+#### Feature Updates
 
 - Stronger authentication when instance is created or modified
 - Added UX to select/unselect all notification events
@@ -367,7 +367,7 @@
 
 ### March 12, 2019
 
-#### Feature Improvements
+#### Feature Updates
 
 - Updated error messages that are vague with unpleasant looks.
 - Updated to allow modifying transaction-isolation on the console
@@ -378,18 +378,18 @@
 
 ### February 26, 2019
 
-#### More Features
+#### Added Features
 
 - Added the feature of SSD volume as storage for instance data
 
-#### Feature Improvements
+#### Feature Updates
 
 - Updated to set recipients of notification from project members
 - Updated features for x1, u2 flavor
 
 ### January 29, 2019
 
-#### Feature Improvements
+#### Feature Updates
 
 - Changed the maximum instance volume to 1000G
 
@@ -403,34 +403,34 @@
 
 ### December 11, 2018
 
-#### Feature Improvements
+#### Feature Updates
 
 - Removed the peering feature
 - Feature updated to the method of network communication by using user VPC subnet
 
 ### October 23, 2018
 
-#### Feature Improvements
+#### Feature Updates
 
 - Shows description message for input items when instance is created/restored/replicated
 - Shows the mysql transaction_isolation option
 
 ### October 16, 2018
 
-#### More Features
+#### Added Features
 
 - Added the feature of changing instance flavor
 - Added the feature of extending instance storage
 
 ### August 28, 2018
 
-#### More Features
+#### Added Features
 
 - Allows to secure instance volume by deleting binary log files
 
 ### July 24, 2018
 
-#### More Features
+#### Added Features
 
 - Also supports MySQL 5.7.15
 
@@ -441,13 +441,13 @@
 
 ### May 29, 2018
 
-#### More Features
+#### Added Features
 
 - Newly supports MySQL 5.7
 
 ### April 24, 2018
 
-#### Feature Improvements
+#### Feature Updates
 
 - With port change of the master, the master access information is automatically changed for read only slave
 - Delete unnecessary logs after backup
