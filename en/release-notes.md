@@ -16,7 +16,7 @@
 * Fixed an issue, where, when creating a read replica, backup execution is left in event logs even if the execution is not performed
 * Fixed an issue where volume scaling fails intermittently
 
-### 2022. 06. 14.
+### June 14, 2022
 
 #### Feature Updates
 
