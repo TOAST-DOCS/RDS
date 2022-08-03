@@ -394,7 +394,7 @@
 
 #### Bug Fixes
 
-- Fixed an issue where instances cannot be deleted intermittently when they are being creating
+- Fixed an issue where instances cannot be deleted intermittently when they are being created
 - Fixed an issue in which data volume is not properly changed when data storage is full
 
 ### March 12, 2019
