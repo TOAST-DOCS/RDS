@@ -8,7 +8,7 @@
 
 #### Feature Updates
 
-* Made modifications so that the DB Configuration of an instance where high availiability is paused can be changed
+* Made modifications so that the DB Configuration of an instance where high availability is paused can be changed
 * Changed the maximum backup retention period from 30 days to 2 years
 * Made improvements so that, when backup fails due to DDL execution, the cause is left in the event message
 
