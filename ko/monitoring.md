@@ -86,7 +86,7 @@ DB 인스턴스의 각종 성능 지표와 DB 인스턴스와 관련된 여러 �
 | INSTANCE | INSTC_53_00 | DB 인스턴스 중지 시작 |
 | INSTANCE | INSTC_53_01 | DB 인스턴스 중지 완료 |
 | INSTANCE | INSTC_53_04 | DB 인스턴스 중지 실패 |
-| INSTANCE | INSTC_55_01 | 복제 딜레이로 인한 장애 조치 재시작 실패 |
+| INSTANCE | INSTC_55_01 | 복제 지연로 인한 장애 조치 재시작 실패 |
 | BACKUP | BACUP_02_01 | 백업 삭제 완료 |
 | BACKUP | BACUP_05_00 | 백업 내보내기 시작 |
 | BACKUP | BACUP_05_01 | 백업 내보내기 완료 |
@@ -116,25 +116,25 @@ RDS for MySQL은 **기본 시스템 지표**, **기본 MySQL 지표** 2개의 �
 DB 인스턴스의 각종 성능 지표를 차트 형태로 볼 수 있습니다. 성능 지표마다 각기 다른 형태의 차트로 구성되어 있습니다.
 RDS for MySQL에서 지원하는 차트는 아래와 같습니다.
 
-| 차트 | 지표 (단위) |
-| --- | --- |
-| CPU 사용률 | cpu used (%) |
-| CPU 상세 | cpu user (%)<br> cpu system (%)<br>cpu nice (%)<br>cpu IO wait(%) |
-| 메모리 사용량 | memory used (%) |
-| 메모리 상세 | memory used (bytes)<br> memory buffers (bytes)<br> memory cached (bytes)<br> memory free (bytes) |
-| 스왑 사용량 | swap used (bytes)<br> swap total (bytes) |
-| Storage 사용량 | storage used (%) |
-| Storage IO | disk read (bytes)<br> disk write (bytes) |
-| 네트워크 데이터 송수신 | nic incoming (bytes)<br> nic outgoing (bytes) |
-| CPU 평균 부하 | 1m<br> 5m<br> 15m |
+| 차트                 | 지표 (단위) |
+|--------------------| --- |
+| CPU 사용률            | cpu used (%) |
+| CPU 상세             | cpu user (%)<br> cpu system (%)<br>cpu nice (%)<br>cpu IO wait(%) |
+| 메모리 사용량            | memory used (%) |
+| 메모리 상세             | memory used (bytes)<br> memory buffers (bytes)<br> memory cached (bytes)<br> memory free (bytes) |
+| 스왑 사용량             | swap used (bytes)<br> swap total (bytes) |
+| Storage 사용량        | storage used (%) |
+| Storage IO         | disk read (bytes)<br> disk write (bytes) |
+| 네트워크 데이터 송수신       | nic incoming (bytes)<br> nic outgoing (bytes) |
+| CPU 평균 부하          | 1m<br> 5m<br> 15m |
 | Queries Per Second | qps |
-| Connection | total<br> running<br> cached |
-| Connection Ratio | ratio (%) |
-| Database Activity | select<br> insert<br> update<br> delete<br> replace<br> call<br> |
-| Buffer Pool | buffer pool total (bytes)<br> buffer pool used (%) |
-| Slow Query | counts |
-| 복제 딜레이 | sec (초) |
-| Row Access | index<br> full scan |
+| Connection         | total<br> running<br> cached |
+| Connection Ratio   | ratio (%) |
+| Database Activity  | select<br> insert<br> update<br> delete<br> replace<br> call<br> |
+| Buffer Pool        | buffer pool total (bytes)<br> buffer pool used (%) |
+| Slow Query         | counts |
+| 복제 지연              | sec (초) |
+| Row Access         | index<br> full scan |
 
 ## 알림 그룹
 
