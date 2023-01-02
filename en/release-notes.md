@@ -4,7 +4,7 @@
 
 #### Feature Updates
 
-* Made modifications not to allow duplicate Notify Group names
+* Made modifications not to allow duplicate notification group names
 
 #### Bug Fixes
 
