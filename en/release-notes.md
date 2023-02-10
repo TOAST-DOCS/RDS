@@ -9,7 +9,7 @@
 #### Bug Fixes
 
 * Fixed an issue where, when an error occurs in the IAM console, the page is not moved to an appropirate error page
-* Fixed an issue where, when changing the DB instance type or expanding storage using failover, the Ping interval was set to default  
+* Fixed an issue where, when changing the DB instance type or expanding storage using failover, the Ping interval is set to default  
 
 ### January 10, 2023
 
