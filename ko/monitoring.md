@@ -87,6 +87,21 @@ DB 인스턴스의 각종 성능 지표와 DB 인스턴스와 관련된 여러 �
 | INSTANCE | INSTC_53_01 | DB 인스턴스 중지 완료                   |
 | INSTANCE | INSTC_53_04 | DB 인스턴스 중지 실패                   |
 | INSTANCE | INSTC_55_01 | 복제 지연으로 인한 장애 조치 재시작 실패         |
+| INSTANCE | INSTC_56_00 | DB 인스턴스 보안 그룹 변경 시작 |
+| INSTANCE | INSTC_56_01 | DB 인스턴스 보안 그룹 변경 완료 |
+| INSTANCE | INSTC_56_04 | DB 인스턴스 보안 그룹 변경 실패 |
+| INSTANCE | INSTC_57_00 | 장애 조치 완료된 DB 인스턴스를 일반 DB 인스턴스로 변경 시작 |
+| INSTANCE | INSTC_57_01 | 장애 조치 완료된 DB 인스턴스를 일반 DB 인스턴스로 변경 완료 |
+| INSTANCE | INSTC_57_04 | 장애 조치 완료된 DB 인스턴스를 일반 DB 인스턴스로 변경 실패 |
+| INSTANCE | INSTC_58_00 | 파라미터 그룹 변경 시작 |
+| INSTANCE | INSTC_58_01 | 파라미터 그룹 변경 완료 |
+| INSTANCE | INSTC_58_04 | 파라미터 그룹 변경 실패 |
+| INSTANCE | INSTC_59_00 | 파라미터 그룹 변경 사항 적용 시작 |
+| INSTANCE | INSTC_59_01 | 파라미터 그룹 변경 사항 적용 완료 |
+| INSTANCE | INSTC_59_04 | 파라미터 그룹 변경 사항 적용 실패 |
+| INSTANCE | INSTC_60_00 | DB 인스턴스 마이그레이션 시작 |
+| INSTANCE | INSTC_60_01 | DB 인스턴스 마이그레이션 완료 |
+| INSTANCE | INSTC_60_04 | DB 인스턴스 마이그레이션 실패 |
 | BACKUP | BACUP_02_01 | 백업 삭제 완료                        |
 | BACKUP | BACUP_05_00 | 백업 내보내기 시작                      |
 | BACKUP | BACUP_05_01 | 백업 내보내기 완료                      |
@@ -97,6 +112,11 @@ DB 인스턴스의 각종 성능 지표와 DB 인스턴스와 관련된 여러 �
 | TENANT | TENAT_03_04 | 개별 볼륨 크기 제한                     |
 | TENANT | TENAT_04_04 | 프로젝트 전체 볼륨 크기 제한                |
 | TENANT | TENAT_05_04 | Read Only Slave 개수 제한           |
+| DB_SECURITY_GROUP | SECGP_02_00 | DB 보안 그룹 변경 시작 |
+| DB_SECURITY_GROUP | SECGP_01_01 | DB 보안 그룹 생성 |
+| DB_SECURITY_GROUP | SECGP_02_01 | DB 보안 그룹 변경 완료 |
+| DB_SECURITY_GROUP | SECGP_02_04 | DB 보안 그룹 변경 실패 |
+| DB_SECURITY_GROUP | SECGP_03_01 | DB 보안 그룹 삭제 |
 
 ### 이벤트 구독
 

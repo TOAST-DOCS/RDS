@@ -87,6 +87,21 @@ An event refers to important incident incurred by RDS for MySQL or the user. An 
 | INSTANCE | INSTC_53_01 | Stopping DB instance completed |
 | INSTANCE | INSTC_53_04 | Stopping DB instance failed |
 | INSTANCE | INSTC_55_01 | Failover restart failed due to replication delay |
+| INSTANCE | INSTC_56_00 | DB 인스턴스 보안 그룹 변경 시작 |
+| INSTANCE | INSTC_56_01 | DB 인스턴스 보안 그룹 변경 완료 |
+| INSTANCE | INSTC_56_04 | DB 인스턴스 보안 그룹 변경 실패 |
+| INSTANCE | INSTC_57_00 | 장애 조치 완료된 DB 인스턴스를 일반 DB 인스턴스로 변경 시작 |
+| INSTANCE | INSTC_57_01 | 장애 조치 완료된 DB 인스턴스를 일반 DB 인스턴스로 변경 완료 |
+| INSTANCE | INSTC_57_04 | 장애 조치 완료된 DB 인스턴스를 일반 DB 인스턴스로 변경 실패 |
+| INSTANCE | INSTC_58_00 | 파라미터 그룹 변경 시작 |
+| INSTANCE | INSTC_58_01 | 파라미터 그룹 변경 완료 |
+| INSTANCE | INSTC_58_04 | 파라미터 그룹 변경 실패 |
+| INSTANCE | INSTC_59_00 | 파라미터 그룹 변경 사항 적용 시작 |
+| INSTANCE | INSTC_59_01 | 파라미터 그룹 변경 사항 적용 완료 |
+| INSTANCE | INSTC_59_04 | 파라미터 그룹 변경 사항 적용 실패 |
+| INSTANCE | INSTC_60_00 | DB 인스턴스 마이그레이션 시작 |
+| INSTANCE | INSTC_60_01 | DB 인스턴스 마이그레이션 완료 |
+| INSTANCE | INSTC_60_04 | DB 인스턴스 마이그레이션 실패 |
 | BACKUP | BACUP_02_01 | Backup deleted |
 | BACKUP | BACUP_05_00 | Backup export started |
 | BACKUP | BACUP_05_01 | Backup exported |
@@ -97,6 +112,11 @@ An event refers to important incident incurred by RDS for MySQL or the user. An 
 | TENANT | TENAT_03_04 | Individual volume limit |
 | TENANT | TENAT_04_04 | Total project volume limit |
 | TENANT | TENAT_05_04 | Read-only slaves limit |
+| DB_SECURITY_GROUP | SECGP_02_00 | DB 보안 그룹 변경 시작 |
+| DB_SECURITY_GROUP | SECGP_01_01 | DB 보안 그룹 생성 |
+| DB_SECURITY_GROUP | SECGP_02_01 | DB 보안 그룹 변경 완료 |
+| DB_SECURITY_GROUP | SECGP_02_04 | DB 보안 그룹 변경 실패 |
+| DB_SECURITY_GROUP | SECGP_03_01 | DB 보안 그룹 삭제 |
 
 ### Event Subscription
 

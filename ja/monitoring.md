@@ -87,6 +87,21 @@ DBインスタンスの各種性能指標とDBインスタンスに関連する�
 | INSTANCE | INSTC_53_01 | DBインスタンス停止完了 |
 | INSTANCE | INSTC_53_04 | DBインスタンス停止失敗 |
 | INSTANCE | INSTC_55_01 | 複製遅延による障害措置再起動失敗 |
+| INSTANCE | INSTC_56_00 | DB 인스턴스 보안 그룹 변경 시작 |
+| INSTANCE | INSTC_56_01 | DB 인스턴스 보안 그룹 변경 완료 |
+| INSTANCE | INSTC_56_04 | DB 인스턴스 보안 그룹 변경 실패 |
+| INSTANCE | INSTC_57_00 | 장애 조치 완료된 DB 인스턴스를 일반 DB 인스턴스로 변경 시작 |
+| INSTANCE | INSTC_57_01 | 장애 조치 완료된 DB 인스턴스를 일반 DB 인스턴스로 변경 완료 |
+| INSTANCE | INSTC_57_04 | 장애 조치 완료된 DB 인스턴스를 일반 DB 인스턴스로 변경 실패 |
+| INSTANCE | INSTC_58_00 | 파라미터 그룹 변경 시작 |
+| INSTANCE | INSTC_58_01 | 파라미터 그룹 변경 완료 |
+| INSTANCE | INSTC_58_04 | 파라미터 그룹 변경 실패 |
+| INSTANCE | INSTC_59_00 | 파라미터 그룹 변경 사항 적용 시작 |
+| INSTANCE | INSTC_59_01 | 파라미터 그룹 변경 사항 적용 완료 |
+| INSTANCE | INSTC_59_04 | 파라미터 그룹 변경 사항 적용 실패 |
+| INSTANCE | INSTC_60_00 | DB 인스턴스 마이그레이션 시작 |
+| INSTANCE | INSTC_60_01 | DB 인스턴스 마이그레이션 완료 |
+| INSTANCE | INSTC_60_04 | DB 인스턴스 마이그레이션 실패 |
 | BACKUP | BACUP_02_01 | バックアップ削除完了 |
 | BACKUP | BACUP_04_00 | Object Storageアップロード開始 |
 | BACKUP | BACUP_04_01 | Object Storageアップロード完了 |
@@ -100,6 +115,11 @@ DBインスタンスの各種性能指標とDBインスタンスに関連する�
 | TENANT | TENAT_03_04 | 個別ボリュームサイズ制限 |
 | TENANT | TENAT_04_04 | プロジェクト全体ボリュームサイズ制限 |
 | TENANT | TENAT_05_04 | Read Only Slave数制限 |
+| DB_SECURITY_GROUP | SECGP_02_00 | DB 보안 그룹 변경 시작 |
+| DB_SECURITY_GROUP | SECGP_01_01 | DB 보안 그룹 생성 |
+| DB_SECURITY_GROUP | SECGP_02_01 | DB 보안 그룹 변경 완료 |
+| DB_SECURITY_GROUP | SECGP_02_04 | DB 보안 그룹 변경 실패 |
+| DB_SECURITY_GROUP | SECGP_03_01 | DB 보안 그룹 삭제 |
 
 ### イベント購読
 
