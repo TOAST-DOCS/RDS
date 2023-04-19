@@ -2218,7 +2218,7 @@ DELETE /rds/api/public/external/v3.0/db-security-groups/{dbSecurityGroupId}/rule
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
 |dbSecurityGroupId|URL|UUID|O|DB 보안 그룹의 식별자|
-|ruleId|Query|Array|O|DB 보안 그룹 규칙의 식별자 목록|
+|ruleIds|Query|Array|O|DB 보안 그룹 규칙의 식별자 목록|
 
 #### 응답
 
