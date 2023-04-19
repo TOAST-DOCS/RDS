@@ -115,7 +115,7 @@ RDS for MySQL은 **기본 시스템 지표**, **기본 MySQL 지표** 2개의 �
 DB 인스턴스의 각종 성능 지표를 차트 형태로 볼 수 있습니다. 성능 지표마다 각기 다른 형태의 차트로 구성되어 있습니다.
 RDS for MySQL에서 지원하는 차트는 아래와 같습니다.
 
-| 차트 | 지표 (단위) |
+| 차트 | 지표(단위) |
 | --- | --- |
 | CPU 사용률 | cpu used (%) |
 | CPU 상세 | cpu user (%)<br> cpu system (%)<br>cpu nice (%)<br>cpu IO wait(%) |
