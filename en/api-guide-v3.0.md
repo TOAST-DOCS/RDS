@@ -24,7 +24,7 @@ API를 사용하려면 인증에 필요한 `User Access Key ID`와 `Secret Acces
   * DB 인스턴스를 생성, 수정, 삭제하거나, DB 인스턴스를 대상으로 하는 어떠한 기능도 사용할 수 없습니다.
   * 단, 알림 그룹과 사용자 그룹 관련된 기능은 사용 가능합니다.
 
-API 요청 시 인증에 실패하거나 권한이 없을 경우 다음과 같은 에러가 발생합니다.
+API 요청 시 인증에 실패하거나 권한이 없을 경우 다음과 같은 오류가 발생합니다.
 
 | resultCode | resultMessage | 설명          |
 |------------|---------------|-------------|
@@ -328,7 +328,7 @@ GET /rds/api/public/external/v3.0/storages
 |`INTERRUPTED`| 작업 진행 중 인터럽트가 발생한 경우|
 |`CANCELED`| 작업이 취소된 경우 |
 |`FAILED`| 작업이 실패한 경우 |
-|`ERROR`| 작업 진행 중 에러가 발생한 경우|
+|`ERROR`| 작업 진행 중 오류가 발생한 경우|
 |`DELETED`| 작업이 삭제된 경우 |
 |`FAIL_TO_READY`| 작업 준비에 실패한 경우|
 
@@ -1637,7 +1637,7 @@ DELETE /rds/api/public/external/v3.0/db-instances/{dbInstanceId}/db-schemas/{dbS
 | `COMPLETED` | 백업이 완료된 경우 |
 | `DELETING`| 백업이 삭제 중인 경우 |
 | `DELETED`| 백업이 삭제된 경우 |
-| `ERROR`| 에러가 발생한 경우 |
+| `ERROR`| 오류가 발생한 경우 |
 
 
 ### 백업 목록 조회
