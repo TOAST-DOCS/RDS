@@ -244,9 +244,9 @@ GET /rds/api/public/external/v3.0/db-versions
 | 이름                            | 종류 | 형식 | 설명 |
 |-------------------------------|---|---|---|
 | dbVersions                           |Body|Array| DB 엔진 목록 |
-| dbEnginedbVersions.dbEnginedbVersion        |Body|String|DB 엔진 유형|
-| dbEnginedbVersions.dbEnginedbVersionName    |Body|String|DB 엔진 이름|
-| dbEnginedbVersions.restorableFromObs |Body|Boolean|오브젝트 스토리지로부터 복원 가능 여부|
+| dbVersions.dbVersion        |Body|String|DB 엔진 유형|
+| dbVersions.dbVersionName    |Body|String|DB 엔진 이름|
+| dbVersions.restorableFromObs |Body|Boolean|오브젝트 스토리지로부터 복원 가능 여부|
 
 <details><summary>예시</summary>
 <p>
@@ -676,38 +676,38 @@ POST /rds/api/public/external/v3.0/db-instances
 
 #### 요청
 
-| 이름                                           | 종류 | 형식 | 필수 | 설명 |
-|----------------------------------------------|---|---|---|---|
-| dbInstanceName                               | Body | String | O | DB 인스턴스를 식별할 수 있는 이름 |
-| description                                  |Body|String|X|DB 인스턴스에 대한 추가 정보|
-| dbFlavorId                                   | Body | UUID | O | DB 인스턴스 사양의 식별자 |
-| dbVersion                                    |Body|Enum|O|DB 엔진 유형|
-| dbPort                                       |Body|Number|O|DB 포트<br/>- 최솟값: `3306`<br/>- 최댓값: `43306`|
-| dbUserName                                   |Body|String|O|DB 사용자 계정명|
-| dbPassword                                   |Body|String|O|DB 사용자 계정 암호<br/>- 최소 길이: `4`<br/>- 최대 길이: `16`|
-| parameterGroupId                             |Body|UUID|O|파라미터 그룹의 식별자|
-| dbSecurityGroupIds                           |Body|Array|X|DB 보안 그룹의 식별자 목록||network|Body|Object|O|네트워크 정보 객체|
-| userGroupIds                                 |Body|Array|X|사용자 그룹의 식별자 목록|
-| useHighAvailability                          |Body|Boolean|X|고가용성 사용 여부<br/>- 기본값: `false`|
-| pingInterval                                 |Body|Number|X|고가용성 사용 시 Ping 간격(초)<br/>- 기본값: `3`<br/>- 최솟값: `1`<br/>- 최댓값: `600`|
-| useDefaultUserNotification                   |Body|Boolean|X|기본 알람 사용 여부<br/>- 기본값: `false`|
-| network                                      |Body|Object|O|네트워크 정보 객체|
-| network.subnetId                             |Body|UUID|O|서브넷의 식별자|
-| network.usePublicAccess                      |Body|Boolean|X|외부 접속 가능  여부<br/>- 기본값: `false`|
-| network.availabilityZone                     | Body|Enum|O|DB 인스턴스를 생성할 가용성 영역<br/>- 예시: `kr-pub-a`|
-| storage                                      |Body|Object|O|스토리지 정보 객체|    
-| storage.storageType                          |Body|Enum|O|데이터 스토리지 타입<br/>- 예시: `General SSD`|
-| storage.storageSize                          |Body|Number|O|데이터 스토리지 크기(GB)<br/>- 최솟값: `20`<br/>- 최댓값: `2048`|
-| backup                                       |Body|Object|O|백업 정보 객체|
-| backup.backupPeriod                          |Body|Number|O|백업 보관 기간(일)<br/>- 최솟값: `0`<br/>- 최댓값: `730`|
-| backup.ftwrlWaitTimeout                      |Body|Number|X|쿼리 지연 대기 시간(초)<br/>- 기본값: `1800`<br/>- 최솟값: `0`<br/>- 최댓값: `21600`|
-| backup.backupRetryCount                      |Body|Number|X|백업 재시도 횟수<br/>- 기본값: `0`<br/>- 최솟값: `0`<br/>- 최댓값: `10`|
-| backup.replicationRegion                     |Body|Enum|X|백업 복제 리전<br />- `KR1`: 한국(판교)<br/>- `KR2`: 한국(평촌)<br/>- `JP1`: 일본(도쿄)|
-| backup.useBackupLock                         |Body|Boolean|X|테이블 잠금 사용 여부<br/>- 기본값: `false`|
-| backup.backupSchedules                       |Body|Array|O|백업 스케줄 목록|
-| backup.backupSchedules.backupWndBgnTime      |Body|String|O|백업 시작 시각<br/>- 예시: `00:00:00`|
-| backup.backupSchedules.backupWndDuration     |Body|Enum|O|백업 Duration<br/>백업 시작 시각부터 Duration 안에 자동 백업이 실행됩니다.<br/>- `HALF_AN_HOUR`: 30분<br/>- `ONE_HOUR`: 1시간<br/>- `ONE_HOUR_AND_HALF`: 1시간 30분<br/>- `TWO_HOURS`: 2시간<br/>- `TWO_HOURS_AND_HALF`: 2시간 30분<br/>- `THREE_HOURS`: 3시간|
-| backup.backupSchedules.backupRetryExpireTime |Body|String|O|백업 재시도 만료 시각<br/>- 백업 재시도 만료 시각은 백업 시작 시각 이전이거나 이후여야 합니다.<br/>- 예시: `01:30:00`|
+| 이름                                           | 종류 | 형식 | 필수 | 설명                                                                                                                                                                                                                          |
+|----------------------------------------------|---|---|---|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| dbInstanceName                               | Body | String | O | DB 인스턴스를 식별할 수 있는 이름                                                                                                                                                                                                        |
+| description                                  |Body|String|X| DB 인스턴스에 대한 추가 정보                                                                                                                                                                                                           |
+| dbFlavorId                                   | Body | UUID | O | DB 인스턴스 사양의 식별자                                                                                                                                                                                                             |
+| dbVersion                                    |Body|Enum|O| DB 엔진 유형                                                                                                                                                                                                                    |
+| dbPort                                       |Body|Number|O| DB 포트<br/>- 최솟값: `3306`<br/>- 최댓값: `43306`                                                                                                                                                                                  |
+| dbUserName                                   |Body|String|O| DB 사용자 계정명                                                                                                                                                                                                                  |
+| dbPassword                                   |Body|String|O| DB 사용자 계정 암호<br/>- 최소 길이: `4`<br/>- 최대 길이: `16`                                                                                                                                                                             |
+| parameterGroupId                             |Body|UUID|O| 파라미터 그룹의 식별자                                                                                                                                                                                                                |
+| dbSecurityGroupIds                           |Body|Array|X| DB 보안 그룹의 식별자 목록                                                                                                                                                                                                            ||network|Body|Object|O|네트워크 정보 객체|
+| userGroupIds                                 |Body|Array|X| 사용자 그룹의 식별자 목록                                                                                                                                                                                                              |
+| useHighAvailability                          |Body|Boolean|X| 고가용성 사용 여부<br/>- 기본값: `false`                                                                                                                                                                                               |
+| pingInterval                                 |Body|Number|X| 고가용성 사용 시 Ping 간격(초)<br/>- 기본값: `3`<br/>- 최솟값: `1`<br/>- 최댓값: `600`                                                                                                                                                         |
+| useDefaultUserNotification                   |Body|Boolean|X| 기본 알람 사용 여부<br/>- 기본값: `false`                                                                                                                                                                                              |
+| network                                      |Body|Object|O| 네트워크 정보 객체                                                                                                                                                                                                                  |
+| network.subnetId                             |Body|UUID|O| 서브넷의 식별자                                                                                                                                                                                                                    |
+| network.usePublicAccess                      |Body|Boolean|X| 외부 접속 가능  여부<br/>- 기본값: `false`                                                                                                                                                                                             |
+| network.availabilityZone                     | Body|Enum|O| DB 인스턴스를 생성할 가용성 영역<br/>- 예시: `kr-pub-a`                                                                                                                                                                                    |
+| storage                                      |Body|Object|O| 스토리지 정보 객체                                                                                                                                                                                                                  |    
+| storage.storageType                          |Body|Enum|O| 데이터 스토리지 타입<br/>- 예시: `General SSD`                                                                                                                                                                                         |
+| storage.storageSize                          |Body|Number|O| 데이터 스토리지 크기(GB)<br/>- 최솟값: `20`<br/>- 최댓값: `2048`                                                                                                                                                                           |
+| backup                                       |Body|Object|O| 백업 정보 객체                                                                                                                                                                                                                    |
+| backup.backupPeriod                          |Body|Number|O| 백업 보관 기간(일)<br/>- 최솟값: `0`<br/>- 최댓값: `730`                                                                                                                                                                                 |
+| backup.ftwrlWaitTimeout                      |Body|Number|X| 쿼리 지연 대기 시간(초)<br/>- 기본값: `1800`<br/>- 최솟값: `0`<br/>- 최댓값: `21600`                                                                                                                                                          |
+| backup.backupRetryCount                      |Body|Number|X| 백업 재시도 횟수<br/>- 기본값: `0`<br/>- 최솟값: `0`<br/>- 최댓값: `10`                                                                                                                                                                     |
+| backup.replicationRegion                     |Body|Enum|X| 백업 복제 리전<br />- `KR1`: 한국(판교)<br/>- `KR2`: 한국(평촌)<br/>- `JP1`: 일본(도쿄)                                                                                                                                                       |
+| backup.useBackupLock                         |Body|Boolean|X| 테이블 잠금 사용 여부<br/>- 기본값: `true`                                                                                                                                                                                              |
+| backup.backupSchedules                       |Body|Array|O| 백업 스케줄 목록                                                                                                                                                                                                                   |
+| backup.backupSchedules.backupWndBgnTime      |Body|String|O| 백업 시작 시각<br/>- 예시: `00:00:00`                                                                                                                                                                                               |
+| backup.backupSchedules.backupWndDuration     |Body|Enum|O| 백업 Duration<br/>백업 시작 시각부터 Duration 안에 자동 백업이 실행됩니다.<br/>- `HALF_AN_HOUR`: 30분<br/>- `ONE_HOUR`: 1시간<br/>- `ONE_HOUR_AND_HALF`: 1시간 30분<br/>- `TWO_HOURS`: 2시간<br/>- `TWO_HOURS_AND_HALF`: 2시간 30분<br/>- `THREE_HOURS`: 3시간 |
+| backup.backupSchedules.backupRetryExpireTime |Body|String|O| 백업 재시도 만료 시각<br/>- 백업 재시도 만료 시각은 백업 시작 시각 이전이거나 이후여야 합니다.<br/>- 예시: `01:30:00`                                                                                                                                              |
 
 
 <details><summary>예시</summary>
@@ -1769,7 +1769,7 @@ POST /rds/api/public/external/v3.0/backups/{backupId}/restore
 | pingInterval                                 | Body   | Number  | X  | 고가용성 사용 시 Ping 간격(초)<br/>- 기본값: `3`<br/>- 최솟값: `1`<br/>- 최댓값: `600`                                                                                                                                                         |
 | useDefaultNotification                       | Body   | Boolean | X  | 기본 알림 사용 여부<br/>- 기본값: `false`                                                                                                                                                                                              |
 | network                                      | Body   | Object  | O  | 네트워크 정보 객체                                                                                                                                                                                                                  |
-| network.subnetId                             | Body   | UUID    | O  | 서브넷의 식별자                                                                                                                                                                                                                |
+| network.subnetId                             | Body   | UUID    | O  | 서브넷의 식별자                                                                                                                                                                                                                    |
 | network.usePublicAccess                      | Body   | Boolean | X  | 외부 접속 가능 여부<br/>- 기본값: `false`                                                                                                                                                                                              |
 | network.availabilityZone                     | Body   | Enum    | O  | DB 인스턴스를 생성할 가용성 영역<br/>- 예시: `kr-pub-a`                                                                                                                                                                                    |
 | storage                                      | Body   | Object  | O  | 스토리지 정보 객체                                                                                                                                                                                                                  |    
@@ -1780,7 +1780,7 @@ POST /rds/api/public/external/v3.0/backups/{backupId}/restore
 | backup.ftwrlWaitTimeout                      | Body   | Number  | X  | 쿼리 지연 대기 시간(초)<br/>- 기본값: `1800`<br/>- 최솟값: `0`<br/>- 최댓값: `21600`                                                                                                                                                          |
 | backup.backupRetryCount                      | Body   | Number  | X  | 백업 재시도 횟수<br/>- 기본값: `0`<br/>- 최솟값: `0`<br/>- 최댓값: `10`                                                                                                                                                                     |
 | backup.replicationRegion                     | Body   | Enum    | X  | 백업 복제 리전<br />- `KR1`: 한국(판교)<br/>- `KR2`: 한국(평촌)<br/>- `JP1`: 일본(도쿄)                                                                                                                                                       |
-| backup.useBackupLock                         | Body   | Boolean | X  | 테이블 잠금 사용 여부<br/>- 기본값: `false`                                                                                                                                                                                             |
+| backup.useBackupLock                         | Body   | Boolean | X  | 테이블 잠금 사용 여부<br/>- 기본값: `true`                                                                                                                                                                                                 |
 | backup.backupSchedules                       | Body   | Array   | O  | 백업 스케줄 목록                                                                                                                                                                                                                   |
 | backup.backupSchedules.backupWndBgnTime      | Body   | String  | O  | 백업 시작 시각<br/>- 예시: `00:00:00`                                                                                                                                                                                               |
 | backup.backupSchedules.backupWndDuration     | Body   | Enum    | O  | 백업 Duration<br/>백업 시작 시각부터 Duration 안에 자동 백업이 실행됩니다.<br/>- `HALF_AN_HOUR`: 30분<br/>- `ONE_HOUR`: 1시간<br/>- `ONE_HOUR_AND_HALF`: 1시간 30분<br/>- `TWO_HOURS`: 2시간<br/>- `TWO_HOURS_AND_HALF`: 2시간 30분<br/>- `THREE_HOURS`: 3시간 |
