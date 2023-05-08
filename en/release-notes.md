@@ -2,7 +2,7 @@
 
 ### May 16, 2023
 
-#### Added Features
+#### Added Features and Updates
 
 * Made improvements so that the user interface is consistent with NHN Cloud services
 * Made modifications so that manual backup is not deleted even when DB instances are deleted
