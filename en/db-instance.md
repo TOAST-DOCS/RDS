@@ -20,8 +20,7 @@ When creating DB instance, you must set up a user account and password, and ther
 
 ### Availability Zone
 
-NHN Cloud has divided the entire system into several availability zones to prepare for failures caused by physical hardware problems. These availability zones are storage systems, network switches, top surfaces, and power supplies, which are all configured separately for each zone. Failure within one availability zone does not affect other availability zones, increasing the availability of the entire service. Deploying DB instances across multiple availability zones can further increase the
-service availability. Network communication is possible between DB instances that are scattered across multiple availability zones, and there is no network usage charge.
+NHN Cloud has divided the entire system into several availability zones to prepare for failures caused by physical hardware problems. These availability zones are storage systems, network switches, top surfaces, and power supplies, which are all configured separately for each zone. Failure within one availability zone does not affect other availability zones, increasing the availability of the entire service. Deploying DB instances across multiple availability zones can further increase the service availability. Network communication is possible between DB instances that are scattered across multiple availability zones, and there is no network usage charge.
 
 > [Caution]
 > You cannot change the availability zone of DB instance that you have already created.
@@ -32,6 +31,7 @@ You can use the versions specified below.
 
 | Version      | Note                                                                                                              | 
 |--------------|-------------------------------------------------------------------------------------------------------------------| 
+| MySQL 8.0.32 |                                                           | 
 | MySQL 8.0.28 |                                                                                                                   | 
 | MySQL 8.0.23 |                                                                                                                   | 
 | MySQL 8.0.18 |                                                                                                                   | 
@@ -63,7 +63,8 @@ The type of DB instance that you have already created can be easily changed thro
 
 The status of the DB instance consists of the following values and changes depending on the behavior of the user and the current status.
 
-| Status | Description | |-------------------|------------------------------------------------|
+| Status | Description | 
+|-------------------|------------------------------------------------|
 | BEFORE_CREATE | before create|
 | AVAILABLE | available to use |
 | STORAGE_FULL | insufficient storage |
@@ -118,8 +119,7 @@ DB instances support two types of storage: HDD and SSD. As performance and price
 
 ### Scale Storage Size
 
-You cannot change the storage type of DB instance, but the storage size is easily scalable through the web console. DB instances are terminated during storage size scale out, resulting in minutes of downtime depending on the service load. If a read replica exists, expanding the storage size of the master also expands the storage size of the read replica. If you have multiple read replicas, the storage size expansion will be sequential. If an error occurs while expanding the storage size, some
-read replicas might not be able to scale, and for read replicas that fail to scale, they can be scaled individually afterward. The storage size cannot be changed to be smaller than the current size.
+You cannot change the storage type of DB instance, but the storage size is easily scalable through the web console. DB instances are terminated during storage size scale out, resulting in minutes of downtime depending on the service load. If a read replica exists, expanding the storage size of the master also expands the storage size of the read replica. If you have multiple read replicas, the storage size expansion will be sequential. If an error occurs while expanding the storage size, some read replicas might not be able to scale, and for read replicas that fail to scale, they can be scaled individually afterward. The storage size cannot be changed to be smaller than the current size.
 
 ### Network
 
@@ -138,8 +138,7 @@ DB security groups are used to restrict access in case of external intrusion. Yo
 
 ### Backup
 
-You can set up periodic backups of the databases in your DB instance, or you can create backups at any time through the web console. Performance may degrade during backups. To avoid affecting service, it is better to perform back up at a time when the service is under low load. If you do not want the backup to degrade performance, you can use a high-availability configuration or perform backups from read replica. Backup files are stored on internal object storage and are charged based on the
-size of backup storage. You can export to user object storage in NHN Cloud if necessary. To prepare for unexpected failures, we recommend that you set up backups to conduct periodically. For more details on backup, see [Backup and Restore](backup-and-restore/).
+You can set up periodic backups of the databases in your DB instance, or you can create backups at any time through the web console. Performance may degrade during backups. To avoid affecting service, it is better to perform back up at a time when the service is under low load. If you do not want the backup to degrade performance, you can use a high-availability configuration or perform backups from read replica. Backup files are stored on internal object storage and are charged based on the size of backup storage. You can export to user object storage in NHN Cloud if necessary. To prepare for unexpected failures, we recommend that you set up backups to conduct periodically. For more details on backup, see [Backup and Restore](backup-and-restore/).
 
 ### Restoration
 
@@ -165,14 +164,16 @@ When you create a DB instance, you can set default notifications. If setting def
 If you do not use DB instance for a certain period of time, but you do not want to delete it, you can stop it. The virtual appliance of the stopped DB instance is shut down and will not be available until restarted. DB instances in a stopped state are charged at the discounted rate for 90 days from the moment they are stopped, and at the regular rate after 90 days. Make sure to delete unused DB instances to avoid unnecessary charges.
 
 > [Note]
-> High availability DB instances, masters with read replicas, and read replicas cannot be stopped. If the DB instance is using Floating IP, the Floating IP pricing is charged whether it is stopped or not.
+> High availability DB instances, masters with read replicas, and read replicas cannot be stopped. 
+> If the DB instance is using Floating IP, the Floating IP pricing is charged whether it is stopped or not.
 
 ### Create Read Replica
 
 To improve read performance, you can create a read replica which can be used for read-only. You can create maximum five read replicas for one master. You cannot create a read replica of a read replica. We recommend that you make the read replica the same or higher specification as the master. Creating with low specifications may cause to delay replication.
 
 > [Caution]
-> When creating a read replica, the master's I/O performance may be lower than usual. The time to create read replica can increase in proportion to the size of the master's database.
+> When creating a read replica, the master's I/O performance may be lower than usual. 
+> The time to create read replica can increase in proportion to the size of the master's database.
 
 > [Note]
 > Object storage pricing may occur as much as the binary log size required for the process of creating read replica.
@@ -183,8 +184,7 @@ Breaking the replication relationship with the master and changing the read repl
 
 ### Stop Replication of Read Replicas
 
-Read replicas can be stopped for several reasons. If the status of the read replica is `Replication stopped`, you must quickly determine the cause and perform normalization. If the ` Replication stopped` status persists for a long time, the replication delay will increase. If you do not have the binary log required for normalization, you must rebuild the read replica. The reason for replication stop can be determined by the `SHOW SLAVE STATUS` command in the read replica. If the value
-of `Last_Errno` is 1062, you can call the Procedure below until the error disappears.
+Read replicas can be stopped for several reasons. If the status of the read replica is `Replication stopped`, you must quickly determine the cause and perform normalization. If the ` Replication stopped` status persists for a long time, the replication delay will increase. If you do not have the binary log required for normalization, you must rebuild the read replica. The reason for replication stop can be determined by the `SHOW SLAVE STATUS` command in the read replica. If the value of `Last_Errno` is 1062, you can call the Procedure below until the error disappears.
 
 ``` 
 mysql> CALL mysql.tcrds_repl_skip_repl_error(); 
@@ -196,8 +196,7 @@ If you can't resolve the replication stop of read replica, you can rebuild it to
 
 ### Force Restart
 
-You can force restart if MySQL on DB instance is not working properly. For force restart, give the SIGTERM command to MySQL to wait 10 minutes for normal shutdown. If MySQL shuts down successfully within 10 minutes, reboot the virtual machine thereafter. If it does not shut down properly within 10 minutes, force to reboot the virtual machine. If virtual machine is forcibly rebooted, some of the transactions you are working on can be lost, and the data volume may be corrupted and may not be
-recovered. After force restart, the state of the DB instance might not return to the available state. In case of this situation, please contact the Customer Center.
+You can force restart if MySQL on DB instance is not working properly. For force restart, give the SIGTERM command to MySQL to wait 10 minutes for normal shutdown. If MySQL shuts down successfully within 10 minutes, reboot the virtual machine thereafter. If it does not shut down properly within 10 minutes, force to reboot the virtual machine. If virtual machine is forcibly rebooted, some of the transactions you are working on can be lost, and the data volume may be corrupted and may not be recovered. After force restart, the state of the DB instance might not return to the available state. In case of this situation, please contact the Customer Center.
 
 > [Caution]  
 > Due to the potential for data loss or data volume corruption, this feature should be avoided except in urgent and unavoidable circumstances.
@@ -207,8 +206,7 @@ recovered. After force restart, the state of the DB instance might not return to
 
 ### Secure Capacity
 
-If your storage is running out of capacity due to sudden heavy loads, you can delete the binary log with the ability to free up space in the web console. If you select securing capacity in the Web Console, a pop-up screen will be displayed where you can select the binary log for DB instance. Select Binary log and press the **Confirm** button to delete all binary logs generated before the selected binary log. Securing Capacity is a feature to temporarily secure capacity. If you continue to run
-out of capacity, you may need to set a storage period for binary logs or expand the size of your storage to match the service load.
+If your storage is running out of capacity due to sudden heavy loads, you can delete the binary log with the ability to free up space in the web console. If you select securing capacity in the Web Console, a pop-up screen will be displayed where you can select the binary log for DB instance. Select Binary log and press the **Confirm** button to delete all binary logs generated before the selected binary log. Securing Capacity is a feature to temporarily secure capacity. If you continue to run out of capacity, you may need to set a storage period for binary logs or expand the size of your storage to match the service load.
 
 > [Note]
 > You can set the storage period for binary logs with the `expire_logs_days` in MySQL 5.7 and later and the `binlog_expire_logs_seconds` parameter in MySQL 5.8 and later.
@@ -236,12 +234,12 @@ Candidate master has a process for detecting failures, which periodically detect
 
 ### Automatic Failover
 
-When the candidate master fails the master's health check four times in a row, it determines that the master is unable to provide service and automatically performs a failover. In order to prevent split brains, disconnect all user security groups assigned to the failed master to block external connections, and the preliminary master will take over the role of the master. A record in the internal domain for access are changed from the failed master to the preliminary master, so no changes to the
-application are required. When failover is completed, the type of failed over master changes to the failed over master and the type of candidate master changes to the master. No failover is performed until the failed over master is recovered or rebuilt. Promoted master takes over all automatic backups of the failover master. Point-in-time restoration using existing backups is not supported because the master changes during failover and all binary logs are deleted. You can restore point-in-time
+When the candidate master fails the master's health check four times in a row, it determines that the master is unable to provide service and automatically performs a failover. In order to prevent split brains, disconnect all user security groups assigned to the failed master to block external connections, and the preliminary master will take over the role of the master. A record in the internal domain for access are changed from the failed master to the preliminary master, so no changes to the application are required. When failover is completed, the type of failed over master changes to the failed over master and the type of candidate master changes to the master. No failover is performed until the failed over master is recovered or rebuilt. Promoted master takes over all automatic backups of the failover master. Point-in-time restoration using existing backups is not supported because the master changes during failover and all binary logs are deleted. You can restore point-in-time
 from the time the new backup was performed on the promoted master.
 
 > [Note]
-> As the high availability feature is based on a domain, if a client trying to connect is in a network environment where the DNS server cannot be reached, the DB instance cannot be accessed through the domain, and normal connection is not possible in the event of failover. It takes approximately 3 seconds for the changes to A record in the internal domain to take effect, but may vary depending on the DNS Cache policy in the client environment where attempting to connect.
+> As the high availability feature is based on a domain, if a client trying to connect is in a network environment where the DNS server cannot be reached, the DB instance cannot be accessed through the domain, and normal connection is not possible in the event of failover. 
+> It takes approximately 3 seconds for the changes to A record in the internal domain to take effect, but may vary depending on the DNS Cache policy in the client environment where attempting to connect.
 
 > [Caution]
 > If the position number value of the binary log between master and candidate master differs by more than 100,000,000, there is no failover.
@@ -253,8 +251,6 @@ A master that fails and conducts failover is called failover master. Backups of 
 ### Recover Failed Over Master
 
 If the data is not consistent during failover and the binary log is not lost from the point of failure to the point of attempting recovery, the failed over and promoted masters can be recovered back to the high availability configuration. Because it re-configure replication relationships with the promoted master in the database of the failed over master, recovery fails once the data became inconsistent or once the binary log required for recovery was lost.
-
-If the failed over master fails to recover, you can re-enable the high availability feature by rebuilding.
 
 > [Note]
 > Recovery is not supported for DB instances where failover occurred before April 11, 2023.
@@ -278,8 +274,7 @@ For high-availability DB instances, when performing an action that accompanies r
 * Reflect parameter group changes
 * Change storage size
 
-When you restart with failover, the candidate master is restarted first. Failover will then promote the candidate master to the master, and the existing master will serve as a candidate master. Upon promotion, a record of the internal domain for access changes from master to candidate master, hence no changes to the application are required. The promoted master takes over all automatic backups of the previous master. Point-in-time restoration using existing backups is not supported because the
-master changes during failover and all binary logs are deleted. You can restore point-in-time from the time the new backup was performed on the promoted master.
+When you restart with failover, the candidate master is restarted first. Failover will then promote the candidate master to the master, and the existing master will serve as a candidate master. Upon promotion, a record of the internal domain for access changes from master to candidate master, hence no changes to the application are required. The promoted master takes over all automatic backups of the previous master. Point-in-time restoration using existing backups is not supported because the master changes during failover and all binary logs are deleted. You can restore point-in-time from the time the new backup was performed on the promoted master.
 
 > [Note]
 > If failover restart is not performed, the master and the candidate master are restarted sequentially.
@@ -289,8 +284,11 @@ master changes during failover and all binary logs are deleted. You can restore 
 
 ### Pause High Availability
 
-You can temporarily stop the high availability feature in situations where temporary interruption of connectivity or high load is expected. If the high availability feature is paused, it does not detect failures, and therefore does not fail. Even if a task that requires a restart while the high availability feature is paused do not resume the paused high availability feature. Data replication occurs normal when high availability is paused, but we do not recommend that you pause for a long time
-as no failures are to be detected.
+You can temporarily stop the high availability feature in situations where temporary interruption of connectivity or high load is expected. If the high availability feature is paused, it does not detect failures, and therefore does not fail. Even if a task that requires a restart while the high availability feature is paused do not resume the paused high availability feature. Data replication occurs normal when high availability is paused, but we do not recommend that you pause for a long time as no failures are to be detected.
+
+### Rebuild Candidate Master
+
+Replication on a candidate master can be interrupted for various reasons, such as network disconnection, using invalid FEDERATED engines, or setting up replication from another master. A candidate master in a replication-stopped status does not perform auto failover. To resolve this, you must rebuild the candidate master. Rebuilding the candidate master removes all of the candidate master's database and rebuilds it based on the master's database. During this process, if the backup file required for the rebuild does not exist on the master database, backup is performed on the master, and performance degradation can occur due to the backup performed.
 
 ## MySQL Procedure
 
