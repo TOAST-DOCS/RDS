@@ -16,7 +16,7 @@
 | BACUP_05_00 | BACKUP            | 예        | 백업 내보내기 시작                           |
 | BACUP_05_01 | BACKUP            | 예        | 백업 내보내기 완료                           |
 | BACUP_05_04 | BACKUP            | 예        | 백업 내보내기 실패                           |
-| BACUP_06_01 | BACKUP            | 아니오      | DB 인스턴스 백업 실패(알려진 원인)               |
+| BACUP_06_01 | BACKUP            | 아니오      | DB 인스턴스 백업 실패(알려진 원인)                |
 | SECGP_01_01 | DB_SECURITY_GROUP | 아니오      | DB 보안 그룹 생성                          |
 | SECGP_02_00 | DB_SECURITY_GROUP | 아니오      | DB 보안 그룹 변경 시작                       |
 | SECGP_02_01 | DB_SECURITY_GROUP | 아니오      | DB 보안 그룹 변경 완료                       |
@@ -62,9 +62,9 @@
 | INSTC_25_00 | INSTANCE          | 예        | Storage 확장 시작                        |
 | INSTC_25_01 | INSTANCE          | 예        | Storage 확장 완료                        |
 | INSTC_25_04 | INSTANCE          | 예        | Storage 확장 실패                        |
-| INSTC_26_00 | INSTANCE          | 예        | DB 인스턴스 장애 조치 발생                      |
-| INSTC_26_01 | INSTANCE          | 예        | DB 인스턴스 장애 조치 완료                      |
-| INSTC_26_04 | INSTANCE          | 예        | DB 인스턴스 장애 조치 실패                      |
+| INSTC_26_00 | INSTANCE          | 예        | DB 인스턴스 장애 조치 발생                     |
+| INSTC_26_01 | INSTANCE          | 예        | DB 인스턴스 장애 조치 완료                     |
+| INSTC_26_04 | INSTANCE          | 예        | DB 인스턴스 장애 조치 실패                     |
 | INSTC_27_01 | INSTANCE          | 예        | DB 인스턴스 용량 확보                        |
 | INSTC_27_04 | INSTANCE          | 예        | DB 인스턴스 용량 확보 실패                     |
 | INSTC_28_01 | INSTANCE          | 예        | 고가용성 DB 인스턴스 시작                      |
@@ -161,13 +161,15 @@
 
 ### 사용자 그룹 생성
 
-![user_group_01_ko](https://static.toastoven.net/prod_rds/23.04.11/user_group_01_ko.png)
+![user_group_01_ko](https://static.toastoven.net/prod_rds/23.06.13/user_group_01_ko.png)
 
 * ❶ **사용자 그룹 생성**을 누르면 사용자 그룹을 생성할 수 있는 팝업 창이 나타납니다.
 * ❷ 사용자 그룹에 추가된 사용자가 나타납니다.
 * ❸ **x**를 누르면 추가된 사용자를 제외할 수 있습니다.
 * ❹ 사용자 목록에 사용자가 많을 경우 검색 조건을 입력하여 결과를 제한할 수 있습니다.
-* ❺ **전체 추가**를 눌러 프로젝트 멤버를 모두 사용자 그룹에 추가합니다.
+* ❺ **전체 프로젝트 멤버**를 통보 대상에 추가합니다. 
+  * 추가 시 개별 사용자 추가는 취소됩니다.
+  * 해당 사용자 그룹을 이용하여 알람을 전송하게 되는 경우, 당시 전체 프로젝트 멤버 대상으로 알람을 전송합니다.
 * ❻ **확인**를 눌러 사용자 그룹에 사용자를 추가합니다.
 
 ## 알림 그룹

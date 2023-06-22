@@ -1,28 +1,28 @@
 ## Database > RDS for MySQL > API 가이드
 
-| 리전 | 엔드포인트                                         |
-|---|-----------------------------------------------|
+| 리전        | 엔드포인트                                         |
+|-----------|-----------------------------------------------|
 | 한국(판교) 리전 | https://kr1-rds-mysql.api.nhncloudservice.com |
-| 한국(평촌) 리전 | https://kr2-rds-mysql.api.nhncloudservice.com     |
-| 일본 리전 | https://jp1-rds-mysql.api.nhncloudservice.com     |
+| 한국(평촌) 리전 | https://kr2-rds-mysql.api.nhncloudservice.com |
+| 일본 리전     | https://jp1-rds-mysql.api.nhncloudservice.com |
 
 ## 인증 및 권한
 
 API를 사용하려면 인증에 필요한 `User Access Key ID`와 `Secret Access Key`가 필요합니다. <b>회원 정보 > API 보안 설정</b>에서 생성할 수 있습니다.
 생성된 Key는 Appkey와 함께 요청 Header에 포함해야 합니다.
 
-| 이름                     | 종류     | 형식     | 필수  | 설명                               |
-|------------------------|--------|--------|-----|----------------------------------|
-| X-TC-APP-KEY           | Header | String | O   | RDS for MySQL 서비스의 Appkey        |
-| X-TC-AUTHENTICATION-ID | Header | String | O   | API 보안 설정 메뉴의 User Access Key ID |
-| X-TC-AUTHENTICATION-SECRET | Header | String | O   | API 보안 설정 메뉴의 Secret Access Key  |
+| 이름                         | 종류     | 형식     | 필수 | 설명                               |
+|----------------------------|--------|--------|----|----------------------------------|
+| X-TC-APP-KEY               | Header | String | O  | RDS for MySQL 서비스의 Appkey        |
+| X-TC-AUTHENTICATION-ID     | Header | String | O  | API 보안 설정 메뉴의 User Access Key ID |
+| X-TC-AUTHENTICATION-SECRET | Header | String | O  | API 보안 설정 메뉴의 Secret Access Key  |
 
 또한 프로젝트 멤버 역할에 따라 호출할 수 있는 API가 제한됩니다. `RDS for MySQL ADMIN`, `RDS for MySQL VIEWER`로 구분하여 권한을 부여할 수 있습니다.
 
 * `RDS for MySQL ADMIN` 권한은 모든 기능을 사용 가능합니다.
 * `RDS for MySQL VIEWER` 권한은 정보를 조회하는 기능만 사용 가능합니다.
-  * DB 인스턴스를 생성, 수정, 삭제하거나, DB 인스턴스를 대상으로 하는 어떠한 기능도 사용할 수 없습니다.
-  * 단, 알림 그룹과 사용자 그룹 관련된 기능은 사용 가능합니다.
+    * DB 인스턴스를 생성, 수정, 삭제하거나, DB 인스턴스를 대상으로 하는 어떠한 기능도 사용할 수 없습니다.
+    * 단, 알림 그룹과 사용자 그룹 관련된 기능은 사용 가능합니다.
 
 API 요청 시 인증에 실패하거나 권한이 없을 경우 다음과 같은 오류가 발생합니다.
 
@@ -77,6 +77,7 @@ GET /v3.0/project/regions
     ]
 }
 ```
+
 </details>
 
 ---
@@ -100,7 +101,6 @@ GET /v3.0/project/members
 | members.memberName   | Body | String | 프로젝트 멤버의 이름     |
 | members.emailAddress | Body | String | 프로젝트 멤버의 이메일 주소 |
 | members.phoneNumber  | Body | String | 프로젝트 멤버의 전화번호   |
-
 
 <details><summary>예시</summary>
 <p>
@@ -142,13 +142,13 @@ GET /v3.0/db-flavors
 
 #### 응답
 
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|dbFlavors|Body|Array| DB 인스턴스 사양 목록 |
-|dbFlavors.dbFlavorId|Body|UUID|DB 인스턴스 사양의 식별자|
-|dbFlavors.dbFlavorName|Body|String|DB 인스턴스 사양 이름|
-|dbFlavors.ram|Body|Number|메모리 용량(MB)|
-|dbFlavors.vcpus|Body|Number|CPU 코어 수|
+| 이름                     | 종류   | 형식     | 설명              |
+|------------------------|------|--------|-----------------|
+| dbFlavors              | Body | Array  | DB 인스턴스 사양 목록   |
+| dbFlavors.dbFlavorId   | Body | UUID   | DB 인스턴스 사양의 식별자 |
+| dbFlavors.dbFlavorName | Body | String | DB 인스턴스 사양 이름   |
+| dbFlavors.ram          | Body | Number | 메모리 용량(MB)      |
+| dbFlavors.vcpus        | Body | Number | CPU 코어 수        |
 
 <details><summary>예시</summary>
 <p>
@@ -186,19 +186,18 @@ GET /v3.0/network/subnets
 
 #### 요청
 
-
 이 API는 요청 본문을 요구하지 않습니다.
 
 #### 응답
 
-| 이름                       | 종류 | 형식 | 설명               |
-|--------------------------|---|---|------------------|
-| subnets                  |Body|Array| 서브넷 목록           |
-| subnets.subnetId         |Body|UUID| 서브넷의 식별자         |
-| subnets.subnetName       |Body|String| 서브넷을 식별할 수 있는 이름 |
-| subnets.subnetCidr       |Body|String| 서브넷의 CIDR        |
-| subnets.usingGateway     |Body|Boolean| 게이트웨이 사용 여부      |
-| subnets.availableIpCount |Body|Number| 사용 가능한 IP 수      |
+| 이름                       | 종류   | 형식      | 설명               |
+|--------------------------|------|---------|------------------|
+| subnets                  | Body | Array   | 서브넷 목록           |
+| subnets.subnetId         | Body | UUID    | 서브넷의 식별자         |
+| subnets.subnetName       | Body | String  | 서브넷을 식별할 수 있는 이름 |
+| subnets.subnetCidr       | Body | String  | 서브넷의 CIDR        |
+| subnets.usingGateway     | Body | Boolean | 게이트웨이 사용 여부      |
+| subnets.availableIpCount | Body | Number  | 사용 가능한 IP 수      |
 
 <details><summary>예시</summary>
 <p>
@@ -234,19 +233,19 @@ GET /v3.0/network/subnets
 ```
 GET /v3.0/db-versions
 ```
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-
 #### 응답
 
-| 이름                            | 종류 | 형식 | 설명 |
-|-------------------------------|---|---|---|
-| dbVersions                           |Body|Array| DB 엔진 목록 |
-| dbVersions.dbVersion        |Body|String|DB 엔진 유형|
-| dbVersions.dbVersionName    |Body|String|DB 엔진 이름|
-| dbVersions.restorableFromObs |Body|Boolean|오브젝트 스토리지로부터 복원 가능 여부|
+| 이름                           | 종류   | 형식      | 설명                    |
+|------------------------------|------|---------|-----------------------|
+| dbVersions                   | Body | Array   | DB 엔진 목록              |
+| dbVersions.dbVersion         | Body | String  | DB 엔진 유형              |
+| dbVersions.dbVersionName     | Body | String  | DB 엔진 이름              |
+| dbVersions.restorableFromObs | Body | Boolean | 오브젝트 스토리지로부터 복원 가능 여부 |
 
 <details><summary>예시</summary>
 <p>
@@ -277,7 +276,6 @@ GET /v3.0/db-versions
 
 ### 스토리지 목록 보기
 
-
 ```
 GET /v3.0/storages
 ```
@@ -288,9 +286,9 @@ GET /v3.0/storages
 
 #### 응답
 
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|storages|Body|Array| 스토리지 목록 |
+| 이름       | 종류   | 형식    | 설명      |
+|----------|------|-------|---------|
+| storages | Body | Array | 스토리지 목록 |
 
 <details><summary>예시</summary>
 <p>
@@ -318,23 +316,21 @@ GET /v3.0/storages
 
 ### 작업 상태
 
-| 상태명 | 설명 |
-|--|--|
-|`READY`| 작업이 준비 중인 경우|
-|`RUNNING`| 작업이 진행 중인 경우|
-|`COMPLETED`| 작업이 완료된 경우|
-|`REGISTERED`| 작업이 등록된 경우|
-|`WAIT_TO_REGISTER`| 작업 등록 대기 중인 경우|
-|`INTERRUPTED`| 작업 진행 중 인터럽트가 발생한 경우|
-|`CANCELED`| 작업이 취소된 경우 |
-|`FAILED`| 작업이 실패한 경우 |
-|`ERROR`| 작업 진행 중 오류가 발생한 경우|
-|`DELETED`| 작업이 삭제된 경우 |
-|`FAIL_TO_READY`| 작업 준비에 실패한 경우|
-
+| 상태명                | 설명                   |
+|--------------------|----------------------|
+| `READY`            | 작업이 준비 중인 경우         |
+| `RUNNING`          | 작업이 진행 중인 경우         |
+| `COMPLETED`        | 작업이 완료된 경우           |
+| `REGISTERED`       | 작업이 등록된 경우           |
+| `WAIT_TO_REGISTER` | 작업 등록 대기 중인 경우       |
+| `INTERRUPTED`      | 작업 진행 중 인터럽트가 발생한 경우 |
+| `CANCELED`         | 작업이 취소된 경우           |
+| `FAILED`           | 작업이 실패한 경우           |
+| `ERROR`            | 작업 진행 중 오류가 발생한 경우   |
+| `DELETED`          | 작업이 삭제된 경우           |
+| `FAIL_TO_READY`    | 작업 준비에 실패한 경우        |
 
 ### 작업 정보 상세 보기
-
 
 ```
 GET /v3.0/jobs/{jobId}
@@ -344,22 +340,21 @@ GET /v3.0/jobs/{jobId}
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-| jobId | URL  | UUID | O | 작업의 식별자 |
+| 이름    | 종류  | 형식   | 필수 | 설명      |
+|-------|-----|------|----|---------|
+| jobId | URL | UUID | O  | 작업의 식별자 |
 
 #### 응답
 
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|jobId|Body|UUID| 작업의 식별자 |
-|jobStatus|Body|Enum| 작업의 현재 상태 |
-|resourceRelations|Body|Array|연관 리소스 목록|
-|resourceRelations.resourceType|Body|Enum|연관 리소스 유형|
-|resourceRelations.resourceId|Body|UUID|연관 리소스의 식별자|
-|createdYmdt|Body|DateTime|생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)|
-|updatedYmdt|Body|DateTime|수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)|
-
+| 이름                             | 종류   | 형식       | 설명                                |
+|--------------------------------|------|----------|-----------------------------------|
+| jobId                          | Body | UUID     | 작업의 식별자                           |
+| jobStatus                      | Body | Enum     | 작업의 현재 상태                         |
+| resourceRelations              | Body | Array    | 연관 리소스 목록                         |
+| resourceRelations.resourceType | Body | Enum     | 연관 리소스 유형                         |
+| resourceRelations.resourceId   | Body | UUID     | 연관 리소스의 식별자                       |
+| createdYmdt                    | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| updatedYmdt                    | Body | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 
 <details><summary>예시</summary>
 <p>
@@ -403,13 +398,13 @@ GET /v3.0/db-instance-groups
 
 #### 응답
 
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|dbInstanceGroups|Body|Array| DB 인스턴스 그룹 목록 |
-|dbInstanceGroups.dbInstanceGroupId|Body|UUID| DB 인스턴스 그룹의 식별자 |
-|dbInstanceGroups.replicationType|Body|Enum| DB 인스턴스 그룹의 복제 형태<br/>- `STANDALONE`: 단일<br/>- `HIGH_AVAILABILITY`: 고가용성 |
-|dbInstanceGroups.createdYmdt|Body|DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
-|dbInstanceGroups.updatedYmdt|Body|DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| 이름                                 | 종류   | 형식       | 설명                                                                       |
+|------------------------------------|------|----------|--------------------------------------------------------------------------|
+| dbInstanceGroups                   | Body | Array    | DB 인스턴스 그룹 목록                                                            |
+| dbInstanceGroups.dbInstanceGroupId | Body | UUID     | DB 인스턴스 그룹의 식별자                                                          |
+| dbInstanceGroups.replicationType   | Body | Enum     | DB 인스턴스 그룹의 복제 형태<br/>- `STANDALONE`: 단일<br/>- `HIGH_AVAILABILITY`: 고가용성 |
+| dbInstanceGroups.createdYmdt       | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                        |
+| dbInstanceGroups.updatedYmdt       | Body | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                        |
 
 <details><summary>예시</summary>
 <p>
@@ -447,22 +442,22 @@ GET /v3.0/db-instance-groups/{dbInstanceGroupId}
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-| dbInstanceGroupId | URL | UUID | O | DB 인스턴스 그룹의 식별자 |
+| 이름                | 종류  | 형식   | 필수 | 설명              |
+|-------------------|-----|------|----|-----------------|
+| dbInstanceGroupId | URL | UUID | O  | DB 인스턴스 그룹의 식별자 |
 
 #### 응답
 
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|dbInstanceGroupId|Body|UUID| DB 인스턴스 그룹의 식별자 |
-|replicationType|Body|Enum| DB 인스턴스 그룹의 복제 형태<br/>- `STANDALONE`: 단일<br/>- `HIGH_AVAILABILITY`: 고가용성 |
-|dbInstances|Body|Array|DB 인스턴스 그룹에 속한 DB 인스턴스 목록|
-|dbInstances.dbInstanceId|Body|UUID|DB 인스턴스의 식별자|
-|dbInstances.dbInstanceType|Body|Enum|DB 인스턴스의 역할 타입<br/>- `MASTER`: 마스터<br/>- `FAILED_MASTER`: 장애 조치된 마스터<br/>- `CANDIDATE_MASTER`: 예비 마스터<br/>- `READ_ONLY_SLAVE`: 읽기 복제본|
-|dbInstances.dbInstanceStatus|Body|Enum|DB 인스턴스의 현재 상태|
-|createdYmdt|Body|DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
-|updatedYmdt|Body|DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| 이름                           | 종류   | 형식       | 설명                                                                                                                                    |
+|------------------------------|------|----------|---------------------------------------------------------------------------------------------------------------------------------------|
+| dbInstanceGroupId            | Body | UUID     | DB 인스턴스 그룹의 식별자                                                                                                                       |
+| replicationType              | Body | Enum     | DB 인스턴스 그룹의 복제 형태<br/>- `STANDALONE`: 단일<br/>- `HIGH_AVAILABILITY`: 고가용성                                                              |
+| dbInstances                  | Body | Array    | DB 인스턴스 그룹에 속한 DB 인스턴스 목록                                                                                                             |
+| dbInstances.dbInstanceId     | Body | UUID     | DB 인스턴스의 식별자                                                                                                                          |
+| dbInstances.dbInstanceType   | Body | Enum     | DB 인스턴스의 역할 타입<br/>- `MASTER`: 마스터<br/>- `FAILED_MASTER`: 장애 조치된 마스터<br/>- `CANDIDATE_MASTER`: 예비 마스터<br/>- `READ_ONLY_SLAVE`: 읽기 복제본 |
+| dbInstances.dbInstanceStatus | Body | Enum     | DB 인스턴스의 현재 상태                                                                                                                        |
+| createdYmdt                  | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                     |
+| updatedYmdt                  | Body | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                     |
 
 <details><summary>예시</summary>
 <p>
@@ -488,34 +483,32 @@ GET /v3.0/db-instance-groups/{dbInstanceGroupId}
 }
 ```
 
-
 </p>
 </details>
 
 ---
 
-
 ## DB 인스턴스
 
 ### DB 인스턴스 상태
 
-| 상태 | 설명 |
-|--|--|
-| `AVAILABLE` | DB 인스턴스가 사용 가능한 경우 |
-| `BEFORE_CREATE` | DB 인스턴스가 생성 전인 경우 |
-| `STORAGE_FULL`| DB 인스턴스의 용량이 부족한 경우 |
-| `FAIL_TO_CREATE`| DB 인스턴스 생성에 실패한 경우 |
-| `FAIL_TO_CONNECT`| DB 인스턴스 연결에 실패한 경우 |
-| `REPLICATION_STOP`| DB 인스턴스의 복제가 중단된 경우 |
-| `FAILOVER`| DB 인스턴스가 고가용성 장애 조치된 경우|
-| `FAILOVER_SHUTDOWN`| DB 인스턴스가 고가용성 장애 조치되어 중단된 경우|
-| `SHUTDOWN`| DB 인스턴스가 중지된 경우|
-| `DELETED`| DB 인스턴스가 삭제된 경우 |
+| 상태                  | 설명                           |
+|---------------------|------------------------------|
+| `AVAILABLE`         | DB 인스턴스가 사용 가능한 경우           |
+| `BEFORE_CREATE`     | DB 인스턴스가 생성 전인 경우            |
+| `STORAGE_FULL`      | DB 인스턴스의 용량이 부족한 경우          |
+| `FAIL_TO_CREATE`    | DB 인스턴스 생성에 실패한 경우           |
+| `FAIL_TO_CONNECT`   | DB 인스턴스 연결에 실패한 경우           |
+| `REPLICATION_STOP`  | DB 인스턴스의 복제가 중단된 경우          |
+| `FAILOVER`          | DB 인스턴스가 고가용성 장애 조치된 경우      |
+| `FAILOVER_SHUTDOWN` | DB 인스턴스가 고가용성 장애 조치되어 중단된 경우 |
+| `SHUTDOWN`          | DB 인스턴스가 중지된 경우              |
+| `DELETED`           | DB 인스턴스가 삭제된 경우              |
 
 ### DB 인스턴스 진행 상태
 
-| 상태 | 설명 |
-|--|--|
+| 상태                         | 설명           |
+|----------------------------|--------------|
 | `APPLYING_PARAMETER_GROUP` | 파라미터 그룹 적용 중 |
 | `BACKING_UP`               | 백업 중         |
 | `CANCELING`                | 취소 중         |
@@ -555,20 +548,20 @@ GET /v3.0/db-instances
 
 #### 응답
 
-| 이름                            | 종류 | 형식 | 설명 |
-|-------------------------------|---|---|---|
-| dbInstances                   |Body|Array| DB 인스턴스 목록 |
-| dbInstances.dbInstanceId      |Body|UUID|DB 인스턴스의 식별자|
-| dbInstances.dbInstanceGroupId |Body|UUID|DB 인스턴스 그룹의 식별자|
-| dbInstances.dbInstanceName    |Body|String|DB 인스턴스를 식별할 수 있는 이름|
-| dbInstances.description       |Body|String|DB 인스턴스에 대한 추가 정보|
-| dbInstances.dbVersion                |Body|Enum|DB 엔진 유형 |
-| dbInstances.dbPort            |Body|Number|DB 포트|
-| dbInstances.dbInstanceType    |Body|Enum|DB 인스턴스의 역할 타입<br/>- `MASTER`: 마스터<br/>- `FAILED_MASTER`: 장애 조치된 마스터<br/>- `CANDIDATE_MASTER`: 예비 마스터<br/>- `READ_ONLY_SLAVE`: 읽기 복제본|
-| dbInstances.dbInstanceStatus  |Body|Enum|DB 인스턴스의 현재 상태|
-| dbInstances.progressStatus    |Body|Enum|DB 인스턴스의 현재 진행 상태|
-| dbInstances.createdYmdt       |Body|DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
-| dbInstances.updatedYmdt       |Body|DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| 이름                            | 종류   | 형식       | 설명                                                                                                                                    |
+|-------------------------------|------|----------|---------------------------------------------------------------------------------------------------------------------------------------|
+| dbInstances                   | Body | Array    | DB 인스턴스 목록                                                                                                                            |
+| dbInstances.dbInstanceId      | Body | UUID     | DB 인스턴스의 식별자                                                                                                                          |
+| dbInstances.dbInstanceGroupId | Body | UUID     | DB 인스턴스 그룹의 식별자                                                                                                                       |
+| dbInstances.dbInstanceName    | Body | String   | DB 인스턴스를 식별할 수 있는 이름                                                                                                                  |
+| dbInstances.description       | Body | String   | DB 인스턴스에 대한 추가 정보                                                                                                                     |
+| dbInstances.dbVersion         | Body | Enum     | DB 엔진 유형                                                                                                                              |
+| dbInstances.dbPort            | Body | Number   | DB 포트                                                                                                                                 |
+| dbInstances.dbInstanceType    | Body | Enum     | DB 인스턴스의 역할 타입<br/>- `MASTER`: 마스터<br/>- `FAILED_MASTER`: 장애 조치된 마스터<br/>- `CANDIDATE_MASTER`: 예비 마스터<br/>- `READ_ONLY_SLAVE`: 읽기 복제본 |
+| dbInstances.dbInstanceStatus  | Body | Enum     | DB 인스턴스의 현재 상태                                                                                                                        |
+| dbInstances.progressStatus    | Body | Enum     | DB 인스턴스의 현재 진행 상태                                                                                                                     |
+| dbInstances.createdYmdt       | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                     |
+| dbInstances.updatedYmdt       | Body | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                     |
 
 <details><summary>예시</summary>
 <p>
@@ -751,17 +744,14 @@ POST /v3.0/db-instances
 }
 ```
 
-
 </p>
 </details>
 
 #### 응답
 
-
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|jobId|Body|UUID| 요청한 작업의 식별자 |
-
+| 이름    | 종류   | 형식   | 설명          |
+|-------|------|------|-------------|
+| jobId | Body | UUID | 요청한 작업의 식별자 |
 
 ---
 
@@ -773,17 +763,17 @@ PUT /v3.0/db-instances/{dbInstanceId}
 
 #### 요청
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-| dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
-| dbInstanceName | Body | String | X | DB 인스턴스를 식별할 수 있는 이름 |
-| description|Body|String|X|DB 인스턴스에 대한 추가 정보|
-|dbPort|Body|Number|X|DB 포트<br/>- 최솟값: `3306`<br/>- 최댓값: `43306`|
-| dbFlavorId | Body | UUID | X | DB 인스턴스 사양의 식별자 |
-| parameterGroupId|Body|UUID|X|파라미터 그룹의 식별자|
-|dbSecurityGroupIds|Body|Array|X|DB 보안 그룹의 식별자 목록|
-|executeBackup|Body|Boolean|X|현재 시점 백업 진행 여부<br/>- 기본값: `false`|
-|useOnlineFailover|Body|Boolean|X|장애 조치를 이용한 재시작 여부<br/>고가용성을 사용 중인 DB 인스턴스에서만 사용 가능합니다.<br/>- 기본값: `false`|
+| 이름                 | 종류   | 형식      | 필수 | 설명                                                                        |
+|--------------------|------|---------|----|---------------------------------------------------------------------------|
+| dbInstanceId       | URL  | UUID    | O  | DB 인스턴스의 식별자                                                              |
+| dbInstanceName     | Body | String  | X  | DB 인스턴스를 식별할 수 있는 이름                                                      |
+| description        | Body | String  | X  | DB 인스턴스에 대한 추가 정보                                                         |
+| dbPort             | Body | Number  | X  | DB 포트<br/>- 최솟값: `3306`<br/>- 최댓값: `43306`                                |
+| dbFlavorId         | Body | UUID    | X  | DB 인스턴스 사양의 식별자                                                           |
+| parameterGroupId   | Body | UUID    | X  | 파라미터 그룹의 식별자                                                              |
+| dbSecurityGroupIds | Body | Array   | X  | DB 보안 그룹의 식별자 목록                                                          |
+| executeBackup      | Body | Boolean | X  | 현재 시점 백업 진행 여부<br/>- 기본값: `false`                                         |
+| useOnlineFailover  | Body | Boolean | X  | 장애 조치를 이용한 재시작 여부<br/>고가용성을 사용 중인 DB 인스턴스에서만 사용 가능합니다.<br/>- 기본값: `false` |
 
 <details><summary>예시</summary>
 <p>
@@ -803,10 +793,9 @@ PUT /v3.0/db-instances/{dbInstanceId}
 
 #### 응답
 
-
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|jobId|Body|UUID| 요청한 작업의 식별자 |
+| 이름    | 종류   | 형식   | 설명          |
+|-------|------|------|-------------|
+| jobId | Body | UUID | 요청한 작업의 식별자 |
 
 ---
 
@@ -820,16 +809,15 @@ DELETE /v3.0/db-instances/{dbInstanceId}
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-| dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
+| 이름           | 종류  | 형식   | 필수 | 설명           |
+|--------------|-----|------|----|--------------|
+| dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
 
 #### 응답
 
-
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|jobId|Body|UUID| 요청한 작업의 식별자 |
+| 이름    | 종류   | 형식   | 설명          |
+|-------|------|------|-------------|
+| jobId | Body | UUID | 요청한 작업의 식별자 |
 
 ---
 
@@ -841,18 +829,17 @@ POST /v3.0/db-instances/{dbInstanceId}/restart
 
 #### 요청
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-| dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
-|useOnlineFailover|Body|Boolean|X|장애 조치를 이용한 재시작 여부<br/>고가용성을 사용 중인 DB 인스턴스에서만 사용 가능합니다.<br/>- 기본값: `false`|
-|executeBackup|Body|Boolean|X|현재 시점 백업 진행 여부<br/>- 기본값: `false`|
+| 이름                | 종류   | 형식      | 필수 | 설명                                                                        |
+|-------------------|------|---------|----|---------------------------------------------------------------------------|
+| dbInstanceId      | URL  | UUID    | O  | DB 인스턴스의 식별자                                                              |
+| useOnlineFailover | Body | Boolean | X  | 장애 조치를 이용한 재시작 여부<br/>고가용성을 사용 중인 DB 인스턴스에서만 사용 가능합니다.<br/>- 기본값: `false` |
+| executeBackup     | Body | Boolean | X  | 현재 시점 백업 진행 여부<br/>- 기본값: `false`                                         |
 
 #### 응답
 
-
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|jobId|Body|UUID| 요청한 작업의 식별자 |
+| 이름    | 종류   | 형식   | 설명          |
+|-------|------|------|-------------|
+| jobId | Body | UUID | 요청한 작업의 식별자 |
 
 ---
 
@@ -866,16 +853,15 @@ POST /v3.0/db-instances/{dbInstanceId}/start
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-| dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
+| 이름           | 종류  | 형식   | 필수 | 설명           |
+|--------------|-----|------|----|--------------|
+| dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
 
 #### 응답
 
-
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|jobId|Body|UUID| 요청한 작업의 식별자 |
+| 이름    | 종류   | 형식   | 설명          |
+|-------|------|------|-------------|
+| jobId | Body | UUID | 요청한 작업의 식별자 |
 
 ---
 
@@ -889,16 +875,15 @@ POST /v3.0/db-instances/{dbInstanceId}/stop
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-| dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
+| 이름           | 종류  | 형식   | 필수 | 설명           |
+|--------------|-----|------|----|--------------|
+| dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
 
 #### 응답
 
-
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|jobId|Body|UUID| 요청한 작업의 식별자 |
+| 이름    | 종류   | 형식   | 설명          |
+|-------|------|------|-------------|
+| jobId | Body | UUID | 요청한 작업의 식별자 |
 
 ---
 
@@ -910,17 +895,16 @@ POST /v3.0/db-instances/{dbInstanceId}/backup
 
 #### 요청
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-| dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
-| backupName | Body | String | O | 백업을 식별할 수 있는 이름 |
+| 이름           | 종류   | 형식     | 필수 | 설명              |
+|--------------|------|--------|----|-----------------|
+| dbInstanceId | URL  | UUID   | O  | DB 인스턴스의 식별자    |
+| backupName   | Body | String | O  | 백업을 식별할 수 있는 이름 |
 
 #### 응답
 
-
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|jobId|Body|UUID| 요청한 작업의 식별자 |
+| 이름    | 종류   | 형식   | 설명          |
+|-------|------|------|-------------|
+| jobId | Body | UUID | 요청한 작업의 식별자 |
 
 ---
 
@@ -966,28 +950,26 @@ POST /v3.0/db-instances/{dbInstanceId}/replicate
 
 ```json
 {
-"dbInstanceName": "db-instance-replicate",
-"description": "description",
-"dbPort": 11000,
-"network": {
-    "availabilityZone": "kr-pub-a"
-},
-"storage": {
-    "stroageSize": 100
-}
+    "dbInstanceName": "db-instance-replicate",
+    "description": "description",
+    "dbPort": 11000,
+    "network": {
+        "availabilityZone": "kr-pub-a"
+    },
+    "storage": {
+        "stroageSize": 100
+    }
 }
 ```
-
 
 </p>
 </details>
 
 #### 응답
 
-
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|jobId|Body|UUID| 요청한 작업의 식별자 |
+| 이름    | 종류   | 형식   | 설명          |
+|-------|------|------|-------------|
+| jobId | Body | UUID | 요청한 작업의 식별자 |
 
 ---
 
@@ -1001,16 +983,15 @@ POST /v3.0/db-instances/{dbInstanceId}/promote
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-| dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
+| 이름           | 종류  | 형식   | 필수 | 설명           |
+|--------------|-----|------|----|--------------|
+| dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
 
 #### 응답
 
-
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|jobId|Body|UUID| 요청한 작업의 식별자 |
+| 이름    | 종류   | 형식   | 설명          |
+|-------|------|------|-------------|
+| jobId | Body | UUID | 요청한 작업의 식별자 |
 
 ---
 
@@ -1040,19 +1021,17 @@ PUT /v3.0/db-instances/{dbInstanceId}/high-availability
 
 #### 요청
 
-
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-| dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
-|useHighAvailability|Body|Boolean|O|고가용성 사용 여부|
-|pingInterval|Body|Number|X|고가용성 사용 시 Ping 간격(초)<br/>- 최솟값: `1`<br/>- 최댓값: `600`|
+| 이름                  | 종류   | 형식      | 필수 | 설명                                                   |
+|---------------------|------|---------|----|------------------------------------------------------|
+| dbInstanceId        | URL  | UUID    | O  | DB 인스턴스의 식별자                                         |
+| useHighAvailability | Body | Boolean | O  | 고가용성 사용 여부                                           |
+| pingInterval        | Body | Number  | X  | 고가용성 사용 시 Ping 간격(초)<br/>- 최솟값: `1`<br/>- 최댓값: `600` |
 
 #### 응답
 
-
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|jobId|Body|UUID| 요청한 작업의 식별자 |
+| 이름    | 종류   | 형식   | 설명          |
+|-------|------|------|-------------|
+| jobId | Body | UUID | 요청한 작업의 식별자 |
 
 ---
 
@@ -1066,16 +1045,15 @@ POST /v3.0/db-instances/{dbInstanceId}/high-availability/resume
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-| dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
+| 이름           | 종류  | 형식   | 필수 | 설명           |
+|--------------|-----|------|----|--------------|
+| dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
 
 #### 응답
 
-
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|jobId|Body|UUID| 요청한 작업의 식별자 |
+| 이름    | 종류   | 형식   | 설명          |
+|-------|------|------|-------------|
+| jobId | Body | UUID | 요청한 작업의 식별자 |
 
 ---
 
@@ -1089,16 +1067,15 @@ POST /v3.0/db-instances/{dbInstanceId}/high-availability/pause
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-| dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
+| 이름           | 종류  | 형식   | 필수 | 설명           |
+|--------------|-----|------|----|--------------|
+| dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
 
 #### 응답
 
-
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|jobId|Body|UUID| 요청한 작업의 식별자 |
+| 이름    | 종류   | 형식   | 설명          |
+|-------|------|------|-------------|
+| jobId | Body | UUID | 요청한 작업의 식별자 |
 
 ---
 
@@ -1112,16 +1089,15 @@ POST /v3.0/db-instances/{dbInstanceId}/high-availability/repair
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-| dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
+| 이름           | 종류  | 형식   | 필수 | 설명           |
+|--------------|-----|------|----|--------------|
+| dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
 
 #### 응답
 
-
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|jobId|Body|UUID| 요청한 작업의 식별자 |
+| 이름    | 종류   | 형식   | 설명          |
+|-------|------|------|-------------|
+| jobId | Body | UUID | 요청한 작업의 식별자 |
 
 ---
 
@@ -1135,16 +1111,15 @@ POST /v3.0/db-instances/{dbInstanceId}/high-availability/split
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-| dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
+| 이름           | 종류  | 형식   | 필수 | 설명           |
+|--------------|-----|------|----|--------------|
+| dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
 
 #### 응답
 
-
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|jobId|Body|UUID| 요청한 작업의 식별자 |
+| 이름    | 종류   | 형식   | 설명          |
+|-------|------|------|-------------|
+| jobId | Body | UUID | 요청한 작업의 식별자 |
 
 ---
 
@@ -1158,18 +1133,17 @@ GET /v3.0/db-instances/{dbInstanceId}/storage-info
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-| dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
+| 이름           | 종류  | 형식   | 필수 | 설명           |
+|--------------|-----|------|----|--------------|
+| dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
 
 #### 응답
 
-
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|storageType|Body|Enum|데이터 스토리지 타입|
-|storageSize|Body|Number|데이터 스토리지 크기(GB)|
-|storageStatus|Body|Enum|데이터 스토리지의 현재 상태<br/>- `DETACHED`: 부착되지 않음<br/>- `ATTACHED`: 부착됨<br/>- `DELETED`: 삭제됨 |
+| 이름            | 종류   | 형식     | 설명                                                                                   |
+|---------------|------|--------|--------------------------------------------------------------------------------------|
+| storageType   | Body | Enum   | 데이터 스토리지 타입                                                                          |
+| storageSize   | Body | Number | 데이터 스토리지 크기(GB)                                                                      |
+| storageStatus | Body | Enum   | 데이터 스토리지의 현재 상태<br/>- `DETACHED`: 부착되지 않음<br/>- `ATTACHED`: 부착됨<br/>- `DELETED`: 삭제됨 |
 
 <details><summary>예시</summary>
 <p>
@@ -1187,13 +1161,11 @@ GET /v3.0/db-instances/{dbInstanceId}/storage-info
 }
 ```
 
-
 </p>
 </details>
 
 
 ---
-
 
 ### 스토리지 정보 수정하기
 
@@ -1203,18 +1175,17 @@ PUT /v3.0/db-instances/{dbInstanceId}/storage-info
 
 #### 요청
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-| dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
-|storageSize|Body|Number|O|데이터 스토리지 크기(GB)<br/>- 최솟값: 현재값<br/>- 최댓값: `2048`|
-|useOnlineFailover|Body|Boolean|X|장애 조치를 이용한 재시작 여부<br/>고가용성을 사용 중인 DB 인스턴스에서만 사용 가능합니다.<br/>- 기본값: `false`|
+| 이름                | 종류   | 형식      | 필수 | 설명                                                                        |
+|-------------------|------|---------|----|---------------------------------------------------------------------------|
+| dbInstanceId      | URL  | UUID    | O  | DB 인스턴스의 식별자                                                              |
+| storageSize       | Body | Number  | O  | 데이터 스토리지 크기(GB)<br/>- 최솟값: 현재값<br/>- 최댓값: `2048`                          |
+| useOnlineFailover | Body | Boolean | X  | 장애 조치를 이용한 재시작 여부<br/>고가용성을 사용 중인 DB 인스턴스에서만 사용 가능합니다.<br/>- 기본값: `false` |
 
 #### 응답
 
-
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|jobId|Body|UUID| 요청한 작업의 식별자 |
+| 이름    | 종류   | 형식   | 설명          |
+|-------|------|------|-------------|
+| jobId | Body | UUID | 요청한 작업의 식별자 |
 
 ---
 
@@ -1228,24 +1199,23 @@ GET /v3.0/db-instances/{dbInstanceId}/backup-info
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-| dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
+| 이름           | 종류  | 형식   | 필수 | 설명           |
+|--------------|-----|------|----|--------------|
+| dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
 
 #### 응답
 
-
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|backupPeriod|Body|Number|백업 보관 기간(일)|
-|ftwrlWaitTimeout|Body|Number|쿼리 지연 대기 시간(초)|
-|backupRetryCount|Body|Number|백업 재시도 횟수|
-|replicationRegion|Body|Enum|백업 복제 리전|
-|useBackupLock|Body|Boolean|테이블 잠금 사용 여부|
-|backupSchedules|Body|Array|백업 스케줄 목록|
-|backupSchedules.backupWndBgnTime|Body|String|백업 시작 시각|
-|backupSchedules.backupWndDuration|Body|Enum|백업 Duration|
-|backupSchedules.backupRetryExpireTime|Body|String|백업 재시도 만료 시각|
+| 이름                                    | 종류   | 형식      | 설명             |
+|---------------------------------------|------|---------|----------------|
+| backupPeriod                          | Body | Number  | 백업 보관 기간(일)    |
+| ftwrlWaitTimeout                      | Body | Number  | 쿼리 지연 대기 시간(초) |
+| backupRetryCount                      | Body | Number  | 백업 재시도 횟수      |
+| replicationRegion                     | Body | Enum    | 백업 복제 리전       |
+| useBackupLock                         | Body | Boolean | 테이블 잠금 사용 여부   |
+| backupSchedules                       | Body | Array   | 백업 스케줄 목록      |
+| backupSchedules.backupWndBgnTime      | Body | String  | 백업 시작 시각       |
+| backupSchedules.backupWndDuration     | Body | Enum    | 백업 Duration    |
+| backupSchedules.backupRetryExpireTime | Body | String  | 백업 재시도 만료 시각   |
 
 <details><summary>예시</summary>
 <p>
@@ -1272,13 +1242,11 @@ GET /v3.0/db-instances/{dbInstanceId}/backup-info
 }
 ```
 
-
 </p>
 </details>
 
 
 ---
-
 
 ### 백업 정보 수정하기
 
@@ -1288,47 +1256,44 @@ PUT /v3.0/db-instances/{dbInstanceId}/backup-info
 
 #### 요청
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-| dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
-|backupPeriod|Body|Number|X|백업 보관 기간(일)<br/>- 최솟값: `0`<br/>- 최댓값: `730`|
-|ftwrlWaitTimeout|Body|Number|X|쿼리 지연 대기 시간(초)<br/>- 최솟값: `0`<br/>- 최댓값: `21600`|
-|backupRetryCount|Body|Number|X|백업 재시도 횟수<br/>- 최솟값: `0`<br/>- 최댓값: `10`|
-|replicationRegion|Body|Enum|X|백업 복제 리전<br />- `KR1`: 한국(판교)<br/>- `KR2`: 한국(평촌)<br/>- `JP1`: 일본(도쿄)|
-|useBackupLock|Body|Boolean|X|테이블 잠금 사용 여부|
-|backupSchedules|Body|Array|X|백업 스케줄 목록|
-|backupSchedules.backupWndBgnTime|Body|String|O|백업 시작 시각<br/>- 예시: `00:00:00`|
-|backupSchedules.backupWndDuration|Body|Enum|O|백업 Duration<br/>백업 시작 시각부터 Duration 안에 자동 백업이 실행됩니다.<br/>- `HALF_AN_HOUR`: 30분<br/>- `ONE_HOUR`: 1시간<br/>- `ONE_HOUR_AND_HALF`: 1시간 30분<br/>- `TWO_HOURS`: 2시간<br/>- `TWO_HOURS_AND_HALF`: 2시간 30분<br/>- `THREE_HOURS`: 3시간|
-|backupSchedules.backupRetryExpireTime|Body|String|O|백업 재시도 만료 시각<br/>- 백업 재시도 만료 시각은 백업 시작 시각 이전이거나 이후여야 합니다.<br/>- 예시: `01:30:00`|
+| 이름                                    | 종류   | 형식      | 필수 | 설명                                                                                                                                                                                                                          |
+|---------------------------------------|------|---------|----|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| dbInstanceId                          | URL  | UUID    | O  | DB 인스턴스의 식별자                                                                                                                                                                                                                |
+| backupPeriod                          | Body | Number  | X  | 백업 보관 기간(일)<br/>- 최솟값: `0`<br/>- 최댓값: `730`                                                                                                                                                                                 |
+| ftwrlWaitTimeout                      | Body | Number  | X  | 쿼리 지연 대기 시간(초)<br/>- 최솟값: `0`<br/>- 최댓값: `21600`                                                                                                                                                                            |
+| backupRetryCount                      | Body | Number  | X  | 백업 재시도 횟수<br/>- 최솟값: `0`<br/>- 최댓값: `10`                                                                                                                                                                                    |
+| replicationRegion                     | Body | Enum    | X  | 백업 복제 리전<br />- `KR1`: 한국(판교)<br/>- `KR2`: 한국(평촌)<br/>- `JP1`: 일본(도쿄)                                                                                                                                                       |
+| useBackupLock                         | Body | Boolean | X  | 테이블 잠금 사용 여부                                                                                                                                                                                                                |
+| backupSchedules                       | Body | Array   | X  | 백업 스케줄 목록                                                                                                                                                                                                                   |
+| backupSchedules.backupWndBgnTime      | Body | String  | O  | 백업 시작 시각<br/>- 예시: `00:00:00`                                                                                                                                                                                               |
+| backupSchedules.backupWndDuration     | Body | Enum    | O  | 백업 Duration<br/>백업 시작 시각부터 Duration 안에 자동 백업이 실행됩니다.<br/>- `HALF_AN_HOUR`: 30분<br/>- `ONE_HOUR`: 1시간<br/>- `ONE_HOUR_AND_HALF`: 1시간 30분<br/>- `TWO_HOURS`: 2시간<br/>- `TWO_HOURS_AND_HALF`: 2시간 30분<br/>- `THREE_HOURS`: 3시간 |
+| backupSchedules.backupRetryExpireTime | Body | String  | O  | 백업 재시도 만료 시각<br/>- 백업 재시도 만료 시각은 백업 시작 시각 이전이거나 이후여야 합니다.<br/>- 예시: `01:30:00`                                                                                                                                              |
 
 <details><summary>예시</summary>
 <p>
 
 ```json
 {
-"backupPeriod": 5,
-"useBackupLock": true,
-"backupSchedules": [
-    {
-        "backupWndBgnTime": "01:00:00",
-        "backupWndDuration": "TWO_HOURS",
-        "backupRetryExpireTime": "03:00:00"
-    }
-]
+    "backupPeriod": 5,
+    "useBackupLock": true,
+    "backupSchedules": [
+        {
+            "backupWndBgnTime": "01:00:00",
+            "backupWndDuration": "TWO_HOURS",
+            "backupRetryExpireTime": "03:00:00"
+        }
+    ]
 }
 ```
-
 
 </p>
 </details>
 
 #### 응답
 
-
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|jobId|Body|UUID| 요청한 작업의 식별자 |
-
+| 이름    | 종류   | 형식   | 설명          |
+|-------|------|------|-------------|
+| jobId | Body | UUID | 요청한 작업의 식별자 |
 
 ---
 
@@ -1342,26 +1307,23 @@ GET /v3.0/db-instances/{dbInstanceId}/network-info
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-| dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
+| 이름           | 종류  | 형식   | 필수 | 설명           |
+|--------------|-----|------|----|--------------|
+| dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
 
 #### 응답
 
-
-| 이름                     | 종류 | 형식 | 설명                                                                                                                                      |
-|------------------------|---|---|-----------------------------------------------------------------------------------------------------------------------------------------|
-| availabilityZone       | Body|Enum| DB 인스턴스를 생성할 가용성 영역                                                                                                                     |
-| subnet                 |Body|Object| 서브넷 객체                                                                                                                                  |
-| subnet.subnetId        |Body|UUID| 서브넷의 식별자                                                                                                                                |
-| subnet.subnetName      |Body|UUID| 서브넷을 식별할 수 있는 이름                                                                                                                        |
-| subnet.subnetCidr      |Body|UUID| 서브넷의 CIDR                                                                                                                               |
-| endPoints              |Body|Array| 접속 정보 목록                                                                                                                                |
-| endPoints.domain       |Body|String| 도메인                                                                                                                                     |
-| endPoints.ipAddress    |Body|String| IP 주소                                                                                                                                   |
-| endPoints.endPointType |Body|Enum| 접속 정보 타입<br>-`EXTERNAL`: 외부 접속 도메인<br>-`INTERNAL`: 내부 접속 도메인<br>-`PUBLIC`: (Deprecated) 외부 접속 도메인<br>-`PRIVATE`: (Deprecated) 내부 접속 도메인 |
-
+| 이름                     | 종류   | 형식     | 설명                                                                                                                                      |
+|------------------------|------|--------|-----------------------------------------------------------------------------------------------------------------------------------------|
+| availabilityZone       | Body | Enum   | DB 인스턴스를 생성할 가용성 영역                                                                                                                     |
+| subnet                 | Body | Object | 서브넷 객체                                                                                                                                  |
+| subnet.subnetId        | Body | UUID   | 서브넷의 식별자                                                                                                                                |
+| subnet.subnetName      | Body | UUID   | 서브넷을 식별할 수 있는 이름                                                                                                                        |
+| subnet.subnetCidr      | Body | UUID   | 서브넷의 CIDR                                                                                                                               |
+| endPoints              | Body | Array  | 접속 정보 목록                                                                                                                                |
+| endPoints.domain       | Body | String | 도메인                                                                                                                                     |
+| endPoints.ipAddress    | Body | String | IP 주소                                                                                                                                   |
+| endPoints.endPointType | Body | Enum   | 접속 정보 타입<br>-`EXTERNAL`: 외부 접속 도메인<br>-`INTERNAL`: 내부 접속 도메인<br>-`PUBLIC`: (Deprecated) 외부 접속 도메인<br>-`PRIVATE`: (Deprecated) 내부 접속 도메인 |
 
 <details><summary>예시</summary>
 <p>
@@ -1402,17 +1364,16 @@ PUT /v3.0/db-instances/{dbInstanceId}/network-info
 
 #### 요청
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-| dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
-|usePublicAccess|Body|Boolean|O|외부 접속 가능  여부|
+| 이름              | 종류   | 형식      | 필수 | 설명           |
+|-----------------|------|---------|----|--------------|
+| dbInstanceId    | URL  | UUID    | O  | DB 인스턴스의 식별자 |
+| usePublicAccess | Body | Boolean | O  | 외부 접속 가능  여부 |
 
 #### 응답
 
-
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|jobId|Body|UUID| 요청한 작업의 식별자 |
+| 이름    | 종류   | 형식   | 설명          |
+|-------|------|------|-------------|
+| jobId | Body | UUID | 요청한 작업의 식별자 |
 
 ---
 
@@ -1426,22 +1387,22 @@ GET /v3.0/db-instances/{dbInstanceId}/db-users
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-| dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
+| 이름           | 종류  | 형식   | 필수 | 설명           |
+|--------------|-----|------|----|--------------|
+| dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
 
 #### 응답
 
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|dbUsers|Body|Array|DB 사용자 목록|
-|dbUsers.dbUserId|Body|UUID|DB 사용자의 식별자|
-|dbUsers.dbUserName|Body|String|DB 사용자 계정 이름|
-|dbUsers.host|Body|String|DB 사용자 계정의 호스트 이름|
-|dbUsers.authorityType|Body|Enum|DB 사용자 권한 타입<br/>- `READ`: SELECT 쿼리 수행 가능한 권한<br/>- `CRUD`: DML 쿼리 수행 가능한 권한<br/>- `DDL`: DDL 쿼리 수행 가능한 권한<br/>|
-|dbUsers.dbUserStatus|Body|Enum|DB 사용자의 현재 상태<br/>- `STABLE`: 생성됨<br/>- `CREATING`: 생성 중<br/>- `UPDATING`: 수정 중<br/>- `DELETING`: 삭제 중<br/>- `DELETED`: 삭제됨 |
-|dbUsers.createdYmdt|Body|DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
-|dbUsers.updatedYmdt|Body|DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| 이름                    | 종류   | 형식       | 설명                                                                                                                          |
+|-----------------------|------|----------|-----------------------------------------------------------------------------------------------------------------------------|
+| dbUsers               | Body | Array    | DB 사용자 목록                                                                                                                   |
+| dbUsers.dbUserId      | Body | UUID     | DB 사용자의 식별자                                                                                                                 |
+| dbUsers.dbUserName    | Body | String   | DB 사용자 계정 이름                                                                                                                |
+| dbUsers.host          | Body | String   | DB 사용자 계정의 호스트 이름                                                                                                           |
+| dbUsers.authorityType | Body | Enum     | DB 사용자 권한 타입<br/>- `READ`: SELECT 쿼리 수행 가능한 권한<br/>- `CRUD`: DML 쿼리 수행 가능한 권한<br/>- `DDL`: DDL 쿼리 수행 가능한 권한<br/>            |
+| dbUsers.dbUserStatus  | Body | Enum     | DB 사용자의 현재 상태<br/>- `STABLE`: 생성됨<br/>- `CREATING`: 생성 중<br/>- `UPDATING`: 수정 중<br/>- `DELETING`: 삭제 중<br/>- `DELETED`: 삭제됨 |
+| dbUsers.createdYmdt   | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                           |
+| dbUsers.updatedYmdt   | Body | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                           |
 
 <details><summary>예시</summary>
 <p>
@@ -1467,7 +1428,6 @@ GET /v3.0/db-instances/{dbInstanceId}/db-users
 }
 ```
 
-
 </p>
 </details>
 
@@ -1481,35 +1441,34 @@ POST /v3.0/db-instances/{dbInstanceId}/db-users
 
 #### 요청
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-| dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
-|dbUserName|Body|String|O|DB 사용자 계정 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `32`|
-|dbPassword|Body|String|O|DB 사용자 계정 암호<br/>- 최소 길이: `4`<br/>- 최대 길이: `16`|
-|host|Body|String|O|DB 사용자 계정의 호스트명<br/>- 예시: `1.1.1.%`|
-|authorityType|Body|Enum|O|DB 사용자 권한 타입<br/>- `READ`: SELECT 쿼리 수행 가능한 권한<br/>- `CRUD`: DML 쿼리 수행 가능한 권한<br/>- `DDL`: DDL 쿼리 수행 가능한 권한<br/>|
+| 이름            | 종류   | 형식     | 필수 | 설명                                                                                                               |
+|---------------|------|--------|----|------------------------------------------------------------------------------------------------------------------|
+| dbInstanceId  | URL  | UUID   | O  | DB 인스턴스의 식별자                                                                                                     |
+| dbUserName    | Body | String | O  | DB 사용자 계정 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `32`                                                                  |
+| dbPassword    | Body | String | O  | DB 사용자 계정 암호<br/>- 최소 길이: `4`<br/>- 최대 길이: `16`                                                                  |
+| host          | Body | String | O  | DB 사용자 계정의 호스트명<br/>- 예시: `1.1.1.%`                                                                              |
+| authorityType | Body | Enum   | O  | DB 사용자 권한 타입<br/>- `READ`: SELECT 쿼리 수행 가능한 권한<br/>- `CRUD`: DML 쿼리 수행 가능한 권한<br/>- `DDL`: DDL 쿼리 수행 가능한 권한<br/> |
 
 <details><summary>예시</summary>
 <p>
 
 ```json
 {
-"dbUserName": "db-user",
-"dbPassword": "password",
-"host": "1.1.1.%",
-"authorityType": "CRUD"
+    "dbUserName": "db-user",
+    "dbPassword": "password",
+    "host": "1.1.1.%",
+    "authorityType": "CRUD"
 }
 ```
-
 
 </p>
 </details>
 
 #### 응답
 
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|jobId|Body|UUID| 요청한 작업의 식별자 |
+| 이름    | 종류   | 형식   | 설명          |
+|-------|------|------|-------------|
+| jobId | Body | UUID | 요청한 작업의 식별자 |
 
 ---
 
@@ -1521,31 +1480,30 @@ PUT /v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 
 #### 요청
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-| dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
-| dbUserId | URL | UUID | O | DB 사용자의 식별자 |
-|dbPassword|Body|String|X|DB 사용자 계정 암호<br/>- 최소 길이: `4`<br/>- 최대 길이: `16`|
-|authorityType|Body|Enum|X|DB 사용자 권한 타입<br/>- `READ`: SELECT 쿼리 수행 가능한 권한<br/>- `CRUD`: DML 쿼리 수행 가능한 권한<br/>- `DDL`: DDL 쿼리 수행 가능한 권한<br/>|
+| 이름            | 종류   | 형식     | 필수 | 설명                                                                                                               |
+|---------------|------|--------|----|------------------------------------------------------------------------------------------------------------------|
+| dbInstanceId  | URL  | UUID   | O  | DB 인스턴스의 식별자                                                                                                     |
+| dbUserId      | URL  | UUID   | O  | DB 사용자의 식별자                                                                                                      |
+| dbPassword    | Body | String | X  | DB 사용자 계정 암호<br/>- 최소 길이: `4`<br/>- 최대 길이: `16`                                                                  |
+| authorityType | Body | Enum   | X  | DB 사용자 권한 타입<br/>- `READ`: SELECT 쿼리 수행 가능한 권한<br/>- `CRUD`: DML 쿼리 수행 가능한 권한<br/>- `DDL`: DDL 쿼리 수행 가능한 권한<br/> |
 
 <details><summary>예시</summary>
 <p>
 
 ```json
 {
-"authorityType": "DDL"
+    "authorityType": "DDL"
 }
 ```
-
 
 </p>
 </details>
 
 #### 응답
 
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|jobId|Body|UUID| 요청한 작업의 식별자 |
+| 이름    | 종류   | 형식   | 설명          |
+|-------|------|------|-------------|
+| jobId | Body | UUID | 요청한 작업의 식별자 |
 
 ---
 
@@ -1559,16 +1517,16 @@ DELETE /v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-| dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
-| dbUserId | URL | UUID | O | DB 사용자의 식별자 |
+| 이름           | 종류  | 형식   | 필수 | 설명           |
+|--------------|-----|------|----|--------------|
+| dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
+| dbUserId     | URL | UUID | O  | DB 사용자의 식별자  |
 
 #### 응답
 
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|jobId|Body|UUID| 요청한 작업의 식별자 |
+| 이름    | 종류   | 형식   | 설명          |
+|-------|------|------|-------------|
+| jobId | Body | UUID | 요청한 작업의 식별자 |
 
 ---
 
@@ -1582,19 +1540,19 @@ GET /v3.0/db-instances/{dbInstanceId}/db-schemas
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-| dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
+| 이름           | 종류  | 형식   | 필수 | 설명           |
+|--------------|-----|------|----|--------------|
+| dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
 
 #### 응답
 
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|dbSchemas|Body|Array|DB 스키마 목록|
-|dbSchemas.dbSchemaId|Body|UUID|DB 스키마의 식별자|
-|dbSchemas.dbSchemaName|Body|String|DB 스키마 이름|
-|dbSchemas.dbSchemaStatus|Body|Enum|DB 스키마의 현재 상태<br/>- `STABLE`: 생성됨<br/>- `CREATING`: 생성 중<br/>- `DELETING`: 삭제 중<br/>- `DELETED`: 삭제됨 |
-|dbSchemas.createdYmdt|Body|DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| 이름                       | 종류   | 형식       | 설명                                                                                                   |
+|--------------------------|------|----------|------------------------------------------------------------------------------------------------------|
+| dbSchemas                | Body | Array    | DB 스키마 목록                                                                                            |
+| dbSchemas.dbSchemaId     | Body | UUID     | DB 스키마의 식별자                                                                                          |
+| dbSchemas.dbSchemaName   | Body | String   | DB 스키마 이름                                                                                            |
+| dbSchemas.dbSchemaStatus | Body | Enum     | DB 스키마의 현재 상태<br/>- `STABLE`: 생성됨<br/>- `CREATING`: 생성 중<br/>- `DELETING`: 삭제 중<br/>- `DELETED`: 삭제됨 |
+| dbSchemas.createdYmdt    | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                    |
 
 <details><summary>예시</summary>
 <p>
@@ -1617,7 +1575,6 @@ GET /v3.0/db-instances/{dbInstanceId}/db-schemas
 }
 ```
 
-
 </p>
 </details>
 
@@ -1631,16 +1588,16 @@ POST /v3.0/db-instances/{dbInstanceId}/db-schemas
 
 #### 요청
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-| dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
-|dbSchemaName|Body|String|O|DB 스키마 이름|
+| 이름           | 종류   | 형식     | 필수 | 설명           |
+|--------------|------|--------|----|--------------|
+| dbInstanceId | URL  | UUID   | O  | DB 인스턴스의 식별자 |
+| dbSchemaName | Body | String | O  | DB 스키마 이름    |
 
 #### 응답
 
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|jobId|Body|UUID| 요청한 작업의 식별자 |
+| 이름    | 종류   | 형식   | 설명          |
+|-------|------|------|-------------|
+| jobId | Body | UUID | 요청한 작업의 식별자 |
 
 ---
 
@@ -1654,16 +1611,16 @@ DELETE /v3.0/db-instances/{dbInstanceId}/db-schemas/{dbSchemaId}
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-| dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
-|dbSchemaId|URL|UUID|O|DB 스키마의 식별자 |
+| 이름           | 종류  | 형식   | 필수 | 설명           |
+|--------------|-----|------|----|--------------|
+| dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
+| dbSchemaId   | URL | UUID | O  | DB 스키마의 식별자  |
 
 #### 응답
 
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|jobId|Body|UUID| 요청한 작업의 식별자 |
+| 이름    | 종류   | 형식   | 설명          |
+|-------|------|------|-------------|
+| jobId | Body | UUID | 요청한 작업의 식별자 |
 
 ---
 
@@ -1671,14 +1628,13 @@ DELETE /v3.0/db-instances/{dbInstanceId}/db-schemas/{dbSchemaId}
 
 ### 백업 상태
 
-| 상태 | 설명 |
-|--|--|
-| `BACKING_UP` | 백업 중인 경우 |
-| `COMPLETED` | 백업이 완료된 경우 |
-| `DELETING`| 백업이 삭제 중인 경우 |
-| `DELETED`| 백업이 삭제된 경우 |
-| `ERROR`| 오류가 발생한 경우 |
-
+| 상태           | 설명           |
+|--------------|--------------|
+| `BACKING_UP` | 백업 중인 경우     |
+| `COMPLETED`  | 백업이 완료된 경우   |
+| `DELETING`   | 백업이 삭제 중인 경우 |
+| `DELETED`    | 백업이 삭제된 경우   |
+| `ERROR`      | 오류가 발생한 경우   |
 
 ### 백업 목록 조회
 
@@ -1690,29 +1646,29 @@ GET /v3.0/backups
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-| 이름           | 종류 | 형식 | 필수 | 설명 |
-|--------------|---|---|---|---|
-| page         | Query | Number | O | 조회할 목록의 페이지<br/>- 최솟값: `1` |
-| size         | Query | Number | O | 조회할 목록의 페이지 크기<br/>- 최솟값: `1`<br/>- 최댓값: `100` |
-| backupType   | Query | Enum | X | 백업 유형<br/>- `AUTO`: 자동<br/>- `MANUAL`:  수동<br/>- 기본값: 전체|
-| dbInstanceId | Query | UUID | X | 원본 DB 인스턴스의 식별자 |
-| dbVersion           |Query|Enum|X|DB 엔진 유형 |
+| 이름           | 종류    | 형식     | 필수 | 설명                                                       |
+|--------------|-------|--------|----|----------------------------------------------------------|
+| page         | Query | Number | O  | 조회할 목록의 페이지<br/>- 최솟값: `1`                               |
+| size         | Query | Number | O  | 조회할 목록의 페이지 크기<br/>- 최솟값: `1`<br/>- 최댓값: `100`           |
+| backupType   | Query | Enum   | X  | 백업 유형<br/>- `AUTO`: 자동<br/>- `MANUAL`:  수동<br/>- 기본값: 전체 |
+| dbInstanceId | Query | UUID   | X  | 원본 DB 인스턴스의 식별자                                          |
+| dbVersion    | Query | Enum   | X  | DB 엔진 유형                                                 |
 
 #### 응답
 
-| 이름                   | 종류 | 형식 | 설명 |
-|----------------------|---|---|---|
-| totalCounts          |Body|Number| 전체 백업 목록 수 |
-| backups              |Body|Array|백업 목록 |
-| backups.backupId     |Body|UUID|백업의 식별자|
-| backups.backupName   |Body|String|백업을 식별할 수 있는 이름|
-| backups.backupStatus |Body|Enum|백업의 현재 상태|
-| backups.dbInstanceId |Body|UUID|원본 DB 인스턴스의 식별자|
-| backups.dbVersion           |Body|Enum|DB 엔진 유형|
-| backups.backupType   |Body|Enum|백업 유형|
-| backups.backupSize   |Body|Number|백업의 크기(Byte)|
-| createdYmdt          |Body|DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
-| updatedYmdt          |Body|DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| 이름                   | 종류   | 형식       | 설명                                |
+|----------------------|------|----------|-----------------------------------|
+| totalCounts          | Body | Number   | 전체 백업 목록 수                        |
+| backups              | Body | Array    | 백업 목록                             |
+| backups.backupId     | Body | UUID     | 백업의 식별자                           |
+| backups.backupName   | Body | String   | 백업을 식별할 수 있는 이름                   |
+| backups.backupStatus | Body | Enum     | 백업의 현재 상태                         |
+| backups.dbInstanceId | Body | UUID     | 원본 DB 인스턴스의 식별자                   |
+| backups.dbVersion    | Body | Enum     | DB 엔진 유형                          |
+| backups.backupType   | Body | Enum     | 백업 유형                             |
+| backups.backupSize   | Body | Number   | 백업의 크기(Byte)                      |
+| createdYmdt          | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| updatedYmdt          | Body | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 
 <details><summary>예시</summary>
 <p>
@@ -1754,14 +1710,14 @@ POST /v3.0/backups/{backupId}/export
 
 #### 요청
 
-| 이름              | 종류 | 형식 | 필수 | 설명 |
-|-----------------|---|---|---|---|
-| backupId        |URL|UUID|O|백업의 식별자|
-| tenantId        |Body|String|O|백업이 저장될 오브젝트 스토리지의 테넌트 ID|
-| username         |Body|String|O|NHN Cloud 계정 혹은 IAM 멤버 ID|
-| password        |Body|String|O|백업이 저장될 오브젝트 스토리지의 API 비밀번호|
-| targetContainer |Body|String|O|백업이 저장될 오브젝트 스토리지의 컨테이너|
-| objectPath      |Body|String|O|컨테이너에 저장될 백업의 경로|
+| 이름              | 종류   | 형식     | 필수 | 설명                          |
+|-----------------|------|--------|----|-----------------------------|
+| backupId        | URL  | UUID   | O  | 백업의 식별자                     |
+| tenantId        | Body | String | O  | 백업이 저장될 오브젝트 스토리지의 테넌트 ID   |
+| username        | Body | String | O  | NHN Cloud 계정 혹은 IAM 멤버 ID   |
+| password        | Body | String | O  | 백업이 저장될 오브젝트 스토리지의 API 비밀번호 |
+| targetContainer | Body | String | O  | 백업이 저장될 오브젝트 스토리지의 컨테이너     |
+| objectPath      | Body | String | O  | 컨테이너에 저장될 백업의 경로            |
 
 <details><summary>예시</summary>
 <p>
@@ -1781,9 +1737,9 @@ POST /v3.0/backups/{backupId}/export
 
 #### 응답
 
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|jobId|Body|UUID| 요청한 작업의 식별자 |
+| 이름    | 종류   | 형식   | 설명          |
+|-------|------|------|-------------|
+| jobId | Body | UUID | 요청한 작업의 식별자 |
 
 ---
 
@@ -1833,39 +1789,39 @@ POST /v3.0/backups/{backupId}/restore
 ```json
 
 {
-"dbInstanceName" : "db-instance-restore",
-"dbFlavorId" : "50be6d9c-02d6-4594-a2d4-12010eb65ec0",
-"dbPort" : 10000,
-"parameterGroupId": "132d383c-38e3-468a-a826-5e9a8fff15d0",
-"network": {
-    "subnetId": "e721a9dd-dad0-4cf0-a53b-dd654ebfc683",
-    "availabilityZone": "kr-pub-a"
-},
-"storage": {
-    "storageType": "General SSD",
-    "storageSize": 20
-},
-"backup": {
-    "backupPeriod": 1,
-    "backupSchedules": [{
-        "backupWndBgnTime": "00:00:00",
-        "backupWndDuration": "HALF_AN_HOUR",
-        "backupRetryExpireTime": "01:30:00"
+    "dbInstanceName": "db-instance-restore",
+    "dbFlavorId": "50be6d9c-02d6-4594-a2d4-12010eb65ec0",
+    "dbPort": 10000,
+    "parameterGroupId": "132d383c-38e3-468a-a826-5e9a8fff15d0",
+    "network": {
+        "subnetId": "e721a9dd-dad0-4cf0-a53b-dd654ebfc683",
+        "availabilityZone": "kr-pub-a"
+    },
+    "storage": {
+        "storageType": "General SSD",
+        "storageSize": 20
+    },
+    "backup": {
+        "backupPeriod": 1,
+        "backupSchedules": [
+            {
+                "backupWndBgnTime": "00:00:00",
+                "backupWndDuration": "HALF_AN_HOUR",
+                "backupRetryExpireTime": "01:30:00"
+            }
+        ]
     }
-    ]
-}
 }
 ```
 
 </p>
 </details>
 
-
 #### 응답
 
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|jobId|Body|UUID| 요청한 작업의 식별자 |
+| 이름    | 종류   | 형식   | 설명          |
+|-------|------|------|-------------|
+| jobId | Body | UUID | 요청한 작업의 식별자 |
 
 ---
 
@@ -1879,31 +1835,28 @@ DELETE /v3.0/backups/{backupId}
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-|backupId|URL|UUID|O|백업의 식별자|
+| 이름       | 종류  | 형식   | 필수 | 설명      |
+|----------|-----|------|----|---------|
+| backupId | URL | UUID | O  | 백업의 식별자 |
 
 #### 응답
 
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|jobId|Body|UUID| 요청한 작업의 식별자 |
+| 이름    | 종류   | 형식   | 설명          |
+|-------|------|------|-------------|
+| jobId | Body | UUID | 요청한 작업의 식별자 |
 
 ---
-
-
 
 ## DB 보안 그룹
 
 ### DB 보안 그룹 진행 상태
 
-| 상태 | 설명 |
-|--|--|
-| `NONE` | 진행 중인 작업이 없음 |
-| `CREATING_RULE` | 규칙 정책 생성 중 |
-| `UPDATING_RULE`| 규칙 정책 수정 중 |
-| `DELETING_RULE`| 규칙 정책 삭제 중 |
-
+| 상태              | 설명           |
+|-----------------|--------------|
+| `NONE`          | 진행 중인 작업이 없음 |
+| `CREATING_RULE` | 규칙 정책 생성 중   |
+| `UPDATING_RULE` | 규칙 정책 수정 중   |
+| `DELETING_RULE` | 규칙 정책 삭제 중   |
 
 ### DB 보안 그룹 목록 보기
 
@@ -1917,16 +1870,15 @@ GET /v3.0/db-security-groups
 
 #### 응답
 
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|dbSecurityGroups|Body|Array|DB 보안 그룹 목록|
-|dbSecurityGroups.dbSecurityGroupId|Body|UUID|DB 보안 그룹의 식별자|
-|dbSecurityGroups.dbSecurityGroupName|Body|String|DB 보안 그룹을 식별할 수 있는 이름|
-|dbSecurityGroups.description|Body|String|DB 보안 그룹에 대한 추가 정보|
-|dbSecurityGroups.progressStatus|Body|Enum|DB 보안 그룹의 현재 진행 상태|
-|dbSecurityGroups.createdYmdt|Body|DateTime |생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)|
-|dbSecurityGroups.updatedYmdt|Body|DateTime |수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)|
-
+| 이름                                   | 종류   | 형식       | 설명                                |
+|--------------------------------------|------|----------|-----------------------------------|
+| dbSecurityGroups                     | Body | Array    | DB 보안 그룹 목록                       |
+| dbSecurityGroups.dbSecurityGroupId   | Body | UUID     | DB 보안 그룹의 식별자                     |
+| dbSecurityGroups.dbSecurityGroupName | Body | String   | DB 보안 그룹을 식별할 수 있는 이름             |
+| dbSecurityGroups.description         | Body | String   | DB 보안 그룹에 대한 추가 정보                |
+| dbSecurityGroups.progressStatus      | Body | Enum     | DB 보안 그룹의 현재 진행 상태                |
+| dbSecurityGroups.createdYmdt         | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| dbSecurityGroups.updatedYmdt         | Body | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 
 <details><summary>예시</summary>
 <p>
@@ -1966,34 +1918,32 @@ GET /v3.0/db-security-groups/{dbSecurityGroupId}
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-|dbSecurityGroupId|URL|UUID|O|DB 보안 그룹의 식별자|
+| 이름                | 종류  | 형식   | 필수 | 설명            |
+|-------------------|-----|------|----|---------------|
+| dbSecurityGroupId | URL | UUID | O  | DB 보안 그룹의 식별자 |
 
 #### 응답
 
-
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|dbSecurityGroupId|Body|UUID|DB 보안 그룹의 식별자|
-|dbSecurityGroupName|Body|String|DB 보안 그룹을 식별할 수 있는 이름|
-|description|Body|String|DB 보안 그룹에 대한 추가 정보|
-|progressStatus|Body|Enum|DB 보안 그룹의 현재 진행 상태|
-|rules|Body|Array|DB 보안 그룹 규칙 목록|
-|rules.ruleId|Body|UUID|DB 보안 그룹 규칙의 식별자|
-|rules.description|Body|String|DB 보안 그룹 규칙에 대한 추가 정보|
-|rules.direction|Body|Enum|통신 방향<br/>- `INGRESS`: 수신<br/>- `EGRESS`: 송신
-|rules.etherType|Body|Enum|Ether 타입<br/>- `IPV4`: IPv4<br/>- `IPV6`: IPv6|
-|rules.port|Body|Object|포트 객체|
-|rules.port.portType|Body|Enum|포트 타입<br/>- `DB_PORT`: 각 DB 인스턴스 포트값으로 설정됩니다.<br/>- `PORT`: 지정된 포트값으로 설정됩니다.<br/>- `PORT_RANGE`: 지정된 포트 범위로 설정됩니다.|
-|rules.port.minPort|Body|Number|최소 포트 범위|
-|rules.port.maxPort|Body|Number|최대 포트 범위|
-|rules.cidr|Body|String|허용할 트래픽의 원격 소스|
-|rules.createdYmdt|Body|DateTime |생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)|
-|rules.updatedYmdt|Body|DateTime |수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)|
-|createdYmdt|Body|DateTime |생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)|
-|updatedYmdt|Body|DateTime |수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)|
-
+| 이름                  | 종류   | 형식       | 설명                                                                                                                 |
+|---------------------|------|----------|--------------------------------------------------------------------------------------------------------------------|
+| dbSecurityGroupId   | Body | UUID     | DB 보안 그룹의 식별자                                                                                                      |
+| dbSecurityGroupName | Body | String   | DB 보안 그룹을 식별할 수 있는 이름                                                                                              |
+| description         | Body | String   | DB 보안 그룹에 대한 추가 정보                                                                                                 |
+| progressStatus      | Body | Enum     | DB 보안 그룹의 현재 진행 상태                                                                                                 |
+| rules               | Body | Array    | DB 보안 그룹 규칙 목록                                                                                                     |
+| rules.ruleId        | Body | UUID     | DB 보안 그룹 규칙의 식별자                                                                                                   |
+| rules.description   | Body | String   | DB 보안 그룹 규칙에 대한 추가 정보                                                                                              |
+| rules.direction     | Body | Enum     | 통신 방향<br/>- `INGRESS`: 수신<br/>- `EGRESS`: 송신                                                                       |
+| rules.etherType     | Body | Enum     | Ether 타입<br/>- `IPV4`: IPv4<br/>- `IPV6`: IPv6                                                                     |
+| rules.port          | Body | Object   | 포트 객체                                                                                                              |
+| rules.port.portType | Body | Enum     | 포트 타입<br/>- `DB_PORT`: 각 DB 인스턴스 포트값으로 설정됩니다.<br/>- `PORT`: 지정된 포트값으로 설정됩니다.<br/>- `PORT_RANGE`: 지정된 포트 범위로 설정됩니다. |
+| rules.port.minPort  | Body | Number   | 최소 포트 범위                                                                                                           |
+| rules.port.maxPort  | Body | Number   | 최대 포트 범위                                                                                                           |
+| rules.cidr          | Body | String   | 허용할 트래픽의 원격 소스                                                                                                     |
+| rules.createdYmdt   | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                  |
+| rules.updatedYmdt   | Body | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                  |
+| createdYmdt         | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                  |
+| updatedYmdt         | Body | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                  |
 
 <details><summary>예시</summary>
 <p>
@@ -2045,19 +1995,19 @@ POST /v3.0/db-security-groups
 
 #### 요청
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-|dbSecurityGroupName|Body|String|O|DB 보안 그룹을 식별할 수 있는 이름|
-|description|Body|String|X|DB 보안 그룹에 대한 추가 정보|
-|rules|Body|Array|O|DB 보안 그룹 규칙 목록|
-|rules.description|Body|String|X|DB 보안 그룹 규칙에 대한 추가 정보|
-|rules.direction|Body|Enum|O|통신 방향<br/>- `INGRESS`: 수신<br/>- `EGRESS`: 송신
-|rules.etherType|Body|Enum|O|Ether 타입<br/>- `IPV4`: IPv4<br/>- `IPV6`: IPv6|
-|rules.cidr|Body|String|O|허용할 트래픽의 원격 소스<br/>- 예시: `1.1.1.1/32`|
-|rules.port|Body|Object|O|포트 객체|
-|rules.port.portType|Body|Enum|O|포트 타입<br/>- `DB_PORT`: 각 DB 인스턴스 포트값으로 설정됩니다. `minPort`값과 `maxPort`값을 필요로 하지 않습니다.<br/>- `PORT`: 지정된 포트값으로 설정됩니다. `minPort`값과 `maxPort`값이 같아야 합니다.<br/>- `PORT_RANGE`: 지정된 포트 범위로 설정됩니다.|
-|rules.port.minPort|Body|Number|X|최소 포트 범위<br/>- 최솟값: 1|
-|rules.port.maxPort|Body|Number|X|최대 포트 범위<br/>- 최댓값: 65535|
+| 이름                  | 종류   | 형식     | 필수 | 설명                                                                                                                                                                                       |
+|---------------------|------|--------|----|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| dbSecurityGroupName | Body | String | O  | DB 보안 그룹을 식별할 수 있는 이름                                                                                                                                                                    |
+| description         | Body | String | X  | DB 보안 그룹에 대한 추가 정보                                                                                                                                                                       |
+| rules               | Body | Array  | O  | DB 보안 그룹 규칙 목록                                                                                                                                                                           |
+| rules.description   | Body | String | X  | DB 보안 그룹 규칙에 대한 추가 정보                                                                                                                                                                    |
+| rules.direction     | Body | Enum   | O  | 통신 방향<br/>- `INGRESS`: 수신<br/>- `EGRESS`: 송신                                                                                                                                             |
+| rules.etherType     | Body | Enum   | O  | Ether 타입<br/>- `IPV4`: IPv4<br/>- `IPV6`: IPv6                                                                                                                                           |
+| rules.cidr          | Body | String | O  | 허용할 트래픽의 원격 소스<br/>- 예시: `1.1.1.1/32`                                                                                                                                                    |
+| rules.port          | Body | Object | O  | 포트 객체                                                                                                                                                                                    |
+| rules.port.portType | Body | Enum   | O  | 포트 타입<br/>- `DB_PORT`: 각 DB 인스턴스 포트값으로 설정됩니다. `minPort`값과 `maxPort`값을 필요로 하지 않습니다.<br/>- `PORT`: 지정된 포트값으로 설정됩니다. `minPort`값과 `maxPort`값이 같아야 합니다.<br/>- `PORT_RANGE`: 지정된 포트 범위로 설정됩니다. |
+| rules.port.minPort  | Body | Number | X  | 최소 포트 범위<br/>- 최솟값: 1                                                                                                                                                                    |
+| rules.port.maxPort  | Body | Number | X  | 최대 포트 범위<br/>- 최댓값: 65535                                                                                                                                                                |
 
 <details><summary>예시</summary>
 <p>
@@ -2081,16 +2031,14 @@ POST /v3.0/db-security-groups
 }
 ```
 
-
 </p>
 </details>
 
-
 #### 응답
 
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|dbSecurityGroupId|Body|UUID|DB 보안 그룹의 식별자|
+| 이름                | 종류   | 형식   | 설명            |
+|-------------------|------|------|---------------|
+| dbSecurityGroupId | Body | UUID | DB 보안 그룹의 식별자 |
 
 ---
 
@@ -2102,12 +2050,11 @@ PUT /v3.0/db-security-groups/{dbSecurityGroupId}
 
 #### 요청
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-|dbSecurityGroupId|URL|UUID|O|DB 보안 그룹의 식별자|
-|dbSecurityGroupName|Body|String|X|DB 보안 그룹을 식별할 수 있는 이름|
-|description|Body|String|X|DB 보안 그룹에 대한 추가 정보|
-
+| 이름                  | 종류   | 형식     | 필수 | 설명                    |
+|---------------------|------|--------|----|-----------------------|
+| dbSecurityGroupId   | URL  | UUID   | O  | DB 보안 그룹의 식별자         |
+| dbSecurityGroupName | Body | String | X  | DB 보안 그룹을 식별할 수 있는 이름 |
+| description         | Body | String | X  | DB 보안 그룹에 대한 추가 정보    |
 
 <details><summary>예시</summary>
 <p>
@@ -2119,10 +2066,8 @@ PUT /v3.0/db-security-groups/{dbSecurityGroupId}
 }
 ```
 
-
 </p>
 </details>
-
 
 #### 응답
 
@@ -2141,9 +2086,9 @@ DELETE /v3.0/db-security-groups/{dbSecurityGroupId}
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-|dbSecurityGroupId|URL|UUID|O|DB 보안 그룹의 식별자|
+| 이름                | 종류  | 형식   | 필수 | 설명            |
+|-------------------|-----|------|----|---------------|
+| dbSecurityGroupId | URL | UUID | O  | DB 보안 그룹의 식별자 |
 
 #### 응답
 
@@ -2159,17 +2104,17 @@ POST /v3.0/db-security-groups/{dbSecurityGroupId}/rules
 
 #### 요청
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-|dbSecurityGroupId|URL|UUID|O|DB 보안 그룹의 식별자|
-|description|Body|String|X|DB 보안 그룹 규칙에 대한 추가 정보|
-|direction|Body|Enum|O|통신 방향<br/>- `INGRESS`: 수신<br/>- `EGRESS`: 송신
-|etherType|Body|Enum|O|Ether 타입<br/>- `IPV4`: IPv4<br/>- `IPV6`: IPv6|
-|port|Body|Object|O|포트 객체|
-|port.portType|Body|Enum|O|포트 타입<br/>- `DB_PORT`: 각 DB 인스턴스 포트값으로 설정됩니다. `minPort`값과 `maxPort`값을 필요로 하지 않습니다.<br/>- `PORT`: 지정된 포트값으로 설정됩니다. `minPort`값과 `maxPort`값이 같아야 합니다.<br/>- `PORT_RANGE`: 지정된 포트 범위로 설정됩니다.|
-|port.minPort|Body|Number|X|최소 포트 범위<br/>- 최솟값: 1|
-|port.maxPort|Body|Number|X|최대 포트 범위<br/>- 최댓값: 65535|
-|cidr|Body|String|O|허용할 트래픽의 원격 소스<br/>- 예시: `1.1.1.1/32`|
+| 이름                | 종류   | 형식     | 필수 | 설명                                                                                                                                                                                       |
+|-------------------|------|--------|----|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| dbSecurityGroupId | URL  | UUID   | O  | DB 보안 그룹의 식별자                                                                                                                                                                            |
+| description       | Body | String | X  | DB 보안 그룹 규칙에 대한 추가 정보                                                                                                                                                                    |
+| direction         | Body | Enum   | O  | 통신 방향<br/>- `INGRESS`: 수신<br/>- `EGRESS`: 송신                                                                                                                                             |
+| etherType         | Body | Enum   | O  | Ether 타입<br/>- `IPV4`: IPv4<br/>- `IPV6`: IPv6                                                                                                                                           |
+| port              | Body | Object | O  | 포트 객체                                                                                                                                                                                    |
+| port.portType     | Body | Enum   | O  | 포트 타입<br/>- `DB_PORT`: 각 DB 인스턴스 포트값으로 설정됩니다. `minPort`값과 `maxPort`값을 필요로 하지 않습니다.<br/>- `PORT`: 지정된 포트값으로 설정됩니다. `minPort`값과 `maxPort`값이 같아야 합니다.<br/>- `PORT_RANGE`: 지정된 포트 범위로 설정됩니다. |
+| port.minPort      | Body | Number | X  | 최소 포트 범위<br/>- 최솟값: 1                                                                                                                                                                    |
+| port.maxPort      | Body | Number | X  | 최대 포트 범위<br/>- 최댓값: 65535                                                                                                                                                                |
+| cidr              | Body | String | O  | 허용할 트래픽의 원격 소스<br/>- 예시: `1.1.1.1/32`                                                                                                                                                    |
 
 <details><summary>예시</summary>
 <p>
@@ -2190,12 +2135,11 @@ POST /v3.0/db-security-groups/{dbSecurityGroupId}/rules
 </p>
 </details>
 
-
 #### 응답
 
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|jobId|Body|UUID| 요청한 작업의 식별자 |
+| 이름    | 종류   | 형식   | 설명          |
+|-------|------|------|-------------|
+| jobId | Body | UUID | 요청한 작업의 식별자 |
 
 ---
 
@@ -2207,18 +2151,18 @@ PUT /v3.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 
 #### 요청
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-|dbSecurityGroupId|URL|UUID|O|DB 보안 그룹의 식별자|
-|ruleId|URL|UUID|O|DB 보안 그룹 규칙의 식별자|
-|description|Body|String|X|DB 보안 그룹 규칙에 대한 추가 정보|
-|direction|Body|Enum|O|통신 방향<br/>- `INGRESS`: 수신<br/>- `EGRESS`: 송신
-|etherType|Body|Enum|O|Ether 타입<br/>- `IPV4`: IPv4<br/>- `IPV6`: IPv6|
-|port|Body|Object|O|포트 객체|
-|port.portType|Body|Enum|O|포트 타입<br/>- `DB_PORT`: 각 DB 인스턴스 포트값으로 설정됩니다. `minPort`값과 `maxPort`값을 필요로 하지 않습니다.<br/>- `PORT`: 지정된 포트값으로 설정됩니다. `minPort`값과 `maxPort`값이 같아야 합니다.<br/>- `PORT_RANGE`: 지정된 포트 범위로 설정됩니다.|
-|port.minPort|Body|Number|X|최소 포트 범위<br/>- 최솟값: 1|
-|port.maxPort|Body|Number|X|최대 포트 범위<br/>- 최댓값: 65535|
-|cidr|Body|String|O|허용할 트래픽의 원격 소스<br/>- 예시: `1.1.1.1/32`|
+| 이름                | 종류   | 형식     | 필수 | 설명                                                                                                                                                                                       |
+|-------------------|------|--------|----|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| dbSecurityGroupId | URL  | UUID   | O  | DB 보안 그룹의 식별자                                                                                                                                                                            |
+| ruleId            | URL  | UUID   | O  | DB 보안 그룹 규칙의 식별자                                                                                                                                                                         |
+| description       | Body | String | X  | DB 보안 그룹 규칙에 대한 추가 정보                                                                                                                                                                    |
+| direction         | Body | Enum   | O  | 통신 방향<br/>- `INGRESS`: 수신<br/>- `EGRESS`: 송신                                                                                                                                             |
+| etherType         | Body | Enum   | O  | Ether 타입<br/>- `IPV4`: IPv4<br/>- `IPV6`: IPv6                                                                                                                                           |
+| port              | Body | Object | O  | 포트 객체                                                                                                                                                                                    |
+| port.portType     | Body | Enum   | O  | 포트 타입<br/>- `DB_PORT`: 각 DB 인스턴스 포트값으로 설정됩니다. `minPort`값과 `maxPort`값을 필요로 하지 않습니다.<br/>- `PORT`: 지정된 포트값으로 설정됩니다. `minPort`값과 `maxPort`값이 같아야 합니다.<br/>- `PORT_RANGE`: 지정된 포트 범위로 설정됩니다. |
+| port.minPort      | Body | Number | X  | 최소 포트 범위<br/>- 최솟값: 1                                                                                                                                                                    |
+| port.maxPort      | Body | Number | X  | 최대 포트 범위<br/>- 최댓값: 65535                                                                                                                                                                |
+| cidr              | Body | String | O  | 허용할 트래픽의 원격 소스<br/>- 예시: `1.1.1.1/32`                                                                                                                                                    |
 
 <details><summary>예시</summary>
 <p>
@@ -2237,12 +2181,11 @@ PUT /v3.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 </p>
 </details>
 
-
 #### 응답
 
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|jobId|Body|UUID| 요청한 작업의 식별자 |
+| 이름    | 종류   | 형식   | 설명          |
+|-------|------|------|-------------|
+| jobId | Body | UUID | 요청한 작업의 식별자 |
 
 ---
 
@@ -2256,19 +2199,18 @@ DELETE /v3.0/db-security-groups/{dbSecurityGroupId}/rules
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-|dbSecurityGroupId|URL|UUID|O|DB 보안 그룹의 식별자|
-|ruleIds|Query|Array|O|DB 보안 그룹 규칙의 식별자 목록|
+| 이름                | 종류    | 형식    | 필수 | 설명                  |
+|-------------------|-------|-------|----|---------------------|
+| dbSecurityGroupId | URL   | UUID  | O  | DB 보안 그룹의 식별자       |
+| ruleIds           | Query | Array | O  | DB 보안 그룹 규칙의 식별자 목록 |
 
 #### 응답
 
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|jobId|Body|UUID| 요청한 작업의 식별자 |
+| 이름    | 종류   | 형식   | 설명          |
+|-------|------|------|-------------|
+| jobId | Body | UUID | 요청한 작업의 식별자 |
 
 ---
-
 
 ## 파라미터 그룹
 
@@ -2282,23 +2224,22 @@ GET /v3.0/parameter-groups
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-| 이름  | 종류 | 형식 | 필수 | 설명 |
-|-----|---|---|---|---|
-| dbVersion  |Query|Enum|X|DB 엔진 유형|
-
+| 이름        | 종류    | 형식   | 필수 | 설명       |
+|-----------|-------|------|----|----------|
+| dbVersion | Query | Enum | X  | DB 엔진 유형 |
 
 #### 응답
 
-| 이름                                   | 종류 | 형식 | 설명 |
-|--------------------------------------|---|---|---|
-| parameterGroups                      |Body|Array|파라미터 그룹 목록|
-| parameterGroups.parameterGroupId     |Body|UUID|파라미터 그룹의 식별자|
-| parameterGroups.parameterGroupName   |Body|String|파라미터 그룹을 식별할 수 있는 이름|
-| parameterGroups.description          |Body|String|파라미터 그룹에 대한 추가 정보|
-| parameterGroups.dbVersion                   |Body|Enum|DB 엔진 유형|
-| parameterGroups.parameterGroupStatus |Body|Enum|파라미터 그룹의 현재 상태<br/>- `STABLE`: 적용 완료<br/>- `NEED_TO_APPLY`: 적용 필요|
-| parameterGroups.createdYmdt          |Body|DateTime|생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)|
-| parameterGroups.updatedYmdt          |Body|DateTime|수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)|
+| 이름                                   | 종류   | 형식       | 설명                                                                |
+|--------------------------------------|------|----------|-------------------------------------------------------------------|
+| parameterGroups                      | Body | Array    | 파라미터 그룹 목록                                                        |
+| parameterGroups.parameterGroupId     | Body | UUID     | 파라미터 그룹의 식별자                                                      |
+| parameterGroups.parameterGroupName   | Body | String   | 파라미터 그룹을 식별할 수 있는 이름                                              |
+| parameterGroups.description          | Body | String   | 파라미터 그룹에 대한 추가 정보                                                 |
+| parameterGroups.dbVersion            | Body | Enum     | DB 엔진 유형                                                          |
+| parameterGroups.parameterGroupStatus | Body | Enum     | 파라미터 그룹의 현재 상태<br/>- `STABLE`: 적용 완료<br/>- `NEED_TO_APPLY`: 적용 필요 |
+| parameterGroups.createdYmdt          | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                 |
+| parameterGroups.updatedYmdt          | Body | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                 |
 
 <details><summary>예시</summary>
 <p>
@@ -2340,31 +2281,31 @@ GET /v3.0/parameter-groups/{parameterGroupId}
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-|parameterGroupId|URL|UUID|O|파라미터 그룹의 식별자|
+| 이름               | 종류  | 형식   | 필수 | 설명           |
+|------------------|-----|------|----|--------------|
+| parameterGroupId | URL | UUID | O  | 파라미터 그룹의 식별자 |
 
 #### 응답
 
-| 이름                            | 종류 | 형식 | 설명 |
-|-------------------------------|---|---|---|
-| parameterGroupId              |Body|UUID|파라미터 그룹의 식별자|
-| parameterGroupName            |Body|String|파라미터 그룹을 식별할 수 있는 이름|
-| description                   |Body|String|파라미터 그룹에 대한 추가 정보|
-| dbVersion                            |Body|Enum|DB 엔진 유형|
-| parameterGroupStatus          |Body|Enum|파라미터 그룹의 현재 상태<br/>- `STABLE`: 적용 완료<br/>- `NEED_TO_APPLY`: 적용 필요|
-| parameters                    |Body|Array|파라미터 목록|
-| parameters.parameterId        |Body|UUID|파라미터 식별자|
-| parameters.parameterFileGroup |Body|Enum|파라미터 파일 그룹 타입<br/>- `CLIENT`: client<br/>- `MYSQL`: mysql<br/>- `MYSQLD`: mysqld|
-| parameters.parameterName      |Body|String|파라미터 이름|
-| parameters.fileParameterName  |Body|String|파라미터 파일 이름|
-| parameters.value              |Body|String|현재 설정된 값 |
-| parameters.defaultValue       |Body|String|기본값|
-| parameters.allowedValue       |Body|String|허용된 값|
-| parameters.updateType         |Body|Enum|수정 타입<br/>- `VARIABLE`: 언제든 수정 가능<br/>- `CONSTANT`: 수정 불가능<br/>- `INIT_VARIABLE`: DB 인스턴스 생성 시에만 수정 가능|
-| parameters.applyType          |Body|Enum|적용 타입<br/>- `SESSION`: 세션 적용<br/>- `FILE`: 설정 파일 적용(재시작 필요)<br/>- `BOTH`: 전체(재시작 필요)|
-| createdYmdt                   |Body|DateTime|생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)|
-| updatedYmdt                   |Body|DateTime|수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)|
+| 이름                            | 종류   | 형식       | 설명                                                                                                     |
+|-------------------------------|------|----------|--------------------------------------------------------------------------------------------------------|
+| parameterGroupId              | Body | UUID     | 파라미터 그룹의 식별자                                                                                           |
+| parameterGroupName            | Body | String   | 파라미터 그룹을 식별할 수 있는 이름                                                                                   |
+| description                   | Body | String   | 파라미터 그룹에 대한 추가 정보                                                                                      |
+| dbVersion                     | Body | Enum     | DB 엔진 유형                                                                                               |
+| parameterGroupStatus          | Body | Enum     | 파라미터 그룹의 현재 상태<br/>- `STABLE`: 적용 완료<br/>- `NEED_TO_APPLY`: 적용 필요                                      |
+| parameters                    | Body | Array    | 파라미터 목록                                                                                                |
+| parameters.parameterId        | Body | UUID     | 파라미터 식별자                                                                                               |
+| parameters.parameterFileGroup | Body | Enum     | 파라미터 파일 그룹 타입<br/>- `CLIENT`: client<br/>- `MYSQL`: mysql<br/>- `MYSQLD`: mysqld                       |
+| parameters.parameterName      | Body | String   | 파라미터 이름                                                                                                |
+| parameters.fileParameterName  | Body | String   | 파라미터 파일 이름                                                                                             |
+| parameters.value              | Body | String   | 현재 설정된 값                                                                                               |
+| parameters.defaultValue       | Body | String   | 기본값                                                                                                    |
+| parameters.allowedValue       | Body | String   | 허용된 값                                                                                                  |
+| parameters.updateType         | Body | Enum     | 수정 타입<br/>- `VARIABLE`: 언제든 수정 가능<br/>- `CONSTANT`: 수정 불가능<br/>- `INIT_VARIABLE`: DB 인스턴스 생성 시에만 수정 가능 |
+| parameters.applyType          | Body | Enum     | 적용 타입<br/>- `SESSION`: 세션 적용<br/>- `FILE`: 설정 파일 적용(재시작 필요)<br/>- `BOTH`: 전체(재시작 필요)                   |
+| createdYmdt                   | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                      |
+| updatedYmdt                   | Body | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                      |
 
 <details><summary>예시</summary>
 <p>
@@ -2413,11 +2354,11 @@ POST /v3.0/parameter-groups
 
 #### 요청
 
-| 이름                 | 종류 | 형식 | 필수 | 설명 |
-|--------------------|---|---|---|---|
-| parameterGroupName |Body|String|O|파라미터 그룹을 식별할 수 있는 이름|
-| description        |Body|String|X|파라미터 그룹에 대한 추가 정보|
-| dbVersion                 |Body|Enum|O|DB 엔진 유형|
+| 이름                 | 종류   | 형식     | 필수 | 설명                   |
+|--------------------|------|--------|----|----------------------|
+| parameterGroupName | Body | String | O  | 파라미터 그룹을 식별할 수 있는 이름 |
+| description        | Body | String | X  | 파라미터 그룹에 대한 추가 정보    |
+| dbVersion          | Body | Enum   | O  | DB 엔진 유형             |
 
 <details><summary>예시</summary>
 <p>
@@ -2432,13 +2373,12 @@ POST /v3.0/parameter-groups
 </p>
 </details>
 
-
 #### 응답
 
+| 이름               | 종류   | 형식   | 설명           |
+|------------------|------|------|--------------|
+| parameterGroupId | Body | UUID | 파라미터 그룹의 식별자 |
 
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|parameterGroupId|Body|UUID|파라미터 그룹의 식별자|
 ---
 
 ### 파라미터 그룹 복사하기
@@ -2449,11 +2389,11 @@ POST /v3.0/parameter-groups/{parameterGroupId}/copy
 
 #### 요청
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-|parameterGroupId|URL|UUID|O|파라미터 그룹의 식별자|
-|parameterGroupName|Body|String|O|파라미터 그룹을 식별할 수 있는 이름|
-|description|Body|String|X|파라미터 그룹에 대한 추가 정보|
+| 이름                 | 종류   | 형식     | 필수 | 설명                   |
+|--------------------|------|--------|----|----------------------|
+| parameterGroupId   | URL  | UUID   | O  | 파라미터 그룹의 식별자         |
+| parameterGroupName | Body | String | O  | 파라미터 그룹을 식별할 수 있는 이름 |
+| description        | Body | String | X  | 파라미터 그룹에 대한 추가 정보    |
 
 <details><summary>예시</summary>
 <p>
@@ -2468,15 +2408,13 @@ POST /v3.0/parameter-groups/{parameterGroupId}/copy
 </p>
 </details>
 
-
 #### 응답
 
+| 이름               | 종류   | 형식   | 설명           |
+|------------------|------|------|--------------|
+| parameterGroupId | Body | UUID | 파라미터 그룹의 식별자 |
 
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|parameterGroupId|Body|UUID|파라미터 그룹의 식별자|
 ---
-
 
 ### 파라미터 그룹 수정하기
 
@@ -2486,13 +2424,11 @@ PUT /v3.0/parameter-groups/{parameterGroupId}
 
 #### 요청
 
-
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-|parameterGroupId|URL|UUID|O|파라미터 그룹의 식별자|
-|parameterGroupName|Body|String|X|파라미터 그룹을 식별할 수 있는 이름|
-|description|Body|String|X|파라미터 그룹에 대한 추가 정보|
-
+| 이름                 | 종류   | 형식     | 필수 | 설명                   |
+|--------------------|------|--------|----|----------------------|
+| parameterGroupId   | URL  | UUID   | O  | 파라미터 그룹의 식별자         |
+| parameterGroupName | Body | String | X  | 파라미터 그룹을 식별할 수 있는 이름 |
+| description        | Body | String | X  | 파라미터 그룹에 대한 추가 정보    |
 
 <details><summary>예시</summary>
 <p>
@@ -2520,28 +2456,26 @@ PUT /v3.0/parameter-groups/{parameterGroupId}/parameters
 
 #### 요청
 
-
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-|parameterGroupId|URL|UUID|O|파라미터 그룹의 식별자|
-|modifiedParameters|Body|Array|O|변경할 파라미터 목록|
-|modifiedParameters.parameterId|Body|UUID|O|파라미터의 식별자|
-|modifiedParameters.value|Body|String|O|변경할 파라미터 값 |
+| 이름                             | 종류   | 형식     | 필수 | 설명           |
+|--------------------------------|------|--------|----|--------------|
+| parameterGroupId               | URL  | UUID   | O  | 파라미터 그룹의 식별자 |
+| modifiedParameters             | Body | Array  | O  | 변경할 파라미터 목록  |
+| modifiedParameters.parameterId | Body | UUID   | O  | 파라미터의 식별자    |
+| modifiedParameters.value       | Body | String | O  | 변경할 파라미터 값   |
 
 <details><summary>예시</summary>
 <p>
 
 ```json
 {
-   "modifiedParameters": [
-       {
-           "parameterId": "3abac558-7274-44e1-9f4a-f100f53f67ba",
-           "value": "0"
-       }
-   ]
+    "modifiedParameters": [
+        {
+            "parameterId": "3abac558-7274-44e1-9f4a-f100f53f67ba",
+            "value": "0"
+        }
+    ]
 }
 ```
-
 
 </p>
 </details>
@@ -2560,9 +2494,9 @@ PUT /v3.0/parameter-groups/{parameterGroupId}/reset
 
 #### 요청
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-|parameterGroupId|URL|UUID|O|파라미터 그룹의 식별자|
+| 이름               | 종류  | 형식   | 필수 | 설명           |
+|------------------|-----|------|----|--------------|
+| parameterGroupId | URL | UUID | O  | 파라미터 그룹의 식별자 |
 
 #### 응답
 
@@ -2580,9 +2514,9 @@ DELETE /v3.0/parameter-groups/{parameterGroupId}
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-|parameterGroupId|URL|UUID|O|파라미터 그룹의 식별자|
+| 이름               | 종류  | 형식   | 필수 | 설명           |
+|------------------|-----|------|----|--------------|
+| parameterGroupId | URL | UUID | O  | 파라미터 그룹의 식별자 |
 
 #### 응답
 
@@ -2604,14 +2538,13 @@ GET /v3.0/user-groups
 
 #### 응답
 
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|userGroups|Body|Array|사용자 그룹 목록|
-|userGroups.userGroupId|Body|UUID|사용자 그룹의 식별자|
-|userGroups.userGroupName|Body|String|사용자 그룹을 식별할 수 있는 이름|
-|userGroups.createdYmdt|Body|DateTime|생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)|
-|userGroups.updatedYmdt|Body|DateTime|수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)|
-
+| 이름                       | 종류   | 형식       | 설명                                |
+|--------------------------|------|----------|-----------------------------------|
+| userGroups               | Body | Array    | 사용자 그룹 목록                         |
+| userGroups.userGroupId   | Body | UUID     | 사용자 그룹의 식별자                       |
+| userGroups.userGroupName | Body | String   | 사용자 그룹을 식별할 수 있는 이름               |
+| userGroups.createdYmdt   | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| userGroups.updatedYmdt   | Body | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 
 <details><summary>예시</summary>
 <p>
@@ -2649,20 +2582,21 @@ GET /v3.0/user-groups/{userGroupId}
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-| userGroupId | URL | UUID | O | 사용자 그룹의 식별자|
+| 이름          | 종류  | 형식   | 필수 | 설명          |
+|-------------|-----|------|----|-------------|
+| userGroupId | URL | UUID | O  | 사용자 그룹의 식별자 |
 
 #### 응답
 
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|userGroupId|Body|UUID|사용자 그룹의 식별자|
-|userGroupName|Body|String|사용자 그룹을 식별할 수 있는 이름|
-|members|Body|Array|프로젝트 멤버 목록|
-|members.memberId|Body|UUID|프로젝트 멤버의 식별자|
-|createdYmdt|Body|DateTime|생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)|
-|updatedYmdt|Body|DateTime|수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)|
+| 이름               | 종류   | 형식       | 설명                                |
+|------------------|------|----------|-----------------------------------|
+| userGroupId      | Body | UUID     | 사용자 그룹의 식별자                       |
+| userGroupName    | Body | String   | 사용자 그룹을 식별할 수 있는 이름               |
+| userGroupTypeCode    | Body | Enum   | 사용자 그룹 종류    <br /> `ENTIRE`: 프로젝트 멤버 전체를 포함하는 사용자 그룹 <br /> `INDIVIDUAL_MEMBER`: 특정 프로젝트 멤버를 포함하는 사용자 그룹      |
+| members          | Body | Array    | 프로젝트 멤버 목록                        |
+| members.memberId | Body | UUID     | 프로젝트 멤버의 식별자                      |
+| createdYmdt      | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| updatedYmdt      | Body | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 
 <details><summary>예시</summary>
 <p>
@@ -2676,6 +2610,7 @@ GET /v3.0/user-groups/{userGroupId}
     },
     "userGroupId": "1aac0437-f32d-4923-ad3c-ac61c1cfdfe0",
     "userGroupName": "dev-team",
+	"userGroupTypeCode": "INDIVIDUAL_MEMBER",
     "members": [
         {
             "memberId": "1321e759-2ef3-4b85-9921-b13e918b24b5"
@@ -2699,10 +2634,11 @@ POST /v3.0/user-groups
 
 #### 요청
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-|userGroupName|Body|String|O|사용자 그룹을 식별할 수 있는 이름|
-|memberIds|Body|Array|O|프로젝트 멤버의 식별자 목록|
+| 이름            | 종류   | 형식     | 필수 | 설명                  |
+|---------------|------|--------|----|---------------------|
+| userGroupName | Body | String | O  | 사용자 그룹을 식별할 수 있는 이름 |
+| memberIds     | Body | Array  | O  | 프로젝트 멤버의 식별자 목록 <br /> `selectAllYN`이 true인 경우 해당 필드 값은 무시됨    |
+|    selectAllYN  | Body | Boolean  | X  | 프로젝트 멤버 전체 유무 <br /> true인 경우 해당 그룹은 전체 멤버에 대해 설정됨   |
 
 <details><summary>예시</summary>
 <p>
@@ -2710,7 +2646,16 @@ POST /v3.0/user-groups
 ```json
 {
     "userGroupName": "dev-team",
-    "memberIds": ["1321e759-2ef3-4b85-9921-b13e918b24b5"]
+    "memberIds": [
+        "1321e759-2ef3-4b85-9921-b13e918b24b5"
+    ]
+}
+```
+
+```json
+{
+    "userGroupName": "dev-team",
+    "selectAllYN":true
 }
 ```
 
@@ -2719,9 +2664,9 @@ POST /v3.0/user-groups
 
 #### 응답
 
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|userGroupId|Body|UUID|사용자 그룹의 식별자|
+| 이름          | 종류   | 형식   | 설명          |
+|-------------|------|------|-------------|
+| userGroupId | Body | UUID | 사용자 그룹의 식별자 |
 
 ---
 
@@ -2733,11 +2678,12 @@ PUT /v3.0/user-groups/{userGroupId}
 
 #### 요청
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-| userGroupId | URL | UUID | O | 사용자 그룹의 식별자|
-|userGroupName|Body|String|X|사용자 그룹을 식별할 수 있는 이름|
-|memberIds|Body|Array|X|프로젝트 멤버의 식별자 목록|
+| 이름            | 종류   | 형식     | 필수 | 설명                  |
+|---------------|------|--------|----|---------------------|
+| userGroupId   | URL  | UUID   | O  | 사용자 그룹의 식별자         |
+| userGroupName | Body | String | X  | 사용자 그룹을 식별할 수 있는 이름 |
+| memberIds     | Body | Array  | X  | 프로젝트 멤버의 식별자 목록     |
+|    selectAllYN  | Body | Boolean  | X  | 프로젝트 멤버 전체 유무 <br /> true인 경우 해당 그룹은 전체 멤버에 대해 설정됨   |
 
 <details><summary>예시</summary>
 <p>
@@ -2745,7 +2691,10 @@ PUT /v3.0/user-groups/{userGroupId}
 ```json
 {
     "userGroupName": "dev-team",
-    "memberIds": ["1321e759-2ef3-4b85-9921-b13e918b24b5","f9064b09-2b15-442e-a4b0-3a5a2754555e"]
+    "memberIds": [
+        "1321e759-2ef3-4b85-9921-b13e918b24b5",
+        "f9064b09-2b15-442e-a4b0-3a5a2754555e"
+    ]
 }
 ```
 
@@ -2766,15 +2715,15 @@ DELETE /v3.0/user-groups/{userGroupId}
 
 #### 요청
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-| userGroupId | URL | UUID | O | 사용자 그룹의 식별자|
+| 이름          | 종류  | 형식   | 필수 | 설명          |
+|-------------|-----|------|----|-------------|
+| userGroupId | URL | UUID | O  | 사용자 그룹의 식별자 |
+
 #### 응답
 
 이 API는 응답 본문을 반환하지 않습니다.
 
 ---
-
 
 ## 알림 그룹
 
@@ -2788,20 +2737,18 @@ GET /v3.0/notification-groups
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-
 #### 응답
 
-
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|notificationGroups|Body|Array|알림 그룹 목록|
-|notificationGroups.notificationGroupId|Body|UUID|알림 그룹의 식별자|
-|notificationGroups.notificationGroupName|Body|String|알림 그룹을 식별할 수 있는 이름|
-|notificationGroups.notifyEmail|Body|Boolean|이메일 알림 여부|
-|notificationGroups.notifySms|Body|Boolean|SMS 알림 여부|
-|notificationGroups.isEnabled|Body|Boolean| 활성화 여부|
-|notificationGroups.createdYmdt|Body|DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
-|notificationGroups.updatedYmdt|Body|DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| 이름                                       | 종류   | 형식       | 설명                                |
+|------------------------------------------|------|----------|-----------------------------------|
+| notificationGroups                       | Body | Array    | 알림 그룹 목록                          |
+| notificationGroups.notificationGroupId   | Body | UUID     | 알림 그룹의 식별자                        |
+| notificationGroups.notificationGroupName | Body | String   | 알림 그룹을 식별할 수 있는 이름                |
+| notificationGroups.notifyEmail           | Body | Boolean  | 이메일 알림 여부                         |
+| notificationGroups.notifySms             | Body | Boolean  | SMS 알림 여부                         |
+| notificationGroups.isEnabled             | Body | Boolean  | 활성화 여부                            |
+| notificationGroups.createdYmdt           | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| notificationGroups.updatedYmdt           | Body | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 
 <details><summary>예시</summary>
 <p>
@@ -2831,38 +2778,38 @@ GET /v3.0/notification-groups
 </details>
 
 ---
-### 알람 그룹 상세 보기
 
+### 알람 그룹 상세 보기
 
 ```
 GET /v3.0/notification-groups/{notificationGroupId}
 ```
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-|notificationGroupId|URL|UUID|O|알림 그룹의 식별자|
+| 이름                  | 종류  | 형식   | 필수 | 설명         |
+|---------------------|-----|------|----|------------|
+| notificationGroupId | URL | UUID | O  | 알림 그룹의 식별자 |
 
 #### 응답
 
-
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|notificationGroupId|Body|UUID|알림 그룹의 식별자|
-|notificationGroupName|Body|String|알림 그룹을 식별할 수 있는 이름|
-|notifyEmail|Body|Boolean|이메일 알림 여부|
-|notifySms|Body|Boolean|SMS 알림 여부|
-|isEnabled|Body|Boolean| 활성화 여부|
-|dbInstances|Body|Array|감시 대상 DB 인스턴스 목록|
-|dbInstances.dbInstanceId|Body|UUID|DB 인스턴스의 식별자|
-|dbInstances.dbInstanceName|Body|String|DB 인스턴스를 식별할 수 있는 이름|
-|userGroups|Body|Array|사용자 그룹 목록|
-|userGroups.userGroupId|Body|UUID|사용자 그룹의 식별자|
-|userGroups.userGroupName|Body|String|사용자 그룹을 식별할 수 있는 이름|
-|createdYmdt|Body|DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
-|updatedYmdt|Body|DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| 이름                         | 종류   | 형식       | 설명                                |
+|----------------------------|------|----------|-----------------------------------|
+| notificationGroupId        | Body | UUID     | 알림 그룹의 식별자                        |
+| notificationGroupName      | Body | String   | 알림 그룹을 식별할 수 있는 이름                |
+| notifyEmail                | Body | Boolean  | 이메일 알림 여부                         |
+| notifySms                  | Body | Boolean  | SMS 알림 여부                         |
+| isEnabled                  | Body | Boolean  | 활성화 여부                            |
+| dbInstances                | Body | Array    | 감시 대상 DB 인스턴스 목록                  |
+| dbInstances.dbInstanceId   | Body | UUID     | DB 인스턴스의 식별자                      |
+| dbInstances.dbInstanceName | Body | String   | DB 인스턴스를 식별할 수 있는 이름              |
+| userGroups                 | Body | Array    | 사용자 그룹 목록                         |
+| userGroups.userGroupId     | Body | UUID     | 사용자 그룹의 식별자                       |
+| userGroups.userGroupName   | Body | String   | 사용자 그룹을 식별할 수 있는 이름               |
+| createdYmdt                | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| updatedYmdt                | Body | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 
 <details><summary>예시</summary>
 <p>
@@ -2880,15 +2827,17 @@ GET /v3.0/notification-groups/{notificationGroupId}
     "notifySms": false,
     "isEnabled": true,
     "dbInstances": [
-            {
+        {
             "dbInstanceId": "ed5cb985-526f-4c54-9ae0-40288593de65",
             "dbInstanceName": "database"
-        }],
+        }
+    ],
     "userGroups": [
-            {
+        {
             "userGroupId": "1aac0437-f32d-4923-ad3c-ac61c1cfdfe0",
             "userGroupName": "dev-team"
-        }],
+        }
+    ],
     "createdYmdt": "2023-02-20T13:34:13+09:00",
     "updatedYmdt": "2023-02-20T13:34:13+09:00"
 }
@@ -2904,16 +2853,17 @@ GET /v3.0/notification-groups/{notificationGroupId}
 ```
 POST /v3.0/notification-groups
 ```
+
 #### 요청
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-|notificationGroupName|Body|String|O|알림 그룹을 식별할 수 있는 이름|
-|notifyEmail|Body|Boolean|X|이메일 알림 여부<br/>- 기본값: `true`|
-|notifySms|Body|Boolean|X|SMS 알림 여부<br/>- 기본값: `true`|
-|isEnabled|Body|Boolean| X|활성화 여부<br/>- 기본값: `true`|
-|dbInstanceIds|Body|Array|O|감시 대상 DB 인스턴스의 식별자 목록|
-|userGroupIds|Body|Array|O|사용자 그룹의 식별자 목록|
+| 이름                    | 종류   | 형식      | 필수 | 설명                          |
+|-----------------------|------|---------|----|-----------------------------|
+| notificationGroupName | Body | String  | O  | 알림 그룹을 식별할 수 있는 이름          |
+| notifyEmail           | Body | Boolean | X  | 이메일 알림 여부<br/>- 기본값: `true` |
+| notifySms             | Body | Boolean | X  | SMS 알림 여부<br/>- 기본값: `true` |
+| isEnabled             | Body | Boolean | X  | 활성화 여부<br/>- 기본값: `true`    |
+| dbInstanceIds         | Body | Array   | O  | 감시 대상 DB 인스턴스의 식별자 목록       |
+| userGroupIds          | Body | Array   | O  | 사용자 그룹의 식별자 목록              |
 
 <details><summary>예시</summary>
 <p>
@@ -2923,8 +2873,12 @@ POST /v3.0/notification-groups
     "notificationGroupName": "dev-team-noti",
     "notifyEmail": false,
     "isEnable": true,
-    "dbInstanceIds": ["ed5cb985-526f-4c54-9ae0-40288593de65"],
-    "userGroupIds": ["1aac0437-f32d-4923-ad3c-ac61c1cfdfe0"]
+    "dbInstanceIds": [
+        "ed5cb985-526f-4c54-9ae0-40288593de65"
+    ],
+    "userGroupIds": [
+        "1aac0437-f32d-4923-ad3c-ac61c1cfdfe0"
+    ]
 }
 ```
 
@@ -2933,9 +2887,9 @@ POST /v3.0/notification-groups
 
 #### 응답
 
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|notificationGroupId|Body|UUID|알림 그룹의 식별자|
+| 이름                  | 종류   | 형식   | 설명         |
+|---------------------|------|------|------------|
+| notificationGroupId | Body | UUID | 알림 그룹의 식별자 |
 
 ---
 
@@ -2947,16 +2901,15 @@ PUT /v3.0/notification-groups/{notificationGroupId}
 
 #### 요청
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-|notificationGroupId|URL|UUID|O|알림 그룹의 식별자|
-|notificationGroupName|Body|String|X|알림 그룹을 식별할 수 있는 이름|
-|notifyEmail|Body|Boolean|X|이메일 알림 여부|
-|notifySms|Body|Boolean|X|SMS 알림 여부|
-|isEnabled|Body|Boolean| X|활성화 여부|
-|dbInstanceIds|Body|Array|X|감시 대상 DB 인스턴스의 식별자 목록|
-|userGroupIds|Body|Array|X|사용자 그룹의 식별자 목록|
-
+| 이름                    | 종류   | 형식      | 필수 | 설명                    |
+|-----------------------|------|---------|----|-----------------------|
+| notificationGroupId   | URL  | UUID    | O  | 알림 그룹의 식별자            |
+| notificationGroupName | Body | String  | X  | 알림 그룹을 식별할 수 있는 이름    |
+| notifyEmail           | Body | Boolean | X  | 이메일 알림 여부             |
+| notifySms             | Body | Boolean | X  | SMS 알림 여부             |
+| isEnabled             | Body | Boolean | X  | 활성화 여부                |
+| dbInstanceIds         | Body | Array   | X  | 감시 대상 DB 인스턴스의 식별자 목록 |
+| userGroupIds          | Body | Array   | X  | 사용자 그룹의 식별자 목록        |
 
 <details><summary>예시</summary>
 <p>
@@ -2964,7 +2917,10 @@ PUT /v3.0/notification-groups/{notificationGroupId}
 ```json
 {
     "notifyEmail": true,
-    "dbInstanceIds": ["ed5cb985-526f-4c54-9ae0-40288593de65", "d51b7da0-682f-47ff-b588-b739f6adc740"]
+    "dbInstanceIds": [
+        "ed5cb985-526f-4c54-9ae0-40288593de65",
+        "d51b7da0-682f-47ff-b588-b739f6adc740"
+    ]
 }
 ```
 
@@ -2982,13 +2938,14 @@ PUT /v3.0/notification-groups/{notificationGroupId}
 ```
 DELETE /v3.0/notification-groups/{notificationGroupId}
 ```
+
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-|notificationGroupId|URL|UUID|O|알림 그룹의 식별자|
+| 이름                  | 종류  | 형식   | 필수 | 설명         |
+|---------------------|-----|------|----|------------|
+| notificationGroupId | URL | UUID | O  | 알림 그룹의 식별자 |
 
 #### 응답
 
@@ -3004,19 +2961,17 @@ DELETE /v3.0/notification-groups/{notificationGroupId}
 GET /v3.0/metrics
 ```
 
-
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-
 #### 응답
 
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|metrics|Body|Array|Metric 목록|
-|metrics.measureName|Body|Enum| 조회 지표 유형|
-|metrics.unit|Body|String|측정값 단위 |
+| 이름                  | 종류   | 형식     | 설명        |
+|---------------------|------|--------|-----------|
+| metrics             | Body | Array  | Metric 목록 |
+| metrics.measureName | Body | Enum   | 조회 지표 유형  |
+| metrics.unit        | Body | String | 측정값 단위    |
 
 <details><summary>예시</summary>
 <p>
@@ -3050,24 +3005,24 @@ GET /v3.0/metric-statistics
 
 #### 요청
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-| dbInstanceId | Query | UUID| O | DB 인스턴스의 식별자|
-| measureNames | Query | Array | O | 조회 지표 목록<br/>- 최소 크기: `1` |
-| from | Query | Datetime | O| 시작 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
-| to | Query | Datetime | O| 종료 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
-| interval | Query | Number | X | 조회 간격 |
+| 이름           | 종류    | 형식       | 필수 | 설명                                |
+|--------------|-------|----------|----|-----------------------------------|
+| dbInstanceId | Query | UUID     | O  | DB 인스턴스의 식별자                      |
+| measureNames | Query | Array    | O  | 조회 지표 목록<br/>- 최소 크기: `1`         |
+| from         | Query | Datetime | O  | 시작 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| to           | Query | Datetime | O  | 종료 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| interval     | Query | Number   | X  | 조회 간격                             |
 
 #### 응답
 
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|metricStatistics|Body|Array|통계 정보 목록|
-|metricStatistics.measureName|Body|Enum| 측정 항목 유형|
-|metricStatistics.unit|Body|String|측정값 단위 |
-|metricStatistics.values|Body|Array|측정값 목록 |
-|metricStatistics.values.timestamp|Body|Timestamp| 측정 시간|
-|metricStatistics.values.value|Body|Object|측정값 |
+| 이름                                | 종류   | 형식        | 설명       |
+|-----------------------------------|------|-----------|----------|
+| metricStatistics                  | Body | Array     | 통계 정보 목록 |
+| metricStatistics.measureName      | Body | Enum      | 측정 항목 유형 |
+| metricStatistics.unit             | Body | String    | 측정값 단위   |
+| metricStatistics.values           | Body | Array     | 측정값 목록   |
+| metricStatistics.values.timestamp | Body | Timestamp | 측정 시간    |
+| metricStatistics.values.value     | Body | Object    | 측정값      |
 
 <details><summary>예시</summary>
 <p>
@@ -3104,45 +3059,41 @@ GET /v3.0/metric-statistics
 
 ## 이벤트
 
-
 ### 이벤트 목록 조회
-
 
 ```
 GET /v3.0/events
 ```
 
-
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-| page | Query | Number | O | 조회할 목록의 페이지<br/>- 최솟값: `1` |
-| size | Query | Number | O | 조회할 목록의 페이지 크기<br/>- 최솟값: `1`<br/>- 최댓값: `100`  |
-| from | Query | Datetime | O| 시작 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
-| to | Query | Datetime | O| 종료 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
-|eventCategoryType|Query|Enum|O|조회할 이벤트 카테고리 유형<br/>- `ALL`: 전체<br/>- `INSTANCE`: DB 인스턴스<br/>- `BACKUP`: 백업<br/>- `DB_SECURITY_GROUP`: DB 보안 그룹<br/>- `TENANT`: 테넌트|
-|sourceId|Query|String|X|이벤트가 발생한 대상 리소스의 식별자|
-|keyword|Query|String|X|이벤트 메시지에 포함된 문자열 검색어|
-|ascendingOrder|Query|Enum|X|이벤트 메시지 정렬 순서<br/>- `ASC`: 오름차순<br/>- `DESC`: 내림차순<br/>- 기본값: `DESC`|
-
+| 이름                | 종류    | 형식       | 필수 | 설명                                                                                                                                   |
+|-------------------|-------|----------|----|--------------------------------------------------------------------------------------------------------------------------------------|
+| page              | Query | Number   | O  | 조회할 목록의 페이지<br/>- 최솟값: `1`                                                                                                           |
+| size              | Query | Number   | O  | 조회할 목록의 페이지 크기<br/>- 최솟값: `1`<br/>- 최댓값: `100`                                                                                       |
+| from              | Query | Datetime | O  | 시작 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                    |
+| to                | Query | Datetime | O  | 종료 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                    |
+| eventCategoryType | Query | Enum     | O  | 조회할 이벤트 카테고리 유형<br/>- `ALL`: 전체<br/>- `INSTANCE`: DB 인스턴스<br/>- `BACKUP`: 백업<br/>- `DB_SECURITY_GROUP`: DB 보안 그룹<br/>- `TENANT`: 테넌트 |
+| sourceId          | Query | String   | X  | 이벤트가 발생한 대상 리소스의 식별자                                                                                                                 |
+| keyword           | Query | String   | X  | 이벤트 메시지에 포함된 문자열 검색어                                                                                                                 |
+| ascendingOrder    | Query | Enum     | X  | 이벤트 메시지 정렬 순서<br/>- `ASC`: 오름차순<br/>- `DESC`: 내림차순<br/>- 기본값: `DESC`                                                                 |
 
 #### 응답
 
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|totalCounts|Body|Number| 전체 이벤트 목록 수 |
-|events|Body|Array|이벤트 목록 |
-|events.eventCategoryType|Body|Enum|이벤트 카테고리 유형|
-|events.eventCode|Body|Enum|발생한 이벤트의 유형|
-|events.sourceId|Body|String|이벤트 소스의 식별자|
-|events.sourceName|Body|String|이벤트 소스를 식별할 수 있는 이름|
-|events.messages|Body|Array|이벤트 메시지 목록|
-|events.messages.langCode|Body|String|언어 코드|
-|events.messages.message|Body|String|이벤트 메시지|
-|events.eventYmdt|Body|DateTime | 이벤트 발생 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| 이름                       | 종류   | 형식       | 설명                                    |
+|--------------------------|------|----------|---------------------------------------|
+| totalCounts              | Body | Number   | 전체 이벤트 목록 수                           |
+| events                   | Body | Array    | 이벤트 목록                                |
+| events.eventCategoryType | Body | Enum     | 이벤트 카테고리 유형                           |
+| events.eventCode         | Body | Enum     | 발생한 이벤트의 유형                           |
+| events.sourceId          | Body | String   | 이벤트 소스의 식별자                           |
+| events.sourceName        | Body | String   | 이벤트 소스를 식별할 수 있는 이름                   |
+| events.messages          | Body | Array    | 이벤트 메시지 목록                            |
+| events.messages.langCode | Body | String   | 언어 코드                                 |
+| events.messages.message  | Body | String   | 이벤트 메시지                               |
+| events.eventYmdt         | Body | DateTime | 이벤트 발생 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 
 <details><summary>예시</summary>
 <p>
@@ -3185,8 +3136,6 @@ GET /v3.0/events
 }
 ```
 
-
-
 </p>
 </details>
 
@@ -3204,12 +3153,11 @@ GET /v3.0/event-codes
 
 #### 응답
 
-
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-|eventCodes|Body|Array|이벤트 코드 목록|
-|eventCodes.eventCode|Body|Enum|이벤트 코드|
-|eventCodes.eventCategoryType|Body|Enum|이벤트 카테고리 유형|
+| 이름                           | 종류   | 형식    | 설명          |
+|------------------------------|------|-------|-------------|
+| eventCodes                   | Body | Array | 이벤트 코드 목록   |
+| eventCodes.eventCode         | Body | Enum  | 이벤트 코드      |
+| eventCodes.eventCategoryType | Body | Enum  | 이벤트 카테고리 유형 |
 
 <details><summary>예시</summary>
 <p>

@@ -10,19 +10,19 @@
 RDS for MySQL에서는 Percona XtraBackup을 이용하여 데이터베이스를 백업합니다. 외부 MySQL의 백업으로 복원하거나 RDS for MySQL의 백업으로 복원하기 위해서는 RDS for MySQL에서 사용하는 Percona XtraBackup과 동일한 버전을 사용해야 합니다. DB 엔진 버전에 따른 Percona XtraBackup 버전은 아래와 같습니다.
 
 | MySQL 버전 | XtraBackup 버전 |
-| --- | --- |
-| 5.7.15 | 2.4.20 |
-| 5.7.19 | 2.4.20 |
-| 5.7.26 | 2.4.20 |
-| 5.7.33 | 2.4.20 |
-| 5.7.37 | 2.4.20 |
-| 8.0.18 | 8.0.26 |
-| 8.0.23 | 8.0.26 |
-| 8.0.28 | 8.0.28 |
+|----------|---------------|
+| 5.7.15   | 2.4.20        |
+| 5.7.19   | 2.4.20        |
+| 5.7.26   | 2.4.20        |
+| 5.7.33   | 2.4.20        |
+| 5.7.37   | 2.4.20        |
+| 8.0.18   | 8.0.26        |
+| 8.0.23   | 8.0.26        |
+| 8.0.28   | 8.0.28        |
 
 * XtraBackup의 설치에 대한 자세한 설명은 Percona 홈페이지를 참고합니다.
-  * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
-  * https://www.percona.com/doc/percona-xtrabackup/8.0/index.html
+    * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
+    * https://www.percona.com/doc/percona-xtrabackup/8.0/index.html
 
 ### 자동 백업
 
@@ -41,10 +41,6 @@ DB 인스턴스의 백업 보관 기간을 1일 이상으로 설정하면 자동
 **쿼리 지연 대기 시간(초)**
 
 * 테이블 잠금 사용 시 `FLUSH TABLES WITH READ LOCK` 구문의 대기 시간을 설정합니다. 쿼리 지연 대기 시간만큼 `FLUSH TABLES WITH READ LOCK` 구문이 대기하게 됩니다. 0~21,600초까지 설정 가능합니다. 길게 설정할 수록 DML 쿼리 부하로 인한 백업 실패 가능성을 줄일 수 있으나, 전체 백업 시간이 길어질 수 있습니다.
-
-**백업 복제 리전**
-
-* 백업 파일을 다른 리전의 오브젝트 스토리지로 복제되도록 설정합니다. 백업 복제 리전은 재해 복구(disaster recovery)를 위한 기능으로 원본 리전의 백업 파일을 대상 리전으로 동일하게 복제하고 관리합니다. 복제는 백그라운드에서 일정 주기마다 진행됩니다. 백업 복제 리전을 설정하면 리전 간 복제 트래픽 과금이 청구되며, 대상 리전에 오브젝트 스토리지 사용량에 대한 과금이 추가로 청구됩니다.
 
 **백업 재시도 횟수**
 

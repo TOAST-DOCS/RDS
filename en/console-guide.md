@@ -59,6 +59,8 @@
 * User Access Control: Enter accessible users to DB instance in the CIDR format.
     * Unregistered IPs for user access control are not accessible.
     * Selects whether or not to allow `inbound/outbound` in the Direction setting for access control.
+        * Inboud: Direction into the instance.
+        * Outbound: Direction out of the instance.
 
 > [Note] The Backup Replication Region feature is not provided for banking networks.
 
@@ -269,6 +271,7 @@
 * It is recommended to create a replica whose specification is the same as or higher than that of the original DB instance, because using a lower specification may result in replication latency.
 * When a replica is created, the I/O performance of the original DB instance may be lower than usual.
 * Replica creation time may increase in proportion to the size of the original DB instance.
+
 > [Note] While replication is underway, object storage volume may be incurred as much as the size of a binary log file.
 > [Note] When replication is completed, the Read Only Slave rule is added to the access rule of the master instance.
 
@@ -363,6 +366,7 @@
 * Click **Download** and a pop-up will show up.
 * Click **Import** and wait, then the **Download** button is enabled.
 * Log files are uploaded to temporary object storage, and remain to be downloaded for the maximum 5 minutes.
+
 > [Note] For the 5 minutes while it is uploaded to object storage and deleted, object storage may be charged.
 
 ### Audit Log
@@ -489,7 +493,7 @@ Various performance indicators can be checked in charts.
 * ❶ Click **View More** of the group to modify or delete, a drop-down menu is displayed.
 * ❷ Click **Edit**, the **Modify Group** window is displayed.
 * ❸ Click **Delete** to delete a group.
-  
+
 ![server_dashboard_chart_group_modify_delete_2_en.png](https://static.toastoven.net/prod_rds/22.07.12/server_dashboard_chart_group_modify_delete_2_en.png)
 
 * ❶ After modifications, click the OK button.
@@ -523,12 +527,14 @@ The users who receive notifications through notification groups and event subscr
 
 * ❶ Click the **Create User Group** to display a popup to **create a user group**.
 
-![user_group_create_1_en](https://static.toastoven.net/prod_rds/22.03.15/user_group_create_1_en.png)
+![user_group_create_1_en](https://static.toastoven.net/prod_rds/23.06.13/user_group_create_1_en.png)
 
 * ❷ Enter the group name.
 * ❸ The notified users are displayed. Clicking the **x** button will exclude notified users.
 * ❹ Add users to notified users.
-* ❺ All users in the user list are added to the notified users.
+* ❺ Add **all project members** to the notified users.
+  * You cannot add individual users. If you do, it is canceled.
+  * When sending an alrm using the user group, the alarm is sent to all project members at the time.
 
 ### Modify User Group
 
@@ -536,7 +542,7 @@ The users who receive notifications through notification groups and event subscr
 
 * ❶ Click the **Edit** button of the user group to be modified and a popup will appear to **modify the user group**.
 
-![user_group_modify_1_en](https://static.toastoven.net/prod_rds/22.03.15/user_group_modify_1_en.png)
+![user_group_modify_1_en](https://static.toastoven.net/prod_rds/23.06.13/user_group_modify_1_en.png)
 
 * ❷ After modifying the items, click the **OK** button to modify the user group.
 
@@ -672,6 +678,7 @@ The chart shows the count of items collected over time, and you can check the de
 * ❸ Click **Save CSV** to save all data in the selected point in time.
 
 ## Appendix
+
 ### Appendix 1. Guide for DB instance Migration for Hypervisor Maintenance
 
 NHN Cloud updates hypervisor software on a regular basis to enhance security and stability of its infrastructure services.
@@ -717,16 +724,16 @@ When using Federated Storage Engine, make sure you consider the following.
 #### For configuration using RDS as a local node
 
 * Make sure you need to allow the outbound direction to remote nodes.
-  * It can be set in the **Backup and Access Control** tab of the DB instance detailed configuration.
-  * Please refer to ‘User Access Control’ in ‘#Getting Started’.
+    * It can be set in the **Backup and Access Control** tab of the DB instance detailed configuration.
+    * Please refer to ‘User Access Control’ in ‘#Getting Started’.
 * When using a configuration that adds Read Only Slave to RDS that serves as a local node, you need to specify a federated table in replicate-ignore-table of DB Configuration.
-  * When configuring Read Only Slave, the federated table is also replicated so that Master and Read Only Slave look at the remote nodes together.
-  * In this case, the data input performed in Master is performed in the remote nodes according to the federated settings, and the same input is also performed in Read Only Slave, so replication may be suspended due to a duplicate key error, etc.
-  * Make sure you need to configure the settings of replicate-ignore-table so that Read Only Save does not replicate a federated table.
-  * It can be set in the DB Configuration tab of the DB instance detailed configuration.
+    * When configuring Read Only Slave, the federated table is also replicated so that Master and Read Only Slave look at the remote nodes together.
+    * In this case, the data input performed in Master is performed in the remote nodes according to the federated settings, and the same input is also performed in Read Only Slave, so replication may be suspended due to a duplicate key error, etc.
+    * Make sure you need to configure the settings of replicate-ignore-table so that Read Only Save does not replicate a federated table.
+    * It can be set in the DB Configuration tab of the DB instance detailed configuration.
 
 #### For configuration using RDS as a remote node
 
 * Make sure you need to allow the inbound direction to local nodes.
-  * It can be set in the **Backup and Access Control** tab of the DB instance detailed configuration.
-  * Please refer to 'User Access Control' in '#Getting Started'.
+    * It can be set in the **Backup and Access Control** tab of the DB instance detailed configuration.
+    * Please refer to 'User Access Control' in '#Getting Started'.
