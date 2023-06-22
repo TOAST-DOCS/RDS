@@ -1,8 +1,8 @@
 ## Database > RDS for MySQL > APIガイド
 
-| リージョン           | エンドポイント                                       |
-|-----------------|-----------------------------------------------|
-| 韓国(パンギョ)リージョン   | https://kr1-rds-mysql.api.gncloud.go.kr |
+| リージョン         | エンドポイント                                 |
+|---------------|-----------------------------------------|
+| 韓国(パンギョ)リージョン | https://kr1-rds-mysql.api.gncloud.go.kr |
 
 ## 認証および権限
 
@@ -43,11 +43,11 @@ GET /v3.0/project/regions
 
 #### レスポンス
 
-| 名前                 | 種類   | 形式      | 説明                                                                                     |
-|--------------------|------|---------|----------------------------------------------------------------------------------------|
-| regions            | Body | Array   | リージョンリスト                                                                               |
+| 名前                 | 種類   | 形式      | 説明                                 |
+|--------------------|------|---------|------------------------------------|
+| regions            | Body | Array   | リージョンリスト                           |
 | regions.regionCode | Body | Enum    | リージョンコード<br/>- `KR1`:韓国(パンギョ)リージョン |
-| regions.isEnabled  | Body | Boolean | リージョンが有効かどうか                                                                           |
+| regions.isEnabled  | Body | Boolean | リージョンが有効かどうか                       |
 
 <details><summary>例</summary>
 <p>
@@ -596,29 +596,29 @@ GET /v3.0/db-instances/{dbInstanceId}
 
 このAPIはリクエスト本文を要求しません。
 
-| 名前 | 種類 | 形式 | 必須 | 説明 |
-|---|---|---|---|---|
-| dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
+| 名前           | 種類  | 形式   | 必須 | 説明           |
+|--------------|-----|------|----|--------------|
+| dbInstanceId | URL | UUID | O  | DBインスタンスの識別子 |
 
 #### レスポンス
 
-| 名前                 | 種類 | 形式 | 説明 |
-|--------------------|---|---|---|
-| dbInstanceId       |Body|UUID|DBインスタンスの識別子|
-| dbInstanceGroupId  |Body|UUID|DBインスタンスグループの識別子|
-| dbInstanceName     |Body|String|DBインスタンスを識別できる名前|
-| description        |Body|String|DBインスタンスの追加情報|
-| dbVersion          |Body|Enum|DBエンジンタイプ |
-| dbPort             |Body|Number|DBポート|
-| dbInstanceType     |Body|Enum|DBインスタンスの役割タイプ<br/>- `MASTER`:マスター<br/>- `FAILED_MASTER`:フェイルオーバーしたマスター<br/>- `CANDIDATE_MASTER`:予備マスター<br/>- `READ_ONLY_SLAVE`:リードレプリカ|
-| dbInstanceStatus   |Body|Enum|DBインスタンスの現在状態|
-| progressStatus     |Body|Enum|DBインスタンスの現在作業進行状態|
-| dbFlavorId         |Body|UUID|DBインスタンス仕様の識別子 |
-| parameterGroupId   |Body|UUID|DBインスタンスに適用されたパラメータグループの識別子|
-| dbSecurityGroupIds |Body|Array|DBインスタンスに適用されたDBセキュリティグループの識別子リスト|
-| useDeletionProtection |Body|Boolean|DB 인스턴스 삭제 보호 여부|
-| createdYmdt        |Body|DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
-| updatedYmdt        |Body|DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| 名前                    | 種類   | 形式       | 説明                                                                                                                                      |
+|-----------------------|------|----------|-----------------------------------------------------------------------------------------------------------------------------------------|
+| dbInstanceId          | Body | UUID     | DBインスタンスの識別子                                                                                                                            |
+| dbInstanceGroupId     | Body | UUID     | DBインスタンスグループの識別子                                                                                                                        |
+| dbInstanceName        | Body | String   | DBインスタンスを識別できる名前                                                                                                                        |
+| description           | Body | String   | DBインスタンスの追加情報                                                                                                                           |
+| dbVersion             | Body | Enum     | DBエンジンタイプ                                                                                                                               |
+| dbPort                | Body | Number   | DBポート                                                                                                                                   |
+| dbInstanceType        | Body | Enum     | DBインスタンスの役割タイプ<br/>- `MASTER`:マスター<br/>- `FAILED_MASTER`:フェイルオーバーしたマスター<br/>- `CANDIDATE_MASTER`:予備マスター<br/>- `READ_ONLY_SLAVE`:リードレプリカ |
+| dbInstanceStatus      | Body | Enum     | DBインスタンスの現在状態                                                                                                                           |
+| progressStatus        | Body | Enum     | DBインスタンスの現在作業進行状態                                                                                                                       |
+| dbFlavorId            | Body | UUID     | DBインスタンス仕様の識別子                                                                                                                          |
+| parameterGroupId      | Body | UUID     | DBインスタンスに適用されたパラメータグループの識別子                                                                                                             |
+| dbSecurityGroupIds    | Body | Array    | DBインスタンスに適用されたDBセキュリティグループの識別子リスト                                                                                                       |
+| useDeletionProtection | Body | Boolean  | DB 인스턴스 삭제 보호 여부                                                                                                                        |
+| createdYmdt           | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                        |
+| updatedYmdt           | Body | DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                        |
 
 <details><summary>例</summary>
 <p>
@@ -661,39 +661,39 @@ POST /v3.0/db-instances
 
 #### リクエスト
 
-| 名前                                         | 種類 | 形式 | 必須 | 説明                                                                                                                                                                                                                             |
-|--------------------------------------------|---|---|---|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| dbInstanceName                             | Body | String | O | DBインスタンスを識別できる名前                                                                                                                                                                                                               |
-| description                                |Body|String|X| DBインスタンスの追加情報                                                                                                                                                                                                                  |
-| dbFlavorId                                 | Body | UUID | O | DBインスタンス仕様の識別子                                                                                                                                                                                                                 |
-| dbVersion                                  |Body|Enum|O| DBエンジンタイプ                                                                                                                                                                                                                      |
-| dbPort                                     |Body|Number|O| DBポート<br/>- 最小値: `3306`<br/>- 最大値: `43306`                                                                                                                                                                                     |
-| dbUserName                                 |Body|String|O| DBユーザーアカウント名                                                                                                                                                                                                                   |
-| dbPassword                                 |Body|String|O| DBユーザーアカウントのパスワード<br/>- 最小長さ: `4`<br/>- 最大長さ: `16`                                                                                                                                                                             |
-| parameterGroupId                           |Body|UUID|O| パラメータグループの識別子                                                                                                                                                                                                                  |
-| dbSecurityGroupIds                         |Body|Array|X| DBセキュリティグループの識別子リスト                                                                                                                                                                                                            ||network|Body|Object|O|ネットワーク情報オブジェクト|
-| userGroupIds                               |Body|Array|X| ユーザーグループの識別子リスト                                                                                                                                                                                                                |
-| useHighAvailability                        |Body|Boolean|X| 高可用性を使用するかどうか<br/>- デフォルト値: `false`                                                                                                                                                                                            |
-| pingInterval                               |Body|Number|X| 高可用性を使用する時、Ping間隔(秒)<br/>- デフォルト値: `3`<br/>- 最小値: `1`<br/>- 最大値: `600`                                                                                                                                                         |
-| useDefaultUserNotification                 |Body|Boolean|X| 基本アラームを使用するかどうか<br/>- デフォルト値: `false`                                                                                                                                                                                          |
-| useDeletionProtection                        |Body|Boolean|X| 삭제 보호 여부<br/>- 기본값: `false`                                                                                                                                                                                                 |
-| network                                    |Body|Object|O| ネットワーク情報オブジェクト                                                                                                                                                                                                                 |
-| network.subnetId                           |Body|UUID|O| サブネットの識別子                                                                                                                                                                                                                      |
-| network.usePublicAccess                    |Body|Boolean|X| 外部接続可否<br/>- デフォルト値: `false`                                                                                                                                                                                                   |
-| network.availabilityZone                   | Body|Enum|O| DBインスタンスを作成するアベイラビリティゾーン<br/>- 例: `kr-pub-a`                                                                                                                                                                                   |
-| storage                                    |Body|Object|O| ストレージ情報オブジェクト                                                                                                                                                                                                                  |    
-| storage.storageType                        |Body|Enum|O| データストレージタイプ<br/>- 例: `General SSD`                                                                                                                                                                                             |
-| storage.storageSize                        |Body|Number|O| データストレージサイズ(GB)<br/>- 最小値: `20`<br/>- 最大値: `2048`                                                                                                                                                                              |
-| backup                                     |Body|Object|O| バックアップ情報オブジェクト                                                                                                                                                                                                                 |
-| backup.backupPeriod                        |Body|Number|O| バックアップ保管期間(日)<br/>- 最小値: `0`<br/>- 最大値: `730`                                                                                                                                                                                  |
-| backup.ftwrlWaitTimeout                    |Body|Number|X| クエリ遅延待機時間(秒)<br/>- デフォルト値: `1800`<br/>- 最小値: `0`<br/>- 最大値: `21600`                                                                                                                                                            |
-| backup.backupRetryCount                    |Body|Number|X| バックアップ再試行回数<br/>- デフォルト値: `0`<br/>- 最小値: `0`<br/>- 最大値: `10`                                                                                                                                                                   |
-| backup.replicationRegion                   |Body|Enum|X| バックアップ複製リージョン<br />- `KR1`:韓国(パンギョ)<br/>- `KR2`:韓国(ピョンチョン)<br/>- `JP1`:日本(東京)                                                                                                                                                  |
-| backup.useBackupLock                       |Body|Boolean|X| テーブルロックを使用するかどうか<br/>- デフォルト値: `true`                                                                                                                                                                                          |
-| backup.backupSchedules                     |Body|Array|O| バックアップスケジュールリスト                                                                                                                                                                                                                |
-| backup.backupSchedules.backupWndBgnTime    |Body|String|O| バックアップ開始時刻<br/>- 例: `00:00:00`                                                                                                                                                                                                 |
-| backup.backupSchedules.backupWndDuration   |Body|Enum|O| バックアップDuration<br/>バックアップ開始時刻からDuration内に自動バックアップが実行されます。<br/>- `HALF_AN_HOUR`: 30分<br/>- `ONE_HOUR`: 1時間<br/>- `ONE_HOUR_AND_HALF`: 1時間30分<br/>- `TWO_HOURS`: 2時間<br/>- `TWO_HOURS_AND_HALF`: 2時間30分<br/>- `THREE_HOURS`: 3時間 |
-| backup.backupSchedules.backupRetryExpireTime |Body|String|O| バックアップ再試行期限<br/>- バックアップ再試行期限時刻はバックアップ開始時刻より前または後でなければなりません。<br/>- 例: `01:30:00`                                                                                                                                               |
+| 名前                                           | 種類   | 形式      | 必須 | 説明                                                                                                                                                                                                                             |
+|----------------------------------------------|------|---------|----|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| dbInstanceName                               | Body | String  | O  | DBインスタンスを識別できる名前                                                                                                                                                                                                               |
+| description                                  | Body | String  | X  | DBインスタンスの追加情報                                                                                                                                                                                                                  |
+| dbFlavorId                                   | Body | UUID    | O  | DBインスタンス仕様の識別子                                                                                                                                                                                                                 |
+| dbVersion                                    | Body | Enum    | O  | DBエンジンタイプ                                                                                                                                                                                                                      |
+| dbPort                                       | Body | Number  | O  | DBポート<br/>- 最小値: `3306`<br/>- 最大値: `43306`                                                                                                                                                                                     |
+| dbUserName                                   | Body | String  | O  | DBユーザーアカウント名                                                                                                                                                                                                                   |
+| dbPassword                                   | Body | String  | O  | DBユーザーアカウントのパスワード<br/>- 最小長さ: `4`<br/>- 最大長さ: `16`                                                                                                                                                                             |
+| parameterGroupId                             | Body | UUID    | O  | パラメータグループの識別子                                                                                                                                                                                                                  |
+| dbSecurityGroupIds                           | Body | Array   | X  | DBセキュリティグループの識別子リスト                                                                                                                                                                                                            ||network|Body|Object|O|ネットワーク情報オブジェクト|
+| userGroupIds                                 | Body | Array   | X  | ユーザーグループの識別子リスト                                                                                                                                                                                                                |
+| useHighAvailability                          | Body | Boolean | X  | 高可用性を使用するかどうか<br/>- デフォルト値: `false`                                                                                                                                                                                            |
+| pingInterval                                 | Body | Number  | X  | 高可用性を使用する時、Ping間隔(秒)<br/>- デフォルト値: `3`<br/>- 最小値: `1`<br/>- 最大値: `600`                                                                                                                                                         |
+| useDefaultUserNotification                   | Body | Boolean | X  | 基本アラームを使用するかどうか<br/>- デフォルト値: `false`                                                                                                                                                                                          |
+| useDeletionProtection                        | Body | Boolean | X  | 삭제 보호 여부<br/>- 기본값: `false`                                                                                                                                                                                                    |
+| network                                      | Body | Object  | O  | ネットワーク情報オブジェクト                                                                                                                                                                                                                 |
+| network.subnetId                             | Body | UUID    | O  | サブネットの識別子                                                                                                                                                                                                                      |
+| network.usePublicAccess                      | Body | Boolean | X  | 外部接続可否<br/>- デフォルト値: `false`                                                                                                                                                                                                   |
+| network.availabilityZone                     | Body | Enum    | O  | DBインスタンスを作成するアベイラビリティゾーン<br/>- 例: `kr-pub-a`                                                                                                                                                                                   |
+| storage                                      | Body | Object  | O  | ストレージ情報オブジェクト                                                                                                                                                                                                                  |    
+| storage.storageType                          | Body | Enum    | O  | データストレージタイプ<br/>- 例: `General SSD`                                                                                                                                                                                             |
+| storage.storageSize                          | Body | Number  | O  | データストレージサイズ(GB)<br/>- 最小値: `20`<br/>- 最大値: `2048`                                                                                                                                                                              |
+| backup                                       | Body | Object  | O  | バックアップ情報オブジェクト                                                                                                                                                                                                                 |
+| backup.backupPeriod                          | Body | Number  | O  | バックアップ保管期間(日)<br/>- 最小値: `0`<br/>- 最大値: `730`                                                                                                                                                                                  |
+| backup.ftwrlWaitTimeout                      | Body | Number  | X  | クエリ遅延待機時間(秒)<br/>- デフォルト値: `1800`<br/>- 最小値: `0`<br/>- 最大値: `21600`                                                                                                                                                            |
+| backup.backupRetryCount                      | Body | Number  | X  | バックアップ再試行回数<br/>- デフォルト値: `0`<br/>- 最小値: `0`<br/>- 最大値: `10`                                                                                                                                                                   |
+| backup.replicationRegion                     | Body | Enum    | X  | バックアップ複製リージョン<br />- `KR1`:韓国(パンギョ)<br/>- `KR2`:韓国(ピョンチョン)<br/>- `JP1`:日本(東京)                                                                                                                                                  |
+| backup.useBackupLock                         | Body | Boolean | X  | テーブルロックを使用するかどうか<br/>- デフォルト値: `true`                                                                                                                                                                                          |
+| backup.backupSchedules                       | Body | Array   | O  | バックアップスケジュールリスト                                                                                                                                                                                                                |
+| backup.backupSchedules.backupWndBgnTime      | Body | String  | O  | バックアップ開始時刻<br/>- 例: `00:00:00`                                                                                                                                                                                                 |
+| backup.backupSchedules.backupWndDuration     | Body | Enum    | O  | バックアップDuration<br/>バックアップ開始時刻からDuration内に自動バックアップが実行されます。<br/>- `HALF_AN_HOUR`: 30分<br/>- `ONE_HOUR`: 1時間<br/>- `ONE_HOUR_AND_HALF`: 1時間30分<br/>- `TWO_HOURS`: 2時間<br/>- `TWO_HOURS_AND_HALF`: 2時間30分<br/>- `THREE_HOURS`: 3時間 |
+| backup.backupSchedules.backupRetryExpireTime | Body | String  | O  | バックアップ再試行期限<br/>- バックアップ再試行期限時刻はバックアップ開始時刻より前または後でなければなりません。<br/>- 例: `01:30:00`                                                                                                                                               |
 
 <details><summary>例</summary>
 <p>
@@ -905,33 +905,33 @@ POST /v3.0/db-instances/{dbInstanceId}/replicate
 
 #### リクエスト
 
-| 名前                                           | 種類 | 形式 | 必須 | 説明 |
-|----------------------------------------------|---|---|---|---|
-| dbInstanceId                                 | URL | UUID | O | DBインスタンスの識別子 |
-| dbInstanceName                               | Body | String | O | DBインスタンスを識別できる名前 |
-| description                                  |Body|String|X|DBインスタンスの追加情報|
-| dbFlavorId                                   | Body | UUID | X | DBインスタンス仕様の識別子<br/>- デフォルト値:原本DBインスタンス値 |
-| dbPort                                       |Body|Number|X|DBポート<br/>- デフォルト値:原本DBインスタンス値<br/>- 最小値: `3306`<br/>- 最大値: `43306`|
-| parameterGroupId                             |Body|UUID|X|パラメータグループの識別子<br/>- デフォルト値:原本DBインスタンス値|
-| dbSecurityGroupIds                           |Body|Array|X|DBセキュリティグループの識別子リスト<br/>- デフォルト値:原本DBインスタンス値|
-| userGroupIds                                 |Body|Array|X|ユーザーグループの識別子リスト|
-| useDefaultUserNotification                   |Body|Boolean|X|基本アラームを使用するかどうか<br/>- デフォルト値: `false`|
-|useDeletionProtection|Body|Boolean|X|삭제 보호 여부<br/>- 기본값: `false`|
-| network                                      |Body|Object|O|ネットワーク情報オブジェクト|
-| network.usePublicAccess                      |Body|Boolean|X|外部接続可否<br/>- デフォルト値:原本DBインスタンス値|
-| network.availabilityZone                     | Body|Enum|O|DBインスタンスを作成するアベイラビリティゾーン<br/>- 例: `kr-pub-a`|
-| storage                                      |Body|Object|X|ストレージ情報オブジェクト|    
-| storage.storageSize                          |Body|Number|X|データストレージサイズ(GB)<br/>- デフォルト値:原本DBインスタンス値<br/>- 最小値: `20`<br/>- 最大値: `2048`|
-| backup                                       |Body|Object|X|バックアップ情報オブジェクト|
-| backup.backupPeriod                          |Body|Number|X|バックアップ保管期間(日)<br/>- デフォルト値:原本DBインスタンス値<br/>- 最小値: `0`<br/>- 最大値: `730`|
-| backup.ftwrlWaitTimeout                      |Body|Number|X|クエリ遅延待機時間(秒)<br/>- デフォルト値:原本DBインスタンス値<br/>- 最小値: `0`<br/>- 最大値: `21600`|
-| backup.backupRetryCount                      |Body|Number|X|バックアップ再試行回数<br/>- デフォルト値:原本DBインスタンス値<br/>- 最小値: `0`<br/>- 最大値: `10`|
-| backup.replicationRegion                     |Body|Enum|X|バックアップ複製リージョン<br />- `KR1`:韓国(パンギョ)<br/>- `KR2`:韓国(ピョンチョン)<br/>- `JP1`:日本(東京)<br/>- デフォルト値:原本DBインスタンス値|
-| backup.useBackupLock                         |Body|Boolean|X|テーブルロックを使用するかどうか<br/>- デフォルト値:原本DBインスタンス値|
-| backup.backupSchedules                       |Body|Array|X|バックアップスケジュールリスト|
-| backup.backupSchedules.backupWndBgnTime      |Body|String|X|バックアップ開始時刻<br/>- 例: `00:00:00`<br/>- デフォルト値:原本DBインスタンス値|
-| backup.backupSchedules.backupWndDuration     |Body|Enum|X|バックアップDuration<br/>バックアップ開始時刻からDuration内に自動バックアップが実行されます。<br/>- `HALF_AN_HOUR`: 30分<br/>- `ONE_HOUR`: 1時間<br/>- `ONE_HOUR_AND_HALF`: 1時間30分<br/>- `TWO_HOURS`: 2時間<br/>- `TWO_HOURS_AND_HALF`: 2時間30分<br/>- `THREE_HOURS`: 3時間<br/>- デフォルト値:原本DBインスタンス値|
-| backup.backupSchedules.backupRetryExpireTime |Body|String|X||バックアップ再試行期限<br/>- バックアップ再試行期限時刻はバックアップ開始時刻より前または後でなければなりません。<br/>- 例: `01:30:00`<br/>- デフォルト値:原本DBインスタンス値|
+| 名前                                           | 種類   | 形式      | 必須 | 説明                                                                                                                                                                                                                                                      |
+|----------------------------------------------|------|---------|----|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| dbInstanceId                                 | URL  | UUID    | O  | DBインスタンスの識別子                                                                                                                                                                                                                                            |
+| dbInstanceName                               | Body | String  | O  | DBインスタンスを識別できる名前                                                                                                                                                                                                                                        |
+| description                                  | Body | String  | X  | DBインスタンスの追加情報                                                                                                                                                                                                                                           |
+| dbFlavorId                                   | Body | UUID    | X  | DBインスタンス仕様の識別子<br/>- デフォルト値:原本DBインスタンス値                                                                                                                                                                                                                 |
+| dbPort                                       | Body | Number  | X  | DBポート<br/>- デフォルト値:原本DBインスタンス値<br/>- 最小値: `3306`<br/>- 最大値: `43306`                                                                                                                                                                                     |
+| parameterGroupId                             | Body | UUID    | X  | パラメータグループの識別子<br/>- デフォルト値:原本DBインスタンス値                                                                                                                                                                                                                  |
+| dbSecurityGroupIds                           | Body | Array   | X  | DBセキュリティグループの識別子リスト<br/>- デフォルト値:原本DBインスタンス値                                                                                                                                                                                                            |
+| userGroupIds                                 | Body | Array   | X  | ユーザーグループの識別子リスト                                                                                                                                                                                                                                         |
+| useDefaultUserNotification                   | Body | Boolean | X  | 基本アラームを使用するかどうか<br/>- デフォルト値: `false`                                                                                                                                                                                                                   |
+| useDeletionProtection                        | Body | Boolean | X  | 삭제 보호 여부<br/>- 기본값: `false`                                                                                                                                                                                                                             |
+| network                                      | Body | Object  | O  | ネットワーク情報オブジェクト                                                                                                                                                                                                                                          |
+| network.usePublicAccess                      | Body | Boolean | X  | 外部接続可否<br/>- デフォルト値:原本DBインスタンス値                                                                                                                                                                                                                         |
+| network.availabilityZone                     | Body | Enum    | O  | DBインスタンスを作成するアベイラビリティゾーン<br/>- 例: `kr-pub-a`                                                                                                                                                                                                            |
+| storage                                      | Body | Object  | X  | ストレージ情報オブジェクト                                                                                                                                                                                                                                           |    
+| storage.storageSize                          | Body | Number  | X  | データストレージサイズ(GB)<br/>- デフォルト値:原本DBインスタンス値<br/>- 最小値: `20`<br/>- 最大値: `2048`                                                                                                                                                                              |
+| backup                                       | Body | Object  | X  | バックアップ情報オブジェクト                                                                                                                                                                                                                                          |
+| backup.backupPeriod                          | Body | Number  | X  | バックアップ保管期間(日)<br/>- デフォルト値:原本DBインスタンス値<br/>- 最小値: `0`<br/>- 最大値: `730`                                                                                                                                                                                  |
+| backup.ftwrlWaitTimeout                      | Body | Number  | X  | クエリ遅延待機時間(秒)<br/>- デフォルト値:原本DBインスタンス値<br/>- 最小値: `0`<br/>- 最大値: `21600`                                                                                                                                                                                 |
+| backup.backupRetryCount                      | Body | Number  | X  | バックアップ再試行回数<br/>- デフォルト値:原本DBインスタンス値<br/>- 最小値: `0`<br/>- 最大値: `10`                                                                                                                                                                                     |
+| backup.replicationRegion                     | Body | Enum    | X  | バックアップ複製リージョン<br />- `KR1`:韓国(パンギョ)<br/>- `KR2`:韓国(ピョンチョン)<br/>- `JP1`:日本(東京)<br/>- デフォルト値:原本DBインスタンス値                                                                                                                                                  |
+| backup.useBackupLock                         | Body | Boolean | X  | テーブルロックを使用するかどうか<br/>- デフォルト値:原本DBインスタンス値                                                                                                                                                                                                               |
+| backup.backupSchedules                       | Body | Array   | X  | バックアップスケジュールリスト                                                                                                                                                                                                                                         |
+| backup.backupSchedules.backupWndBgnTime      | Body | String  | X  | バックアップ開始時刻<br/>- 例: `00:00:00`<br/>- デフォルト値:原本DBインスタンス値                                                                                                                                                                                                 |
+| backup.backupSchedules.backupWndDuration     | Body | Enum    | X  | バックアップDuration<br/>バックアップ開始時刻からDuration内に自動バックアップが実行されます。<br/>- `HALF_AN_HOUR`: 30分<br/>- `ONE_HOUR`: 1時間<br/>- `ONE_HOUR_AND_HALF`: 1時間30分<br/>- `TWO_HOURS`: 2時間<br/>- `TWO_HOURS_AND_HALF`: 2時間30分<br/>- `THREE_HOURS`: 3時間<br/>- デフォルト値:原本DBインスタンス値 |
+| backup.backupSchedules.backupRetryExpireTime | Body | String  | X  |                                                                                                                                                                                                                                                         |バックアップ再試行期限<br/>- バックアップ再試行期限時刻はバックアップ開始時刻より前または後でなければなりません。<br/>- 例: `01:30:00`<br/>- デフォルト値:原本DBインスタンス値|
 
 <details><summary>例</summary>
 <p>
@@ -990,10 +990,11 @@ PUT /v3.0/db-instances/{dbInstanceId}/deletion-protection
 ```
 
 #### 요청
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-| --- | --- | --- | --- | --- |
-| dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자 |
-| useDeletionProtection | Body | Boolean | O | 삭제 보호 여부 |
+
+| 이름                    | 종류   | 형식      | 필수 | 설명           |
+|-----------------------|------|---------|----|--------------|
+| dbInstanceId          | URL  | UUID    | O  | DB 인스턴스의 식별자 |
+| useDeletionProtection | Body | Boolean | O  | 삭제 보호 여부     |
 
 #### 응답
 
@@ -1736,37 +1737,37 @@ POST /v3.0/backups/{backupId}/restore
 
 #### リクエスト
 
-| 名前                                           | 種類   | 形式    | 必須 | 説明                                                                                                                                                                                                                          |
-|----------------------------------------------|--------|---------|----|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| backupId                                     | URL    | UUID    | O  | バックアップの識別子                                                                                                                                                                                                                  |
-| dbInstanceName                               | Body   | String  | O  | DBインスタンスを識別できる名前                                                                                                                                                                                                            |
-| description                                  | Body   | String  | X  | DBインスタンスの追加情報                                                                                                                                                                                                               |
-| dbFlavorId                                   | Body   | UUID    | O  | DBインスタンス仕様の識別子                                                                                                                                                                                                              |
-| dbPort                                       | Body   | Integer | O  | DBポート<br/>- 最小値: `3306`<br/>- 最大値: `43306`                                                                                                                                                                                  |
-| parameterGroupId                             | Body   | UUID    | O  | パラメータグループの識別子                                                                                                                                                                                                               |
-| dbSecurityGroupIds                           | Body   | Array   | X  | DBセキュリティグループの識別子リスト                                                                                                                                                                                                         ||network|Body|Object|O|ネットワーク情報オブジェクト|
-| userGroupIds                                 | Body   | Array   | X  | ユーザーグループの識別子リスト                                                                                                                                                                                                             |
-| useHighAvailability                          | Body   | Boolean | X  | 高可用性を使用するかどうか<br/>- デフォルト値: `false`                                                                                                                                                                                         |
-| pingInterval                                 | Body   | Number  | X  | 高可用性を使用する時、Ping間隔(秒)<br/>- デフォルト値: `3`<br/>- 最小値: `1`<br/>- 最大値: `600`                                                                                                                                                      |
-| useDefaultNotification                       | Body   | Boolean | X  | 基本通知を使用するかどうか<br/>- デフォルト値: `false`                                                                                                                                                                                         |
-| useDeletionProtection                        | Body   | Boolean | X  | 삭제 보호 여부<br/>- 기본값: `false`                                                                                                                                                                                                 | 
-| network                                      | Body   | Object  | O  | ネットワーク情報オブジェクト                                                                                                                                                                                                              |
-| network.subnetId                             | Body   | UUID    | O  | サブネットの識別子                                                                                                                                                                                                                   |
-| network.usePublicAccess                      | Body   | Boolean | X  | 外部接続可否<br/>- デフォルト値: `false`                                                                                                                                                                                                |
-| network.availabilityZone                     | Body   | Enum    | O  | DBインスタンスを作成するアベイラビリティゾーン<br/>- 例: `kr-pub-a`                                                                                                                                                                                |
-| storage                                      | Body   | Object  | O  | ストレージ情報オブジェクト                                                                                                                                                                                                               |    
-| storage.storageType                          | Body   | Enum    | O  | データストレージタイプ<br/>- 例: `General SSD`                                                                                                                                                                                          |
-| storage.storageSize                          | Body   | Number  | O  | データストレージサイズ(GB)<br/>- 最小値: `20`<br/>- 最大値: `2048`                                                                                                                                                                           |
-| backup                                       | Body   | Object  | O  | バックアップ情報オブジェクト                                                                                                                                                                                                              |
-| backup.backupPeriod                          | Body   | Number  | O  | バックアップ保管期間(日)<br/>- 最小値: `0`<br/>- 最大値: `730`                                                                                                                                                                               |
-| backup.ftwrlWaitTimeout                      | Body   | Number  | X  | クエリ遅延待機時間(秒)<br/>- デフォルト値: `1800`<br/>- 最小値: `0`<br/>- 最大値: `21600`                                                                                                                                                         |
-| backup.backupRetryCount                      | Body   | Number  | X  | バックアップ再試行回数<br/>- デフォルト値: `0`<br/>- 最小値: `0`<br/>- 最大値: `10`                                                                                                                                                                |
-| backup.replicationRegion                     | Body   | Enum    | X  | バックアップ複製リージョン<br />- `KR1`:韓国(パンギョ)<br/>- `KR2`:韓国(ピョンチョン)<br/>- `JP1`:日本(東京)                                                                                                                                               |
-| backup.useBackupLock                         | Body   | Boolean | X  | テーブルロックを使用するかどうか<br/>- デフォルト値: `true`                                                                                                                                                                                       |
-| backup.backupSchedules                       | Body   | Array   | O  | バックアップスケジュールリスト                                                                                                                                                                                                             |
-| backup.backupSchedules.backupWndBgnTime      | Body   | String  | O  | バックアップ開始時刻<br/>- 例: `00:00:00`                                                                                                                                                                                              |
-| backup.backupSchedules.backupWndDuration     | Body   | Enum    | O  | バックアップDuration<br/>バックアップ開始時刻からDuration内に自動バックアップが実行されます。<br/>- `HALF_AN_HOUR`: 30分<br/>- `ONE_HOUR`: 1時間<br/>- `ONE_HOUR_AND_HALF`: 1時間30分<br/>- `TWO_HOURS`: 2時間<br/>- `TWO_HOURS_AND_HALF`: 2時間30分<br/>- `THREE_HOURS`: 3時間 |
-| backup.backupSchedules.backupRetryExpireTime | Body   | String  | O  | バックアップ再試行期限<br/>- バックアップ再試行期限時刻はバックアップ開始時刻より前または後でなければなりません。<br/>- 例: `01:30:00`                                                                                                                                            |
+| 名前                                           | 種類   | 形式      | 必須 | 説明                                                                                                                                                                                                                             |
+|----------------------------------------------|------|---------|----|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| backupId                                     | URL  | UUID    | O  | バックアップの識別子                                                                                                                                                                                                                     |
+| dbInstanceName                               | Body | String  | O  | DBインスタンスを識別できる名前                                                                                                                                                                                                               |
+| description                                  | Body | String  | X  | DBインスタンスの追加情報                                                                                                                                                                                                                  |
+| dbFlavorId                                   | Body | UUID    | O  | DBインスタンス仕様の識別子                                                                                                                                                                                                                 |
+| dbPort                                       | Body | Integer | O  | DBポート<br/>- 最小値: `3306`<br/>- 最大値: `43306`                                                                                                                                                                                     |
+| parameterGroupId                             | Body | UUID    | O  | パラメータグループの識別子                                                                                                                                                                                                                  |
+| dbSecurityGroupIds                           | Body | Array   | X  | DBセキュリティグループの識別子リスト                                                                                                                                                                                                            ||network|Body|Object|O|ネットワーク情報オブジェクト|
+| userGroupIds                                 | Body | Array   | X  | ユーザーグループの識別子リスト                                                                                                                                                                                                                |
+| useHighAvailability                          | Body | Boolean | X  | 高可用性を使用するかどうか<br/>- デフォルト値: `false`                                                                                                                                                                                            |
+| pingInterval                                 | Body | Number  | X  | 高可用性を使用する時、Ping間隔(秒)<br/>- デフォルト値: `3`<br/>- 最小値: `1`<br/>- 最大値: `600`                                                                                                                                                         |
+| useDefaultNotification                       | Body | Boolean | X  | 基本通知を使用するかどうか<br/>- デフォルト値: `false`                                                                                                                                                                                            |
+| useDeletionProtection                        | Body | Boolean | X  | 삭제 보호 여부<br/>- 기본값: `false`                                                                                                                                                                                                    | 
+| network                                      | Body | Object  | O  | ネットワーク情報オブジェクト                                                                                                                                                                                                                 |
+| network.subnetId                             | Body | UUID    | O  | サブネットの識別子                                                                                                                                                                                                                      |
+| network.usePublicAccess                      | Body | Boolean | X  | 外部接続可否<br/>- デフォルト値: `false`                                                                                                                                                                                                   |
+| network.availabilityZone                     | Body | Enum    | O  | DBインスタンスを作成するアベイラビリティゾーン<br/>- 例: `kr-pub-a`                                                                                                                                                                                   |
+| storage                                      | Body | Object  | O  | ストレージ情報オブジェクト                                                                                                                                                                                                                  |    
+| storage.storageType                          | Body | Enum    | O  | データストレージタイプ<br/>- 例: `General SSD`                                                                                                                                                                                             |
+| storage.storageSize                          | Body | Number  | O  | データストレージサイズ(GB)<br/>- 最小値: `20`<br/>- 最大値: `2048`                                                                                                                                                                              |
+| backup                                       | Body | Object  | O  | バックアップ情報オブジェクト                                                                                                                                                                                                                 |
+| backup.backupPeriod                          | Body | Number  | O  | バックアップ保管期間(日)<br/>- 最小値: `0`<br/>- 最大値: `730`                                                                                                                                                                                  |
+| backup.ftwrlWaitTimeout                      | Body | Number  | X  | クエリ遅延待機時間(秒)<br/>- デフォルト値: `1800`<br/>- 最小値: `0`<br/>- 最大値: `21600`                                                                                                                                                            |
+| backup.backupRetryCount                      | Body | Number  | X  | バックアップ再試行回数<br/>- デフォルト値: `0`<br/>- 最小値: `0`<br/>- 最大値: `10`                                                                                                                                                                   |
+| backup.replicationRegion                     | Body | Enum    | X  | バックアップ複製リージョン<br />- `KR1`:韓国(パンギョ)<br/>- `KR2`:韓国(ピョンチョン)<br/>- `JP1`:日本(東京)                                                                                                                                                  |
+| backup.useBackupLock                         | Body | Boolean | X  | テーブルロックを使用するかどうか<br/>- デフォルト値: `true`                                                                                                                                                                                          |
+| backup.backupSchedules                       | Body | Array   | O  | バックアップスケジュールリスト                                                                                                                                                                                                                |
+| backup.backupSchedules.backupWndBgnTime      | Body | String  | O  | バックアップ開始時刻<br/>- 例: `00:00:00`                                                                                                                                                                                                 |
+| backup.backupSchedules.backupWndDuration     | Body | Enum    | O  | バックアップDuration<br/>バックアップ開始時刻からDuration内に自動バックアップが実行されます。<br/>- `HALF_AN_HOUR`: 30分<br/>- `ONE_HOUR`: 1時間<br/>- `ONE_HOUR_AND_HALF`: 1時間30分<br/>- `TWO_HOURS`: 2時間<br/>- `TWO_HOURS_AND_HALF`: 2時間30分<br/>- `THREE_HOURS`: 3時間 |
+| backup.backupSchedules.backupRetryExpireTime | Body | String  | O  | バックアップ再試行期限<br/>- バックアップ再試行期限時刻はバックアップ開始時刻より前または後でなければなりません。<br/>- 例: `01:30:00`                                                                                                                                               |
 
 <details><summary>例</summary>
 <p>
@@ -2572,15 +2573,15 @@ GET /v3.0/user-groups/{userGroupId}
 
 #### レスポンス
 
-| 名前               | 種類   | 形式       | 説明                               |
-|------------------|------|----------|----------------------------------|
-| userGroupId      | Body | UUID     | ユーザーグループの識別子                     |
-| userGroupName    | Body | String   | ユーザーグループを識別できる名前                 |
-| userGroupTypeCode    | Body | Enum   | ユーザーグループの種類  <br /> `ENTIRE`:プロジェクトメンバー全体を含むユーザーグループ <br /> `INDIVIDUAL_MEMBER`:特定のプロジェクトメンバーをを含むユーザーグループ    |
-| members          | Body | Array    | プロジェクトメンバーリスト                    |
-| members.memberId | Body | UUID     | プロジェクトメンバーの識別子                   |
-| createdYmdt      | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
-| updatedYmdt      | Body | DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| 名前                | 種類   | 形式       | 説明                                                                                                        |
+|-------------------|------|----------|-----------------------------------------------------------------------------------------------------------|
+| userGroupId       | Body | UUID     | ユーザーグループの識別子                                                                                              |
+| userGroupName     | Body | String   | ユーザーグループを識別できる名前                                                                                          |
+| userGroupTypeCode | Body | Enum     | ユーザーグループの種類  <br /> `ENTIRE`:プロジェクトメンバー全体を含むユーザーグループ <br /> `INDIVIDUAL_MEMBER`:特定のプロジェクトメンバーをを含むユーザーグループ |
+| members           | Body | Array    | プロジェクトメンバーリスト                                                                                             |
+| members.memberId  | Body | UUID     | プロジェクトメンバーの識別子                                                                                            |
+| createdYmdt       | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                          |
+| updatedYmdt       | Body | DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                          |
 
 <details><summary>例</summary>
 <p>
@@ -2618,11 +2619,11 @@ POST /v3.0/user-groups
 
 #### リクエスト
 
-| 名前            | 種類   | 形式     | 必須 | 説明                |
-|---------------|------|--------|----|-------------------|
-| userGroupName | Body | String | O  | ユーザーグループを識別できる名前  |
-| memberIds     | Body | Array  | O  | プロジェクトメンバーの識別子リスト <br /> `selectAllYN`がtrueの場合、当該フィールドの値は無視されます   |
-|    selectAllYN  | Body | Boolean  | X  | プロジェクトメンバー全体かどうか <br /> trueの場合、当該グループは全メンバーに対して設定されます  |
+| 名前            | 種類   | 形式      | 必須 | 説明                                                              |
+|---------------|------|---------|----|-----------------------------------------------------------------|
+| userGroupName | Body | String  | O  | ユーザーグループを識別できる名前                                                |
+| memberIds     | Body | Array   | O  | プロジェクトメンバーの識別子リスト <br /> `selectAllYN`がtrueの場合、当該フィールドの値は無視されます |
+| selectAllYN   | Body | Boolean | X  | プロジェクトメンバー全体かどうか <br /> trueの場合、当該グループは全メンバーに対して設定されます          |
 
 <details><summary>例</summary>
 <p>
@@ -2633,12 +2634,14 @@ POST /v3.0/user-groups
     "memberIds": ["1321e759-2ef3-4b85-9921-b13e918b24b5"]
 }
 ```
+
 ```json
 {
     "userGroupName": "dev-team",
     "selectAllYN":true
 }
 ```
+
 </p>
 </details>
 
@@ -2658,12 +2661,12 @@ PUT /v3.0/user-groups/{userGroupId}
 
 #### リクエスト
 
-| 名前            | 種類   | 形式     | 必須 | 説明                |
-|---------------|------|--------|----|-------------------|
-| userGroupId   | URL  | UUID   | O  | ユーザーグループの識別子      |
-| userGroupName | Body | String | X  | ユーザーグループを識別できる名前  |
-| memberIds     | Body | Array  | X  | プロジェクトメンバーの識別子リスト |
-|    selectAllYN  | Body | Boolean  | X  | プロジェクトメンバー全体かどうか<br /> trueの場合、当該グループは全メンバーに対して設定されます  |
+| 名前            | 種類   | 形式      | 必須 | 説明                                                    |
+|---------------|------|---------|----|-------------------------------------------------------|
+| userGroupId   | URL  | UUID    | O  | ユーザーグループの識別子                                          |
+| userGroupName | Body | String  | X  | ユーザーグループを識別できる名前                                      |
+| memberIds     | Body | Array   | X  | プロジェクトメンバーの識別子リスト                                     |
+| selectAllYN   | Body | Boolean | X  | プロジェクトメンバー全体かどうか<br /> trueの場合、当該グループは全メンバーに対して設定されます |
 
 <details><summary>例</summary>
 <p>
