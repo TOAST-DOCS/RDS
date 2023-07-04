@@ -2088,7 +2088,7 @@ PUT /v3.0/db-security-groups/{dbSecurityGroupId}
 このAPIはレスポンス本文を返しません。
 
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
@@ -2103,7 +2103,6 @@ PUT /v3.0/db-security-groups/{dbSecurityGroupId}
 
 </p>
 </details>
-
 
 ---
 
@@ -2126,7 +2125,7 @@ DELETE /v3.0/db-security-groups/{dbSecurityGroupId}
 このAPIはレスポンス本文を返しません。
 
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
@@ -2141,7 +2140,6 @@ DELETE /v3.0/db-security-groups/{dbSecurityGroupId}
 
 </p>
 </details>
-
 ---
 
 ### DBセキュリティグループルールを作成する
@@ -2495,7 +2493,7 @@ PUT /v3.0/parameter-groups/{parameterGroupId}
 このAPIはレスポンス本文を返しません。
 
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
@@ -2510,7 +2508,6 @@ PUT /v3.0/parameter-groups/{parameterGroupId}
 
 </p>
 </details>
-
 ---
 
 ### パラメータを修正する
@@ -2550,7 +2547,7 @@ PUT /v3.0/parameter-groups/{parameterGroupId}/parameters
 このAPIはレスポンス本文を返しません。
 
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
@@ -2565,7 +2562,6 @@ PUT /v3.0/parameter-groups/{parameterGroupId}/parameters
 
 </p>
 </details>
-
 ---
 
 ### パラメータグループを再設定する
@@ -2585,7 +2581,7 @@ PUT /v3.0/parameter-groups/{parameterGroupId}/reset
 このAPIはレスポンス本文を返しません。
 
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
@@ -2600,7 +2596,6 @@ PUT /v3.0/parameter-groups/{parameterGroupId}/reset
 
 </p>
 </details>
-
 ---
 
 ### パラメータグループを削除する
@@ -2622,7 +2617,7 @@ DELETE /v3.0/parameter-groups/{parameterGroupId}
 このAPIはレスポンス本文を返しません。
 
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
@@ -2637,7 +2632,6 @@ DELETE /v3.0/parameter-groups/{parameterGroupId}
 
 </p>
 </details>
-
 ---
 
 ## ユーザーグループ
@@ -2817,7 +2811,7 @@ PUT /v3.0/user-groups/{userGroupId}
 このAPIはレスポンス本文を返しません。
 
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
@@ -2832,7 +2826,6 @@ PUT /v3.0/user-groups/{userGroupId}
 
 </p>
 </details>
-
 ---
 
 ### ユーザーグループを削除する
@@ -2852,7 +2845,7 @@ DELETE /v3.0/user-groups/{userGroupId}
 このAPIはレスポンス本文を返しません。
 
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
@@ -2867,7 +2860,6 @@ DELETE /v3.0/user-groups/{userGroupId}
 
 </p>
 </details>
-
 ---
 
 ## 通知グループ
@@ -3068,7 +3060,7 @@ PUT /v3.0/notification-groups/{notificationGroupId}
 このAPIはレスポンス本文を返しません。
 
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
@@ -3083,7 +3075,6 @@ PUT /v3.0/notification-groups/{notificationGroupId}
 
 </p>
 </details>
-
 ---
 
 ### アラームグループを削除する
@@ -3105,7 +3096,7 @@ DELETE /v3.0/notification-groups/{notificationGroupId}
 このAPIはレスポンス本文を返しません。
 
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
@@ -3120,7 +3111,6 @@ DELETE /v3.0/notification-groups/{notificationGroupId}
 
 </p>
 </details>
-
 ---
 
 ## モニタリング

@@ -2087,7 +2087,7 @@ PUT /v3.0/db-security-groups/{dbSecurityGroupId}
 
 This API does not return a response body.
 
-<details><summary>예시</summary>
+<details><summary>Example</summary>
 <p>
 
 ```json
@@ -2102,7 +2102,6 @@ This API does not return a response body.
 
 </p>
 </details>
-
 
 ---
 
@@ -2124,7 +2123,7 @@ This API does not require a request body.
 
 This API does not return a response body.
 
-<details><summary>예시</summary>
+<details><summary>Example</summary>
 <p>
 
 ```json
@@ -2139,7 +2138,6 @@ This API does not return a response body.
 
 </p>
 </details>
-
 ---
 
 ### Create DB Security Group
@@ -2490,7 +2488,7 @@ PUT /v3.0/parameter-groups/{parameterGroupId}
 
 This API does not return a response body.
 
-<details><summary>예시</summary>
+<details><summary>Example</summary>
 <p>
 
 ```json
@@ -2505,7 +2503,6 @@ This API does not return a response body.
 
 </p>
 </details>
-
 ---
 
 ### Modify Parameter
@@ -2544,7 +2541,7 @@ PUT /v3.0/parameter-groups/{parameterGroupId}/parameters
 
 This API does not return a response body.
 
-<details><summary>예시</summary>
+<details><summary>Example</summary>
 <p>
 
 ```json
@@ -2559,7 +2556,6 @@ This API does not return a response body.
 
 </p>
 </details>
-
 ---
 
 ### Reset Parameter Group
@@ -2578,7 +2574,7 @@ PUT /v3.0/parameter-groups/{parameterGroupId}/reset
 
 This API does not return a response body.
 
-<details><summary>예시</summary>
+<details><summary>Example</summary>
 <p>
 
 ```json
@@ -2593,7 +2589,6 @@ This API does not return a response body.
 
 </p>
 </details>
-
 ---
 
 ### Delete Parameter Group
@@ -2614,7 +2609,7 @@ This API does not require a request body.
 
 This API does not return a response body.
 
-<details><summary>예시</summary>
+<details><summary>Example</summary>
 <p>
 
 ```json
@@ -2629,7 +2624,6 @@ This API does not return a response body.
 
 </p>
 </details>
-
 ---
 
 ## User Group
@@ -2808,7 +2802,7 @@ PUT /v3.0/user-groups/{userGroupId}
 
 This API does not return a response body.
 
-<details><summary>예시</summary>
+<details><summary>Example</summary>
 <p>
 
 ```json
@@ -2823,7 +2817,6 @@ This API does not return a response body.
 
 </p>
 </details>
-
 ---
 
 ### Delete User Group
@@ -2842,7 +2835,7 @@ DELETE /v3.0/user-groups/{userGroupId}
 
 This API does not return a response body.
 
-<details><summary>예시</summary>
+<details><summary>Example</summary>
 <p>
 
 ```json
@@ -2857,7 +2850,6 @@ This API does not return a response body.
 
 </p>
 </details>
-
 ---
 
 ## Notification Group
@@ -3057,7 +3049,7 @@ PUT /v3.0/notification-groups/{notificationGroupId}
 
 This API does not return a response body.
 
-<details><summary>예시</summary>
+<details><summary>Example</summary>
 <p>
 
 ```json
@@ -3072,7 +3064,6 @@ This API does not return a response body.
 
 </p>
 </details>
-
 ---
 
 ### Delete Notification Group
@@ -3093,7 +3084,7 @@ This API does not require a request body.
 
 This API does not return a response body.
 
-<details><summary>예시</summary>
+<details><summary>Example</summary>
 <p>
 
 ```json
@@ -3108,7 +3099,6 @@ This API does not return a response body.
 
 </p>
 </details>
-
 ---
 
 ## Monitoring
