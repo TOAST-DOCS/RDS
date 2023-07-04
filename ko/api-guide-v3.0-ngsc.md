@@ -1000,6 +1000,22 @@ PUT /v3.0/db-instances/{dbInstanceId}/deletion-protection
 
 이 API는 응답 본문을 반환하지 않습니다.
 
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
+
 ---
 
 ### 고가용성 수정하기
@@ -2058,6 +2074,22 @@ PUT /v3.0/db-security-groups/{dbSecurityGroupId}
 
 이 API는 응답 본문을 반환하지 않습니다.
 
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
+
 
 ---
 
@@ -2078,6 +2110,22 @@ DELETE /v3.0/db-security-groups/{dbSecurityGroupId}
 #### 응답
 
 이 API는 응답 본문을 반환하지 않습니다.
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
 
 ---
 
@@ -2431,6 +2479,22 @@ PUT /v3.0/parameter-groups/{parameterGroupId}
 
 이 API는 응답 본문을 반환하지 않습니다.
 
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
+
 ---
 
 ### 파라미터 수정하기
@@ -2469,6 +2533,22 @@ PUT /v3.0/parameter-groups/{parameterGroupId}/parameters
 
 이 API는 응답 본문을 반환하지 않습니다.
 
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
+
 ---
 
 ### 파라미터 그룹 재설정하기
@@ -2486,6 +2566,22 @@ PUT /v3.0/parameter-groups/{parameterGroupId}/reset
 #### 응답
 
 이 API는 응답 본문을 반환하지 않습니다.
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
 
 ---
 
@@ -2506,6 +2602,22 @@ DELETE /v3.0/parameter-groups/{parameterGroupId}
 #### 응답
 
 이 API는 응답 본문을 반환하지 않습니다.
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
 
 ---
 
@@ -2685,6 +2797,22 @@ PUT /v3.0/user-groups/{userGroupId}
 
 이 API는 응답 본문을 반환하지 않습니다.
 
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
+
 ---
 
 ### 사용자 그룹 삭제하기
@@ -2702,6 +2830,22 @@ DELETE /v3.0/user-groups/{userGroupId}
 #### 응답
 
 이 API는 응답 본문을 반환하지 않습니다.
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
 
 ---
 
@@ -2902,6 +3046,22 @@ PUT /v3.0/notification-groups/{notificationGroupId}
 
 이 API는 응답 본문을 반환하지 않습니다.
 
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
+
 ---
 
 ### 알람 그룹 삭제하기
@@ -2921,6 +3081,22 @@ DELETE /v3.0/notification-groups/{notificationGroupId}
 #### 응답
 
 이 API는 응답 본문을 반환하지 않습니다.
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
 
 ---
 

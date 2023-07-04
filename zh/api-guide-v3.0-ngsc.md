@@ -1000,6 +1000,22 @@ PUT /v3.0/db-instances/{dbInstanceId}/deletion-protection
 
 이 API는 응답 본문을 반환하지 않습니다.
 
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
+
 ---
 
 ### Modify High Availability
@@ -2058,6 +2074,22 @@ PUT /v3.0/db-security-groups/{dbSecurityGroupId}
 
 This API does not return a response body.
 
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
+
 
 ---
 
@@ -2078,6 +2110,22 @@ This API does not require a request body.
 #### Response
 
 This API does not return a response body.
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
 
 ---
 
@@ -2429,6 +2477,22 @@ PUT /v3.0/parameter-groups/{parameterGroupId}
 
 This API does not return a response body.
 
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
+
 ---
 
 ### Modify Parameter
@@ -2467,6 +2531,22 @@ PUT /v3.0/parameter-groups/{parameterGroupId}/parameters
 
 This API does not return a response body.
 
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
+
 ---
 
 ### Reset Parameter Group
@@ -2484,6 +2564,22 @@ PUT /v3.0/parameter-groups/{parameterGroupId}/reset
 #### Response
 
 This API does not return a response body.
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
 
 ---
 
@@ -2504,6 +2600,22 @@ This API does not require a request body.
 #### Response
 
 This API does not return a response body.
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
 
 ---
 
@@ -2683,6 +2795,22 @@ PUT /v3.0/user-groups/{userGroupId}
 
 This API does not return a response body.
 
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
+
 ---
 
 ### Delete User Group
@@ -2700,6 +2828,22 @@ DELETE /v3.0/user-groups/{userGroupId}
 #### Response
 
 This API does not return a response body.
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
 
 ---
 
@@ -2900,6 +3044,22 @@ PUT /v3.0/notification-groups/{notificationGroupId}
 
 This API does not return a response body.
 
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
+
 ---
 
 ### Delete Notification Group
@@ -2919,6 +3079,22 @@ This API does not require a request body.
 #### Response
 
 This API does not return a response body.
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
 
 ---
 

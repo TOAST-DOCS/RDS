@@ -1000,6 +1000,22 @@ PUT /v3.0/db-instances/{dbInstanceId}/deletion-protection
 
 이 API는 응답 본문을 반환하지 않습니다.
 
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
+
 ---
 
 ### 高可用性を修正する
@@ -2059,6 +2075,23 @@ PUT /v3.0/db-security-groups/{dbSecurityGroupId}
 このAPIはレスポンス本文を返しません。
 
 
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
+
+
 ---
 
 ### DBセキュリティグループを削除する
@@ -2078,6 +2111,23 @@ DELETE /v3.0/db-security-groups/{dbSecurityGroupId}
 #### レスポンス
 
 このAPIはレスポンス本文を返しません。
+
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
 
 ---
 
@@ -2431,6 +2481,23 @@ PUT /v3.0/parameter-groups/{parameterGroupId}
 
 このAPIはレスポンス本文を返しません。
 
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
+
 ---
 
 ### パラメータを修正する
@@ -2469,6 +2536,23 @@ PUT /v3.0/parameter-groups/{parameterGroupId}/parameters
 
 このAPIはレスポンス本文を返しません。
 
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
+
 ---
 
 ### パラメータグループを再設定する
@@ -2486,6 +2570,23 @@ PUT /v3.0/parameter-groups/{parameterGroupId}/reset
 #### レスポンス
 
 このAPIはレスポンス本文を返しません。
+
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
 
 ---
 
@@ -2506,6 +2607,23 @@ DELETE /v3.0/parameter-groups/{parameterGroupId}
 #### レスポンス
 
 このAPIはレスポンス本文を返しません。
+
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
 
 ---
 
@@ -2685,6 +2803,23 @@ PUT /v3.0/user-groups/{userGroupId}
 
 このAPIはレスポンス本文を返しません。
 
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
+
 ---
 
 ### ユーザーグループを削除する
@@ -2702,6 +2837,23 @@ DELETE /v3.0/user-groups/{userGroupId}
 #### レスポンス
 
 このAPIはレスポンス本文を返しません。
+
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
 
 ---
 
@@ -2902,6 +3054,23 @@ PUT /v3.0/notification-groups/{notificationGroupId}
 
 このAPIはレスポンス本文を返しません。
 
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
+
 ---
 
 ### アラームグループを削除する
@@ -2921,6 +3090,23 @@ DELETE /v3.0/notification-groups/{notificationGroupId}
 #### レスポンス
 
 このAPIはレスポンス本文を返しません。
+
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
 
 ---
 
