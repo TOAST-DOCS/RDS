@@ -43,6 +43,7 @@ API 요청 시 인증에 실패하거나 권한이 없을 경우 다음과 같�
         "resultMessage": "SUCCESS",
         "isSuccessful": true
     }
+}
 ```
 
 #### 필드
@@ -51,6 +52,26 @@ API 요청 시 인증에 실패하거나 권한이 없을 경우 다음과 같�
 |resultCode | int | 결과코드 (성공: 0, 그 외: 실패) |
 |resultMessage | String | 결과 메시지 |
 |successful | boolean | 성공 여부 |
+
+
+## DB 엔진 유형
+
+| DB 엔진 유형 | 생성 가능 여부 | OBS 로부터 복원 가능 여부 |
+| -------- | -------- | ---------------- |
+| MYSQL\_V5633 | X | X |
+| MYSQL\_V5715 | O | O |
+| MYSQL\_V5719 | O | O |
+| MYSQL\_V5726 | O | O |
+| MYSQL\_V5731 | X | X |
+| MYSQL\_V5733 | O | X |
+| MYSQL\_V5737 | O | O |
+| MYSQL\_V8018 | O | O |
+| MYSQL\_V8023 | O | O |
+| MYSQL\_V8028 | O | O |
+| MYSQL\_V8032 | O | O |
+
+* ENUM 타입의 dbVersion 필드에 대해 해당 값을 사용할 수 있습니다.
+* 버전에 따라 생성이 불가능하거나, 복원이 불가능한 경우가 있을 수 있습니다.
 
 ## 프로젝트 정보
 
