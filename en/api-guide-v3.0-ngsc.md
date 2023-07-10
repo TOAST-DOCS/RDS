@@ -873,6 +873,39 @@ POST /v3.0/db-instances/{dbInstanceId}/restart
 | jobId | Body | UUID   | Identifier of requested task |
 
 ---
+### DB 인스턴스 강제 재시작하기
+```
+POST /v3.0/db-instances/{dbInstanceId}/force-restart
+```
+
+#### 요청
+
+| 이름                | 종류   | 형식      | 필수 | 설명                                                                        |
+|-------------------|------|---------|----|---------------------------------------------------------------------------|
+| dbInstanceId      | URL  | UUID    | O  | DB 인스턴스의 식별자                                                              |
+
+
+#### 응답
+
+이 API는 응답 본문을 반환하지 않습니다.
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
+
+---
 
 ### Start DB Instance
 
