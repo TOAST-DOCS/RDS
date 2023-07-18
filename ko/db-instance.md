@@ -218,6 +218,64 @@ DB 인스턴스의 MySQL이 정상 동작하지 않는 경우 강제로 재시�
 
 DB 인스턴스에 연결된 파라미터 그룹의 파라미터가 수정된 경우, 해당 수정 사항을 반영해야 합니다. 변경된 파라미터 적용을 위해 재시작이 필요한 경우 DB 인스턴스가 재시작됩니다. 파라미터 그룹에 대한 자세한 설명은 [파라미터 그룹](parameter-group/) 항목을 참고합니다.
 
+### 사용자 관리
+
+RDS for MySQL에서는 웹 콘솔을 통해 데이터베이스에 접속할 사용자를 손쉽게 관리할 수 있는 기능을 제공합니다. DB 인스턴스를 생성할 때 사용자가 생성되며, 이미 생성된 DB 인스턴스에서 자유롭게 사용자를 생성, 수정, 삭제할 수 있습니다. 이를 위해 데이터베이스에서 쿼리를 통해 직접 사용자를 생성, 수정 삭제하는 것을 허용하지 않습니다. 그대신 미리 정의된 권한 템플릿을 이용하여 사용자에게 권한을 부여할 수 있습니다. 사용자에게 부여할 수 있는 권한 템플릿은 다음과 같습니다.
+
+* **READ**
+  * 조회 권한을 가지고 있습니다.
+
+```sql
+GRANT SELECT, SHOW VIEW, PROCESS, SHOW DATABASES, REPLICATION SLAVE, REPLICATION CLIENT ON *.* TO '{user_id}'@'{host}';
+GRANT SELECT ON `mysql`.* TO '{user_id}'@'{host}';
+GRANT SELECT, EXECUTE ON `sys`.* TO '{user_id}'@'{host}';
+GRANT SELECT ON `performance_schema`.* TO '{user_id}'@'{host}';
+```
+
+* **CRUD**
+  * READ 권한을 포함하며, 데이터를 변경할 수 있는 권한을 가지고 있습니다.
+
+```sql
+GRANT INSERT, UPDATE, DELETE, CREATE TEMPORARY TABLES, LOCK TABLES, EXECUTE ON *.* TO '{user_id}'@'{host}';
+```
+
+* **DDL**
+  * CRUD 권한을 포함하며, DDL 쿼리를 실행 할 수 있는 권한을 가지고 있습니다.
+
+```sql
+GRANT CREATE, DROP, INDEX, ALTER, CREATE VIEW, REFERENCES, EVENT, ALTER ROUTINE, CREATE ROUTINE, TRIGGER, RELOAD ON *.* TO '{user_id}'@'{host}';
+GRANT EXECUTE ON `mysql`.* TO '{user_id}'@'{host}';
+```
+
+* **CUSTOM**
+  * 외부 데이터베이스 백업으로부터 DB 인스턴스를 복원한 경우, 데이터베이스에 존재하는 모든 사용자는 CUSTOM 권한으로 표현됩니다.
+  * CUSTOM 권한 템플릿에는 어떤 권한이 있는지 알 수 없습니다.
+  * CUSTOM 권한 템플릿에서 다른 권한 템플릿으로 변경한 경우 다시 CUSTOM 권한 템플릿으로 변경할 수 없습니다.
+
+MySQL 5.7.33 버전 이상에서는 사용자 생성, 변경 시 인증 플러그인과 TLS Option을 지정할 수 있습니다. 인증 플러그인을 변경하려면 반드시 비밀번호를 같이 변경해야 하며, 비밀번호를 변경하지 않으면 기존 비밀번호를 사용합니다. 버전별 적용 가능한 인증 플러그인은 다음과 같습니다.
+
+* 5.7 버전
+
+| 인증 플러그인 | 설명                                   |
+|---------|--------------------------------------|
+| NATIVE  | `mysql_native_password`를 사용하여 인증합니다. |
+| SHA256  | `sha256_password`를 사용하여 인증합니다.       |
+
+* 8.0 버전
+
+| 인증 플러그인      | 설명                                   |
+|--------------|--------------------------------------|
+| NATIVE       | `mysql_native_password`를 사용하여 인증합니다. |
+| CACHING_SHA2 | `caching_sha2_password`를 사용하여 인증합니다. |
+
+TLS Option을 지정하여 클라이언트와 데이터베이스간의 연결을 암호화할 수 있습니다.
+
+| TLS Option | 설명                                                                 |
+|------------|--------------------------------------------------------------------|
+| NONE       | 암호화된 연결을 적용하지 않습니다.                                                |
+| SSL        | 암호화된 연결을 적용합니다.                                                    |
+| X509       | 암호화된 연결을 적용하며 접속 시 인증서가 필요합니다. 접속에 필요한 인증서는 웹 콘솔에서 다운로드 받을 수 있습니다. |
+
 ## 고가용성 DB 인스턴스
 
 고가용성 DB 인스턴스는 가용성과 데이터 내구성을 증가시키고, 장애 허용이 가능한 데이터베이스를 제공합니다. 고가용성 DB 인스턴스는 마스터, 예비 마스터로 구성되며 서로 다른 가용성 영역에 생성됩니다. 예비 마스터는 장애에 대비한 DB 인스턴스로 평소에는 사용할 수 없습니다. 고가용성 DB 인스턴스의 경우 예비 마스터에서 백업이 수행됩니다.
