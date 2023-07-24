@@ -727,7 +727,7 @@ POST /v3.0/db-instances
 | userGroupIds                                 | Body | Array   | X  | User group identifiers                                                                                                                                                                                                              |
 | useHighAvailability                          | Body | Boolean | X  | Whether to use high availability<br/>Default: `false`                                                                                                                                                                                               |
 | pingInterval                                 | Body | Number  | X  | Ping interval (sec) when using high availability<br/>Default: `6`<br/>- Minimum value: `1`<br/>- Maximum value: `600`                                                                                                                                                         |
-| useDefaultUserNotification                   | Body | Boolean | X  | Whether to use default notification<br/>Default: `false`                                                                                                                                                                                              |
+| useDefaultNotification                   | Body | Boolean | X  | Whether to use default notification<br/>Default: `false`                                                                                                                                                                                              |
 | useDeletionProtection                        | Body | Boolean | X  | Whether to protect against deletion<br/>Default: `false`                                                                                                                                                                                                 |
 | network                                      | Body | Object  | O  | Network information objects                                                                                                                                                                                                                  |
 | network.subnetId                             | Body | UUID    | O  | Subnet identifier                                                                                                                                                                                                                    |
@@ -1000,7 +1000,7 @@ POST /v3.0/db-instances/{dbInstanceId}/replicate
 | parameterGroupId                             | Body | UUID    | X  | Parameter group identifier<br/>- Default: Original DB instance value                                                                                                                                                                                                                |
 | dbSecurityGroupIds                           | Body | Array   | X  | DB security group identifiers<br/>- Default: Original DB instance value                                                                                                                                                                                                            |
 | userGroupIds                                 | Body | Array   | X  | User group identifiers                                                                                                                                                                                                                                      |
-| useDefaultUserNotification                   | Body | Boolean | X  | Whether to use default notification<br/>Default: `false`                                                                                                                                                                                                                      |
+| useDefaultNotification                   | Body | Boolean | X  | Whether to use default notification<br/>Default: `false`                                                                                                                                                                                                                      |
 | useDeletionProtection                        | Body | Boolean | X  | Whether to protect against deletion<br/>Default: `false`                                                                                                                                                                                                                         |
 | network                                      | Body | Object  | O  | Network information objects                                                                                                                                                                                                                                          |
 | network.usePublicAccess                      | Body | Boolean | X  | External access is available or not<br/>- Default: Original DB instance value                                                                                                                                                                                                                 |
@@ -1170,7 +1170,7 @@ POST /v3.0/db-instances/{dbInstanceId}/restore
 | userGroupIds | Body | Array | X | 사용자 그룹의 식별자 목록 |
 | useHighAvailability | Body | Boolean | X | 고가용성 사용 여부<br><ul><li>기본값: `false`</li></ul> |
 | pingInterval | Body | Number | X | 고가용성 사용 시 Ping 간격(초)<br><ul><li>기본값: `3`</li><li>최솟값: `1`</li><li>최댓값: `600`</li></ul> |
-| useDefaultUserNotification | Body | Boolean | X | 기본 알람 사용 여부<br><ul><li>기본값: `false`</li></ul> |
+| useDefaultNotification | Body | Boolean | X | 기본 알람 사용 여부<br><ul><li>기본값: `false`</li></ul> |
 | network | Body | Object | O | 네트워크 정보 객체 |
 | network.subnetId | Body | UUID | O | 서브넷의 식별자 |
 | network.usePublicAccess | Body | Boolean | X | 외부 접속 가능 여부<br><ul><li>기본값: `false`</li></ul> |
@@ -1388,7 +1388,7 @@ POST /v3.0/db-instances/restore-from-obs
 | userGroupIds | Body | Array | X | 사용자 그룹의 식별자 목록 |
 | useHighAvailability | Body | Boolean | X | 고가용성 사용 여부<br><ul><li>기본값: `false`</li></ul> |
 | pingInterval | Body | Number | X | 고가용성 사용 시 Ping 간격(초)<br><ul><li>기본값: `3`</li><li>최솟값: `1`</li><li>최댓값: `600`</li></ul> |
-| useDefaultUserNotification | Body | Boolean | X | 기본 알람 사용 여부<br><ul><li>기본값: `false`</li></ul> |
+| useDefaultNotification | Body | Boolean | X | 기본 알람 사용 여부<br><ul><li>기본값: `false`</li></ul> |
 | network | Body | Object | O | 네트워크 정보 객체 |
 | network.subnetId | Body | UUID | O | 서브넷의 식별자 |
 | network.usePublicAccess | Body | Boolean | X | 외부 접속 가능 여부<br><ul><li>기본값: `false`</li></ul> |

@@ -717,7 +717,7 @@ POST /v3.0/db-instances
 | userGroupIds                                 | Body | Array   | X  | 사용자 그룹의 식별자 목록                                                                                                                                                                                                              |
 | useHighAvailability                          | Body | Boolean | X  | 고가용성 사용 여부<br/>- 기본값: `false`                                                                                                                                                                                               |
 | pingInterval                                 | Body | Number  | X  | 고가용성 사용 시 Ping 간격(초)<br/>- 기본값: `3`<br/>- 최솟값: `1`<br/>- 최댓값: `600`                                                                                                                                                         |
-| useDefaultUserNotification                   | Body | Boolean | X  | 기본 알람 사용 여부<br/>- 기본값: `false`                                                                                                                                                                                              |
+| useDefaultNotification                   | Body | Boolean | X  | 기본 알람 사용 여부<br/>- 기본값: `false`                                                                                                                                                                                              |
 | useDeletionProtection                        | Body | Boolean | X  | 삭제 보호 여부<br/>- 기본값: `false`                                                                                                                                                                                                 |
 | network                                      | Body | Object  | O  | 네트워크 정보 객체                                                                                                                                                                                                                  |
 | network.subnetId                             | Body | UUID    | O  | 서브넷의 식별자                                                                                                                                                                                                                    |
@@ -990,7 +990,7 @@ POST /v3.0/db-instances/{dbInstanceId}/replicate
 | parameterGroupId                             | Body | UUID    | X  | 파라미터 그룹의 식별자<br/>- 기본값: 원본 DB 인스턴스 값                                                                                                                                                                                                                |
 | dbSecurityGroupIds                           | Body | Array   | X  | DB 보안 그룹의 식별자 목록<br/>- 기본값: 원본 DB 인스턴스 값                                                                                                                                                                                                            |
 | userGroupIds                                 | Body | Array   | X  | 사용자 그룹의 식별자 목록                                                                                                                                                                                                                                      |
-| useDefaultUserNotification                   | Body | Boolean | X  | 기본 알람 사용 여부<br/>- 기본값: `false`                                                                                                                                                                                                                      |
+| useDefaultNotification                   | Body | Boolean | X  | 기본 알람 사용 여부<br/>- 기본값: `false`                                                                                                                                                                                                                      |
 | useDeletionProtection                        | Body | Boolean | X  | 삭제 보호 여부<br/>- 기본값: `false`                                                                                                                                                                                                                         |
 | network                                      | Body | Object  | O  | 네트워크 정보 객체                                                                                                                                                                                                                                          |
 | network.usePublicAccess                      | Body | Boolean | X  | 외부 접속 가능 여부<br/>- 기본값: 원본 DB 인스턴스 값                                                                                                                                                                                                                 |
@@ -1160,7 +1160,7 @@ POST /v3.0/db-instances/{dbInstanceId}/restore
 | userGroupIds | Body | Array | X | 사용자 그룹의 식별자 목록 |
 | useHighAvailability | Body | Boolean | X | 고가용성 사용 여부<br><ul><li>기본값: `false`</li></ul> |
 | pingInterval | Body | Number | X | 고가용성 사용 시 Ping 간격(초)<br><ul><li>기본값: `3`</li><li>최솟값: `1`</li><li>최댓값: `600`</li></ul> |
-| useDefaultUserNotification | Body | Boolean | X | 기본 알람 사용 여부<br><ul><li>기본값: `false`</li></ul> |
+| useDefaultNotification | Body | Boolean | X | 기본 알람 사용 여부<br><ul><li>기본값: `false`</li></ul> |
 | network | Body | Object | O | 네트워크 정보 객체 |
 | network.subnetId | Body | UUID | O | 서브넷의 식별자 |
 | network.usePublicAccess | Body | Boolean | X | 외부 접속 가능 여부<br><ul><li>기본값: `false`</li></ul> |
@@ -1378,7 +1378,7 @@ POST /v3.0/db-instances/restore-from-obs
 | userGroupIds | Body | Array | X | 사용자 그룹의 식별자 목록 |
 | useHighAvailability | Body | Boolean | X | 고가용성 사용 여부<br><ul><li>기본값: `false`</li></ul> |
 | pingInterval | Body | Number | X | 고가용성 사용 시 Ping 간격(초)<br><ul><li>기본값: `3`</li><li>최솟값: `1`</li><li>최댓값: `600`</li></ul> |
-| useDefaultUserNotification | Body | Boolean | X | 기본 알람 사용 여부<br><ul><li>기본값: `false`</li></ul> |
+| useDefaultNotification | Body | Boolean | X | 기본 알람 사용 여부<br><ul><li>기본값: `false`</li></ul> |
 | network | Body | Object | O | 네트워크 정보 객체 |
 | network.subnetId | Body | UUID | O | 서브넷의 식별자 |
 | network.usePublicAccess | Body | Boolean | X | 외부 접속 가능 여부<br><ul><li>기본값: `false`</li></ul> |
