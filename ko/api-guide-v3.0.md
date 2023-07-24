@@ -2152,6 +2152,7 @@ GET /v3.0/backups
 | backups.backupStatus | Body | Enum     | 백업의 현재 상태                         |
 | backups.dbInstanceId | Body | UUID     | 원본 DB 인스턴스의 식별자                   |
 | backups.dbVersion    | Body | Enum     | DB 엔진 유형                          |
+| backups.utilVersion  | Body | String   | 백업에 사용된 xtrabackup 유틸리티 버전        |
 | backups.backupType   | Body | Enum     | 백업 유형                             |
 | backups.backupSize   | Body | Number   | 백업의 크기(Byte)                      |
 | createdYmdt          | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
