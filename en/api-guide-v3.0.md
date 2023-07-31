@@ -49,7 +49,7 @@ If an API request fails to authenticate or is not authorized, the following erro
 #### 필드
 | 이름 | 형식      | 설명|
 | --- |---------| --- |
-|resultCode | Number  | 결과코드 (성공: 0, 그 외: 실패) |
+|resultCode | Number  | 결과 코드<br/>- 성공: `0`<br/>- 실패: `0`이 아닌 값 |
 |resultMessage | String  | 결과 메시지 |
 |isSuccessful | Boolean | 성공 여부 |
 

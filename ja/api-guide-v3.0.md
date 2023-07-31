@@ -49,7 +49,7 @@ APIリクエスト時、認証に失敗したり権限がない場合、次の�
 #### 필드
 | 이름 | 형식      | 설명|
 | --- |---------| --- |
-|resultCode | Number  | 결과코드 (성공: 0, 그 외: 실패) |
+|resultCode | Number  | 결과 코드<br/>- 성공: `0`<br/>- 실패: `0`이 아닌 값 |
 |resultMessage | String  | 결과 메시지 |
 |isSuccessful | Boolean | 성공 여부 |
 
