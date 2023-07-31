@@ -45,11 +45,11 @@ APIリクエスト時、認証に失敗したり権限がない場合、次の�
 ```
 
 #### 필드
-| 이름 | 자료형 | 설명|
-| --- | --- | --- |
-|resultCode | int | 결과코드 (성공: 0, 그 외: 실패) |
-|resultMessage | String | 결과 메시지 |
-|successful | boolean | 성공 여부 |
+| 이름 | 형식      | 설명|
+| --- |---------| --- |
+|resultCode | Number  | 결과코드 (성공: 0, 그 외: 실패) |
+|resultMessage | String  | 결과 메시지 |
+|isSuccessful | Boolean | 성공 여부 |
 
 
 ## DB 엔진 유형
