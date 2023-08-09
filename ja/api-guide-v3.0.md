@@ -727,8 +727,10 @@ POST /v3.0/db-instances
 | userGroupIds                                 | Body | Array   | X  | ユーザーグループの識別子リスト                                                                                                                                                                                                                |
 | useHighAvailability                          | Body | Boolean | X  | 高可用性を使用するかどうか<br/>- デフォルト値: `false`                                                                                                                                                                                            |
 | pingInterval                                 | Body | Number  | X  | 高可用性を使用する時、Ping間隔(秒)<br/>- デフォルト値: `3`<br/>- 最小値: `1`<br/>- 最大値: `600`                                                                                                                                                         |
-| useDefaultNotification                   | Body | Boolean | X  | 基本アラームを使用するかどうか<br/>- デフォルト値: `false`                                                                                                                                                                                          |
-| useDeletionProtection                        | Body | Boolean | X  | 削除保護の有無<br/>- デフォルト値: `false`                                                                                                                                                                                                    |
+| useDefaultNotification                       | Body | Boolean | X  | 基本アラームを使用するかどうか<br/>- デフォルト値: `false`                                                                                                                                                                                          |
+| useDeletionProtection                        | Body | Boolean | X  | 削除保護の有無<br/>- デフォルト値: `false`                                                                                                                                                                                                  |
+| authenticationPlugin                         | Body | Enum    | X  | 認証プラグイン<br/>- 기본값: `NATIVE`                                                                                                                                                                                      |
+| tlsOption                                    | Body | Enum    | X  | TLS Option<br/>- 기본값: `NONE`                                                                                                                                                                                                   |
 | network                                      | Body | Object  | O  | ネットワーク情報オブジェクト                                                                                                                                                                                                                 |
 | network.subnetId                             | Body | UUID    | O  | サブネットの識別子                                                                                                                                                                                                                      |
 | network.usePublicAccess                      | Body | Boolean | X  | 外部接続可否<br/>- デフォルト値: `false`                                                                                                                                                                                                   |
@@ -1878,16 +1880,18 @@ GET /v3.0/db-instances/{dbInstanceId}/db-users
 
 #### レスポンス
 
-| 名前                    | 種類   | 形式       | 説明                                                                                                                  |
-|-----------------------|------|----------|---------------------------------------------------------------------------------------------------------------------|
-| dbUsers               | Body | Array    | DBユーザーリスト                                                                                                           |
-| dbUsers.dbUserId      | Body | UUID     | DBユーザーの識別子                                                                                                          |
-| dbUsers.dbUserName    | Body | String   | DBユーザーアカウント名                                                                                                        |
-| dbUsers.host          | Body | String   | DBユーザーアカウントのホスト名                                                                                                    |
-| dbUsers.authorityType | Body | Enum     | DBユーザー権限タイプ<br/>- `READ`: SELECTクエリ実行可能な権限<br/>- `CRUD`: DMLクエリ実行可能な権限<br/>- `DDL`: DDLクエリ実行可能な権限<br/>              |
-| dbUsers.dbUserStatus  | Body | Enum     | DBユーザーの現在状態<br/>- `STABLE`:作成済み<br/>- `CREATING`:作成中<br/>- `UPDATING`:修正中<br/>- `DELETING`:削除中<br/>- `DELETED`:削除済み |
-| dbUsers.createdYmdt   | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                    |
-| dbUsers.updatedYmdt   | Body | DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                    |
+| 名前                           | 種類   | 形式       | 説明                                                                                                                      |
+|------------------------------|------|----------|-------------------------------------------------------------------------------------------------------------------------|
+| dbUsers                      | Body | Array    | DBユーザーリスト                                                                                                               |
+| dbUsers.dbUserId             | Body | UUID     | DBユーザーの識別子                                                                                                              |
+| dbUsers.dbUserName           | Body | String   | DBユーザーアカウント名                                                                                                            |
+| dbUsers.host                 | Body | String   | DBユーザーアカウントのホスト名                                                                                                        |
+| dbUsers.authorityType        | Body | Enum     | DBユーザー権限タイプ<br/>- `READ`: SELECTクエリ実行可能な権限<br/>- `CRUD`: DMLクエリ実行可能な権限<br/>- `DDL`: DDLクエリ実行可能な権限<br/>                  |
+| dbUsers.dbUserStatus         | Body | Enum     | DBユーザーの現在状態<br/>- `STABLE`:作成済み<br/>- `CREATING`:作成中<br/>- `UPDATING`:修正中<br/>- `DELETING`:削除中<br/>- `DELETED`:削除済み     |
+| dbUsers.authenticationPlugin | Body | Enum     | 인증 플러그인<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password |
+| dbUsers.tlsOption            | Body | Enum     | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                            |
+| dbUsers.createdYmdt          | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                        |
+| dbUsers.updatedYmdt          | Body | DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                        |
 
 <details><summary>例</summary>
 <p>
@@ -1906,6 +1910,8 @@ GET /v3.0/db-instances/{dbInstanceId}/db-users
             "host": "%",
             "authorityType": "DDL",
             "dbUserStatus": "STABLE",
+            "authenticationPlugin": "NATIVE",
+            "tlsOption": "NONE",
             "createdYmdt": "2023-03-17T14:02:29+09:00",
             "updatedYmdt": "2023-03-17T14:02:31+09:00"
         }
@@ -1926,23 +1932,27 @@ POST /v3.0/db-instances/{dbInstanceId}/db-users
 
 #### リクエスト
 
-| 名前            | 種類   | 形式     | 必須 | 説明                                                                                                     |
-|---------------|------|--------|----|--------------------------------------------------------------------------------------------------------|
-| dbInstanceId  | URL  | UUID   | O  | DBインスタンスの識別子                                                                                           |
-| dbUserName    | Body | String | O  | DBユーザーアカウント名<br/>- 最小長さ: `1`<br/>- 最大長さ: `32`                                                          |
-| dbPassword    | Body | String | O  | DBユーザーアカウントのパスワード<br/>- 最小長さ: `4`<br/>- 最大長さ: `16`                                                     |
-| host          | Body | String | O  | DBユーザーアカウントのホスト名<br/>- 例: `1.1.1.%`                                                                    |
-| authorityType | Body | Enum   | O  | DBユーザー権限タイプ<br/>- `READ`: SELECTクエリ実行可能な権限<br/>- `CRUD`: DMLクエリ実行可能な権限<br/>- `DDL`: DDLクエリ実行可能な権限<br/> |
+| 名前                   | 種類   | 形式     | 必須 | 説明                                                                                                                      |
+|----------------------|------|--------|----|-------------------------------------------------------------------------------------------------------------------------|
+| dbInstanceId         | URL  | UUID   | O  | DBインスタンスの識別子                                                                                                            |
+| dbUserName           | Body | String | O  | DBユーザーアカウント名<br/>- 最小長さ: `1`<br/>- 最大長さ: `32`                                                                           |
+| dbPassword           | Body | String | O  | DBユーザーアカウントのパスワード<br/>- 最小長さ: `4`<br/>- 最大長さ: `16`                                                                      |
+| host                 | Body | String | O  | DBユーザーアカウントのホスト名<br/>- 例: `1.1.1.%`                                                                                     |
+| authorityType        | Body | Enum   | O  | DBユーザー権限タイプ<br/>- `READ`: SELECTクエリ実行可能な権限<br/>- `CRUD`: DMLクエリ実行可能な権限<br/>- `DDL`: DDLクエリ実行可能な権限<br/>                  |
+| authenticationPlugin | Body | Enum   | X  | 인증 플러그인<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password |
+| tlsOption            | Body | Enum   | X  | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                            |
 
 <details><summary>例</summary>
 <p>
 
 ```json
 {
-"dbUserName": "db-user",
-"dbPassword": "password",
-"host": "1.1.1.%",
-"authorityType": "CRUD"
+    "dbUserName": "db-user",
+    "dbPassword": "password",
+    "host": "1.1.1.%",
+    "authorityType": "CRUD",
+    "authenticationPlugin": "NATIVE",
+    "tlsOption": "NONE"
 }
 ```
 
@@ -1965,19 +1975,21 @@ PUT /v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 
 #### リクエスト
 
-| 名前            | 種類   | 形式     | 必須 | 説明                                                                                                     |
-|---------------|------|--------|----|--------------------------------------------------------------------------------------------------------|
-| dbInstanceId  | URL  | UUID   | O  | DBインスタンスの識別子                                                                                           |
-| dbUserId      | URL  | UUID   | O  | DBユーザーの識別子                                                                                             |
-| dbPassword    | Body | String | X  | DBユーザーアカウントのパスワード<br/>- 最小長さ: `4`<br/>- 最大長さ: `16`                                                     |
-| authorityType | Body | Enum   | X  | DBユーザー権限タイプ<br/>- `READ`: SELECTクエリ実行可能な権限<br/>- `CRUD`: DMLクエリ実行可能な権限<br/>- `DDL`: DDLクエリ実行可能な権限<br/> |
+| 名前                   | 種類   | 形式     | 必須 | 説明                                                                                                                      |
+|----------------------|------|--------|----|-------------------------------------------------------------------------------------------------------------------------|
+| dbInstanceId         | URL  | UUID   | O  | DBインスタンスの識別子                                                                                                            |
+| dbUserId             | URL  | UUID   | O  | DBユーザーの識別子                                                                                                              |
+| dbPassword           | Body | String | X  | DBユーザーアカウントのパスワード<br/>- 最小長さ: `4`<br/>- 最大長さ: `16`                                                                      |
+| authorityType        | Body | Enum   | X  | DBユーザー権限タイプ<br/>- `READ`: SELECTクエリ実行可能な権限<br/>- `CRUD`: DMLクエリ実行可能な権限<br/>- `DDL`: DDLクエリ実行可能な権限<br/>                  |
+| authenticationPlugin | Body | Enum   | X  | 인증 플러그인<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password |
+| tlsOption            | Body | Enum   | X  | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                            |
 
 <details><summary>例</summary>
 <p>
 
 ```json
 {
-"authorityType": "DDL"
+    "authorityType": "DDL"
 }
 ```
 
@@ -2150,6 +2162,7 @@ GET /v3.0/backups
 | backups.backupStatus | Body | Enum     | バックアップの現在状態                      |
 | backups.dbInstanceId | Body | UUID     | 原本DBインスタンスの識別子                   |
 | backups.dbVersion    | Body | Enum     | DBエンジンタイプ                        |
+| backups.utilVersion  | Body | String   | ユーティリティバージョン                     |
 | backups.backupType   | Body | Enum     | バックアップタイプ                        |
 | backups.backupSize   | Body | Number   | バックアップのサイズ(Byte)                 |
 | createdYmdt          | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
@@ -2173,6 +2186,7 @@ GET /v3.0/backups
             "backupStatus": "COMPLETED",
             "dbInstanceId": "142e6ccc-3bfb-4e1e-84f7-38861284fafd",
             "dbVersion": "MYSQL_V8028",
+            "utilVersion": "8.0.28",
             "backupType": "AUTO",
             "backupSize": 4996786,
             "createdYmdt": "2023-02-21T00:35:00+09:00",

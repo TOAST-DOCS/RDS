@@ -727,8 +727,10 @@ POST /v3.0/db-instances
 | userGroupIds                                 | Body | Array   | X  | 사용자 그룹의 식별자 목록                                                                                                                                                                                                              |
 | useHighAvailability                          | Body | Boolean | X  | 고가용성 사용 여부<br/>- 기본값: `false`                                                                                                                                                                                               |
 | pingInterval                                 | Body | Number  | X  | 고가용성 사용 시 Ping 간격(초)<br/>- 기본값: `3`<br/>- 최솟값: `1`<br/>- 최댓값: `600`                                                                                                                                                         |
-| useDefaultNotification                   | Body | Boolean | X  | 기본 알람 사용 여부<br/>- 기본값: `false`                                                                                                                                                                                              |
+| useDefaultNotification                       | Body | Boolean | X  | 기본 알람 사용 여부<br/>- 기본값: `false`                                                                                                                                                                                              |
 | useDeletionProtection                        | Body | Boolean | X  | 삭제 보호 여부<br/>- 기본값: `false`                                                                                                                                                                                                 |
+| authenticationPlugin                         | Body | Enum    | X  | 인증 플러그인<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password                                                                                                     |
+| tlsOption                                    | Body | Enum    | X  | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                                                                                                                |
 | network                                      | Body | Object  | O  | 네트워크 정보 객체                                                                                                                                                                                                                  |
 | network.subnetId                             | Body | UUID    | O  | 서브넷의 식별자                                                                                                                                                                                                                    |
 | network.usePublicAccess                      | Body | Boolean | X  | 외부 접속 가능  여부<br/>- 기본값: `false`                                                                                                                                                                                             |
@@ -1880,16 +1882,18 @@ GET /v3.0/db-instances/{dbInstanceId}/db-users
 
 #### 응답
 
-| 이름                    | 종류   | 형식       | 설명                                                                                                                          |
-|-----------------------|------|----------|-----------------------------------------------------------------------------------------------------------------------------|
-| dbUsers               | Body | Array    | DB 사용자 목록                                                                                                                   |
-| dbUsers.dbUserId      | Body | UUID     | DB 사용자의 식별자                                                                                                                 |
-| dbUsers.dbUserName    | Body | String   | DB 사용자 계정 이름                                                                                                                |
-| dbUsers.host          | Body | String   | DB 사용자 계정의 호스트 이름                                                                                                           |
-| dbUsers.authorityType | Body | Enum     | DB 사용자 권한 타입<br/>- `READ`: SELECT 쿼리 수행 가능한 권한<br/>- `CRUD`: DML 쿼리 수행 가능한 권한<br/>- `DDL`: DDL 쿼리 수행 가능한 권한<br/>            |
-| dbUsers.dbUserStatus  | Body | Enum     | DB 사용자의 현재 상태<br/>- `STABLE`: 생성됨<br/>- `CREATING`: 생성 중<br/>- `UPDATING`: 수정 중<br/>- `DELETING`: 삭제 중<br/>- `DELETED`: 삭제됨 |
-| dbUsers.createdYmdt   | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                           |
-| dbUsers.updatedYmdt   | Body | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                           |
+| 이름                           | 종류   | 형식       | 설명                                                                                                                          |
+|------------------------------|------|----------|-----------------------------------------------------------------------------------------------------------------------------|
+| dbUsers                      | Body | Array    | DB 사용자 목록                                                                                                                   |
+| dbUsers.dbUserId             | Body | UUID     | DB 사용자의 식별자                                                                                                                 |
+| dbUsers.dbUserName           | Body | String   | DB 사용자 계정 이름                                                                                                                |
+| dbUsers.host                 | Body | String   | DB 사용자 계정의 호스트 이름                                                                                                           |
+| dbUsers.authorityType        | Body | Enum     | DB 사용자 권한 타입<br/>- `READ`: SELECT 쿼리 수행 가능한 권한<br/>- `CRUD`: DML 쿼리 수행 가능한 권한<br/>- `DDL`: DDL 쿼리 수행 가능한 권한<br/>            |
+| dbUsers.dbUserStatus         | Body | Enum     | DB 사용자의 현재 상태<br/>- `STABLE`: 생성됨<br/>- `CREATING`: 생성 중<br/>- `UPDATING`: 수정 중<br/>- `DELETING`: 삭제 중<br/>- `DELETED`: 삭제됨 |
+| dbUsers.authenticationPlugin | Body | Enum     | 인증 플러그인<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password     |
+| dbUsers.tlsOption            | Body | Enum     | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                |
+| dbUsers.createdYmdt          | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                           |
+| dbUsers.updatedYmdt          | Body | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                           |
 
 <details><summary>예시</summary>
 <p>
@@ -1908,6 +1912,8 @@ GET /v3.0/db-instances/{dbInstanceId}/db-users
             "host": "%",
             "authorityType": "DDL",
             "dbUserStatus": "STABLE",
+            "authenticationPlugin": "NATIVE",
+            "tlsOption": "NONE",
             "createdYmdt": "2023-03-17T14:02:29+09:00",
             "updatedYmdt": "2023-03-17T14:02:31+09:00"
         }
@@ -1928,13 +1934,15 @@ POST /v3.0/db-instances/{dbInstanceId}/db-users
 
 #### 요청
 
-| 이름            | 종류   | 형식     | 필수 | 설명                                                                                                               |
-|---------------|------|--------|----|------------------------------------------------------------------------------------------------------------------|
-| dbInstanceId  | URL  | UUID   | O  | DB 인스턴스의 식별자                                                                                                     |
-| dbUserName    | Body | String | O  | DB 사용자 계정 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `32`                                                                  |
-| dbPassword    | Body | String | O  | DB 사용자 계정 암호<br/>- 최소 길이: `4`<br/>- 최대 길이: `16`                                                                  |
-| host          | Body | String | O  | DB 사용자 계정의 호스트명<br/>- 예시: `1.1.1.%`                                                                              |
-| authorityType | Body | Enum   | O  | DB 사용자 권한 타입<br/>- `READ`: SELECT 쿼리 수행 가능한 권한<br/>- `CRUD`: DML 쿼리 수행 가능한 권한<br/>- `DDL`: DDL 쿼리 수행 가능한 권한<br/> |
+| 이름                   | 종류   | 형식     | 필수 | 설명                                                                                                                      |
+|----------------------|------|--------|----|-------------------------------------------------------------------------------------------------------------------------|
+| dbInstanceId         | URL  | UUID   | O  | DB 인스턴스의 식별자                                                                                                            |
+| dbUserName           | Body | String | O  | DB 사용자 계정 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `32`                                                                         |
+| dbPassword           | Body | String | O  | DB 사용자 계정 암호<br/>- 최소 길이: `4`<br/>- 최대 길이: `16`                                                                         |
+| host                 | Body | String | O  | DB 사용자 계정의 호스트명<br/>- 예시: `1.1.1.%`                                                                                     |
+| authorityType        | Body | Enum   | O  | DB 사용자 권한 타입<br/>- `READ`: SELECT 쿼리 수행 가능한 권한<br/>- `CRUD`: DML 쿼리 수행 가능한 권한<br/>- `DDL`: DDL 쿼리 수행 가능한 권한<br/>        |
+| authenticationPlugin | Body | Enum   | X  | 인증 플러그인<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password |
+| tlsOption            | Body | Enum   | X  | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                            |
 
 <details><summary>예시</summary>
 <p>
@@ -1944,7 +1952,9 @@ POST /v3.0/db-instances/{dbInstanceId}/db-users
     "dbUserName": "db-user",
     "dbPassword": "password",
     "host": "1.1.1.%",
-    "authorityType": "CRUD"
+    "authorityType": "CRUD",
+    "authenticationPlugin": "NATIVE",
+    "tlsOption": "NONE"
 }
 ```
 
@@ -1967,12 +1977,14 @@ PUT /v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 
 #### 요청
 
-| 이름            | 종류   | 형식     | 필수 | 설명                                                                                                               |
-|---------------|------|--------|----|------------------------------------------------------------------------------------------------------------------|
-| dbInstanceId  | URL  | UUID   | O  | DB 인스턴스의 식별자                                                                                                     |
-| dbUserId      | URL  | UUID   | O  | DB 사용자의 식별자                                                                                                      |
-| dbPassword    | Body | String | X  | DB 사용자 계정 암호<br/>- 최소 길이: `4`<br/>- 최대 길이: `16`                                                                  |
-| authorityType | Body | Enum   | X  | DB 사용자 권한 타입<br/>- `READ`: SELECT 쿼리 수행 가능한 권한<br/>- `CRUD`: DML 쿼리 수행 가능한 권한<br/>- `DDL`: DDL 쿼리 수행 가능한 권한<br/> |
+| 이름                   | 종류   | 형식     | 필수 | 설명                                                                                                                      |
+|----------------------|------|--------|----|-------------------------------------------------------------------------------------------------------------------------|
+| dbInstanceId         | URL  | UUID   | O  | DB 인스턴스의 식별자                                                                                                            |
+| dbUserId             | URL  | UUID   | O  | DB 사용자의 식별자                                                                                                             |
+| dbPassword           | Body | String | X  | DB 사용자 계정 암호<br/>- 최소 길이: `4`<br/>- 최대 길이: `16`                                                                         |
+| authorityType        | Body | Enum   | X  | DB 사용자 권한 타입<br/>- `READ`: SELECT 쿼리 수행 가능한 권한<br/>- `CRUD`: DML 쿼리 수행 가능한 권한<br/>- `DDL`: DDL 쿼리 수행 가능한 권한<br/>        |
+| authenticationPlugin | Body | Enum   | X  | 인증 플러그인<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password |
+| tlsOption            | Body | Enum   | X  | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                            |
 
 <details><summary>예시</summary>
 <p>
@@ -2152,6 +2164,7 @@ GET /v3.0/backups
 | backups.backupStatus | Body | Enum     | 백업의 현재 상태                         |
 | backups.dbInstanceId | Body | UUID     | 원본 DB 인스턴스의 식별자                   |
 | backups.dbVersion    | Body | Enum     | DB 엔진 유형                          |
+| backups.utilVersion  | Body | String   | 유틸리티 버전                           |
 | backups.utilVersion  | Body | String   | 백업에 사용된 xtrabackup 유틸리티 버전        |
 | backups.backupType   | Body | Enum     | 백업 유형                             |
 | backups.backupSize   | Body | Number   | 백업의 크기(Byte)                      |
@@ -2176,6 +2189,7 @@ GET /v3.0/backups
             "backupStatus": "COMPLETED",
             "dbInstanceId": "142e6ccc-3bfb-4e1e-84f7-38861284fafd",
             "dbVersion": "MYSQL_V8028",
+            "utilVersion": "8.0.28",
             "backupType": "AUTO",
             "backupSize": 4996786,
             "createdYmdt": "2023-02-21T00:35:00+09:00",
