@@ -54,7 +54,7 @@ If an API request fails to authenticate or is not authorized, the following erro
 
 ## DB 엔진 유형
 
-| DB 엔진 유형 | 생성 가능 여부 | OBS 로부터 복원 가능 여부 |
+| DB 엔진 유형 | 생성 가능 여부 | OBS로부터 복원 가능 여부 |
 | -------- | -------- | ---------------- |
 | MYSQL\_V5633 | X | X |
 | MYSQL\_V5715 | O | O |
@@ -69,7 +69,7 @@ If an API request fails to authenticate or is not authorized, the following erro
 | MYSQL\_V8032 | O | O |
 
 * ENUM 타입의 dbVersion 필드에 대해 해당 값을 사용할 수 있습니다.
-* 버전에 따라 생성이 불가능하거나, 복원이 불가능한 경우가 있을 수 있습니다.
+* 버전에 따라 생성 또는 복원이 불가능한 경우가 있을 수 있습니다.
 
 ## Project Information
 
@@ -1182,7 +1182,7 @@ POST /v3.0/db-instances/{dbInstanceId}/restore
 | backup.backupSchedules.backupRetryExpireTime | Body | String | O | 백업 재시도 만료 시각<br><ul><li>백업 재시도 만료 시각은 백업 시작 시각 이전이거나 이후여야 합니다.</li><li>예시: `01:30:00`</li></ul> |
 | useDeletionProtection | Body | Boolean | X | 삭제 보호 여부<br>기본값 : `false` |
 
-#### Timestamp를 이용한 시점 복원 시 요청(restoreType이 `TIMESTAMP`인 경우)
+#### Timestamp를 이용한 시점 복원 시 요청(restoreType이 `TIMESTAMP`인 경우)
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |

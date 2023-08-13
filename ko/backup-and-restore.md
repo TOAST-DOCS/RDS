@@ -26,7 +26,7 @@ RDS for MySQL에서는 Percona XtraBackup을 이용하여 데이터베이스를 
     * https://www.percona.com/doc/percona-xtrabackup/8.0/index.html
 
 > [참고]
-> 2023년 8월 17일 XtraBackup 유틸리티의 버전이 업그레이드 되었습니다. 이전 백업에 사용된 XtraBackup 버전은 웹콘솔에서 확인할 수 있습니다.
+> 2023년 8월 17일 XtraBackup 유틸리티의 버전이 업그레이드되었습니다. 이전 백업에 사용된 XtraBackup 버전은 웹 콘솔에서 확인할 수 있습니다.
 
 ### 자동 백업
 

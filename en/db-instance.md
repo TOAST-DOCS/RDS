@@ -45,9 +45,7 @@ You can use the versions specified below.
 | <strong>5.6</strong> ||
 | MySQL 5.6.33 | Unable to create new DB instance. It only supports creating and restoring read replicas of existing DB instances. |
 
-DB 엔진의 경우, 생성 이후 웹 콘솔의 수정 기능을 통해 버전 업그레이드가 가능합니다.
-DB 엔진에 
-DB 엔진의 경우, 생성 이후 웹 콘솔의 수정 기능을 통해 버전 업그레이드가 가능합니다.
+DB 엔진의 경우 생성 이후 웹 콘솔의 수정 기능을 통해 버전 업그레이드가 가능합니다.
 DB 엔진에 대한 자세한 사항은 [DB 엔진](db-engine/)에서 확인할 수 있습니다.
 
 ### DB Instance Type
