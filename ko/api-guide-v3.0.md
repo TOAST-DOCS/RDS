@@ -1255,7 +1255,7 @@ POST /v3.0/db-instances/{dbInstanceId}/restore
 | restore.binLog.binLogFileName | Body | String | O | 복원에 사용할 바이너리 로그 이름 |
 | restore.binLog.binLogPosition | Body | String | O | 복원에 사용할 바이너리 로그 위치 |
 
-* 바이너리 로그를 이용한 시점 복원 시, 기준 백업의 바이너리 로그 파일 및 바이너리 로그 위치 이후 기록된 바이너리 로그 및 포지션에 대해서만 복원이 가능합니다.
+* 바이너리 로그를 이용한 시점 복원 시 기준 백업의 바이너리 로그 파일 및 위치를 기준으로 그 이후에 기록된 로그에 대해 복원이 가능합니다.
 
 
 <details><summary>예시</summary>
