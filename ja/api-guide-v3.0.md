@@ -316,6 +316,44 @@ GET /v3.0/db-versions
 
 ## ストレージ
 
+### 스토리지 타입 목록 보기
+
+```
+GET /v3.0/storage-types
+```
+
+#### 요청
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+#### 응답
+
+| 이름           | 종류   | 형식    | 설명         |
+|--------------|------|-------|------------|
+| storageTypes | Body | Array | 스토리지 타입 목록 |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "storageTypes": [
+        "General SSD",
+        "General HDD"
+    ]
+}
+```
+
+</p>
+</details>
+
+---
+
 ### ストレージリストを表示
 
 ```
