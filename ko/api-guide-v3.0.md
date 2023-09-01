@@ -1986,7 +1986,7 @@ POST /v3.0/db-instances/{dbInstanceId}/db-users
 | tlsOption            | Body | Enum   | X  | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                            |
 
 > [주의]
-> DB 인스턴스의 `supportAuthenticationPlugin` 값이 true 인 DB 인스턴스만 `authenticationPlugin`, `tlsOption`의 값을 설정할 수 있습니다.
+> DB 인스턴스의 `supportAuthenticationPlugin` 값이 true인 DB 인스턴스만 `authenticationPlugin`, `tlsOption`의 값을 설정할 수 있습니다.
 
 <details><summary>예시</summary>
 <p>
@@ -2031,7 +2031,7 @@ PUT /v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 | tlsOption            | Body | Enum   | X  | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                            |
 
 > [주의]
-> DB 인스턴스의 `supportAuthenticationPlugin` 값이 true 인 DB 인스턴스만 `authenticationPlugin`, `tlsOption`의 값을 수정할 수 있습니다.
+> DB 인스턴스의 `supportAuthenticationPlugin` 값이 true인 DB 인스턴스만 `authenticationPlugin`, `tlsOption`의 값을 수정할 수 있습니다.
 > `authenticationPlugin`의 값은 `dbPassword`와 동시에 수정을 해야 합니다.
 
 <details><summary>예시</summary>
