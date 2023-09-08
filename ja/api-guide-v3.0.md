@@ -316,23 +316,25 @@ GET /v3.0/db-versions
 
 ## ストレージ
 
-### 스토리지 타입 목록 보기
+
+### ストレージタイプリストを表示
 
 ```
 GET /v3.0/storage-types
 ```
 
-#### 요청
+#### リクエスト
 
-이 API는 요청 본문을 요구하지 않습니다.
+このAPIはリクエスト本文を要求しません。
 
-#### 응답
+#### レスポンス
 
-| 이름           | 종류   | 형식    | 설명         |
+| 名前         | 種類 | 形式  | 説明       |
 |--------------|------|-------|------------|
-| storageTypes | Body | Array | 스토리지 타입 목록 |
+| storageTypes | Body | Array | ストレージタイプリスト |
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
+
 <p>
 
 ```json
@@ -366,8 +368,8 @@ GET /v3.0/storages
 
 #### レスポンス
 
-| 名前       | 種類   | 形式    | 説明       |
-|----------|------|-------|----------|
+| 名前          | 種類  | 形式   | 説明       |
+|--------------|------|-------|-----------|
 | storages | Body | Array | ストレージリスト |
 
 <details><summary>例</summary>
@@ -692,24 +694,25 @@ GET /v3.0/db-instances/{dbInstanceId}
 
 #### レスポンス
 
-| 名前                    | 種類   | 形式       | 説明                                                                                                                                      |
-|-----------------------|------|----------|-----------------------------------------------------------------------------------------------------------------------------------------|
-| dbInstanceId          | Body | UUID     | DBインスタンスの識別子                                                                                                                            |
-| dbInstanceGroupId     | Body | UUID     | DBインスタンスグループの識別子                                                                                                                        |
-| dbInstanceName        | Body | String   | DBインスタンスを識別できる名前                                                                                                                        |
-| description           | Body | String   | DBインスタンスの追加情報                                                                                                                           |
-| dbVersion             | Body | Enum     | DBエンジンタイプ                                                                                                                               |
-| dbPort                | Body | Number   | DBポート                                                                                                                                   |
-| dbInstanceType        | Body | Enum     | DBインスタンスの役割タイプ<br/>- `MASTER`:マスター<br/>- `FAILED_MASTER`:フェイルオーバーしたマスター<br/>- `CANDIDATE_MASTER`:予備マスター<br/>- `READ_ONLY_SLAVE`:リードレプリカ |
-| dbInstanceStatus      | Body | Enum     | DBインスタンスの現在状態                                                                                                                           |
-| progressStatus        | Body | Enum     | DBインスタンスの現在作業進行状態                                                                                                                       |
-| dbFlavorId            | Body | UUID     | DBインスタンス仕様の識別子                                                                                                                          |
-| parameterGroupId      | Body | UUID     | DBインスタンスに適用されたパラメータグループの識別子                                                                                                             |
-| dbSecurityGroupIds    | Body | Array    | DBインスタンスに適用されたDBセキュリティグループの識別子リスト                                                                                                       |
-| useDeletionProtection | Body | Boolean  | DBインスタンス削除保護の有無                                                                                                                         |
-| supportAuthenticationPlugin | Body | Boolean | 인증 플러그인 지원 여부                                                                                                                           |
-| createdYmdt           | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                        |
-| updatedYmdt           | Body | DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                        |
+| 名前                         | 種類  | 形式      | 説明                                                                                                                                   |
+|-----------------------------|------|----------|---------------------------------------------------------------------------------------------------------------------------------------|
+| dbInstanceId                | Body | UUID     | DBインスタンスの識別子                                                                                                                         |
+| dbInstanceGroupId           | Body | UUID     | DBインスタンスグループの識別子                                                                                                                      |
+| dbInstanceName              | Body | String   | DBインスタンスを識別できる名前                                                                                                                 |
+| description                 | Body | String   | DBインスタンスの追加情報                                                                                                                    |
+| dbVersion                   | Body | Enum     | DBエンジンタイプ                                                                                                                             |
+| dbPort                      | Body | Number   | DBポート                                                                                                                                |
+| dbInstanceType              | Body | Enum     | DBインスタンスの役割タイプ<br/>- `MASTER`:マスター<br/>- `FAILED_MASTER`:フェイルオーバーしたマスター<br/>- `CANDIDATE_MASTER`:予備マスター<br/>- `READ_ONLY_SLAVE`:リードレプリカ |
+| dbInstanceStatus            | Body | Enum     | DBインスタンスの現在状態                                                                                                                       |
+| progressStatus              | Body | Enum     | DBインスタンスの現在作業進行状態                                                                                                                 |
+| dbFlavorId                  | Body | UUID     | DBインスタンス仕様の識別子                                                                                                                      |
+| parameterGroupId            | Body | UUID     | DBインスタンスに適用されたパラメータグループの識別子                                                                                                            |
+| dbSecurityGroupIds          | Body | Array    | DBインスタンスに適用されたDBセキュリティグループの識別子リスト                                                                                                        |
+| useDeletionProtection       | Body | Boolean  | DBインスタンス削除保護の有無                                                                                                                      |
+| supportAuthenticationPlugin | Body | Boolean  | 認証プラグインサポートの有無                                                                                                                         |
+| createdYmdt                 | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                     |
+| updatedYmdt                 | Body | DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                     |
+
 
 <details><summary>例</summary>
 <p>
@@ -1981,8 +1984,8 @@ POST /v3.0/db-instances/{dbInstanceId}/db-users
 | authenticationPlugin | Body | Enum   | X  | 認証プラグイン<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password |
 | tlsOption            | Body | Enum   | X  | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                            |
 
-> [주의]
-> DB 인스턴스의 `supportAuthenticationPlugin` 값이 true인 DB 인스턴스만 `authenticationPlugin`, `tlsOption`의 값을 설정할 수 있습니다.
+> [注意]
+> DBインスタンスの`supportAuthenticationPlugin`値がtrueであるDBインスタンスのみ`authenticationPlugin`、`tlsOption`の値を設定できます。
 
 <details><summary>例</summary>
 <p>
@@ -2026,9 +2029,9 @@ PUT /v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 | authenticationPlugin | Body | Enum   | X  | 認証プラグイン<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password |
 | tlsOption            | Body | Enum   | X  | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                            |
 
-> [주의]
-> DB 인스턴스의 `supportAuthenticationPlugin` 값이 true인 DB 인스턴스만 `authenticationPlugin`, `tlsOption`의 값을 수정할 수 있습니다.
-> `authenticationPlugin`의 값은 `dbPassword`와 동시에 수정을 해야 합니다.
+> [注意]
+> DBインスタンスの`supportAuthenticationPlugin`値がtrueであるDBインスタンスのみ`authenticationPlugin`、`tlsOption`の値を修正できます。
+> `authenticationPlugin`の値は`dbPassword`と同時に修正する必要があります。
 
 <details><summary>例</summary>
 <p>
