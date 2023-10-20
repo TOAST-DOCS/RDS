@@ -1035,6 +1035,46 @@ POST /v3.0/db-instances/{dbInstanceId}/backup
 
 ---
 
+### 신규로 백업을 진행, 오브젝트 스토리지로 내보내는 API
+
+```
+POST /v3.0/db-instances/{dbInstanceId}/backup-to-object-storage
+```
+
+#### 요청
+
+| 이름              | 종류   | 형식     | 필수 | 설명                          |
+|-----------------|------|--------|----|-----------------------------|
+| dbInstanceId    | URL  | UUID   | O  | DB 인스턴스의 식별자                |
+| tenantId        | Body | String | O  | 백업이 저장될 오브젝트 스토리지의 테넌트 ID   |
+| username        | Body | String | O  | NHN Cloud 계정 혹은 IAM 멤버 ID   |
+| password        | Body | String | O  | 백업이 저장될 오브젝트 스토리지의 API 비밀번호 |
+| targetContainer | Body | String | O  | 백업이 저장될 오브젝트 스토리지의 컨테이너     |
+| objectPath      | Body | String | O  | 컨테이너에 저장될 백업의 경로            |
+
+<details>
+  <summary>예시</summary>
+<p>
+
+```json
+{
+    "tenantId": "399631c404744dbbb18ce4fa2dc71a5a",
+    "username": "gildong.hong@nhn.com",
+    "password": "password",
+    "targetContainer": "/container",
+    "objectPath": "/backups/backup_file"
+}
+```
+
+<br>
+#### 응답
+
+| 이름 | 종류 | 형식 | 설명 |
+| --- | --- | --- | --- |
+| jobId | Body | UUID | 요청한 작업의 식별자 |
+
+---
+
 ### DB 인스턴스 복제하기
 
 ```
@@ -2355,6 +2395,9 @@ POST /v3.0/backups/{backupId}/export
 | 이름    | 종류   | 형식   | 설명          |
 |-------|------|------|-------------|
 | jobId | Body | UUID | 요청한 작업의 식별자 |
+
+> [주의]
+> 수동 백업의 경우 백업이 수행된 DB 인스턴스가 존재하지 않으면, 백업을 오브젝트 스토리지로 내보낼 수 없습니다.
 
 ---
 
