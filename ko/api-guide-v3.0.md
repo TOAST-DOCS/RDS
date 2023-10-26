@@ -1035,7 +1035,7 @@ POST /v3.0/db-instances/{dbInstanceId}/backup
 
 ---
 
-### 신규로 백업을 진행, 오브젝트 스토리지로 내보내는 API
+### DB 인스턴스 백업 후 내보내기
 
 ```
 POST /v3.0/db-instances/{dbInstanceId}/backup-to-object-storage
@@ -1052,8 +1052,7 @@ POST /v3.0/db-instances/{dbInstanceId}/backup-to-object-storage
 | targetContainer | Body | String | O  | 백업이 저장될 오브젝트 스토리지의 컨테이너     |
 | objectPath      | Body | String | O  | 컨테이너에 저장될 백업의 경로            |
 
-<details>
-  <summary>예시</summary>
+<details><summary>예시</summary>
 <p>
 
 ```json
@@ -1066,7 +1065,9 @@ POST /v3.0/db-instances/{dbInstanceId}/backup-to-object-storage
 }
 ```
 
-<br>
+</p>
+</details>
+
 #### 응답
 
 | 이름 | 종류 | 형식 | 설명 |
@@ -3890,8 +3891,6 @@ GET /v3.0/metric-statistics
 | TENANT      | 테넌트     |
 | MONITORING  | 모니터링    |
 
----
-
 ### 이벤트 목록 조회
 
 ```
@@ -4016,7 +4015,7 @@ GET /v3.0/event-codes
 
 ---
 
-### 이벤트 구독 목록 조회 API
+### 이벤트 구독 목록 조회
 
 ```
 GET /v3.0/event-subscriptions
@@ -4080,7 +4079,7 @@ GET /v3.0/event-subscriptions
 
 ---
 
-### 이벤트 구독 API
+### 이벤트 구독
 
 ```
 POST /v3.0/event-subscriptions
@@ -4145,9 +4144,9 @@ POST /v3.0/event-subscriptions
 </p>
 </details>
 
-***
+---
 
-### 이벤트 구독 정보 수정 API
+### 이벤트 구독 정보 수정
 
 ```
 PUT /v3.0/event-subscriptions/{subscriptionId}
@@ -4210,9 +4209,9 @@ PUT /v3.0/event-subscriptions/{subscriptionId}
 </p>
 </details> 
 
-***
+---
 
-### 이벤트 구독 해지 API
+### 이벤트 구독 해지
 
 ```
 DELETE /v3.0/event-subscriptions/{subscriptionId}
@@ -4246,3 +4245,5 @@ DELETE /v3.0/event-subscriptions/{subscriptionId}
 
 </p>
 </details>
+
+---
