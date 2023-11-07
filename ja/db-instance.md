@@ -351,7 +351,7 @@ mysql> CALL mysql. tcrds_repl_changemaster (master_instance_ip, master_instance_
 
 * パラメータの説明
     * master_instance_ip:複製対象(Master)サーバーのIP
-    * master_instance_port :複製対象(Master)サーバーのMySQLポート
+    * master_instance_port:複製対象(Master)サーバーのMySQLポート
     * user_id_for_replication:複製対象(Master)サーバーのMySQLに接続する複製用アカウント
     * password_for_replication_user:複製用アカウントパスワード
     * MASTER_LOG_FILE:複製対象(Master)のbinary logファイル名

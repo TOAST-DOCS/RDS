@@ -57,15 +57,15 @@ DBバージョンアップグレードの事前点検については、次の方
 - DBバージョンアップグレードの試行による結果の確認
 
 コンソールで`DBエンジンアップグレード事前確認`による結果および、DBバージョンアップグレードの試行による結果は、個別DBインスタンスのログタブに作成された`db_version_upgrade_compatibility.log`を通じて詳細を確認できます。詳細項目はそれぞれ次の意味を持ちます。
-- `CHECK_BY_MYSQL_CHECK` : `mysqlcheck`を通じたバージョンアップグレードの欠格事項がないこと。
-- `COLUMN_LENGHT_LIMIT_CHECK` : `INFORMATION_SCHEMA.VIEWS`で確認した時、カラム名が64文字を超える内容がないこと。
+- `CHECK_BY_MYSQL_CHECK`: `mysqlcheck`を通じたバージョンアップグレードの欠格事項がないこと。
+- `COLUMN_LENGHT_LIMIT_CHECK`: `INFORMATION_SCHEMA.VIEWS`で確認した時、カラム名が64文字を超える内容がないこと。
 - `DUPLICATE_NAME_WITH_DATA_DICT` :データ辞書で使用されるテーブルと同じ名称のテーブルがないこと。
 - `ENUM_SET_SIZE_CHECK` :長さが255文字または1020バイトを超える個々のENUM、SET列要素があるテーブル、保存プロシージャがないこと。
 - `FOREIGN_KEY_LENGTH_LIMIT_CHECK` :外部キー制約条件名が64文字を超えるテーブルがないこと。
-- `LOWER_CASE_SCHEMAS_NAMES_CHECK` : `lower_case_table_names`設定を1に変更する場合、スキーマ名が小文字であることを確認する。
-- `LOWER_CASE_TABLE_NAMES_CHECK` : `lower_case_table_names`設定を1に変更する場合、テーブル名が小文字であることを確認する。
+- `LOWER_CASE_SCHEMAS_NAMES_CHECK`: `lower_case_table_names`設定を1に変更する場合、スキーマ名が小文字であることを確認する。
+- `LOWER_CASE_TABLE_NAMES_CHECK`: `lower_case_table_names`設定を1に変更する場合、テーブル名が小文字であることを確認する。
 - `PARTITION_TABLE_CHECK` :特定のパーティションチェックで抽出されるパーティションテーブルがないこと。
-- `PROPERTY_LENGTH_LIMIT_CHECK` : InnoDBシステムテーブルスペースと一般テーブルスペースを含む共有テーブルスペースに常駐するテーブルパーティションがないこと。
+- `PROPERTY_LENGTH_LIMIT_CHECK`: InnoDBシステムテーブルスペースと一般テーブルスペースを含む共有テーブルスペースに常駐するテーブルパーティションがないこと。
 
 また、5.7では使用されたが、8.0では削除または変更された事項について確認が必要です。
 - [SQL変更項目ガイド](https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-sql-changes)
