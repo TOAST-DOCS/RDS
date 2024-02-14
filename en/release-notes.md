@@ -1,13 +1,29 @@
 ## Database > RDS for MySQL > Release Notes
 
+### 2024. 02. 15.
+
+#### 기능 추가 및 개선
+
+* DB 스키마 & 사용자 직접 제어 설정 기능 추가
+* 연결된 알림 그룹을 식별하기 쉽도록 개선
+  * DB 인스턴스 상세 보기 화면에서 연결된 알림 그룹 정보 노출
+* MySQL 8.0.35 버전 추가
+
+### January 9, 2024
+
+#### Added Features
+
+* Improved to control the timing of failover whe upgrading the DB engine version for high availability instances
+* Improved to allow you to operate the hypervisor migration feature for each DB instance
+
 ### December 19, 2023
 
 #### Added Features
 
 * Improved to make it easier to identify DB instances to which the changed parameter will be applied
-  * Added the 'Apply' button in front of the target name to apply the changed parameter on the DB instance list screen.
-  * Added the 'Apply' button to the parameter group item on the detail view screen of the DB instance to which the changed parameter will be applied.
-  * Add filter option that requires application of changed parameters
+    * Added the 'Apply' button in front of the target name to apply the changed parameter on the DB instance list screen.
+    * Added the 'Apply' button to the parameter group item on the detail view screen of the DB instance to which the changed parameter will be applied.
+    * Add filter option that requires application of changed parameters
 * Changed to retrieve servers that have been deleted within the last month when checking the View deleted servers on the server dashboard screen
 
 ### November 14, 2023.
@@ -61,8 +77,8 @@
 #### Added Features and Updates
 
 * Added rebuild support when a candidate master fails
-  * The DB instance on the candidate master does not change, so the fixed IP address does not change
-  * All data in the database are deleted, and restored with the data of the master
+    * The DB instance on the candidate master does not change, so the fixed IP address does not change
+    * All data in the database are deleted, and restored with the data of the master
 * Made improvements so that, when adding a user to user groups, all users of organizatons and projects can be added
 
 ### May 16, 2023
@@ -668,6 +684,6 @@
 
 #### New Releases
 
-- TOAST Relational Database Service (RDS) provides Relational Database in the cloud environment.
+- Relational Database Service (RDS) provides Relational Database in the cloud environment.
 - No complicated configuration is required to enable relational database.
 - Supports MySQL 5.6.33.
