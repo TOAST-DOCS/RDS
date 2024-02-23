@@ -248,6 +248,10 @@ RDS for MySQLではDBスキーマとユーザーを簡単に管理できるよ�
 GRANT CREATE,DROP,LOCK TABLES,REFERENCES,EVENT,ALTER,INDEX,INSERT,SELECT,UPDATE,DELETE,CREATE VIEW,SHOW VIEW,CREATE ROUTINE,ALTER ROUTINE,EXECUTE,CREATE USER,PROCESS,RELOAD,REPLICATION SLAVE,REPLICATION CLIENT,SHOW DATABASES, CREATE TEMPORARY TABLES,TRIGGER ON *.* TO '{user_id}'@'{host}' WITH GRANT OPTION;
 ```
 
+직접 제어 사용 이후 다시 사용 안함으로 변경하였을 때 주의해야할 점
+* 기존에 부여했던 권한들을 회수하지 않습니다. 이 때 명령어를 사용해 DB 스키마나 사용자를 추가한다면 웹 콘솔의 데이터와 정합성이 맞지 않을 수 있습니다.
+* 사용자가 어떤 권한을 갖고 있던 콘솔에서는 CUSTOM으로 표현됩니다.
+
 ## 高可用性DBインスタンス
 
 高可用性DBインスタンスは可用性とデータ耐久性を増加させ、障害許容が可能なデータベースを提供します。高可用性DBインスタンスはマスター、予備マスターで構成され、異なるアベイラビリティゾーンに作成されます。予備マスターは障害に備えたDBインスタンスで、通常は使用できません。高可用性DBインスタンスの場合、予備マスターでバックアップが行われます。
