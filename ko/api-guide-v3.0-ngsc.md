@@ -6,7 +6,7 @@
 
 ## 인증 및 권한
 
-API를 사용하려면 인증에 필요한 `User Access Key ID`와 `Secret Access Key`가 필요합니다. <b>회원 정보 > API 보안 설정</b>에서 생성할 수 있습니다.
+API를 사용하려면 인증에 필요한 `User Access Key ID`와 `Secret Access Key`가 필요합니다. 콘솔 우측 상단의 계정에 마우스 포인터를 올리면 표시되는 드롭다운 메뉴에서 <b>API 보안 설정</b>을 선택해 생성할 수 있습니다.
 생성된 Key는 Appkey와 함께 요청 Header에 포함해야 합니다.
 
 | 이름                         | 종류     | 형식     | 필수 | 설명                               |
@@ -390,7 +390,8 @@ GET /v3.0/storages
 
 | 상태명                | 설명                   |
 |--------------------|----------------------|
-| `READY`            | 작업이 준비 중인 경우         |
+| `PREPARING`        | 작업이 준비 중인 경우         |
+| `READY`            | 작업이 준비 완료된 경우         |
 | `RUNNING`          | 작업이 진행 중인 경우         |
 | `COMPLETED`        | 작업이 완료된 경우           |
 | `REGISTERED`       | 작업이 등록된 경우           |

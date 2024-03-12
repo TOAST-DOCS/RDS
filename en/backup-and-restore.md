@@ -31,6 +31,7 @@ RDS for MySQL uses Percona XtraBackup to back up databases. You have to use the 
 
 > [Note]
 > On August 17, 2023, the version of the XtraBackup utility was upgraded. The XtraBackup version used for the previous backup can be found in the web console.
+> High Availability DB instances are backed up on a candidate master to avoid degradation of data storage performance on the master.
 
 The following settings are applied to backup, and also to auto and manual backups.
 
@@ -104,12 +105,11 @@ In addition to manually performing backups, auto backups can occur when needed f
 Auto backup name is given in the format of `{DB instance name} yyyy-MM-dd-HH-mm`.
 
 > [Caution]
-> If you are unable to perform backup, for example, if the previous backup does not end, the backup may not be performed.
+> Backups may not be performed in some situations, such as when a previous backup fails to terminate.
 
 ### Backup Storage and Pricing
 
-All backup files are uploaded to the internal object storage and stored. For manual backups, they are stored permanently until you delete them separately, and object storage charges are incurred depending on the backup capacity. For automatic backups, it is stored for the set retention period and charges for the full size of the automatic backup file, which exceeds the storage size of the DB instance. If you do not have direct access to the internal object storage where the backup file is
-stored, and when you need backup file, you can export the backup file to the object storage in NHN Cloud.
+All backup files are uploaded to the internal backup storage and stored. For manual backups, they are stored permanently until you delete them separately, and backup storage charges are incurred depending on the backup capacity. For auto backups, it is stored for the set retention period and charges for the full size of the auto backup file, which exceeds the storage size of the DB instance. If you do not have direct access to the internal backup storage where the backup file is stored, and when you need backup file, you can export the backup file to the object storage in NHN Cloud.
 
 ### Export Backup
 
@@ -148,7 +148,7 @@ stored, and when you need backup file, you can export the backup file to the obj
 Backups allow you to restore data to any point in time. Restoration always creates new DB instance and cannot be restored to the existing DB instance. You can restore only to the same DB engine version as the source DB instance from which you performed the backup. Supports restoring snapshots to the point in time when the backup was created, and restoring point in time to a specific point in time. You can restore it as backup of external MySQL as well as backup that you created in RDS for MySQL.
 
 > [Caution]
-> Restoration might fail if the storage size of the DB instance that you want to restore is smaller than the storage size of the source DB instance that you backed up, or if you use a different parameter group than the parameter group of the source DB instance.
+> Restoration might fail if the data storage size of the DB instance that you want to restore is smaller than the data storage size of the source DB instance that you backed up, or if you use a different parameter group than the parameter group of the source DB instance.
 
 ### Snapshot Restoration
 
