@@ -250,12 +250,37 @@ DB 스키마 이름은  아래와 같은 제약 사항이 있습니다.
 ❹ 접속을 허용할 Host IP를 입력합니다. `%` 문자를 이용하면 허용할 Host IP를 범위로 지정할 수 있습니다. 예를 들어 `1.1.1.%` 는 `1.1.1.0`~`1.1.1.255` 사이의 모든 IP를 의미합니다.
 ❺ 사용자에게 부여할 권한을 선택합니다. 부여할 수 있는 권한과 설명은 다음과 같습니다.
 
-| 권한     | 설명                                                                           |
-|--------|------------------------------------------------------------------------------|
-| READ   | 데이터 조회 쿼리만 허용합니다.                                                            |
-| CRUD   | 데이터 조회 및 변경 쿼리만 허용합니다.                                                       |
-| DDL    | 데이터 조회, 변경 및 테이블 변경 쿼리만 허용합니다.                                               |
-| CUSTOM | RDS에서 부여하지 않은 권한을 의미합니다. 해당 권한으로 설정은 불가능하며 외부 백업으로부터 복원을 한 경우 해당 권한으로 표현됩니다. |
+**READ**
+* You have permission to view.
+
+```sql
+GRANT SELECT, SHOW VIEW, PROCESS, SHOW DATABASES, REPLICATION SLAVE, REPLICATION CLIENT ON *.* TO '{user_id}'@'{host}';
+GRANT SELECT ON `mysql`.* TO '{user_id}'@'{host}';
+GRANT SELECT, EXECUTE ON `sys`.* TO '{user_id}'@'{host}';
+GRANT SELECT ON `performance_schema`.* TO '{user_id}'@'{host}';
+```
+
+**CRUD**
+* Includes READ permission, and has permission to modify data.
+
+```sql
+GRANT INSERT, UPDATE, DELETE, CREATE TEMPORARY TABLES, LOCK TABLES, EXECUTE ON *.* TO '{user_id}'@'{host}';
+```
+
+**DDL**
+* Includes CRUD permissions, and has permissions to execute DDL queries.
+
+```sql
+GRANT CREATE, DROP, INDEX, ALTER, CREATE VIEW, REFERENCES, EVENT, ALTER ROUTINE, CREATE ROUTINE, TRIGGER, RELOAD ON *.* TO '{user_id}'@'{host}';
+GRANT EXECUTE ON `mysql`.* TO '{user_id}'@'{host}';
+```
+
+**CUSTOM**
+* When restoring a DB instance from an external database backup, all users that exist in the database are represented with the CUSTOM permission.
+* You cannot check what permissions are in the CUSTOM permission template.
+* If you change from one CUSTOM permission template to another permission template, you cannot change back to a CUSTOM permission template.
+
+In MySQL 5.7.33 or higher, you can specify the authentication plugin and TLS Option when creating or changing users. If you change the authentication plugin, you must change the password as well. If you do not change the password, the existing password is used. Applicable authentication plugins by version are as follows.
 
 ❻ 사용자 인증에 적용할 플러그인을 선택합니다. 선택할 수 있는 버전별 플러그인은 다음과 같습니다.
 
@@ -267,11 +292,11 @@ DB 스키마 이름은  아래와 같은 제약 사항이 있습니다.
 
 ❼ DB 인스턴스에 대한 연결 암호화 옵션을 선택합니다.
 
-| TLS Option | 설명                                                                                                |
-|------------|---------------------------------------------------------------------------------------------------|
-| NONE       | DB 인스턴스에 대한 연결을 암호화하지 않습니다.                                                                       |
-| SSL        | SSL을 이용하여 DB 인스턴스에 대한 연결을 암호화합니다.                                                                 |
-| X509       | SSL을 이용하여 DB 인스턴스에 대한 연결을 암호화할 뿐 아니라 인증서를 통해 추가로 검증을 진행합니다.<br />연결에 사용할 인증서는 웹 콘솔에서 내려받을 수 있습니다. | 
+| TLS Option | 설명                                                                                                                                                       |
+|------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| NONE       | Encrypted connections are not applied.                                                                                                                   |
+| SSL        | Encrypted connections are applied.                                                                                                                       |
+| X509       | An encrypted connection is applied and a certificate is required for access. The certificate required for access can be downloaded from the web console. |
 
 > [참고]
 > 사용자 인증 플러그인과 TLS Option은 MySQL 5.7.33 버전 이상에서 지원합니다.
@@ -331,7 +356,24 @@ DB 스키마 이름은  아래와 같은 제약 사항이 있습니다.
 | 백업 설정        | 예        | 아니오                     |
 | 스키마 & 사용자 제어 | 예        | 아니오                     |
 
-고가용성 DB 인스턴스의 경우 재시작이 필요한 항목의 변경이 있으면 안정성을 높이고 순단 시간을 줄이기 위하여 장애 조치를 이용한 재시작 기능을 제공합니다. 장애 조치를 이용한 재시작을 사용하지 않으면 마스터와 예비 마스터에 변경 사항을 순차적으로 적용한 후 DB 인스턴스를 재시작합니다. 자세한 사항은 고가용성 DB 인스턴스의 수동 장애 조치 항목을 참고합니다.
+고가용성 DB 인스턴스의 경우 재시작이 필요한 항목의 변경이 있으면 안정성을 높이고 순단 시간을 줄이기 위하여 장애 조치를 이용한 재시작 기능을 제공합니다. 
+
+![db-instance-modify-ha-en.png](https://static.toastoven.net/prod_rds/24.03.12/db-instance-modify-ha-en.png)
+
+장애 조치를 이용한 재시작을 사용하지 않으면 마스터와 예비 마스터에 변경 사항을 순차적으로 적용한 후 DB 인스턴스를 재시작합니다. 자세한 사항은 고가용성 DB 인스턴스의 [수동 장애 조치 항목](backup-and-restore/#mysql)을 참고합니다.
+
+### DB Schema & Direct User Control
+
+RDS for MySQL provides management features in the web console to make it easy to manage DB schemas and users, but it also provides the feature to set up direct user control. This can be set via the DB Schema & User Direct Control item on the Modify DB Instance screen in the web console. With direct control, all currently created users are granted the following permissions
+
+```sql
+GRANT CREATE,DROP,LOCK TABLES,REFERENCES,EVENT,ALTER,INDEX,INSERT,SELECT,UPDATE,DELETE,CREATE VIEW,SHOW VIEW,CREATE ROUTINE,ALTER ROUTINE,EXECUTE,CREATE USER,PROCESS,RELOAD,REPLICATION SLAVE,REPLICATION CLIENT,SHOW DATABASES, CREATE TEMPORARY TABLES,TRIGGER ON *.* TO '{user_id}'@'{host}' WITH GRANT OPTION;
+```
+
+> [Cautions] 
+> when you enable direct control and then disable it again
+> * Already granted permissions are not revoked. If you use the command to add DB schema or users at this time, the data in the web console may not match.
+> * All users that exist in the database, regardless of the permissions granted to them, are represented by CUSTOM permissions.
 
 ## DB 인스턴스 삭제
 
@@ -370,7 +412,11 @@ DB 인스턴스에 연결된 파라미터 그룹의 설정이 변경되어도, �
 
 파라미터 그룹에서 재시작을 필요로 하는 파라미터가 변경된 경우, 변경 사항을 적용하는 과정에서 DB 인스턴스가 재시작됩니다.
 
-고가용성 DB 인스턴스의 경우 안정성을 높이고 순단 시간을 줄이기 위하여 장애 조치를 이용한 재시작 기능을 제공합니다. 장애 조치를 이용한 재시작을 사용하지 않으면 마스터와 예비 마스터에 변경 사항을 순차적으로 적용한 후 DB 인스턴스를 재시작합니다. 자세한 사항은 고가용성 DB 인스턴스의 수동 장애 조치 항목을 참고합니다.
+고가용성 DB 인스턴스의 경우 안정성을 높이고 순단 시간을 줄이기 위하여 장애 조치를 이용한 재시작 기능을 제공합니다.
+
+![db-instance-parameter-ha-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-parameter-ha-en.png)
+
+장애 조치를 이용한 재시작을 사용하지 않으면 마스터와 예비 마스터에 변경 사항을 순차적으로 적용한 후 DB 인스턴스를 재시작합니다. 자세한 사항은 고가용성 DB 인스턴스의 [수동 장애 조치 항목](backup-and-restore/#mysql)을 참고합니다.
 
 ## 오브젝트 스토리지에 있는 백업으로 복원
 

@@ -151,8 +151,6 @@ RDS for MySQLでは、Percona XtraBackupを利用してデータベースをバ�
 
 ### スナップショット復元
 
-スナップショット復元は、バックアップを実行した時点に復元します。バックアップファイルだけで復元を行い、バックアップを行った元のDBインスタンスが必要ありません。
-
 스냅샷 복원은 백업을 수행한 시점으로 복원합니다. 백업 파일만으로 복원을 진행하여, 백업을 수행한 원본 DB 인스턴스가 필요하지 않습니다. 웹 콘솔에서 스냅샷 복원을 하려면
 
 ![db-instance-snapshot-restoration-ja](https://static.toastoven.net/prod_rds/24.03.12/db-instance-snapshot-restoration-ja.png)
