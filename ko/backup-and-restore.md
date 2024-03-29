@@ -52,7 +52,7 @@ RDS for MySQL에서는 Percona XtraBackup을 이용하여 데이터베이스를 
 
 ![db-instance-backup-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-backup-ko.png)
 
-❶ 백업할 DB 인스턴스를 선택한 뒤 백업을 클릭하면 백업 생성 팝업 화면이 나타납니다.
+❶ 백업할 DB 인스턴스를 선택한 뒤 **백업**을 클릭하면 **백업 생성** 팝업 화면이 나타납니다.
 
 ![db-instance-backup-popup-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-backup-popup-ko.png)
 
@@ -62,7 +62,7 @@ RDS for MySQL에서는 Percona XtraBackup을 이용하여 데이터베이스를 
 * 백업 이름은 리전별로 고유해야 합니다.
 * 백업 이름은 1~100자 사이의 영문자, 숫자, 일부 기호(-, _, .)만 입력할 수 있으며, 첫 번째 글자는 영문자만 사용할 수 있습니다.
 
-또는 백업 탭에서
+또는 **백업** 탭에서
 
 ![manual-backup-ko](https://static.toastoven.net/prod_rds/24.03.12/manual-backup-ko.png)
 
@@ -124,7 +124,7 @@ RDS for MySQL에서는 Percona XtraBackup을 이용하여 데이터베이스를 
 
 ❶ 백업할 DB 인스턴스를 선택한 뒤 드롭다운 메뉴에서 **오브젝트 스토리지로 백업 내보내기**를 클릭하면 설정 팝업 화면이 나타납니다.
 ❷ 백업이 저장될 오브젝트 스토리지의 테넌트 ID를 입력합니다. 테넌트 ID는 API 엔드포인트 설정에서 확인할 수 있습니다.
-❸ 백업이 저장될 오브젝트 스토리지의 NHN Cloud 회원 또는 IAM 멤버를 입력합니다.
+`❸ 백업이 저장될 오브젝트 스토리지의 NHN Cloud 회원 또는 IAM 멤버를 입력합니다.`
 ❹ 백업이 저장될 오브젝트 스토리지의 API 비밀번호를 입력합니다.
 ❺ 백업이 저장될 오브젝트 스토리지의 컨테이너를 입력합니다.
 ❻ 컨테이너에 저장될 백업의 경로를 입력합니다. 폴더 이름은 최대 255바이트이고, 전체 경로는 최대 1024바이트입니다. 특정 형태(. 또는 ..)는 사용할 수 없으며 특수문자(' " < > ;)와 공백은 입력할 수 없습니다.
@@ -139,7 +139,7 @@ RDS for MySQL에서는 Percona XtraBackup을 이용하여 데이터베이스를 
 
 ![backup-export-ko](https://static.toastoven.net/prod_rds/24.03.12/backup-export-ko.png)
 
-❷ 또는 백업 탭에서 내보낼 백업 파일을 선택한 뒤 **오브젝트 스토리지로 백업 내보내기**를 클릭합니다.
+❷ 또는 **백업** 탭에서 내보낼 백업 파일을 선택한 뒤 **오브젝트 스토리지로 백업 내보내기**를 클릭합니다.
 
 > [참고]
 > 수동 백업의 경우 백업을 수행한 원본 DB 인스턴스가 삭제되었다면 백업을 내보낼 수 없습니다.

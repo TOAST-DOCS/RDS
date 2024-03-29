@@ -72,8 +72,11 @@ The type of DB instance that you have already created can be easily changed thro
 
 데이터 스토리지에 데이터베이스의 데이터 파일을 저장합니다. DB 인스턴스는 HDD, SSD의 2가지 데이터 스토리지 유형을 지원합니다. 데이터 스토리지 유형에 따라 성능과 가격이 다르므로 데이터베이스 워크로드에 따라 알맞은 유형을 선택해야 합니다. 데이터 스토리지는 20GB~2TB로 생성할 수 있습니다.
 
+> [주의]
+> 이미 생성한 DB 인스턴스의 데이터 스토리지 유형은 변경할 수 없습니다.
+
 > [참고]
-> 2TB 이상의 크기를 사용하시려면 NHN Cloud 고객 센터로 연락해 주세요.
+> 데이터 스토리지를 2TB 이상 사용하려면 NHN Cloud 고객 센터로 연락하십시오.
 
 아래 작업은 데이터 스토리지의 I/O 용량을 사용하기 때문에 진행되는 동안 DB 인스턴스의 성능이 저하될 수 있습니다.
 
@@ -91,7 +94,7 @@ High availability DB instances increase availability, data durability, and provi
 
 ### Network
 
-When create DB instance, you have to select the VPC subnet to connect to. 동일한 서브넷에 연결된 Compute 서비스의 인스턴스 간에는 별도의 플로팅 IP 없이 통신할 수 있으며, 네트워크 트래픽에 대한 비용이 청구되지 않습니다. DB 인스턴스는 기본적으로 모든 네트워크 접근을 차단 하므로 접속을 원하는 경우 DB 보안 그룹을 적용해야 합니다.
+When create DB instance, you have to select the VPC subnet to connect to. 동일한 서브넷에 연결된 Compute 서비스의 인스턴스 간에는 별도의 플로팅 IP 없이 통신할 수 있으며, 네트워크 트래픽에 대한 비용이 청구되지 않습니다. DB 인스턴스는 기본적으로 모든 네트워크 접근을 차단하므로 접속을 원하는 경우 DB 보안 그룹을 적용해야 합니다.
 
 > [Caution]
 > You cannot change the subnet of DB instance that you have already created.
@@ -134,7 +137,7 @@ When you create a DB instance, you can set default notifications. If setting def
 
 ## DB 인스턴스 목록
 
-웹 콘솔에서 생성된 DB 인스턴스를 확인 할 수 있습니다. 복제 그룹 단위로 묶어서 보거나, 개별 DB 인스턴스로 볼 수 있습니다.
+웹 콘솔에서 생성된 DB 인스턴스를 확인할 수 있습니다. DB 인스턴스 그룹 단위로 묶어서 보거나, 개별 DB 인스턴스로 볼 수 있습니다.
 
 ![db-instance-list_en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-list_en.png)
 
@@ -143,6 +146,7 @@ When you create a DB instance, you can set default notifications. If setting def
 ❸ 가장 최근 수집된 모니터링 지표를 보여줍니다.
 ❹ 현재 상태를 볼 수 있습니다.
 ❺ 진행 중인 작업이 있으면 스피너가 나타납니다.
+❻ 검색 조건을 변경할 수 있습니다.
 
 The status of the DB instance consists of the following values and changes depending on the behavior of the user and the current status.
 
@@ -157,7 +161,7 @@ The status of the DB instance consists of the following values and changes depen
 | FAILOVER_SHUTDOWN | failover completed (shutdown), DB Instances Failing Before April 11, 2023 |
 | SHUTDOWN | shutdown |
 
-변경 할 수 있는 검색 조건은 아래와 같습니다.
+변경할 수 있는 검색 조건은 아래와 같습니다.
 
 ![db-instance-filter_en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-filter_en.png)
 
@@ -169,21 +173,21 @@ DB 인스턴스를 선택하면 상세 정보를 볼 수 있습니다.
 
 ![db-instance-detail_en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail_en.png)
 
-❶ 접속 정보의 도메인을 클릭하면 IP 주소를 확인할 수 있는 팝업이 나타납니다.
-❷ DB 보안 그룹을 클릭하면 DB 보안 규칙을 확인할 수 있는 팝업이 나타납니다.
+❶ 접속 정보의 도메인을 클릭하면 IP 주소를 확인할 수 있는 팝업 창이 나타납니다.
+❷ DB 보안 그룹을 클릭하면 DB 보안 규칙을 확인할 수 있는 팝업 창이 나타납니다.
 ❸ 파라미터 그룹을 클릭하면 파라미터를 확인할 수 있는 화면으로 이동합니다.
-❹ 마우스로 드래그 엔드 드롭 하여 상세 정보 패널의 높이를 조절할 수 있습니다.
+❹ 마우스로 드래그 앤드 드롭 하여 상세 정보 패널의 높이를 조절할 수 있습니다.
 ❺ 상세 정보 패널의 높이를 미리 지정된 높이로 조절할 수 있습니다.
 
 ### 접속 정보
 
 DB 인스턴스 생성 시 내부 도메인을 발급합니다. 내부 도메인은 사용자 VPC 서브넷에 속한 IP 주소를 가리킵니다. 고가용성 DB 인스턴스의 경우 장애 조치가 되어 예비 마스터가 새로운 마스터로 변경되더라도 내부 도메인은 변경되지 않습니다. 따라서 특별한 이유가 없으면 응용 프로그램의 접속 정보는 반드시 내부 도메인을 이용해야 합니다.
 
-플로팅 IP를 생성한 경우 외부 도메인을 추가로 발급합니다. 외부 도메인은 플로팅 IP의 주소를 가리킵니다. 외부 도메인 혹은 플로팅 IP는 외부에서 접근이 가능하므로 DB 보안 그룹의 규칙을 적절히 설정하여 DB 인스턴스를 보호해야 합니다.
+플로팅 IP를 생성한 경우 외부 도메인을 추가로 발급합니다. 외부 도메인은 플로팅 IP의 주소를 가리킵니다. 외부 도메인 또는 플로팅 IP는 외부에서 접근이 가능하므로 DB 보안 그룹의 규칙을 적절히 설정하여 DB 인스턴스를 보호해야 합니다.
 
 ### 로그
 
-DB 인스턴스의 로그 탭에서는 각종 로그 파일을 보거나 다운로드할 수 있습니다. 로그 파일은 아래와 같이 정해진 설정으로 로테이트 됩니다. 몇몇 로그 파일은 파라미터 그룹에서 활성화 하거나 비활성화 할 수 있습니다.
+DB 인스턴스의 로그 탭에서는 각종 로그 파일을 보거나 다운로드할 수 있습니다. 로그 파일은 아래와 같이 정해진 설정으로 로테이트 됩니다. 일부 로그 파일은 파라미터 그룹에서 활성화하거나 비활성화할 수 있습니다.
 
 | 항목               | 로테이트 설정   | 변경 여부 | 연관 파라미터                                                                |
 |------------------|-----------|-------|------------------------------------------------------------------------|
@@ -195,15 +199,15 @@ DB 인스턴스의 로그 탭에서는 각종 로그 파일을 보거나 다운�
 
 ![db-instance-detail-log_en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-log_en.png)
 
-❶ **로그 보기** 버튼을 클릭하면 로그 파일의 내용을 확인할 수 있는 팝업을 노출합니다. 최대 65,535 Bytes 의 로그를 확인할 수 있습니다.
-❷ **가져오기** 버튼을 클릭하면 DB 인스턴스의 로그 파일을 다운로드 할 수 있도록 요청합니다.
-❸ 다운로드 준비가 되면 **다운로드** 버튼을 노출합니다. **다운로드** 버튼을 클릭하면 로그를 내려받습니다.
+❶ **로그 보기**를 클릭하면 로그 파일의 내용을 확인할 수 있는 팝업 화면이 나타납니다. 최대 65,535Bytes의 로그를 확인할 수 있습니다.
+❷ **가져오기**를 클릭하면 DB 인스턴스의 로그 파일을 다운로드할 수 있도록 요청합니다.
+❸ 다운로드가 준비되면 **다운로드** 버튼이 노출됩니다. 클릭하면 로그를 내려받습니다.
 
 > [주의]
-> **가져오기** 버튼을 클릭하면 약 5분간 로그 파일이 백업 스토리지에 업로드되며 로그 파일의 크기만큼 백업 스토리지 용량이 과금됩니다.
-> **다운로드** 버튼을 클릭하면 로그 파일의 크기만큼 인터넷 트래픽이 과금됩니다.
+> **가져오기**를 클릭하면 약 5분간 로그 파일이 백업 스토리지에 업로드되며 로그 파일의 크기만큼 백업 스토리지 용량이 과금됩니다.
+> **다운로드**를 클릭하면 로그 파일의 크기만큼 인터넷 트래픽이 과금됩니다.
 
-❹ 바이너리 로그(binary log)의 경우 2가지 형태로 내려받을 수 있습니다. **가져오기** 버튼을 클릭하면 어떤 형태로 내려받을 수 있을지 선택하는 팝업을 노출합니다.
+❹ 바이너리 로그(binary log)의 경우 2가지 형태로 내려받을 수 있습니다. **가져오기**를 클릭하면 바이너리 로그 형태를 선택할 수 있는 팝업 화면이 나타납니다.
 
 ![db-instance-detail-log-bin_en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-log-bin_en.png)
 
@@ -211,19 +215,19 @@ DB 인스턴스의 로그 탭에서는 각종 로그 파일을 보거나 다운�
 
 ### DB 스키마 & 사용자
 
-DB 인스턴스의 DB 스키마 & 사용자 탭에서는 데이터베이스에 생성된 스키마와 사용자를 조회 및 제어할 수 있습니다.
+DB 인스턴스의 **DB 스키마 & 사용자** 탭에서는 데이터베이스에 생성된 스키마와 사용자를 조회 및 제어할 수 있습니다.
 
 #### DB 스키마 생성
 
 ![db-instance-detail-schema-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-schema_en.png)
 
-❶ **생성** 버튼을 클릭하면 DB 스키마의 이름을 입력할 수 있는 팝업 창이 나타납니다.
-❷ DB 스키마 이름을 입력한 후 **확인** 버튼을 클릭하여 DB 스키마를 생성할 수 있습니다.
+❶ **+ 생성**을 클릭하면 사용자 추가 팝업 화면이 나타납니다.
+❷ DB 스키마 이름을 입력한 뒤 **확인**을 클릭하여 DB 스키마를 생성할 수 있습니다.
 
-DB 스키마 이름은  아래와 같은 제약 사항이 있습니다.
+DB 스키마 이름은 아래와 같은 제약 사항이 있습니다.
 
 * 1~64자 사이의 알파벳, 숫자, _만 사용할 수 있으며, 첫 번째 글자는 영문자만 사용할 수 있습니다.
-* `information_schema`, `performance_schema`, `db_helper`, `sys`, `mysql`, `rds_maintenance` 는 DB 스키마 이름으로 사용할 수 없습니다.
+* `information_schema`, `performance_schema`, `db_helper`, `sys`, `mysql`, `rds_maintenance`는 DB 스키마 이름으로 사용할 수 없습니다.
 
 생성된 DB 스키마의 이름은 수정할 수 없습니다.
 
@@ -232,22 +236,22 @@ DB 스키마 이름은  아래와 같은 제약 사항이 있습니다.
 ![db-instance-detail-schema-delete-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-schema-delete-en.png)
 
 ❶ 삭제할 DB 스키마를 선택 후 드롭다운 메뉴를 클릭합니다.
-❷ **삭제** 메뉴를 클릭하면 삭제 확인 팝업 창이 나타납니다. **확인** 버튼을 클릭하여 삭제 요청할 수 있습니다.
+❷ **삭제** 메뉴를 클릭하면 삭제 확인 팝업 화면이 나타납니다. **확인**을 클릭하여 삭제를 요청할 수 있습니다.
 
 #### 사용자 생성
 
 ![db-instance-detail-user-create-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-user-create-en.png)
 
-❶ **생성** 버튼을 클릭하면 사용자 생성에 필요한 정보를 입력할 수 있는 팝업 창이 나타납니다.
+❶ **+ 생성**을 클릭하면 사용자 추가 팝업 화면이 나타납니다.
 ❷ 사용자 ID를 입력합니다.
 
 사용자 ID는 아래와 같은 제약 사항이 있습니다.
 
 * 1~32자 사이의 글자이어야 합니다.
-* `mysql.session`, `mysql.sys`, `mysql.infoschema`, `sqlgw`, `admin`, `etladm`, `alertman`, `prom`, `rds_admin`, `rds_mha`, `rds_repl` 은 사용자 ID로 사용할 수 없습니다.
+* `mysql.session`, `mysql.sys`, `mysql.infoschema`, `sqlgw`, `admin`, `etladm`, `alertman`, `prom`, `rds_admin`, `rds_mha`, `rds_repl`은 사용자 ID로 사용할 수 없습니다.
 
 ❸ Password를 입력합니다.
-❹ 접속을 허용할 Host IP를 입력합니다. `%` 문자를 이용하면 허용할 Host IP를 범위로 지정할 수 있습니다. 예를 들어 `1.1.1.%` 는 `1.1.1.0`~`1.1.1.255` 사이의 모든 IP를 의미합니다.
+❹ 접속을 허용할 Host IP를 입력합니다. `%` 문자를 이용하면 허용할 Host IP를 범위로 지정할 수 있습니다. 예를 들어 `1.1.1.%`는 `1.1.1.0`~`1.1.1.255` 사이의 모든 IP를 의미합니다.
 ❺ 사용자에게 부여할 권한을 선택합니다. 부여할 수 있는 권한과 설명은 다음과 같습니다.
 
 **READ**
@@ -310,20 +314,20 @@ In MySQL 5.7.33 or higher, you can specify the authentication plugin and TLS Opt
 
 ❶ 인증서를 내려받을 DB 인스턴스를 선택합니다.
 ❷ 드롭다운 메뉴를 클릭합니다.
-❸ **인증서 다운로드** 메뉴를 클릭하면 인증서를 내려받을 수 있는 팝업 창이 나타납니다.
-❹ 내려받을 파일의 **가져오기** 버튼을 클릭하면 인증서 파일을 내려받을 수 있도록 준비합니다.
-❺ 내려받을 준비가 되면 **다운로드** 버튼이 나타납니다. **다운로드** 버튼을 클릭하면 인증서 파일을 내려받을 수 있습니다.
+❸ **인증서 다운로드**를 클릭하면 인증서를 내려받을 수 있는 팝업 화면이 나타납니다.
+❹ 내려받을 파일 하단의 **가져오기**를 클릭합니다.
+❺ 내려받을 준비가 되면 **다운로드** 버튼이 나타납니다. 클릭하면 인증서 파일을 내려받을 수 있습니다.
 
 > [주의]
-> **가져오기** 버튼을 클릭하면 약 5분간 인증서 파일이 백업 스토리지에 업로드되며 인증서 파일의 크기만큼 백업 스토리지 용량이 과금됩니다.
-> **다운로드** 버튼을 클릭하면 인증서 파일의 크기만큼 인터넷 트래픽이 과금됩니다.
+> **가져오기**를 클릭하면 약 5분간 인증서 파일이 백업 스토리지에 업로드되며, 인증서 파일의 크기만큼 백업 스토리지 용량이 과금됩니다.
+> **다운로드**를 클릭하면 인증서 파일의 크기만큼 인터넷 트래픽이 과금됩니다.
 
 #### 사용자 수정
 
 ![db-instance-detail-user-modify-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-user-modify-en.png)
 
-❶ 수정하고자 하는 사용자의 **수정** 버튼을 클릭하면 사용자를 수정할 수 있는 팝업 창이 나타납니다.
-❷ Password를 입력하지 않으면 변경하지 않습니다.
+❶ 수정할 사용자 행의 **수정**을 클릭하면 사용자 정보를 수정할 수 있는 팝업 화면이 나타납니다.
+❷ Password를 입력하지 않으면 변경되지 않습니다.
 ❸ 사용자 인증에 적용할 플러그인을 변경하려면 반드시 Password를 변경해야 합니다.
 
 #### 사용자 삭제
@@ -331,7 +335,7 @@ In MySQL 5.7.33 or higher, you can specify the authentication plugin and TLS Opt
 ![db-instance-detail-user-delete-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-user-delete-en.png)
 
 ❶ 삭제할 사용자를 선택 후 드롭다운 메뉴를 클릭합니다.
-❷ **삭제** 메뉴를 클릭하면 삭제 확인 팝업 창이 나타납니다. **확인** 버튼을 클릭하여 삭제 요청할 수 있습니다.
+❷ **삭제**를 클릭하면 **삭제 확인** 팝업 화면이 나타납니다. **확인**을 클릭하여 삭제를 요청할 수 있습니다.
 
 ## DB 인스턴스 수정
 
@@ -377,7 +381,7 @@ GRANT CREATE,DROP,LOCK TABLES,REFERENCES,EVENT,ALTER,INDEX,INSERT,SELECT,UPDATE,
 
 ## DB 인스턴스 삭제
 
-더 이상 사용하지 않는 DB 인스턴스는 삭제할 수 있습니다. 마스터를 삭제하게 되면, 해당 복제 그룹에 속한 예비 마스터와 읽기 복제본도 모두 함께 삭제됩니다. 삭제된 DB 인스턴스는 복구할 수 없으므로, 중요한 DB 인스턴스에 대해서는 삭제 보호 설정을 활성화하는 것이 좋습니다.
+더 이상 사용하지 않는 DB 인스턴스는 삭제할 수 있습니다. 마스터를 삭제하면 해당 복제 그룹에 속한 예비 마스터와 읽기 복제본도 모두 함께 삭제됩니다. 삭제된 DB 인스턴스는 복구할 수 없으므로 중요한 DB 인스턴스는 삭제 보호 설정을 활성화하는 것을 권장합니다.
 
 ## Backup
 
@@ -400,15 +404,15 @@ out of capacity, you may need to set a storage period for binary logs or expand 
 
 ## Applying parameter group changes
 
-DB 인스턴스에 연결된 파라미터 그룹의 설정이 변경되어도, 이 변경사항은 DB 인스턴스에 자동으로 적용되지 않습니다. 만약 DB 인스턴스에 적용된 파라미터와 연결된 파라미터 그룹의 설정이 서로 다를 경우, 웹 콘솔에서 파라미터 버튼이 표시됩니다.
+DB 인스턴스에 연결된 파라미터 그룹의 설정이 변경되어도 이 변경 사항은 DB 인스턴스에 자동으로 적용되지 않습니다. 만약 DB 인스턴스에 적용된 파라미터와 연결된 파라미터 그룹의 설정이 서로 다를 경우 웹 콘솔에 **파라미터** 버튼이 표시됩니다.
 
-다음 방법 중 하나를 사용하여 DB 인스턴스에 파라미터 그룹의 변경사항을 적용할 수 있습니다.
+다음 방법 중 하나를 사용하여 DB 인스턴스에 파라미터 그룹의 변경 사항을 적용할 수 있습니다.
 
 ![db-instance-list-parameter-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-list-parameter-en.png)
 
-❶ 대상 DB 인스턴스의 **파라미터** 버튼을 클릭하거나
+❶ 대상 DB 인스턴스의 **파라미터**를 클릭하거나
 ❷ 대상 DB 인스턴스를 선택한 후 드롭다운 메뉴에서 **파라미터 그룹 변경 사항 적용** 메뉴를 클릭하거나
-❸ 대상 DB 인스턴스의 기본 정보 탭에서 **파라미터 그룹 변경 사항 적용** 버튼을 클릭합니다.
+❸ 대상 DB 인스턴스의 **기본 정보** 탭에서 **파라미터 그룹 변경 사항 적용**을 클릭합니다.
 
 파라미터 그룹에서 재시작을 필요로 하는 파라미터가 변경된 경우, 변경 사항을 적용하는 과정에서 DB 인스턴스가 재시작됩니다.
 
@@ -420,11 +424,11 @@ DB 인스턴스에 연결된 파라미터 그룹의 설정이 변경되어도, �
 
 ## 오브젝트 스토리지에 있는 백업으로 복원
 
-외부 MySQL 백업 파일을 NHN Cloud의 사용자 오브젝트 스토리지에 업로드 하여 RDS for MySQL의 DB 인스턴스로 복원할 수 있습니다. 자세한 사항은 [외부 MySQL 백업을 이용한 복원](backup-and-restore/#mysql) 항목을 참고합니다.
+외부 MySQL 백업 파일을 NHN Cloud의 사용자 오브젝트 스토리지에 업로드하여 RDS for MySQL의 DB 인스턴스로 복원할 수 있습니다. 자세한 사항은 [외부 MySQL 백업을 이용한 복원](backup-and-restore/#mysql) 항목을 참고합니다.
 
 ## 오브젝트 스토리지로 백업 내보내기
 
-백업을 수행함과 동시에 백업 파일을 NHN Cloud의 사용자 사용자 오브젝트 스토리지로 내보낼 수 있습니다. 자세한 사항은 [백업 내보내기](backup-and-restore/#_5) 항목을 참고합니다.
+백업을 수행함과 동시에 백업 파일을 NHN Cloud의 사용자 오브젝트 스토리지로 내보낼 수 있습니다. 자세한 사항은 [백업 내보내기](backup-and-restore/#_5) 항목을 참고합니다.
 
 ## Read Replica
 
@@ -432,7 +436,7 @@ To improve read performance, you can create a read replica which can be used for
 
 ### Create Read Replica
 
-읽기 복제본을 생성하려면 복제 그룹에 속한 DB 인스턴스 중 테이블 잠금 사용 옵션으로 생성된 백업 파일 및 바이너리 로그(binary log)가 필요합니다. 백업 파일이 없는 경우, 다음 순서에 따라 백업을 수행할 DB 인스턴스를 선택합니다.
+읽기 복제본을 생성하려면 복제 그룹에 속한 DB 인스턴스 중 테이블 잠금 사용 옵션으로 생성된 백업 파일 및 바이너리 로그(binary log)가 필요합니다. 백업 파일이 없는 경우 다음 순서에 따라 백업을 수행할 DB 인스턴스를 선택합니다.
 
 ❶ 자동 백업 설정한 읽기 복제본
 ❷ 자동 백업 설정한 예비 마스터
@@ -442,7 +446,7 @@ To improve read performance, you can create a read replica which can be used for
 
 > [Caution]
 > When creating a read replica, the master's I/O performance may be lower than usual. The time to create read replica can increase in proportion to the size of the master's database.
-> 백업이 수행 되는 DB 인스턴스의 경우 읽기 복제본 생성 과정에서 스토리지 I/O 성능 하락이 있을 수 있습니다.
+> 백업이 수행되는 DB 인스턴스의 경우 읽기 복제본 생성 과정에서 스토리지 I/O 성능 하락이 있을 수 있습니다.
 
 > [Note]
 > Object storage pricing may occur as much as the binary log size required for the process of creating read replica.
@@ -451,7 +455,7 @@ To improve read performance, you can create a read replica which can be used for
 
 ![db-instance-replica-create-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-replica-create-en.png)
 
-❶ 원본 DB 인스턴스를 선택한 후 **읽기 복제본 생성** 버튼을 클릭하면 읽기 복제본을 생성하기 위한 페이지로 이동합니다.
+❶ 원본 DB 인스턴스를 선택한 뒤 **읽기 복제본 생성**을 클릭하면
 
 아래 설정들을 통하여 읽기 복제본을 생성할 수 있습니다.
 
@@ -465,7 +469,7 @@ To improve read performance, you can create a read replica which can be used for
 
 #### 읽기 복제본 리전
 
-읽기 복제본을 생성할 리전을 선택할 때, 리전 피어링을 지원하는 경우 서로 다른 리전에 존재하는 VPC 간 리전 피어링을 연결하면 다른 리전 VPC에 속한 서브넷에 읽기 복제본을 생성할 수 있습니다. 단, 원본 DB 인스턴스의 리전과 다른 리전을 선택하면 복제 지연이 발생할 수 있으며, DB 버전 업그레이드를 지원하지 않습니다.
+읽기 복제본을 생성할 리전을 선택할 때 리전 피어링을 지원하는 경우 서로 다른 리전에 존재하는 VPC 간 리전 피어링을 연결하면 다른 리전 VPC에 속한 서브넷에 읽기 복제본을 생성할 수 있습니다. 단, 원본 DB 인스턴스의 리전과 다른 리전을 선택하면 복제 지연이 발생할 수 있으며, DB 버전 업그레이드를 지원하지 않습니다.
 
 > [주의]
 > 리전 피어링이 연결되어 있더라도 라우트 설정이 올바르지 않을 경우 읽기 복제본 생성에 실패하거나 복제가 중단될 수 있습니다.
@@ -488,11 +492,11 @@ We recommend that you make the read replica the same or higher specification as 
 
 #### Parameter Group
 
-읽기 복제본의 파라미터 그룹을 선택할 때, 복제 관련 설정 변경이 필요 없다면 원본 DB 인스턴스와 동일한 파라미터 그룹을 선택하는 것을 권장합니다. 파라미터 그룹에 대한 자세한 설명은 [파라미터 그룹](parameter-group/) 항목을 참고합니다.
+읽기 복제본의 파라미터 그룹을 선택할 때 복제 관련 설정 변경이 필요 없다면 원본 DB 인스턴스와 동일한 파라미터 그룹을 선택하는 것을 권장합니다. 파라미터 그룹에 대한 자세한 설명은 [파라미터 그룹](parameter-group/) 항목을 참고합니다.
 
 #### DB Security Group
 
-읽기 복제본에 적용할 DB 보안 그룹을 선택합니다. 복제에 필요한 규칙은 자동으로 적용되기 때문에, DB 보안 그룹에 별도로 복제 관련 규칙을 추가할 필요가 없습니다. DB 보안 그룹에 대한 자세한 설명은 [DB 보안 그룹](db-security-group/) 항목을 참고합니다.
+읽기 복제본에 적용할 DB 보안 그룹을 선택합니다. 복제에 필요한 규칙은 자동으로 적용되기 때문에 DB 보안 그룹에 별도로 복제 관련 규칙을 추가할 필요가 없습니다. DB 보안 그룹에 대한 자세한 설명은 [DB 보안 그룹](db-security-group/) 항목을 참고합니다.
 
 #### Backup
 
@@ -508,7 +512,7 @@ We recommend that you make the read replica the same or higher specification as 
 
 ### Promote Read Replica
 
-마스터와의 복제 관계를 해제하고 읽기 복제본을 독립된 마스터로 전환하는 과정을 승격이라고 합니다. 승격된 마스터는 독립된 DB 인스턴스로서 작동하게 됩니다. 승격을 원하는 읽기 복제본과 마스터 사이에 복제 지연이 존재하는 경우, 해당 지연이 해결될 때까지 승격이 이루어지지 않습니다. 한 번 승격된 DB 인스턴스는 이전의 복제 관계로 되돌릴 수 없습니다.
+마스터와의 복제 관계를 해제하고 읽기 복제본을 독립된 마스터로 전환하는 과정을 승격이라고 합니다. 승격된 마스터는 독립된 DB 인스턴스로서 작동하게 됩니다. 승격을 원하는 읽기 복제본과 마스터 사이에 복제 지연이 존재하는 경우 해당 지연이 해결될 때까지 승격이 이루어지지 않습니다. 한 번 승격된 DB 인스턴스는 이전의 복제 관계로 되돌릴 수 없습니다.
 
 > [주의]
 > 마스터 DB 인스턴스의 상태가 비정상일 경우에는 승격 작업을 진행할 수 없습니다.
@@ -518,7 +522,7 @@ We recommend that you make the read replica the same or higher specification as 
 
 ### Force Promote Read Replica
 
-마스터나 원본 리전의 상태와 관계없이, 읽기 복제본의 현재 시점 데이터를 기반으로 강제 승격을 진행합니다. 복제 지연이 있는 경우 데이터 유실이 발생할 수 있습니다. 따라서, 읽기 복제본을 긴급하게 서비스에 투입해야 하는 상황이 아니라면, 이 기능의 사용은 권장하지 않습니다.
+마스터나 원본 리전의 상태와 관계없이 읽기 복제본의 현재 시점 데이터를 기반으로 강제 승격을 진행합니다. 복제 지연이 있는 경우 데이터 유실이 발생할 수 있습니다. 따라서 읽기 복제본을 긴급하게 서비스에 투입해야 하는 상황이 아니라면 이 기능의 사용은 권장하지 않습니다.
 
 ### Stop Replication of Read Replicas
 
@@ -531,14 +535,14 @@ mysql> CALL mysql.tcrds_repl_skip_repl_error();
 
 ### Rebuild Read Replica
 
-읽기 복제본의 복제 문제를 해결할 수 없는 경우, 재구축을 통해 정상 상태로 복원할 수 있습니다. 이 과정에서 읽기 복제본의 모든 데이터베이스를 삭제하고, 마스터 데이터베이스를 기반으로 새롭게 재구축합니다. 재구축하는 동안 읽기 복제본은 사용할 수 없습니다. 읽기 복제본을 재구축 하려면 복제 그룹에 속한 DB 인스턴스 중 테이블 잠금 사용 옵션으로 생성된 백업 파일 및 바이너리 로그(binary log)가 필요합니다. 백업 파일이 없는 경우 동작 및 주의 사항은 [읽기 복제본 생성](./#_1) 항목을 참고합니다.
+읽기 복제본의 복제 문제를 해결할 수 없는 경우 재구축을 통해 정상 상태로 복원할 수 있습니다. 이 과정에서 읽기 복제본의 모든 데이터베이스를 삭제하고, 마스터 데이터베이스를 기반으로 새롭게 재구축합니다. 재구축하는 동안 읽기 복제본은 사용할 수 없습니다. 읽기 복제본을 재구축 하려면 복제 그룹에 속한 DB 인스턴스 중 테이블 잠금 사용 옵션으로 생성된 백업 파일 및 바이너리 로그(binary log)가 필요합니다. 백업 파일이 없는 경우 동작 및 주의 사항은 [읽기 복제본 생성](./#_1) 항목을 참고합니다.
 
 > [참고]
 > 재구축 후에도 접속 정보(도메인, IP)는 변경되지 않습니다
 
 ## DB 인스턴스 재시작
 
-MySQL을 재시작 하거나 고가용성 DB 인스턴스를 수동으로 장애 조치하고자 할 때, DB 인스턴스를 재시작할 수 있습니다. 재시작 시간을 최소화하기 위해, 서비스 부하가 낮은 시간대에 재시작을 수행하는 것이 좋습니다. 고가용성 DB 인스턴스의 경우 장애 조치를 이용한 재시작을 사용하지 않을 경우 예비 마스터를 먼저 재시작 한후, 마스터를 재시작합니다. 장애 조치 기능을 이용한 재시작의 경우, [수동 장애 조치](./#_1) 항목을 참고합니다.
+MySQL을 재시작하거나 고가용성 DB 인스턴스를 수동으로 장애 조치하고자 할 때, DB 인스턴스를 재시작할 수 있습니다. 재시작 시간을 최소화하기 위해 서비스 부하가 낮은 시간대에 수행하는 것이 좋습니다. 고가용성 DB 인스턴스의 경우 장애 조치를 이용한 재시작을 사용하지 않을 경우 예비 마스터를 먼저 재시작한 뒤 마스터를 재시작합니다. 장애 조치 기능을 이용한 재시작의 경우 [수동 장애 조치](./#_1) 항목을 참고합니다.
 
 DB 인스턴스 재시작을 하려면 웹 콘솔에서
 
@@ -548,7 +552,7 @@ DB 인스턴스 재시작을 하려면 웹 콘솔에서
 
 ## DB 인스턴스 강제 재시작
 
-DB 인스턴스의 MySQL이 정상 동작하지 않는 경우 강제로 재시작할 수 있습니다. 강제 재시작의 경우 MySQL에 SIGTERM 명령을 내려 정상 종료되기를 10분간 기다립니다. 10분 안에 MySQL이 정상 종료되면 이후 가상 머신을 재부팅합니다. 10분 안에 정상 종료되지 않으면 가상 머신을 강제로 재부팅합니다. 가상 머신이 강제로 재부팅되면 작업 중인 일부 트랜잭션이 유실될 수 있으며, 데이터 볼륨이 손상되어 복구가 불가능해질 수 있습니다. 강제 재시작 이후 DB 인스턴스의 상태가 사용 가능 상태로 돌아오지 않을 수 있습니다. 해당 상황 발생 시 고객 센터로 문의해 주세요.
+DB 인스턴스의 MySQL이 정상 동작하지 않는 경우 강제로 재시작할 수 있습니다. 강제 재시작의 경우 MySQL에 SIGTERM 명령을 내려 정상 종료되기를 10분간 기다립니다. 10분 안에 MySQL이 정상 종료되면 이후 가상 머신을 재부팅합니다. 10분 안에 정상 종료되지 않으면 가상 머신을 강제로 재부팅합니다. 가상 머신이 강제로 재부팅되면 작업 중인 일부 트랜잭션이 유실될 수 있으며, 데이터 볼륨이 손상되어 복구가 불가능해질 수 있습니다. 강제 재시작 이후 DB 인스턴스의 상태가 사용 가능 상태로 돌아오지 않을 수 있습니다. 해당 상황 발생 시 고객 센터로 문의하십시오.
 
 > [주의]
 > 데이터가 유실되거나 데이터 볼륨이 손상될 가능성이 있으므로 해당 기능은 긴급하고 불가피한 상황 이외에는 사용을 지양해야 합니다.
@@ -572,7 +576,7 @@ DB 인스턴스 강제 재시작을 하려면 웹 콘솔에서
 
 ![deletion-protection-popup-en](https://static.toastoven.net/prod_rds/24.03.12/deletion-protection-popup-en.png)
 
-❷ 삭제 보호 설정을 변경한 후 **확인** 버튼을 클릭합니다.
+❷ 삭제 보호 설정을 변경한 후 **확인**을 클릭합니다.
 
 ## High Availability DB instances
 
@@ -621,7 +625,7 @@ If the failed over master fails to recover, you can re-enable the high availabil
 
 ### Rebuild Failed over Master
 
-If the failed over master fails to recover, you can re-enable the high availability feature by rebuilding. Unlike recovery, rebuild removes all databases from the failed over master and rebuilds them based on the promoted master's database. In this process, 백업 파일이 없는 경우, 다음 순서에 따라 백업을 수행할 DB 인스턴스를 선택합니다.
+If the failed over master fails to recover, you can re-enable the high availability feature by rebuilding. Unlike recovery, rebuild removes all databases from the failed over master and rebuilds them based on the promoted master's database. In this process, 백업 파일이 없는 경우 다음 순서에 따라 백업을 수행할 DB 인스턴스를 선택합니다.
 
 ❶ 자동 백업 설정한 읽기 복제본
 ❷ 자동 백업 설정한 마스터
@@ -630,7 +634,7 @@ If the failed over master fails to recover, you can re-enable the high availabil
 
 > [주의]
 > 마스터의 데이터베이스 크기에 비례하여 장애 조치된 마스터 재구축 시간이 늘어날 수 있습니다.
-> 백업이 수행 되는 DB 인스턴스의 경우 장애 조치된 마스터 재구축 과정에서 스토리지 I/O 성능 하락이 있을 수 있습니다.
+> 백업이 수행되는 DB 인스턴스의 경우 장애 조치된 마스터 재구축 과정에서 스토리지 I/O 성능 하락이 있을 수 있습니다.
 
 > [참고]
 > 장애 조치된 마스터 재구축 과정에 필요한 바이너리 로그(binary log) 크기만큼 백업 스토리지 과금이 발생할 수 있습니다.
@@ -678,20 +682,20 @@ master changes during failover and all binary logs are deleted. You can restore 
 
 #### 장애 조치 수동 제어
 
-예비 마스터에 변경 사항을 먼저 적용한 다음 그 추이를 관찰하고자 하거나, 정확한 시간에 장애 조치를 실행하고 싶을 때가 있습니다. 이러한 요구를 충족하기 위해, 웹 콘솔을 통해 장애 조치 시점을 직접 제어할 수 있습니다. 장애 조치 수동 제어를 선택하면 예비 마스터가 재시작된 후 ❶ 웹 콘솔에 **장애 조치** 버튼이 표시됩니다. 이 버튼을 클릭하면 장애 조치가 실행되며, 최대 5일간 실행을 대기할 수 있습니다. 5일 이내에 장애 조치를 실행하지 않을 경우, 해당 작업은 자동으로 취소됩니다.
+예비 마스터에 변경 사항을 먼저 적용한 뒤 그 추이를 관찰하거나, 정확한 시간에 장애 조치를 실행하고자 할 때 웹 콘솔에서 장애 조치 시점을 직접 제어할 수 있습니다. 장애 조치 수동 제어를 선택하면 예비 마스터가 재시작된 후 ❶ 웹 콘솔에 **장애 조치** 버튼이 표시됩니다. 이 버튼을 클릭하면 장애 조치가 실행되며, 최대 5일간 실행을 대기할 수 있습니다. 5일 이내에 장애 조치를 실행하지 않을 경우 해당 작업은 자동으로 취소됩니다.
 
 ![db-instance-ha-wait-manual-failover-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-ha-wait-manual-failover-en.png)
 
 > [주의]
-> 장애 조치를 대기 하는 동안에는 자동 장애 조치가 되지 않습니다.
+> 장애 조치를 대기하는 동안에는 자동 장애 조치가 되지 않습니다.
 
 #### 복제 지연 해소 대기
 
-복제 지연 해소 대기 옵션을 활성화하면, 예비 마스터와 복제 그룹에 포함된 읽기 복제본의 복제 지연이 사라질 때까지 대기할 수 있습니다.
+복제 지연 해소 대기 옵션을 활성화하면 예비 마스터와 복제 그룹에 포함된 읽기 복제본의 복제 지연이 사라질 때까지 대기할 수 있습니다.
 
 #### 쓰기 부하 차단
 
-복제 지연을 해소하는 동안 쓰기 부하를 추가로 차단하는 선택이 가능합니다. 쓰기 부하를 차단하면, 장애 조치를 수행하기 바로 전에 마스터가 읽기 전용 모드로 전환되어, 모든 변경 쿼리가 실패하도록 설정됩니다.
+복제 지연을 해소하는 동안 쓰기 부하를 추가로 차단하는 선택이 가능합니다. 쓰기 부하를 차단하면 장애 조치를 수행하기 바로 전에 마스터가 읽기 전용 모드로 전환되어 모든 변경 쿼리가 실패하도록 설정됩니다.
 
 ### Pause High Availability
 
