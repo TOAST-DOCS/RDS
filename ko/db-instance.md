@@ -377,8 +377,8 @@ GRANT CREATE,DROP,LOCK TABLES,REFERENCES,EVENT,ALTER,INDEX,INSERT,SELECT,UPDATE,
 > * 사용자에게 부여된 권한과 상관없이 데이터베이스에 존재하는 모든 사용자는 CUSTOM 권한으로 표현됩니다.
 
 ## DB 인스턴스 운영체제 업그레이드
-DB 인스턴스 운영체제 업그레이드를 지원합니다. 운영체제 업그레이드를 통해 보안 취약점을 해결하거나 운영체제의 EOL에 대응할 수 있습니다. 
-운영체제 업그레이드는 서비스 순단이 발생하기 때문에 주의가 필요합니다. 고가용성 DB 인스턴스는 장애조치를 통해 서비스 순단을 최소화 할 수 있습니다.
+DB 인스턴스 운영체제 업그레이드를 지원합니다. 운영체제 업그레이드를 통해 보안 취약점을 해결하거나 운영체제의 EOL(end of life)에 대응할 수 있습니다. 
+운영체제 업그레이드는 서비스 순단이 발생하기 때문에 주의가 필요합니다. 고가용성 DB 인스턴스는 장애 조치를 통해 서비스 순단을 최소화할 수 있습니다.
 
 현재 DB 인스턴스의 운영체제 정보는 DB 인스턴스 상세 화면에서 확인할 수 있습니다.
 <!--[db-instance-os-upgrade-ko.png](https://static.toastoven.net/prod_rds/24.05.14/db-instance-os-upgrade-ko.png) -->
@@ -757,7 +757,7 @@ mysql> CALL mysql.tcrds_current_lock();
 * NHN Cloud RDS의 복제 구성은 콘솔의 **복제본 생성**으로 할 수 있습니다.
 
 ```
-mysql> CALL mysql. tcrds_repl_changemaster (master_instance_ip, master_instance_port, user_id_for_replication, password_for_replication_user, MASTER_LOG_FILE, MASTER_LOG_POS);
+mysql> CALL mysql.tcrds_repl_changemaster (master_instance_ip, master_instance_port, user_id_for_replication, password_for_replication_user, MASTER_LOG_FILE, MASTER_LOG_POS);
 ```
 
 * 파라미터 설명

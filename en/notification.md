@@ -152,7 +152,7 @@ Event refers to an important event that occurs either by RDS for MySQL or by use
 | INSTC_68_01 | INSTANCE          | Yes          | Network communication failed                                                  |
 | INSTC_69_00 | INSTANCE          | 예            | 장애 조치 수동 제어 대기                                                                |
 | INSTC_69_01 | INSTANCE          | 예            | 장애 조치 수동 제어 성공                                                                |
-| INSTC_69_04 | INSTANCE          | 예            | 장애 조치 수동 제어 타임 아웃                                                             |
+| INSTC_69_04 | INSTANCE          | 예            | 장애 조치 수동 제어 타임아웃                                                              |
 | INSTC_70_01 | INSTANCE          | 예            | 고가용성 정상화                                                                      |
 | INSTC_71_01 | INSTANCE          | 예            | 고가용성 중단                                                                       |
 | JOB_01_04   | JOB               | Yes          | Job execution failed                                                          |

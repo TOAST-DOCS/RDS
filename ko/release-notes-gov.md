@@ -15,7 +15,7 @@
 * API v3.0 추가 및 변경
   * DB 인스턴스 복제하기 API 요청에 `storage.storageType` 필드 추가
   * DB 인스턴스 상세 보기 API 응답에 `notificationGroupIds` 필드 추가
-  * API v3.0 호출 시 프로젝트 통합 Appkey를 사용할 수 있도록 개선
+  * API v3.0 호출 시 프로젝트 통합 앱키를 사용할 수 있도록 개선
 
 ### 2024. 03. 14.
 
