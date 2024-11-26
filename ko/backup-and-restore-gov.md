@@ -28,6 +28,7 @@ DB 엔진 버전에 따른 Percona XtraBackup 버전은 아래와 같습니다.
 | 8.0.34   | 8.0.34        |
 | 8.0.35   | 8.0.35        |
 | 8.0.36   | 8.0.35        |
+| 8.0.40   | 8.0.35        |
 
 * XtraBackup의 설치에 대한 자세한 설명은 Percona 홈페이지를 참고합니다.
   * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
@@ -103,7 +104,7 @@ DB 인스턴스의 모든 데이터를 백업합니다.
 
 DB 인스턴스 생성 및 수정 시 백업에 적용될 설정 항목들을 지정할 수 있습니다.
 
-![db-instance-backup-ko](https://static.toastoven.net/prod_rds/24.09.10/db-instance-backup-ko.png)
+![db-instance-backup-form-ko](https://static.toastoven.net/prod_rds/24.11.12/db-instance-backup-form-ko.png)
 
 ### 공통 설정
 

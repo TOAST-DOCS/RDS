@@ -28,6 +28,7 @@ DBエンジンバージョン別のPercona XtraBackupバージョンは次のと
 | 8.0.34     | 8.0.34          |
 | 8.0.35     | 8.0.35          |
 | 8.0.36     | 8.0.35          |
+| 8.0.40     | 8.0.35          |
 
 * XtraBackupのインストールに関する詳しい説明はPercona Webサイトを参照します。
   * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
@@ -47,8 +48,8 @@ DBエンジンバージョン別のPercona XtraBackupバージョンは次のと
 * バックアップ名は、リージョンごとに一意でなければなりません。
 * バックアップ名は1～100文字の英字、数字、一部の記号(-, _, .)のみ入力することができ、最初の文字は英字のみ使用できます。
 
-![db-instance-backup-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-backup-ko.png)
-![backup-list-1-ko](https://static.toastoven.net/prod_rds/24.09.10/backup-list-1-ko.png)
+![db-instance-backup-ja](https://static.toastoven.net/prod_rds/24.03.12/db-instance-backup-ja.png)
+![backup-list-ja](https://static.toastoven.net/prod_rds/24.11.12/backup-list-ja.png)
 
 **手動で全体バックアップを作成する**
 
@@ -101,7 +102,7 @@ DBインスタンスの全てのデータをバックアップします。
 
 DBインスタンスの作成及び修正時、バックアップに適用される設定項目を指定できます。
 
-![db-instance-backup-ko](https://static.toastoven.net/prod_rds/24.09.10/db-instance-backup-ko.png)
+![db-instance-backup-form-ja](https://static.toastoven.net/prod_rds/24.11.12/db-instance-backup-form-ja.png)
 
 ### 共通設定
 
@@ -157,7 +158,7 @@ DBインスタンスの作成及び修正時、バックアップに適用され
 
 **バックアップ実行時間**
 
-* バックアップが自動的に実行される時間を設定できます。백업 시작 시각과 백업 윈도우로 구성됩니다。バックアップ実行時間は重複しないように複数回設定できます。バックアップ開始時刻を基準に、バックアップウィンドウ内のある時点でバックアップを実行します。バックアップウィンドウはバックアップの総実行時間とは関係ありません。バックアップにかかる時間はデータベースのサイズに比例し、サービス負荷によって異なります。백업이 실패할 경우 백업 윈도우를 넘지 않았다면 백업 재시도 횟수에 따라 백업을 다시 시도합니다
+* バックアップが自動的に実行される時間を設定できます。バックアップ開始時刻とバックアップウィンドウで構成されます。バックアップ実行時間は重複しないように複数回設定できます。バックアップ開始時刻を基準に、バックアップウィンドウ内のある時点でバックアップを実行します。バックアップウィンドウはバックアップの総実行時間とは関係ありません。バックアップにかかる時間はデータベースのサイズに比例し、サービス負荷によって異なります。バックアップが失敗した場合、バックアップウィンドウを超えなければ、バックアップ再試行回数に基づいてバックアップを再試行します。
 
   > [注意]
   > 前のバックアップが終了しないなどの状況では、バックアップが実行されない場合があります。

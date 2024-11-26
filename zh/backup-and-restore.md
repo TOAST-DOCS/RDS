@@ -27,6 +27,7 @@ high-availability configuration or back up only increments of data since the pre
 | 8.0.34   | 8.0.34        |
 | 8.0.35   | 8.0.35        |
 | 8.0.36   | 8.0.35        |
+| 8.0.40   | 8.0.35        |
 
 * For detailed information about installing XtraBackup, visit the Percona home page.
   * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
@@ -45,8 +46,8 @@ When creating a manual backup, you must specify a name for the backup, with the 
 * Backup name has to be unique for each region.
 * Backup names are alphabetic, numeric, and - _ between 1 and 100 Only, and the first character has to be an alphabet.
 
-![db-instance-backup-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-backup-ko.png)
-![backup-list-1-en](https://static.toastoven.net/prod_rds/24.09.10/backup-list-1-ko.png)
+![db-instance-backup-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-backup-en.png)
+![backup-list-en](https://static.toastoven.net/prod_rds/24.11.12/backup-list-en.png)
 
 **Create a manual full backup**
 
@@ -100,7 +101,7 @@ When incremental backups are scheduled according to [자동 백업 전략](#자�
 
 When creating and modifying DB instances, you can specify settings that will be applied to backups.
 
-![db-instance-backup-en](https://static.toastoven.net/prod_rds/24.09.10/db-instance-backup-ko.png)
+![db-instance-backup-form-en](https://static.toastoven.net/prod_rds/24.11.12/db-instance-backup-form-en.png)
 
 ### Common Settings
 The following topics are common to both auto and manual backups.
@@ -156,7 +157,7 @@ The following items apply only to auto backups.
 
 **Auto Backup Run Time**
 
-* Allows you set the time that the backup automatically takes place. It consists of the backup start time and the backup window. You can set the backup run time multiple times so that it does not overlap. Performs backup at any point in the backup window based on the start time of the backup. The backup window is not related to the total running time of the backup. Backup time is proportional to the size of the database and the service load. 백업이 실패할 경우 백업 윈도우를 넘지 않았다면 백업 재시도 횟수에 따라 백업을 다시 시도합니다.
+* Allows you set the time that the backup automatically takes place. It consists of the backup start time and the backup window. You can set the backup run time multiple times so that it does not overlap. Performs backup at any point in the backup window based on the start time of the backup. The backup window is not related to the total running time of the backup. Backup time is proportional to the size of the database and the service load. If the backup fails, retry the backup based on the number of backups retries if it does not exceed the backup window.
 
 > [Caution]
 > A backup might not be performed in some situations, such as when a previous backup does not terminate.
@@ -188,7 +189,7 @@ After a backup, you can export the backup file to user object storage. This is n
 
 You can export backup files stored in internal backup storage to user object storage. Not supported for incremental backups.
 
-![db-instance-detail-backup-export-ko](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-backup-export-ko.png)
+![db-instance-detail-backup-export-en](https://static.toastoven.net/prod_rds/24.03.12/db-instance-detail-backup-export-en.png)
 
 ❶ On the Details tab of the source DB instance from which the backup was taken, select the backup file to export and click **Export Backup to Object Storage**, and a pop-up screen will appear to export the backup.
 

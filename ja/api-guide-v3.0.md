@@ -72,6 +72,9 @@ APIリクエスト時、認証に失敗したり権限がない場合、次の�
 | MYSQL\_V8032 | O | O |
 | MYSQL\_V8033 | O | O |
 | MYSQL\_V8034 | O | O |
+| MYSQL_V8035 | O | O |
+| MYSQL_V8036 | O | O |
+| MYSQL_V8040 | O | O |
 
 * ENUMタイプのdbVersionフィールドに対して該当値を使用できます。
 * バージョンによって作成または復元が不可能な場合があります。
@@ -1336,6 +1339,7 @@ POST /v3.0/db-instances/{dbInstanceId}/restore
 | backup.backupSchedules                              | Body | Array   | O  | 예정된 자동 백업 목록                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
 | backup.backupSchedules.backupWndBgnTime             | Body | String  | O  | バックアップ開始時刻<br><ul><li>例: `00:00:00`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                            |
 | backup.backupSchedules.backupWndDuration            | Body | Enum    | O  | バックアップDuration<br>バックアップ開始時刻からDuration内に自動バックアップが実行されます。<br><ul><li>`HALF_AN_HOUR`<span style="color:#313338">: 30分</span></li><li>`ONE_HOUR`<span style="color:#313338">: 1時間</span></li><li>`ONE_HOUR_AND_HALF`<span style="color:#313338">: 1時間30分</span></li><li>`TWO_HOURS`<span style="color:#313338">: 2時間</span></li><li>`TWO_HOURS_AND_HALF`<span style="color:#313338">: 2時間30分</span></li><li>`THREE_HOURS`<span style="color:#313338">: 3時間</span></li></ul> |
+| useDeletionProtection                               | Body | Boolean | X  | 削除保護を行うかどうか<br>デフォルト値: `false`                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 
 #### Timestampを利用した時点復元時、リクエスト(restoreTypeが`TIMESTAMP`の場合)
 
@@ -3917,7 +3921,7 @@ GET /v3.0/events
                 },
                 {
                     "langCode": "KO",
-                    "message": "DB 인스턴스 시작"
+                    "message": "DBインスタンス起動"
                 },
                 {
                     "langCode": "ZH",
