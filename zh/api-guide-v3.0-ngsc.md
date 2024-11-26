@@ -69,6 +69,9 @@ The API responds with "200 OK" to all API requests. For more information on the 
 | MYSQL_V8032 | O | O |
 | MYSQL_V8033 | O | O |
 | MYSQL_V8034 | O | O |
+| MYSQL_V8035 | O | O |
+| MYSQL_V8036 | O | O |
+| MYSQL_V8040 | O | O |
 
 * You can use the value for the dbVersion field of ENUM type.
 * Depending on the version, creation or restoration may not be possible.
