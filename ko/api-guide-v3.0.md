@@ -2353,7 +2353,7 @@ POST /v3.0/db-instances/{dbInstanceId}/log-files/export
     "username": "gildong.hong@nhn.com",
     "password": "password",
     "targetContainer": "/container",
-    "objectPath": "/logs/backup_log"
+    "objectPath": "logs/backup"
 }
 ```
 
