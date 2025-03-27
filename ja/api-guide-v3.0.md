@@ -83,7 +83,7 @@ APIリクエスト時、認証に失敗したり権限がない場合、次の�
 
 ### リージョンリストを表示
 
-```
+```http
 GET /v3.0/project/regions
 ```
 
@@ -132,7 +132,7 @@ GET /v3.0/project/regions
 
 ### プロジェクトメンバーリストを表示
 
-```
+```http
 GET /v3.0/project/members
 ```
 
@@ -180,7 +180,7 @@ GET /v3.0/project/members
 
 ### DBインスタンス仕様リストを表示
 
-```
+```http
 GET /v3.0/db-flavors
 ```
 
@@ -228,7 +228,7 @@ GET /v3.0/db-flavors
 
 ### サブネットリストを表示
 
-```
+```http
 GET /v3.0/network/subnets
 ```
 
@@ -278,7 +278,7 @@ GET /v3.0/network/subnets
 
 ### DBエンジンリストを表示
 
-```
+```http
 GET /v3.0/db-versions
 ```
 
@@ -324,7 +324,7 @@ GET /v3.0/db-versions
 
 ### ストレージタイプリストを表示
 
-```
+```http
 GET /v3.0/storage-types
 ```
 
@@ -363,7 +363,7 @@ GET /v3.0/storage-types
 
 ### ストレージリストを表示
 
-```
+```http
 GET /v3.0/storages
 ```
 
@@ -420,7 +420,7 @@ GET /v3.0/storages
 
 ### 作業情報の詳細表示
 
-```
+```http
 GET /v3.0/jobs/{jobId}
 ```
 
@@ -476,7 +476,7 @@ GET /v3.0/jobs/{jobId}
 
 ### DBインスタンスグループリストを表示
 
-```
+```http
 GET /v3.0/db-instance-groups
 ```
 
@@ -522,7 +522,7 @@ GET /v3.0/db-instance-groups
 
 ### DBインスタンスグループの詳細を表示
 
-```
+```http
 GET /v3.0/db-instance-groups/{dbInstanceGroupId}
 ```
 
@@ -625,7 +625,7 @@ GET /v3.0/db-instance-groups/{dbInstanceGroupId}
 
 ### DBインスタンスリストを表示
 
-```
+```http
 GET /v3.0/db-instances
 ```
 
@@ -685,7 +685,7 @@ GET /v3.0/db-instances
 
 ### DBインスタンスの詳細を表示
 
-```
+```http
 GET /v3.0/db-instances/{dbInstanceId}
 ```
 
@@ -762,7 +762,7 @@ GET /v3.0/db-instances/{dbInstanceId}
 
 ### DBインスタンスを作成する
 
-```
+```http
 POST /v3.0/db-instances
 ```
 
@@ -853,7 +853,7 @@ POST /v3.0/db-instances
 
 ### DBインスタンスを修正する
 
-```
+```http
 PUT /v3.0/db-instances/{dbInstanceId}
 ```
 
@@ -899,7 +899,7 @@ PUT /v3.0/db-instances/{dbInstanceId}
 
 ### DBインスタンスを削除する
 
-```
+```http
 DELETE /v3.0/db-instances/{dbInstanceId}
 ```
 
@@ -921,7 +921,7 @@ DELETE /v3.0/db-instances/{dbInstanceId}
 
 ### DBインスタンスを再起動する
 
-```
+```http
 POST /v3.0/db-instances/{dbInstanceId}/restart
 ```
 
@@ -943,7 +943,7 @@ POST /v3.0/db-instances/{dbInstanceId}/restart
 
 ### DBインスタンスを強制再起動する
 
-```
+```http
 POST /v3.0/db-instances/{dbInstanceId}/force-restart
 ```
 
@@ -977,7 +977,7 @@ POST /v3.0/db-instances/{dbInstanceId}/force-restart
 
 ### DBインスタンスを起動する
 
-```
+```http
 POST /v3.0/db-instances/{dbInstanceId}/start
 ```
 
@@ -999,7 +999,7 @@ POST /v3.0/db-instances/{dbInstanceId}/start
 
 ### DBインスタンスを停止する
 
-```
+```http
 POST /v3.0/db-instances/{dbInstanceId}/stop
 ```
 
@@ -1021,7 +1021,7 @@ POST /v3.0/db-instances/{dbInstanceId}/stop
 
 ### DBインスタンスをバックアップする
 
-```
+```http
 POST /v3.0/db-instances/{dbInstanceId}/backup
 ```
 
@@ -1042,7 +1042,7 @@ POST /v3.0/db-instances/{dbInstanceId}/backup
 
 ### DBインスタンスバックアップ後にエクスポート
 
-```
+```http
 POST /v3.0/db-instances/{dbInstanceId}/backup-to-object-storage
 ```
 
@@ -1083,7 +1083,7 @@ POST /v3.0/db-instances/{dbInstanceId}/backup-to-object-storage
 
 ### DBインスタンスを複製する
 
-```
+```http
 POST /v3.0/db-instances/{dbInstanceId}/replicate
 ```
 
@@ -1147,7 +1147,7 @@ POST /v3.0/db-instances/{dbInstanceId}/replicate
 
 ### DBインスタンスを昇格する
 
-```
+```http
 POST /v3.0/db-instances/{dbInstanceId}/promote
 ```
 
@@ -1169,7 +1169,7 @@ POST /v3.0/db-instances/{dbInstanceId}/promote
 
 ### 復元情報照会
 
-```
+```http
 GET /v3.0/db-instances/{dbInstanceId}/restoration-info
 ```
 
@@ -1248,7 +1248,7 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info
 
 ### 復元される最後のクエリ照会
 
-```
+```http
 GET /v3.0/db-instances/{dbInstanceId}/restoration-info/last-query
 ```
 
@@ -1302,7 +1302,7 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info/last-query
 
 ### 復元
 
-```
+```http
 POST /v3.0/db-instances/{dbInstanceId}/restore
 ```
 
@@ -1505,7 +1505,7 @@ POST /v3.0/db-instances/{dbInstanceId}/restore
 
 ### オブジェクトストレージから復元
 
-```
+```http
 POST /v3.0/db-instances/restore-from-obs
 ```
 
@@ -1604,7 +1604,7 @@ POST /v3.0/db-instances/restore-from-obs
 
 ### DBインスタンス削除保護設定を変更する
 
-```
+```http
 PUT /v3.0/db-instances/{dbInstanceId}/deletion-protection
 ```
 
@@ -1639,7 +1639,7 @@ PUT /v3.0/db-instances/{dbInstanceId}/deletion-protection
 
 ### 高可用性を修正する
 
-```
+```http
 PUT /v3.0/db-instances/{dbInstanceId}/high-availability
 ```
 
@@ -1661,7 +1661,7 @@ PUT /v3.0/db-instances/{dbInstanceId}/high-availability
 
 ### 高可用性を再開する
 
-```
+```http
 POST /v3.0/db-instances/{dbInstanceId}/high-availability/resume
 ```
 
@@ -1683,7 +1683,7 @@ POST /v3.0/db-instances/{dbInstanceId}/high-availability/resume
 
 ### 高可用性を一時停止する
 
-```
+```http
 POST /v3.0/db-instances/{dbInstanceId}/high-availability/pause
 ```
 
@@ -1705,7 +1705,7 @@ POST /v3.0/db-instances/{dbInstanceId}/high-availability/pause
 
 ### 高可用性を復旧する
 
-```
+```http
 POST /v3.0/db-instances/{dbInstanceId}/high-availability/repair
 ```
 
@@ -1727,7 +1727,7 @@ POST /v3.0/db-instances/{dbInstanceId}/high-availability/repair
 
 ### 高可用性を分離する
 
-```
+```http
 POST /v3.0/db-instances/{dbInstanceId}/high-availability/split
 ```
 
@@ -1749,7 +1749,7 @@ POST /v3.0/db-instances/{dbInstanceId}/high-availability/split
 
 ### ストレージ情報を表示
 
-```
+```http
 GET /v3.0/db-instances/{dbInstanceId}/storage-info
 ```
 
@@ -1793,7 +1793,7 @@ GET /v3.0/db-instances/{dbInstanceId}/storage-info
 
 ### ストレージ情報を修正する
 
-```
+```http
 PUT /v3.0/db-instances/{dbInstanceId}/storage-info
 ```
 
@@ -1815,7 +1815,7 @@ PUT /v3.0/db-instances/{dbInstanceId}/storage-info
 
 ### バックアップ情報を表示
 
-```
+```http
 GET /v3.0/db-instances/{dbInstanceId}/backup-info
 ```
 
@@ -1872,7 +1872,7 @@ GET /v3.0/db-instances/{dbInstanceId}/backup-info
 
 ### バックアップ情報を修正する
 
-```
+```http
 PUT /v3.0/db-instances/{dbInstanceId}/backup-info
 ```
 
@@ -1919,7 +1919,7 @@ PUT /v3.0/db-instances/{dbInstanceId}/backup-info
 
 ### ネットワーク情報を表示
 
-```
+```http
 GET /v3.0/db-instances/{dbInstanceId}/network-info
 ```
 
@@ -1978,7 +1978,7 @@ GET /v3.0/db-instances/{dbInstanceId}/network-info
 
 ### ネットワーク情報を修正する
 
-```
+```http
 PUT /v3.0/db-instances/{dbInstanceId}/network-info
 ```
 
@@ -1999,7 +1999,7 @@ PUT /v3.0/db-instances/{dbInstanceId}/network-info
 
 ### DBユーザーリストを表示
 
-```
+```http
 GET /v3.0/db-instances/{dbInstanceId}/db-users
 ```
 
@@ -2059,7 +2059,7 @@ GET /v3.0/db-instances/{dbInstanceId}/db-users
 
 ### DBユーザーを作成する
 
-```
+```http
 POST /v3.0/db-instances/{dbInstanceId}/db-users
 ```
 
@@ -2105,7 +2105,7 @@ POST /v3.0/db-instances/{dbInstanceId}/db-users
 
 ### DBユーザーを修正する
 
-```
+```http
 PUT /v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 ```
 
@@ -2146,7 +2146,7 @@ PUT /v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 
 ### DBユーザーを削除する
 
-```
+```http
 DELETE /v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 ```
 
@@ -2169,7 +2169,7 @@ DELETE /v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 
 ### DBスキーマリストを表示
 
-```
+```http
 GET /v3.0/db-instances/{dbInstanceId}/db-schemas
 ```
 
@@ -2219,7 +2219,7 @@ GET /v3.0/db-instances/{dbInstanceId}/db-schemas
 
 ### DBスキーマを作成する
 
-```
+```http
 POST /v3.0/db-instances/{dbInstanceId}/db-schemas
 ```
 
@@ -2240,7 +2240,7 @@ POST /v3.0/db-instances/{dbInstanceId}/db-schemas
 
 ### DBスキーマを削除する
 
-```
+```http
 DELETE /v3.0/db-instances/{dbInstanceId}/db-schemas/{dbSchemaId}
 ```
 
@@ -2275,7 +2275,7 @@ DELETE /v3.0/db-instances/{dbInstanceId}/db-schemas/{dbSchemaId}
 
 ### バックアップリスト照会
 
-```
+```http
 GET /v3.0/backups
 ```
 
@@ -2343,7 +2343,7 @@ GET /v3.0/backups
 
 ### バックアップのエクスポート
 
-```
+```http
 POST /v3.0/backups/{backupId}/export
 ```
 
@@ -2387,7 +2387,7 @@ POST /v3.0/backups/{backupId}/export
 
 ### バックアップを復元する
 
-```
+```http
 POST /v3.0/backups/{backupId}/restore
 ```
 
@@ -2466,7 +2466,7 @@ POST /v3.0/backups/{backupId}/restore
 
 ### バックアップを削除する
 
-```
+```http
 DELETE /v3.0/backups/{backupId}
 ```
 
@@ -2499,7 +2499,7 @@ DELETE /v3.0/backups/{backupId}
 
 ### DBセキュリティグループリストを表示
 
-```
+```http
 GET /v3.0/db-security-groups
 ```
 
@@ -2549,7 +2549,7 @@ GET /v3.0/db-security-groups
 
 ### DBセキュリティグループの詳細を表示
 
-```
+```http
 GET /v3.0/db-security-groups/{dbSecurityGroupId}
 ```
 
@@ -2628,7 +2628,7 @@ GET /v3.0/db-security-groups/{dbSecurityGroupId}
 
 ### DBセキュリティグループを作成する
 
-```
+```http
 POST /v3.0/db-security-groups
 ```
 
@@ -2683,7 +2683,7 @@ POST /v3.0/db-security-groups
 
 ### DBセキュリティグループを修正する
 
-```
+```http
 PUT /v3.0/db-security-groups/{dbSecurityGroupId}
 ```
 
@@ -2733,7 +2733,7 @@ PUT /v3.0/db-security-groups/{dbSecurityGroupId}
 
 ### DBセキュリティグループを削除する
 
-```
+```http
 DELETE /v3.0/db-security-groups/{dbSecurityGroupId}
 ```
 
@@ -2769,7 +2769,7 @@ DELETE /v3.0/db-security-groups/{dbSecurityGroupId}
 
 ### DBセキュリティグループルールを作成する
 
-```
+```http
 POST /v3.0/db-security-groups/{dbSecurityGroupId}/rules
 ```
 
@@ -2816,7 +2816,7 @@ POST /v3.0/db-security-groups/{dbSecurityGroupId}/rules
 
 ### DBセキュリティグループルールを修正する
 
-```
+```http
 PUT /v3.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 ```
 
@@ -2862,7 +2862,7 @@ PUT /v3.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 
 ### DBセキュリティグループルールを削除する
 
-```
+```http
 DELETE /v3.0/db-security-groups/{dbSecurityGroupId}/rules
 ```
 
@@ -2887,7 +2887,7 @@ DELETE /v3.0/db-security-groups/{dbSecurityGroupId}/rules
 
 ### パラメータグループリストを表示
 
-```
+```http
 GET /v3.0/parameter-groups
 ```
 
@@ -2944,7 +2944,7 @@ GET /v3.0/parameter-groups
 
 ### パラメータグループの詳細を表示
 
-```
+```http
 GET /v3.0/parameter-groups/{parameterGroupId}
 ```
 
@@ -3019,7 +3019,7 @@ GET /v3.0/parameter-groups/{parameterGroupId}
 
 ### パラメータグループを作成する
 
-```
+```http
 POST /v3.0/parameter-groups
 ```
 
@@ -3054,7 +3054,7 @@ POST /v3.0/parameter-groups
 
 ### パラメータグループをコピーする
 
-```
+```http
 POST /v3.0/parameter-groups/{parameterGroupId}/copy
 ```
 
@@ -3089,7 +3089,7 @@ POST /v3.0/parameter-groups/{parameterGroupId}/copy
 
 ### パラメータグループを修正する
 
-```
+```http
 PUT /v3.0/parameter-groups/{parameterGroupId}
 ```
 
@@ -3137,7 +3137,7 @@ PUT /v3.0/parameter-groups/{parameterGroupId}
 
 ### パラメータを修正する
 
-```
+```http
 PUT /v3.0/parameter-groups/{parameterGroupId}/parameters
 ```
 
@@ -3191,7 +3191,7 @@ PUT /v3.0/parameter-groups/{parameterGroupId}/parameters
 
 ### パラメータグループを再設定する
 
-```
+```http
 PUT /v3.0/parameter-groups/{parameterGroupId}/reset
 ```
 
@@ -3225,7 +3225,7 @@ PUT /v3.0/parameter-groups/{parameterGroupId}/reset
 
 ### パラメータグループを削除する
 
-```
+```http
 DELETE /v3.0/parameter-groups/{parameterGroupId}
 ```
 
@@ -3263,7 +3263,7 @@ DELETE /v3.0/parameter-groups/{parameterGroupId}
 
 ### ユーザーグループリストを表示
 
-```
+```http
 GET /v3.0/user-groups
 ```
 
@@ -3309,7 +3309,7 @@ GET /v3.0/user-groups
 
 ### ユーザーグループの詳細を表示
 
-```
+```http
 GET /v3.0/user-groups/{userGroupId}
 ```
 
@@ -3363,7 +3363,7 @@ GET /v3.0/user-groups/{userGroupId}
 
 ### ユーザーグループを作成する
 
-```
+```http
 POST /v3.0/user-groups
 ```
 
@@ -3405,7 +3405,7 @@ POST /v3.0/user-groups
 
 ### ユーザーグループを修正する
 
-```
+```http
 PUT /v3.0/user-groups/{userGroupId}
 ```
 
@@ -3455,7 +3455,7 @@ PUT /v3.0/user-groups/{userGroupId}
 
 ### ユーザーグループを削除する
 
-```
+```http
 DELETE /v3.0/user-groups/{userGroupId}
 ```
 
@@ -3491,7 +3491,7 @@ DELETE /v3.0/user-groups/{userGroupId}
 
 ### 通知グループリストを表示
 
-```
+```http
 GET /v3.0/notification-groups
 ```
 
@@ -3543,7 +3543,7 @@ GET /v3.0/notification-groups
 
 ### アラームグループの詳細を表示
 
-```
+```http
 GET /v3.0/notification-groups/{notificationGroupId}
 ```
 
@@ -3610,7 +3610,7 @@ GET /v3.0/notification-groups/{notificationGroupId}
 
 ### アラームグループを作成する
 
-```
+```http
 POST /v3.0/notification-groups
 ```
 
@@ -3651,7 +3651,7 @@ POST /v3.0/notification-groups
 
 ### アラームグループを修正する
 
-```
+```http
 PUT /v3.0/notification-groups/{notificationGroupId}
 ```
 
@@ -3704,7 +3704,7 @@ PUT /v3.0/notification-groups/{notificationGroupId}
 
 ### アラームグループを削除する
 
-```
+```http
 DELETE /v3.0/notification-groups/{notificationGroupId}
 ```
 
@@ -3742,7 +3742,7 @@ DELETE /v3.0/notification-groups/{notificationGroupId}
 
 ### Metricリストを表示
 
-```
+```http
 GET /v3.0/metrics
 ```
 
@@ -3784,7 +3784,7 @@ GET /v3.0/metrics
 
 ### 統計情報の照会
 
-```
+```http
 GET /v3.0/metric-statistics
 ```
 
@@ -3859,7 +3859,7 @@ GET /v3.0/metric-statistics
 
 ### イベントリスト照会
 
-```
+```http
 GET /v3.0/events
 ```
 
@@ -3941,7 +3941,7 @@ GET /v3.0/events
 
 ### 購読可能なイベントコード一覧表示
 
-```
+```http
 GET /v3.0/event-codes
 ```
 

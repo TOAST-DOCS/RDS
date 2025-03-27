@@ -6,21 +6,20 @@
 
 ## 인증 및 권한
 
-API를 사용하려면 인증에 필요한 `User Access Key ID`와 `Secret Access Key`가 필요합니다. 콘솔 우측 상단의 계정에 마우스 포인터를 올리면 표시되는 드롭다운 메뉴에서 <b>API 보안 설정</b>을 선택해 생성할 수 있습니다.
-생성된 Key는 Appkey와 함께 요청 Header에 포함해야 합니다.
+API를 사용하려면 [Public API > API 호출 및 인증](/nhncloud/ko/public-api/api-authentication/)을 통해 발급 받은 Bearer 유형의 토큰이 필요합니다.
+발급 받은 토큰은 Appkey와 함께 요청 Header에 포함해야 합니다.
 
-| 이름                         | 종류     | 형식     | 필수 | 설명                                          |
-|----------------------------|--------|--------|----|---------------------------------------------|
-| X-TC-APP-KEY               | Header | String | O  | RDS for MySQL 서비스의 Appkey 또는 프로젝트 통합 Appkey |
-| X-TC-AUTHENTICATION-ID     | Header | String | O  | API 보안 설정 메뉴의 User Access Key ID            |
-| X-TC-AUTHENTICATION-SECRET | Header | String | O  | API 보안 설정 메뉴의 Secret Access Key             |
+| 이름                  | 종류     | 형식     | 필수 | 설명                                          |
+|---------------------|--------|--------|----|---------------------------------------------|
+| X-TC-APP-KEY        | Header | String | O  | RDS for MySQL 서비스의 Appkey 또는 프로젝트 통합 Appkey |
+| X-NHN-AUTHORIZATION | Header | String | O  | Public API로 발급 받은 Bearer 유형 토큰              |
 
 또한 프로젝트 멤버 역할에 따라 호출할 수 있는 API가 제한됩니다. `RDS for MySQL ADMIN`, `RDS for MySQL VIEWER`로 구분하여 권한을 부여할 수 있습니다.
 
 * `RDS for MySQL ADMIN` 권한은 모든 기능을 사용 가능합니다.
 * `RDS for MySQL VIEWER` 권한은 정보를 조회하는 기능만 사용 가능합니다.
-  * DB 인스턴스를 생성, 수정, 삭제하거나, DB 인스턴스를 대상으로 하는 어떠한 기능도 사용할 수 없습니다.
-  * 단, 알림 그룹과 사용자 그룹 관련된 기능은 사용 가능합니다.
+    * DB 인스턴스를 생성, 수정, 삭제하거나, DB 인스턴스를 대상으로 하는 어떠한 기능도 사용할 수 없습니다.
+    * 단, 알림 그룹과 사용자 그룹 관련된 기능은 사용 가능합니다.
 
 API 요청 시 인증에 실패하거나 권한이 없을 경우 다음과 같은 오류가 발생합니다.
 
@@ -45,11 +44,11 @@ API 요청 시 인증에 실패하거나 권한이 없을 경우 다음과 같�
 ```
 
 #### 필드
-| 이름 | 형식      | 설명|
-| --- |---------| --- |
-|resultCode | Number  | 결과 코드<br/>- 성공: `0`<br/>- 실패: `0`이 아닌 값 |
-|resultMessage | String  | 결과 메시지 |
-|isSuccessful | Boolean | 성공 여부 |
+| 이름            | 형식      | 설명                                      |
+|---------------|---------|-----------------------------------------|
+| resultCode    | Number  | 결과 코드<br/>- 성공: `0`<br/>- 실패: `0`이 아닌 값 |
+| resultMessage | String  | 결과 메시지                                  |
+| isSuccessful  | Boolean | 성공 여부                                   |
 
 
 ## DB 엔진 유형
@@ -81,8 +80,14 @@ API 요청 시 인증에 실패하거나 권한이 없을 경우 다음과 같�
 ### 리전 목록 보기
 
 ```http
-GET /v3.0/project/regions
+GET /v3.1/project/regions
 ```
+
+#### 필요 권한
+
+| 권한명                     | 설명         |
+|-------------------------|------------|
+| RDSforMySQL:Project.Get | 프로젝트 정보 조회 |
 
 #### 요청
 
@@ -130,8 +135,14 @@ GET /v3.0/project/regions
 ### 프로젝트 멤버 목록 보기
 
 ```http
-GET /v3.0/project/members
+GET /v3.1/project/members
 ```
+
+#### 필요 권한
+
+| 권한명                     | 설명         |
+|-------------------------|------------|
+| RDSforMySQL:Project.Get | 프로젝트 정보 조회 |
 
 #### 요청
 
@@ -178,8 +189,14 @@ GET /v3.0/project/members
 ### DB 인스턴스 사양 목록 보기
 
 ```http
-GET /v3.0/db-flavors
+GET /v3.1/db-flavors
 ```
+
+#### 필요 권한
+
+| 권한명                       | 설명               |
+|---------------------------|------------------|
+| RDSforMySQL:DbFlavor.List | DB 인스턴스 사양 목록 보기 |
 
 #### 요청
 
@@ -226,8 +243,14 @@ GET /v3.0/db-flavors
 ### 서브넷 목록 보기
 
 ```http
-GET /v3.0/network/subnets
+GET /v3.1/network/subnets
 ```
+
+#### 필요 권한
+
+| 권한명                      | 설명        |
+|--------------------------|-----------|
+| RDSforMySQL:Network.List | 서브넷 목록 보기 |
 
 #### 요청
 
@@ -276,8 +299,14 @@ GET /v3.0/network/subnets
 ### DB 엔진 목록 보기
 
 ```http
-GET /v3.0/db-versions
+GET /v3.1/db-versions
 ```
+
+#### 필요 권한
+
+| 권한명                        | 설명          |
+|----------------------------|-------------|
+| RDSforMySQL:DbVersion.List | DB 엔진 목록 보기 |
 
 #### 요청
 
@@ -322,8 +351,14 @@ GET /v3.0/db-versions
 ### 데이터 스토리지 타입 목록 보기
 
 ```http
-GET /v3.0/storage-types
+GET /v3.1/storage-types
 ```
+
+#### 필요 권한
+
+| 권한명                      | 설명                |
+|--------------------------|-------------------|
+| RDSforMySQL:Storage.List | 데이터 스토리지 타입 목록 보기 |
 
 #### 요청
 
@@ -357,44 +392,6 @@ GET /v3.0/storage-types
 
 ---
 
-### 데이터 스토리지 목록 보기
-
-```http
-GET /v3.0/storages
-```
-
-#### 요청
-
-이 API는 요청 본문을 요구하지 않습니다.
-
-#### 응답
-
-| 이름           | 종류   | 형식    | 설명        |
-|--------------|------|-------|-----------|
-| storages | Body | Array | 데이터 스토리지 목록 |
-
-<details><summary>예시</summary>
-<p>
-
-```json
-{
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "storages": [
-        "General SSD",
-        "General HDD"
-    ]
-}
-```
-
-</p>
-</details>
-
----
-
 ## 작업 정보
 
 ### 작업 상태
@@ -417,8 +414,14 @@ GET /v3.0/storages
 ### 작업 정보 상세 보기
 
 ```http
-GET /v3.0/jobs/{jobId}
+GET /v3.1/jobs/{jobId}
 ```
+
+#### 필요 권한
+
+| 권한명                 | 설명          |
+|---------------------|-------------|
+| RDSforMySQL:Job.Get | 작업 정보 상세 보기 |
 
 #### 요청
 
@@ -473,8 +476,14 @@ GET /v3.0/jobs/{jobId}
 ### DB 인스턴스 그룹 목록 보기
 
 ```http
-GET /v3.0/db-instance-groups
+GET /v3.1/db-instance-groups
 ```
+
+#### 필요 권한
+
+| 권한명                              | 설명               |
+|----------------------------------|------------------|
+| RDSforMySQL:DbInstanceGroup.List | DB 인스턴스 그룹 목록 보기 |
 
 #### 요청
 
@@ -519,8 +528,14 @@ GET /v3.0/db-instance-groups
 ### DB 인스턴스 그룹 상세 보기
 
 ```http
-GET /v3.0/db-instance-groups/{dbInstanceGroupId}
+GET /v3.1/db-instance-groups/{dbInstanceGroupId}
 ```
+
+#### 필요 권한
+
+| 권한명                             | 설명               |
+|---------------------------------|------------------|
+| RDSforMySQL:DbInstanceGroup.Get | DB 인스턴스 그룹 상세 보기 |
 
 #### 요청
 
@@ -622,8 +637,14 @@ GET /v3.0/db-instance-groups/{dbInstanceGroupId}
 ### DB 인스턴스 목록 보기
 
 ```http
-GET /v3.0/db-instances
+GET /v3.1/db-instances
 ```
+
+#### 필요 권한
+
+| 권한명                         | 설명            |
+|-----------------------------|---------------|
+| RDSforMySQL:DbInstance.List | DB 인스턴스 목록 보기 |
 
 #### 요청
 
@@ -682,8 +703,14 @@ GET /v3.0/db-instances
 ### DB 인스턴스 상세 보기
 
 ```http
-GET /v3.0/db-instances/{dbInstanceId}
+GET /v3.1/db-instances/{dbInstanceId}
 ```
+
+#### 필요 권한
+
+| 권한명                        | 설명            |
+|----------------------------|---------------|
+| RDSforMySQL:DbInstance.Get | DB 인스턴스 상세 보기 |
 
 #### 요청
 
@@ -759,8 +786,14 @@ GET /v3.0/db-instances/{dbInstanceId}
 ### DB 인스턴스 생성하기
 
 ```http
-POST /v3.0/db-instances
+POST /v3.1/db-instances
 ```
+
+#### 필요 권한
+
+| 권한명                           | 설명           |
+|-------------------------------|--------------|
+| RDSforMySQL:DbInstance.Create | DB 인스턴스 생성하기 |
 
 #### 요청
 
@@ -778,8 +811,10 @@ POST /v3.0/db-instances
 | userGroupIds                                 | Body | Array   | X  | 사용자 그룹의 식별자 목록                                                                                                                                                                                                              |
 | useHighAvailability                          | Body | Boolean | X  | 고가용성 사용 여부<br/>- 기본값: `false`                                                                                                                                                                                               |
 | pingInterval                                 | Body | Number  | X  | 고가용성 사용 시 Ping 간격(초)<br/>- 기본값: `3`<br/>- 최솟값: `1`<br/>- 최댓값: `600`                                                                                                                                                         |
-| useDefaultNotification                   | Body | Boolean | X  | 기본 알림 사용 여부<br/>- 기본값: `false`                                                                                                                                                                                              |
+| useDefaultNotification                       | Body | Boolean | X  | 기본 알림 사용 여부<br/>- 기본값: `false`                                                                                                                                                                                              |
 | useDeletionProtection                        | Body | Boolean | X  | 삭제 보호 여부<br/>- 기본값: `false`                                                                                                                                                                                                 |
+| authenticationPlugin                         | Body | Enum    | X  | 인증 플러그인<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password                                                                                                     |
+| tlsOption                                    | Body | Enum    | X  | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                                                                                                                |
 | network                                      | Body | Object  | O  | 네트워크 정보 객체                                                                                                                                                                                                                  |
 | network.subnetId                             | Body | UUID    | O  | 서브넷의 식별자                                                                                                                                                                                                                    |
 | network.usePublicAccess                      | Body | Boolean | X  | 외부 접속 가능  여부<br/>- 기본값: `false`                                                                                                                                                                                             |
@@ -848,8 +883,14 @@ POST /v3.0/db-instances
 ### DB 인스턴스 수정하기
 
 ```http
-PUT /v3.0/db-instances/{dbInstanceId}
+PUT /v3.1/db-instances/{dbInstanceId}
 ```
+
+#### 필요 권한
+
+| 권한명                           | 설명           |
+|-------------------------------|--------------|
+| RDSforMySQL:DbInstance.Modify | DB 인스턴스 수정하기 |
 
 #### 요청
 
@@ -894,8 +935,14 @@ PUT /v3.0/db-instances/{dbInstanceId}
 ### DB 인스턴스 삭제하기
 
 ```http
-DELETE /v3.0/db-instances/{dbInstanceId}
+DELETE /v3.1/db-instances/{dbInstanceId}
 ```
+
+#### 필요 권한
+
+| 권한명                           | 설명           |
+|-------------------------------|--------------|
+| RDSforMySQL:DbInstance.Delete | DB 인스턴스 삭제하기 |
 
 #### 요청
 
@@ -916,8 +963,14 @@ DELETE /v3.0/db-instances/{dbInstanceId}
 ### DB 인스턴스 재시작하기
 
 ```http
-POST /v3.0/db-instances/{dbInstanceId}/restart
+POST /v3.1/db-instances/{dbInstanceId}/restart
 ```
+
+#### 필요 권한
+
+| 권한명                            | 설명            |
+|--------------------------------|---------------|
+| RDSforMySQL:DbInstance.Restart | DB 인스턴스 재시작하기 |
 
 #### 요청
 
@@ -934,10 +987,18 @@ POST /v3.0/db-instances/{dbInstanceId}/restart
 | jobId | Body | UUID | 요청한 작업의 식별자 |
 
 ---
+
 ### DB 인스턴스 강제 재시작하기
+
 ```http
-POST /v3.0/db-instances/{dbInstanceId}/force-restart
+POST /v3.1/db-instances/{dbInstanceId}/force-restart
 ```
+
+#### 필요 권한
+
+| 권한명                                 | 설명               |
+|-------------------------------------|------------------|
+| RDSforMySQL:DbInstance.ForceRestart | DB 인스턴스 강제 재시작하기 |
 
 #### 요청
 
@@ -966,13 +1027,20 @@ POST /v3.0/db-instances/{dbInstanceId}/force-restart
 </p>
 </details>
 
+
 ---
 
 ### DB 인스턴스 시작하기
 
 ```http
-POST /v3.0/db-instances/{dbInstanceId}/start
+POST /v3.1/db-instances/{dbInstanceId}/start
 ```
+
+#### 필요 권한
+
+| 권한명                          | 설명           |
+|------------------------------|--------------|
+| RDSforMySQL:DbInstance.Start | DB 인스턴스 시작하기 |
 
 #### 요청
 
@@ -993,8 +1061,14 @@ POST /v3.0/db-instances/{dbInstanceId}/start
 ### DB 인스턴스 정지하기
 
 ```http
-POST /v3.0/db-instances/{dbInstanceId}/stop
+POST /v3.1/db-instances/{dbInstanceId}/stop
 ```
+
+#### 필요 권한
+
+| 권한명                         | 설명           |
+|-----------------------------|--------------|
+| RDSforMySQL:DbInstance.Stop | DB 인스턴스 정지하기 |
 
 #### 요청
 
@@ -1015,8 +1089,14 @@ POST /v3.0/db-instances/{dbInstanceId}/stop
 ### DB 인스턴스 백업하기
 
 ```http
-POST /v3.0/db-instances/{dbInstanceId}/backup
+POST /v3.1/db-instances/{dbInstanceId}/backup
 ```
+
+#### 필요 권한
+
+| 권한명                           | 설명           |
+|-------------------------------|--------------|
+| RDSforMySQL:DbInstance.Backup | DB 인스턴스 백업하기 |
 
 #### 요청
 
@@ -1036,8 +1116,15 @@ POST /v3.0/db-instances/{dbInstanceId}/backup
 ### DB 인스턴스 백업 후 내보내기
 
 ```http
-POST /v3.0/db-instances/{dbInstanceId}/backup-to-object-storage
+POST /v3.1/db-instances/{dbInstanceId}/backup-to-object-storage
 ```
+
+#### 필요 권한
+
+| 권한명                                          | 설명                |
+|----------------------------------------------|-------------------|
+| RDSforMySQL:DbInstance.BackupToObjectStorage | DB 인스턴스 백업 후 내보내기 |
+
 
 #### 요청
 
@@ -1077,8 +1164,14 @@ POST /v3.0/db-instances/{dbInstanceId}/backup-to-object-storage
 ### DB 인스턴스 복제하기
 
 ```http
-POST /v3.0/db-instances/{dbInstanceId}/replicate
+POST /v3.1/db-instances/{dbInstanceId}/replicate
 ```
+
+#### 필요 권한
+
+| 권한명                              | 설명           |
+|----------------------------------|--------------|
+| RDSforMySQL:DbInstance.Replicate | DB 인스턴스 복제하기 |
 
 #### 요청
 
@@ -1141,8 +1234,14 @@ POST /v3.0/db-instances/{dbInstanceId}/replicate
 ### DB 인스턴스 승격하기
 
 ```http
-POST /v3.0/db-instances/{dbInstanceId}/promote
+POST /v3.1/db-instances/{dbInstanceId}/promote
 ```
+
+#### 필요 권한
+
+| 권한명                            | 설명           |
+|--------------------------------|--------------|
+| RDSforMySQL:DbInstance.Promote | DB 인스턴스 승격하기 |
 
 #### 요청
 
@@ -1163,8 +1262,14 @@ POST /v3.0/db-instances/{dbInstanceId}/promote
 ### 복원 정보 조회
 
 ```http
-GET /v3.0/db-instances/{dbInstanceId}/restoration-info
+GET /v3.1/db-instances/{dbInstanceId}/restoration-info
 ```
+
+#### 필요 권한
+
+| 권한명                        | 설명            |
+|----------------------------|---------------|
+| RDSforMySQL:DbInstance.Get | DB 인스턴스 상세 보기 |
 
 #### 요청
 
@@ -1244,8 +1349,14 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info
 ### 복원될 마지막 쿼리 조회
 
 ```http
-GET /v3.0/db-instances/{dbInstanceId}/restoration-info/last-query
+GET /v3.1/db-instances/{dbInstanceId}/restoration-info/last-query
 ```
+
+#### 필요 권한
+
+| 권한명                        | 설명            |
+|----------------------------|---------------|
+| RDSforMySQL:DbInstance.Get | DB 인스턴스 상세 보기 |
 
 #### 공통 요청
 
@@ -1262,11 +1373,11 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info/last-query
 
 #### restoreType이 `BINLOG`인 경우
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-| --- | --- | --- | --- | --- |
+| 이름 | 종류    | 형식 | 필수 | 설명 |
+| --- |-------| --- | --- | --- |
 | backupId | Query | UUID | O | 복원에 사용할 백업의 식별자 |
-| binLogFileName | Query | String | O | 복원에 사용할 바이너리 로그 이름 |
-| binLogPosition | Query | Number | O | 복원에 사용할 바이너리 로그 위치 |
+| binLogFileName | Query  | String | O | 복원에 사용할 바이너리 로그 이름 |
+| binLogPosition | Query  | Number | O | 복원에 사용할 바이너리 로그 위치 |
 
 #### 응답
 
@@ -1298,49 +1409,55 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info/last-query
 ### 복원
 
 ```http
-POST /v3.0/db-instances/{dbInstanceId}/restore
+POST /v3.1/db-instances/{dbInstanceId}/restore
 ```
+
+#### 필요 권한
+
+| 권한명                            | 설명           |
+|--------------------------------|--------------|
+| RDSforMySQL:DbInstance.Restore | DB 인스턴스 복원하기 |
 
 #### 공통 요청
 
-| 이름 | 종류 | 형식 | 필수 | 설명                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| --- | --- | --- | --- |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| dbInstanceId | URL | UUID | O | DB 인스턴스의 식별자                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| restore | Body | Object | O | 복원 정보 객체                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| restore.restoreType | Body | Enum | O | 복원 타입 종류<br><ul><li>`TIMESTAMP`: 복원 가능한 시간 이내의 시간을 이용한 시점 복원 타입</li><li>`BINLOG`: 복원 가능한 바이너리 로그 위치를 이용한 시점 복원 타입</li><li>`BACKUP`: 기존에 생성한 백업을 이용한 스냅샷 복원 타입</li></ul>                                                                                                                                                                                                                                                                                              |
-| dbInstanceName | Body | String | O | DB 인스턴스를 식별할 수 있는 이름                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| description | Body | String | X | DB 인스턴스에 대한 추가 정보                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
-| dbFlavorId | Body | UUID | O | DB 인스턴스 사양의 식별자                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| dbPort | Body | Number | O | DB 포트<br><ul><li>최솟값: `3306`</li><li>최댓값: `43306`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                          |
-| <span style="color:#313338">parameterGroupId</span> | Body | UUID | O | 파라미터 그룹의 식별자                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| dbSecurityGroupIds | Body | Array | X | DB 보안 그룹의 식별자 목록                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
-| userGroupIds | Body | Array | X | 사용자 그룹의 식별자 목록                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| useHighAvailability | Body | Boolean | X | 고가용성 사용 여부<br><ul><li>기본값: `false`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| pingInterval | Body | Number | X | 고가용성 사용 시 Ping 간격(초)<br><ul><li>기본값: `3`</li><li>최솟값: `1`</li><li>최댓값: `600`</li></ul>                                                                                                                                                                                                                                                                                                                                                                               |
-| useDefaultNotification | Body | Boolean | X | 기본 알림 사용 여부<br><ul><li>기본값: `false`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| network | Body | Object | O | 네트워크 정보 객체                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| network.subnetId | Body | UUID | O | 서브넷의 식별자                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| network.usePublicAccess | Body | Boolean | X | 외부 접속 가능 여부<br><ul><li>기본값: `false`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| network.availabilityZone | Body | Enum | O | DB 인스턴스를 생성할 가용성 영역<br><ul><li>예시: `kr-pub-a`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                              |
-| storage | Body | Object | O | 데이터 스토리지 정보 객체                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| storage.storageType | Body | Enum | O | 데이터 스토리지 타입<br><ul><li>예시: `General SSD`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| storage.storageSize | Body | Number | O | 데이터 스토리지 크기(GB)<br><ul><li>최솟값: `20`</li><li>최댓값: `2048`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                   |
-| backup | Body | Object | O | 백업 정보 객체                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| backup.backupPeriod | Body | Number | O | 백업 보관 기간(일)<br><ul><li>최솟값: `0`</li><li>최댓값: `730`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                         |
-| backup.ftwrlWaitTimeout | Body | Number | X | 쿼리 지연 대기 시간(초)<br><ul><li>기본값: `1800`</li><li>최솟값: `0`</li><li>최댓값: `21600`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                |
-| backup.backupRetryCount | Body | Number | X | 백업 재시도 횟수<br><ul><li>기본값: `0`</li><li>최솟값: `0`</li><li>최댓값: `10`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                           |
-| backup.replicationRegion | Body | Enum | X | 백업 복제 리전<br><ul><li>`KR1`: 한국(판교)</li><li>`KR2`: 한국(평촌)</li><li>`JP1`: 일본(도쿄)</li></ul>                                                                                                                                                                                                                                                                                                                                                                              |
-| backup.useBackupLock | Body | Boolean | X | 테이블 잠금 사용 여부<br><ul><li>기본값: `true`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| backup.backupSchedules | Body | Array | O | 예정된 자동 백업 목록                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
-| backup.backupSchedules.backupWndBgnTime | Body | String | O | 백업 시작 시각<br><ul><li>예시: `00:00:00`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| backup.backupSchedules.backupWndDuration | Body | Enum | O | 백업 Duration<br>백업 시작 시각부터 Duration 안에 자동 백업이 실행됩니다.<br><ul><li>`HALF_AN_HOUR`<span style="color:#313338">: 30분</span></li><li>`ONE_HOUR`<span style="color:#313338">: 1시간</span></li><li>`ONE_HOUR_AND_HALF`<span style="color:#313338">: 1시간 30분</span></li><li>`TWO_HOURS`<span style="color:#313338">: 2시간</span></li><li>`TWO_HOURS_AND_HALF`<span style="color:#313338">: 2시간 30분</span></li><li>`THREE_HOURS`<span style="color:#313338">: 3시간</span></li></ul> |
-| useDeletionProtection | Body | Boolean | X | 삭제 보호 여부<br>기본값: `false`                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| 이름                                       | 종류   | 형식      | 필수 | 설명                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+|------------------------------------------|------|---------|----|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| dbInstanceId                             | URL  | UUID    | O  | DB 인스턴스의 식별자                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| restore                                  | Body | Object  | O  | 복원 정보 객체                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| restore.restoreType                      | Body | Enum    | O  | 복원 타입 종류<br><ul><li>`TIMESTAMP`: 복원 가능한 시간 이내의 시간을 이용한 시점 복원 타입</li><li>`BINLOG`: 복원 가능한 바이너리 로그 위치를 이용한 시점 복원 타입</li><li>`BACKUP`: 기존에 생성한 백업을 이용한 스냅샷 복원 타입</li></ul>                                                                                                                                                                                                                                                                                               |
+| dbInstanceName                           | Body | String  | O  | DB 인스턴스를 식별할 수 있는 이름                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| description                              | Body | String  | X  | DB 인스턴스에 대한 추가 정보                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| dbFlavorId                               | Body | UUID    | O  | DB 인스턴스 사양의 식별자                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| dbPort                                   | Body | Number  | O  | DB 포트<br><ul><li>최솟값: `3306`</li><li>최댓값: `43306`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                           |
+| parameterGroupId                         | Body | UUID    | O  | 파라미터 그룹의 식별자                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| dbSecurityGroupIds                       | Body | Array   | X  | DB 보안 그룹의 식별자 목록                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| userGroupIds                             | Body | Array   | X  | 사용자 그룹의 식별자 목록                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| useHighAvailability                      | Body | Boolean | X  | 고가용성 사용 여부<br><ul><li>기본값: `false`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| pingInterval                             | Body | Number  | X  | 고가용성 사용 시 Ping 간격(초)<br><ul><li>기본값: `3`</li><li>최솟값: `1`</li><li>최댓값: `600`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                |
+| useDefaultNotification                   | Body | Boolean | X  | 기본 알림 사용 여부<br><ul><li>기본값: `false`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| network                                  | Body | Object  | O  | 네트워크 정보 객체                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| network.subnetId                         | Body | UUID    | O  | 서브넷의 식별자                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| network.usePublicAccess                  | Body | Boolean | X  | 외부 접속 가능 여부<br><ul><li>기본값: `false`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| network.availabilityZone                 | Body | Enum    | O  | DB 인스턴스를 생성할 가용성 영역<br><ul><li>예시: `kr-pub-a`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                               |
+| storage                                  | Body | Object  | O  | 데이터 스토리지 정보 객체                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| storage.storageType                      | Body | Enum    | O  | 데이터 스토리지 타입<br><ul><li>예시: `General SSD`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| storage.storageSize                      | Body | Number  | O  | 데이터 스토리지 크기(GB)<br><ul><li>최솟값: `20`</li><li>최댓값: `2048`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                    |
+| backup                                   | Body | Object  | O  | 백업 정보 객체                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| backup.backupPeriod                      | Body | Number  | O  | 백업 보관 기간(일)<br><ul><li>최솟값: `0`</li><li>최댓값: `730`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                          |
+| backup.ftwrlWaitTimeout                  | Body | Number  | X  | 쿼리 지연 대기 시간(초)<br><ul><li>기본값: `1800`</li><li>최솟값: `0`</li><li>최댓값: `21600`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                 |
+| backup.backupRetryCount                  | Body | Number  | X  | 백업 재시도 횟수<br><ul><li>기본값: `0`</li><li>최솟값: `0`</li><li>최댓값: `10`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                            |
+| backup.replicationRegion                 | Body | Enum    | X  | 백업 복제 리전<br><ul><li>`KR1`: 한국(판교)</li><li>`KR2`: 한국(평촌)</li><li>`JP1`: 일본(도쿄)</li></ul>                                                                                                                                                                                                                                                                                                                                                                               |
+| backup.useBackupLock                     | Body | Boolean | X  | 테이블 잠금 사용 여부<br><ul><li>기본값: `true`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| backup.backupSchedules                   | Body | Array   | O  | 예정된 자동 백업 목록                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| backup.backupSchedules.backupWndBgnTime  | Body | String  | O  | 백업 시작 시각<br><ul><li>예시: `00:00:00`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| backup.backupSchedules.backupWndDuration | Body | Enum    | O  | 백업 Duration<br>백업 시작 시각부터 Duration 안에 자동 백업이 실행됩니다.<br><ul><li>`HALF_AN_HOUR`<span style="color:#313338">: 30분</span></li><li>`ONE_HOUR`<span style="color:#313338">: 1시간</span></li><li>`ONE_HOUR_AND_HALF`<span style="color:#313338">: 1시간 30분</span></li><li>`TWO_HOURS`<span style="color:#313338">: 2시간</span></li><li>`TWO_HOURS_AND_HALF`<span style="color:#313338">: 2시간 30분</span></li><li>`THREE_HOURS`<span style="color:#313338">: 3시간</span></li></ul> |
+| useDeletionProtection                    | Body | Boolean | X  | 삭제 보호 여부<br>기본값: `false`                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 
 #### Timestamp를 이용한 시점 복원 시 요청(restoreType이 `TIMESTAMP`인 경우)
 
-| 이름 | 종류 | 형식 | 필수 | 설명                                                                                             |
-| --- | --- | --- | --- |------------------------------------------------------------------------------------------------|
-| restore.restoreYmdt | Body | DateTime | O | DB 인스턴스 복원 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)<br>복원 정보 조회로 조회한 가장 최신의 복원 가능한 시간 이전에 대해서만 복원이 가능하다. |
+| 이름                  | 종류   | 형식       | 필수 | 설명                                                                                             |
+|---------------------|------|----------|----|------------------------------------------------------------------------------------------------|
+| restore.restoreYmdt | Body | DateTime | O  | DB 인스턴스 복원 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)<br>복원 정보 조회로 조회한 가장 최신의 복원 가능한 시간 이전에 대해서만 복원이 가능하다. |
 
 
 <details><summary>예시</summary>
@@ -1388,12 +1505,12 @@ POST /v3.0/db-instances/{dbInstanceId}/restore
 
 #### 바이너리 로그를 이용한 시점 복원 시 요청(restoreType이 `BINLOG`인 경우)
 
-| 이름 | 종류 | 형식     | 필수 | 설명 |
-| --- | --- |--------| --- | --- |
-| restore.backupId | Body | UUID   | O | 복원에 사용할 백업의 식별자 |
-| restore.binLog | Body | Object | O | 바이너리 로그 정보 객체 |
-| restore.binLog.binLogFileName | Body | String | O | 복원에 사용할 바이너리 로그 이름 |
-| restore.binLog.binLogPosition | Body | Number | O | 복원에 사용할 바이너리 로그 위치 |
+| 이름                            | 종류   | 형식     | 필수 | 설명                 |
+|-------------------------------|------|--------|----|--------------------|
+| restore.backupId              | Body | UUID   | O  | 복원에 사용할 백업의 식별자    |
+| restore.binLog                | Body | Object | O  | 바이너리 로그 정보 객체      |
+| restore.binLog.binLogFileName | Body | String | O  | 복원에 사용할 바이너리 로그 이름 |
+| restore.binLog.binLogPosition | Body | Number | O  | 복원에 사용할 바이너리 로그 위치 |
 
 * 바이너리 로그를 이용한 시점 복원 시 기준 백업의 바이너리 로그 파일 및 위치를 기준으로 그 이후에 기록된 로그에 대해 복원이 가능합니다.
 
@@ -1445,8 +1562,8 @@ POST /v3.0/db-instances/{dbInstanceId}/restore
 
 #### 백업을 이용한 복원 시 요청(restoreType이 `BACKUP`인 경우)
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-| --- | --- | --- | --- | --- |
+| 이름               | 종류   | 형식   | 필수                           | 설명              |
+|------------------|------|------|------------------------------|-----------------|
 | restore.backupId | Body | UUID | O(restoreType이 `BACKUP`인 경우) | 복원에 사용할 백업의 식별자 |
 
 
@@ -1496,8 +1613,8 @@ POST /v3.0/db-instances/{dbInstanceId}/restore
 
 #### 응답
 
-| 이름 | 종류 | 형식 | 설명 |
-| --- | --- | --- | --- |
+| 이름    | 종류   | 형식   | 설명          |
+|-------|------|------|-------------|
 | jobId | Body | UUID | 요청한 작업의 식별자 |
 
 
@@ -1506,8 +1623,14 @@ POST /v3.0/db-instances/{dbInstanceId}/restore
 ### 오브젝트 스토리지로부터 복원
 
 ```http
-POST /v3.0/db-instances/restore-from-obs
+POST /v3.1/db-instances/restore-from-obs
 ```
+
+#### 필요 권한
+
+| 권한명                                   | 설명                      |
+|---------------------------------------|-------------------------|
+| RDSforMySQL:DbInstance.RestoreFromObs | DB 인스턴스 오브젝트 스토리지로부터 복원 |
 
 #### 요청
 
@@ -1605,11 +1728,18 @@ POST /v3.0/db-instances/restore-from-obs
 
 ---
 
+
 ### DB 인스턴스 삭제 보호 설정 변경하기
 
 ```http
-PUT /v3.0/db-instances/{dbInstanceId}/deletion-protection
+PUT /v3.1/db-instances/{dbInstanceId}/deletion-protection
 ```
+
+#### 필요 권한
+
+| 권한명                           | 설명           |
+|-------------------------------|--------------|
+| RDSforMySQL:DbInstance.Modify | DB 인스턴스 수정하기 |
 
 #### 요청
 
@@ -1643,8 +1773,14 @@ PUT /v3.0/db-instances/{dbInstanceId}/deletion-protection
 ### 고가용성 수정하기
 
 ```http
-PUT /v3.0/db-instances/{dbInstanceId}/high-availability
+PUT /v3.1/db-instances/{dbInstanceId}/high-availability
 ```
+
+#### 필요 권한
+
+| 권한명                                 | 설명        |
+|-------------------------------------|-----------|
+| RDSforMySQL:HighAvailability.Modify | 고가용성 수정하기 |
 
 #### 요청
 
@@ -1665,8 +1801,14 @@ PUT /v3.0/db-instances/{dbInstanceId}/high-availability
 ### 고가용성 다시 시작하기
 
 ```http
-POST /v3.0/db-instances/{dbInstanceId}/high-availability/resume
+POST /v3.1/db-instances/{dbInstanceId}/high-availability/resume
 ```
+
+#### 필요 권한
+
+| 권한명                                 | 설명           |
+|-------------------------------------|--------------|
+| RDSforMySQL:HighAvailability.Resume | 고가용성 다시 시작하기 |
 
 #### 요청
 
@@ -1687,8 +1829,14 @@ POST /v3.0/db-instances/{dbInstanceId}/high-availability/resume
 ### 고가용성 일시 중지하기
 
 ```http
-POST /v3.0/db-instances/{dbInstanceId}/high-availability/pause
+POST /v3.1/db-instances/{dbInstanceId}/high-availability/pause
 ```
+
+#### 필요 권한
+
+| 권한명                                | 설명           |
+|------------------------------------|--------------|
+| RDSforMySQL:HighAvailability.Pause | 고가용성 일시 중지하기 |
 
 #### 요청
 
@@ -1709,8 +1857,14 @@ POST /v3.0/db-instances/{dbInstanceId}/high-availability/pause
 ### 고가용성 복구하기
 
 ```http
-POST /v3.0/db-instances/{dbInstanceId}/high-availability/repair
+POST /v3.1/db-instances/{dbInstanceId}/high-availability/repair
 ```
+
+#### 필요 권한
+
+| 권한명                                 | 설명        |
+|-------------------------------------|-----------|
+| RDSforMySQL:HighAvailability.Repair | 고가용성 복구하기 |
 
 #### 요청
 
@@ -1731,8 +1885,14 @@ POST /v3.0/db-instances/{dbInstanceId}/high-availability/repair
 ### 고가용성 분리하기
 
 ```http
-POST /v3.0/db-instances/{dbInstanceId}/high-availability/split
+POST /v3.1/db-instances/{dbInstanceId}/high-availability/split
 ```
+
+#### 필요 권한
+
+| 권한명                                | 설명        |
+|------------------------------------|-----------|
+| RDSforMySQL:HighAvailability.Split | 고가용성 분리하기 |
 
 #### 요청
 
@@ -1753,8 +1913,14 @@ POST /v3.0/db-instances/{dbInstanceId}/high-availability/split
 ### 데이터 스토리지 정보 보기
 
 ```http
-GET /v3.0/db-instances/{dbInstanceId}/storage-info
+GET /v3.1/db-instances/{dbInstanceId}/storage-info
 ```
+
+#### 필요 권한
+
+| 권한명                        | 설명            |
+|----------------------------|---------------|
+| RDSforMySQL:DbInstance.Get | DB 인스턴스 상세 보기 |
 
 #### 요청
 
@@ -1797,8 +1963,14 @@ GET /v3.0/db-instances/{dbInstanceId}/storage-info
 ### 데이터 스토리지 정보 수정하기
 
 ```http
-PUT /v3.0/db-instances/{dbInstanceId}/storage-info
+PUT /v3.1/db-instances/{dbInstanceId}/storage-info
 ```
+
+#### 필요 권한
+
+| 권한명                           | 설명           |
+|-------------------------------|--------------|
+| RDSforMySQL:DbInstance.Modify | DB 인스턴스 수정하기 |
 
 #### 요청
 
@@ -1819,8 +1991,14 @@ PUT /v3.0/db-instances/{dbInstanceId}/storage-info
 ### 백업 정보 보기
 
 ```http
-GET /v3.0/db-instances/{dbInstanceId}/backup-info
+GET /v3.1/db-instances/{dbInstanceId}/backup-info
 ```
+
+#### 필요 권한
+
+| 권한명                        | 설명            |
+|----------------------------|---------------|
+| RDSforMySQL:DbInstance.Get | DB 인스턴스 상세 보기 |
 
 #### 요청
 
@@ -1876,8 +2054,14 @@ GET /v3.0/db-instances/{dbInstanceId}/backup-info
 ### 백업 정보 수정하기
 
 ```http
-PUT /v3.0/db-instances/{dbInstanceId}/backup-info
+PUT /v3.1/db-instances/{dbInstanceId}/backup-info
 ```
+
+#### 필요 권한
+
+| 권한명                           | 설명           |
+|-------------------------------|--------------|
+| RDSforMySQL:DbInstance.Modify | DB 인스턴스 수정하기 |
 
 #### 요청
 
@@ -1923,8 +2107,14 @@ PUT /v3.0/db-instances/{dbInstanceId}/backup-info
 ### 네트워크 정보 보기
 
 ```http
-GET /v3.0/db-instances/{dbInstanceId}/network-info
+GET /v3.1/db-instances/{dbInstanceId}/network-info
 ```
+
+#### 필요 권한
+
+| 권한명                        | 설명            |
+|----------------------------|---------------|
+| RDSforMySQL:DbInstance.Get | DB 인스턴스 상세 보기 |
 
 #### 요청
 
@@ -1982,8 +2172,14 @@ GET /v3.0/db-instances/{dbInstanceId}/network-info
 ### 네트워크 정보 수정하기
 
 ```http
-PUT /v3.0/db-instances/{dbInstanceId}/network-info
+PUT /v3.1/db-instances/{dbInstanceId}/network-info
 ```
+
+#### 필요 권한
+
+| 권한명                           | 설명           |
+|-------------------------------|--------------|
+| RDSforMySQL:DbInstance.Modify | DB 인스턴스 수정하기 |
 
 #### 요청
 
@@ -2003,8 +2199,14 @@ PUT /v3.0/db-instances/{dbInstanceId}/network-info
 ### DB 사용자 목록 보기
 
 ```http
-GET /v3.0/db-instances/{dbInstanceId}/db-users
+GET /v3.1/db-instances/{dbInstanceId}/db-users
 ```
+
+#### 필요 권한
+
+| 권한명                             | 설명                  |
+|---------------------------------|---------------------|
+| RDSforMySQL:DbInstanceUser.List | DB 인스턴스 내 사용자 목록 보기 |
 
 #### 요청
 
@@ -2016,16 +2218,18 @@ GET /v3.0/db-instances/{dbInstanceId}/db-users
 
 #### 응답
 
-| 이름                    | 종류   | 형식       | 설명                                                                                                                          |
-|-----------------------|------|----------|-----------------------------------------------------------------------------------------------------------------------------|
-| dbUsers               | Body | Array    | DB 사용자 목록                                                                                                                   |
-| dbUsers.dbUserId      | Body | UUID     | DB 사용자의 식별자                                                                                                                 |
-| dbUsers.dbUserName    | Body | String   | DB 사용자 계정 이름                                                                                                                |
-| dbUsers.host          | Body | String   | DB 사용자 계정의 호스트 이름                                                                                                           |
-| dbUsers.authorityType | Body | Enum     | DB 사용자 권한 타입<br/>- `READ`: SELECT 쿼리 수행 가능한 권한<br/>- `CRUD`: DML 쿼리 수행 가능한 권한<br/>- `DDL`: DDL 쿼리 수행 가능한 권한<br/>            |
-| dbUsers.dbUserStatus  | Body | Enum     | DB 사용자의 현재 상태<br/>- `STABLE`: 생성됨<br/>- `CREATING`: 생성 중<br/>- `UPDATING`: 수정 중<br/>- `DELETING`: 삭제 중<br/>- `DELETED`: 삭제됨 |
-| dbUsers.createdYmdt   | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                           |
-| dbUsers.updatedYmdt   | Body | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                           |
+| 이름                           | 종류   | 형식       | 설명                                                                                                                          |
+|------------------------------|------|----------|-----------------------------------------------------------------------------------------------------------------------------|
+| dbUsers                      | Body | Array    | DB 사용자 목록                                                                                                                   |
+| dbUsers.dbUserId             | Body | UUID     | DB 사용자의 식별자                                                                                                                 |
+| dbUsers.dbUserName           | Body | String   | DB 사용자 계정 이름                                                                                                                |
+| dbUsers.host                 | Body | String   | DB 사용자 계정의 호스트 이름                                                                                                           |
+| dbUsers.authorityType        | Body | Enum     | DB 사용자 권한 타입<br/>- `READ`: SELECT 쿼리 수행 가능한 권한<br/>- `CRUD`: DML 쿼리 수행 가능한 권한<br/>- `DDL`: DDL 쿼리 수행 가능한 권한<br/>            |
+| dbUsers.dbUserStatus         | Body | Enum     | DB 사용자의 현재 상태<br/>- `STABLE`: 생성됨<br/>- `CREATING`: 생성 중<br/>- `UPDATING`: 수정 중<br/>- `DELETING`: 삭제 중<br/>- `DELETED`: 삭제됨 |
+| dbUsers.authenticationPlugin | Body | Enum     | 인증 플러그인<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password     |
+| dbUsers.tlsOption            | Body | Enum     | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                |
+| dbUsers.createdYmdt          | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                           |
+| dbUsers.updatedYmdt          | Body | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                           |
 
 <details><summary>예시</summary>
 <p>
@@ -2044,6 +2248,8 @@ GET /v3.0/db-instances/{dbInstanceId}/db-users
             "host": "%",
             "authorityType": "DDL",
             "dbUserStatus": "STABLE",
+            "authenticationPlugin": "NATIVE",
+            "tlsOption": "NONE",
             "createdYmdt": "2023-03-17T14:02:29+09:00",
             "updatedYmdt": "2023-03-17T14:02:31+09:00"
         }
@@ -2059,8 +2265,14 @@ GET /v3.0/db-instances/{dbInstanceId}/db-users
 ### DB 사용자 생성하기
 
 ```http
-POST /v3.0/db-instances/{dbInstanceId}/db-users
+POST /v3.1/db-instances/{dbInstanceId}/db-users
 ```
+
+#### 필요 권한
+
+| 권한명                               | 설명                 |
+|-----------------------------------|--------------------|
+| RDSforMySQL:DbInstanceUser.Create | DB 인스턴스 내 사용자 생성하기 |
 
 #### 요청
 
@@ -2105,8 +2317,14 @@ POST /v3.0/db-instances/{dbInstanceId}/db-users
 ### DB 사용자 수정하기
 
 ```http
-PUT /v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
+PUT /v3.1/db-instances/{dbInstanceId}/db-users/{dbUserId}
 ```
+
+#### 필요 권한
+
+| 권한명                               | 설명                 |
+|-----------------------------------|--------------------|
+| RDSforMySQL:DbInstanceUser.Modify | DB 인스턴스 내 사용자 수정하기 |
 
 #### 요청
 
@@ -2146,8 +2364,14 @@ PUT /v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 ### DB 사용자 삭제하기
 
 ```http
-DELETE /v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
+DELETE /v3.1/db-instances/{dbInstanceId}/db-users/{dbUserId}
 ```
+
+#### 필요 권한
+
+| 권한명                               | 설명                 |
+|-----------------------------------|--------------------|
+| RDSforMySQL:DbInstanceUser.Delete | DB 인스턴스 내 사용자 삭제하기 |
 
 #### 요청
 
@@ -2169,8 +2393,14 @@ DELETE /v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 ### DB 스키마 목록 보기
 
 ```http
-GET /v3.0/db-instances/{dbInstanceId}/db-schemas
+GET /v3.1/db-instances/{dbInstanceId}/db-schemas
 ```
+
+#### 필요 권한
+
+| 권한명                               | 설명                  |
+|-----------------------------------|---------------------|
+| RDSforMySQL:DbInstanceSchema.List | DB 인스턴스 내 스키마 목록 보기 |
 
 #### 요청
 
@@ -2219,8 +2449,14 @@ GET /v3.0/db-instances/{dbInstanceId}/db-schemas
 ### DB 스키마 생성하기
 
 ```http
-POST /v3.0/db-instances/{dbInstanceId}/db-schemas
+POST /v3.1/db-instances/{dbInstanceId}/db-schemas
 ```
+
+#### 필요 권한
+
+| 권한명                                 | 설명                 |
+|-------------------------------------|--------------------|
+| RDSforMySQL:DbInstanceSchema.Create | DB 인스턴스 내 스키마 생성하기 |
 
 #### 요청
 
@@ -2240,8 +2476,14 @@ POST /v3.0/db-instances/{dbInstanceId}/db-schemas
 ### DB 스키마 삭제하기
 
 ```http
-DELETE /v3.0/db-instances/{dbInstanceId}/db-schemas/{dbSchemaId}
+DELETE /v3.1/db-instances/{dbInstanceId}/db-schemas/{dbSchemaId}
 ```
+
+#### 필요 권한
+
+| 권한명                                 | 설명                 |
+|-------------------------------------|--------------------|
+| RDSforMySQL:DbInstanceSchema.Delete | DB 인스턴스 내 스키마 삭제하기 |
 
 #### 요청
 
@@ -2251,6 +2493,116 @@ DELETE /v3.0/db-instances/{dbInstanceId}/db-schemas/{dbSchemaId}
 |--------------|-----|------|----|--------------|
 | dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
 | dbSchemaId   | URL | UUID | O  | DB 스키마의 식별자  |
+
+#### 응답
+
+| 이름    | 종류   | 형식   | 설명          |
+|-------|------|------|-------------|
+| jobId | Body | UUID | 요청한 작업의 식별자 |
+
+---
+
+### 로그 파일 목록 보기
+
+```http
+GET /v3.1/db-instances/{dbInstanceId}/log-files
+```
+
+#### 필요 권한
+
+| 권한명                            | 설명                    |
+|--------------------------------|-----------------------|
+| RDSforMySQL:DbInstanceLog.List | DB 인스턴스 내 로그 파일 목록 보기 |
+
+#### 요청
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+| 이름           | 종류  | 형식   | 필수 | 설명           |
+|--------------|-----|------|----|--------------|
+| dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
+| logFileTypes | Query | Array  | X  | 로그 파일 타입 종류 목록<br/>- `ERROR`: error.log<br/>- `BINLOG`: mysql-bin<br/>- `GENERAL`: general.log<br/>- `SLOW_QUERY`: slow_query.log<br/>- `AUDIT`: server_audit.log<br/>- `BACKUP`: xtra_full.log  |
+
+#### 응답
+
+| 이름                     | 종류   | 형식     | 설명                                                                                                                                      |
+|------------------------|------|--------|-----------------------------------------------------------------------------------------------------------------------------------------|
+| logFiles       | Body | Array   | 로그 파일 목록 |
+| logFiles.logFileName       | Body | String   | 로그 파일 이름 |
+| logFiles.logFileType | Body | Enum | 로그 파일 타입 종류<br/>- `ERROR`: error.log<br/>- `BINLOG`: mysql-bin<br/>- `GENERAL`: general.log<br/>- `SLOW_QUERY`: slow_query.log<br/>- `AUDIT`: server_audit.log<br/>- `BACKUP`: xtra_full.log |
+| logFiles.logFileSize| Body | Number   | 로그 파일 크기(Byte) |
+| logFiles.createdYmdt| Body | DateTime   | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "logFiles": [
+        {
+            "logFileName": "xtra_full.log-20230317",
+            "logFileType": "BACKUP",
+            "logFileSize": 4096,
+            "createdYmdt": "2023-03-17T14:02:29+09:00"
+        }
+    ]
+}
+```
+
+</p>
+</details>
+
+## 로그 파일 내보내기 API
+
+- 사용자 Obs로 로그 파일을 내보낸다.
+- 로그 파일 업로드 시간이 오래 걸릴 수 있음. 어떻게 처리할지 결정이 필요함
+
+### 로그 파일 내보내기
+
+```http
+POST /v3.1/db-instances/{dbInstanceId}/log-files/export
+```
+
+#### 필요 권한
+
+| 권한명                              | 설명                   |
+|----------------------------------|----------------------|
+| RDSforMySQL:DbInstanceLog.Export | DB 인스턴스 내 로그 파일 내보내기 |
+
+#### 요청
+
+| 이름           | 종류  | 형식   | 필수 | 설명           |
+|--------------|-----|------|----|--------------|
+| dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
+| logFileNames | Body | Array | O | 로그 파일 이름 목록<br/>- 최소 크기: `1` |
+| tenantId        | Body | String | O  | 로그 파일이 저장될 오브젝트 스토리지의 테넌트 ID   |
+| username        | Body | String | O  | NHN Cloud 회원 또는 IAM 멤버 ID   |
+| password        | Body | String | O  | 로그 파일이 저장될 오브젝트 스토리지의 API 비밀번호 |
+| targetContainer | Body | String | O  | 로그 파일이 저장될 오브젝트 스토리지의 컨테이너     |
+| objectPath      | Body | String | O  | 컨테이너에 저장될 로그 파일의 경로            |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "logFileNames": ["xtra_full.log-20230317"],
+    "tenantId": "399631c404744dbbb18ce4fa2dc71a5a",
+    "username": "gildong.hong@nhn.com",
+    "password": "password",
+    "targetContainer": "/container",
+    "objectPath": "logs/backup"
+}
+```
+
+</p>
+</details>
 
 #### 응답
 
@@ -2275,8 +2627,14 @@ DELETE /v3.0/db-instances/{dbInstanceId}/db-schemas/{dbSchemaId}
 ### 백업 목록 조회
 
 ```http
-GET /v3.0/backups
+GET /v3.1/backups
 ```
+
+#### 필요 권한
+
+| 권한명                     | 설명       |
+|-------------------------|----------|
+| RDSforMySQL:Backup.List | 백업 목록 조회 |
 
 #### 요청
 
@@ -2301,6 +2659,7 @@ GET /v3.0/backups
 | backups.backupStatus | Body | Enum     | 백업의 현재 상태                         |
 | backups.dbInstanceId | Body | UUID     | 원본 DB 인스턴스의 식별자                   |
 | backups.dbVersion    | Body | Enum     | DB 엔진 유형                          |
+| backups.utilVersion  | Body | String   | 유틸리티 버전                           |
 | backups.utilVersion  | Body | String   | 백업에 사용된 xtrabackup 유틸리티 버전        |
 | backups.backupType   | Body | Enum     | 백업 유형                             |
 | backups.backupSize   | Body | Number   | 백업의 크기(Byte)                      |
@@ -2325,6 +2684,7 @@ GET /v3.0/backups
             "backupStatus": "COMPLETED",
             "dbInstanceId": "142e6ccc-3bfb-4e1e-84f7-38861284fafd",
             "dbVersion": "MYSQL_V8028",
+            "utilVersion": "8.0.28",
             "backupType": "AUTO",
             "backupSize": 4996786,
             "createdYmdt": "2023-02-21T00:35:00+09:00",
@@ -2342,8 +2702,14 @@ GET /v3.0/backups
 ### 백업 내보내기
 
 ```http
-POST /v3.0/backups/{backupId}/export
+POST /v3.1/backups/{backupId}/export
 ```
+
+#### 필요 권한
+
+| 권한명                       | 설명      |
+|---------------------------|---------|
+| RDSforMySQL:Backup.Export | 백업 내보내기 |
 
 #### 요청
 
@@ -2378,13 +2744,22 @@ POST /v3.0/backups/{backupId}/export
 |-------|------|------|-------------|
 | jobId | Body | UUID | 요청한 작업의 식별자 |
 
+> [주의]
+> 수동 백업의 경우 백업이 수행된 DB 인스턴스가 존재하지 않으면, 백업을 오브젝트 스토리지로 내보낼 수 없습니다.
+
 ---
 
 ### 백업 복원하기
 
 ```http
-POST /v3.0/backups/{backupId}/restore
+POST /v3.1/backups/{backupId}/restore
 ```
+
+#### 필요 권한
+
+| 권한명                        | 설명      |
+|----------------------------|---------|
+| RDSforMySQL:Backup.Restore | 백업 복원하기 |
 
 #### 요청
 
@@ -2463,8 +2838,14 @@ POST /v3.0/backups/{backupId}/restore
 ### 백업 삭제하기
 
 ```http
-DELETE /v3.0/backups/{backupId}
+DELETE /v3.1/backups/{backupId}
 ```
+
+#### 필요 권한
+
+| 권한명                       | 설명      |
+|---------------------------|---------|
+| RDSforMySQL:Backup.Delete | 백업 삭제하기 |
 
 #### 요청
 
@@ -2496,8 +2877,14 @@ DELETE /v3.0/backups/{backupId}
 ### DB 보안 그룹 목록 보기
 
 ```http
-GET /v3.0/db-security-groups
+GET /v3.1/db-security-groups
 ```
+
+#### 필요 권한
+
+| 권한명                              | 설명             |
+|----------------------------------|----------------|
+| RDSforMySQL:DbSecurityGroup.List | DB 보안 그룹 목록 보기 |
 
 #### 요청
 
@@ -2546,8 +2933,14 @@ GET /v3.0/db-security-groups
 ### DB 보안 그룹 상세 보기
 
 ```http
-GET /v3.0/db-security-groups/{dbSecurityGroupId}
+GET /v3.1/db-security-groups/{dbSecurityGroupId}
 ```
+
+#### 필요 권한
+
+| 권한명                             | 설명             |
+|---------------------------------|----------------|
+| RDSforMySQL:DbSecurityGroup.Get | DB 보안 그룹 상세 보기 |
 
 #### 요청
 
@@ -2625,8 +3018,14 @@ GET /v3.0/db-security-groups/{dbSecurityGroupId}
 ### DB 보안 그룹 생성하기
 
 ```http
-POST /v3.0/db-security-groups
+POST /v3.1/db-security-groups
 ```
+
+#### 필요 권한
+
+| 권한명                                | 설명            |
+|------------------------------------|---------------|
+| RDSforMySQL:DbSecurityGroup.Create | DB 보안 그룹 생성하기 |
 
 #### 요청
 
@@ -2680,8 +3079,14 @@ POST /v3.0/db-security-groups
 ### DB 보안 그룹 수정하기
 
 ```http
-PUT /v3.0/db-security-groups/{dbSecurityGroupId}
+PUT /v3.1/db-security-groups/{dbSecurityGroupId}
 ```
+
+#### 필요 권한
+
+| 권한명                                | 설명            |
+|------------------------------------|---------------|
+| RDSforMySQL:DbSecurityGroup.Modify | DB 보안 그룹 수정하기 |
 
 #### 요청
 
@@ -2730,8 +3135,14 @@ PUT /v3.0/db-security-groups/{dbSecurityGroupId}
 ### DB 보안 그룹 삭제하기
 
 ```http
-DELETE /v3.0/db-security-groups/{dbSecurityGroupId}
+DELETE /v3.1/db-security-groups/{dbSecurityGroupId}
 ```
+
+#### 필요 권한
+
+| 권한명                                | 설명            |
+|------------------------------------|---------------|
+| RDSforMySQL:DbSecurityGroup.Delete | DB 보안 그룹 삭제하기 |
 
 #### 요청
 
@@ -2766,8 +3177,14 @@ DELETE /v3.0/db-security-groups/{dbSecurityGroupId}
 ### DB 보안 그룹 규칙 생성하기
 
 ```http
-POST /v3.0/db-security-groups/{dbSecurityGroupId}/rules
+POST /v3.1/db-security-groups/{dbSecurityGroupId}/rules
 ```
+
+#### 필요 권한
+
+| 권한명                                    | 설명               |
+|----------------------------------------|------------------|
+| RDSforMySQL:DbSecurityGroupRule.Create | DB 보안 그룹 규칙 생성하기 |
 
 #### 요청
 
@@ -2813,8 +3230,14 @@ POST /v3.0/db-security-groups/{dbSecurityGroupId}/rules
 ### DB 보안 그룹 규칙 수정하기
 
 ```http
-PUT /v3.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
+PUT /v3.1/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 ```
+
+#### 필요 권한
+
+| 권한명                                    | 설명               |
+|----------------------------------------|------------------|
+| RDSforMySQL:DbSecurityGroupRule.Modify | DB 보안 그룹 규칙 수정하기 |
 
 #### 요청
 
@@ -2859,8 +3282,14 @@ PUT /v3.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 ### DB 보안 그룹 규칙 삭제하기
 
 ```http
-DELETE /v3.0/db-security-groups/{dbSecurityGroupId}/rules
+DELETE /v3.1/db-security-groups/{dbSecurityGroupId}/rules
 ```
+
+#### 필요 권한
+
+| 권한명                                    | 설명               |
+|----------------------------------------|------------------|
+| RDSforMySQL:DbSecurityGroupRule.Create | DB 보안 그룹 규칙 삭제하기 |
 
 #### 요청
 
@@ -2884,8 +3313,14 @@ DELETE /v3.0/db-security-groups/{dbSecurityGroupId}/rules
 ### 파라미터 그룹 목록 보기
 
 ```http
-GET /v3.0/parameter-groups
+GET /v3.1/parameter-groups
 ```
+
+#### 필요 권한
+
+| 권한명                             | 설명            |
+|---------------------------------|---------------|
+| RDSforMySQL:ParameterGroup.List | 파라미터 그룹 목록 보기 |
 
 #### 요청
 
@@ -2941,8 +3376,14 @@ GET /v3.0/parameter-groups
 ### 파라미터 그룹 상세 보기
 
 ```http
-GET /v3.0/parameter-groups/{parameterGroupId}
+GET /v3.1/parameter-groups/{parameterGroupId}
 ```
+
+#### 필요 권한
+
+| 권한명                            | 설명            |
+|--------------------------------|---------------|
+| RDSforMySQL:ParameterGroup.Get | 파라미터 그룹 상세 보기 |
 
 #### 요청
 
@@ -3016,8 +3457,14 @@ GET /v3.0/parameter-groups/{parameterGroupId}
 ### 파라미터 그룹 생성하기
 
 ```http
-POST /v3.0/parameter-groups
+POST /v3.1/parameter-groups
 ```
+
+#### 필요 권한
+
+| 권한명                               | 설명           |
+|-----------------------------------|--------------|
+| RDSforMySQL:ParameterGroup.Create | 파라미터 그룹 생성하기 |
 
 #### 요청
 
@@ -3051,8 +3498,14 @@ POST /v3.0/parameter-groups
 ### 파라미터 그룹 복사하기
 
 ```http
-POST /v3.0/parameter-groups/{parameterGroupId}/copy
+POST /v3.1/parameter-groups/{parameterGroupId}/copy
 ```
+
+#### 필요 권한
+
+| 권한명                             | 설명           |
+|---------------------------------|--------------|
+| RDSforMySQL:ParameterGroup.Copy | 파라미터 그룹 복사하기 |
 
 #### 요청
 
@@ -3086,8 +3539,14 @@ POST /v3.0/parameter-groups/{parameterGroupId}/copy
 ### 파라미터 그룹 수정하기
 
 ```http
-PUT /v3.0/parameter-groups/{parameterGroupId}
+PUT /v3.1/parameter-groups/{parameterGroupId}
 ```
+
+#### 필요 권한
+
+| 권한명                               | 설명           |
+|-----------------------------------|--------------|
+| RDSforMySQL:ParameterGroup.Modify | 파라미터 그룹 수정하기 |
 
 #### 요청
 
@@ -3134,8 +3593,14 @@ PUT /v3.0/parameter-groups/{parameterGroupId}
 ### 파라미터 수정하기
 
 ```http
-PUT /v3.0/parameter-groups/{parameterGroupId}/parameters
+PUT /v3.1/parameter-groups/{parameterGroupId}/parameters
 ```
+
+#### 필요 권한
+
+| 권한명                               | 설명           |
+|-----------------------------------|--------------|
+| RDSforMySQL:ParameterGroup.Modify | 파라미터 그룹 수정하기 |
 
 #### 요청
 
@@ -3188,8 +3653,14 @@ PUT /v3.0/parameter-groups/{parameterGroupId}/parameters
 ### 파라미터 그룹 재설정하기
 
 ```http
-PUT /v3.0/parameter-groups/{parameterGroupId}/reset
+PUT /v3.1/parameter-groups/{parameterGroupId}/reset
 ```
+
+#### 필요 권한
+
+| 권한명                              | 설명            |
+|----------------------------------|---------------|
+| RDSforMySQL:ParameterGroup.Reset | 파라미터 그룹 재설정하기 |
 
 #### 요청
 
@@ -3222,8 +3693,14 @@ PUT /v3.0/parameter-groups/{parameterGroupId}/reset
 ### 파라미터 그룹 삭제하기
 
 ```http
-DELETE /v3.0/parameter-groups/{parameterGroupId}
+DELETE /v3.1/parameter-groups/{parameterGroupId}
 ```
+
+#### 필요 권한
+
+| 권한명                               | 설명           |
+|-----------------------------------|--------------|
+| RDSforMySQL:ParameterGroup.Delete | 파라미터 그룹 삭제하기 |
 
 #### 요청
 
@@ -3260,8 +3737,14 @@ DELETE /v3.0/parameter-groups/{parameterGroupId}
 ### 사용자 그룹 목록 보기
 
 ```http
-GET /v3.0/user-groups
+GET /v3.1/user-groups
 ```
+
+#### 필요 권한
+
+| 권한명                        | 설명           |
+|----------------------------|--------------|
+| RDSforMySQL:UserGroup.List | 사용자 그룹 목록 보기 |
 
 #### 요청
 
@@ -3306,8 +3789,14 @@ GET /v3.0/user-groups
 ### 사용자 그룹 상세 보기
 
 ```http
-GET /v3.0/user-groups/{userGroupId}
+GET /v3.1/user-groups/{userGroupId}
 ```
+
+#### 필요 권한
+
+| 권한명                       | 설명           |
+|---------------------------|--------------|
+| RDSforMySQL:UserGroup.Get | 사용자 그룹 상세 보기 |
 
 #### 요청
 
@@ -3360,8 +3849,14 @@ GET /v3.0/user-groups/{userGroupId}
 ### 사용자 그룹 생성하기
 
 ```http
-POST /v3.0/user-groups
+POST /v3.1/user-groups
 ```
+
+#### 필요 권한
+
+| 권한명                          | 설명          |
+|------------------------------|-------------|
+| RDSforMySQL:UserGroup.Create | 사용자 그룹 생성하기 |
 
 #### 요청
 
@@ -3404,8 +3899,14 @@ POST /v3.0/user-groups
 ### 사용자 그룹 수정하기
 
 ```http
-PUT /v3.0/user-groups/{userGroupId}
+PUT /v3.1/user-groups/{userGroupId}
 ```
+
+#### 필요 권한
+
+| 권한명                          | 설명          |
+|------------------------------|-------------|
+| RDSforMySQL:UserGroup.Modify | 사용자 그룹 수정하기 |
 
 #### 요청
 
@@ -3457,8 +3958,14 @@ PUT /v3.0/user-groups/{userGroupId}
 ### 사용자 그룹 삭제하기
 
 ```http
-DELETE /v3.0/user-groups/{userGroupId}
+DELETE /v3.1/user-groups/{userGroupId}
 ```
+
+#### 필요 권한
+
+| 권한명                          | 설명          |
+|------------------------------|-------------|
+| RDSforMySQL:UserGroup.Delete | 사용자 그룹 삭제하기 |
 
 #### 요청
 
@@ -3493,8 +4000,15 @@ DELETE /v3.0/user-groups/{userGroupId}
 ### 알림 그룹 목록 보기
 
 ```http
-GET /v3.0/notification-groups
+GET /v3.1/notification-groups
 ```
+
+#### 필요 권한
+
+| 권한명                                | 설명          |
+|------------------------------------|-------------|
+| RDSforMySQL:NotificationGroup.List | 알림 그룹 목록 보기 |
+
 
 #### 요청
 
@@ -3545,8 +4059,14 @@ GET /v3.0/notification-groups
 ### 알림 그룹 상세 보기
 
 ```http
-GET /v3.0/notification-groups/{notificationGroupId}
+GET /v3.1/notification-groups/{notificationGroupId}
 ```
+
+#### 필요 권한
+
+| 권한명                               | 설명          |
+|-----------------------------------|-------------|
+| RDSforMySQL:NotificationGroup.Get | 알림 그룹 상세 보기 |
 
 #### 요청
 
@@ -3614,8 +4134,14 @@ GET /v3.0/notification-groups/{notificationGroupId}
 ### 알림 그룹 생성하기
 
 ```http
-POST /v3.0/notification-groups
+POST /v3.1/notification-groups
 ```
+
+#### 필요 권한
+
+| 권한명                                  | 설명         |
+|--------------------------------------|------------|
+| RDSforMySQL:NotificationGroup.Create | 알림 그룹 생성하기 |
 
 #### 요청
 
@@ -3659,8 +4185,14 @@ POST /v3.0/notification-groups
 ### 알림 그룹 수정하기
 
 ```http
-PUT /v3.0/notification-groups/{notificationGroupId}
+PUT /v3.1/notification-groups/{notificationGroupId}
 ```
+
+#### 필요 권한
+
+| 권한명                                  | 설명         |
+|--------------------------------------|------------|
+| RDSforMySQL:NotificationGroup.Modify | 알림 그룹 수정하기 |
 
 #### 요청
 
@@ -3679,11 +4211,11 @@ PUT /v3.0/notification-groups/{notificationGroupId}
 
 ```json
 {
-  "notifyEmail": true,
-  "dbInstanceIds": [
-    "ed5cb985-526f-4c54-9ae0-40288593de65",
-    "d51b7da0-682f-47ff-b588-b739f6adc740"
-  ]
+    "notifyEmail": true,
+    "dbInstanceIds": [
+        "ed5cb985-526f-4c54-9ae0-40288593de65",
+        "d51b7da0-682f-47ff-b588-b739f6adc740"
+    ]
 }
 ```
 
@@ -3715,8 +4247,14 @@ PUT /v3.0/notification-groups/{notificationGroupId}
 ### 알림 그룹 삭제하기
 
 ```http
-DELETE /v3.0/notification-groups/{notificationGroupId}
+DELETE /v3.1/notification-groups/{notificationGroupId}
 ```
+
+#### 필요 권한
+
+| 권한명                                  | 설명         |
+|--------------------------------------|------------|
+| RDSforMySQL:NotificationGroup.Delete | 알림 그룹 삭제하기 |
 
 #### 요청
 
@@ -3753,8 +4291,14 @@ DELETE /v3.0/notification-groups/{notificationGroupId}
 ### Metric 목록 보기
 
 ```http
-GET /v3.0/metrics
+GET /v3.1/metrics
 ```
+
+#### 필요 권한
+
+| 권한명                     | 설명       |
+|-------------------------|----------|
+| RDSforMySQL:Metric.List | 통계 정보 조회 |
 
 #### 요청
 
@@ -3773,17 +4317,17 @@ GET /v3.0/metrics
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "metrics": [
-    {
-      "measureName": "CPU_USAGE",
-      "unit": "%"
-    }
-  ]
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "metrics": [
+        {
+            "measureName": "CPU_USAGE",
+            "unit": "%"
+        }
+    ]
 }
 ```
 
@@ -3795,8 +4339,14 @@ GET /v3.0/metrics
 ### 통계 정보 조회
 
 ```http
-GET /v3.0/metric-statistics
+GET /v3.1/metric-statistics
 ```
+
+#### 필요 권한
+
+| 권한명                     | 설명       |
+|-------------------------|----------|
+| RDSforMySQL:Metric.List | 통계 정보 조회 |
 
 #### 요청
 
@@ -3824,26 +4374,26 @@ GET /v3.0/metric-statistics
 
 ```json
 {
-  "metricStatistics": [
-    {
-      "measureName": "MYSQL_STATUS",
-      "unit": "",
-      "values": [
-        [
-          1679298540,
-          "1"
-        ],
-        [
-          1679298600,
-          "1"
-        ],
-        [
-          1679298660,
-          "1"
-        ]
-      ]
-    }
-  ]
+    "metricStatistics": [
+        {
+            "measureName": "MYSQL_STATUS",
+            "unit": "",
+            "values": [
+                [
+                    1679298540,
+                    "1"
+                ],
+                [
+                    1679298600,
+                    "1"
+                ],
+                [
+                    1679298660,
+                    "1"
+                ]
+            ]
+        }
+    ]
 }
 ```
 
@@ -3870,8 +4420,14 @@ GET /v3.0/metric-statistics
 ### 이벤트 목록 조회
 
 ```http
-GET /v3.0/events
+GET /v3.1/events
 ```
+
+#### 필요 권한
+
+| 권한명                    | 설명        |
+|------------------------|-----------|
+| RDSforMySQL:Event.List | 이벤트 목록 보기 |
 
 #### 요청
 
@@ -3908,39 +4464,39 @@ GET /v3.0/events
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "totalCounts": 28,
-  "events": [
-    {
-      "eventCategoryType": "INSTANCE",
-      "eventCode": "INSTC_02_01",
-      "sourceId": "76f00947-356e-4a20-8922-428368cc45ed",
-      "sourceName": "db-instance",
-      "messages": [
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "totalCounts": 28,
+    "events": [
         {
-          "langCode": "EN",
-          "message": "DB instance started"
-        },
-        {
-          "langCode": "JA",
-          "message": "DBインスタンスの起動"
-        },
-        {
-          "langCode": "KO",
-          "message": "DB 인스턴스 시작"
-        },
-        {
-          "langCode": "ZH",
-          "message": "DB instance started"
+            "eventCategoryType": "INSTANCE",
+            "eventCode": "INSTC_02_01",
+            "sourceId": "76f00947-356e-4a20-8922-428368cc45ed",
+            "sourceName": "db-instance",
+            "messages": [
+                {
+                    "langCode": "EN",
+                    "message": "DB instance started"
+                },
+                {
+                    "langCode": "JA",
+                    "message": "DBインスタンスの起動"
+                },
+                {
+                    "langCode": "KO",
+                    "message": "DB 인스턴스 시작"
+                },
+                {
+                    "langCode": "ZH",
+                    "message": "DB instance started"
+                }
+            ],
+            "eventYmdt": "2023-03-20T16:31:59+09:00"
         }
-      ],
-      "eventYmdt": "2023-03-20T16:31:59+09:00"
-    }
-  ]
+    ]
 }
 ```
 
@@ -3952,8 +4508,14 @@ GET /v3.0/events
 ### 구독 가능한 이벤트 코드 목록 보기
 
 ```http
-GET /v3.0/event-codes
+GET /v3.1/event-codes
 ```
+
+#### 필요 권한
+
+| 권한명                    | 설명        |
+|------------------------|-----------|
+| RDSforMySQL:Event.List | 이벤트 목록 보기 |
 
 #### 요청
 
@@ -3972,17 +4534,17 @@ GET /v3.0/event-codes
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "eventCodes": [
-    {
-      "eventCode": "INSTC_05_01",
-      "eventCategoryType": "INSTANCE"
-    }
-  ]
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "eventCodes": [
+        {
+            "eventCode": "INSTC_05_01",
+            "eventCategoryType": "INSTANCE"
+        }
+    ]
 }
 ```
 
