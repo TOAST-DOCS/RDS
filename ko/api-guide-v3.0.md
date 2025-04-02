@@ -1050,7 +1050,7 @@ POST /v3.0/db-instances/{dbInstanceId}/backup-to-object-storage
 |-----------------|------|--------|----|-----------------------------|
 | dbInstanceId    | URL  | UUID   | O  | DB 인스턴스의 식별자                |
 | tenantId        | Body | String | O  | 백업이 저장될 오브젝트 스토리지의 테넌트 ID   |
-| username        | Body | String | O  | NHN Cloud 회원 또는 IAM 멤버 ID   |
+| username        | Body | String | O  | NHN Cloud 계정 또는 IAM 계정 ID   |
 | password        | Body | String | O  | 백업이 저장될 오브젝트 스토리지의 API 비밀번호 |
 | targetContainer | Body | String | O  | 백업이 저장될 오브젝트 스토리지의 컨테이너     |
 | objectPath      | Body | String | O  | 컨테이너에 저장될 백업의 경로            |
@@ -1520,7 +1520,7 @@ POST /v3.0/db-instances/restore-from-obs
 | --- | --- | --- | --- |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | restore | Body | Object | O | 복원 정보 객체                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 | restore.tenantId | Body | String | O | 백업이 저장된 오브젝트 스토리지의 테넌트 ID                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| restore.username | Body | String | O | NHN Cloud 회원 또는 IAM 멤버 ID                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| restore.username | Body | String | O | NHN Cloud 계정 또는 IAM 계정 ID                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | restore.password | Body | String | O | 백업이 저장된 오브젝트 스토리지의 API 비밀번호                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | restore.targetContainer | Body | String | O | 백업이 저장된 오브젝트 스토리지의 컨테이너                                                                                                                                                                                                                                                                                                                                                                                                                                               |
 | restore.objectPath | Body | String | O | 컨테이너에 저장된 백업의 경로                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
@@ -2320,11 +2320,6 @@ GET /v3.0/db-instances/{dbInstanceId}/log-files
 </p>
 </details>
 
-## 로그 파일 내보내기 API
-
-- 사용자 Obs로 로그 파일을 내보낸다.
-- 로그 파일 업로드 시간이 오래 걸릴 수 있음. 어떻게 처리할지 결정이 필요함
-
 ### 로그 파일 내보내기
 
 ```
@@ -2338,7 +2333,7 @@ POST /v3.0/db-instances/{dbInstanceId}/log-files/export
 | dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
 | logFileNames | Body | Array | O | 로그 파일 이름 목록<br/>- 최소 크기: `1` |
 | tenantId        | Body | String | O  | 로그 파일이 저장될 오브젝트 스토리지의 테넌트 ID   |
-| username        | Body | String | O  | NHN Cloud 회원 또는 IAM 멤버 ID   |
+| username        | Body | String | O  | NHN Cloud 계정 또는 IAM 계정 ID   |
 | password        | Body | String | O  | 로그 파일이 저장될 오브젝트 스토리지의 API 비밀번호 |
 | targetContainer | Body | String | O  | 로그 파일이 저장될 오브젝트 스토리지의 컨테이너     |
 | objectPath      | Body | String | O  | 컨테이너에 저장될 로그 파일의 경로            |
@@ -2461,7 +2456,7 @@ POST /v3.0/backups/{backupId}/export
 |-----------------|------|--------|----|-----------------------------|
 | backupId        | URL  | UUID   | O  | 백업의 식별자                     |
 | tenantId        | Body | String | O  | 백업이 저장될 오브젝트 스토리지의 테넌트 ID   |
-| username        | Body | String | O  | NHN Cloud 회원 또는 IAM 멤버 ID   |
+| username        | Body | String | O  | NHN Cloud 계정 또는 IAM 계정 ID   |
 | password        | Body | String | O  | 백업이 저장될 오브젝트 스토리지의 API 비밀번호 |
 | targetContainer | Body | String | O  | 백업이 저장될 오브젝트 스토리지의 컨테이너     |
 | objectPath      | Body | String | O  | 컨테이너에 저장될 백업의 경로            |
