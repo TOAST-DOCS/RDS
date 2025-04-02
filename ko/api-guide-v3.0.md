@@ -2320,6 +2320,8 @@ GET /v3.0/db-instances/{dbInstanceId}/log-files
 </p>
 </details>
 
+---
+
 ### 로그 파일 내보내기
 
 ```
