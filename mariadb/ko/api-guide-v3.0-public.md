@@ -70,7 +70,7 @@ API 요청 시 인증에 실패하거나 권한이 없을 경우 다음과 같�
 
 ### 리전 목록 보기
 
-```
+```http
 GET /v3.0/project/regions
 ```
 
@@ -111,7 +111,7 @@ GET /v3.0/project/regions
 
 ### 프로젝트 멤버 목록 보기
 
-```
+```http
 GET /v3.0/project/members
 ```
 
@@ -159,7 +159,7 @@ GET /v3.0/project/members
 
 ### DB 인스턴스 사양 목록 보기
 
-```
+```http
 GET /v3.0/db-flavors
 ```
 
@@ -207,7 +207,7 @@ GET /v3.0/db-flavors
 
 ### 서브넷 목록 보기
 
-```
+```http
 GET /v3.0/network/subnets
 ```
 
@@ -257,7 +257,7 @@ GET /v3.0/network/subnets
 
 ### DB 엔진 목록 보기
 
-```
+```http
 GET /v3.0/db-versions
 ```
 
@@ -303,7 +303,7 @@ GET /v3.0/db-versions
 
 ### 데이터 스토리지 타입 목록 보기
 
-```
+```http
 GET /v3.0/storage-types
 ```
 
@@ -341,7 +341,7 @@ GET /v3.0/storage-types
 
 ### 데이터 스토리지 목록 보기
 
-```
+```http
 GET /v3.0/storages
 ```
 
@@ -398,7 +398,7 @@ GET /v3.0/storages
 
 ### 작업 정보 상세 보기
 
-```
+```http
 GET /v3.0/jobs/{jobId}
 ```
 
@@ -454,7 +454,7 @@ GET /v3.0/jobs/{jobId}
 
 ### DB 인스턴스 그룹 목록 보기
 
-```
+```http
 GET /v3.0/db-instance-groups
 ```
 
@@ -500,7 +500,7 @@ GET /v3.0/db-instance-groups
 
 ### DB 인스턴스 그룹 상세 보기
 
-```
+```http
 GET /v3.0/db-instance-groups/{dbInstanceGroupId}
 ```
 
@@ -603,7 +603,7 @@ GET /v3.0/db-instance-groups/{dbInstanceGroupId}
 
 ### DB 인스턴스 목록 보기
 
-```
+```http
 GET /v3.0/db-instances
 ```
 
@@ -663,7 +663,7 @@ GET /v3.0/db-instances
 
 ### DB 인스턴스 상세 보기
 
-```
+```http
 GET /v3.0/db-instances/{dbInstanceId}
 ```
 
@@ -740,7 +740,7 @@ GET /v3.0/db-instances/{dbInstanceId}
 
 ### DB 인스턴스 생성하기
 
-```
+```http
 POST /v3.0/db-instances
 ```
 
@@ -828,7 +828,7 @@ POST /v3.0/db-instances
 
 ### DB 인스턴스 수정하기
 
-```
+```http
 PUT /v3.0/db-instances/{dbInstanceId}
 ```
 
@@ -872,7 +872,7 @@ PUT /v3.0/db-instances/{dbInstanceId}
 
 ### DB 인스턴스 삭제하기
 
-```
+```http
 DELETE /v3.0/db-instances/{dbInstanceId}
 ```
 
@@ -894,7 +894,7 @@ DELETE /v3.0/db-instances/{dbInstanceId}
 
 ### DB 인스턴스 재시작하기
 
-```
+```http
 POST /v3.0/db-instances/{dbInstanceId}/restart
 ```
 
@@ -914,7 +914,7 @@ POST /v3.0/db-instances/{dbInstanceId}/restart
 
 ---
 ### DB 인스턴스 강제 재시작하기
-```
+```http
 POST /v3.0/db-instances/{dbInstanceId}/force-restart
 ```
 
@@ -950,7 +950,7 @@ POST /v3.0/db-instances/{dbInstanceId}/force-restart
 
 ### DB 인스턴스 시작하기
 
-```
+```http
 POST /v3.0/db-instances/{dbInstanceId}/start
 ```
 
@@ -972,7 +972,7 @@ POST /v3.0/db-instances/{dbInstanceId}/start
 
 ### DB 인스턴스 정지하기
 
-```
+```http
 POST /v3.0/db-instances/{dbInstanceId}/stop
 ```
 
@@ -994,7 +994,7 @@ POST /v3.0/db-instances/{dbInstanceId}/stop
 
 ### DB 인스턴스 백업하기
 
-```
+```http
 POST /v3.0/db-instances/{dbInstanceId}/backup
 ```
 
@@ -1015,7 +1015,7 @@ POST /v3.0/db-instances/{dbInstanceId}/backup
 
 ### DB 인스턴스 백업 후 내보내기
 
-```
+```http
 POST /v3.0/db-instances/{dbInstanceId}/backup-to-object-storage
 ```
 
@@ -1056,7 +1056,7 @@ POST /v3.0/db-instances/{dbInstanceId}/backup-to-object-storage
 
 ### DB 인스턴스 복제하기
 
-```
+```http
 POST /v3.0/db-instances/{dbInstanceId}/replicate
 ```
 
@@ -1119,7 +1119,7 @@ POST /v3.0/db-instances/{dbInstanceId}/replicate
 
 ### DB 인스턴스 승격하기
 
-```
+```http
 POST /v3.0/db-instances/{dbInstanceId}/promote
 ```
 
@@ -1141,7 +1141,7 @@ POST /v3.0/db-instances/{dbInstanceId}/promote
 
 ### 복원 정보 조회
 
-```
+```http
 GET /v3.0/db-instances/{dbInstanceId}/restoration-info
 ```
 
@@ -1222,7 +1222,7 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info
 
 ### 복원될 마지막 쿼리 조회
 
-```
+```http
 GET /v3.0/db-instances/{dbInstanceId}/restoration-info/last-query
 ```
 
@@ -1276,7 +1276,7 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info/last-query
 
 ### 복원
 
-```
+```http
 POST /v3.0/db-instances/{dbInstanceId}/restore
 ```
 
@@ -1483,7 +1483,7 @@ POST /v3.0/db-instances/{dbInstanceId}/restore
 
 ### 오브젝트 스토리지로부터 복원
 
-```
+```http
 POST /v3.0/db-instances/restore-from-obs
 ```
 
@@ -1585,7 +1585,7 @@ POST /v3.0/db-instances/restore-from-obs
 
 ### DB 인스턴스 삭제 보호 설정 변경하기
 
-```
+```http
 PUT /v3.0/db-instances/{dbInstanceId}/deletion-protection
 ```
 
@@ -1620,7 +1620,7 @@ PUT /v3.0/db-instances/{dbInstanceId}/deletion-protection
 
 ### 고가용성 수정하기
 
-```
+```http
 PUT /v3.0/db-instances/{dbInstanceId}/high-availability
 ```
 
@@ -1642,7 +1642,7 @@ PUT /v3.0/db-instances/{dbInstanceId}/high-availability
 
 ### 고가용성 다시 시작하기
 
-```
+```http
 POST /v3.0/db-instances/{dbInstanceId}/high-availability/resume
 ```
 
@@ -1664,7 +1664,7 @@ POST /v3.0/db-instances/{dbInstanceId}/high-availability/resume
 
 ### 고가용성 일시 중지하기
 
-```
+```http
 POST /v3.0/db-instances/{dbInstanceId}/high-availability/pause
 ```
 
@@ -1686,7 +1686,7 @@ POST /v3.0/db-instances/{dbInstanceId}/high-availability/pause
 
 ### 고가용성 복구하기
 
-```
+```http
 POST /v3.0/db-instances/{dbInstanceId}/high-availability/repair
 ```
 
@@ -1708,7 +1708,7 @@ POST /v3.0/db-instances/{dbInstanceId}/high-availability/repair
 
 ### 고가용성 분리하기
 
-```
+```http
 POST /v3.0/db-instances/{dbInstanceId}/high-availability/split
 ```
 
@@ -1730,7 +1730,7 @@ POST /v3.0/db-instances/{dbInstanceId}/high-availability/split
 
 ### 데이터 스토리지 정보 보기
 
-```
+```http
 GET /v3.0/db-instances/{dbInstanceId}/storage-info
 ```
 
@@ -1774,7 +1774,7 @@ GET /v3.0/db-instances/{dbInstanceId}/storage-info
 
 ### 데이터 스토리지 정보 수정하기
 
-```
+```http
 PUT /v3.0/db-instances/{dbInstanceId}/storage-info
 ```
 
@@ -1796,7 +1796,7 @@ PUT /v3.0/db-instances/{dbInstanceId}/storage-info
 
 ### 백업 정보 보기
 
-```
+```http
 GET /v3.0/db-instances/{dbInstanceId}/backup-info
 ```
 
@@ -1853,7 +1853,7 @@ GET /v3.0/db-instances/{dbInstanceId}/backup-info
 
 ### 백업 정보 수정하기
 
-```
+```http
 PUT /v3.0/db-instances/{dbInstanceId}/backup-info
 ```
 
@@ -1899,7 +1899,7 @@ PUT /v3.0/db-instances/{dbInstanceId}/backup-info
 
 ### 네트워크 정보 보기
 
-```
+```http
 GET /v3.0/db-instances/{dbInstanceId}/network-info
 ```
 
@@ -1958,7 +1958,7 @@ GET /v3.0/db-instances/{dbInstanceId}/network-info
 
 ### 네트워크 정보 수정하기
 
-```
+```http
 PUT /v3.0/db-instances/{dbInstanceId}/network-info
 ```
 
@@ -1979,7 +1979,7 @@ PUT /v3.0/db-instances/{dbInstanceId}/network-info
 
 ### DB 사용자 목록 보기
 
-```
+```http
 GET /v3.0/db-instances/{dbInstanceId}/db-users
 ```
 
@@ -2035,7 +2035,7 @@ GET /v3.0/db-instances/{dbInstanceId}/db-users
 
 ### DB 사용자 생성하기
 
-```
+```http
 POST /v3.0/db-instances/{dbInstanceId}/db-users
 ```
 
@@ -2074,7 +2074,7 @@ POST /v3.0/db-instances/{dbInstanceId}/db-users
 
 ### DB 사용자 수정하기
 
-```
+```http
 PUT /v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 ```
 
@@ -2109,7 +2109,7 @@ PUT /v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 
 ### DB 사용자 삭제하기
 
-```
+```http
 DELETE /v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 ```
 
@@ -2132,7 +2132,7 @@ DELETE /v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 
 ### DB 스키마 목록 보기
 
-```
+```http
 GET /v3.0/db-instances/{dbInstanceId}/db-schemas
 ```
 
@@ -2182,7 +2182,7 @@ GET /v3.0/db-instances/{dbInstanceId}/db-schemas
 
 ### DB 스키마 생성하기
 
-```
+```http
 POST /v3.0/db-instances/{dbInstanceId}/db-schemas
 ```
 
@@ -2203,7 +2203,7 @@ POST /v3.0/db-instances/{dbInstanceId}/db-schemas
 
 ### DB 스키마 삭제하기
 
-```
+```http
 DELETE /v3.0/db-instances/{dbInstanceId}/db-schemas/{dbSchemaId}
 ```
 
@@ -2226,7 +2226,7 @@ DELETE /v3.0/db-instances/{dbInstanceId}/db-schemas/{dbSchemaId}
 
 ### 로그 파일 목록 보기
 
-```
+```http
 GET /v3.0/db-instances/{dbInstanceId}/log-files
 ```
 
@@ -2278,7 +2278,7 @@ GET /v3.0/db-instances/{dbInstanceId}/log-files
 
 ### 로그 파일 내보내기
 
-```
+```http
 POST /v3.0/db-instances/{dbInstanceId}/log-files/export
 ```
 
@@ -2333,7 +2333,7 @@ POST /v3.0/db-instances/{dbInstanceId}/log-files/export
 
 ### 백업 목록 조회
 
-```
+```http
 GET /v3.0/backups
 ```
 
@@ -2399,7 +2399,7 @@ GET /v3.0/backups
 
 ### 백업 내보내기
 
-```
+```http
 POST /v3.0/backups/{backupId}/export
 ```
 
@@ -2443,7 +2443,7 @@ POST /v3.0/backups/{backupId}/export
 
 ### 백업 복원하기
 
-```
+```http
 POST /v3.0/backups/{backupId}/restore
 ```
 
@@ -2522,7 +2522,7 @@ POST /v3.0/backups/{backupId}/restore
 
 ### 백업 삭제하기
 
-```
+```http
 DELETE /v3.0/backups/{backupId}
 ```
 
@@ -2555,7 +2555,7 @@ DELETE /v3.0/backups/{backupId}
 
 ### DB 보안 그룹 목록 보기
 
-```
+```http
 GET /v3.0/db-security-groups
 ```
 
@@ -2605,7 +2605,7 @@ GET /v3.0/db-security-groups
 
 ### DB 보안 그룹 상세 보기
 
-```
+```http
 GET /v3.0/db-security-groups/{dbSecurityGroupId}
 ```
 
@@ -2684,7 +2684,7 @@ GET /v3.0/db-security-groups/{dbSecurityGroupId}
 
 ### DB 보안 그룹 생성하기
 
-```
+```http
 POST /v3.0/db-security-groups
 ```
 
@@ -2739,7 +2739,7 @@ POST /v3.0/db-security-groups
 
 ### DB 보안 그룹 수정하기
 
-```
+```http
 PUT /v3.0/db-security-groups/{dbSecurityGroupId}
 ```
 
@@ -2789,7 +2789,7 @@ PUT /v3.0/db-security-groups/{dbSecurityGroupId}
 
 ### DB 보안 그룹 삭제하기
 
-```
+```http
 DELETE /v3.0/db-security-groups/{dbSecurityGroupId}
 ```
 
@@ -2825,7 +2825,7 @@ DELETE /v3.0/db-security-groups/{dbSecurityGroupId}
 
 ### DB 보안 그룹 규칙 생성하기
 
-```
+```http
 POST /v3.0/db-security-groups/{dbSecurityGroupId}/rules
 ```
 
@@ -2872,7 +2872,7 @@ POST /v3.0/db-security-groups/{dbSecurityGroupId}/rules
 
 ### DB 보안 그룹 규칙 수정하기
 
-```
+```http
 PUT /v3.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 ```
 
@@ -2918,7 +2918,7 @@ PUT /v3.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 
 ### DB 보안 그룹 규칙 삭제하기
 
-```
+```http
 DELETE /v3.0/db-security-groups/{dbSecurityGroupId}/rules
 ```
 
@@ -2943,7 +2943,7 @@ DELETE /v3.0/db-security-groups/{dbSecurityGroupId}/rules
 
 ### 파라미터 그룹 목록 보기
 
-```
+```http
 GET /v3.0/parameter-groups
 ```
 
@@ -3000,7 +3000,7 @@ GET /v3.0/parameter-groups
 
 ### 파라미터 그룹 상세 보기
 
-```
+```http
 GET /v3.0/parameter-groups/{parameterGroupId}
 ```
 
@@ -3075,7 +3075,7 @@ GET /v3.0/parameter-groups/{parameterGroupId}
 
 ### 파라미터 그룹 생성하기
 
-```
+```http
 POST /v3.0/parameter-groups
 ```
 
@@ -3110,7 +3110,7 @@ POST /v3.0/parameter-groups
 
 ### 파라미터 그룹 복사하기
 
-```
+```http
 POST /v3.0/parameter-groups/{parameterGroupId}/copy
 ```
 
@@ -3145,7 +3145,7 @@ POST /v3.0/parameter-groups/{parameterGroupId}/copy
 
 ### 파라미터 그룹 수정하기
 
-```
+```http
 PUT /v3.0/parameter-groups/{parameterGroupId}
 ```
 
@@ -3193,7 +3193,7 @@ PUT /v3.0/parameter-groups/{parameterGroupId}
 
 ### 파라미터 수정하기
 
-```
+```http
 PUT /v3.0/parameter-groups/{parameterGroupId}/parameters
 ```
 
@@ -3247,7 +3247,7 @@ PUT /v3.0/parameter-groups/{parameterGroupId}/parameters
 
 ### 파라미터 그룹 재설정하기
 
-```
+```http
 PUT /v3.0/parameter-groups/{parameterGroupId}/reset
 ```
 
@@ -3281,7 +3281,7 @@ PUT /v3.0/parameter-groups/{parameterGroupId}/reset
 
 ### 파라미터 그룹 삭제하기
 
-```
+```http
 DELETE /v3.0/parameter-groups/{parameterGroupId}
 ```
 
@@ -3319,7 +3319,7 @@ DELETE /v3.0/parameter-groups/{parameterGroupId}
 
 ### 사용자 그룹 목록 보기
 
-```
+```http
 GET /v3.0/user-groups
 ```
 
@@ -3365,7 +3365,7 @@ GET /v3.0/user-groups
 
 ### 사용자 그룹 상세 보기
 
-```
+```http
 GET /v3.0/user-groups/{userGroupId}
 ```
 
@@ -3419,7 +3419,7 @@ GET /v3.0/user-groups/{userGroupId}
 
 ### 사용자 그룹 생성하기
 
-```
+```http
 POST /v3.0/user-groups
 ```
 
@@ -3463,7 +3463,7 @@ POST /v3.0/user-groups
 
 ### 사용자 그룹 수정하기
 
-```
+```http
 PUT /v3.0/user-groups/{userGroupId}
 ```
 
@@ -3516,7 +3516,7 @@ PUT /v3.0/user-groups/{userGroupId}
 
 ### 사용자 그룹 삭제하기
 
-```
+```http
 DELETE /v3.0/user-groups/{userGroupId}
 ```
 
@@ -3552,7 +3552,7 @@ DELETE /v3.0/user-groups/{userGroupId}
 
 ### 알림 그룹 목록 보기
 
-```
+```http
 GET /v3.0/notification-groups
 ```
 
@@ -3604,7 +3604,7 @@ GET /v3.0/notification-groups
 
 ### 알림 그룹 상세 보기
 
-```
+```http
 GET /v3.0/notification-groups/{notificationGroupId}
 ```
 
@@ -3673,7 +3673,7 @@ GET /v3.0/notification-groups/{notificationGroupId}
 
 ### 알림 그룹 생성하기
 
-```
+```http
 POST /v3.0/notification-groups
 ```
 
@@ -3718,7 +3718,7 @@ POST /v3.0/notification-groups
 
 ### 알림 그룹 수정하기
 
-```
+```http
 PUT /v3.0/notification-groups/{notificationGroupId}
 ```
 
@@ -3774,7 +3774,7 @@ PUT /v3.0/notification-groups/{notificationGroupId}
 
 ### 알림 그룹 삭제하기
 
-```
+```http
 DELETE /v3.0/notification-groups/{notificationGroupId}
 ```
 
@@ -3812,7 +3812,7 @@ DELETE /v3.0/notification-groups/{notificationGroupId}
 
 ### Metric 목록 보기
 
-```
+```http
 GET /v3.0/metrics
 ```
 
@@ -3854,7 +3854,7 @@ GET /v3.0/metrics
 
 ### 통계 정보 조회
 
-```
+```http
 GET /v3.0/metric-statistics
 ```
 
@@ -3929,7 +3929,7 @@ GET /v3.0/metric-statistics
 
 ### 이벤트 목록 조회
 
-```
+```http
 GET /v3.0/events
 ```
 
@@ -4011,7 +4011,7 @@ GET /v3.0/events
 
 ### 구독 가능한 이벤트 코드 목록 보기
 
-```
+```http
 GET /v3.0/event-codes
 ```
 

@@ -80,7 +80,7 @@ The API responds with "200 OK" to all API requests. For more information on the 
 
 ### List Regions
 
-```
+```http
 GET /v3.0/project/regions
 ```
 
@@ -129,7 +129,7 @@ This API does not require a request body.
 
 ### List Project Members
 
-```
+```http
 GET /v3.0/project/members
 ```
 
@@ -177,7 +177,7 @@ This API does not require a request body.
 
 ### List DB Instance Specifications
 
-```
+```http
 GET /v3.0/db-flavors
 ```
 
@@ -225,7 +225,7 @@ This API does not require a request body.
 
 ### List Subnets
 
-```
+```http
 GET /v3.0/network/subnets
 ```
 
@@ -275,7 +275,7 @@ This API does not require a request body.
 
 ### List DB Engines
 
-```
+```http
 GET /v3.0/db-versions
 ```
 
@@ -320,7 +320,7 @@ This API does not require a request body.
 ## Storage
 
 ### List Storage Type
-```
+```http
 GET /v3.0/storage-types
 ```
 
@@ -358,7 +358,7 @@ This API does not require a request body.
 
 ### List Storage
 
-```
+```http
 GET /v3.0/storages
 ```
 
@@ -415,7 +415,7 @@ This API does not require a request body.
 
 ### List Task Details
 
-```
+```http
 GET /v3.0/jobs/{jobId}
 ```
 
@@ -471,7 +471,7 @@ This API does not require a request body.
 
 ### List DB Instances
 
-```
+```http
 GET /v3.0/db-instance-groups
 ```
 
@@ -517,7 +517,7 @@ This API does not require a request body.
 
 ### List DB Instance Group Details
 
-```
+```http
 GET /v3.0/db-instance-groups/{dbInstanceGroupId}
 ```
 
@@ -620,7 +620,7 @@ This API does not require a request body.
 
 ### List DB instances
 
-```
+```http
 GET /v3.0/db-instances
 ```
 
@@ -680,7 +680,7 @@ This API does not require a request body.
 
 ### List DB Instance Details
 
-```
+```http
 GET /v3.0/db-instances/{dbInstanceId}
 ```
 
@@ -757,7 +757,7 @@ This API does not require a request body.
 
 ### Create DB Instance
 
-```
+```http
 POST /v3.0/db-instances
 ```
 
@@ -848,7 +848,7 @@ POST /v3.0/db-instances
 
 ### Modify DB Instance
 
-```
+```http
 PUT /v3.0/db-instances/{dbInstanceId}
 ```
 
@@ -894,7 +894,7 @@ PUT /v3.0/db-instances/{dbInstanceId}
 
 ### Delete DB instance
 
-```
+```http
 DELETE /v3.0/db-instances/{dbInstanceId}
 ```
 
@@ -916,7 +916,7 @@ This API does not require a request body.
 
 ### Restart DB Instance
 
-```
+```http
 POST /v3.0/db-instances/{dbInstanceId}/restart
 ```
 
@@ -936,7 +936,7 @@ POST /v3.0/db-instances/{dbInstanceId}/restart
 
 ---
 ### Force Restart DB instance
-```
+```http
 POST /v3.0/db-instances/{dbInstanceId}/force-restart
 ```
 
@@ -972,7 +972,7 @@ This API does not return a response body.
 
 ### Start DB Instance
 
-```
+```http
 POST /v3.0/db-instances/{dbInstanceId}/start
 ```
 
@@ -994,7 +994,7 @@ This API does not require a request body.
 
 ### Stop DB Instance
 
-```
+```http
 POST /v3.0/db-instances/{dbInstanceId}/stop
 ```
 
@@ -1016,7 +1016,7 @@ This API does not require a request body.
 
 ### Backup DB Instance
 
-```
+```http
 POST /v3.0/db-instances/{dbInstanceId}/backup
 ```
 
@@ -1037,7 +1037,7 @@ POST /v3.0/db-instances/{dbInstanceId}/backup
 
 ### Export after Backing up DB Instance
 
-```
+```http
 POST /v3.0/db-instances/{dbInstanceId}/backup-to-object-storage
 ```
 
@@ -1078,7 +1078,7 @@ POST /v3.0/db-instances/{dbInstanceId}/backup-to-object-storage
 
 ### Replicate DB Instance
 
-```
+```http
 POST /v3.0/db-instances/{dbInstanceId}/replicate
 ```
 
@@ -1142,7 +1142,7 @@ POST /v3.0/db-instances/{dbInstanceId}/replicate
 
 ### Promote DB Instance
 
-```
+```http
 POST /v3.0/db-instances/{dbInstanceId}/promote
 ```
 
@@ -1164,7 +1164,7 @@ This API does not require a request body.
 
 ### View Restoration Information
 
-```
+```http
 GET /v3.0/db-instances/{dbInstanceId}/restoration-info
 ```
 
@@ -1245,7 +1245,7 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info
 
 ### View the last query to be restored
 
-```
+```http
 GET /v3.0/db-instances/{dbInstanceId}/restoration-info/last-query
 ```
 
@@ -1299,7 +1299,7 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info/last-query
 
 ### Restoration
 
-```
+```http
 POST /v3.0/db-instances/{dbInstanceId}/restore
 ```
 
@@ -1507,7 +1507,7 @@ POST /v3.0/db-instances/{dbInstanceId}/restore
 
 ### Restore from Object Storage
 
-```
+```http
 POST /v3.0/db-instances/restore-from-obs
 ```
 
@@ -1610,7 +1610,7 @@ POST /v3.0/db-instances/restore-from-obs
 
 ### Change DB Instance Deletion Protection Settings
 
-```
+```http
 PUT /v3.0/db-instances/{dbInstanceId}/deletion-protection
 ```
 
@@ -1645,7 +1645,7 @@ This API does not return a response body.
 
 ### Modify High Availability
 
-```
+```http
 PUT /v3.0/db-instances/{dbInstanceId}/high-availability
 ```
 
@@ -1667,7 +1667,7 @@ PUT /v3.0/db-instances/{dbInstanceId}/high-availability
 
 ### Restart High Availability
 
-```
+```http
 POST /v3.0/db-instances/{dbInstanceId}/high-availability/resume
 ```
 
@@ -1689,7 +1689,7 @@ This API does not require a request body.
 
 ### Pause High Availability
 
-```
+```http
 POST /v3.0/db-instances/{dbInstanceId}/high-availability/pause
 ```
 
@@ -1711,7 +1711,7 @@ This API does not require a request body.
 
 ### Recover High Availability
 
-```
+```http
 POST /v3.0/db-instances/{dbInstanceId}/high-availability/repair
 ```
 
@@ -1733,7 +1733,7 @@ This API does not require a request body.
 
 ### Separate High Availability
 
-```
+```http
 POST /v3.0/db-instances/{dbInstanceId}/high-availability/split
 ```
 
@@ -1755,7 +1755,7 @@ This API does not require a request body.
 
 ### View Storage Information
 
-```
+```http
 GET /v3.0/db-instances/{dbInstanceId}/storage-info
 ```
 
@@ -1799,7 +1799,7 @@ This API does not require a request body.
 
 ### Modify Storage Information
 
-```
+```http
 PUT /v3.0/db-instances/{dbInstanceId}/storage-info
 ```
 
@@ -1821,7 +1821,7 @@ PUT /v3.0/db-instances/{dbInstanceId}/storage-info
 
 ### View Backup Information
 
-```
+```http
 GET /v3.0/db-instances/{dbInstanceId}/backup-info
 ```
 
@@ -1878,7 +1878,7 @@ This API does not require a request body.
 
 ### Modify Backup Information
 
-```
+```http
 PUT /v3.0/db-instances/{dbInstanceId}/backup-info
 ```
 
@@ -1925,7 +1925,7 @@ PUT /v3.0/db-instances/{dbInstanceId}/backup-info
 
 ### List Network Information
 
-```
+```http
 GET /v3.0/db-instances/{dbInstanceId}/network-info
 ```
 
@@ -1984,7 +1984,7 @@ This API does not require a request body.
 
 ### Modify Network Information
 
-```
+```http
 PUT /v3.0/db-instances/{dbInstanceId}/network-info
 ```
 
@@ -2005,7 +2005,7 @@ PUT /v3.0/db-instances/{dbInstanceId}/network-info
 
 ### List DB Users
 
-```
+```http
 GET /v3.0/db-instances/{dbInstanceId}/db-users
 ```
 
@@ -2065,7 +2065,7 @@ This API does not require a request body.
 
 ### Create DB User
 
-```
+```http
 POST /v3.0/db-instances/{dbInstanceId}/db-users
 ```
 
@@ -2111,7 +2111,7 @@ POST /v3.0/db-instances/{dbInstanceId}/db-users
 
 ### Modify DB User
 
-```
+```http
 PUT /v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 ```
 
@@ -2152,7 +2152,7 @@ PUT /v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 
 ### Delete DB User
 
-```
+```http
 DELETE /v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 ```
 
@@ -2175,7 +2175,7 @@ This API does not require a request body.
 
 ### List DB Schema
 
-```
+```http
 GET /v3.0/db-instances/{dbInstanceId}/db-schemas
 ```
 
@@ -2225,7 +2225,7 @@ This API does not require a request body.
 
 ### Create DB Schema
 
-```
+```http
 POST /v3.0/db-instances/{dbInstanceId}/db-schemas
 ```
 
@@ -2246,7 +2246,7 @@ POST /v3.0/db-instances/{dbInstanceId}/db-schemas
 
 ### Delete DB Schema
 
-```
+```http
 DELETE /v3.0/db-instances/{dbInstanceId}/db-schemas/{dbSchemaId}
 ```
 
@@ -2269,7 +2269,7 @@ This API does not require a request body.
 
 ### List Log Files
 
-```
+```http
 GET /v3.0/db-instances/{dbInstanceId}/log-files
 ```
 
@@ -2321,7 +2321,7 @@ This API does not require a request body.
 
 ### Export Log File
 
-```
+```http
 POST /v3.0/db-instances/{dbInstanceId}/log-files/export
 ```
 
@@ -2376,7 +2376,7 @@ POST /v3.0/db-instances/{dbInstanceId}/log-files/export
 
 ### Retrieve Backup List
 
-```
+```http
 GET /v3.0/backups
 ```
 
@@ -2444,7 +2444,7 @@ This API does not require a request body.
 
 ### Export Backup
 
-```
+```http
 POST /v3.0/backups/{backupId}/export
 ```
 
@@ -2485,7 +2485,7 @@ POST /v3.0/backups/{backupId}/export
 
 ### Restore Backup
 
-```
+```http
 POST /v3.0/backups/{backupId}/restore
 ```
 
@@ -2565,7 +2565,7 @@ POST /v3.0/backups/{backupId}/restore
 
 ### Delete Backup
 
-```
+```http
 DELETE /v3.0/backups/{backupId}
 ```
 
@@ -2598,7 +2598,7 @@ This API does not require a request body.
 
 ### List DB Security Groups
 
-```
+```http
 GET /v3.0/db-security-groups
 ```
 
@@ -2648,7 +2648,7 @@ This API does not require a request body.
 
 ### List DB Security Group Details
 
-```
+```http
 GET /v3.0/db-security-groups/{dbSecurityGroupId}
 ```
 
@@ -2727,7 +2727,7 @@ This API does not require a request body.
 
 ### Create DB Security Group
 
-```
+```http
 POST /v3.0/db-security-groups
 ```
 
@@ -2782,7 +2782,7 @@ POST /v3.0/db-security-groups
 
 ### Modify DB Security Group
 
-```
+```http
 PUT /v3.0/db-security-groups/{dbSecurityGroupId}
 ```
 
@@ -2832,7 +2832,7 @@ This API does not return a response body.
 
 ### Delete DB Security Group
 
-```
+```http
 DELETE /v3.0/db-security-groups/{dbSecurityGroupId}
 ```
 
@@ -2868,7 +2868,7 @@ This API does not return a response body.
 
 ### Create DB Security Group
 
-```
+```http
 POST /v3.0/db-security-groups/{dbSecurityGroupId}/rules
 ```
 
@@ -2915,7 +2915,7 @@ POST /v3.0/db-security-groups/{dbSecurityGroupId}/rules
 
 ### Modify DB Security Group Rule
 
-```
+```http
 PUT /v3.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 ```
 
@@ -2961,7 +2961,7 @@ PUT /v3.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 
 ### Delete DB Security Group Rule
 
-```
+```http
 DELETE /v3.0/db-security-groups/{dbSecurityGroupId}/rules
 ```
 
@@ -2986,7 +2986,7 @@ This API does not require a request body.
 
 ### List Parameter Groups
 
-```
+```http
 GET /v3.0/parameter-groups
 ```
 
@@ -3043,7 +3043,7 @@ This API does not require a request body.
 
 ### List Parameter Group Details
 
-```
+```http
 GET /v3.0/parameter-groups/{parameterGroupId}
 ```
 
@@ -3118,7 +3118,7 @@ This API does not require a request body.
 
 ### Create Parameter Group
 
-```
+```http
 POST /v3.0/parameter-groups
 ```
 
@@ -3153,7 +3153,7 @@ POST /v3.0/parameter-groups
 
 ### Copy Parameter Group
 
-```
+```http
 POST /v3.0/parameter-groups/{parameterGroupId}/copy
 ```
 
@@ -3188,7 +3188,7 @@ POST /v3.0/parameter-groups/{parameterGroupId}/copy
 
 ### Modify Parameter Group
 
-```
+```http
 PUT /v3.0/parameter-groups/{parameterGroupId}
 ```
 
@@ -3236,7 +3236,7 @@ This API does not return a response body.
 
 ### Modify Parameter
 
-```
+```http
 PUT /v3.0/parameter-groups/{parameterGroupId}/parameters
 ```
 
@@ -3290,7 +3290,7 @@ This API does not return a response body.
 
 ### Reset Parameter Group
 
-```
+```http
 PUT /v3.0/parameter-groups/{parameterGroupId}/reset
 ```
 
@@ -3324,7 +3324,7 @@ This API does not return a response body.
 
 ### Delete Parameter Group
 
-```
+```http
 DELETE /v3.0/parameter-groups/{parameterGroupId}
 ```
 
@@ -3362,7 +3362,7 @@ This API does not return a response body.
 
 ### List User Groups
 
-```
+```http
 GET /v3.0/user-groups
 ```
 
@@ -3408,7 +3408,7 @@ This API does not require a request body.
 
 ### List User Group Details
 
-```
+```http
 GET /v3.0/user-groups/{userGroupId}
 ```
 
@@ -3462,7 +3462,7 @@ This API does not require a request body.
 
 ### Create User Group
 
-```
+```http
 POST /v3.0/user-groups
 ```
 
@@ -3506,7 +3506,7 @@ POST /v3.0/user-groups
 
 ### Modify User Group
 
-```
+```http
 PUT /v3.0/user-groups/{userGroupId}
 ```
 
@@ -3559,7 +3559,7 @@ This API does not return a response body.
 
 ### Delete User Group
 
-```
+```http
 DELETE /v3.0/user-groups/{userGroupId}
 ```
 
@@ -3595,7 +3595,7 @@ This API does not return a response body.
 
 ### List Notification Groups
 
-```
+```http
 GET /v3.0/notification-groups
 ```
 
@@ -3647,7 +3647,7 @@ This API does not require a request body.
 
 ### List Notification Groups
 
-```
+```http
 GET /v3.0/notification-groups/{notificationGroupId}
 ```
 
@@ -3716,7 +3716,7 @@ This API does not require a request body.
 
 ### Create Notification Group
 
-```
+```http
 POST /v3.0/notification-groups
 ```
 
@@ -3761,7 +3761,7 @@ POST /v3.0/notification-groups
 
 ### Modify Notification Group
 
-```
+```http
 PUT /v3.0/notification-groups/{notificationGroupId}
 ```
 
@@ -3817,7 +3817,7 @@ This API does not return a response body.
 
 ### Delete Notification Group
 
-```
+```http
 DELETE /v3.0/notification-groups/{notificationGroupId}
 ```
 
@@ -3855,7 +3855,7 @@ This API does not return a response body.
 
 ### List Metric List
 
-```
+```http
 GET /v3.0/metrics
 ```
 
@@ -3897,7 +3897,7 @@ This API does not require a request body.
 
 ### View stats
 
-```
+```http
 GET /v3.0/metric-statistics
 ```
 
@@ -3972,7 +3972,7 @@ Events can be categorized into categories, which are shown below.
 
 ### List Events
 
-```
+```http
 GET /v3.0/events
 ```
 
@@ -4054,7 +4054,7 @@ This API does not require a request body.
 
 ### List Subscribable Event Codes
 
-```
+```http
 GET /v3.0/event-codes
 ```
 
