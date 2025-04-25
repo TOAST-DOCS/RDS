@@ -1136,9 +1136,9 @@ POST /v4.0/db-instances/{dbInstanceId}/replicate
 
 #### 필요 권한
 
-| 권한명                                              | 설명                |
-|--------------------------------------------------|-------------------|
-| RDSfor{{engine.pascalCase}}:DbInstance.Replicate | DB 인스턴스 백업 후 내보내기 |
+| 권한명                                              | 설명           |
+|--------------------------------------------------|--------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.Replicate | DB 인스턴스 복제하기 |
 
 #### 요청
 
