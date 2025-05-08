@@ -1,12 +1,12 @@
 ## Database > RDS for MySQL > Release Notes
 
-### 2025. 04. 16.
+### April 16, 2025
 
-#### 기능 추가 및 개선
+#### Added Features and Updates
 
-* API v3.0 추가 및 변경
-  * 로그 파일 목록 보기 API 추가
-  * 로그 파일 내보내기 API 추가
+* Added and modified API v3.0
+  * Added the API to list Log files
+  * Added the Export Log file API
 
 ### February 13, 2025
 
