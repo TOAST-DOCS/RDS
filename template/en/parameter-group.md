@@ -1,8 +1,8 @@
-## Database > RDS for MySQL > Parameter Group
+## Database > RDS for {{engine.pascalCase}} > Parameter Group
 
 ## Parameter Group
 
-To apply the settings of MySQL installed on a DB instance, RDS for MySQL provides the parameter group feature. A parameter group is a set of parameters for which you can set MySQL. When the service is enabled, the default parameter group is provided for each DB engine version. The default parameter group is provided by `default.{DB Engine Version Name}` and is configured with the recommended default parameter values for each version. Default parameter group can be modified and deleted the same
+To apply the settings of {{engine.pascalCase}} installed on a DB instance, RDS for {{engine.pascalCase}} provides the parameter group feature. A parameter group is a set of parameters for which you can set {{engine.pascalCase}}. When the service is enabled, the default parameter group is provided for each DB engine version. The default parameter group is provided by `default.{DB Engine Version Name}` and is configured with the recommended default parameter values for each version. Default parameter group can be modified and deleted the same
 as other parameter groups.
 
 ### Create Parameter Group

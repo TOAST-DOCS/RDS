@@ -1,4 +1,4 @@
-## Database > RDS for MySQL > DB Engine
+## Database > RDS for {{engine.pascalCase}} > DB Engine
 
 ## DB Engine
 For MySQL, the version number consists of version = X.Y.Z. In NHN Cloud RDS terminology, X.Y represents the major version and Z represents the minor version number.
@@ -60,7 +60,7 @@ MySQL 8.0 and MySQL 5.7 contain a number of incompatibilities. So if you are doi
 - No table partitions must reside in shared tablespaces, including the InnoDB system tablespace and regular tablespaces.
 
 For DB version upgrade pre-check, you can check the result in the following ways.
-- Check for `the detailed checklist for upgrading from 5.7 to 8.0`(https://static.toastoven.net/prod_rds/mysql/23.08.17/Check_5.7_to_8.0_en.xlsx)
+- Check for `the detailed checklist for upgrading from 5.7 to 8.0`({{url.cdn}}/23.08.17/Check_5.7_to_8.0_en.xlsx)
 - When attempting to upgrade the DB version in the console, check the result using the `DB Engine Upgrade Pre-Check` button.
 - Check the results of DB version upgrade attempts
 
