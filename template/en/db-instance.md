@@ -31,32 +31,33 @@ NHN Cloud has divided the entire system into several availability zones to prepa
 
 The versions specified below are available.
 {{#if (eq engine.lowerCase "mysql")}}
-| Version              | Note                                                                                                              |
-|----------------------|-------------------------------------------------------------------------------------------------------------------|
-| <strong>8.4</strong> |                                                                                                                   |
-| MySQL 8.4.6          |                                                                                                                   |
-| MySQL 8.4.5          |                                                                                                                   |
-| <strong>8.0</strong> |                                                                                                                   |
-| MySQL 8.0.43         |                                                                                                                   |
-| MySQL 8.0.42         |                                                                                                                   |
-| MySQL 8.0.41         |                                                                                                                   |
-| MySQL 8.0.40         |                                                                                                                   |
-| MySQL 8.0.36         |                                                                                                                   |
-| MySQL 8.0.35         |                                                                                                                   |
-| MySQL 8.0.34         |                                                                                                                   | 
-| MySQL 8.0.33         |                                                                                                                   |
-| MySQL 8.0.32         |                                                                                                                   | 
-| MySQL 8.0.28         |                                                                                                                   | 
-| MySQL 8.0.23         |                                                                                                                   |
-| MySQL 8.0.18         |                                                                                                                   |
-| <strong>5.7</strong> |                                                                                                                   |
-| MySQL 5.7.37         |                                                                                                                   |
-| MySQL 5.7.33         | You cannot restore a DB instance from an external backup.                                                         |
-| MySQL 5.7.26         |                                                                                                                   |
-| MySQL 5.7.19         |                                                                                                                   |
-| MySQL 5.7.15         |                                                                                                                   |
-| <strong>5.6</strong> |                                                                                                                   |
-| MySQL 5.6.33         | A new DB instance cannot be created. Only supports creating and restoring read replicas of existing DB instances. |
+
+| Version              | Note                                                      |
+|----------------------|-----------------------------------------------------------|
+| <strong>8.4</strong> |                                                           |
+| MySQL 8.4.6          |                                                           |
+| MySQL 8.4.5          |                                                           |
+| <strong>8.0</strong> |                                                           |
+| MySQL 8.0.43         |                                                           |
+| MySQL 8.0.42         |                                                           |
+| MySQL 8.0.41         |                                                           |
+| MySQL 8.0.40         |                                                           |
+| MySQL 8.0.36         |                                                           |
+| MySQL 8.0.35         |                                                           |
+| MySQL 8.0.34         |                                                           | 
+| MySQL 8.0.33         |                                                           |
+| MySQL 8.0.32         |                                                           | 
+| MySQL 8.0.28         |                                                           | 
+| MySQL 8.0.23         |                                                           |
+| MySQL 8.0.18         |                                                           |
+| <strong>5.7</strong> |                                                           |
+| MySQL 5.7.37         |                                                           |
+| MySQL 5.7.33         | You cannot restore a DB instance from an external backup. |
+| MySQL 5.7.26         |                                                           |
+| MySQL 5.7.19         |                                                           |
+| MySQL 5.7.15         |                                                           |
+| <strong>5.6</strong> |                                                           |
+| MySQL 5.6.33         | 지원 종료 된 버전입니다.                                            |
 
 For the DB engine, version upgrades are possible through the modification feature of console after creation.
 Details about DB engine can be found in [DB Engine](db-engine/).
