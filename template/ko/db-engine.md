@@ -32,7 +32,7 @@ MySQL의 경우 버전 번호는 버전 = X.Y.Z로 구성됩니다. NHN Cloud RD
 | MySQL 5.7.19         |                                |
 | MySQL 5.7.15         |                                |
 | <strong>5.6</strong> |                                |
-| MySQL 5.6.33         | 지원 종료 된 버전입니다.                 |
+| MySQL 5.6.33         | 지원이 종료된 버전입니다.                 |
 
 MySQL에서 버전 번호는 버전 = `X.Y.Z`로 구성됩니다. NHN Cloud의 RDS for MySQL에서는 `X.Y`의 경우 메이저 버전을, `Z`는 마이너 버전을 나타냅니다.
 
