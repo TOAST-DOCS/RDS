@@ -8,31 +8,31 @@ For MySQL, the version number consists of version = X.Y.Z. In NHN Cloud RDS term
 
 The versions specified below are available.
 
-| Version              | Note                                                                                                              |
-|----------------------|-------------------------------------------------------------------------------------------------------------------|
-| <strong>8.4</strong> |                                                                                                                   |
-| MySQL 8.4.5          |                                                                                                                   |
-| <strong>8.0</strong> |                                                                                                                   |
-| MySQL 8.0.43         |                                                                                                                   |
-| MySQL 8.0.42         |                                                                                                                   |
-| MySQL 8.0.41         |                                                                                                                   |
-| MySQL 8.0.40         |                                                                                                                   |
-| MySQL 8.0.36         |                                                                                                                   |
-| MySQL 8.0.35         |                                                                                                                   |
-| MySQL 8.0.34         |                                                                                                                   | 
-| MySQL 8.0.33         |                                                                                                                   | 
-| MySQL 8.0.32         |                                                                                                                   | 
-| MySQL 8.0.28         |                                                                                                                   | 
-| MySQL 8.0.23         |                                                                                                                   |
-| MySQL 8.0.18         |                                                                                                                   |
-| <strong>5.7</strong> |                                                                                                                   |
-| MySQL 5.7.37         |                                                                                                                   |
-| MySQL 5.7.33         | You cannot restore a DB instance from an external backup.                                                         |
-| MySQL 5.7.26         |                                                                                                                   |
-| MySQL 5.7.19         |                                                                                                                   |
-| MySQL 5.7.15         |                                                                                                                   |
-| <strong>5.6</strong> |                                                                                                                   |
-| MySQL 5.6.33         | A new DB instance cannot be created. Only supports creating and restoring read replicas of existing DB instances. |
+| Version              | Note                                                      |
+|----------------------|-----------------------------------------------------------|
+| <strong>8.4</strong> |                                                           |
+| MySQL 8.4.5          |                                                           |
+| <strong>8.0</strong> |                                                           |
+| MySQL 8.0.43         |                                                           |
+| MySQL 8.0.42         |                                                           |
+| MySQL 8.0.41         |                                                           |
+| MySQL 8.0.40         |                                                           |
+| MySQL 8.0.36         |                                                           |
+| MySQL 8.0.35         |                                                           |
+| MySQL 8.0.34         |                                                           | 
+| MySQL 8.0.33         |                                                           | 
+| MySQL 8.0.32         |                                                           | 
+| MySQL 8.0.28         |                                                           | 
+| MySQL 8.0.23         |                                                           |
+| MySQL 8.0.18         |                                                           |
+| <strong>5.7</strong> |                                                           |
+| MySQL 5.7.37         |                                                           |
+| MySQL 5.7.33         | You cannot restore a DB instance from an external backup. |
+| MySQL 5.7.26         |                                                           |
+| MySQL 5.7.19         |                                                           |
+| MySQL 5.7.15         |                                                           |
+| <strong>5.6</strong> |                                                           |
+| MySQL 5.6.33         | This version is no longer supported.                                            |
 
 In MySQL, the version number consists of version = `X.Y.Z.` In NHN Cloud's RDS for MySQL, `X.Y` represents the major version and `Z` represents the minor version.
 
@@ -60,7 +60,7 @@ MySQL 8.0 and MySQL 5.7 contain a number of incompatibilities. So if you are doi
 - No table partitions must reside in shared tablespaces, including the InnoDB system tablespace and regular tablespaces.
 
 For DB version upgrade pre-check, you can check the result in the following ways.
-- Check for `the detailed checklist for upgrading from 5.7 to 8.0`(https://static.toastoven.net/prod_rds/mysql/23.08.17/Check_5.7_to_8.0_en.xlsx)
+- Check for `the detailed checklist for upgrading from 5.7 to 8.0`(https://static-station.ninc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/23.08.17/Check_5.7_to_8.0_en.xlsx)
 - When attempting to upgrade the DB version in the console, check the result using the `DB Engine Upgrade Pre-Check` button.
 - Check the results of DB version upgrade attempts
 

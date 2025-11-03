@@ -1,10 +1,10 @@
-## Database > RDS for MySQL > API Guide
+## Database > RDS for {{engine.pascalCase}} > API Guide
 
 | Region | Endpoint |
 |--------|----------|
-| Korea (Pangyo) region | https://kr1-rds-mysql.api.nhncloudservice.com |
-| Korea (Pyeongchon) region | https://kr2-rds-mysql.api.nhncloudservice.com |
-| Japan region | https://jp1-rds-mysql.api.nhncloudservice.com |
+{{#each regions}}
+| {{this.text.en}} | {{this.endpoint}} |
+{{/each}}
 
 ## Authentication and Authorization
 
@@ -13,13 +13,13 @@ The issued token must be included in the request header along with the Appkey.
 
 | Name                | Type   | Format | Required | Description                                           |
 |---------------------|--------|--------|----|-------------------------------------------------------------|
-| X-TC-APP-KEY        | Header | String | O  | Appkey of RDS for MySQL or integrated Appkey for project |
+| X-TC-APP-KEY        | Header | String | O  | Appkey of RDS for {{engine.pascalCase}} or integrated Appkey for project |
 | X-NHN-AUTHORIZATION | Header | String | O  | Bearer type token issued with the Public API                           |
 
-In addition, the APIs you can call are limited based on the project member role. You can grant permissions separately for `RDS for MySQL ADMIN` and `RDS for MySQL VIEWER`.
+In addition, the APIs you can call are limited based on the project member role. You can grant permissions separately for `RDS for {{engine.pascalCase}} ADMIN` and `RDS for {{engine.pascalCase}} VIEWER`.
 
-* `RDS for MySQL ADMIN permission holders` can use all available features as before.
-* `RDS for MySQL MEMBER permission holders` can use read-only feature.
+* `RDS for {{engine.pascalCase}} ADMIN permission holders` can use all available features as before.
+* `RDS for {{engine.pascalCase}} MEMBER permission holders` can use read-only feature.
     * Cannot use any features aimed at DB instances or create, modify, or delete any DB instance.
     * But, notification group and user group-related features are available.
 
@@ -55,6 +55,7 @@ The API responds with "200 OK" to all API requests. For more information on the 
 
 ## DB engine type
 
+{{#if (eq engine.lowerCase "mysql")}}
 | DB engine type | Available for creation | Available for restoration from OBS |
 | -------- | -------- | ---------------- |
 | MYSQL_V5633 | X | X |
@@ -73,6 +74,17 @@ The API responds with "200 OK" to all API requests. For more information on the 
 | MYSQL_V8035 | O | O |
 | MYSQL_V8036 | O | O |
 | MYSQL_V8040 | O | O |
+{{/if}}
+{{#if (eq engine.lowerCase "mariadb")}}
+| DB engine type | Available for creation | Available for restoration from OBS |
+|-----------------|----------|------------------|
+| MARIADB_V10330  | O        | O                |
+| MARIADB_V10611  | O        | O                |
+| MARIADB_V10612  | O        | O                |
+| MARIADB_V10616  | O        | O                |
+| MARIADB_V101107 | O        | O                |
+| MARIADB_V101108 | O        | O                |
+{{/if}}
 
 * You can use the value for the dbVersion field of ENUM type.
 * Depending on the version, creation or restoration may not be possible.
@@ -89,7 +101,7 @@ GET /v4.0/project/regions
 
 | Permission Name                                     | Description         |
 |-----------------------------------------|------------|
-| RDSforMySQL:Project.Get | Query project information |
+| RDSfor{{engine.pascalCase}}:Project.Get | Query project information |
 
 #### Request
 
@@ -100,7 +112,12 @@ This API does not require a request body.
 | Name    | Type | Format | Description |
 |---------|------|--------|-------------|
 | regions | Body | Array  | Region list |
+{{#if (eq engine.lowerCase "mysql")}}
 | regions.regionCode | Body | Enum    | Region code<br/>`KR1`: Korea (Pangyo) Region<br/>`KR2`: Korea (Pyeongchon) Region<br/>`JP1`: Japan (Tokyo) Region |
+{{/if}}
+{{#if (eq engine.lowerCase "mariadb")}}
+| regions.regionCode | Body | Enum    | Region code<br/>`KR1`: Korea (Pangyo) |
+{{/if}}
 | regions.isEnabled  | Body | Boolean | Whether to enable a region                                                                 |
 
 <details><summary>Example</summary>
@@ -114,6 +131,7 @@ This API does not require a request body.
         "isSuccessful": true
     },
     "regions": [
+{{#if (eq engine.lowerCase "mysql")}}    
         {
             "regionCode": "KR1",
             "isEnabled": true
@@ -126,6 +144,13 @@ This API does not require a request body.
             "regionCode": "JP1",
             "isEnabled": true
         }
+{{/if}}
+{{#if (eq engine.lowerCase "mariadb")}}
+        {
+            "regionCode": "KR1",
+            "isEnabled": true
+        }
+{{/if}}
     ]
 }
 ```
@@ -144,7 +169,7 @@ GET /v4.0/project/members
 
 | Permission Name                                      | Description         |
 |-----------------------------------------|------------|
-| RDSforMySQL:Project.Get | Query project information |
+| RDSfor{{engine.pascalCase}}:Project.Get | Query project information |
 
 #### Request
 
@@ -198,7 +223,7 @@ GET /v4.0/db-flavors
 
 | Permission Name                                       | Description               |
 |-------------------------------------------|------------------|
-| RDSforMySQL:DbFlavor.List | List DB Instance Specifications |
+| RDSfor{{engine.pascalCase}}:DbFlavor.List | List DB Instance Specifications |
 
 #### Request
 
@@ -252,7 +277,7 @@ GET /v4.0/network/subnets
 
 | Permission Name                                     | Description        |
 |------------------------------------------|-----------|
-| RDSforMySQL:Network.List | List subnets |
+| RDSfor{{engine.pascalCase}}:Network.List | List subnets |
 
 #### Request
 
@@ -308,7 +333,7 @@ GET /v4.0/db-versions
 
 | Permission Name                                        | Description          |
 |--------------------------------------------|-------------|
-| RDSforMySQL:DbVersion.List | List DB Engines |
+| RDSfor{{engine.pascalCase}}:DbVersion.List | List DB Engines |
 
 #### Request
 
@@ -335,8 +360,8 @@ This API does not require a request body.
     },
     "dbVersions": [
         {
-            "dbVersion": "MYSQL_V8028",
-            "dbVersionName": "MySQL 8.0.28",
+            "dbVersion": "{{engine.sampleDbVersionCode}}",
+            "dbVersionName": "{{engine.sampleDbVersionName}}",
             "restorableFromObs": true
         }
     ]
@@ -360,7 +385,7 @@ GET /v4.0/storage-types
 
 | Permission Name                                      | Description                |
 |------------------------------------------|-------------------|
-| RDSforMySQL:Storage.List | List data storage types |
+| RDSfor{{engine.pascalCase}}:Storage.List | List data storage types |
 
 #### Request
 
@@ -423,7 +448,7 @@ GET /v4.0/jobs/{jobId}
 
 | Permission Name                                 | Description          |
 |-------------------------------------|-------------|
-| RDSforMySQL:Job.Get | List Task Details |
+| RDSfor{{engine.pascalCase}}:Job.Get | List Task Details |
 
 #### Request
 
@@ -485,7 +510,7 @@ GET /v4.0/db-instance-groups
 
 | Permission Name                                              | Description               |
 |--------------------------------------------------|------------------|
-| RDSforMySQL:DbInstanceGroup.List | List DB Instances |
+| RDSfor{{engine.pascalCase}}:DbInstanceGroup.List | List DB Instances |
 
 #### Request
 
@@ -537,7 +562,7 @@ GET /v4.0/db-instance-groups/{dbInstanceGroupId}
 
 | Permission Name                                             | Description               |
 |-------------------------------------------------|------------------|
-| RDSforMySQL:DbInstanceGroup.Get | List DB Instance Group Details |
+| RDSfor{{engine.pascalCase}}:DbInstanceGroup.Get | List DB Instance Group Details |
 
 
 #### Request
@@ -647,7 +672,7 @@ GET /v4.0/db-instances
 
 | Permission Name                                         | Description            |
 |---------------------------------------------|---------------|
-| RDSforMySQL:DbInstance.List | List DB instances |
+| RDSfor{{engine.pascalCase}}:DbInstance.List | List DB instances |
 
 #### Request
 
@@ -686,7 +711,7 @@ This API does not require a request body.
             "dbInstanceGroupId": "51c7d080-ff36-4025-84b1-9d9d0b4fe9e0",
             "dbInstanceName": "db-instance",
             "description": null,
-            "dbVersion": "MYSQL_V8028",
+            "dbVersion": "{{engine.sampleDbVersionCode}}",
             "dbPort": 10000,
             "dbInstanceType": "MASTER",
             "dbInstanceStatus": "AVAILABLE",
@@ -713,7 +738,7 @@ GET /v4.0/db-instances/{dbInstanceId}
 
 | Permission Name                                        | Description            |
 |--------------------------------------------|---------------|
-| RDSforMySQL:DbInstance.Get | List DB Instance Details |
+| RDSfor{{engine.pascalCase}}:DbInstance.Get | List DB Instance Details |
 
 #### Request
 
@@ -763,7 +788,7 @@ This API does not require a request body.
     "dbInstanceGroupId": "51c7d080-ff36-4025-84b1-9d9d0b4fe9e0",
     "dbInstanceName": "db-instance",
     "description": null,
-    "dbVersion": "MYSQL_V8028",
+    "dbVersion": "{{engine.sampleDbVersionCode}}",
     "dbPort": 10000,
     "dbInstanceType": "MASTER",
     "dbInstanceStatus": "AVAILABLE",
@@ -798,7 +823,7 @@ POST /v4.0/db-instances
 
 | Permission Name                                           | Description           |
 |-----------------------------------------------|--------------|
-| RDSforMySQL:DbInstance.Create | Create DB Instance |
+| RDSfor{{engine.pascalCase}}:DbInstance.Create | Create DB Instance |
 
 #### Request
 
@@ -820,8 +845,10 @@ POST /v4.0/db-instances
 | useDefaultNotification | Body | Boolean | X        | Whether to use default notification<br/>Default: `false`                                                              |
 | useDeletionProtection  | Body | Boolean | X        | Whether to protect against deletion<br/>Default: `false`                                                              |
 | useSlowQueryAnalysis   | Body | Boolean | X        | Whether to analyze slow queries<br/>- Default: `true`                                                                 |
+{{#if (eq engine.lowerCase "mysql")}}
 | authenticationPlugin                     | Body | Enum    | X        | Authentication Plugin<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password                                                                                                                                     |
 | tlsOption                                | Body | Enum    | X        | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                                                                                                                                                              |
+{{/if}}
 | network                                  | Body | Object  | O        | Network information objects                                                                                                                                                                                                                                               |
 | network.subnetId                         | Body | UUID    | O        | Subnet identifier                                                                                                                                                                                                                                                         |
 | network.usePublicAccess                  | Body | Boolean | X        | External access is available or not<br/>Default: `false`                                                                                                                                                                                                                  |
@@ -838,7 +865,9 @@ POST /v4.0/db-instances
 | backup.backupPeriod                      | Body | Number  | O        | Backup retention period<br/>- Minimum value: `0`<br/>- Maximum value: `730`                                                                                                                                                                                               |
 | backup.ftwrlWaitTimeout                  | Body | Number  | X        | Query latency (sec)<br/>Default: `6`<br/>- Minimum value: `0`<br/>- Maximum value: `21600`                                                                                                                                                                                |
 | backup.backupRetryCount                  | Body | Number  | X        | Number of backup retries<br/>Default: `6`<br/>- Minimum value: `0`<br/>- Maximum value: `10`                                                                                                                                                                              |
+{{#if (eq engine.lowerCase "mysql")}}
 | backup.replicationRegion                 | Body | Enum    | X        | Backup replication region<br />- `KR1`: Korea (Pangyo) Region<br/>- `KR2`: Korea (Pyeongchon) Region<br/>- `JP1`: Japan (Tokyo) Region                                                                                                                                    |
+{{/if}}
 | backup.useBackupLock                     | Body | Boolean | X        | Whether to use table lock<br/>Default: `true`                                                                                                                                                                                                                             |
 | backup.backupSchedules                   | Body | Array   | O        | Scheduled auto backup list                                                                                                                                                                                                                                                |
 | backup.backupSchedules.backupWndBgnTime  | Body | String  | O        | Backup started time<br/>- Example: `00:00:00`                                                                                                                                                                                                                             |
@@ -852,7 +881,7 @@ POST /v4.0/db-instances
     "dbInstanceName": "db-instance",
     "description": "description",
     "dbFlavorId": "71f69bf9-3c01-4c1a-b135-bb75e93f6268",
-    "dbVersion": "MYSQL_V8028",
+    "dbVersion": "{{engine.sampleDbVersionCode}}",
     "dbPort": 10000,
     "dbUserName": "db-user",
     "dbPassword": "password",
@@ -902,7 +931,7 @@ PUT /v4.0/db-instances/{dbInstanceId}
 
 | Permission Name                               | Description  |
 |-----------------------------------------------|--------------|
-| RDSforMySQL:DbInstance.Modify | Modify DB Instance |
+| RDSfor{{engine.pascalCase}}:DbInstance.Modify | Modify DB Instance |
 
 #### Request
 
@@ -913,8 +942,10 @@ PUT /v4.0/db-instances/{dbInstanceId}
 | dbInstanceCandidateName| Body | String  | X        | Candidate name to identify DB instances                                                                               |
 | description        | Body | String  | X        | Additional information on DB instances                                                                            |
 | dbPort             | Body | Number  | X        | DB port<br/>- Minimum value: `3306`<br/>- Maximum value: `43306`                                                  |
+{{#if (eq engine.lowerCase "mysql")}}
 | dbVersion          | Body | Enum    | X        | DB engine type                                                                                                    |
 | useDummy           | Body | Boolean | X        | Whether to use dummies when upgrading the DB version of a single DB instance<br/>Default: `false`                 |
+{{/if}}
 | useSlowQueryAnalysis | Body | Boolean  | X | Whether to analyze slow queries |
 | dbFlavorId         | Body | UUID    | X        | Identifier of DB instance specifications                                                                          |
 | parameterGroupId   | Body | UUID    | X        | Parameter group identifier                                                                                        |
@@ -956,7 +987,7 @@ DELETE /v4.0/db-instances/{dbInstanceId}
 
 | Permission Name                                           | Description           |
 |-----------------------------------------------|--------------|
-| RDSforMySQL:DbInstance.Delete | Delete DB instance |
+| RDSfor{{engine.pascalCase}}:DbInstance.Delete | Delete DB instance |
 
 #### Request
 
@@ -984,7 +1015,7 @@ POST /v4.0/db-instances/{dbInstanceId}/restart
 
 | Permission Name                                            | Description            |
 |------------------------------------------------|---------------|
-| RDSforMySQL:DbInstance.Restart | Restart DB Instance |
+| RDSfor{{engine.pascalCase}}:DbInstance.Restart | Restart DB Instance |
 
 #### Request
 
@@ -1010,7 +1041,7 @@ POST /v4.0/db-instances/{dbInstanceId}/force-restart
 
 | Permission Name                                                 | Description               |
 |-----------------------------------------------------|------------------|
-| RDSforMySQL:DbInstance.ForceRestart | Force Restart DB instance |
+| RDSfor{{engine.pascalCase}}:DbInstance.ForceRestart | Force Restart DB instance |
 
 #### Request
 
@@ -1052,7 +1083,7 @@ POST /v4.0/db-instances/{dbInstanceId}/start
 
 | Permission Name                              | Description           |
 |----------------------------------------------|--------------|
-| RDSforMySQL:DbInstance.Start | Start DB Instance |
+| RDSfor{{engine.pascalCase}}:DbInstance.Start | Start DB Instance |
 
 #### Request
 
@@ -1080,7 +1111,7 @@ POST /v4.0/db-instances/{dbInstanceId}/stop
 
 | Permission Name                                         | Description            |
 |---------------------------------------------|--------------|
-| RDSforMySQL:DbInstance.Stop | Stop DB Instance |
+| RDSfor{{engine.pascalCase}}:DbInstance.Stop | Stop DB Instance |
 
 #### Request
 
@@ -1108,7 +1139,7 @@ POST /v4.0/db-instances/{dbInstanceId}/replicate
 
 | Permission Name                                  | Description           |
 |--------------------------------------------------|--------------|
-| RDSforMySQL:DbInstance.Replicate | Replicate DB Instance |
+| RDSfor{{engine.pascalCase}}:DbInstance.Replicate | Replicate DB Instance |
 
 #### Request
 
@@ -1141,7 +1172,9 @@ POST /v4.0/db-instances/{dbInstanceId}/replicate
 | backup.backupPeriod                          | Body | Number  | X        | Backup retention period<br/>- Default: Original DB instance value<br/>- Minimum value: `0`<br/>- Maximum value: `730`   |
 | backup.ftwrlWaitTimeout                      | Body | Number  | X        | Query latency (sec)<br/>- Default: Original DB instance value<br/>- Minimum value: `0`<br/>- Maximum value: `21600`     |
 | backup.backupRetryCount                      | Body | Number  | X        | Number of backup retries<br/>- Default: Original DB instance value<br/>- Minimum value: `0`<br/>- Maximum value: `10`   |
+{{#if (eq engine.lowerCase "mysql")}}
 | backup.replicationRegion                 | Body | Enum    | X        | Backup replication region<br />- `KR1`: Korea (Pangyo) Region<br/>- `KR2`: Korea (Pyeongchon) Region<br/>- `JP1`: Japan (Tokyo) Region<br/>- Default: Original DB instance value                                                                                                                                    |
+{{/if}}
 | backup.useBackupLock                     | Body | Boolean | X        | Whether to use table lock<br/>- Default: Original DB instance value                                                                                                                                                                                                                                                 |
 | backup.backupSchedules                   | Body | Array   | X        | Scheduled auto backup list                                                                                                                                                                                                                                                                                          |
 | backup.backupSchedules.backupWndBgnTime  | Body | String  | X        | Backup started time<br/>- Example: `00:00:00`<br/>- Default: Original DB instance value                                                                                                                                                                                                                             |
@@ -1185,7 +1218,7 @@ POST /v4.0/db-instances/{dbInstanceId}/promote
 
 | Permission Name                                            | Description           |
 |------------------------------------------------|--------------|
-| RDSforMySQL:DbInstance.Promote | Promote DB Instance |
+| RDSfor{{engine.pascalCase}}:DbInstance.Promote | Promote DB Instance |
 
 #### Request
 
@@ -1213,7 +1246,7 @@ POST /v4.0/db-instances/{dbInstanceId}/rebuild
 
 | Permission Name                                            | Description            |
 |------------------------------------------------|---------------|
-| RDSforMySQL:DbInstance.Rebuild | Rebuild DB Instance |
+| RDSfor{{engine.pascalCase}}:DbInstance.Rebuild | Rebuild DB Instance |
 
 #### Request
 
@@ -1241,7 +1274,7 @@ GET /v4.0/db-instances/{dbInstanceId}/restoration-info
 
 | Permission Name                                        | Description            |
 |--------------------------------------------|---------------|
-| RDSforMySQL:DbInstance.Get | List DB Instance Details |
+| RDSfor{{engine.pascalCase}}:DbInstance.Get | List DB Instance Details |
 
 #### Request
 
@@ -1295,7 +1328,7 @@ GET /v4.0/db-instances/{dbInstanceId}/restoration-info
 				"backupStatus": "COMPLETED",
 				"dbInstanceId": "dba1be25-9429-4589-9716-7fb6daad7cb9",
 				"dbInstanceName": "original-db-instance-name",
-				"dbVersion": "MYSQL_V8028",
+				"dbVersion": "{{engine.sampleDbVersionCode}}",
 				"backupType": "MANUAL",
 				"backupSize": 8299904,
 				"useBackupLock": true,
@@ -1328,7 +1361,7 @@ GET /v4.0/db-instances/{dbInstanceId}/restoration-info/last-query
 
 | Permission Name                                        | Description            |
 |--------------------------------------------|---------------|
-| RDSforMySQL:DbInstance.Get | List DB Instance Details |
+| RDSfor{{engine.pascalCase}}:DbInstance.Get | List DB Instance Details |
 
 #### Common Request
 
@@ -1388,7 +1421,7 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 
 | Permission Name                                            | Description           |
 |------------------------------------------------|--------------|
-| RDSforMySQL:DbInstance.Restore | Restore DB Instance |
+| RDSfor{{engine.pascalCase}}:DbInstance.Restore | Restore DB Instance |
 
 #### Common Request
 
@@ -1426,7 +1459,9 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 | backup.backupPeriod                                 | Body | Number  | O        | Backup retention period<br><ul><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul>                                                                                                                                                                                                                 |
 | backup.ftwrlWaitTimeout                             | Body | Number  | X        | Query latency (sec)<br><ul><li>Default: `6`</li><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul>                                                                                                                                                                                                |
 | backup.backupRetryCount                             | Body | Number  | X        | Number of backup retries<br><ul><li>Default: `0`</li><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul>                                                                                                                                                                                           |
+{{#if (eq engine.lowerCase "mysql")}}    
 | backup.replicationRegion                            | Body | Enum    | X        | Backup replication region<br><ul><li>- `KR1`: Korea (Pangyo) Region</li><li>- `KR2`: Korea (Pyeongchon) Region</li><li>- `JP1`: Japan (Tokyo) Region</li></ul>                                                                                                                                                   |
+{{/if}}
 | backup.useBackupLock                                | Body | Boolean | X        | Whether to use table lock<br><ul><li>Default: `true`</li></ul>                                                                                                                                                                                                                                                   |
 | backup.backupSchedules                              | Body | Array   | O        | Scheduled auto backup list                                                                                                                                                                                                                                                                                       |
 | backup.backupSchedules.backupWndBgnTime             | Body | String  | O        | Backup started time<br><ul><li>- Example: `1.1.1.%`</li></ul>                                                                                                                                                                                                                                                    |
@@ -1609,7 +1644,7 @@ POST /v4.0/db-instances/restore-from-obs
 
 | Permission Name                                           | Description           |
 |-------------------------------------------------------|-------------------------|
-| RDSforMySQL:DbInstance.RestoreFromObs | Restore a DB instance from object storage |
+| RDSfor{{engine.pascalCase}}:DbInstance.RestoreFromObs | Restore a DB instance from object storage |
 
 #### Request
 
@@ -1651,7 +1686,9 @@ POST /v4.0/db-instances/restore-from-obs
 | backup.backupPeriod                                 | Body | Number  | O        | Backup retention period<br><ul><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul>                                               |
 | backup.ftwrlWaitTimeout                             | Body | Number  | X        | Query latency (sec)<br><ul><li>Default: `6`</li><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul>                              |
 | backup.backupRetryCount                             | Body | Number  | X        | Number of backup retries<br><ul><li>Default: `0`</li><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul>                         |
+{{#if (eq engine.lowerCase "mysql")}}    
 | backup.replicationRegion                            | Body | Enum    | X        | Backup replication region<br><ul><li>- `KR1`: Korea (Pangyo) Region</li><li>- `KR2`: Korea (Pyeongchon) Region</li><li>- `JP1`: Japan (Tokyo) Region</li></ul>                                                                                                                                                |
+{{/if}}
 | backup.useBackupLock                                | Body | Boolean | X        | Whether to use table lock<br><ul><li>Default: `true`</li></ul>                                                                                                                                                                                                                                                |
 | backup.backupSchedules                              | Body | Array   | O        | Scheduled auto backup list                                                                                                                                                                                                                                                                                    |
 | backup.backupSchedules.backupWndBgnTime             | Body | String  | O        | Backup started time<br><ul><li>- Example: `1.1.1.%`</li></ul>                                                                                                                                                                                                                                                 |
@@ -1668,7 +1705,7 @@ POST /v4.0/db-instances/restore-from-obs
     "description": "description",
     "dbFlavorId": "71f69bf9-3c01-4c1a-b135-bb75e93f6268",
     "dbPort": 10000,
-    "dbVersion": "MYSQL_V8028",
+    "dbVersion": "{{engine.sampleDbVersionCode}}",
     "dbUserName": "db-user",
     "dbPassword": "password",
     "parameterGroupId": "488bf4f5-d8f7-459b-ace6-529b606c8570",
@@ -1726,7 +1763,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/deletion-protection
 
 | Permission Name                                           | Description           |
 |-----------------------------------------------|--------------|
-| RDSforMySQL:DbInstance.Modify | Modify DB Instance |
+| RDSfor{{engine.pascalCase}}:DbInstance.Modify | Modify DB Instance |
 
 #### Request
 
@@ -1767,7 +1804,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/high-availability
 
 | Permission Name                                     | Description        |
 |-----------------------------------------------------|-----------|
-| RDSforMySQL:HighAvailability.Modify | Modify high availability |
+| RDSfor{{engine.pascalCase}}:HighAvailability.Modify | Modify high availability |
 
 #### Request
 
@@ -1795,7 +1832,7 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/resume
 
 | Permission Name                                     | Description           |
 |-----------------------------------------------------|--------------|
-| RDSforMySQL:HighAvailability.Resume | Restart high availability |
+| RDSfor{{engine.pascalCase}}:HighAvailability.Resume | Restart high availability |
 
 #### Request
 
@@ -1823,7 +1860,7 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/pause
 
 | Permission Name                                    | Description           |
 |----------------------------------------------------|--------------|
-| RDSforMySQL:HighAvailability.Pause | Pause high availability |
+| RDSfor{{engine.pascalCase}}:HighAvailability.Pause | Pause high availability |
 
 #### Request
 
@@ -1851,7 +1888,7 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/repair
 
 | Permission Name                                     | Description           |
 |-----------------------------------------------------|-----------|
-| RDSforMySQL:HighAvailability.Repair | Recover high availability |
+| RDSfor{{engine.pascalCase}}:HighAvailability.Repair | Recover high availability |
 
 #### Request
 
@@ -1879,7 +1916,7 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/split
 
 | Permission Name                                    | Description           |
 |----------------------------------------------------|-----------|
-| RDSforMySQL:HighAvailability.Split | Separate high availability |
+| RDSfor{{engine.pascalCase}}:HighAvailability.Split | Separate high availability |
 
 #### Request
 
@@ -1907,7 +1944,7 @@ GET /v4.0/db-instances/{dbInstanceId}/storage-info
 
 | Permission Name                            | Description           |
 |--------------------------------------------|---------------|
-| RDSforMySQL:DbInstance.Get | List DB Instance Details |
+| RDSfor{{engine.pascalCase}}:DbInstance.Get | List DB Instance Details |
 
 #### Request
 
@@ -1968,7 +2005,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/storage-info
 
 | Permission Name                                           | Description           |
 |-----------------------------------------------|--------------|
-| RDSforMySQL:DbInstance.Modify | Modify DB Instance |
+| RDSfor{{engine.pascalCase}}:DbInstance.Modify | Modify DB Instance |
 
 #### Request
 
@@ -2001,7 +2038,7 @@ GET /v4.0/db-instances/{dbInstanceId}/backup-info
 
 | Permission Name                                        | Description            |
 |--------------------------------------------|---------------|
-| RDSforMySQL:DbInstance.Get | List DB Instance Details |
+| RDSfor{{engine.pascalCase}}:DbInstance.Get | List DB Instance Details |
 
 #### Request
 
@@ -2064,7 +2101,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/backup-info
 
 | Permission Name                                           | Description           |
 |-----------------------------------------------|--------------|
-| RDSforMySQL:DbInstance.Modify | Modify DB Instance |
+| RDSfor{{engine.pascalCase}}:DbInstance.Modify | Modify DB Instance |
 
 #### Request
 
@@ -2074,7 +2111,9 @@ PUT /v4.0/db-instances/{dbInstanceId}/backup-info
 | backupPeriod                      | Body | Number  | X        | Backup retention period<br/>- Minimum value: `0`<br/>- Maximum value: `730`                                                                                                                                                                                               |
 | ftwrlWaitTimeout                  | Body | Number  | X        | Query latency (sec)<br/>- Minimum value: `0`<br/>- Maximum value: `21600`                                                                                                                                                                                                 |
 | backupRetryCount                  | Body | Number  | X        | Number of backup retries<br/>- Minimum value: `0`<br/>- Maximum value: `10`                                                                                                                                                                                               |
+{{#if (eq engine.lowerCase "mysql")}}
 | replicationRegion                 | Body | Enum    | X        | Backup replication region<br />- `KR1`: Korea (Pangyo) Region<br/>- `KR2`: Korea (Pyeongchon) Region<br/>- `JP1`: Japan (Tokyo) Region                                                                                                                                    |
+{{/if}}
 | useBackupLock                     | Body | Boolean | X        | Whether to use table lock                                                                                                                                                                                                                                                 |
 | backupSchedules                   | Body | Array   | X        | Scheduled auto backup list                                                                                                                                                                                                                                                |
 | backupSchedules.backupWndBgnTime  | Body | String  | O        | Backup started time<br/>- Example: `00:00:00`                                                                                                                                                                                                                             |
@@ -2117,7 +2156,7 @@ GET /v4.0/db-instances/{dbInstanceId}/network-info
 
 | Permission Name                                       | Description            |
 |--------------------------------------------|---------------|
-| RDSforMySQL:DbInstance.Get | List DB Instance Details |
+| RDSfor{{engine.pascalCase}}:DbInstance.Get | List DB Instance Details |
 
 #### Request
 
@@ -2159,7 +2198,7 @@ This API does not require a request body.
     },
     "endPoints": [
         {
-            "domain": "ea548a78-d85f-43b4-8ddf-c88d999b9905.internal.kr1.mysql.rds.nhncloudservice.com",
+            "domain": "ea548a78-d85f-43b4-8ddf-c88d999b9905.internal.kr1.{{engine.lowerCase}}.rds.nhncloudservice.com",
             "ipAddress": "192.168.0.2",
             "endPointType": "INTERNAL"
         }
@@ -2182,7 +2221,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/network-info
 
 | Permission Name                               | Description           |
 |-----------------------------------------------|--------------|
-| RDSforMySQL:DbInstance.Modify | Modify DB Instance |
+| RDSfor{{engine.pascalCase}}:DbInstance.Modify | Modify DB Instance |
 
 #### Request
 
@@ -2209,7 +2248,7 @@ GET /v4.0/db-instances/{dbInstanceId}/db-users
 
 | Permission Name                                 | Description                  |
 |-------------------------------------------------|---------------------|
-| RDSforMySQL:DbInstanceUser.List | List of users in DB instance |
+| RDSfor{{engine.pascalCase}}:DbInstanceUser.List | List of users in DB instance |
 
 #### Request
 
@@ -2229,8 +2268,10 @@ This API does not require a request body.
 | dbUsers.host                 | Body | String   | DB user account host name                                                                                                                                                |
 | dbUsers.authorityType        | Body | Enum     | DB user permission type<br/>- `READ`: Permission to execute SELECT query<br/>- `CRUD`: Permission to execute DML query<br/>- `DDL`: Permission to execute DDL query<br/> |
 | dbUsers.dbUserStatus         | Body | Enum     | DB user current status<br/>- `STABLE`: Created<br/>(CREATING: Creating,<br/>- `UPDATING`: Modifying<br/>DELETING: Deleting,<br/>- `DELETED`: Deleted                     |
+{{#if (eq engine.lowerCase "mysql")}}
 | dbUsers.authenticationPlugin | Body | Enum     | Authentication Plugin<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password                                    |
 | dbUsers.tlsOption            | Body | Enum     | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                                                             |
+{{/if}}
 | dbUsers.createdYmdt          | Body | DateTime | Created date and time (YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                                       |
 | dbUsers.updatedYmdt          | Body | DateTime | Modified date and time (YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                                      |
 
@@ -2251,8 +2292,10 @@ This API does not require a request body.
             "host": "%",
             "authorityType": "DDL",
             "dbUserStatus": "STABLE",
+{{#if (eq engine.lowerCase "mysql")}}
             "authenticationPlugin": "NATIVE",
             "tlsOption": "NONE",
+{{/if}}
             "createdYmdt": "2023-03-17T14:02:29+09:00",
             "updatedYmdt": "2023-03-17T14:02:31+09:00"
         }
@@ -2276,7 +2319,7 @@ POST /v4.0/db-instances/{dbInstanceId}/db-users
 
 | Permission Name                                           | Description           |
 |---------------------------------------------------|--------------------|
-| RDSforMySQL:DbInstanceUser.Create | Create users in DB instance |
+| RDSfor{{engine.pascalCase}}:DbInstanceUser.Create | Create users in DB instance |
 
 #### Request
 
@@ -2287,11 +2330,13 @@ POST /v4.0/db-instances/{dbInstanceId}/db-users
 | dbPassword           | Body | String | O        | DB user account password<br/>- Minimum length: `4`<br/>- Maximum length: `16`                                                                                            |
 | host                 | Body | String | O        | DB user account host name<br/>- Example: `1.1.1.%`                                                                                                                       |
 | authorityType        | Body | Enum   | O        | DB user permission type<br/>- `READ`: Permission to execute SELECT query<br/>- `CRUD`: Permission to execute DML query<br/>- `DDL`: Permission to execute DDL query<br/> |
+{{#if (eq engine.lowerCase "mysql")}}
 | authenticationPlugin | Body | Enum   | X        | Authentication Plugin<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password                                    |
 | tlsOption            | Body | Enum   | X        | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                                                             |
 
 > [Caution]
 > Only DB instances whose `supportAuthenticationPlugin` value is true can set the values of `authenticationPlugin` and `tlsOption`.
+{{/if}}
 
 <details><summary>Example</summary>
 <p>
@@ -2301,9 +2346,14 @@ POST /v4.0/db-instances/{dbInstanceId}/db-users
     "dbUserName": "db-user",
     "dbPassword": "password",
     "host": "1.1.1.%",
+{{#if (eq engine.lowerCase "mysql")}}
     "authorityType": "CRUD",
     "authenticationPlugin": "NATIVE",
     "tlsOption": "NONE"
+{{/if}}
+{{#if (eq engine.lowerCase "mariadb")}}
+    "authorityType": "CRUD"
+{{/if}}
 }
 ```
 
@@ -2328,7 +2378,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 
 | Permission Name                                           | Description           |
 |---------------------------------------------------|--------------------|
-| RDSforMySQL:DbInstanceUser.Modify | Modify users in DB instance |
+| RDSfor{{engine.pascalCase}}:DbInstanceUser.Modify | Modify users in DB instance |
 
 #### Request
 
@@ -2338,12 +2388,14 @@ PUT /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 | dbUserId             | URL  | UUID   | O        | DB user identifier                                                                                                                                                       |
 | dbPassword           | Body | String | X        | DB user account password<br/>- Minimum length: `4`<br/>- Maximum length: `16`                                                                                            |
 | authorityType        | Body | Enum   | X        | DB user permission type<br/>- `READ`: Permission to execute SELECT query<br/>- `CRUD`: Permission to execute DML query<br/>- `DDL`: Permission to execute DDL query<br/> |
+{{#if (eq engine.lowerCase "mysql")}}
 | authenticationPlugin | Body | Enum   | X        | Authentication Plugin<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password                                    |
 | tlsOption            | Body | Enum   | X        | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                                                             |
 
 > [Caution]
 > Only DB instances whose `supportAuthenticationPlugin` value is true can modify the values of `authenticationPlugin` and `tlsOption`.
 > The value of`authenticationPlugin`must be modified at the same time `as dbPassword`.
+{{/if}}
 
 <details><summary>Example</summary>
 <p>
@@ -2375,7 +2427,7 @@ DELETE /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 
 | Permission Name                                           | Description           |
 |---------------------------------------------------|--------------------|
-| RDSforMySQL:DbInstanceUser.Delete | Delete users in DB instance |
+| RDSfor{{engine.pascalCase}}:DbInstanceUser.Delete | Delete users in DB instance |
 
 #### Request
 
@@ -2404,7 +2456,7 @@ GET /v4.0/db-instances/{dbInstanceId}/db-schemas
 
 | Permission Name                                           | Description           |
 |---------------------------------------------------|---------------------|
-| RDSforMySQL:DbInstanceSchema.List | List of schemas in DB instance |
+| RDSfor{{engine.pascalCase}}:DbInstanceSchema.List | List of schemas in DB instance |
 
 #### Request
 
@@ -2460,7 +2512,7 @@ POST /v4.0/db-instances/{dbInstanceId}/db-schemas
 
 | Permission Name                                           | Description           |
 |-----------------------------------------------------|--------------------|
-| RDSforMySQL:DbInstanceSchema.Create | Create schemas in DB instance |
+| RDSfor{{engine.pascalCase}}:DbInstanceSchema.Create | Create schemas in DB instance |
 
 #### Request
 
@@ -2487,7 +2539,7 @@ DELETE /v4.0/db-instances/{dbInstanceId}/db-schemas/{dbSchemaId}
 
 | Permission Name                                           | Description           |
 |-----------------------------------------------------|--------------------|
-| RDSforMySQL:DbInstanceSchema.Delete | Delete schemas in DB instance |
+| RDSfor{{engine.pascalCase}}:DbInstanceSchema.Delete | Delete schemas in DB instance |
 
 #### Request
 
@@ -2516,7 +2568,7 @@ GET /v4.0/db-instances/{dbInstanceId}/log-files
 
 | Permission Name                                           | Description           |
 |------------------------------------------------|-----------------------|
-| RDSforMySQL:DbInstanceLog.List | List of log files in DB instance |
+| RDSfor{{engine.pascalCase}}:DbInstanceLog.List | List of log files in DB instance |
 
 #### Request
 
@@ -2574,7 +2626,7 @@ POST /v4.0/db-instances/{dbInstanceId}/log-files/export
 
 | Permission Name                                           | Description           |
 |--------------------------------------------------|----------------------|
-| RDSforMySQL:DbInstanceLog.Export | Export log files in DB instance |
+| RDSfor{{engine.pascalCase}}:DbInstanceLog.Export | Export log files in DB instance |
 
 #### Request
 
@@ -2635,7 +2687,7 @@ GET /v4.0/backups
 
 | Permission Name                                           | Description           |
 |-----------------------------------------|----------|
-| RDSforMySQL:Backup.List | Retrieve Backup List |
+| RDSfor{{engine.pascalCase}}:Backup.List | Retrieve Backup List |
 
 #### Request
 
@@ -2660,7 +2712,9 @@ This API does not require a request body.
 | backups.backupStatus | Body | Enum     | Backup current status                               |
 | backups.dbInstanceId | Body | UUID     | Original DB instance identifier                     |
 | backups.dbVersion    | Body | Enum     | DB engine type                                      |
+{{#if (eq engine.lowerCase "mysql")}}
 | backups.utilVersion  | Body | String   | Version of the xtrabackup utility used for backup   |
+{{/if}}
 | backups.backupType   | Body | Enum     | Backup type                                         |
 | backups.backupSize   | Body | Number   | Backup size (Byte)                                  |
 | createdYmdt          | Body | DateTime | Created date and time (YYYY-MM-DDThh:mm:ss.SSSTZD)  |
@@ -2683,8 +2737,10 @@ This API does not require a request body.
             "backupName": "backup",
             "backupStatus": "COMPLETED",
             "dbInstanceId": "142e6ccc-3bfb-4e1e-84f7-38861284fafd",
-            "dbVersion": "MYSQL_V8028",
+            "dbVersion": "{{engine.sampleDbVersionCode}}",
+{{#if (eq engine.lowerCase "mysql")}}    
             "utilVersion": "8.0.28",
+{{/if}}
             "backupType": "AUTO",
             "backupSize": 4996786,
             "createdYmdt": "2023-02-21T00:35:00+09:00",
@@ -2709,7 +2765,7 @@ POST /v4.0/backups
 
 | Permission Name                                           | Description           |
 |-------------------------------------------|---------|
-| RDSforMySQL:Backup.Create | Create backup |
+| RDSfor{{engine.pascalCase}}:Backup.Create | Create backup |
 
 #### Common Request
 
@@ -2779,7 +2835,7 @@ POST /v4.0/backups/{backupId}/export
 
 | Permission Name                                           | Description           |
 |-------------------------------------------|---------|
-| RDSforMySQL:Backup.Export | Export backup |
+| RDSfor{{engine.pascalCase}}:Backup.Export | Export backup |
 
 #### Request
 
@@ -2826,7 +2882,7 @@ POST /v4.0/backups/{backupId}/restore
 
 | Permission Name                                           | Description           |
 |--------------------------------------------|---------|
-| RDSforMySQL:Backup.Restore | Restore backup |
+| RDSfor{{engine.pascalCase}}:Backup.Restore | Restore backup |
 
 #### Request
 
@@ -2862,7 +2918,9 @@ POST /v4.0/backups/{backupId}/restore
 | backup.backupPeriod                          | Body | Number  | O        | Backup retention period<br/>- Minimum value: `0`<br/>- Maximum value: `730`                                           |
 | backup.ftwrlWaitTimeout                      | Body | Number  | X        | Query latency (sec)<br/>Default: `6`<br/>- Minimum value: `0`<br/>- Maximum value: `21600`                            |
 | backup.backupRetryCount                      | Body | Number  | X        | Number of backup retries<br/>Default: `6`<br/>- Minimum value: `0`<br/>- Maximum value: `10`                          |
+{{#if (eq engine.lowerCase "mysql")}}
 | backup.replicationRegion                 | Body | Enum    | X        | Backup replication region<br />- `KR1`: Korea (Pangyo) Region<br/>- `KR2`: Korea (Pyeongchon) Region<br/>- `JP1`: Japan (Tokyo) Region                                                                                                                                    |
+{{/if}}
 | backup.useBackupLock                     | Body | Boolean | X        | Whether to use table lock<br/>Default: `true`                                                                                                                                                                                                                             |
 | backup.backupSchedules                   | Body | Array   | O        | Scheduled auto backup list                                                                                                                                                                                                                                                |
 | backup.backupSchedules.backupWndBgnTime  | Body | String  | O        | Backup started time<br/>- Example: `00:00:00`                                                                                                                                                                                                                             |
@@ -2919,7 +2977,7 @@ DELETE /v4.0/backups/{backupId}
 
 | Permission Name                                           | Description           |
 |-------------------------------------------|---------|
-| RDSforMySQL:Backup.Delete | Delete backup |
+| RDSfor{{engine.pascalCase}}:Backup.Delete | Delete backup |
 
 #### Request
 
@@ -2958,7 +3016,7 @@ GET /v4.0/db-security-groups
 
 | Permission Name                                           | Description           |
 |--------------------------------------------------|----------------|
-| RDSforMySQL:DbSecurityGroup.List | List DB security groups |
+| RDSfor{{engine.pascalCase}}:DbSecurityGroup.List | List DB security groups |
 
 #### Request
 
@@ -3014,7 +3072,7 @@ GET /v4.0/db-security-groups/{dbSecurityGroupId}
 
 | Permission Name                                           | Description           |
 |-------------------------------------------------|----------------|
-| RDSforMySQL:DbSecurityGroup.Get | List DB security group details
+| RDSfor{{engine.pascalCase}}:DbSecurityGroup.Get | List DB security group details
  |
 
 #### Request
@@ -3100,7 +3158,7 @@ POST /v4.0/db-security-groups
 
 | Permission Name                                           | Description           |
 |----------------------------------------------------|---------------|
-| RDSforMySQL:DbSecurityGroup.Create | Create DB security group |
+| RDSfor{{engine.pascalCase}}:DbSecurityGroup.Create | Create DB security group |
 
 #### Request
 
@@ -3164,7 +3222,7 @@ PUT /v4.0/db-security-groups/{dbSecurityGroupId}
 
 | Permission Name                                           | Description           |
 |----------------------------------------------------|---------------|
-| RDSforMySQL:DbSecurityGroup.Modify | Modify DB security group |
+| RDSfor{{engine.pascalCase}}:DbSecurityGroup.Modify | Modify DB security group |
 
 #### Request
 
@@ -3220,7 +3278,7 @@ DELETE /v4.0/db-security-groups/{dbSecurityGroupId}
 
 | Permission Name                                           | Description           |
 |----------------------------------------------------|---------------|
-| RDSforMySQL:DbSecurityGroup.Delete | Delete DB security group |
+| RDSfor{{engine.pascalCase}}:DbSecurityGroup.Delete | Delete DB security group |
 
 #### Request
 
@@ -3262,7 +3320,7 @@ POST /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 
 | Permission Name                                        | Description           |
 |--------------------------------------------------------|------------------|
-| RDSforMySQL:DbSecurityGroupRule.Create | Create DB security group rule |
+| RDSfor{{engine.pascalCase}}:DbSecurityGroupRule.Create | Create DB security group rule |
 
 #### Request
 
@@ -3318,7 +3376,7 @@ PUT /v4.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 
 | Permission Name                                        | Description           |
 |--------------------------------------------------------|------------------|
-| RDSforMySQL:DbSecurityGroupRule.Modify | Modify DB security group rule |
+| RDSfor{{engine.pascalCase}}:DbSecurityGroupRule.Modify | Modify DB security group rule |
 
 #### Request
 
@@ -3373,7 +3431,7 @@ DELETE /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 
 | Permission Name                                           | Description           |
 |--------------------------------------------------------|------------------|
-| RDSforMySQL:DbSecurityGroupRule.Create | Delete DB security group rule |
+| RDSfor{{engine.pascalCase}}:DbSecurityGroupRule.Create | Delete DB security group rule |
 
 #### Request
 
@@ -3404,7 +3462,7 @@ GET /v4.0/parameter-groups
 
 | Permission Name                                           | Description           |
 |-------------------------------------------------|---------------|
-| RDSforMySQL:ParameterGroup.List | List parameter groups |
+| RDSfor{{engine.pascalCase}}:ParameterGroup.List | List parameter groups |
 
 #### Request
 
@@ -3442,7 +3500,7 @@ This API does not require a request body.
             "parameterGroupId": "404e8a89-ca4d-4fca-96c2-1518754d50b7",
             "parameterGroupName": "parameter-group",
             "description": null,
-            "dbVersion": "MYSQL_V8028",
+            "dbVersion": "{{engine.sampleDbVersionCode}}",
             "parameterGroupStatus": "STABLE",
             "createdYmdt": "2023-02-31T15:28:17+09:00",
             "updatedYmdt": "2023-02-31T15:28:17+09:00"
@@ -3467,7 +3525,7 @@ GET /v4.0/parameter-groups/{parameterGroupId}
 
 | Permission Name                                | Description           |
 |------------------------------------------------|---------------|
-| RDSforMySQL:ParameterGroup.Get | List parameter group details |
+| RDSfor{{engine.pascalCase}}:ParameterGroup.Get | List parameter group details |
 
 #### Request
 
@@ -3512,7 +3570,7 @@ This API does not require a request body.
     "parameterGroupId": "404e8a89-ca4d-4fca-96c2-1518754d50b7",
     "parameterGroupName": "parameter-group",
     "description": null,
-    "dbVersion": "MYSQL_V8028",
+    "dbVersion": "{{engine.sampleDbVersionCode}}",
     "parameterGroupStatus": "STABLE",
     "parameters": [
         {
@@ -3548,7 +3606,7 @@ POST /v4.0/parameter-groups
 
 | Permission Name                                           | Description           |
 |---------------------------------------------------|--------------|
-| RDSforMySQL:ParameterGroup.Create | Create parameter group |
+| RDSfor{{engine.pascalCase}}:ParameterGroup.Create | Create parameter group |
 
 #### Request
 
@@ -3564,7 +3622,7 @@ POST /v4.0/parameter-groups
 ```json
 {
     "parameterGroupName": "parameter-group",
-    "dbVersion": "MYSQL_V8028"
+    "dbVersion": "{{engine.sampleDbVersionCode}}"
 }
 ```
 
@@ -3589,7 +3647,7 @@ POST /v4.0/parameter-groups/{parameterGroupId}/copy
 
 | Permission Name                                           | Description           |
 |-------------------------------------------------|--------------|
-| RDSforMySQL:ParameterGroup.Copy | Copy parameter group |
+| RDSfor{{engine.pascalCase}}:ParameterGroup.Copy | Copy parameter group |
 
 #### Request
 
@@ -3630,7 +3688,7 @@ PUT /v4.0/parameter-groups/{parameterGroupId}
 
 | Permission Name                                           | Description           |
 |---------------------------------------------------|--------------|
-| RDSforMySQL:ParameterGroup.Modify | Modify parameter group |
+| RDSfor{{engine.pascalCase}}:ParameterGroup.Modify | Modify parameter group |
 
 #### Request
 
@@ -3684,7 +3742,7 @@ PUT /v4.0/parameter-groups/{parameterGroupId}/parameters
 
 | Permission Name                                           | Description           |
 |---------------------------------------------------|--------------|
-| RDSforMySQL:ParameterGroup.Modify | Modify parameter group |
+| RDSfor{{engine.pascalCase}}:ParameterGroup.Modify | Modify parameter group |
 
 #### Request
 
@@ -3744,7 +3802,7 @@ PUT /v4.0/parameter-groups/{parameterGroupId}/reset
 
 | Permission Name                                           | Description           |
 |--------------------------------------------------|---------------|
-| RDSforMySQL:ParameterGroup.Reset | Reset parameter group |
+| RDSfor{{engine.pascalCase}}:ParameterGroup.Reset | Reset parameter group |
 
 #### Request
 
@@ -3784,7 +3842,7 @@ DELETE /v4.0/parameter-groups/{parameterGroupId}
 
 | Permission Name                                           | Description           |
 |---------------------------------------------------|--------------|
-| RDSforMySQL:ParameterGroup.Delete | Delete parameter group |
+| RDSfor{{engine.pascalCase}}:ParameterGroup.Delete | Delete parameter group |
 
 #### Request
 
@@ -3828,7 +3886,7 @@ GET /v4.0/user-groups
 
 | Permission Name                                           | Description           |
 |--------------------------------------------|--------------|
-| RDSforMySQL:UserGroup.List | List user groups |
+| RDSfor{{engine.pascalCase}}:UserGroup.List | List user groups |
 
 #### Request
 
@@ -3880,7 +3938,7 @@ GET /v4.0/user-groups/{userGroupId}
 
 | Permission Name                                           | Description           |
 |-------------------------------------------|--------------|
-| RDSforMySQL:UserGroup.Get | List user group details |
+| RDSfor{{engine.pascalCase}}:UserGroup.Get | List user group details |
 
 #### Request
 
@@ -3940,7 +3998,7 @@ POST /v4.0/user-groups
 
 | Permission Name                                           | Description           |
 |----------------------------------------------|-------------|
-| RDSforMySQL:UserGroup.Create | Create user group |
+| RDSfor{{engine.pascalCase}}:UserGroup.Create | Create user group |
 
 #### Request
 
@@ -3990,7 +4048,7 @@ PUT /v4.0/user-groups/{userGroupId}
 
 | Permission Name                                           | Description           |
 |----------------------------------------------|-------------|
-| RDSforMySQL:UserGroup.Modify | Modify user group|
+| RDSfor{{engine.pascalCase}}:UserGroup.Modify | Modify user group|
 
 #### Request
 
@@ -4049,7 +4107,7 @@ DELETE /v4.0/user-groups/{userGroupId}
 
 | Permission Name                                           | Description           |
 |----------------------------------------------|-------------|
-| RDSforMySQL:UserGroup.Delete | Delete user group |
+| RDSfor{{engine.pascalCase}}:UserGroup.Delete | Delete user group |
 
 #### Request
 
@@ -4091,7 +4149,7 @@ GET /v4.0/notification-groups
 
 | Permission Name                                           | Description           |
 |----------------------------------------------------|-------------|
-| RDSforMySQL:NotificationGroup.List | List notification groups |
+| RDSfor{{engine.pascalCase}}:NotificationGroup.List | List notification groups |
 
 #### Request
 
@@ -4149,7 +4207,7 @@ GET /v4.0/notification-groups/{notificationGroupId}
 
 | Permission Name                                           | Description           |
 |---------------------------------------------------|-------------|
-| RDSforMySQL:NotificationGroup.Get | List notification groups |
+| RDSfor{{engine.pascalCase}}:NotificationGroup.Get | List notification groups |
 
 #### Request
 
@@ -4224,7 +4282,7 @@ POST /v4.0/notification-groups
 
 | Permission Name                                      | Description           |
 |------------------------------------------------------|------------|
-| RDSforMySQL:NotificationGroup.Create | Create notification group |
+| RDSfor{{engine.pascalCase}}:NotificationGroup.Create | Create notification group |
 
 #### Request
 
@@ -4275,7 +4333,7 @@ PUT /v4.0/notification-groups/{notificationGroupId}
 
 | Permission Name                                           | Description           |
 |------------------------------------------------------|------------|
-| RDSforMySQL:NotificationGroup.Modify | Modify notification group |
+| RDSfor{{engine.pascalCase}}:NotificationGroup.Modify | Modify notification group |
 
 #### Request
 
@@ -4337,7 +4395,7 @@ DELETE /v4.0/notification-groups/{notificationGroupId}
 
 | Permission Name                                      | Description           |
 |------------------------------------------------------|------------|
-| RDSforMySQL:NotificationGroup.Delete | Delete notification group |
+| RDSfor{{engine.pascalCase}}:NotificationGroup.Delete | Delete notification group |
 
 #### Request
 
@@ -4381,7 +4439,7 @@ GET /v4.0/metrics
 
 | Permission Name                                           | Description           |
 |-----------------------------------------|----------|
-| RDSforMySQL:Metric.List | List metric information |
+| RDSfor{{engine.pascalCase}}:Metric.List | List metric information |
 
 #### Request
 
@@ -4429,7 +4487,7 @@ GET /v4.0/metric-statistics
 
 | Permission Name                                           | Description           |
 |-----------------------------------------|----------|
-| RDSforMySQL:Metric.List | List metric information |
+| RDSfor{{engine.pascalCase}}:Metric.List | List metric information |
 
 #### Request
 
@@ -4510,7 +4568,7 @@ GET /v4.0/events
 
 | Permission Name                                           | Description           |
 |----------------------------------------|-----------|
-| RDSforMySQL:Event.List | List Events |
+| RDSfor{{engine.pascalCase}}:Event.List | List Events |
 
 #### Request
 
@@ -4598,7 +4656,7 @@ GET /v4.0/event-codes
 
 | Permission Name                                           | Description           |
 |----------------------------------------|-----------|
-| RDSforMySQL:Event.List | List Events |
+| RDSfor{{engine.pascalCase}}:Event.List | List Events |
 
 #### Request
 

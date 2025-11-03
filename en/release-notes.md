@@ -1,5 +1,23 @@
 ## Database > RDS for MySQL > Release Notes
 
+### November 11, 2025
+
+#### Feature Updates
+
+- Added version MySQL 8.4.6
+- Improved to record the cause of backup failure due to Lock acquisition failure in the event log.
+- Improved to display a warning message related to the password plugin when upgrading to version 8.4.
+- Fixed to allow creation of cross-region read replicas in subnets that do not have region peering set up.
+
+#### Bug Fixes
+
+- Fixed an issue where the failover status persisted when failover failed.
+- Fixed an issue where DB instances stopped before the July deployment could not be started.
+- Fixed an issue where unusable values ​​could be used in server_audit_events.
+- Fixed an issue where the latest parameter group would not be applied after selecting multiple DB instances when using a different parameter group for read replicas.
+- Fixed an issue where an error notification modal would be displayed when deselecting a master in a group with read replicas in a different region.
+- Fixed an issue where unchangeable values ​​would be changed when resetting a parameter group.
+
 ### September 09, 2025
 
 #### Feature Updates
