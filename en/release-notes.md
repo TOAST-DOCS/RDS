@@ -13,10 +13,10 @@
 
 - Fixed an issue where the failover status persisted when failover failed.
 - Fixed an issue where DB instances stopped before the July deployment could not be started.
-- Fixed an issue where unusable values ​​could be used in server_audit_events.
+- Fixed an issue where unusable values could be used in server_audit_events.
 - Fixed an issue where the latest parameter group would not be applied after selecting multiple DB instances when using a different parameter group for read replicas.
 - Fixed an issue where an error notification modal would be displayed when deselecting a master in a group with read replicas in a different region.
-- Fixed an issue where unchangeable values ​​would be changed when resetting a parameter group.
+- Fixed an issue where unchangeable values would be changed when resetting a parameter group.
 
 ### September 09, 2025
 
