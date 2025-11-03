@@ -57,7 +57,7 @@ The versions specified below are available.
 | MySQL 5.7.19         |                                                           |
 | MySQL 5.7.15         |                                                           |
 | <strong>5.6</strong> |                                                           |
-| MySQL 5.6.33         | 지원 종료 된 버전입니다.                                            |
+| MySQL 5.6.33         | This version is no longer supported.                                            |
 
 For the DB engine, version upgrades are possible through the modification feature of console after creation.
 Details about DB engine can be found in [DB Engine](db-engine/).

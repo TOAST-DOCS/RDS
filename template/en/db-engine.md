@@ -32,7 +32,7 @@ The versions specified below are available.
 | MySQL 5.7.19         |                                                           |
 | MySQL 5.7.15         |                                                           |
 | <strong>5.6</strong> |                                                           |
-| MySQL 5.6.33         | 지원 종료 된 버전입니다.                                            |
+| MySQL 5.6.33         | This version is no longer supported.                                            |
 
 In MySQL, the version number consists of version = `X.Y.Z.` In NHN Cloud's RDS for MySQL, `X.Y` represents the major version and `Z` represents the minor version.
 
