@@ -1,22 +1,22 @@
 ## Database > RDS for MySQL > Release Notes
 
-### 2025. 11. 11.
+### November 11, 2025
 
-#### 기능 추가 및 개선
+#### Feature Updates
 
-- MySQL 8.4.6 버전 추가
-- Lock 획득 실패로 인한 백업 실패 시, 원인을 이벤트에 남기도록 개선
-- 8.4 버전 업그레이드 시 패스워드 플러그인 관련 경고 문구를 보여주도록 개선
-- 리전 간 읽기 복제본 생성 시 리전 피어링을 설정하지 않은 서브넷으로도 생성 가능하도록 수정
+- Added version MySQL 8.4.6
+- Improved to record the cause of backup failure due to Lock acquisition failure in the event log.
+- Improved to display a warning message related to the password plugin when upgrading to version 8.4.
+- Fixed to allow creation of cross-region read replicas in subnets that do not have region peering set up.
 
-#### 버그 수정
+#### Bug Fixes
 
-- 장애 조치 실패 시, 장애 조치 중 상태가 지속 되던 현상 수정
-- 7월 배포 이전에 중지된 DB 인스턴스를 시작 하지 못하던 현상 수정
-- server_audit_events 에 사용할 수 없는 값을 사용할 수 있던 현상 수정
-- 읽기 복제본 만 다른 파라미터 그룹을 사용할 경우, 여러 DB 인스턴스를 선택 후 최신 파라미터 그룹 적용이 안되던 현상 수정
-- 다른 리전의 읽기 복제본이 있는 그룹에서 마스터 선택 해제 시 에러 알림 모달이 노출되는 현상 수정
-- 파라미터 그룹 재설정 시 변경 불가능한 값이 변경되는 현상 수정
+- Fixed an issue where the failover status persisted when failover failed.
+- Fixed an issue where DB instances stopped before the July deployment could not be started.
+- Fixed an issue where unusable values ​​could be used in server_audit_events.
+- Fixed an issue where the latest parameter group would not be applied after selecting multiple DB instances when using a different parameter group for read replicas.
+- Fixed an issue where an error notification modal would be displayed when deselecting a master in a group with read replicas in a different region.
+- Fixed an issue where unchangeable values ​​would be changed when resetting a parameter group.
 
 ### September 09, 2025
 
