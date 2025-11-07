@@ -59,7 +59,7 @@ The versions specified below are available.
 | MySQL 5.6.33         | This version is no longer supported.                                            |
 
 For the DB engine, version upgrades are possible through the modification feature of console after creation.
-Details about DB engine can be found in [DB Engine](db-engine/).
+Details about DB engine can be found in [DB Engine](db-engine-ncgn/).
 
 ### DB Instance Type
 
@@ -100,7 +100,7 @@ Because the following tasks increase the I/O usage of data storage, the performa
 
 ### High Availability
 
-High availability DB instances increase availability, data durability, and provide fault tolerant databases. High availability DB instances consist of master and candidate master and are created in different availability zones. Candidate master is a DB instance for failover and is not normally available. For high availability DB instances, backups are performed on candidate master, which avoids performance degradation caused by backups. Several features provided by a high availability DB instance can be found in [High Availability DB Instance](db-instance/#ha-db-instance).
+High availability DB instances increase availability, data durability, and provide fault tolerant databases. High availability DB instances consist of master and candidate master and are created in different availability zones. Candidate master is a DB instance for failover and is not normally available. For high availability DB instances, backups are performed on candidate master, which avoids performance degradation caused by backups. Several features provided by a high availability DB instance can be found in [High Availability DB Instance](db-instance-ncgn/#ha-db-instance).
 
 ### Network
 
@@ -115,20 +115,20 @@ To access DB instance from the outside, you must connect the floating IP to DB i
 
 ### Parameter group
 
-A parameter group is a set of parameters that allow you to set up a database installed on DB instance. You have to select one parameter group when creating a DB instance. You can change parameter groups freely after creating. Refer to [Parameter Group](parameter-group/) for a detailed description of parameter groups.
+A parameter group is a set of parameters that allow you to set up a database installed on DB instance. You have to select one parameter group when creating a DB instance. You can change parameter groups freely after creating. Refer to [Parameter Group](parameter-group-ncgn/) for a detailed description of parameter groups.
 
 ### DB Security Group
 
-DB security groups are used to restrict access in case of external intrusion. You can allow access to specific port ranges or database ports for incoming and outgoing traffic. You can apply multiple DB security groups to DB instance. For more details on DB security groups, see the [DB security groups](db-security-group/).
+DB security groups are used to restrict access in case of external intrusion. You can allow access to specific port ranges or database ports for incoming and outgoing traffic. You can apply multiple DB security groups to DB instance. For more details on DB security groups, see the [DB security groups](db-security-group-ncgn/).
 
 ### Backup
 
 You can set up periodic backups of the databases in your DB instance, or you can create backups at any time through the console. Performance may degrade during backups. To avoid affecting service, it is better to perform back up at a time when the service is under low load. If you do not want the backup to degrade performance, you can use a high-availability configuration or perform backups from read replica. Backup files are stored on internal object storage and are charged based on the
-size of backup storage. You can export to user object storage in NHN Cloud if necessary. To prepare for unexpected failures, we recommend that you set up backups to conduct periodically. For more details on backup, see [Backup and Restore](backup-and-restore/).
+size of backup storage. You can export to user object storage in NHN Cloud if necessary. To prepare for unexpected failures, we recommend that you set up backups to conduct periodically. For more details on backup, see [Backup and Restore](backup-and-restore-ncgn/).
 
 ### Default Notification
 
-When you create a DB instance, you can set default notifications. If setting default notifications, it will create a new notification group with the name `{DB instance name}-default` and will automatically set the notification items below. You can freely modify and delete alert groups that are created as default notification. For more details on notification group, see the [ notification group ](notification/).
+When you create a DB instance, you can set default notifications. If setting default notifications, it will create a new notification group with the name `{DB instance name}-default` and will automatically set the notification items below. You can freely modify and delete alert groups that are created as default notification. For more details on notification group, see the [ notification group ](notification-ncgn/).
 
 | Item                         | Comparison Method | Threshold value           | Duration |
 |----------------------------|-------|---------------|-------|
@@ -383,7 +383,7 @@ For high availability DB instances, if there are any changes to items that need 
 
 ![modify-ha-popup-en](https://static.toastoven.net/prod_rds/mysql/24.11.12/modify-ha-popup-en.png)
 
-If restart with failover is not enabled, the DB instance is restarted after the changes are sequentially applied to the master and candidate master. For more information, refer to [Manual failover item](db-instance/#manual-failover) in a high availability DB instance.
+If restart with failover is not enabled, the DB instance is restarted after the changes are sequentially applied to the master and candidate master. For more information, refer to [Manual failover item](db-instance-ncgn/#manual-failover) in a high availability DB instance.
 
 ### DB Schema & Direct User Control
 
@@ -413,7 +413,7 @@ Operating system version upgrades behave differently depending on whether you ar
 When you click the OS Version Upgrade button for a single DB instance, the following pop-up screen appears.
 ![db-instance-os-upgrade-single-popup-en.png](https://static.toastoven.net/prod_rds/mysql/24.06.11/db-instance-os-upgrade-simple-popup-en.png)
 
-When you click the Upgrade Operating System Version for High Availability DB Instance button, the pop-up screen shown below appears. For more information, see [Manual failover item](db-instance/#manual-failover) of High Availability DB Instances.
+When you click the Upgrade Operating System Version for High Availability DB Instance button, the pop-up screen shown below appears. For more information, see [Manual failover item](db-instance-ncgn/#manual-failover) of High Availability DB Instances.
 ![os-upgrade-ha-popup-en.png](https://static.toastoven.net/prod_rds/mysql/24.11.12/os-upgrade-ha-popup-en.png)
 
 ## Delete DB Instance
@@ -422,11 +422,11 @@ You can delete DB instances that are no longer in use. If you delete a master, y
 
 ## Backup
 
-You can prepare in advance to recover the database of your DB instance in case of failure. You can perform backups from the console whenever necessary or you can set up periodic backups. Refer to [Backup](backup-and-restore/#overview) for more information.
+You can prepare in advance to recover the database of your DB instance in case of failure. You can perform backups from the console whenever necessary or you can set up periodic backups. Refer to [Backup](backup-and-restore-ncgn/#overview) for more information.
 
 ## Restoration
 
-You can use backups to restore data to any point in time. Restore always creates a new DB instance and cannot be restored to existing DB instance. Refer to [Restore](backup-and-restore/#restore) for more information.
+You can use backups to restore data to any point in time. Restore always creates a new DB instance and cannot be restored to existing DB instance. Refer to [Restore](backup-and-restore-ncgn/#restore) for more information.
 
 ## Secure Capacity
 
@@ -474,15 +474,15 @@ High availability DB instances provide restart feature using failover to increas
 
 ![db-instance-parameter-ha-en](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-parameter-ha-en.png)
 
-If restart with failover is not enabled, the DB instance is restarted after the changes are sequentially applied to the master and candidate master. For more information, refer to [Manual failover item](db-instance/#manual-failover) in a high availability DB instance.
+If restart with failover is not enabled, the DB instance is restarted after the changes are sequentially applied to the master and candidate master. For more information, refer to [Manual failover item](db-instance-ncgn/#manual-failover) in a high availability DB instance.
 
 ## Recover from backup in object storage
 
-You can upload an external MySQL backup file to user object storage in NHN Cloud to restore it to DB instance in RDS for MySQL. For more information, refer to [Restore with External MySQL Backup](backup-and-restore/#restore-from-external).
+You can upload an external MySQL backup file to user object storage in NHN Cloud to restore it to DB instance in RDS for MySQL. For more information, refer to [Restore with External MySQL Backup](backup-and-restore-ncgn/#restore-from-external).
 
 ## Export backup files to the object storage after backup
 
-You can export backup files to user object storage in NHN Cloud at the same time as you perform a backup. Refer to [Export Backup](backup-and-restore/#export) for more information.
+You can export backup files to user object storage in NHN Cloud at the same time as you perform a backup. Refer to [Export Backup](backup-and-restore-ncgn/#export) for more information.
 
 ## Read Replica
 
@@ -546,15 +546,15 @@ Select whether or not to use floating IP for read replicas. Refer to [Floating I
 
 #### Parameter group
 
-If you do not need to change replication-related settings when selecting a parameter group for a read replica, we recommend that you select the same parameter group as the original DB instance. Refer to [Parameter Group](parameter-group/) for a detailed description of the parameter groups.
+If you do not need to change replication-related settings when selecting a parameter group for a read replica, we recommend that you select the same parameter group as the original DB instance. Refer to [Parameter Group](parameter-group-ncgn/) for a detailed description of the parameter groups.
 
 #### DB Security Group
 
-Select the DB security group that you want to apply to read replicas. Because the rules required for replication are applied automatically, you do not need to add replication-related rules to DB security group separately. Refer to [DB security group](db-security-group/) for a detailed description of the DB security group.
+Select the DB security group that you want to apply to read replicas. Because the rules required for replication are applied automatically, you do not need to add replication-related rules to DB security group separately. Refer to [DB security group](db-security-group-ncgn/) for a detailed description of the DB security group.
 
 #### Backup
 
-Select backup settings for the read replica. Refer to [Backup and Restore](backup-and-restore/) for a detailed description of backup.
+Select backup settings for the read replica. Refer to [Backup and Restore](backup-and-restore-ncgn/) for a detailed description of backup.
 
 #### Default notification
 
@@ -1204,7 +1204,7 @@ When using Federated Storage Engine, make sure you consider the following.
 
 * Make sure you need to allow the outbound direction to remote nodes.
   * You can add rules from DB security group.
-  * Refer to [DB Security Group](db-security-group/) for more information.
+  * Refer to [DB Security Group](db-security-group-ncgn/) for more information.
 * When using a configuration that adds Read Only Slave to RDS that serves as a local node, you need to specify a federated table in replicate-ignore-table of parameter.
   * When you configure Read Only Slave, the federated table is also replicated, allowing the Master and Read Only Slave to look at the remote node together.
   * In this case, the data input performed on the Master is performed on the remote node according to the federated setting, and the same input is performed on the Read Only Slave, which may lead to stop replication due to duplicate key errors.
@@ -1214,4 +1214,4 @@ When using Federated Storage Engine, make sure you consider the following.
 
 * Make sure you need to allow the inbound direction to local nodes.
   * You can add rules from DB security group.
-  * Refer to [DB Security Group](db-security-group/) for more information.
+  * Refer to [DB Security Group](db-security-group-ncgn/) for more information.
