@@ -66,7 +66,7 @@ const configs = [
 ];
 
 for (let config of configs) {
-    let context = JSON.parse(fs.readFileSync(`config/${config.engine}-${config.env}.json`, 'utf-8'));
+    const context = JSON.parse(fs.readFileSync(`config/${config.engine}-${config.env}.json`, 'utf-8'));
 
     for (let language of languages) {
         for (let doc of docs) {
@@ -82,10 +82,14 @@ for (let config of configs) {
                 template = fs.readFileSync(`template/${language}/${doc}.md`, 'utf-8');
             }
 
-            let compiled = Handlebars.compile(template);
-            const result = compiled(context);
+            const fileName = config.env === 'public' ? `${doc}.md` : `${doc}-${config.env}.md`;
+            const compiled = Handlebars.compile(template);
+            let result = compiled(context);
 
-            let fileName = config.env === 'public' ? `${doc}.md` : `${doc}-${config.env}.md`;
+            if(config.env !== 'public') {
+                // [text](link-menu/) 혹은 [text](link-menu/#tag) 형식을 [text](link-menu-env/) 형식으로 교체
+                result = result.replace(/\[(.*)]\((?!.*png)(?!#)(?!http)([^)]*?)(\/#[^)]*|\/)\)/g,`[$1]($2-${config.env}$3)`);
+            }
 
             if (config.engine === 'mysql') {
                 fs.writeFileSync(`${language}/${fileName}`, result);

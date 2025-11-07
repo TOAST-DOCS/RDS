@@ -277,7 +277,7 @@ Timestamp를 사용한 복원 시에는 선택한 시점과 가장 가까운 백
 <a id="restore-from-external"></a>
 ### 외부 MySQL 백업을 이용한 복원
 
-외부 MySQL 백업 파일을 이용하여 DB 인스턴스를 생성할 수 있습니다. 외부 MySQL 백업 파일을 생성할 때 [백업](backup-and-restore/#overview) 항목을 참고하여 RDS for MySQL에서 사용하는 Percona XtraBackup과 동일한 버전을 사용해야 합니다.
+외부 MySQL 백업 파일을 이용하여 DB 인스턴스를 생성할 수 있습니다. 외부 MySQL 백업 파일을 생성할 때 [백업](backup-and-restore-ninc/#overview) 항목을 참고하여 RDS for MySQL에서 사용하는 Percona XtraBackup과 동일한 버전을 사용해야 합니다.
 
 > [주의]
 > innodb_data_file_path의 설정값이 ibdata1:12M:autoextend가 아니면 RDS for MySQL의 DB 인스턴스로 복원할 수 없습니다.
@@ -302,7 +302,7 @@ xtrabackup --defaults-file={my.cnf 경로} --user={사용자} --password='{비�
 
 * 한 번에 업로드할 수 있는 최대 파일 크기는 5GB입니다.
 * 백업 파일의 크기가 5GB보다 클 경우 split과 같은 유틸리티를 이용해 백업 파일을 5GB 이하로 자른 뒤 멀티 파트로 업로드해야 합니다.
-* 자세한 사항은 [멀티파트 업로드](/Storage/Object%20Storage/ko/api-guide/#_44)를 참고합니다.
+* 자세한 사항은 [멀티파트 업로드](/Storage/Object%20Storage/ko/api-guide-ninc/#_45)를 참고합니다.
 
 (4) 복원할 프로젝트의 콘솔에 접속한 뒤 DB 인스턴스 탭에서 **오브젝트 스토리지에 있는 백업으로 복원** 버튼을 클릭합니다.
 
@@ -314,9 +314,9 @@ xtrabackup --defaults-file={my.cnf 경로} --user={사용자} --password='{비�
 
 ### RDS for MySQL 백업을 이용한 복원
 
-RDS for MySQL의 백업 파일을 이용하여 직접 MySQL의 데이터베이스를 복원할 수 있습니다. 전체 백업에 대해서만 복원이 가능하며, 증분 백업 반영은 지원되지 않습니다. RDS for MySQL 백업 파일을 복원할 때 [백업](backup-and-restore/#overview) 항목을 참고하여 RDS for MySQL에서 사용하는 Percona XtraBackup과 동일한 버전을 사용해야 합니다.
+RDS for MySQL의 백업 파일을 이용하여 직접 MySQL의 데이터베이스를 복원할 수 있습니다. 전체 백업에 대해서만 복원이 가능하며, 증분 백업 반영은 지원되지 않습니다. RDS for MySQL 백업 파일을 복원할 때 [백업](backup-and-restore-ninc/#overview) 항목을 참고하여 RDS for MySQL에서 사용하는 Percona XtraBackup과 동일한 버전을 사용해야 합니다.
 
-(1) [백업 내보내기](backup-and-restore/#export) 항목을 참고하여 RDS for MySQL의 백업을 오브젝트 스토리지로 내보냅니다.
+(1) [백업 내보내기](backup-and-restore-ninc/#export) 항목을 참고하여 RDS for MySQL의 백업을 오브젝트 스토리지로 내보냅니다.
 
 (2) 오브젝트 스토리지의 백업을 복원하고자 하는 서버에 다운로드합니다.
 
