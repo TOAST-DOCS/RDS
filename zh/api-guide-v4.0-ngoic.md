@@ -2,13 +2,11 @@
 
 | Region | Endpoint |
 |--------|----------|
-| Korea (Pangyo) region | https://kr1-rds-mysql.api.nhncloudservice.com |
-| Korea (Pyeongchon) region | https://kr2-rds-mysql.api.nhncloudservice.com |
-| Japan region | https://jp1-rds-mysql.api.nhncloudservice.com |
+| Korea (Pangyo) region |  |
 
 ## Authentication and Authorization
 
-To use the API, you need a token of type Bearer, issued through [Public API > API Calls and Authentication](/nhncloud/ko/public-api/api-authentication/).
+To use the API, you need a token of type Bearer, issued through [Public API > API Calls and Authentication](/nhncloud/ko/public-api/api-authentication-ngoic/).
 The issued token must be included in the request header along with the Appkey.
 
 | Name                | Type   | Format | Required | Description                                           |
