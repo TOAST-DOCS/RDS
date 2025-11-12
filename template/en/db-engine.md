@@ -11,6 +11,7 @@ The versions specified below are available.
 | Version              | Note                                                      |
 |----------------------|-----------------------------------------------------------|
 | <strong>8.4</strong> |                                                           |
+| MySQL 8.4.6          |                                                           |
 | MySQL 8.4.5          |                                                           |
 | <strong>8.0</strong> |                                                           |
 | MySQL 8.0.43         |                                                           |
@@ -32,7 +33,7 @@ The versions specified below are available.
 | MySQL 5.7.19         |                                                           |
 | MySQL 5.7.15         |                                                           |
 | <strong>5.6</strong> |                                                           |
-| MySQL 5.6.33         | This version is no longer supported.                                            |
+| MySQL 5.6.33         | This version is no longer supported.                      |
 
 In MySQL, the version number consists of version = `X.Y.Z.` In NHN Cloud's RDS for MySQL, `X.Y` represents the major version and `Z` represents the minor version.
 
@@ -124,6 +125,7 @@ This plugin may not be supported by all versions of MySQL and will be unavailabl
 | MySQL version        | Whether to support server audit plugins |
 |----------------------|-----------------------------------------|
 | <strong>8.4</strong> |                                         |
+| MySQL 8.4.6          | O                                       |
 | MySQL 8.4.5          | O                                       |
 | <strong>8.0</strong> |                                         |
 | MySQL 8.0.43         | O                                       |
@@ -137,7 +139,7 @@ This plugin may not be supported by all versions of MySQL and will be unavailabl
 | MySQL 8.0.32         | O                                       | 
 | MySQL 8.0.28         | O                                       | 
 | MySQL 8.0.23         | O                                       |
-| MySQL 8.0.18         | O                                       |
+| MySQL 8.0.18         | X                                       |
 | <strong>5.7</strong> |                                         |
 | MySQL 5.7.37         | X                                       |
 | MySQL 5.7.33         | O                                       |
