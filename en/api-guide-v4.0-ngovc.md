@@ -2,7 +2,7 @@
 
 | Region | Endpoint |
 |--------|----------|
-| Korea (Pangyo) region |  |
+| Korea (Pangyo) region | https://kr4-rds-mysql-api.ngovc.com |
 
 ## Authentication and Authorization
 
