@@ -17,7 +17,16 @@ const docs = [
     'parameter-group',
     'server-dashboard'
 ];
-const configs = [
+
+// 명령줄 인자 확인
+const args = process.argv.slice(2);
+const isPPP = args.length > 0 && args[0] === 'ppp';
+
+// PPP 환경 목록
+const pppEnvs = ['ninc', 'ngovc', 'ngoic', 'ngsc'];
+
+// 전체 설정 목록
+const allConfigs = [
     {
         engine: 'mysql',
         env: 'public',
@@ -36,22 +45,22 @@ const configs = [
     {
         engine: 'mysql',
         env: 'ninc',
-        exclusionDocs: ['api-guide-v2.0', 'api-guide-v3.0']
+        exclusionDocs: ['api-guide-v2.0']
     },
     {
         engine: 'mysql',
         env: 'ngovc',
-        exclusionDocs: ['api-guide-v2.0', 'api-guide-v3.0']
+        exclusionDocs: ['api-guide-v2.0']
     },
     {
         engine: 'mysql',
         env: 'ngoic',
-        exclusionDocs: ['api-guide-v2.0', 'api-guide-v3.0']
+        exclusionDocs: ['api-guide-v2.0']
     },
     {
         engine: 'mysql',
         env: 'ngsc',
-        exclusionDocs: ['api-guide-v2.0', 'api-guide-v3.0']
+        exclusionDocs: ['api-guide-v2.0']
     },
     {
         engine: 'mariadb',
@@ -64,6 +73,11 @@ const configs = [
         exclusionDocs: ['db-engine']
     }
 ];
+
+// 매개변수에 따라 필터링
+const configs = isPPP 
+    ? allConfigs.filter(config => pppEnvs.includes(config.env))
+    : allConfigs.filter(config => !pppEnvs.includes(config.env));
 
 for (let config of configs) {
     const context = JSON.parse(fs.readFileSync(`config/${config.engine}-${config.env}.json`, 'utf-8'));
