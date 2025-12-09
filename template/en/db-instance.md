@@ -35,9 +35,11 @@ The versions specified below are available.
 | Version              | Note                                                      |
 |----------------------|-----------------------------------------------------------|
 | <strong>8.4</strong> |                                                           |
+| MySQL 8.4.7          |                                                           |
 | MySQL 8.4.6          |                                                           |
 | MySQL 8.4.5          |                                                           |
 | <strong>8.0</strong> |                                                           |
+| MySQL 8.0.44         |                                                           |
 | MySQL 8.0.43         |                                                           |
 | MySQL 8.0.42         |                                                           |
 | MySQL 8.0.41         |                                                           |
@@ -57,7 +59,7 @@ The versions specified below are available.
 | MySQL 5.7.19         |                                                           |
 | MySQL 5.7.15         |                                                           |
 | <strong>5.6</strong> |                                                           |
-| MySQL 5.6.33         | This version is no longer supported.                                            |
+| MySQL 5.6.33         | This version is no longer supported.                      |
 
 For the DB engine, version upgrades are possible through the modification feature of console after creation.
 Details about DB engine can be found in [DB Engine](db-engine/).

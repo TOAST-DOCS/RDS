@@ -11,9 +11,11 @@ MySQL의 경우 버전 번호는 버전 = X.Y.Z로 구성됩니다. NHN Cloud RD
 | 버전                   | 비고                             |
 |----------------------|--------------------------------|
 | <strong>8.4</strong> |                                |
+| MySQL 8.4.7          |                                |
 | MySQL 8.4.6          |                                |
 | MySQL 8.4.5          |                                |
 | <strong>8.0</strong> |                                |
+| MySQL 8.0.44         |                                |
 | MySQL 8.0.43         |                                |
 | MySQL 8.0.42         |                                |
 | MySQL 8.0.41         |                                |
@@ -92,6 +94,16 @@ MySQL 8.4로 업그레이드하려면 먼저 MySQL 8.0으로 업그레이드된 
 - [비호환 변경 항목 가이드](https://dev.mysql.com/doc/refman/8.4/en/upgrading-from-previous-series.html#upgrade-incompatible-changes)
 - [8.4에서 제거된 기능 가이드](https://dev.mysql.com/doc/refman/8.4/en/mysql-nutshell.html#mysql-nutshell-removals)
 
+#### MySQL 버전 업그레이드 제약 사항
+
+MySQL 8.0.18 버전은 직접 MySQL 8.4로 업그레이드할 수 없습니다.
+8.0.18에서 8.4로의 업그레이드를 수행하기 위해서는 다음 조건을 충족해야 합니다.
+
+업그레이드 경로
+1.	MySQL 8.0.23 이상으로 먼저 업그레이드
+2.	이후 MySQL 8.4 버전으로 업그레이드
+
+이는 MySQL 8.4 버전에서 요구하는 최소 호환 버전이 8.0.23 이상이기 때문이며, 해당 버전보다 낮은 환경에서는 메타데이터 및 내부 스키마 구조의 호환성이 보장되지 않습니다.
 
 #### 더미 DB 인스턴스를 사용한 DB 엔진 버전 업그레이드 
 
@@ -128,9 +140,11 @@ DB 인스턴스가 고가용성으로 구성되어 있을 때 예비 마스터�
 | MySQL 버전                   | 서버 감사 플러그인 지원 여부 |
 |----------------------------|------------------|
 | <strong>8.4</strong>       |                  |
+| MySQL 8.4.7                | O                |
 | MySQL 8.4.6                | O                |
 | MySQL 8.4.5                | O                |
 | <strong>8.0</strong>       |                  |
+| MySQL 8.0.44               | O                |
 | MySQL 8.0.43               | O                |
 | MySQL 8.0.42               | O                |
 | MySQL 8.0.41               | O                |
