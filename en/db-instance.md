@@ -761,9 +761,41 @@ High availability features can be temporarily stopped in situations where a temp
 
 Candidate master replication can be disrupted due to a variety of reasons, such as network disconnection, incorrect FEDERATED engine use, and replication settings from other masters. Candidate masters in a Stopped Replication state do not perform automatic failover. To resolve a backup master's Stopped Replication, the candidate master needs to be rebuilt. When rebuilding a candidate master, it removes all of the candidate master's databases and rebuilds them based on the master's database. In this process, if the backup file required for rebuilding does not exist in the master database, the backup is performed on the master, which can cause performance degradation.
 
+## DB 클러스터
+
+DB 클러스터는 고가용성과 향상된 백업 성능을 제공하는 DB 인스턴스 그룹 타입입니다.
+
+### DB 클러스터 특성
+
+DB 클러스터는 다음과 같은 특성을 가집니다.
+
+#### 고가용성 구성
+
+DB 클러스터는 기본적으로 고가용성 구성을 제공합니다. 마스터와 예비 마스터가 서로 다른 가용성 영역에 생성되어 장애 허용이 가능한 데이터베이스를 제공합니다.
+
+#### GTID 기반 복제
+
+DB 클러스터는 GTID(Global Transaction Identifier) 기반 복제를 사용합니다. 다음 파라미터가 강제로 설정되며 변경할 수 없습니다.
+
+* `gtid_mode = ON`
+* `enforce_gtid_consistency = ON`
+* `binlog_format = ROW`
+
+> [주의] GTID 모드로 인해 일부 복제 관련 프로시저의 사용이 제한됩니다. 자세한 내용은 [MySQL Procedure](#mysql-procedure) 항목을 참고합니다.
+
+#### 향상된 백업 성능
+
+DB 클러스터는 향상된 백업 기능을 제공합니다.
+
+* **고객 리소스 절약**: 백업 수행 중 고객의 DB 인스턴스 리소스를 99% 절약합니다.
+* **백업 시간 단축**: 전체 백업 시간이 기존 대비 90% 이상 감소합니다.
+* **성능 영향 최소화**: 백업으로 인한 데이터베이스 성능 저하가 거의 발생하지 않습니다.
+
 ## MySQL Procedure
 
 RDS for MySQL provides its own procedures for performing some of the features that are restricted from user accounts to provide user convenience.
+
+> [주의] DB 클러스터 타입의 DB 인스턴스 그룹인 경우, 복제 관련 프로시저(tcrds_repl_*)의 사용이 제한됩니다.
 
 ### tcrds_active_process
 
