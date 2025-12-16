@@ -334,7 +334,7 @@ GRANT EXECUTE ON `mysql`.* TO '{user_id}'@'{host}';
 
 | Authentication Plugin | Supported Versions                            |
 |-----------------------|-----------------------------------------------|
-| mysql_native_password | All versions                                  |
+| mysql_native_password | 8.4 버전 미만                                     |
 | sha256_password       | 5.7.33 version or later and below 8.0 version |
 | caching_sha2_password | 8.0 version or later                          |
 
