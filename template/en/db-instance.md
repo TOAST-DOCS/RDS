@@ -791,6 +791,8 @@ High availability features can be temporarily stopped in situations where a temp
 
 Candidate master replication can be disrupted due to a variety of reasons, such as network disconnection, incorrect FEDERATED engine use, and replication settings from other masters. Candidate masters in a Stopped Replication state do not perform automatic failover. To resolve a backup master's Stopped Replication, the candidate master needs to be rebuilt. When rebuilding a candidate master, it removes all of the candidate master's databases and rebuilds them based on the master's database. In this process, if the backup file required for rebuilding does not exist in the master database, the backup is performed on the master, which can cause performance degradation.
 
+{{#if (eq engine.lowerCase "mysql")}}
+
 ## DB 클러스터
 
 DB 클러스터는 고가용성과 향상된 백업 성능을 제공하는 DB 인스턴스 그룹 타입입니다.
@@ -829,11 +831,15 @@ DB 클러스터는 향상된 백업 기능을 제공합니다.
 
 DB 클러스터는 전용 파라미터 그룹을 사용합니다. DB 클러스터 전용 파라미터 그룹은 GTID 관련 파라미터가 사전 설정되어 있으며, 일부 파라미터는 수정할 수 없습니다.
 
+{{/if}}
+
 ## {{engine.pascalCase}} Procedure
 
 RDS for {{engine.pascalCase}} provides its own procedures for performing some of the features that are restricted from user accounts to provide user convenience.
 
+{{#if (eq engine.lowerCase "mysql")}}
 > [주의] DB 클러스터 타입의 DB 인스턴스 그룹인 경우, 복제 관련 프로시저(tcrds_repl_*)의 사용이 제한됩니다.
+{{/if}}
 
 ### tcrds_active_process
 
