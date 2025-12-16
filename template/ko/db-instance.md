@@ -332,7 +332,7 @@ GRANT EXECUTE ON `mysql`.* TO '{user_id}'@'{host}';
 
 | 인증 플러그인               | 지원 버전                  |
 |-----------------------|------------------------|
-| mysql_native_password | 모든 버전                  |
+| mysql_native_password | 8.4 버전 미만              |
 | sha256_password       | 5.7.33 버전 이상 8.0 버전 미만 |
 | caching_sha2_password | 8.0 버전 이상              |
 
