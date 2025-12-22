@@ -45,8 +45,8 @@ MySQL 8.0.34 미만 버전은 MySQL LTS 지원 정책에 따라 지원이 종료
 | MySQL 8.0.42         |                                                           |
 | MySQL 8.0.41         |                                                           |
 | MySQL 8.0.40         |                                                           |
-| MySQL 8.0.36         | 신규로 생성하거나 읽기 복제본을 추가할 수 없습니다.                             |
-| MySQL 8.0.35         | 신규로 생성하거나 읽기 복제본을 추가할 수 없습니다.                             |
+| MySQL 8.0.36         |                                                           |
+| MySQL 8.0.35         |                                                           |
 | MySQL 8.0.34         | 신규로 생성하거나 읽기 복제본을 추가할 수 없습니다.                             | 
 | MySQL 8.0.33         | 신규로 생성하거나 읽기 복제본을 추가할 수 없습니다.                             | 
 | MySQL 8.0.32         | 신규로 생성하거나 읽기 복제본을 추가할 수 없습니다.                             | 
@@ -56,9 +56,9 @@ MySQL 8.0.34 미만 버전은 MySQL LTS 지원 정책에 따라 지원이 종료
 | <strong>5.7</strong> |                                                           |
 | MySQL 5.7.37         |                                                           |
 | MySQL 5.7.33         | You cannot restore a DB instance from an external backup. |
-| MySQL 5.7.26         | 신규로 생성하거나 읽기 복제본을 추가할 수 없습니다.                             |
-| MySQL 5.7.19         | 신규로 생성하거나 읽기 복제본을 추가할 수 없습니다.                             |
-| MySQL 5.7.15         | 신규로 생성하거나 읽기 복제본을 추가할 수 없습니다.                             |
+| MySQL 5.7.26         |                                                           |
+| MySQL 5.7.19         |                                                           |
+| MySQL 5.7.15         |                                                           |
 | <strong>5.6</strong> |                                                           |
 | MySQL 5.6.33         | This version is no longer supported.                      |
 
@@ -67,17 +67,17 @@ Details about DB engine can be found in [DB Engine](db-engine/).
 {{/if}}
 {{#if (eq engine.lowerCase "mariadb")}}
 
-| Version          | Note                          |
-|------------------|-------------------------------|
-| MariaDB 11.4.7   |                               |
-| MariaDB 10.11.13 |                               |
-| MariaDB 10.11.8  |                               |
-| MariaDB 10.11.7  |                               |
-| MariaDB 10.6.22  |                               |
-| MariaDB 10.6.16  |                               |
-| MariaDB 10.6.12  | 신규로 생성하거나 읽기 복제본을 추가할 수 없습니다. |
-| MariaDB 10.6.11  | 신규로 생성하거나 읽기 복제본을 추가할 수 없습니다. |
-| MariaDB 10.3.30  |                               |
+| Version          | Note |
+|------------------|------|
+| MariaDB 11.4.7   |      |
+| MariaDB 10.11.13 |      |
+| MariaDB 10.11.8  |      |
+| MariaDB 10.11.7  |      |
+| MariaDB 10.6.22  |      |
+| MariaDB 10.6.16  |      |
+| MariaDB 10.6.12  |      |
+| MariaDB 10.6.11  |      |
+| MariaDB 10.3.30  |      |
 {{/if}}
 
 ### DB Instance Type
