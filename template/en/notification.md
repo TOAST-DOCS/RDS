@@ -158,6 +158,14 @@ Event refers to an important event that occurs either by RDS for {{engine.pascal
 | INSTC_73_00 | INSTANCE          | Yes          | Auto scale storage started                                                    |
 | INSTC_73_01 | INSTANCE          | Yes          | Auto scale storage completed                                                  |
 | INSTC_73_04 | INSTANCE          | Yes          | Auto scale storage failed                                                     |
+| INSTC_75_00 | INSTANCE          | 예            | VIP 추가 시작                                                                     |  
+| INSTC_75_01 | INSTANCE          | 예            | VIP 추가 완료                                                                     |
+| INSTC_75_04 | INSTANCE          | 예            | VIP 추가 실패                                                                     |
+| INSTC_76_00 | INSTANCE          | 예            | 유지 관리 시작                                                                      |
+| INSTC_76_01 | INSTANCE          | 예            | 유지 관리 완료                                                                      |
+| INSTC_76_02 | INSTANCE          | 예            | 유지 관리 스킵                                                                      |
+| INSTC_76_04 | INSTANCE          | 예            | 유지 관리 실패                                                                      |
+| INSTC_76_05 | INSTANCE          | 예            | 유지 관리 등록 실패                                                                   |
 | JOB_01_04   | JOB               | Yes          | Job execution failed                                                          |
 | TENAT_01_04 | TENANT            | Yes          | CPU cores limit                                                               |
 | TENAT_02_04 | TENANT            | Yes          | RAM capacity limit	                                                           |
