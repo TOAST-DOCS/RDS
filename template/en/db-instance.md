@@ -1388,11 +1388,11 @@ Navigate to the project where the specified DB instance to be checked.
 
 #### 1. Check the DB instance that requires maintenance.
 
-유지 관리 "필수" 버튼 클릭 또는 DB 인스턴스 상세의 유지 관리 탭을 들어가서 하이퍼바이저 마이그레이션 유지 관리 작업이 있는지 확인 할 수 있습니다.
+유지 관리 **필수** 버튼 클릭 또는 DB 인스턴스 상세의 유지 관리 탭을 들어가서 하이퍼바이저 마이그레이션 유지 관리 작업이 있는지 확인 할 수 있습니다.
 
 ![rds_planed_migration_0]({{url.cdn}}/planned_migration_alarm/image0_en.png)
 
-❶ 하이퍼바이저 마이그레이션 유지 관리 "보기" 버튼 클릭
+❶ 하이퍼바이저 마이그레이션 유지 관리 **보기** 버튼 클릭
 ❷ 하이퍼바이저 마이그레이션에 대한 자세한 점검 내용을 확인 할 수 있습니다.
 
 ![rds_planed_migration_1]({{url.cdn}}/planned_migration_alarm/image1_en.png)
@@ -1406,8 +1406,8 @@ If it is inevitable to affect the service, please contact NHN Cloud Customer Cen
 
 ![rds_planed_migration_2]({{url.cdn}}/planned_migration_alarm/image2_en.png)
 
-❶ 하이퍼바이저 마이그레이션을 "즉시 적용"을 통해서 바로 적용할 수 있습니다.
-❷ 하이퍼바이저 마이그레이션을 "다음 유지 관리 기간에 적용" 통해서 원하는 유지 관리 기간에 적용할 수 있습니다.
+❶ 하이퍼바이저 마이그레이션을 **즉시 적용**을 통해서 바로 적용할 수 있습니다.
+❷ 하이퍼바이저 마이그레이션을 **다음 유지 관리 기간에 적용** 통해서 원하는 유지 관리 기간에 적용할 수 있습니다.
 
 #### 4. Wait for the DB instance migration to finish.
 
