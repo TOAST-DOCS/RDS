@@ -1,12 +1,12 @@
 ## Database > RDS for {{engine.pascalCase}} > DB Engine
 
 ## DB Engine
-For MySQL, the version number consists of version = X.Y.Z. In NHN Cloud RDS terminology, X.Y represents the major version and Z represents the minor version number.
 
+In MySQL, the version number consists of version = `X.Y.Z.` In NHN Cloud's RDS for MySQL, `X.Y` represents the major version and `Z` represents the minor version.
 
 ### DB engine version provided by RDS
 
-The versions specified below are available. 신규 DB 인스턴스 생성 및 읽기 복제본 추가는 Major 버전당 상위 7개 Minor 버전까지만 지원합니다.
+The versions specified below are available. 신규 DB 인스턴스 생성 및 읽기 복제본 추가는 메이저 버전당 상위 7개 마이너 버전까지만 지원합니다.
 MySQL 8.0.34 미만 버전은 MySQL LTS 지원 정책에 따라 지원이 종료되었습니다. 해당 버전의 DB 인스턴스는 최신 버전으로 업그레이드할 것을 권장합니다.
 
 | Version              | Note                                                      |
@@ -38,7 +38,6 @@ MySQL 8.0.34 미만 버전은 MySQL LTS 지원 정책에 따라 지원이 종료
 | <strong>5.6</strong> |                                                           |
 | MySQL 5.6.33         | This version is no longer supported.                      |
 
-In MySQL, the version number consists of version = `X.Y.Z.` In NHN Cloud's RDS for MySQL, `X.Y` represents the major version and `Z` represents the minor version.
 
 ### Manage DB Engine Version
 After creating the DB instance, you can change the DB engine version along with modifying the DB instance.
