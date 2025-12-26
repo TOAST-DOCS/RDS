@@ -49,7 +49,7 @@ DB 클러스터에 설치된 {{engine.pascalCase}}의 설정을 적용하기 위
 클러스터 파라미터 그룹은 다음과 같은 제약 사항이 있습니다.
 
 * **DB 클러스터 전용**: DB 클러스터 타입의 DB 인스턴스 그룹에서만 사용할 수 있습니다. 일반 DB 인스턴스에는 적용할 수 없습니다.
-* **GTID 파라미터 고정**: GTID(Global Transaction Identifier) 관련 파라미터가 사전 설정되어 있으며 수정할 수 없습니다.
+* **GTID 파라미터 고정**: GTID(global transaction identifier) 관련 파라미터가 사전 설정되어 있으며 수정할 수 없습니다.
   * `gtid_mode = ON`
   * `enforce_gtid_consistency = ON`
   * `binlog_format = ROW`
