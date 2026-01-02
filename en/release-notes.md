@@ -1,5 +1,21 @@
 ## Database > RDS for MySQL > Release Notes
 
+### January 13, 2026
+
+#### Feature Updates
+
+- Added DB cluster feature
+  - Added a new DB instance group type that provides high availability by default and utilizes GTID-based replication
+  - Enhanced backup features for optimized resources and faster backup times
+- Added maintenance feature
+  - Applied various DB instance modifications during your scheduled maintenance duration
+- Updated to grant ROLE_ADMIN privileges when the Direct Control for DB Schemas & Users setting is enabled
+- Added MySQL 8.0.44, 8.4.7 version
+
+#### Bug Fixes
+
+- Fixed an issue where the authentication plugin was not selected by default when adding a user on MySQL 8.4 DB instances.
+
 ### November 11, 2025
 
 #### Feature Updates
