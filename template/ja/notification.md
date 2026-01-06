@@ -158,14 +158,14 @@
 | INSTC_73_00 | INSTANCE          | はい     | ストレージ自動拡張開始                           |
 | INSTC_73_01 | INSTANCE          | はい     | ストレージ自動拡張完了                           |
 | INSTC_73_04 | INSTANCE          | はい     | ストレージ自動拡張失敗                           |
-| INSTC_75_00 | INSTANCE          | 예      | VIP 추가 시작                             |  
-| INSTC_75_01 | INSTANCE          | 예      | VIP 추가 완료                             |
-| INSTC_75_04 | INSTANCE          | 예      | VIP 추가 실패                             |
-| INSTC_76_00 | INSTANCE          | 예      | 유지 관리 시작                              |
-| INSTC_76_01 | INSTANCE          | 예      | 유지 관리 완료                              |
-| INSTC_76_02 | INSTANCE          | 예      | 유지 관리 스킵                              |
-| INSTC_76_04 | INSTANCE          | 예      | 유지 관리 실패                              |
-| INSTC_76_05 | INSTANCE          | 예      | 유지 관리 등록 실패                           |
+| INSTC_75_00 | INSTANCE          | はい      | VIP追加開始                             |  
+| INSTC_75_01 | INSTANCE          | はい      | VIP追加完了                             |
+| INSTC_75_04 | INSTANCE          | はい      | VIP追加失敗                             |
+| INSTC_76_00 | INSTANCE          | はい      | メンテナンス開始                              |
+| INSTC_76_01 | INSTANCE          | はい      | メンテナンス完了                              |
+| INSTC_76_02 | INSTANCE          | はい      | メンテナンススキップ                              |
+| INSTC_76_04 | INSTANCE          | はい      | メンテナンス失敗                              |
+| INSTC_76_05 | INSTANCE          | はい      | メンテナンス登録失敗                           |
 | JOB_01_04   | JOB               | はい     | Job実行失敗                               |
 | TENAT_01_04 | TENANT            | はい     | CPUコア数制限                              |
 | TENAT_02_04 | TENANT            | はい     | RAM容量制限	                              |

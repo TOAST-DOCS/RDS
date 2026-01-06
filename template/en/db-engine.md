@@ -6,8 +6,8 @@ In MySQL, the version number consists of version = `X.Y.Z.` In NHN Cloud's RDS f
 
 ### DB engine version provided by RDS
 
-The versions specified below are available. 신규 DB 인스턴스 생성 및 읽기 복제본 추가는 메이저 버전당 상위 7개 마이너 버전까지만 지원합니다.
-MySQL 8.0.34 미만 버전은 MySQL LTS 지원 정책에 따라 지원이 종료되었습니다. 해당 버전의 DB 인스턴스는 최신 버전으로 업그레이드할 것을 권장합니다.
+The versions specified below are available. New DB instance creation and read replicas are supported only for the top 7 minor versions per major version.
+Support for MySQL versions below 8.0.34 has ended in accordance with the MySQL LTS policy. We recommend upgrading your DB instances to the latest version.
 
 | Version              | Note                                                      |
 |----------------------|-----------------------------------------------------------|
@@ -23,12 +23,12 @@ MySQL 8.0.34 미만 버전은 MySQL LTS 지원 정책에 따라 지원이 종료
 | MySQL 8.0.40         |                                                           |
 | MySQL 8.0.36         |                                                           |
 | MySQL 8.0.35         |                                                           |
-| MySQL 8.0.34         | 신규로 생성하거나 읽기 복제본을 추가할 수 없습니다.                             | 
-| MySQL 8.0.33         | 신규로 생성하거나 읽기 복제본을 추가할 수 없습니다.                             | 
-| MySQL 8.0.32         | 신규로 생성하거나 읽기 복제본을 추가할 수 없습니다.                             | 
-| MySQL 8.0.28         | 신규로 생성하거나 읽기 복제본을 추가할 수 없습니다.                             | 
-| MySQL 8.0.23         | 신규로 생성하거나 읽기 복제본을 추가할 수 없습니다.                             |
-| MySQL 8.0.18         | 신규로 생성하거나 읽기 복제본을 추가할 수 없습니다.                             |
+| MySQL 8.0.34         | Creation and read replicas unsupported                    | 
+| MySQL 8.0.33         | Creation and read replicas unsupported                    | 
+| MySQL 8.0.32         | Creation and read replicas unsupported                    | 
+| MySQL 8.0.28         | Creation and read replicas unsupported                    | 
+| MySQL 8.0.23         | Creation and read replicas unsupported                    |
+| MySQL 8.0.18         | Creation and read replicas unsupported                    |
 | <strong>5.7</strong> |                                                           |
 | MySQL 5.7.37         |                                                           |
 | MySQL 5.7.33         | You cannot restore a DB instance from an external backup. |
@@ -40,17 +40,17 @@ MySQL 8.0.34 미만 버전은 MySQL LTS 지원 정책에 따라 지원이 종료
 
 
 ### Manage DB Engine Version
-After creating the DB instance, you can change the DB engine version along with modifying the DB instance.
+After creating the DB instance, you can change the DB engine version and modify the DB instance.
 
 > [Caution]
-When attempting to change the DB version, only upgrade is supported, downgrade is not supported.
+When attempting to change the DB version, only an upgrade is supported. a downgrade is not supported.
 
-When upgrading the DB engine version, if only the major version number is changed, it is considered a major version upgrade, and if only the minor version number is changed, it is considered a minor version upgrade.
+When upgrading the database engine version, a major version upgrade occurs if only the major version number is changed, and a minor version upgrade occurs if only the minor version number is changed.
 When attempting to upgrade the DB engine major version, you can upgrade to the next major version of the DB engine.
 
 #### Pre-inspection for upgrading from MySQL 5.7 to MySQL 8.0
 
-MySQL 8.0 and MySQL 5.7 contain a number of incompatibilities. So if you are doing a major version DB engine upgrade from `5.7` to version `8.0` you may run into issues. Therefore, a pre-inspection process is required for some items that are expected to cause problems. The following items require prior inspection.
+MySQL 8.0 and MySQL 5.7 contain a number of incompatibilities. So if you are doing a major version DB engine upgrade from `5.7` to version `8.0`, you may run into issues. Therefore, a pre-inspection process is required for some items that are expected to cause problems. The following items require prior inspection.
 
 - There must be no version upgrade disqualifications via `mysqlcheck`.
 - When checked through `INFORMATION_SCHEMA.VIEWS`, the column name must not exceed 64 characters.
@@ -67,7 +67,7 @@ For DB version upgrade pre-check, you can check the result in the following ways
 - When attempting to upgrade the DB version in the console, check the result using the `DB Engine Upgrade Pre-Check` button.
 - Check the results of DB version upgrade attempts
 
-For the results of `DB Engine upgrade pre-check`in the console and the results of DB version upgrade attempts, you can check the details through `db_version_upgrade_compatibility.log`generated on the Log tab of each DB instance. The detailed history items have the following meanings respectively.
+For the results of `DB Engine upgrade pre-check`in the console and the results of DB version upgrade attempts, you can check the details through `db_version_upgrade_compatibility.log`generated on the Log tab of each DB instance. The detailed history items have the following meanings, respectively.
 - `CHECK_BY_MYSQL_CHECK`:  There must be no version upgrade disqualifications via `mysqlcheck`.
 - `COLUMN_LENGHT_LIMIT_CHECK`: When checked through INFORMATION_SCHEMA.VIEWS, the column name must not exceed 64 characters.
 - `DUPLICATE_NAME_WITH_DATA_DICT`: No table should have the same name as a table used in the data dictionary.
@@ -87,34 +87,34 @@ Also, you must check items that have been removed or changed in 8.0.
 
 To upgrade to MySQL 8.4, you must have already upgraded to MySQL 8.0. When upgrading a major version of the DB engine from `8.0` to `8.4`, a pre-check process is required for some items that are expected to cause problems.
 
-You can check the items detected by the upgrade checker through `DB Engine Upgrade Pre-Check` in the console, and any items detected as errors must be addressed. For more details, please refer to the MySQL hompage.
+You can check the items detected by the upgrade checker through `DB Engine Upgrade Pre-Check` in the console, and any items detected as errors must be addressed. For more details, please refer to the MySQL homepage.
 - [Upgrade Checker Guide](https://dev.mysql.com/doc/mysql-shell/8.4/en/mysql-shell-utilities-upgrade.html#mysql-utilities-upgrade-checks)
 
 Also, you must check what has been removed or changed in 8.4.
 - [Guide to Incompatible Changes](https://dev.mysql.com/doc/refman/8.4/en/upgrading-from-previous-series.html#upgrade-incompatible-changes)
 - [Guide to Features Removed in 8.4](https://dev.mysql.com/doc/refman/8.4/en/mysql-nutshell.html#mysql-nutshell-removals)
 
-#### MySQL 버전 업그레이드 제약 사항
+#### MySQL Version Upgrade Constraints
 
-MySQL 8.0.18 버전은 직접 MySQL 8.4로 업그레이드할 수 없습니다.
-8.0.18에서 8.4로의 업그레이드를 수행하기 위해서는 다음 조건을 충족해야 합니다.
+Direct upgrade from version 8.0.18 to MySQL 8.4 is not supported.
+The following conditions must be met to upgrade from 8.0.18 to 8.4:
 
-업그레이드 경로
-1.	MySQL 8.0.23 이상으로 먼저 업그레이드
-2.	이후 MySQL 8.4 버전으로 업그레이드
+Upgrade Path
+1.	First, upgrade to MySQL 8.0.23 or higher
+2.	Then, upgrade to MySQL 8.4
 
-이는 MySQL 8.4 버전에서 요구하는 최소 호환 버전이 8.0.23 이상이기 때문이며, 해당 버전보다 낮은 환경에서는 메타데이터 및 내부 스키마 구조의 호환성이 보장되지 않습니다.
+This is because MySQL 8.4 requires at least version 8.0.23 for metadata and internal schema compatibility. Upgrading from versions below 8.0.23 is not supported.
 
 #### Upgrading the DB Engine Version Using a Dummy DB Instance 
 
 When trying to change the DB engine version in the Modify DB Instance window, you can select whether to use a dummy DB instance to ensure high availability during the version upgrade process. If you choose to use a dummy DB instance, a candidate master for DB version upgrade is created. 
 
 > [Caution]
-For dummy DB instances, a temporary candidate master is created during the upgrade process, so this option is only available for non-high availability configurations.
+For dummy DB instances, a temporary candidate master is created during the upgrade process, so this option is only available for non-high-availability configurations.
 
 #### Manual Control of Failover When Upgrading High Availability DB Instances
 
-When a DB instance is configured for high availability, the engine version of the candidate master is upgraded first, and then failover is used to promote the candidate master to master. Because failover briefly interrupts the service on the master, you can initiate failover at any time they want.
+When a DB instance is configured for high availability, the engine version of the candidate master is upgraded first, and then failover is used to promote the candidate master to master. Because failover briefly interrupts the service on the master, you can initiate failover at any time.
 The manual control of failover during version upgrade allows you to initiate failover directly from the console.
 
 ### When using an Outdated Operating System

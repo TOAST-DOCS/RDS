@@ -29,9 +29,9 @@ NHN Cloud has divided the entire system into several availability zones to prepa
 
 ### DB Engine
 
-The versions specified below are available. 신규 DB 인스턴스 생성 및 읽기 복제본 추가는 메이저 버전당 상위 7개 마이너 버전까지만 지원합니다.
+The versions specified below are available. New DB instance creation and read replica additions are supported only for the seven most recent minor versions of each major version.
 {{#if (eq engine.lowerCase "mysql")}}
-MySQL 8.0.34 미만 버전은 MySQL LTS 지원 정책에 따라 지원이 종료되었습니다. 해당 버전의 DB 인스턴스는 최신 버전으로 업그레이드할 것을 권장합니다.
+MySQL versions below 8.0.34 have reached End of Support per the MySQL LTS policy. We recommend upgrading your DB instances to the latest version.
 
 | Version              | Note                                                      |
 |----------------------|-----------------------------------------------------------|
@@ -47,12 +47,12 @@ MySQL 8.0.34 미만 버전은 MySQL LTS 지원 정책에 따라 지원이 종료
 | MySQL 8.0.40         |                                                           |
 | MySQL 8.0.36         |                                                           |
 | MySQL 8.0.35         |                                                           |
-| MySQL 8.0.34         | 신규로 생성하거나 읽기 복제본을 추가할 수 없습니다.                             | 
-| MySQL 8.0.33         | 신규로 생성하거나 읽기 복제본을 추가할 수 없습니다.                             | 
-| MySQL 8.0.32         | 신규로 생성하거나 읽기 복제본을 추가할 수 없습니다.                             | 
-| MySQL 8.0.28         | 신규로 생성하거나 읽기 복제본을 추가할 수 없습니다.                             | 
-| MySQL 8.0.23         | 신규로 생성하거나 읽기 복제본을 추가할 수 없습니다.                             |
-| MySQL 8.0.18         | 신규로 생성하거나 읽기 복제본을 추가할 수 없습니다.                             |
+| MySQL 8.0.34         | Creation and read replicas unsupported                    | 
+| MySQL 8.0.33         | Creation and read replicas unsupported                    | 
+| MySQL 8.0.32         | Creation and read replicas unsupported                    | 
+| MySQL 8.0.28         | Creation and read replicas unsupported                    | 
+| MySQL 8.0.23         | Creation and read replicas unsupported                    |
+| MySQL 8.0.18         | Creation and read replicas unsupported                    |
 | <strong>5.7</strong> |                                                           |
 | MySQL 5.7.37         |                                                           |
 | MySQL 5.7.33         | You cannot restore a DB instance from an external backup. |
@@ -62,7 +62,7 @@ MySQL 8.0.34 미만 버전은 MySQL LTS 지원 정책에 따라 지원이 종료
 | <strong>5.6</strong> |                                                           |
 | MySQL 5.6.33         | This version is no longer supported.                      |
 
-For the DB engine, version upgrades are possible through the modification feature of console after creation.
+For the DB engine, version upgrades are possible through the modification feature of the console after creation.
 Details about DB engine can be found in [DB Engine](db-engine/).
 {{/if}}
 {{#if (eq engine.lowerCase "mariadb")}}
@@ -83,7 +83,7 @@ Details about DB engine can be found in [DB Engine](db-engine/).
 ### DB Instance Type
 
 DB instances have different CPU cores and memory capacity depending on the type.
-When creating DB instance, you must select appropriate DB instance type according to database workload.
+When creating a DB instance, you must select an appropriate DB instance type according to the database workload.
 
 | Type | Description                                                                                                                    | 
 |------|--------------------------------------------------------------------------------------------------------------------------------| 
@@ -99,7 +99,7 @@ The type of DB instance that you have already created can be easily changed thro
 
 ### Data Storage
 
-It stores the database's data files on data storage. DB instances support two types of data storage HDD and SSD. Performance and price vary depending on the type of data storage, so you need to choose the right type depending on the database workload. Data storage can be created from 20GB to 2TB.
+It stores the database's data files in data storage. DB instances support two types of data storage: HDD and SSD. Performance and price vary depending on the type of data storage, so you need to choose the right type depending on the database workload. Data storage can range from 20GB to 2TB.
 
 > [Caution]
 You cannot change the data storage type for DB instance that you have already created.
@@ -142,94 +142,92 @@ DB security groups are used to restrict access in case of external intrusion. Yo
 
 ### Backup
 
-You can set up periodic backups of the databases in your DB instance, or you can create backups at any time through the console. Performance may degrade during backups. To avoid affecting service, it is better to perform back up at a time when the service is under low load. If you do not want the backup to degrade performance, you can use a high-availability configuration or perform backups from read replica. Backup files are stored on internal object storage and are charged based on the
-size of backup storage. You can export to user object storage in NHN Cloud if necessary. To prepare for unexpected failures, we recommend that you set up backups to conduct periodically. For more details on backup, see [Backup and Restore](backup-and-restore/).
+You can set up periodic backups of the databases in your DB instance, or you can create backups at any time through the console. Performance may degrade during backups. To avoid affecting service, it is better to perform back up at a time when the service is under low load. If you do not want the backup to degrade performance, you can use a high-availability configuration or perform backups from a read replica. Backup files are stored on internal object storage and are charged based on the
+size of backup storage. You can export to user object storage in NHN Cloud if necessary. To prepare for unexpected failures, we recommend that you set up backups to be conducted periodically. For more details on backup, see [Backup and Restore](backup-and-restore/).
 
-### 유지 관리
+### Maintenance
 
-유지 관리 기능을 사용하면 DB 인스턴스의 다양한 변경 작업을 원하는 시간대에 수행할 수 있습니다. DB 인스턴스 수정, DB 엔진 버전 업그레이드, DB 인스턴스 운영체제 업그레이드 등의 작업은 재시작이 필요하여 다운타임이 발생할 수 있습니다. 유지 관리 기간을 설정하면 이러한 작업들을 서비스 부하가 적은 시간대에 실행할 수 있습니다.
+The Maintenance feature allows you to schedule various changes to your DB instance at your preferred time. Since tasks such as modifying instances or upgrading the DB engine and operating system require a restart, downtime may occur. By scheduling a maintenance duration, you can ensure these operations occur during periods of low service load.
 
-#### 유지 관리 기간
+#### Maintenance Duration
 
-DB 인스턴스 생성 또는 수정 시 유지 관리 기간을 설정할 수 있습니다. 유지 관리 기간을 설정하지 않으면 22:00~06:00 사이의 30분이 랜덤하게 자동 할당됩니다. 유지 관리 기간은 자동 백업 시간과 겹칠 수 없습니다.
+You can set a maintenance duration when creating or modifying a DB instance. If no duration is specified, a 30-minute slot will be automatically assigned at random between 10 PM and 6 AM. Note that the maintenance duration cannot overlap with the automated backup duration.
 
-> [참고]
-> 유지 관리 기간은 유지 관리 시작 요일, 유지 관리 시작 시간, 유지 관리 윈도우(30분 단위)로 구성됩니다.
+> [Note]
+> A maintenance duration consists of a start day, a start time, and a duration (in 30-minute increments).
+#### Maintenance Task
 
-#### 유지 관리 작업
+Maintenance tasks are categorized into User Maintenance and Provider Maintenance.
 
-유지 관리 작업은 사용자 유지 관리 작업과 Provider 유지 관리 작업으로 구분됩니다.
+**User Maintenance Task**
 
-**사용자 유지 관리 작업**
+A task that users manually schedule and execute.
 
-사용자가 직접 실행을 예약할 수 있는 작업입니다.
+* DB instance modifications (e.g., changing instance specs, port updates, parameter group changes)
+* DB engine version upgrade
+* DB instance OS upgrade
 
-* DB 인스턴스 수정(DB 인스턴스 사양 변경, 포트 변경, 파라미터 그룹 변경 등)
-* DB 엔진 버전 업그레이드
-* DB 인스턴스 운영체제 업그레이드
+**Provider Maintenance Task**
 
-**Provider 유지 관리 작업**
+A maintenance task provided by NHN Cloud.
 
-NHN Cloud에서 제공하는 유지 관리 작업입니다.
+* Apply parameter group changes
+* Migration for hypervisor maintenance
 
-* 파라미터 그룹 변경 사항 적용
-* 하이퍼바이저 점검을 위한 마이그레이션
+#### Maintenance Execution Time
 
-#### 유지 관리 적용 시점
+You can choose when to apply maintenance tasks.
 
-유지 관리 작업 수행 시 적용 시점을 선택할 수 있습니다.
+* **Apply Immediately**: apply immediately upon request.
+* **Apply in the Next Maintenance Duration**: apply during the next maintenance duration.
 
-* **즉시 적용**: 요청 즉시 유지 관리 작업을 수행합니다.
-* **다음 유지 관리 기간에 적용**: 다음 유지 관리 기간에 작업을 수행합니다.
+#### Maintenance Status
 
-#### 유지 관리 상태
+You can check the maintenance status of each instance in the DB instance list.
 
-DB 인스턴스 목록에서 각 인스턴스의 유지 관리 상태를 확인할 수 있습니다.
-
-| 상태      | 설명                                    |
+| Status      | Description                                    |
 |---------|---------------------------------------|
-| 없음      | 예약 및 보류 중인 유지 관리 작업이 없습니다.            |
-| 다음 적용   | 사용자 유지 관리 작업이 다음 유지 관리 기간에 실행 예정입니다.  |
-| 적용 중    | 유지 관리 작업이 진행 중입니다.                    |
-| 필수      | 필수 Provider 유지 관리 작업이 보류 중입니다.        |
-| 사용 가능   | 필수가 아닌 Provider 유지 관리 작업이 보류/준비 중입니다. |
+| None | There are no scheduled or pending maintenance tasks. |
+| Next Applied | A user maintenance task is scheduled to run in the next maintenance duration. |
+| Applying | A maintenance task is in progress. |
+| Required | A required provider maintenance task is pending. |
+| Available | A non-required provider maintenance task is pending/in preparation. |
 
-> [참고]
-> 고가용성 DB 인스턴스의 예비 마스터는 유지 관리 상태가 표시되지 않습니다.
+> [Note]
+> The maintenance status is not displayed for the standby instance of High Availability (HA) DB instances.
+#### Maintenance Tab
 
-#### 유지 관리 탭
+You can find the following information on the Maintenance tab of the DB instance details page:
 
-DB 인스턴스 상세 화면의 유지 관리 탭에서 다음 정보를 확인할 수 있습니다.
+* Maintenance start day and duration
+* Next maintenance duration
+* Maintenance status
+* Upcoming maintenance tasks (Scheduled for the next duration)
+* Pending maintenance tasks
 
-* 유지 관리 시작 요일 및 기간
-* 다음 유지 관리 기간
-* 유지 관리 상태
-* 준비 중인 유지 관리 작업 목록(다음 유지 관리 기간에 실행될 작업)
-* 보류 중인 유지 관리 작업 목록
+Upcoming maintenance tasks can be excluded from the maintenance duration using the Hold or Delete buttons. For pending Provider maintenance tasks, you can manually apply them by selecting either **Apply Immediately** or **Apply in the Next Maintenance Duration**.
 
-준비 중인 유지 관리 작업은 보류/삭제 버튼을 통해 유지 관리 기간에서 제외할 수 있습니다. 보류 중인 Provider 유지 관리 작업은 **즉시 적용** 또는 **다음 유지 관리 기간에 적용**을 선택하여 수동으로 적용할 수 있습니다.
+#### Execution Order
 
-#### 작업 실행 순서
+All tasks within the maintenance duration are executed sequentially in the order they were registered. However, mandatory maintenance tasks that have expired will be prioritized and executed first. Any tasks not completed within the current duration will be rescheduled to the next maintenance duration.
 
-유지 관리 기간 내의 모든 작업은 등록 순서에 따라 순차적으로 실행됩니다. 단, 만료 일시가 지난 필수 유지 관리 작업은 가장 먼저 실행됩니다. 유지 관리 기간 내에 실행되지 못한 작업은 다음 유지 관리 기간에 다시 실행됩니다.
-
-> [참고]
-> 자동 백업 및 DB 인스턴스가 '작업 중' 상태에서 유지 관리 기간이 시작되어 유지 관리 시간이 계속 미뤄질 경우 해당 유지 관리는 우선 생략하고 다음 유지 관리 기간에 실행됩니다. 유지 관리 작업이 생략되면 이벤트가 생성됩니다.
+> [Note]
+> If a maintenance task is repeatedly deferred because the maintenance duration starts while an automated backup is in progress or the DB instance is in a 'Busy' state, that task will be skipped and rescheduled for the next duration. An event will be generated if a maintenance task is skipped.
 
 ### Default Notification
 
-When you create a DB instance, you can set default notifications. If setting default notifications, it will create a new notification group with the name `{DB instance name}-default` and will automatically set the notification items below. You can freely modify and delete alert groups that are created as default notification. For more details on notification group, see the [ notification group ](notification/).
+When you create a DB instance, you can set default notifications. If setting default notifications, it will create a new notification group with the name `{DB instance name}-default` and will automatically set the notification items below. You can freely modify and delete alert groups that are created as default notifications. For more details on the notification group, see the [ notification group ](notification/).
 
-| Item                         | Comparison Method | Threshold value           | Duration |
-|----------------------------|-------|---------------|-------|
-| CPU Usage                    | >= | 80%           | 5 minutes    |
-| Storage Remaining Usage             | <= | 5,120MB       | 5 minutes    |
-| Database Connection Status | <= | 0             | 0 minute    |
-| Storage usage                | >= | 95%           | 5 minutes    |
-| Data Storage Defects                | <= | 0             | 0 minute    |
-| Connection Ratio           | >= | 85%           | 5 minutes    |
-| Memory Usage                    | >= | 90%           | 5 minutes    |
-| Slow Query                 | >= | 60 counts/min | 5 minutes    |
+| Item                       | Comparison Method | Threshold value | Duration  |
+|----------------------------|-------------------|-----------------|-----------|
+| CPU Usage                  | >=                | 80%             | 5 minutes |
+| Storage Remaining Usage    | <=                | 5,120MB         | 5 minutes |
+| Database Connection Status | <=                | 0               | 0 minute  |
+| Storage usage              | >=                | 95%             | 5 minutes |
+| Data Storage Defects       | <=                | 0               | 0 minute  |
+| Connection Ratio           | >=                | 85%             | 5 minutes |
+| Memory Usage               | >=                | 90%             | 5 minutes |
+| Slow Query                 | >=                | 60 counts/min   | 5 minutes |
 
 ### Deletion Protection
 
@@ -315,7 +313,7 @@ You can view and download various log files from Log tab of DB instance. Log fil
 
 ![db-instance-detail-log_en]({{url.cdn}}/24.03.12/db-instance-detail-log_en.png)
 
-❶ Click on **View Logs** and you will see a pop-up window where you can check the contents of the log file. You can check logs up to 65,535 Bytes.
+❶ Click on **View Logs**, and you will see a pop-up window where you can check the contents of the log file. You can check logs up to 65,535 Bytes.
 ❷ When **Import** is clicked, the request is made to download the log file for DB instance.
 ❸ When download is ready, **Download** button will be exposed. Click to download the log.
 
@@ -329,68 +327,66 @@ Click on **Download** to charge Internet traffic as the size of the log file.
 
 ❺ Select to use the mysqlbinlog utility to convert the binary log into SQL file and then download it.
 
-### 유지 관리
+### Maintenance
 
-DB 인스턴스의 **유지 관리** 탭에서는 유지 관리 설정 및 상태를 확인하고, 유지 관리 작업을 관리할 수 있습니다.
+The Maintenance tab allows you to monitor settings and status, and manage maintenance operations for your DB instance.
 
 ![db-instance-detail-maintenance_ko]({{url.cdn}}/25.01.13/db-instance-detail-maintenance_ko.png)
 
-#### 유지 관리 정보
+#### Maintenance Information
 
-유지 관리 탭 상단에서 현재 DB 인스턴스의 유지 관리 설정 정보를 확인할 수 있습니다.
+At the top of the Maintenance tab, you can view the maintenance configuration details for the current DB instance.
 
-| 항목               | 설명                                                          |
+| Item | Description |
 |------------------|-------------------------------------------------------------|
-| 유지 관리 시작 요일      | DB 인스턴스에 설정된 유지 관리 시작 요일입니다.                                |
-| 유지 관리 기간         | DB 인스턴스에 설정된 유지 관리 시간 범위입니다.                                |
-| 다음 유지 관리 기간      | 다음에 유지 관리 작업이 실행될 예정인 일시입니다.                                |
-| 유지 관리 상태         | 현재 유지 관리 상태를 나타냅니다. **없음**, **다음 적용**, **적용 중**, **필수**, **사용 가능** 중 하나로 표시됩니다. |
+| Maintenance Start Day | The maintenance start day set for the DB instance. |
+| Maintenance Duration | The maintenance duration range set for the DB instance. |
+| Next Maintenance Duration | The date and time when the maintenance task is next scheduled to run. |
+| Maintenance Status | Indicates the current maintenance status. This can be one of **None**, **Next Apply**, **Applying**, **Required**, or **Available**. |
 
-> [참고]
-> 유지 관리 기간을 설정하지 않은 경우에도 랜덤으로 할당된 유지 관리 기간을 확인할 수 있습니다.
+> [Note]
+> Even if you haven't set a maintenance duration, you can view the randomly assigned duration here.
+#### Upcoming Maintenance
 
-#### 준비 중인 유지 관리
+Upcoming Maintenance is a list of tasks scheduled to be executed during the next maintenance duration. When you perform actions such as modifying a DB instance or upgrading the DB engine version and select **Apply in the Next Maintenance Duration**, the task is added to this list.
 
-준비 중인 유지 관리는 다음 유지 관리 기간에 실행될 예정인 작업 목록입니다. 사용자가 DB 인스턴스 수정, DB 엔진 버전 업그레이드 등의 작업을 수행할 때 **다음 유지 관리 기간에 적용**을 선택하면 이 목록에 추가됩니다.
-
-| 항목         | 설명                               |
+| Item | Description |
 |------------|----------------------------------|
-| 설명         | 유지 관리 작업에 대한 설명입니다.              |
-| 유형         | 유지 관리 작업의 유형입니다.                 |
-| 상태         | 유지 관리 작업의 현재 상태입니다.              |
-| 필수 여부      | 필수 유지 관리 작업 여부를 나타냅니다.           |
-| 등록 일시      | 유지 관리 작업이 등록된 일시입니다.             |
-| 강제 적용 일시   | 필수 작업의 경우, 이 일시 이후에는 자동으로 적용됩니다. |
+| Description | A description of the maintenance task. |
+| Type | The type of maintenance task. |
+| Status | The current status of the maintenance task. |
+| Required | Indicates whether the maintenance task is required. |
+| Registration Date | The date the maintenance task was registered. |
+| Mandatory Date | If the task is required, it will be automatically applied after this date. |
 
-준비 중인 유지 관리 작업은 선택 후 **삭제** 또는 **보류**를 클릭하여 유지 관리 기간에서 제외할 수 있습니다.
-삭제된 사용자 유지 관리 작업은 취소되며, 다시 유지 관리 기간에 적용하려면 해당 작업을 다시 수행해야 합니다.
-Provider 유지 관리 작업은 보류 중인 유지 관리 목록으로 이동합니다. 보류 중인 유지 관리 목록에서 다시 준비 중인 유지 관리 작업으로 이동할 수 있습니다.
+Upcoming maintenance tasks can be excluded from the maintenance duration by selecting them and clicking **Delete** or **Hold**.
+If deleted, these tasks are canceled. To apply them again in a future duration, you must perform the original action once more.
+Provider maintenance tasks will be moved to the Pending Maintenance list. You can move them back to the Upcoming Maintenance list at any time from the Pending Maintenance list.
 
-#### 보류 중인 유지 관리
+#### Pending Maintenance
 
-보류 중인 유지 관리는 NHN Cloud에서 제공하는 Provider 유지 관리 작업 목록입니다. 파라미터 그룹 변경 사항 적용, 하이퍼바이저 점검을 위한 마이그레이션 등의 작업이 포함됩니다.
+Pending Maintenance is a list of Provider maintenance tasks provided by NHN Cloud. This includes operations such as applying parameter group changes and migrations for hypervisor maintenance.
 
-| 항목         | 설명                               |
-|------------|----------------------------------|
-| 설명         | 유지 관리 작업에 대한 설명입니다.              |
-| 유형         | 유지 관리 작업의 유형입니다.                 |
-| 상태         | 유지 관리 작업의 현재 상태입니다.              |
-| 필수 여부      | 필수 유지 관리 작업 여부를 나타냅니다.           |
-| 강제 적용 일시   | 필수 작업의 경우, 이 일시 이후에는 자동으로 적용됩니다. |
+| Item        | Description                                                                 |
+|-------------|-----------------------------------------------------------------------------|
+| Description | A description of the maintenance task.                                      |
+| Type        | The type of maintenance task.                                               |
+| Status      | The current status of the maintenance task.                                 |
+| Mandatory   | Indicates whether the maintenance task is mandatory.                        |
+| Forced Date | If the task is mandatory, it will be applied automatically after this date. |
 
-보류 중인 유지 관리 작업을 선택한 후 **다음**을 클릭하여 적용 시점을 선택할 수 있습니다.
+You can select a pending maintenance task and then click **Next** to select the execution time.
 
-**즉시 적용**: 선택한 유지 관리 작업을 즉시 수행합니다. **확인**을 클릭하면 바로 실행됩니다.
+**Apply Immediately**: apply immediately upon request. Click **Confirm** to execute immediately.
 ![db-instance-detail-maintenance-immediately_ko]({{url.cdn}}/25.01.13/db-instance-detail-maintenance-immediately_ko.png)
 
-**다음 유지 관리 기간에 적용**: 선택한 유지 관리 작업을 다음 유지 관리 기간에 수행합니다. **확인**을 클릭하면 준비 중인 유지 관리 목록으로 이동합니다.
+**Apply in the Next Maintenance Duration**: apply during the next maintenance duration. Click **Confirm** to move this task to the Upcoming Maintenance list.
 ![db-instance-detail-maintenance-schedule_ko]({{url.cdn}}/25.01.13/db-instance-detail-maintenance-schedule_ko.png)
 
-> [주의]
-> 필수 유지 관리 작업은 강제 적용 일시 이전까지는 적용 시점을 선택할 수 있지만, 강제 적용 일시 이후에는 자동으로 다음 유지 관리 기간에 수행됩니다.
-
-> [참고]
-> 유지 관리 작업 적용 시 재시작이 필요한 경우 장애 조치, 백업 등의 추가 옵션을 선택할 수 있는 팝업 화면이 나타납니다. 고가용성 DB 인스턴스의 경우 장애 조치를 이용한 재시작을 사용하여 서비스 중단 시간을 최소화할 수 있습니다.
+> [Caution]
+> Required maintenance tasks can be applied at any time up to the mandatory application date. However, after the mandatory application date, they will automatically be performed during the next maintenance period.
+> [Note]
+> If a maintenance task requires a restart, a pop-up screen will appear, allowing you to select additional options, such as failover or backup. For high-availability DB instances, you can minimize service downtime by using a restart with failover.
 
 ### DB Schema and Users
 
@@ -408,7 +404,7 @@ DB schema name has the following restrictions.
 * You can only use alphabets, numbers, and _ from 1 to 64 characters and the first letter can only contain alphabetic characters.
 * `information_schema`, `performance_schema`, `db_helper`, `sys`, `mysql`, `rds_maintenance` are not allowed to be used as DB schema name.
 
-You cannot modify the name of DB schema that has created.
+You cannot modify the name of the DB schema that has been created.
 
 #### DB schema deleted
 
@@ -451,7 +447,7 @@ GRANT INSERT, UPDATE, DELETE, CREATE TEMPORARY TABLES, LOCK TABLES, EXECUTE ON *
 ```
 
 **DDL**
-* Includes CRUD permissions, and has permissions to execute DDL queries.
+* Includes CRUD permissions and has permissions to execute DDL queries.
 
 ```sql
 GRANT CREATE, DROP, INDEX, ALTER, CREATE VIEW, REFERENCES, EVENT, ALTER ROUTINE, CREATE ROUTINE, TRIGGER, RELOAD ON *.* TO '{user_id}'@'{host}';
@@ -468,7 +464,7 @@ GRANT EXECUTE ON `mysql`.* TO '{user_id}'@'{host}';
 
 | Authentication Plugin | Supported Versions                            |
 |-----------------------|-----------------------------------------------|
-| mysql_native_password | 8.4 버전 미만                                     |
+| mysql_native_password | 8.4 version or below                          |
 | sha256_password       | 5.7.33 version or later and below 8.0 version |
 | caching_sha2_password | 8.0 version or later                          |
 
@@ -539,12 +535,13 @@ You can easily change various items in DB instances created through console. Cha
 | Storage Auto Scale | Yes        | No                     | 
 | Schema & User Control | Yes        | No                     |
 
-For high availability DB instances, if there are any changes to items that need to be restarted, it provides a restart capability using failover to increase stability and reduce disconnected time.
+For high-availability DB instances, if there are any changes to items that need to be restarted, it provides a restart capability using failover to increase stability and reduce disconnected time.
 
 ![modify-ha-popup-en]({{url.cdn}}/24.11.12/modify-ha-popup-en.png)
 
-❶ 유지 관리 기능으로 **다음 유지 관리 기간에 적용** 또는 **즉시 적용**을 선택해 DB 인스턴스 수정을 진행할 수 있습니다.
-❷ 장애 조치를 이용한 재시작을 사용하지 않으면 마스터와 예비 마스터에 변경 사항을 순차적으로 적용한 후 DB 인스턴스를 재시작합니다. 자세한 사항은 고가용성 DB 인스턴스의 [수동 장애 조치 항목](db-instance/#manual-failover)을 참고합니다.
+
+❶ Modify your DB instance and schedule the update by selecting either **Apply in the Next Maintenance Duration** or **Apply Immediately**.
+❷ If you do not use 'Reboot with Failover', changes will be applied sequentially to the master and standby instances, followed by a restart of the DB instance. For more details, please refer to the [Manual Failover section](db-instance/#manual-failover) for High Availability DB instances.
 
 ### DB Schema & Direct User Control
 
@@ -567,19 +564,19 @@ You can check the operating system information of the current DB instance on the
 ![db-instance-os-upgrade-en.png]({{url.cdn}}/24.06.11/db-instance-os-upgrade-en.png)
 
 ❶ You can check the operating system information of the DB instance.
-❷ If the operating system is eligible for version upgrade, the **OS Version Upgrade** button appears.
+❷ If the operating system is eligible for a version upgrade, the **OS Version Upgrade** button appears.
 
-Operating system version upgrades behave differently depending on whether you are in a highly available configuration or not. For high availability, the operating system version upgrade is performed using failover. For non-high availability, the operating system version upgrade is performed by restarting the DB instance.
+Operating system version upgrades behave differently depending on whether you are in a highly available configuration. For high availability, the operating system version upgrade is performed using failover. For non-high availability, the operating system version upgrade is performed by restarting the DB instance.
 
 When you click the OS Version Upgrade button for a single DB instance, the following pop-up screen appears.
-단일 DB 인스턴스의 운영체제 버전 업그레이드시에도 유지 관리 기능을 사용할 수 있습니다.
+The maintenance feature is also available when upgrading the operating system version of a single DB instance.
 ![db-instance-os-upgrade-single-popup-en.png]({{url.cdn}}/24.06.11/db-instance-os-upgrade-simple-popup-en.png)
 
 When you click the Upgrade Operating System Version for High Availability DB Instance button, the pop-up screen shown below appears. For more information, see [Manual failover item](db-instance/#manual-failover) of High Availability DB Instances.
 ![os-upgrade-ha-popup-en.png]({{url.cdn}}/24.11.12/os-upgrade-ha-popup-en.png)
 
-❶ 유지 관리 적용 방법을 통해서 유지 관리 기능을 사용할 수 있습니다.
-❷ 장애 조치를 사용하는 방법만 제공 됩니다.
+❶ You can use the maintenance feature through the Maintenance Application Method settings.
+❷ Only the With Failover method is provided.
 
 ## Delete DB Instance
 
@@ -591,7 +588,7 @@ You can prepare in advance to recover the database of your DB instance in case o
 
 ## Restoration
 
-You can use backups to restore data to any point in time. Restore always creates a new DB instance and cannot be restored to existing DB instance. Refer to [Restore](backup-and-restore/#restore) for more information.
+You can use backups to restore data to any point in time. Restore always creates a new DB instance and cannot be restored to an existing DB instance. Refer to [Restore](backup-and-restore/#restore) for more information.
 
 ## Secure Capacity
 
@@ -629,20 +626,19 @@ The amount of increase when the auto scale storage feature runs is set to the la
 
 ## Apply parameter group changes
 
-DB 인스턴스에 연결된 파라미터 그룹의 설정이 변경되어도 이 변경 사항은 DB 인스턴스에 자동으로 적용되지 않습니다.
-만약 DB 인스턴스에 적용된 파라미터와 연결된 파라미터 그룹의 설정이 서로 다를 경우 **파라미터 변경 적용** 유지 관리가 생성되고 유지 관리 상태가 변경됩니다.
+Changes made to a parameter group linked to a DB instance are not automatically applied to that instance. If the parameters currently applied to the DB instance differ from the settings in the linked parameter group, an **Apply Parameter Changes** maintenance task is created, and the maintenance status is updated.
 
-다음 방법은 여러 DB 인스턴스 또는 단일 DB 인스턴스에 대해서 파라미터 그룹의 변경 사항을 적용할 수 있습니다.
+You can apply parameter group changes to a single DB instance or multiple DB instances using the following methods:
 
 ![db-instance-list-parameter-en]({{url.cdn}}/24.03.12/db-instance-list-parameter-en.png)
 
-❶ 대상 DB 인스턴스를 선택한 후 드롭다운 메뉴에서 **파라미터 그룹 변경 사항 적용** 메뉴를 클릭
+❶ Select the target DB instance, then click **Apply Parameter Group Changes** from the dropdown menu.
 
-유지 관리 기능으로 **다음 유지 관리 기간에 적용** 또는 **즉시 적용**을 선택해 파라미터 그룹 변경 사항을 적용할 수 있습니다.
+You can apply parameter group changes by choosing either **Apply in the Next Maintenance Duration** or **Apply Immediately** through the maintenance feature.
 
-If the parameters in the parameter group that require restart are changed, the DB instance is restarted during the process of applying the changes.
+If the parameters in the parameter group that require a restart are changed, the DB instance is restarted during the process of applying the changes.
 
-High availability DB instances provide restart feature using failover to increase stability and reduce disconnected time.
+High-availability DB instances provide a restart feature using failover to increase stability and reduce disconnected time.
 
 ![db-instance-parameter-ha-en]({{url.cdn}}/24.03.12/db-instance-parameter-ha-en.png)
 
@@ -933,60 +929,14 @@ High availability features can be temporarily stopped in situations where a temp
 
 Candidate master replication can be disrupted due to a variety of reasons, such as network disconnection, incorrect FEDERATED engine use, and replication settings from other masters. Candidate masters in a Stopped Replication state do not perform automatic failover. To resolve a backup master's Stopped Replication, the candidate master needs to be rebuilt. When rebuilding a candidate master, it removes all of the candidate master's databases and rebuilds them based on the master's database. In this process, if the backup file required for rebuilding does not exist in the master database, the backup is performed on the master, which can cause performance degradation.
 
-{{#if (eq engine.lowerCase "mysql")}}
-
-## DB 클러스터
-
-DB 클러스터는 고가용성과 향상된 백업 성능을 제공하는 DB 인스턴스 그룹 타입입니다.
-
-### DB 클러스터 특성
-
-DB 클러스터는 다음과 같은 특성을 가집니다.
-
-#### 고가용성 구성
-
-DB 클러스터는 기본적으로 고가용성 구성을 제공합니다. 마스터와 예비 마스터가 서로 다른 가용성 영역에 생성되어 장애 허용이 가능한 데이터베이스를 제공합니다.
-
-#### GTID 기반 복제
-
-DB 클러스터는 GTID(global transaction identifier) 기반 복제를 사용합니다. 다음 파라미터가 강제로 설정되며 변경할 수 없습니다.
-
-* `gtid_mode = ON`
-* `enforce_gtid_consistency = ON`
-* `binlog_format = ROW`
-
-> [주의] GTID 모드로 인해 일부 복제 관련 프로시저의 사용이 제한됩니다. 자세한 내용은 [{{engine.pascalCase}} Procedure](#{{engine.lowerCase}}-procedure) 항목을 참고합니다.
-
-#### 향상된 백업 성능
-
-DB 클러스터는 향상된 백업 기능을 제공합니다.
-
-* **리소스 절약**: 백업 수행 중 DB 인스턴스 리소스를 99% 절약합니다.
-* **백업 시간 단축**: 전체 백업 시간이 기존 대비 90% 이상 감소합니다.
-
-> [참고]
-> DB 인스턴스의 부하가 많은 상황에서 경우에 따라 기존과 동일하게 백업으로 인한 성능 저하가 발생할 수 있습니다.
-
-> [참고] 기존 DB 인스턴스 그룹을 DB 클러스터로 마이그레이션할 수 없습니다. 필요시 고객문의로 문의하세요.
-
-#### DB 클러스터 전용 파라미터 그룹
-
-DB 클러스터는 전용 파라미터 그룹을 사용합니다. DB 클러스터 전용 파라미터 그룹은 GTID 관련 파라미터가 사전 설정되어 있으며, 일부 파라미터는 수정할 수 없습니다.
-
-{{/if}}
-
 ## {{engine.pascalCase}} Procedure
 
 RDS for {{engine.pascalCase}} provides its own procedures for performing some of the features that are restricted from user accounts to provide user convenience.
 
-{{#if (eq engine.lowerCase "mysql")}}
-> [주의] DB 클러스터 타입의 DB 인스턴스 그룹인 경우, 복제 관련 프로시저(tcrds_repl_*)의 사용이 제한됩니다.
-{{/if}}
-
 ### tcrds_active_process
 
 * Make inquiry of Process list for ACTIVE status, not Sleep status.
-* Data output is displayed in order of longest performance time to shortest, and the query value (SQL) is displayed up to hundred digits.
+* Data output is displayed in order of longest performance time to shortest, and the query value (SQL) is displayed up to a hundred digits.
 
 ```
 {{engine.lowerCase}}> CALL mysql.tcrds_active_process();
@@ -1012,7 +962,7 @@ RDS for {{engine.pascalCase}} provides its own procedures for performing some of
 {{engine.lowerCase}}> CALL mysql.tcrds_current_lock();
 ```
 
-### tcrds_repl_changemaster (8.4 이전) 
+### tcrds_repl_changemaster (prior to 8.4)
 
 * Used to import external {{engine.pascalCase}} DBs into NHN Cloud RDS using replication.
 * Replication configuration of NHN Cloud RDS is done with **Create replication** of the console.
@@ -1388,26 +1338,26 @@ Navigate to the project where the specified DB instance to be checked.
 
 #### 1. Check the DB instance that requires maintenance.
 
-**유지 관리**에서 **필수**를 클릭하거나 **DB 인스턴스 상세**의 **유지 관리** 탭에서 하이퍼바이저 마이그레이션 유지 관리 작업이 있는지 확인할 수 있습니다.
+You can check for hypervisor migration tasks by clicking **Required** in the **Maintenance** menu, or by visiting the **Maintenance** tab in the **DB Instance Details**.
 
 ![rds_planed_migration_0]({{url.cdn}}/planned_migration_alarm/image0_en.png)
 
-❶ 하이퍼바이저 마이그레이션 유지 관리 **보기** 버튼 클릭
-❷ 하이퍼바이저 마이그레이션에 대한 자세한 점검 내용을 확인할 수 있습니다.
+❶ Click the **View** button for hypervisor migration maintenance.
+❷ You can view detailed information about the hypervisor migration.
 
 ![rds_planed_migration_1]({{url.cdn}}/planned_migration_alarm/image1_en.png)
 
-#### 2. Make sure you close any application programs that are running on the DB instance.
+#### 2. Make sure you close any running applications on the DB instance.
 
 Take appropriate measures to avoid affecting services connected to the DB.
-If it is inevitable to affect the service, please contact NHN Cloud Customer Center and we will guide you on appropriate measures.
+If it is inevitable to affect the service, please contact NHN Cloud Customer Center, and we will guide you on appropriate measures.
 
-#### 3. 점검 대상의 DB 인스턴스 마이그레이션을 적용할 수 있습니다.
+#### 3. You can apply migration to DB instances targeted for maintenance.
 
 ![rds_planed_migration_2]({{url.cdn}}/planned_migration_alarm/image2_en.png)
 
-❶ **즉시 적용**을 클릭해 하이퍼바이저 마이그레이션을 바로 적용할 수 있습니다.
-❷ **다음 유지 관리 기간에 적용**을 클릭해 원하는 유지 관리 기간에 하이퍼바이저 마이그레이션을 적용할 수 있습니다.
+❶ Click **Apply Immediately** to perform the hypervisor migration right away.
+❷ Click **Apply in the Next Maintenance Duration** to schedule the hypervisor migration for your preferred maintenance duration.
 
 #### 4. Wait for the DB instance migration to finish.
 
