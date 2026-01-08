@@ -129,7 +129,7 @@ In GTID mode, the following constraints are applied when doing enforce_gtid_cons
 ### GTID Application Process in RDS
 
 To apply GTID smoothly, gtid_mode (gtid application stage) and enforce_gtid_consistency (query application restriction stage) must be applied in the following order through parameter groups:
-Note : [https://dev.mysql.com/doc/refman/8.4/en/replication-mode-change-online-enable-gtids.html](https://dev.mysql.com/doc/refman/8.4/en/replication-mode-change-online-enable-gtids.html)
+- Note: [https://dev.mysql.com/doc/refman/8.4/en/replication-mode-change-online-enable-gtids.html](https://dev.mysql.com/doc/refman/8.4/en/replication-mode-change-online-enable-gtids.html)
 
 | Stage | Target            | Parameter Setting               | Action                                                    | Note                                                                                                                                                                            |
 |:------|:------------------|:--------------------------------|:----------------------------------------------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|

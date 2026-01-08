@@ -9,6 +9,8 @@ In MySQL, the version number consists of version = `X.Y.Z.` In NHN Cloud's RDS f
 The versions specified below are available. New DB instance creation and read replicas are supported only for the top 7 minor versions per major version.
 Support for MySQL versions below 8.0.34 has ended in accordance with the MySQL LTS policy. We recommend upgrading your DB instances to the latest version.
 
+- Note: [https://blogs.oracle.com/mysql/introducing-mysql-innovation-and-longterm-support-lts-versions](https://blogs.oracle.com/mysql/introducing-mysql-innovation-and-longterm-support-lts-versions)
+
 | Version              | Note                                                      |
 |----------------------|-----------------------------------------------------------|
 | <strong>8.4</strong> |                                                           |

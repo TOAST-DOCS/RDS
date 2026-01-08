@@ -9,8 +9,7 @@ MySQL에서 버전 번호는 버전 = `X.Y.Z`로 구성됩니다. NHN Cloud의 R
 아래에 명시된 버전을 사용할 수 있습니다. 신규 DB 인스턴스 생성 및 읽기 복제본 추가는 메이저 버전당 상위 7개 마이너 버전까지만 지원합니다.
 MySQL 8.0.34 미만 버전은 MySQL LTS 지원 정책에 따라 지원이 종료되었습니다. 해당 버전의 DB 인스턴스는 최신 버전으로 업그레이드할 것을 권장합니다.
 
-> [참고]
-> https://blogs.oracle.com/mysql/introducing-mysql-innovation-and-longterm-support-lts-versions
+- 참고: [https://blogs.oracle.com/mysql/introducing-mysql-innovation-and-longterm-support-lts-versions](https://blogs.oracle.com/mysql/introducing-mysql-innovation-and-longterm-support-lts-versions)
 
 | 버전                   | 비고                             |
 |----------------------|--------------------------------|

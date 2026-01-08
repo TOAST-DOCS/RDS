@@ -127,7 +127,7 @@ GTIDモードでenforce_gtid_consistency=ONに設定すると、次の制約が�
 ### RDSでのGTID適用手順
 
 GTIDを円滑に適用するためには、gtid_mode(GTIDの適用手順)とenforce_gtid_consistency(クエリ適用の制限手順)を、パラメータグループを通じて次の順序で適用する必要があります。
-参考: [https://dev.mysql.com/doc/refman/8.4/en/replication-mode-change-online-enable-gtids.html](https://dev.mysql.com/doc/refman/8.4/en/replication-mode-change-online-enable-gtids.html)
+- 参考: [https://dev.mysql.com/doc/refman/8.4/en/replication-mode-change-online-enable-gtids.html](https://dev.mysql.com/doc/refman/8.4/en/replication-mode-change-online-enable-gtids.html)
 
 | 手順 | 対象          | パラメータ設定                         | 動作                                      | 備考                                                                                         |
 |:---|:------------|:--------------------------------|:----------------------------------------|:-------------------------------------------------------------------------------------------|

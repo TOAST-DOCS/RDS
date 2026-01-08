@@ -9,6 +9,8 @@ MySQLでバージョン番号はバージョン= `X.Y.Z`で構成されます。
 以下に記載されたバージョンを使用できます。新規DBインスタンスの作成及びリードレプリカの追加は、メジャーバージョンごとに上位7つのマイナーバージョンまでのみサポートします。
 MySQL 8.0.34未満のバージョンは、MySQL LTSサポートポリシーに従いサポートが終了しました。該当バージョンのDBインスタンスは最新バージョンにアップグレードすることを推奨します。
 
+- 参考: [https://blogs.oracle.com/mysql/introducing-mysql-innovation-and-longterm-support-lts-versions](https://blogs.oracle.com/mysql/introducing-mysql-innovation-and-longterm-support-lts-versions)
+
 | バージョン                | 備考                                    |
 |----------------------|---------------------------------------|
 | <strong>8.4</strong> |                                       |
