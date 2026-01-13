@@ -91,9 +91,9 @@ for (let config of configs) {
             let template;
 
             if (language === 'zh') {
-                template = fs.readFileSync(`template/en/${doc}.md`, 'utf-8');
+                template = fs.readFileSync(`template/en/${doc}_template.md`, 'utf-8');
             } else {
-                template = fs.readFileSync(`template/${language}/${doc}.md`, 'utf-8');
+                template = fs.readFileSync(`template/${language}/${doc}_template.md`, 'utf-8');
             }
 
             const fileName = config.env === 'public' ? `${doc}.md` : `${doc}-${config.env}.md`;

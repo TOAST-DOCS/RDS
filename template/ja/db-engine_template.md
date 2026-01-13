@@ -1,31 +1,36 @@
 ## Database > RDS for {{engine.pascalCase}} > DBエンジン
 
 ## DBエンジン
-MySQLの場合、バージョン番号はバージョン= X.Y.Zで構成されます。NHN Cloud RDS用語でX.Yはメジャーバージョンを、Zはマイナーバージョン番号を表します。
 
+MySQLでバージョン番号はバージョン= `X.Y.Z`で構成されます。NHN CloudのRDS for MySQLでは、`X.Y`の場合はメジャーバージョンを、`Z`はマイナーバージョンを表します。
 
 ### RDSが提供するDBエンジンのバージョン
 
-以下に記載されたバージョンを使用できます。
+以下に記載されたバージョンを使用できます。新規DBインスタンスの作成及びリードレプリカの追加は、メジャーバージョンごとに上位7つのマイナーバージョンまでのみサポートします。
+MySQL 8.0.34未満のバージョンは、MySQL LTSサポートポリシーに従いサポートが終了しました。該当バージョンのDBインスタンスは最新バージョンにアップグレードすることを推奨します。
+
+- 参考: [https://blogs.oracle.com/mysql/introducing-mysql-innovation-and-longterm-support-lts-versions](https://blogs.oracle.com/mysql/introducing-mysql-innovation-and-longterm-support-lts-versions)
 
 | バージョン                | 備考                                    |
 |----------------------|---------------------------------------|
 | <strong>8.4</strong> |                                       |
+| MySQL 8.4.7          |                                       |
 | MySQL 8.4.6          |                                       |
 | MySQL 8.4.5          |                                       |
 | <strong>8.0</strong> |                                       |
+| MySQL 8.0.44         |                                       |
 | MySQL 8.0.43         |                                       |
 | MySQL 8.0.42         |                                       |
 | MySQL 8.0.41         |                                       |
 | MySQL 8.0.40         |                                       |
 | MySQL 8.0.36         |                                       |
 | MySQL 8.0.35         |                                       |
-| MySQL 8.0.34         |                                       | 
-| MySQL 8.0.33         |                                       |
-| MySQL 8.0.32         |                                       | 
-| MySQL 8.0.28         |                                       | 
-| MySQL 8.0.23         |                                       |
-| MySQL 8.0.18         |                                       |
+| MySQL 8.0.34         | 新規に作成したりリードレプリカを追加することはできません          | 
+| MySQL 8.0.33         | 新規に作成したりリードレプリカを追加することはできません          | 
+| MySQL 8.0.32         | 新規に作成したりリードレプリカを追加することはできません          | 
+| MySQL 8.0.28         | 新規に作成したりリードレプリカを追加することはできません          | 
+| MySQL 8.0.23         | 新規に作成したりリードレプリカを追加することはできません          |
+| MySQL 8.0.18         | 新規に作成したりリードレプリカを追加することはできません          |
 | <strong>5.7</strong> |                                       |
 | MySQL 5.7.37         |                                       |
 | MySQL 5.7.33         | 外部のバックアップファイルからDBインスタンスを復元することはできません。 |
@@ -34,8 +39,6 @@ MySQLの場合、バージョン番号はバージョン= X.Y.Zで構成され�
 | MySQL 5.7.15         |                                       |
 | <strong>5.6</strong> |                                       |
 | MySQL 5.6.33         | サポートが終了したバージョンです。                     |
-
-MySQLでバージョン番号はバージョン= `X.Y.Z`で構成されます。NHN CloudのRDS for MySQLでは、`X.Y`の場合はメジャーバージョンを、`Z`はマイナーバージョンを表します。
 
 ### DBエンジンバージョン管理
 DBインスタンスの作成後、DBインスタンスの修正と一緒にDBエンジンのバージョンを変更できます。
@@ -92,6 +95,16 @@ MySQL 8.4にアップグレードするためには、MySQL 8.0へのアップ�
 - [互換性のない変更項目ガイド](https://dev.mysql.com/doc/refman/8.4/en/upgrading-from-previous-series.html#upgrade-incompatible-changes)
 - [8.4で削除された機能ガイド](https://dev.mysql.com/doc/refman/8.4/en/mysql-nutshell.html#mysql-nutshell-removals)
 
+#### MySQLバージョンアップグレードの制約事項
+
+MySQL 8.0.18バージョンは、直接MySQL 8.4にアップグレードできません。
+8.0.18から8.4へのアップグレードを実行するには、次の条件を満たす必要があります。
+
+アップグレードパス
+1.	MySQL 8.0.23以上にまずアップグレード
+2.	その後、MySQL 8.4バージョンにアップグレード
+
+これはMySQL 8.4バージョンで要求される最小互換バージョンが8.0.23以上であるため、該当バージョンより低い環境ではメタデータ及び内部スキーマ構造の互換性が保証されないためです。
 
 #### ダミーDBインスタンスを使用したDBエンジンバージョンアップグレード 
 
@@ -128,9 +141,11 @@ DBインスタンスが高可用性で構成されている場合、予備マス
 | MySQLバージョン                 | サーバー監査プラグインサポートの有無 |
 |----------------------------|--------------------|
 | <strong>8.4</strong>       |                    |
+| MySQL 8.4.7                | O                  |
 | MySQL 8.4.6                | O                  |
 | MySQL 8.4.5                | O                  |
 | <strong>8.0</strong>       |                    |
+| MySQL 8.0.44               | O                  |
 | MySQL 8.0.43               | O                  |
 | MySQL 8.0.42               | O                  |
 | MySQL 8.0.41               | O                  |
