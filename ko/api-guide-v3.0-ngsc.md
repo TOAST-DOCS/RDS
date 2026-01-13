@@ -1,10 +1,8 @@
-## Database > RDS for {{engine.pascalCase}} > API 가이드
+## Database > RDS for MySQL > API 가이드
 
 | 리전        | 엔드포인트                                         |
 |-----------|-----------------------------------------------|
-{{#each regions}}
-| {{this.text.ko}} | {{this.endpoint}} |
-{{/each}}
+| 한국(판교) 리전 | https://kr4-rds-mysql-api.ngsc.go.kr |
 
 ## 인증 및 권한
 
@@ -13,14 +11,14 @@ API를 사용하려면 인증에 필요한 `User Access Key ID`와 `Secret Acces
 
 | 이름                         | 종류     | 형식     | 필수 | 설명                                                          |
 |----------------------------|--------|--------|----|-------------------------------------------------------------|
-| X-TC-APP-KEY               | Header | String | O  | RDS for {{engine.pascalCase}} 서비스의 Appkey 또는 프로젝트 통합 Appkey |
+| X-TC-APP-KEY               | Header | String | O  | RDS for MySQL 서비스의 Appkey 또는 프로젝트 통합 Appkey |
 | X-TC-AUTHENTICATION-ID     | Header | String | O  | API 보안 설정 메뉴의 User Access Key ID                            |
 | X-TC-AUTHENTICATION-SECRET | Header | String | O  | API 보안 설정 메뉴의 Secret Access Key                             |
 
-또한 프로젝트 멤버 역할에 따라 호출할 수 있는 API가 제한됩니다. `RDS for {{engine.pascalCase}} ADMIN`, `RDS for {{engine.pascalCase}} VIEWER`로 구분하여 권한을 부여할 수 있습니다.
+또한 프로젝트 멤버 역할에 따라 호출할 수 있는 API가 제한됩니다. `RDS for MySQL ADMIN`, `RDS for MySQL VIEWER`로 구분하여 권한을 부여할 수 있습니다.
 
-* `RDS for {{engine.pascalCase}} ADMIN` 권한은 모든 기능을 사용 가능합니다.
-* `RDS for {{engine.pascalCase}} VIEWER` 권한은 정보를 조회하는 기능만 사용 가능합니다.
+* `RDS for MySQL ADMIN` 권한은 모든 기능을 사용 가능합니다.
+* `RDS for MySQL VIEWER` 권한은 정보를 조회하는 기능만 사용 가능합니다.
     * DB 인스턴스를 생성, 수정, 삭제하거나, DB 인스턴스를 대상으로 하는 어떠한 기능도 사용할 수 없습니다.
     * 단, 알림 그룹과 사용자 그룹 관련된 기능은 사용 가능합니다.
 
@@ -56,7 +54,6 @@ API 요청 시 인증에 실패하거나 권한이 없을 경우 다음과 같�
 
 ## DB 엔진 유형
 
-{{#if (eq engine.lowerCase "mysql")}}
 | DB 엔진 유형     | 생성 가능 여부 | OBS로부터 복원 가능 여부 | 인증 플러그인 지원 정보 |
 |--------------|----------|-----------------|--------|
 | MYSQL\_V5633 | X        | X               | NATIVE |
@@ -79,20 +76,6 @@ API 요청 시 인증에 실패하거나 권한이 없을 경우 다음과 같�
 | MYSQL_V8042  | O        | O               | NATIVE, CACHING_SHA2 |
 | MYSQL_V8043  | O        | O               | NATIVE, CACHING_SHA2 |
 | MYSQL_V8405  | O        | O               | CACHING_SHA2 |
-{{/if}}
-{{#if (eq engine.lowerCase "mariadb")}}
-| DB 엔진 유형        | 생성 가능 여부 | OBS로부터 복원 가능 여부 | 인증 플러그인 지원 정보 |
-|-----------------|----------|------------------|--|
-| MARIADB_V10330  | O        | O                | NATIVE, ED25519 |
-| MARIADB_V10611  | O        | O                | NATIVE, ED25519 |
-| MARIADB_V10612  | O        | O                | NATIVE, ED25519 |
-| MARIADB_V10616  | O        | O                | NATIVE, ED25519 |
-| MARIADB_V10622  | O        | O                | NATIVE, ED25519 |
-| MARIADB_V101107 | O        | O                | NATIVE, ED25519 |
-| MARIADB_V101108 | O        | O                | NATIVE, ED25519 |
-| MARIADB_V101113 | O        | O                | NATIVE, ED25519 |
-| MARIADB_V11407  | O        | O                | NATIVE, ED25519 |
-{{/if}}
 
 * ENUM 타입의 dbVersion 필드에 대해 해당 값을 사용할 수 있습니다.
 * 버전에 따라 생성 또는 복원이 불가능한 경우가 있을 수 있습니다.
@@ -114,12 +97,7 @@ GET /v3.0/project/regions
 | 이름                 | 종류   | 형식      | 설명                                                                         |
 |--------------------|------|---------|----------------------------------------------------------------------------|
 | regions            | Body | Array   | 리전 목록                                                                      |
-{{#if (eq engine.lowerCase "mysql")}}
 | regions.regionCode | Body | Enum    | 리전 코드<br/>- `KR1`: 한국(판교) 리전<br/>- `KR2`: 한국(평촌) 리전<br/>- `JP1`: 일본(도쿄) 리전 |
-{{/if}}
-{{#if (eq engine.lowerCase "mariadb")}}
-| regions.regionCode | Body | Enum    | 리전 코드<br/>- `KR1`: 한국(판교) 리전 |
-{{/if}}
 | regions.isEnabled  | Body | Boolean | 리전의 활성화 여부                                                                 |
 
 <details><summary>예시</summary>
@@ -133,7 +111,6 @@ GET /v3.0/project/regions
         "isSuccessful": true
     },
     "regions": [
-{{#if (eq engine.lowerCase "mysql")}}    
         {
             "regionCode": "KR1",
             "isEnabled": true
@@ -146,13 +123,6 @@ GET /v3.0/project/regions
             "regionCode": "JP1",
             "isEnabled": true
         }
-{{/if}}
-{{#if (eq engine.lowerCase "mariadb")}}
-        {
-            "regionCode": "KR1",
-            "isEnabled": true
-        }
-{{/if}}
     ]
 }
 ```
@@ -338,8 +308,8 @@ GET /v3.0/db-versions
     },
     "dbVersions": [
         {
-            "dbVersion": "{{engine.sampleDbVersionCode}}",
-            "dbVersionName": "{{engine.sampleDbVersionName}}",
+            "dbVersion": "MYSQL_V8028",
+            "dbVersionName": "MySQL 8.0.28",
             "restorableFromObs": true
         }
     ]
@@ -696,7 +666,7 @@ GET /v3.0/db-instances
             "dbInstanceGroupId": "51c7d080-ff36-4025-84b1-9d9d0b4fe9e0",
             "dbInstanceName": "db-instance",
             "description": null,
-            "dbVersion": "{{engine.sampleDbVersionCode}}",
+            "dbVersion": "MYSQL_V8028",
             "dbPort": 10000,
             "dbInstanceType": "MASTER",
             "dbInstanceStatus": "AVAILABLE",
@@ -766,7 +736,7 @@ GET /v3.0/db-instances/{dbInstanceId}
     "dbInstanceGroupId": "51c7d080-ff36-4025-84b1-9d9d0b4fe9e0",
     "dbInstanceName": "db-instance",
     "description": null,
-    "dbVersion": "{{engine.sampleDbVersionCode}}",
+    "dbVersion": "MYSQL_V8028",
     "dbPort": 10000,
     "dbInstanceType": "MASTER",
     "dbInstanceStatus": "AVAILABLE",
@@ -815,13 +785,8 @@ POST /v3.0/db-instances
 | pingInterval            | Body | Number  | X  | 고가용성 사용 시 Ping 간격(초)<br/>- 기본값: `3`<br/>- 최솟값: `1`<br/>- 최댓값: `600` |
 | useDefaultNotification  | Body | Boolean | X  | 기본 알림 사용 여부<br/>- 기본값: `false`                                      |
 | useDeletionProtection   | Body | Boolean | X  | 삭제 보호 여부<br/>- 기본값: `false`                                         |
-{{#if (eq engine.lowerCase "mysql")}}
 | authenticationPlugin                         | Body | Enum    | X  | 인증 플러그인<br/>- NATIVE: `mysql_native_password`<br />- SHA256: `sha256_password`<br />- CACHING_SHA2: `caching_sha2_password`                                                                                                     |
 | tlsOption                                    | Body | Enum    | X  | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                                                                                                                |
-{{/if}}
-{{#if (eq engine.lowerCase "mariadb")}}
-| authenticationPlugin                         | Body | Enum    | X  | 인증 플러그인<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519` |
-{{/if}}
 | network                                      | Body | Object  | O  | 네트워크 정보 객체                                                                                                                                                                                                                  |
 | network.subnetId                             | Body | UUID    | O  | 서브넷의 식별자                                                                                                                                                                                                                    |
 | network.usePublicAccess                      | Body | Boolean | X  | 외부 접속 가능  여부<br/>- 기본값: `false`                                                                                                                                                                                             |
@@ -833,9 +798,7 @@ POST /v3.0/db-instances
 | backup.backupPeriod                          | Body | Number  | O  | 백업 보관 기간(일)<br/>- 최솟값: `0`<br/>- 최댓값: `730`                                                                                                                                                                                 |
 | backup.ftwrlWaitTimeout                      | Body | Number  | X  | 쿼리 지연 대기 시간(초)<br/>- 기본값: `1800`<br/>- 최솟값: `0`<br/>- 최댓값: `21600`                                                                                                                                                          |
 | backup.backupRetryCount                      | Body | Number  | X  | 백업 재시도 횟수<br/>- 기본값: `0`<br/>- 최솟값: `0`<br/>- 최댓값: `10`                                                                                                                                                                     |
-{{#if (eq engine.lowerCase "mysql")}}    
 | backup.replicationRegion                     | Body | Enum    | X  | 백업 복제 리전<br />- `KR1`: 한국(판교)<br/>- `KR2`: 한국(평촌)<br/>- `JP1`: 일본(도쿄)                                                                                                                                                       |
-{{/if}}
 | backup.useBackupLock                         | Body | Boolean | X  | 테이블 잠금 사용 여부<br/>- 기본값: `true`                                                                                                                                                                                              |
 | backup.backupSchedules                       | Body | Array   | O  | 예정된 자동 백업 목록                                                                                                                                                                                                                   |
 | backup.backupSchedules.backupWndBgnTime      | Body | String  | O  | 백업 시작 시각<br/>- 예시: `00:00:00`                                                                                                                                                                                               |
@@ -849,7 +812,7 @@ POST /v3.0/db-instances
     "dbInstanceName": "db-instance",
     "description": "description",
     "dbFlavorId": "71f69bf9-3c01-4c1a-b135-bb75e93f6268",
-    "dbVersion": "{{engine.sampleDbVersionCode}}",
+    "dbVersion": "MYSQL_V8028",
     "dbPort": 10000,
     "dbUserName": "db-user",
     "dbPassword": "password",
@@ -904,10 +867,8 @@ PUT /v3.0/db-instances/{dbInstanceId}
 | dbInstanceCandidateName | Body | String  | X  | DB 인스턴스를 식별할 수 있는 예비 마스터 이름                |
 | description             | Body | String  | X  | DB 인스턴스에 대한 추가 정보                          |
 | dbPort                  | Body | Number  | X  | DB 포트<br/>- 최솟값: `3306`<br/>- 최댓값: `43306` |
-{{#if (eq engine.lowerCase "mysql")}}    
 | dbVersion          | Body | Enum    | X  | DB 엔진 유형                                                                                                                              |
 | useDummy      | Body | Boolean | X  | 단일 DB 인스턴스의 DB 버전 업그레이드 시 더미 사용 여부<br/>기본값: `false`                                         |
-{{/if}}
 | dbFlavorId         | Body | UUID    | X  | DB 인스턴스 사양의 식별자                                                           |
 | parameterGroupId   | Body | UUID    | X  | 파라미터 그룹의 식별자                                                              |
 | dbSecurityGroupIds | Body | Array   | X  | DB 보안 그룹의 식별자 목록                                                          |
@@ -1153,9 +1114,7 @@ POST /v3.0/db-instances/{dbInstanceId}/replicate
 | backup.backupPeriod      | Body | Number  | X  | 백업 보관 기간(일)<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 최솟값: `0`<br/>- 최댓값: `730`       |
 | backup.ftwrlWaitTimeout  | Body | Number  | X  | 쿼리 지연 대기 시간(초)<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 최솟값: `0`<br/>- 최댓값: `21600`  |
 | backup.backupRetryCount  | Body | Number  | X  | 백업 재시도 횟수<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 최솟값: `0`<br/>- 최댓값: `10`          |
-{{#if (eq engine.lowerCase "mysql")}}    
 | backup.replicationRegion                     | Body | Enum    | X  | 백업 복제 리전<br />- `KR1`: 한국(판교)<br/>- `KR2`: 한국(평촌)<br/>- `JP1`: 일본(도쿄)<br/>- 기본값: 원본 DB 인스턴스 값                                                                                                                                                       |
-{{/if}}
 | backup.useBackupLock                         | Body | Boolean | X  | 테이블 잠금 사용 여부<br/>- 기본값: 원본 DB 인스턴스 값                                                                                                                                                                                                                |
 | backup.backupSchedules                       | Body | Array   | X  | 예정된 자동 백업 목록                                                                                                                                                                                                                                           |
 | backup.backupSchedules.backupWndBgnTime      | Body | String  | X  | 백업 시작 시각<br/>- 예시: `00:00:00`<br/>- 기본값: 원본 DB 인스턴스 값                                                                                                                                                                                               |
@@ -1269,7 +1228,7 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info
 				"backupStatus": "COMPLETED",
 				"dbInstanceId": "dba1be25-9429-4589-9716-7fb6daad7cb9",
 				"dbInstanceName": "original-db-instance-name",
-				"dbVersion": "{{engine.sampleDbVersionCode}}",
+				"dbVersion": "MYSQL_V8028",
 				"backupType": "MANUAL",
 				"backupSize": 8299904,
 				"useBackupLock": true,
@@ -1381,9 +1340,7 @@ POST /v3.0/db-instances/{dbInstanceId}/restore
 | backup.backupPeriod                                 | Body | Number  | O  | 백업 보관 기간(일)<br><ul><li>최솟값: `0`</li><li>최댓값: `730`</li></ul>                                                                                                            |
 | backup.ftwrlWaitTimeout                             | Body | Number  | X  | 쿼리 지연 대기 시간(초)<br><ul><li>기본값: `1800`</li><li>최솟값: `0`</li><li>최댓값: `21600`</li></ul>                                                                                   |
 | backup.backupRetryCount                             | Body | Number  | X  | 백업 재시도 횟수<br><ul><li>기본값: `0`</li><li>최솟값: `0`</li><li>최댓값: `10`</li></ul>                                                                                              |
-{{#if (eq engine.lowerCase "mysql")}}    
 | backup.replicationRegion | Body | Enum | X | 백업 복제 리전<br><ul><li>`KR1`: 한국(판교)</li><li>`KR2`: 한국(평촌)</li><li>`JP1`: 일본(도쿄)</li></ul>                                                                                                                                                                                                                                                                                                                                                                              |
-{{/if}}
 | backup.useBackupLock | Body | Boolean | X | 테이블 잠금 사용 여부<br><ul><li>기본값: `true`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                        |
 | backup.backupSchedules | Body | Array | O | 예정된 자동 백업 목록                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 | backup.backupSchedules.backupWndBgnTime | Body | String | O | 백업 시작 시각<br><ul><li>예시: `00:00:00`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                         |
@@ -1596,9 +1553,7 @@ POST /v3.0/db-instances/restore-from-obs
 | backup.backupPeriod                                 | Body | Number  | O  | 백업 보관 기간(일)<br><ul><li>최솟값: `0`</li><li>최댓값: `730`</li></ul>                           |
 | backup.ftwrlWaitTimeout                             | Body | Number  | X  | 쿼리 지연 대기 시간(초)<br><ul><li>기본값: `1800`</li><li>최솟값: `0`</li><li>최댓값: `21600`</li></ul>  |
 | backup.backupRetryCount                             | Body | Number  | X  | 백업 재시도 횟수<br><ul><li>기본값: `0`</li><li>최솟값: `0`</li><li>최댓값: `10`</li></ul>             |
-{{#if (eq engine.lowerCase "mysql")}}
 | backup.replicationRegion | Body | Enum | X | 백업 복제 리전<br><ul><li>`KR1`: 한국(판교)</li><li>`KR2`: 한국(평촌)</li><li>`JP1`: 일본(도쿄)</li></ul>                                                                                                                                                                                                                                                                                                                                                                               |
-{{/if}}
 | backup.useBackupLock | Body | Boolean | X | 테이블 잠금 사용 여부<br><ul><li>기본값: `true`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                         |
 | backup.backupSchedules | Body | Array | O | 예정된 자동 백업 목록                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | backup.backupSchedules.backupWndBgnTime | Body | String | O | 백업 시작 시각<br><ul><li>예시: `00:00:00`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                          |
@@ -1615,7 +1570,7 @@ POST /v3.0/db-instances/restore-from-obs
     "description": "description",
     "dbFlavorId": "71f69bf9-3c01-4c1a-b135-bb75e93f6268",
     "dbPort": 10000,
-    "dbVersion": "{{engine.sampleDbVersionCode}}",
+    "dbVersion": "MYSQL_V8028",
     "dbUserName": "db-user",
     "dbPassword": "password",
     "parameterGroupId": "488bf4f5-d8f7-459b-ace6-529b606c8570",
@@ -1945,9 +1900,7 @@ PUT /v3.0/db-instances/{dbInstanceId}/backup-info
 | backupPeriod                          | Body | Number  | X  | 백업 보관 기간(일)<br/>- 최솟값: `0`<br/>- 최댓값: `730`                                                                                                                                                                                 |
 | ftwrlWaitTimeout                      | Body | Number  | X  | 쿼리 지연 대기 시간(초)<br/>- 최솟값: `0`<br/>- 최댓값: `21600`                                                                                                                                                                            |
 | backupRetryCount                      | Body | Number  | X  | 백업 재시도 횟수<br/>- 최솟값: `0`<br/>- 최댓값: `10`                                                                                                                                                                                    |
-{{#if (eq engine.lowerCase "mysql")}}
 | replicationRegion                     | Body | Enum    | X  | 백업 복제 리전<br />- `KR1`: 한국(판교)<br/>- `KR2`: 한국(평촌)<br/>- `JP1`: 일본(도쿄)                                                                                                                                                       |
-{{/if}}
 | useBackupLock                         | Body | Boolean | X  | 테이블 잠금 사용 여부                                                                                                                                                                                                                |
 | backupSchedules                       | Body | Array   | X  | 예정된 자동 백업 목록                                                                                                                                                                                                                   |
 | backupSchedules.backupWndBgnTime      | Body | String  | O  | 백업 시작 시각<br/>- 예시: `00:00:00`                                                                                                                                                                                               |
@@ -2026,7 +1979,7 @@ GET /v3.0/db-instances/{dbInstanceId}/network-info
     },
     "endPoints": [
         {
-            "domain": "ea548a78-d85f-43b4-8ddf-c88d999b9905.internal.kr1.{{engine.lowerCase}}.rds.nhncloudservice.com",
+            "domain": "ea548a78-d85f-43b4-8ddf-c88d999b9905.internal.kr1.mysql.rds.nhncloudservice.com",
             "ipAddress": "192.168.0.2",
             "endPointType": "INTERNAL"
         }
@@ -2084,13 +2037,8 @@ GET /v3.0/db-instances/{dbInstanceId}/db-users
 | dbUsers.host                 | Body | String   | DB 사용자 계정의 호스트 이름                                                                                                           |
 | dbUsers.authorityType        | Body | Enum     | DB 사용자 권한 타입<br/>- `READ`: SELECT 쿼리 수행 가능한 권한<br/>- `CRUD`: DML 쿼리 수행 가능한 권한<br/>- `DDL`: DDL 쿼리 수행 가능한 권한<br/>            |
 | dbUsers.dbUserStatus         | Body | Enum     | DB 사용자의 현재 상태<br/>- `STABLE`: 생성됨<br/>- `CREATING`: 생성 중<br/>- `UPDATING`: 수정 중<br/>- `DELETING`: 삭제 중<br/>- `DELETED`: 삭제됨 |
-{{#if (eq engine.lowerCase "mysql")}}
 | dbUsers.authenticationPlugin | Body | Enum     | 인증 플러그인<br/>- NATIVE: `mysql_native_password`<br />- SHA256: `sha256_password`<br />- CACHING_SHA2: `caching_sha2_password`     |
 | dbUsers.tlsOption            | Body | Enum     | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                |
-{{/if}}
-{{#if (eq engine.lowerCase "mariadb")}}
-| authenticationPlugin         | Body | Enum    | X  | 인증 플러그인<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519` |
-{{/if}}
 | dbUsers.createdYmdt          | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                           |
 | dbUsers.updatedYmdt          | Body | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                           |
 
@@ -2111,10 +2059,8 @@ GET /v3.0/db-instances/{dbInstanceId}/db-users
             "host": "%",
             "authorityType": "DDL",
             "dbUserStatus": "STABLE",
-{{#if (eq engine.lowerCase "mysql")}}
             "authenticationPlugin": "NATIVE",
             "tlsOption": "NONE",
-{{/if}}
             "createdYmdt": "2023-03-17T14:02:29+09:00",
             "updatedYmdt": "2023-03-17T14:02:31+09:00"
         }
@@ -2142,16 +2088,11 @@ POST /v3.0/db-instances/{dbInstanceId}/db-users
 | dbPassword           | Body | String | O  | DB 사용자 계정 암호<br/>- 최소 길이: `4`<br/>- 최대 길이: `16`                                                                         |
 | host                 | Body | String | O  | DB 사용자 계정의 호스트명<br/>- 예시: `1.1.1.%`                                                                                     |
 | authorityType        | Body | Enum   | O  | DB 사용자 권한 타입<br/>- `READ`: SELECT 쿼리 수행 가능한 권한<br/>- `CRUD`: DML 쿼리 수행 가능한 권한<br/>- `DDL`: DDL 쿼리 수행 가능한 권한<br/>        |
-{{#if (eq engine.lowerCase "mysql")}}
 | authenticationPlugin | Body | Enum   | X  | 인증 플러그인<br/>- NATIVE: `mysql_native_password`<br />- SHA256: `sha256_password`<br />- CACHING_SHA2: `caching_sha2_password` |
 | tlsOption            | Body | Enum   | X  | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                            |
 
 > [주의]
 > DB 인스턴스의 `supportAuthenticationPlugin` 값이 true인 DB 인스턴스만 `authenticationPlugin`, `tlsOption`의 값을 설정할 수 있습니다.
-{{/if}}
-{{#if (eq engine.lowerCase "mariadb")}}
-| authenticationPlugin | Body | Enum    | X  | 인증 플러그인<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519` |
-{{/if}}
 
 <details><summary>예시</summary>
 <p>
@@ -2161,14 +2102,9 @@ POST /v3.0/db-instances/{dbInstanceId}/db-users
     "dbUserName": "db-user",
     "dbPassword": "password",
     "host": "1.1.1.%",
-{{#if (eq engine.lowerCase "mysql")}}
     "authorityType": "CRUD",
     "authenticationPlugin": "NATIVE",
     "tlsOption": "NONE"
-{{/if}}
-{{#if (eq engine.lowerCase "mariadb")}}
-    "authorityType": "CRUD"
-{{/if}}
 }
 ```
 
@@ -2197,17 +2133,12 @@ PUT /v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 | dbUserId             | URL  | UUID   | O  | DB 사용자의 식별자                                                                                                             |
 | dbPassword           | Body | String | X  | DB 사용자 계정 암호<br/>- 최소 길이: `4`<br/>- 최대 길이: `16`                                                                         |
 | authorityType        | Body | Enum   | X  | DB 사용자 권한 타입<br/>- `READ`: SELECT 쿼리 수행 가능한 권한<br/>- `CRUD`: DML 쿼리 수행 가능한 권한<br/>- `DDL`: DDL 쿼리 수행 가능한 권한<br/>        |
-{{#if (eq engine.lowerCase "mysql")}}
 | authenticationPlugin | Body | Enum   | X  | 인증 플러그인<br/>- NATIVE: `mysql_native_password`<br />- SHA256: `sha256_password`<br />- CACHING_SHA2: `caching_sha2_password` |
 | tlsOption            | Body | Enum   | X  | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                            |
 
 > [주의]
 > DB 인스턴스의 `supportAuthenticationPlugin` 값이 true인 DB 인스턴스만 `authenticationPlugin`, `tlsOption`의 값을 수정할 수 있습니다.
 > `authenticationPlugin`의 값은 `dbPassword`와 동시에 수정을 해야 합니다.
-{{/if}}
-{{#if (eq engine.lowerCase "mariadb")}}
-| authenticationPlugin | Body | Enum    | X  | 인증 플러그인<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519` |
-{{/if}}
 
 <details><summary>예시</summary>
 <p>
@@ -2482,9 +2413,7 @@ GET /v3.0/backups
 | backups.backupStatus | Body | Enum     | 백업의 현재 상태                         |
 | backups.dbInstanceId | Body | UUID     | 원본 DB 인스턴스의 식별자                   |
 | backups.dbVersion    | Body | Enum     | DB 엔진 유형                          |
-{{#if (eq engine.lowerCase "mysql")}}    
 | backups.utilVersion  | Body | String   | 백업에 사용된 xtrabackup 유틸리티 버전        |
-{{/if}}
 | backups.backupType   | Body | Enum     | 백업 유형                             |
 | backups.backupSize   | Body | Number   | 백업의 크기(Byte)                      |
 | createdYmdt          | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
@@ -2507,10 +2436,8 @@ GET /v3.0/backups
             "backupName": "backup",
             "backupStatus": "COMPLETED",
             "dbInstanceId": "142e6ccc-3bfb-4e1e-84f7-38861284fafd",
-            "dbVersion": "{{engine.sampleDbVersionCode}}",
-{{#if (eq engine.lowerCase "mysql")}}    
+            "dbVersion": "MYSQL_V8028",
             "utilVersion": "8.0.28",
-{{/if}}
             "backupType": "AUTO",
             "backupSize": 4996786,
             "createdYmdt": "2023-02-21T00:35:00+09:00",
@@ -2603,9 +2530,7 @@ POST /v3.0/backups/{backupId}/restore
 | backup.backupPeriod      | Body | Number  | O  | 백업 보관 기간(일)<br/>- 최솟값: `0`<br/>- 최댓값: `730`                         |
 | backup.ftwrlWaitTimeout  | Body | Number  | X  | 쿼리 지연 대기 시간(초)<br/>- 기본값: `1800`<br/>- 최솟값: `0`<br/>- 최댓값: `21600`  |
 | backup.backupRetryCount  | Body | Number  | X  | 백업 재시도 횟수<br/>- 기본값: `0`<br/>- 최솟값: `0`<br/>- 최댓값: `10`             |
-{{#if (eq engine.lowerCase "mysql")}}    
 | backup.replicationRegion                     | Body | Enum    | X  | 백업 복제 리전<br />- `KR1`: 한국(판교)<br/>- `KR2`: 한국(평촌)<br/>- `JP1`: 일본(도쿄)                                                                                                                                                       |
-{{/if}}
 | backup.useBackupLock                         | Body | Boolean | X  | 테이블 잠금 사용 여부<br/>- 기본값: `true`                                                                                                                                                                                              |
 | backup.backupSchedules                       | Body | Array   | O  | 예정된 자동 백업 목록                                                                                                                                                                                                                   |
 | backup.backupSchedules.backupWndBgnTime      | Body | String  | O  | 백업 시작 시각<br/>- 예시: `00:00:00`                                                                                                                                                                                               |
@@ -3124,7 +3049,7 @@ GET /v3.0/parameter-groups
             "parameterGroupId": "404e8a89-ca4d-4fca-96c2-1518754d50b7",
             "parameterGroupName": "parameter-group",
             "description": null,
-            "dbVersion": "{{engine.sampleDbVersionCode}}",
+            "dbVersion": "MYSQL_V8028",
             "parameterGroupStatus": "STABLE",
             "createdYmdt": "2023-02-31T15:28:17+09:00",
             "updatedYmdt": "2023-02-31T15:28:17+09:00"
@@ -3188,7 +3113,7 @@ GET /v3.0/parameter-groups/{parameterGroupId}
     "parameterGroupId": "404e8a89-ca4d-4fca-96c2-1518754d50b7",
     "parameterGroupName": "parameter-group",
     "description": null,
-    "dbVersion": "{{engine.sampleDbVersionCode}}",
+    "dbVersion": "MYSQL_V8028",
     "parameterGroupStatus": "STABLE",
     "parameters": [
         {
@@ -3234,7 +3159,7 @@ POST /v3.0/parameter-groups
 ```json
 {
     "parameterGroupName": "parameter-group",
-    "dbVersion": "{{engine.sampleDbVersionCode}}"
+    "dbVersion": "MYSQL_V8028"
 }
 ```
 

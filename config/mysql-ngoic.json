@@ -17,7 +17,7 @@
                 "en": "Korea (Pangyo) region",
                 "ja": "韓国(パンギョ)リージョン"
             },
-            "endpoint": ""
+            "endpoint": "https://kr4-rds-mysql-api.ngoic.com"
         }
     ]
 }
