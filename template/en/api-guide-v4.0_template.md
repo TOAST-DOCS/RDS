@@ -4693,3 +4693,286 @@ This API does not require a request body.
 </details>
 
 ---
+## 이벤트 구독
+
+### 이벤트 구독 목록 조회
+
+```http
+GET /v4.0/event-subscriptions
+```
+
+#### 필요 권한
+
+| 권한명                                                    | 설명            |
+|---------------------------------------------------------|---------------|
+| RDSfor{{engine.pascalCase}}:EventSubscription.List | 이벤트 구독 목록 조회 |
+
+#### 요청
+
+| 이름                     | 종류    | 형식     | 필수 | 설명                                   |
+|------------------------|-------|--------|----|--------------------------------------|
+| page                   | Query | Number | O  | 조회할 목록의 페이지<br/>- 최솟값: `1`          |
+| size                   | Query | Number | O  | 조회할 목록의 페이지 크기<br/>- 최솟값: `1`<br/>- 최댓값: `100` |
+| eventSubscriptionId    | Query | UUID   | X  | 이벤트 구독의 식별자                          |
+| eventSubscriptionName  | Query | String | X  | 이벤트 구독을 식별할 수 있는 이름                 |
+| userGroupId            | Query | UUID   | X  | 사용자 그룹의 식별자                          |
+
+#### 응답
+
+| 이름                                            | 종류   | 형식       | 설명                  |
+|-----------------------------------------------|------|----------|---------------------|
+| totalCounts                                   | Body | Number   | 전체 이벤트 구독 목록 수      |
+| eventSubscriptions                            | Body | Array    | 이벤트 구독 목록           |
+| eventSubscriptions.eventSubscriptionId        | Body | UUID     | 이벤트 구독의 식별자         |
+| eventSubscriptions.eventCategoryType          | Body | Enum     | 이벤트 카테고리 유형         |
+| eventSubscriptions.eventSubscriptionName      | Body | String   | 이벤트 구독을 식별할 수 있는 이름 |
+| eventSubscriptions.enabled                    | Body | Boolean  | 활성화 여부              |
+| eventSubscriptions.notifyEmail                | Body | Boolean  | 이메일 발송 여부           |
+| eventSubscriptions.notifySms                  | Body | Boolean  | SMS 발송 여부           |
+| eventSubscriptions.eventCodes                 | Body | Array    | 구독할 이벤트 코드 목록       |
+| eventSubscriptions.sources                    | Body | Array    | 구독할 이벤트 소스 목록       |
+| eventSubscriptions.sources.sourceId           | Body | UUID     | 이벤트 소스의 식별자         |
+| eventSubscriptions.sources.eventCategoryType  | Body | Enum     | 이벤트 카테고리 유형         |
+| eventSubscriptions.userGroupIds               | Body | Array    | 이벤트 구독 중인 사용자 그룹의 식별자 목록 |
+| eventSubscriptions.createdYmdt                | Body | DateTime | 생성 일시               |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "totalCounts": 1,
+    "eventSubscriptions": [
+        {
+            "eventSubscriptionId": "12345678-1234-1234-1234-123456789012",
+            "eventCategoryType": "INSTANCE",
+            "eventSubscriptionName": "example-event-subscription",
+            "enabled": true,
+            "notifyEmail": true,
+            "notifySms": false,
+            "eventCodes": [
+                "INSTC_05_01"
+            ],
+            "sources": [
+                {
+                    "sourceId": "87654321-4321-4321-4321-210987654321",
+                    "eventCategoryType": "INSTANCE"
+                }
+            ],
+            "userGroupIds": [
+                "11111111-2222-3333-4444-555555555555"
+            ],
+            "createdYmdt": "2024-01-01T12:00:00+09:00"
+        }
+    ]
+}
+```
+
+</p>
+</details>
+
+---
+
+### 이벤트 구독 생성하기
+
+```http
+POST /v4.0/event-subscriptions
+```
+
+#### 필요 권한
+
+| 권한명                                                      | 설명           |
+|----------------------------------------------------------|--------------|
+| RDSfor{{engine.pascalCase}}:EventSubscription.Create | 이벤트 구독 생성하기 |
+
+#### 요청
+
+| 이름                           | 종류   | 형식      | 필수 | 설명                                    |
+|------------------------------|------|---------|----|-----------------------------------------|
+| eventCategoryType            | Body | Enum    | O  | 이벤트 카테고리 유형                          |
+| eventSubscriptionName        | Body | String  | O  | 이벤트 구독을 식별할 수 있는 이름<br/>- 최대 길이: `100` |
+| enabled                      | Body | Boolean | O  | 활성화 여부                                |
+| notifyEmail                  | Body | Boolean | O  | 이메일 발송 여부                             |
+| notifySms                    | Body | Boolean | O  | SMS 발송 여부                             |
+| eventCodes                   | Body | Array   | O  | 구독할 이벤트 코드 목록                        |
+| sources                      | Body | Array   | O  | 구독할 이벤트 소스 목록                        |
+| sources.sourceId             | Body | UUID    | O  | 이벤트 소스의 식별자                          |
+| sources.eventCategoryType    | Body | Enum    | O  | 이벤트 카테고리 유형                          |
+| userGroupIds                 | Body | Array   | O  | 이벤트 구독할 사용자 그룹의 식별자 목록              |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "eventCategoryType": "INSTANCE",
+    "eventSubscriptionName": "example-event-subscription",
+    "enabled": true,
+    "notifyEmail": true,
+    "notifySms": false,
+    "eventCodes": [
+        "INSTC_05_01"
+    ],
+    "sources": [
+        {
+            "sourceId": "87654321-4321-4321-4321-210987654321",
+            "eventCategoryType": "INSTANCE"
+        }
+    ],
+    "userGroupIds": [
+        "11111111-2222-3333-4444-555555555555"
+    ]
+}
+```
+
+</p>
+</details>
+
+#### 응답
+
+| 이름                    | 종류   | 형식   | 설명          |
+|-----------------------|------|------|-------------|
+| eventSubscriptionId   | Body | UUID | 이벤트 구독의 식별자 |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "eventSubscriptionId": "12345678-1234-1234-1234-123456789012"
+}
+```
+
+</p>
+</details>
+
+---
+
+### 이벤트 구독 수정하기
+
+```http
+PUT /v4.0/event-subscriptions/{eventSubscriptionId}
+```
+
+#### 필요 권한
+
+| 권한명                                                      | 설명           |
+|----------------------------------------------------------|--------------|
+| RDSfor{{engine.pascalCase}}:EventSubscription.Modify | 이벤트 구독 수정하기 |
+
+#### 요청
+
+| 이름                           | 종류   | 형식      | 필수 | 설명                              |
+|------------------------------|------|---------|----|-----------------------------------|
+| eventSubscriptionId          | URL  | UUID    | O  | 이벤트 구독의 식별자                    |
+| eventCategoryType            | Body | Enum    | X  | 이벤트 카테고리 유형                    |
+| eventSubscriptionName        | Body | String  | X  | 이벤트 구독을 식별할 수 있는 이름           |
+| enabled                      | Body | Boolean | X  | 활성화 여부                          |
+| notifyEmail                  | Body | Boolean | X  | 이메일 발송 여부                       |
+| notifySms                    | Body | Boolean | X  | SMS 발송 여부                       |
+| eventCodes                   | Body | Array   | X  | 구독할 이벤트 코드 목록                  |
+| sources                      | Body | Array   | X  | 구독할 이벤트 소스 목록                  |
+| sources.sourceId             | Body | UUID    | X  | 이벤트 소스의 식별자                    |
+| sources.eventCategoryType    | Body | Enum    | X  | 이벤트 카테고리 유형                    |
+| userGroupIds                 | Body | Array   | X  | 이벤트 구독할 사용자 그룹의 식별자 목록        |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "eventSubscriptionName": "updated-event-subscription",
+    "enabled": false,
+    "notifyEmail": false,
+    "notifySms": true,
+    "eventCodes": [
+        "INSTC_05_01",
+        "INSTC_06_01"
+    ],
+    "sources": [
+        {
+            "sourceId": "87654321-4321-4321-4321-210987654321",
+            "eventCategoryType": "INSTANCE"
+        }
+    ],
+    "userGroupIds": [
+        "11111111-2222-3333-4444-555555555555",
+        "22222222-3333-4444-5555-666666666666"
+    ]
+}
+```
+
+</p>
+</details>
+
+#### 응답
+
+이 API는 응답 본문을 반환하지 않습니다.
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
+
+---
+
+### 이벤트 구독 삭제하기
+
+```http
+DELETE /v4.0/event-subscriptions/{eventSubscriptionId}
+```
+
+#### 필요 권한
+
+| 권한명                                                      | 설명           |
+|----------------------------------------------------------|--------------|
+| RDSfor{{engine.pascalCase}}:EventSubscription.Delete | 이벤트 구독 삭제하기 |
+
+#### 요청
+
+| 이름                    | 종류  | 형식   | 필수 | 설명          |
+|-----------------------|-----|------|----|-------------|
+| eventSubscriptionId   | URL | UUID | O  | 이벤트 구독의 식별자 |
+
+#### 응답
+
+이 API는 응답 본문을 반환하지 않습니다.
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
+
+---
