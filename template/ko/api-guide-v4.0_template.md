@@ -2635,6 +2635,53 @@ GET /v4.0/db-instances/{dbInstanceId}/log-files
 
 ---
 
+### 로그 파일 내용 보기
+
+```http
+GET /v4.0/db-instances/{dbInstanceId}/log-files/{logFileName}
+```
+
+#### 필요 권한
+
+| 권한명                                           | 설명                    |
+|-----------------------------------------------|-----------------------|
+| RDSfor{{engine.pascalCase}}:DbInstanceLog.Get | DB 인스턴스 내 로그 파일 내용 보기 |
+
+#### 요청
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+| 이름           | 종류    | 형식     | 필수 | 설명                                                                                                                                                                                              |
+|--------------|-------|--------|----|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| dbInstanceId | URL   | UUID   | O  | DB 인스턴스의 식별자                                                                                                                                                                                    |
+| logFileName  | URL   | String | O  | 로그 파일 이름                                                                                                                                                                                        |
+| logFileType  | Query | Enum   | O  | 로그 파일 타입 종류<br/>- `ERROR`: error.log<br/>- `BINLOG`: mysql-bin<br/>- `GENERAL`: general.log<br/>- `SLOW_QUERY`: slow_query.log<br/>- `AUDIT`: server_audit.log<br/>- `BACKUP`: xtra_full.log |
+
+#### 응답
+
+| 이름      | 종류   | 형식     | 설명                        |
+|---------|------|--------|---------------------------|
+| content | Body | String | 로그 파일 내용 (최대 65533 bytes) |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "content": "..."
+}
+```
+
+</p>
+</details>
+
+---
+
 ### 로그 파일 내보내기
 
 ```http
@@ -2684,6 +2731,219 @@ POST /v4.0/db-instances/{dbInstanceId}/log-files/export
 
 ---
 
+### BinLog 목록 보기
+
+```http
+GET /v4.0/db-instances/{dbInstanceId}/binlogs
+```
+
+#### 필요 권한
+
+| 권한명                                               | 설명           |
+|---------------------------------------------------|---------------|
+| RDSfor{{engine.pascalCase}}:DbInstanceBinLog.List | BinLog 목록 보기 |
+
+#### 요청
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+| 이름           | 종류    | 형식      | 필수 | 설명                                                                                   |
+|--------------|-------|---------|----|---------------------------------------------------------------------------------------|
+| dbInstanceId | URL   | UUID    | O  | DB 인스턴스의 식별자                                                                         |
+| deletable    | Query | Boolean | X  | 삭제 가능한 BinLog만 조회할지 여부<br/>- `true`: 마지막 BinLog 제외<br/>- `false`: 전체<br/>- 기본값: `false` |
+
+#### 응답
+
+| 이름                     | 종류   | 형식       | 설명                                |
+|------------------------|------|----------|-----------------------------------|
+| binLogs                | Body | Array    | BinLog 파일 목록                      |
+| binLogs.binLogFileName | Body | String   | BinLog 파일 이름                      |
+| binLogs.binLogFileSize | Body | Number   | BinLog 파일 크기(Byte)                |
+| binLogs.createdYmdt    | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "binLogs": [
+        {
+            "binLogFileName": "mysql-bin.000001",
+            "binLogFileSize": 1073741824,
+            "createdYmdt": "2023-03-17T14:02:29+09:00"
+        }
+    ]
+}
+```
+
+</p>
+</details>
+
+---
+
+### BinLog 삭제
+
+```http
+POST /v4.0/db-instances/{dbInstanceId}/binlogs/purge
+```
+
+#### 필요 권한
+
+| 권한명                                                | 설명        |
+|----------------------------------------------------|------------|
+| RDSfor{{engine.pascalCase}}:DbInstanceBinLog.Purge | BinLog 삭제 |
+
+#### 요청
+
+| 이름                 | 종류   | 형식     | 필수 | 설명                                     |
+|--------------------|------|--------|----|----------------------------------------|
+| dbInstanceId       | URL  | UUID   | O  | DB 인스턴스의 식별자                           |
+| lastBinLogFileName | Body | String | O  | 삭제할 마지막 BinLog 파일 이름 (해당 파일 직전까지 삭제됨) |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "lastBinLogFileName": "mysql-bin.000010"
+}
+```
+
+</p>
+</details>
+
+#### 응답
+
+이 API는 응답 본문을 반환하지 않습니다.
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
+
+---
+
+### 인증서 파일 목록 보기
+
+```http
+GET /v4.0/db-instances/{dbInstanceId}/certificates
+```
+
+#### 필요 권한
+
+| 권한명                                                    | 설명           |
+|--------------------------------------------------------|---------------|
+| RDSfor{{engine.pascalCase}}:DbInstanceCertificate.List | 인증서 파일 목록 보기 |
+
+#### 요청
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+| 이름           | 종류  | 형식   | 필수 | 설명           |
+|--------------|-----|------|----|---------------|
+| dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
+
+#### 응답
+
+| 이름                           | 종류   | 형식       | 설명                                                                           |
+|------------------------------|------|----------|------------------------------------------------------------------------------|
+| certificates                 | Body | Array    | 인증서 파일 목록                                                                    |
+| certificates.fileName        | Body | String   | 인증서 파일 이름                                                                    |
+| certificates.certificateType | Body | Enum     | 인증서 타입<br/>- `CA_FILE`: CA 인증서<br/>- `CERT_FILE`: 인증서<br/>- `KEY_FILE`: 비밀 키 |
+| certificates.fileSize        | Body | Number   | 인증서 파일 크기(Byte)                                                              |
+| certificates.createdYmdt     | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                            |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "certificates": [
+        {
+            "fileName": "ca.pem",
+            "certificateType": "CA_FILE",
+            "fileSize": 2048,
+            "createdYmdt": "2023-03-17T14:02:29+09:00"
+        }
+    ]
+}
+```
+
+</p>
+</details>
+
+---
+
+### 인증서 파일 내보내기
+
+```http
+POST /v4.0/db-instances/{dbInstanceId}/certificates/upload
+```
+
+#### 필요 권한
+
+| 권한명                                                      | 설명          |
+|----------------------------------------------------------|-------------|
+| RDSfor{{engine.pascalCase}}:DbInstanceCertificate.Export | 인증서 파일 내보내기 |
+
+#### 요청
+
+| 이름               | 종류   | 형식     | 필수 | 설명                                                                           |
+|------------------|------|--------|----|------------------------------------------------------------------------------|
+| dbInstanceId     | URL  | UUID   | O  | DB 인스턴스의 식별자                                                                 |
+| certificateTypes | Body | Array  | O  | 업로드할 인증서 타입 목록<br/>- `CA_FILE`: CA 인증서<br/>- `CERT_FILE`: 인증서<br/>- `KEY_FILE`: 비밀 키 |
+| tenantId         | Body | String | O  | 인증서 파일이 저장될 오브젝트 스토리지의 테넌트 ID                                                |
+| username         | Body | String | O  | NHN Cloud 회원 또는 IAM 멤버 ID                                                    |
+| password         | Body | String | O  | 인증서 파일이 저장될 오브젝트 스토리지의 API 비밀번호                                              |
+| targetContainer  | Body | String | O  | 인증서 파일이 저장될 오브젝트 스토리지의 컨테이너                                                  |
+| objectPath       | Body | String | O  | 컨테이너에 저장될 인증서 파일의 경로                                                         |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "certificateTypes": ["CA_FILE", "CERT_FILE", "KEY_FILE"],
+    "tenantId": "399631c404744dbbb18ce4fa2dc71a5a",
+    "username": "gildong.hong@nhn.com",
+    "password": "password",
+    "targetContainer": "container",
+    "objectPath": "certificates/"
+}
+```
+
+</p>
+</details>
+
+#### 응답
+
+| 이름    | 종류   | 형식   | 설명          |
+|-------|------|------|-------------|
+| jobId | Body | UUID | 요청한 작업의 식별자 |
+
+---
+
 ## 백업
 
 ### 백업 상태
@@ -2695,6 +2955,90 @@ POST /v4.0/db-instances/{dbInstanceId}/log-files/export
 | `DELETING`   | 백업이 삭제 중인 경우 |
 | `DELETED`    | 백업이 삭제된 경우   |
 | `ERROR`      | 오류가 발생한 경우   |
+
+### 백업 상세 보기
+
+```http
+GET /v4.0/backups/{backupId}
+```
+
+#### 필요 권한
+
+| 권한명                                    | 설명       |
+|----------------------------------------|----------|
+| RDSfor{{engine.pascalCase}}:Backup.Get | 백업 상세 보기 |
+
+#### 요청
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+| 이름       | 종류  | 형식   | 필수 | 설명      |
+|----------|-----|------|----|----------|
+| backupId | URL | UUID | O  | 백업의 식별자 |
+
+#### 응답
+
+| 이름                      | 종류   | 형식       | 설명                                |
+|-------------------------|------|----------|-----------------------------------|
+| backup                  | Body | Object   | 백업 상세 정보                          |
+| backup.backupId         | Body | UUID     | 백업의 식별자                           |
+| backup.regionCode       | Body | Enum     | 리전 코드                             |
+| backup.backupName       | Body | String   | 백업을 식별할 수 있는 이름                   |
+| backup.backupStatus     | Body | Enum     | 백업의 현재 상태                         |
+| backup.dbInstanceId     | Body | UUID     | 원본 DB 인스턴스의 식별자                   |
+| backup.dbInstanceName   | Body | String   | 원본 DB 인스턴스의 이름                    |
+| backup.dbVersion        | Body | Enum     | DB 엔진 버전                          |
+{{#if (eq engine.lowerCase "mysql")}}
+| backup.utilVersion      | Body | String   | 백업에 사용된 xtrabackup 유틸리티 버전        |
+{{/if}}
+| backup.backupType       | Body | Enum     | 백업 유형                             |
+| backup.backupMethodType | Body | Enum     | 백업 방식                             |
+| backup.backupFileType   | Body | Enum     | 백업 파일 유형                          |
+| backup.backupSize       | Body | Number   | 백업의 크기(Byte)                      |
+| backup.isReplicable     | Body | Boolean  | 복제 가능 여부                          |
+| backup.binLogFileName   | Body | String   | 바이너리 로그 파일명                       |
+| backup.binLogPosition   | Body | Number   | 바이너리 로그 위치                        |
+| backup.createdYmdt      | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| backup.updatedYmdt      | Body | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "backup": {
+        "backupId": "0017f136-3e01-4530-94aa-20661afe6632",
+        "regionCode": "KR1",
+        "backupName": "backup",
+        "backupStatus": "COMPLETED",
+        "dbInstanceId": "142e6ccc-3bfb-4e1e-84f7-38861284fafd",
+        "dbInstanceName": "db-instance",
+        "dbVersion": "{{engine.sampleDbVersionCode}}",
+{{#if (eq engine.lowerCase "mysql")}}
+        "utilVersion": "8.0.28",
+{{/if}}
+        "backupType": "AUTO",
+        "backupMethodType": "FULL",
+        "backupFileType": "XTRA_BACKUP",
+        "backupSize": 4996786,
+        "isReplicable": true,
+        "binLogFileName": "mysql-bin.000001",
+        "binLogPosition": 154,
+        "createdYmdt": "2023-02-21T00:35:00+09:00",
+        "updatedYmdt": "2023-02-22T00:35:32+09:00"
+    }
+}
+```
+
+</p>
+</details>
+
+---
 
 ### 백업 목록 조회
 
