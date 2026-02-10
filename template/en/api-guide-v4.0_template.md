@@ -849,6 +849,9 @@ POST /v4.0/db-instances
 | authenticationPlugin                     | Body | Enum    | X        | Authentication Plugin<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password                                                                                                                                     |
 | tlsOption                                | Body | Enum    | X        | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                                                                                                                                                              |
 {{/if}}
+{{#if (eq engine.lowerCase "mariadb")}}
+| authenticationPlugin                     | Body | Enum    | X        | Authentication Plugin<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519`                                                                                                                                                                                |
+{{/if}}
 | network                                  | Body | Object  | O        | Network information objects                                                                                                                                                                                                                                               |
 | network.subnetId                         | Body | UUID    | O        | Subnet identifier                                                                                                                                                                                                                                                         |
 | network.usePublicAccess                  | Body | Boolean | X        | External access is available or not<br/>Default: `false`                                                                                                                                                                                                                  |
@@ -1147,7 +1150,6 @@ POST /v4.0/db-instances/{dbInstanceId}/replicate
 |----------------------------------------------|------|---------|----------|-------------------------------------------------------------------------------------------------------------------------|
 | dbInstanceId                                 | URL  | UUID    | O        | DB instance identifier                                                                                                  |
 | dbInstanceName                               | Body | String  | O        | Master name to identify DB instances                                                                                  |
-| dbInstanceCandidateName                      | Body | String  | X        | Candidate name to identify DB instances                                                                               |
 | description                                  | Body | String  | X        | Additional information on DB instances                                                                                  |
 | dbFlavorId                                   | Body | UUID    | X        | Identifier of DB instance specifications<br/>- Default: Original DB instance value                                      |
 | dbPort                                       | Body | Number  | X        | DB port<br/>- Default: Original DB instance value<br/>- Minimum value: `3306`<br/>- Maximum value: `43306`              |
@@ -2337,6 +2339,9 @@ POST /v4.0/db-instances/{dbInstanceId}/db-users
 > [Caution]
 > Only DB instances whose `supportAuthenticationPlugin` value is true can set the values of `authenticationPlugin` and `tlsOption`.
 {{/if}}
+{{#if (eq engine.lowerCase "mariadb")}}
+| authenticationPlugin | Body | Enum   | X        | Authentication Plugin<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519`                                                                                                                                                                                |
+{{/if}}
 
 <details><summary>Example</summary>
 <p>
@@ -2395,6 +2400,9 @@ PUT /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 > [Caution]
 > Only DB instances whose `supportAuthenticationPlugin` value is true can modify the values of `authenticationPlugin` and `tlsOption`.
 > The value of`authenticationPlugin`must be modified at the same time `as dbPassword`.
+{{/if}}
+{{#if (eq engine.lowerCase "mariadb")}}
+| authenticationPlugin | Body | Enum   | X        | Authentication Plugin<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519`                                                                                                                                                                                |
 {{/if}}
 
 <details><summary>Example</summary>

@@ -856,6 +856,9 @@ POST /v4.0/db-instances
 | authenticationPlugin                         | Body | Enum    | X  | 認証プラグイン<br/>- NATIVE: `mysql_native_password`<br />- SHA256: `sha256_password`<br />- CACHING_SHA2: `caching_sha2_password`                                                                                                    |
 | tlsOption                                    | Body | Enum    | X  | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                                                                                                                   |
 {{/if}}
+{{#if (eq engine.lowerCase "mariadb")}}
+| authenticationPlugin                         | Body | Enum    | X  | 認証プラグイン<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519`                                                                                                                                                                                   |
+{{/if}}
 | network                                      | Body | Object  | O  | ネットワーク情報オブジェクト                                                                                                                                                                                                                 |
 | network.subnetId                             | Body | UUID    | O  | サブネットの識別子                                                                                                                                                                                                                      |
 | network.usePublicAccess                      | Body | Boolean | X  | 外部接続可否<br/>- デフォルト値: `false`                                                                                                                                                                                                   |
@@ -1155,7 +1158,6 @@ POST /v4.0/db-instances/{dbInstanceId}/replicate
 |----------------------------------------------|------|---------|----|---------------------------------------------------------------------------|
 | dbInstanceId                                 | URL  | UUID    | O  | DBインスタンスの識別子                                                            |
 | dbInstanceName                               | Body | String  | O  | DBインスタンスを識別できる マスター名                                                 |
-| dbInstanceCandidateName                      | Body | String  | O  | DBインスタンスを識別できる 予備マスター名(高可用性を使用する場合の必須値)                               |
 | description                                  | Body | String  | X  | DBインスタンスの追加情報                                                       |
 | dbFlavorId                                   | Body | UUID    | X  | DBインスタンス仕様の識別子<br/>- デフォルト値:原本DBインスタンス値                                 |
 | dbPort                                       | Body | Number  | X  | DBポート<br/>- デフォルト値:原本DBインスタンス値<br/>- 最小値: `3306`<br/>- 最大値: `43306`        |
@@ -1472,8 +1474,8 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 {{/if}}
 | backup.useBackupLock | Body | Boolean | X | テーブルロックを使用するかどうか<br><ul><li>デフォルト値: `true`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                        |
 | backup.backupSchedules | Body | Array | X | 予定された自動バックアップリスト                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| backup.backupSchedules.backupWndBgnTime | Body | String | O | バックアップ開始時刻<br><ul><li>例: `00:00:00`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| backup.backupSchedules.backupWndDuration | Body | Enum | O | バックアップDuration<br>バックアップ開始時刻からDuration内に自動バックアップが実行されます。<br><ul><li>`HALF_AN_HOUR`<span style="color:#313338">: 30分</span></li><li>`ONE_HOUR`<span style="color:#313338">: 1時間</span></li><li>`ONE_HOUR_AND_HALF`<span style="color:#313338">: 1時間30分</span></li><li>`TWO_HOURS`<span style="color:#313338">: 2時間</span></li><li>`TWO_HOURS_AND_HALF`<span style="color:#313338">: 2時間30分</span></li><li>`THREE_HOURS`<span style="color:#313338">: 3時間</span></li></ul> |
+| backup.backupSchedules.backupWndBgnTime | Body | String | X | バックアップ開始時刻<br><ul><li>例: `00:00:00`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| backup.backupSchedules.backupWndDuration | Body | Enum | X | バックアップDuration<br>バックアップ開始時刻からDuration内に自動バックアップが実行されます。<br><ul><li>`HALF_AN_HOUR`<span style="color:#313338">: 30分</span></li><li>`ONE_HOUR`<span style="color:#313338">: 1時間</span></li><li>`ONE_HOUR_AND_HALF`<span style="color:#313338">: 1時間30分</span></li><li>`TWO_HOURS`<span style="color:#313338">: 2時間</span></li><li>`TWO_HOURS_AND_HALF`<span style="color:#313338">: 2時間30分</span></li><li>`THREE_HOURS`<span style="color:#313338">: 3時間</span></li></ul> |
 
 #### Timestampを利用した時点復元時、リクエスト(restoreTypeが`TIMESTAMP`の場合)
 
@@ -2345,6 +2347,9 @@ POST /v4.0/db-instances/{dbInstanceId}/db-users
 > [注意]
 > DBインスタンスの`supportAuthenticationPlugin`値がtrueであるDBインスタンスのみ`authenticationPlugin`、`tlsOption`の値を設定できます。
 {{/if}}
+{{#if (eq engine.lowerCase "mariadb")}}
+| authenticationPlugin | Body | Enum   | X  | 認証プラグイン<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519` |
+{{/if}}
 
 <details><summary>例</summary>
 <p>
@@ -2403,6 +2408,9 @@ PUT /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 > [注意]
 > DBインスタンスの`supportAuthenticationPlugin`値がtrueであるDBインスタンスのみ`authenticationPlugin`、`tlsOption`の値を修正できます。
 > `authenticationPlugin`の値は`dbPassword`と同時に修正する必要があります。
+{{/if}}
+{{#if (eq engine.lowerCase "mariadb")}}
+| authenticationPlugin | Body | Enum   | X  | 認証プラグイン<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519` |
 {{/if}}
 
 <details><summary>例</summary>
@@ -3243,7 +3251,7 @@ POST /v4.0/backups/{backupId}/restore
 |----------------------------------------------|------|---------|----|---------------------------------------------------------------------|
 | backupId                                     | URL  | UUID    | O  | バックアップの識別子                                                           |
 | dbInstanceName                               | Body | String  | O  | DBインスタンスを識別できる マスター名                                           |
-| dbInstanceCandidateName                      | Body | String  | O  | DBインスタンスを識別できる 予備マスター名(高可用性を使用する場合の必須値)                         |
+| dbInstanceCandidateName                      | Body | String  | X  | DBインスタンスを識別できる 予備マスター名(高可用性を使用する場合の必須値)                         |
 | description                                  | Body | String  | X  | DBインスタンスの追加情報                                                 |
 | dbFlavorId                                   | Body | UUID    | X  | DBインスタンス仕様の識別子                                                   |
 | dbPort                                       | Body | Integer | X  | DBポート<br/>- 最小値: `3306`<br/>- 最大値: `43306`                          |

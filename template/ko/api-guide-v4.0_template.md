@@ -1157,7 +1157,7 @@ POST /v4.0/db-instances/{dbInstanceId}/replicate
 | 이름                                           | 종류   | 형식      | 필수 | 설명                                                                        |
 |----------------------------------------------|------|---------|----|---------------------------------------------------------------------------|
 | dbInstanceId                                 | URL  | UUID    | O  | DB 인스턴스의 식별자                                                              |
-| dbInstanceName                               | Body | String  | O  | DB 인스턴스를 식별할 수 있는 이름                                                      |
+| dbInstanceName                               | Body | String  | O  | DB 인스턴스를 식별할 수 있는 마스터 이름                                                      |
 | description                                  | Body | String  | X  | DB 인스턴스에 대한 추가 정보                                                         |
 | dbFlavorId                                   | Body | UUID    | X  | DB 인스턴스 사양의 식별자<br/>- 기본값: 원본 DB 인스턴스 값                                   |
 | dbPort                                       | Body | Number  | X  | DB 포트<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 최솟값: `3306`<br/>- 최댓값: `43306`        |
