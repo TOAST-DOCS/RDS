@@ -1,12 +1,16 @@
 ## Database > RDS for {{engine.pascalCase}} > API Guide
 
+## RDS for {{engine.pascalCase}} API 공통 정보
+
+### API 엔드포인트
+
 | Region | Endpoint |
 |--------|----------|
 {{#each regions}}
 | {{this.text.en}} | {{this.endpoint}} |
 {{/each}}
 
-## Authentication and Authorization
+### Authentication and Authorization
 
 RDS for {{engine.pascalCase}} uses User Access Key tokens for authentication and authorization when making API calls. The User Access Key token is a temporary, Bearer-type access token issued from a User Access Key. For more information on issuing and using User Access Key tokens, please refer to the [User Access Key Token](/nhncloud/en/public-api/user-access-key-token).
 The issued token must be included in the request header along with the Appkey.
@@ -30,7 +34,7 @@ If an API request fails to authenticate or is not authorized, the following erro
 | 80401      | Unauthorized  | Failed to authenticate |
 | 80403      | Forbidden     | Unauthorized.          |
 
-## Common Response Information
+### Common Response Information
 
 The API responds with "200 OK" to all API requests. For more information on the response results, see Response Body Header.
 
@@ -53,7 +57,7 @@ The API responds with "200 OK" to all API requests. For more information on the 
 | isSuccessful  | Boolean | Successful or not                                        |
 
 
-## DB engine type
+### DB engine type
 
 {{#if (eq engine.lowerCase "mysql")}}
 | DB engine type | Available for creation | Available for restoration from OBS |

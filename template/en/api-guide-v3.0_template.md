@@ -1,12 +1,16 @@
 ## Database > RDS for {{engine.pascalCase}} > API Guide
 
+## RDS for {{engine.pascalCase}} API 공통 정보
+
+### API 엔드포인트
+
 | Region | Endpoint |
 |--------|----------|
 {{#each regions}}
 | {{this.text.en}} | {{this.endpoint}} |
 {{/each}}
 
-## Authentication and Authorization
+### Authentication and Authorization
 
 User Access Key is required to use the RDS for {{engine.pascalCase}} API. A User Access Key is an authentication key issued based on an NHN Cloud or IAM account. It is used in conjunction with a Secret Access Key to authenticate API requests.
 
@@ -34,7 +38,7 @@ If an API request fails to authenticate or is not authorized, the following erro
 | 80401      | Unauthorized  | Failed to authenticate |
 | 80403      | Forbidden     | Unauthorized.          |
 
-## Common Response Information
+### Common Response Information
 
 The API responds with "200 OK" to all API requests. For more information on the response results, see Response Body Header.
 
@@ -57,7 +61,7 @@ The API responds with "200 OK" to all API requests. For more information on the 
 | isSuccessful  | Boolean | Successful or not                                        |
 
 
-## DB engine type
+### DB engine type
 
 {{#if (eq engine.lowerCase "mysql")}}
 | DB engine type | Available for creation | Available for restoration from OBS |
