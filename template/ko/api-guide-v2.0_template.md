@@ -6,6 +6,13 @@
 | {{this.text.ko}} | {{this.endpoint}} |
 {{/each}}
 
+
+## 인증 및 권한
+
+RDS for {{engine.pascalCase}} API를 사용하려면 Appkey가 필요합니다. Appkey는 NHN Cloud의 각 서비스별로 발급되는 고유 인증 키로 API 요청 시 서비스 식별과 유효성 검증에 사용됩니다.
+
+Appkey 확인 및 사용에 대한 자세한 내용은 [Appkey](/nhncloud/ko/public-api/appkey)를 참고하세요.
+
 ## Monitoring
 
 ### Metric 조회

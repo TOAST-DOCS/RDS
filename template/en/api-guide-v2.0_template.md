@@ -6,6 +6,12 @@
 | {{this.text.en}} | {{this.endpoint}} |
 {{/each}}
 
+## Authentication and Authorization
+
+Appkey is required to use the RDS for {{engine.pascalCase}} API. An Appkey is a unique authentication key issued for each NHN Cloud service, used to identify the service and validate API requests.
+
+For more information on checking and using Appkeys, please refer to the [Appkey](/nhncloud/en/public-api/appkey).
+
 ## Monitoring
 
 ### View metric

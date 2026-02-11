@@ -8,7 +8,7 @@
 
 ## 認証及び権限
 
-APIを使用するには[Public API > API呼び出し及び認証](/nhncloud/ko/public-api/api-authentication/)で発行されたBearerタイプのトークンが必要です。
+RDS for {{engine.pascalCase}}は、API呼び出し時の認証/認可のためにUser Access Keyトークンを使用します。User Access Keyトークンは、User Access Keyに基づいて発行されるBearerタイプの一時的なアクセストークンです。User Access Keyトークンの発行及び使用に関する詳細は、[User Access Keyトークン](/nhncloud/ja/public-api/user-access-key-token)を参照してください。
 発行されたトークンはAppkeyと一緒にリクエストHeaderに含める必要があります。
 
 | 名前                  | 種類     | 形式     | 必須 | 説明                                                        |
