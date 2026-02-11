@@ -955,6 +955,8 @@ PUT /v4.0/db-instances/{dbInstanceId}
 | dbSecurityGroupIds | Body | Array   | X        | DB security group identifiers                                                                                     |
 | executeBackup      | Body | Boolean | X        | Whether to execute backup at this time<br/>Default: `false`                                                       |
 | useOnlineFailover  | Body | Boolean | X        | Whether to restart using failover<br/>Available only for DB instance using high availability<br/>Default: `false` |
+| waitReplicationDelay  | Body | Boolean | X  | 복제 지연을 기다리는 여부<br/>고가용성을 사용 중인 DB 인스턴스에서만 사용 가능합니다.<br/>- 기본값: `false` |
+| useReadOnly  | Body | Boolean | X  | 읽기 전용으로 변경 여부<br/>고가용성을 사용 중인 DB 인스턴스에서만 사용 가능합니다.<br/>- 기본값: `false` |
 
 <details><summary>Example</summary>
 <p>
@@ -994,11 +996,11 @@ DELETE /v4.0/db-instances/{dbInstanceId}
 
 #### Request
 
-This API does not require a request body.
 
 | Name         | Type | Format | Required | Description            |
 |--------------|------|--------|----------|------------------------|
 | dbInstanceId | URL  | UUID   | O        | DB instance identifier |
+| deleteAutoBackup          | Body | Boolean  | X  | 자동 백업 삭제 여부<br/>- 기본값: `false` |
 
 #### Response
 
@@ -1027,6 +1029,8 @@ POST /v4.0/db-instances/{dbInstanceId}/restart
 | dbInstanceId      | URL  | UUID    | O        | DB instance identifier                                                                                            |
 | useOnlineFailover | Body | Boolean | X        | Whether to restart using failover<br/>Available only for DB instance using high availability<br/>Default: `false` |
 | executeBackup     | Body | Boolean | X        | Whether to execute backup at this time<br/>Default: `false`                                                       |
+| waitReplicationDelay     | Body | Boolean | X  | 복제 지연을 기다리는 여부<br/>고가용성을 사용 중인 DB 인스턴스에서만 사용 가능합니다.<br/>- 기본값: `false`                                         |
+| useReadOnly     | Body | Boolean | X  | 읽기 전용으로 변경 여부<br/>고가용성을 사용 중인 DB 인스턴스에서만 사용 가능합니다.<br/>- 기본값: `false`                                         |
 
 #### Response
 
@@ -1047,6 +1051,8 @@ POST /v4.0/db-instances/{dbInstanceId}/force-restart
 | RDSfor{{engine.pascalCase}}:DbInstance.ForceRestart | Force Restart DB instance |
 
 #### Request
+
+This API does not require a request body.
 
 | Name         | Type | Format | Required | Description            |
 |--------------|------|--------|----------|------------------------|
@@ -1149,7 +1155,7 @@ POST /v4.0/db-instances/{dbInstanceId}/replicate
 | Name                                         | Type | Format  | Required | Description                                                                                                             |
 |----------------------------------------------|------|---------|----------|-------------------------------------------------------------------------------------------------------------------------|
 | dbInstanceId                                 | URL  | UUID    | O        | DB instance identifier                                                                                                  |
-| dbInstanceName                               | Body | String  | O        | Master name to identify DB instances                                                                                  |
+| dbInstanceName                               | Body | String  | O        | Name to identify DB instances                                                                                  |
 | description                                  | Body | String  | X        | Additional information on DB instances                                                                                  |
 | dbFlavorId                                   | Body | UUID    | X        | Identifier of DB instance specifications<br/>- Default: Original DB instance value                                      |
 | dbPort                                       | Body | Number  | X        | DB port<br/>- Default: Original DB instance value<br/>- Minimum value: `3306`<br/>- Maximum value: `43306`              |
@@ -1161,15 +1167,15 @@ POST /v4.0/db-instances/{dbInstanceId}/replicate
 | useSlowQueryAnalysis                         | Body | Boolean | X        | Slow query 분석 여부<br/>- 기본값: `true`                                                                                      |
 | network                                      | Body | Object  | O        | Network information objects                                                                                             |
 | network.usePublicAccess                      | Body | Boolean | X        | External access is available or not<br/>- Default: Original DB instance value                                           |
-| network.availabilityZone                     | Body | Enum    | O        | Availability zone where DB instance will be created<br/>- Example: `kr-pub-a`                                           |
+| network.availabilityZone                     | Body | Enum    | O        | Availability zone where DB instance will be created<br/> <ul><li>  Example: `kr-pub-a`</li></ul>                                           |
 | storage                                      | Body | Object  | X        | Storage information objects                                                                                             |    
-| storage.storageType                          | Body | Enum    | X        | Block Storage Type<br/>- Example: `General SSD`                                                                         |
-| storage.storageSize                          | Body | Number  | X        | Block Storage Size (GB)<br/>- Default: Original DB instance value<br/>- Minimum value: `20`<br/>- Maximum value: `2048` |
+| storage.storageType                          | Body | Enum    | X        | Block Storage Type<br/> <ul><li> Default: Original DB instance value</li><li> Example: `General SSD`</li></ul>                                                                         |
+| storage.storageSize                          | Body | Number  | X        | Block Storage Size (GB)<br/> <ul><li> Default: Original DB instance value</li><li> Minimum value: `20`</li><li> Maximum value: `2048`</li></ul> |
 | storage.storageAutoscale                     | Body | Object  | X        | Block Storage Auto Scaling Objects                                                                                                       |
 | storage.storageAutoscale.useStorageAutoscale | Body | Boolean | X        | Whether to enable storage auto scaling                                                                                                           |
-| storage.storageAutoscale.threshold           | Body | Number  | X        | Auto scale out conditions (%)<br/>- Minimum value: `50`<br/>- Maximum value: `95`                                                                             |
-| storage.storageAutoscale.maxStorageSize      | Body | Number  | X        | Auto scaling maximum size (GB)<br/>- Maximum value:: `4096`                                                                                       |
-| storage.storageAutoscale.cooldownTime        | Body | Number  | X        | Auto scaling cooldown time (minutes)<br/>- Minimum value: `10`<br/>- Maximum value: `1440`                                                                       |
+| storage.storageAutoscale.threshold           | Body | Number  | X        | Auto scale out conditions (%)<br/> <ul><li> Default: Original DB instance value</li><li> Minimum value: `50`</li><li> Maximum value: `95` </li></ul> |
+| storage.storageAutoscale.maxStorageSize      | Body | Number  | X        | Auto scaling maximum size (GB)<br/> <ul><li> Default: Original DB instance value</li><li> Maximum value: `4096` </li></ul>                                         |
+| storage.storageAutoscale.cooldownTime        | Body | Number  | X        | Auto scaling cooldown time (minutes)<br/> <ul><li> Minimum value: `10`</li><li> Maximum value: `1440` </li></ul>                                                                       |
 | backup                                       | Body | Object  | X        | Backup information objects                                                                                              |
 | backup.backupPeriod                          | Body | Number  | X        | Backup retention period<br/>- Default: Original DB instance value<br/>- Minimum value: `0`<br/>- Maximum value: `730`   |
 | backup.ftwrlWaitTimeout                      | Body | Number  | X        | Query latency (sec)<br/>- Default: Original DB instance value<br/>- Minimum value: `0`<br/>- Maximum value: `21600`     |
@@ -1432,35 +1438,35 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 | dbInstanceId                                        | URL  | UUID    | O        | DB instance identifier                                                                                                                                                                                                                                                                                           |
 | restore                                             | Body | Object  | O        | Restoration information object                                                                                                                                                                                                                                                                                   |
 | restore.restoreType                                 | Body | Enum    | O        | Restoration type<br><ul><li>`TIMESTAMP`: A point-in-time restoration type using the time within the restorable time</li><li>`BINLOG`: A point-in-time restoration type using a binary log location that can be restored.</li><li>`BACKUP`: Snapshot restoration type using a previously created backup</li></ul> |
-| dbInstanceName                                      | Body | String  | X        | Master name to identify DB instances                                                                                  |
-| dbInstanceCandidateName                             | Body | String  | X        | Candidate name to identify DB instances                                                                               |
+| dbInstanceName                                      | Body | String  | O        | Master name to identify DB instances                                                                                  |
+| dbInstanceCandidateName                             | Body | String  | O        | Candidate name to identify DB instances         <ul><li> 고가용성 사용 시 필수</li></ul>                                                                       |
 | description                                         | Body | String  | X        | Additional information on DB instances                                                                                                                                                                                                                                                                           |
 | dbFlavorId                                          | Body | UUID    | X        | Identifier of DB instance specifications                                                                                                                                                                                                                                                                         |
-| dbPort                                              | Body | Number  | X        | DB port<br><ul><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul>                                                                                                                                                                                                                                 |
-| <span style="color:#313338">parameterGroupId</span> | Body | UUID    | X        | Parameter group identifier                                                                                                                                                                                                                                                                                       |
+| dbPort                                              | Body | Number  | X        | DB port<br><ul><li> 기본값: 원본 DB 인스턴스 값 </li><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul>                                                                                                                                                                                                                                 |
+| parameterGroupId | Body | UUID    | X        | Parameter group identifier   <ul><li> 기본값: 원본 DB 인스턴스 값 </li></ul>                                                                                                                                                                                                                                                                                     |
 | dbSecurityGroupIds                                  | Body | Array   | X        | DB security group identifiers                                                                                                                                                                                                                                                                                    |
 | userGroupIds                                        | Body | Array   | X        | User group identifiers                                                                                                                                                                                                                                                                                           |
 | useHighAvailability                                 | Body | Boolean | X        | Whether to use high availability<br><ul><li>Default: `false`</li></ul>                                                                                                                                                                                                                                           |
 | pingInterval                                        | Body | Number  | X        | Ping interval (sec) when using high availability<br><ul><li>Default: `6`</li><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul>                                                                                                                                                                   |
 | useDefaultNotification                              | Body | Boolean | X        | Whether to use default notification<br><ul><li>Default: `false`</li></ul>                                                                                                                                                                                                                                        |
 | useDeletionProtection                               | Body | Boolean | X        | Whether to protect against deletion<br>Default: `false`                                                                                                                                                                                                                                                          |
-| useSlowQueryAnalysis                                | Body | Boolean | X        | Whether to analyze slow queries<br/>- Default: `true`                                                                                                                                                                                                                                                                               |
+| useSlowQueryAnalysis                                | Body | Boolean | X        | Whether to analyze slow queries<br/> <ul><li>Default: `true`</li></ul>                                                                                                                                                                                                                                                                               |
 | network                                             | Body | Object  | X        | Network information objects                                                                                                                                                                                                                                                                                      |
 | network.subnetId                                    | Body | UUID    | X        | Subnet identifier                                                                                                                                                                                                                                                                                                |
 | network.usePublicAccess                             | Body | Boolean | X        | External access is available or not<br><ul><li>Default: `false`</li></ul>                                                                                                                                                                                                                                        |
 | network.availabilityZone                            | Body | Enum    | X        | Availability zone where DB instance will be created<br><ul><li>- Example: `kr-pub-a`</li></ul>                                                                                                                                                                                                                   |
 | storage                                             | Body | Object  | X        | Storage information objects                                                                                                                                                                                                                                                                                      |
-| storage.storageType                                 | Body | Enum    | X        | Block Storage Type<br><ul><li>- Example: `General SSD`</li></ul>                                                                                                                                                                                                                                                 |
-| storage.storageSize                                 | Body | Number  | X        | Block Storage Size (GB)<br><ul><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul>                                                                                                                                                                                                                 |
+| storage.storageType                                 | Body | Enum    | X        | Block Storage Type<br><ul><li>기본값: 원본 DB 인스턴스 값</li><li> Example: `General SSD`</li></ul>                                                                                                                                                                                                                                                 |
+| storage.storageSize                                 | Body | Number  | X        | Block Storage Size (GB)<br><ul><li>기본값: 원본 DB 인스턴스 값</li><li> Minimum value: `0`</li><li> Maximum value: 65535</li></ul>                                                                                                                                                                                                                 |
 | storage.storageAutoscale                            | Body | Object  | X        | Block Storage Auto Scaling Objects                                                                                                                                                                                                                                                                                                 |
-| storage.storageAutoscale.useStorageAutoscale        | Body | Boolean | X        | Whether to enable storage auto scaling                                                                                                                                                                                                                                                                                                    |
-| storage.storageAutoscale.threshold                  | Body | Number  | X        | Auto scale out conditions (%)<br/>- Minimum value: `50`<br/>- Maximum value: `95`                                                                                                                                                                                                                                                                      |
-| storage.storageAutoscale.maxStorageSize             | Body | Number  | X        | Auto scaling maximum size (GB)<br/>- Maximum value: `4096`                                                                                                                                                                                                                                                                                |
-| storage.storageAutoscale.cooldownTime               | Body | Number  | X        | Auto scaling cooldown time (minutes)<br/>- Minimum value: `10`<br/>- Maximum value: `1440`                                                                                                                                                                                                                                                                |
+| storage.storageAutoscale.useStorageAutoscale        | Body | Boolean | X        | Whether to enable storage auto scaling       <ul><li>기본값: 원본 DB 인스턴스 값</li></ul>                                                                                                                                                                                                                                                                                             |
+| storage.storageAutoscale.threshold                  | Body | Number  | X        | Auto scale out conditions (%)<br/><ul><li>기본값: 원본 DB 인스턴스 값</li><li> Minimum value: `50`</li><li> Maximum value: `95`                                             </li></ul>                                                                                                                                                                                                                         |
+| storage.storageAutoscale.maxStorageSize             | Body | Number  | X        | Auto scaling maximum size (GB)<br/><ul><li>기본값: 원본 DB 인스턴스 값</li><li> Maximum value: `4096`              </li></ul>                                                                                                                                                                                                                                                                  |
+| storage.storageAutoscale.cooldownTime               | Body | Number  | X        | Auto scaling cooldown time (minutes)<br /><ul><li>기본값: 원본 DB 인스턴스 값</li> <li> Minimum value: `10`</li><li> Maximum value: `1440`                                                    </li></ul>                                                                                                                                                                                                            |
 | backup                                              | Body | Object  | X        | Backup information objects                                                                                                                                                                                                                                                                                       |
-| backup.backupPeriod                                 | Body | Number  | X        | Backup retention period<br><ul><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul>                                                                                                                                                                                                                 |
-| backup.ftwrlWaitTimeout                             | Body | Number  | X        | Query latency (sec)<br><ul><li>Default: `6`</li><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul>                                                                                                                                                                                                |
-| backup.backupRetryCount                             | Body | Number  | X        | Number of backup retries<br><ul><li>Default: `0`</li><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul>                                                                                                                                                                                           |
+| backup.backupPeriod                                 | Body | Number  | X        | Backup retention period<br><ul><li>기본값: 원본 DB 인스턴스 값</li><li> Minimum value: `0`</li><li> Maximum value: 65535</li></ul>                                                                                                                                                                                                                 |
+| backup.ftwrlWaitTimeout                             | Body | Number  | X        | Query latency (sec)<br><ul><li>Default: `6`</li><li> Minimum value: `0`</li><li> Maximum value: 65535</li></ul>                                                                                                                                                                                                |
+| backup.backupRetryCount                             | Body | Number  | X        | Number of backup retries<br><ul><li>Default: `0`</li><li> Minimum value: `0`</li><li> Maximum value: 65535</li></ul>                                                                                                                                                                                           |
 {{#if (eq engine.lowerCase "mysql")}}    
 | backup.replicationRegion                            | Body | Enum    | X        | Backup replication region<br><ul><li>- `KR1`: Korea (Pangyo) Region</li><li>- `KR2`: Korea (Pyeongchon) Region</li><li>- `JP1`: Japan (Tokyo) Region</li></ul>                                                                                                                                                   |
 {{/if}}
@@ -1664,7 +1670,7 @@ POST /v4.0/db-instances/restore-from-obs
 | description                                         | Body | String  | X        | Additional information on DB instances                                                                                                         |
 | dbFlavorId                                          | Body | UUID    | O        | Identifier of DB instance specifications                                                                                                       |
 | dbPort                                              | Body | Number  | O        | DB port<br><ul><li>- Minimum value: `0`</li><li>- Maximum value: 65535</li></ul>                                                               |
-| <span style="color:#313338">parameterGroupId</span> | Body | UUID    | O        | Parameter group identifier                                                                                                                     |
+| parameterGroupId | Body | UUID    | O        | Parameter group identifier                                                                                                                     |
 | dbSecurityGroupIds                                  | Body | Array   | X        | DB security group identifiers                                                                                                                  |
 | userGroupIds                                        | Body | Array   | X        | User group identifiers                                                                                                                         |
 | useHighAvailability                                 | Body | Boolean | X        | Whether to use high availability<br><ul><li>Default: `false`</li></ul>                                                                         |
@@ -1815,6 +1821,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/high-availability
 | dbInstanceId        | URL  | UUID    | O        | DB instance identifier                                                                               |
 | useHighAvailability | Body | Boolean | O        | Whether to use high availability                                                                     |
 | pingInterval        | Body | Number  | X        | Ping interval (sec) when using high availability<br/>- Minimum value: `1`<br/>- Maximum value: `600` |
+| dbInstanceCandidateName        | Body | String  | O  | DB 인스턴스를 식별할 수 있는 예비 마스터 이름 |
 
 #### Response
 
@@ -3046,9 +3053,9 @@ GET /v4.0/backups
 This API does not require a request body.
 
 | Name         | Type  | Format | Required | Description                                                                          |
-|--------------|-------|--------|----------|--------------------------------------------------------------------------------------|
-| page         | Query | Number | O        | Page to retrieve<br/>- Minimum value: `1`                                            |
-| size         | Query | Number | O        | Page size to retrieve<br/>- Minimum value: `1`<br/>- Maximum value: `100`            |
+|-------------------|-------|----------|----|--------------------------------------------------------------------------------------------------------------------------------------|
+| page              | Query | Number   | X  | 조회할 목록의 페이지<br/>- 기본값: 1 <br/>- 최솟값: `1`                                                                                                           |
+| size              | Query | Number   | X  | 조회할 목록의 페이지 크기<br/>- 기본값: 20                                        |
 | backupType   | Query | Enum   | X        | Backup type<br/>- `AUTO`: Automatic<br/>- `MANUAL`:  Manual<br/>- Default value: All |
 | dbInstanceId | Query | UUID   | X        | Original DB instance identifier                                                      |
 | dbVersion    | Query | Enum   | X        | DB engine type                                                                       |
@@ -3124,7 +3131,7 @@ POST /v4.0/backups
 | Name             | Type | Format | Required | Description                                                                          |
 |------------------|------|--------|----------|--------------------------------------------------------------------------------------|
 | backupName       | Body | String | O        | Backup name                                                                          |
-| backupMethodType | Body | Enum   | O        | Backup method type<br/>- `FULL`: Full backup<br/>- `INCREMENTAL`: Incremental backup |
+| backupMethodType | Body | Enum   | O        | Backup method type<br/>- `FULL`: Full backup<br/>- `INCREMENTAL`: Incremental backup <br/>- `SNAPSHOT`: 스냅샷 백업|
 
 #### If backupMethodType is `FULL`
 
@@ -3162,6 +3169,30 @@ POST /v4.0/backups
     "backupName": "example-backup-name",
     "backupMethodType": "INCREMENTAL",
     "baseBackupId": "3ae7914f-9b42-4729-b125-87417b72cf36"
+}
+```
+
+</p>
+</details>
+
+
+
+
+#### 스냅샷 백업(backupMethodType이 `SNAPSHOT`인 경우)
+
+| 이름           | 종류   | 형식   | 필수 | 설명           |
+|--------------|------|------|----|--------------|
+| dbInstanceId | Body | UUID | O  | DB 인스턴스의 식별자 |
+
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "backupName": "example-backup-name",
+    "backupMethodType": "SNAPSHOT",
+    "dbInstanceId": "142e6ccc-3bfb-4e1e-84f7-38861284fafd"
 }
 ```
 
@@ -3245,7 +3276,7 @@ POST /v4.0/backups/{backupId}/restore
 | dbInstanceCandidateName                      | Body | String  | X        | Candidate name to identify DB instances                                                                               |
 | description                                  | Body | String  | X        | Additional information on DB instances                                                                                |
 | dbFlavorId                                   | Body | UUID    | X        | Identifier of DB instance specifications                                                                              |
-| dbPort                                       | Body | Integer | X        | DB port<br/>- Minimum value: `3306`<br/>- Maximum value: `43306`                                                      |
+| dbPort                                       | Body | Integer | X        | DB port <br/> - 기본값: 원본 DB 인스턴스 값     <br/>- Minimum value: `3306`<br/>- Maximum value: `43306`                                                      |
 | parameterGroupId                             | Body | UUID    | X        | Parameter group identifier                                                                                            |
 | dbSecurityGroupIds                           | Body | Array   | X        | DB security group identifiers                                                                                         ||network|Body|Object|O|Network information objects|
 | userGroupIds                                 | Body | Array   | X        | User group identifiers                                                                                                |
@@ -3259,15 +3290,15 @@ POST /v4.0/backups/{backupId}/restore
 | network.usePublicAccess                      | Body | Boolean | X        | External access is available or not<br/>Default: `false`                                                              |
 | network.availabilityZone                     | Body | Enum    | X        | Availability zone where DB instance will be created<br/>- Example: `kr-pub-a`                                         |
 | storage                                      | Body | Object  | X        | Storage information objects                                                                                           |    
-| storage.storageType                          | Body | Enum    | X        | Block Storage Type<br/>- Example: `General SSD`                                                                       |
-| storage.storageSize                          | Body | Number  | X        | Block Storage Size (GB)<br/>- Minimum value: `20`<br/>- Maximum value: `2048`                                         |
+| storage.storageType                          | Body | Enum    | X        | Block Storage Type <br/> - 기본값: 원본 DB 인스턴스 값     <br/>- Example: `General SSD`                                                                       |
+| storage.storageSize                          | Body | Number  | X        | Block Storage Size (GB) <br/> - 기본값: 원본 DB 인스턴스 값     <br/>- Minimum value: `20`<br/>- Maximum value: `2048`                                         |
 | storage.storageAutoscale                     | Body | Object  | X        | Block Storage Auto Scaling Objects                                                                                                        |
-| storage.storageAutoscale.useStorageAutoscale | Body | Boolean | X        | Whether to enable storage auto scaling                                                                                                         |
-| storage.storageAutoscale.threshold           | Body | Number  | X        | Auto scale out conditions (%)<br/>- Minimum value: `50`<br/>- Maximum value: `95`                                                                           |
-| storage.storageAutoscale.maxStorageSize      | Body | Number  | X        | Auto scaling maximum size (GB)<br/>- Maximum value: `4096`                                                                                     |
-| storage.storageAutoscale.cooldownTime        | Body | Number  | X        | Auto scaling cooldown time (minutes)<br/>- Minimum value: `10`<br/>- Maximum value: `1440`                                                                     |
+| storage.storageAutoscale.useStorageAutoscale | Body | Boolean | X        | Whether to enable storage auto scaling        <br/> - 기본값: 원본 DB 인스턴스 값                                                                                                       |
+| storage.storageAutoscale.threshold           | Body | Number  | X        | Auto scale out conditions (%) <br/> - 기본값: 원본 DB 인스턴스 값     <br/>- Minimum value: `50`<br/>- Maximum value: `95`                                                                           |
+| storage.storageAutoscale.maxStorageSize      | Body | Number  | X        | Auto scaling maximum size (GB) <br/> - 기본값: 원본 DB 인스턴스 값     <br/>- Maximum value: `4096`                                                                                     |
+| storage.storageAutoscale.cooldownTime        | Body | Number  | X        | Auto scaling cooldown time (minutes) <br/> - 기본값: 원본 DB 인스턴스 값     <br/>- Minimum value: `10`<br/>- Maximum value: `1440`                                                                     |
 | backup                                       | Body | Object  | X        | Backup information objects                                                                                            |
-| backup.backupPeriod                          | Body | Number  | X        | Backup retention period<br/>- Minimum value: `0`<br/>- Maximum value: `730`                                           |
+| backup.backupPeriod                          | Body | Number  | X        | Backup retention period <br/> - 기본값: 원본 DB 인스턴스 값     <br/>- Minimum value: `0`<br/>- Maximum value: `730`                                           |
 | backup.ftwrlWaitTimeout                      | Body | Number  | X        | Query latency (sec)<br/>Default: `6`<br/>- Minimum value: `0`<br/>- Maximum value: `21600`                            |
 | backup.backupRetryCount                      | Body | Number  | X        | Number of backup retries<br/>Default: `6`<br/>- Minimum value: `0`<br/>- Maximum value: `10`                          |
 {{#if (eq engine.lowerCase "mysql")}}
@@ -3374,6 +3405,10 @@ GET /v4.0/db-security-groups
 
 This API does not require a request body.
 
+| 이름                | 종류    | 형식       | 필수 | 설명                                                                                                                                   |
+|-------------------|-------|----------|----|--------------------------------------------------------------------------------------------------------------------------------------|
+| page              | Query | Number   | X  | 조회할 목록의 페이지<br/>- 기본값: 1 <br/>- 최솟값: `1`                                                                                                           |
+| size              | Query | Number   | X  | 조회할 목록의 페이지 크기<br/>- 기본값: 20                                        |
 #### Response
 
 | Name                                 | Type | Format   | Description                                         |
@@ -4927,9 +4962,9 @@ GET /v4.0/events
 This API does not require a request body.
 
 | Name              | Type  | Format   | Required | Description                                                                                                                                                         |
-|-------------------|-------|----------|----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| page              | Query | Number   | O        | Page to retrieve<br/>- Minimum value: `1`                                                                                                                           |
-| size              | Query | Number   | O        | Page size to retrieve<br/>- Minimum value: `1`<br/>- Maximum value: `100`                                                                                           |
+|-------------------|-------|----------|----|--------------------------------------------------------------------------------------------------------------------------------------|
+| page              | Query | Number   | X  | 조회할 목록의 페이지<br/>- 기본값: 1 <br/>- 최솟값: `1`                                                                                                           |
+| size              | Query | Number   | X  | 조회할 목록의 페이지 크기<br/>- 기본값: 20                                        |
 | from              | Query | Datetime | O        | Start date and time (YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                                    |
 | to                | Query | Datetime | O        | End date and time (YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                                      |
 | eventCategoryType | Query | Enum     | O        | Event category types to query<br/>ALL: All<br/>- `INSTANCE`: DB instance<br/>- `BACKUP`: Backup<br/>- `DB_SECURITY_GROUP`: DB security group<br/>- `TENANT`: Tenant |
@@ -5061,10 +5096,11 @@ GET /v4.0/event-subscriptions
 
 #### 요청
 
-| 이름                     | 종류    | 형식     | 필수 | 설명                                   |
-|------------------------|-------|--------|----|--------------------------------------|
-| page                   | Query | Number | O  | 조회할 목록의 페이지<br/>- 최솟값: `1`          |
-| size                   | Query | Number | O  | 조회할 목록의 페이지 크기<br/>- 최솟값: `1`<br/>- 최댓값: `100` |
+
+| 이름                | 종류    | 형식       | 필수 | 설명                                                                                                                                   |
+|-------------------|-------|----------|----|--------------------------------------------------------------------------------------------------------------------------------------|
+| page              | Query | Number   | X  | 조회할 목록의 페이지<br/>- 기본값: 1 <br/>- 최솟값: `1`                                                                                                           |
+| size              | Query | Number   | X  | 조회할 목록의 페이지 크기<br/>- 기본값: 20                                        |
 | eventSubscriptionId    | Query | UUID   | X  | 이벤트 구독의 식별자                          |
 | eventSubscriptionName  | Query | String | X  | 이벤트 구독을 식별할 수 있는 이름                 |
 | userGroupId            | Query | UUID   | X  | 사용자 그룹의 식별자                          |

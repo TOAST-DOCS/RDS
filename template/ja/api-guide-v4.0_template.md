@@ -962,6 +962,8 @@ PUT /v4.0/db-instances/{dbInstanceId}
 | dbSecurityGroupIds | Body | Array   | X  | DBセキュリティグループの識別子リスト                                                        |
 | executeBackup      | Body | Boolean | X  | 現時点でバックアップを行うかどうか<br/>- デフォルト値: `false`                                       |
 | useOnlineFailover  | Body | Boolean | X  | フェイルオーバーを利用した再起動を行うかどうか<br/>高可用性を使用中のDBインスタンスでのみ使用可能です。<br/>- デフォルト値: `false` |
+| waitReplicationDelay  | Body | Boolean | X  | 복제 지연을 기다리는 여부<br/>고가용성을 사용 중인 DB 인스턴스에서만 사용 가능합니다.<br/>- 기본값: `false` |
+| useReadOnly  | Body | Boolean | X  | 읽기 전용으로 변경 여부<br/>고가용성을 사용 중인 DB 인스턴스에서만 사용 가능합니다.<br/>- 기본값: `false` |
 
 <details><summary>例</summary>
 <p>
@@ -1001,11 +1003,11 @@ DELETE /v4.0/db-instances/{dbInstanceId}
 
 #### リクエスト
 
-このAPIはリクエスト本文を要求しません。
 
 | 名前         | 種類 | 形式 | 必須 | 説明         |
 |--------------|-----|------|----|--------------|
 | dbInstanceId | URL | UUID | O  | DBインスタンスの識別子 |
+| deleteAutoBackup          | Body | Boolean  | X  | 자동 백업 삭제 여부<br/>- 기본값: `false` |
 
 #### レスポンス
 
@@ -1034,6 +1036,8 @@ POST /v4.0/db-instances/{dbInstanceId}/restart
 | dbInstanceId      | URL  | UUID    | O  | DBインスタンスの識別子                                                            |
 | useOnlineFailover | Body | Boolean | X  | フェイルオーバーを利用した再起動を行うかどうか<br/>高可用性を使用中のDBインスタンスでのみ使用可能です。<br/>- デフォルト値: `false` |
 | executeBackup     | Body | Boolean | X  | 現時点でバックアップを行うかどうか<br/>- デフォルト値: `false`                                       |
+| waitReplicationDelay     | Body | Boolean | X  | 복제 지연을 기다리는 여부<br/>고가용성을 사용 중인 DB 인스턴스에서만 사용 가능합니다.<br/>- 기본값: `false`                                         |
+| useReadOnly     | Body | Boolean | X  | 읽기 전용으로 변경 여부<br/>고가용성을 사용 중인 DB 인스턴스에서만 사용 가능합니다.<br/>- 기본값: `false`                                         |
 
 #### レスポンス
 
@@ -1055,6 +1059,8 @@ POST /v4.0/db-instances/{dbInstanceId}/force-restart
 | RDSfor{{engine.pascalCase}}:DbInstance.ForceRestart | DBインスタンスの強制再起動 |
 
 #### リクエスト
+
+このAPIはリクエスト本文を要求しません。
 
 | 名前              | 種類 | 形式    | 必須 | 説明                                                                      |
 |-------------------|------|---------|----|---------------------------------------------------------------------------|
@@ -1157,7 +1163,7 @@ POST /v4.0/db-instances/{dbInstanceId}/replicate
 | 名前                                         | 種類 | 形式    | 必須 | 説明                                                                      |
 |----------------------------------------------|------|---------|----|---------------------------------------------------------------------------|
 | dbInstanceId                                 | URL  | UUID    | O  | DBインスタンスの識別子                                                            |
-| dbInstanceName                               | Body | String  | O  | DBインスタンスを識別できる マスター名                                                 |
+| dbInstanceName                               | Body | String  | O  | DBインスタンスを識別できる名前                                                 |
 | description                                  | Body | String  | X  | DBインスタンスの追加情報                                                       |
 | dbFlavorId                                   | Body | UUID    | X  | DBインスタンス仕様の識別子<br/>- デフォルト値:原本DBインスタンス値                                 |
 | dbPort                                       | Body | Number  | X  | DBポート<br/>- デフォルト値:原本DBインスタンス値<br/>- 最小値: `3306`<br/>- 最大値: `43306`        |
@@ -1169,15 +1175,15 @@ POST /v4.0/db-instances/{dbInstanceId}/replicate
 | useSlowQueryAnalysis                         | Body | Boolean | X  | Slow query分析を行うかどうか<br/>- デフォルト値: `true`                                        |
 | network                                      | Body | Object  | O  | ネットワーク情報オブジェクト                                                              |
 | network.usePublicAccess                      | Body | Boolean | X  | 外部接続可否<br/>- デフォルト値:原本DBインスタンス値                                     |
-| network.availabilityZone                     | Body | Enum    | O  | DBインスタンスを作成するアベイラビリティゾーン<br/>- 例: `kr-pub-a`                                  |
+| network.availabilityZone                     | Body | Enum    | O  | DBインスタンスを作成するアベイラビリティゾーン<br><ul> <li>例: `kr-pub-a`</li></ul>                                  |
 | storage                                      | Body | Object  | X  | データストレージ情報オブジェクト                                                          |    
-| storage.storageType                          | Body | Enum    | X  | データストレージタイプ<br><ul><li>例: `General SSD`</li></ul>                        |
+| storage.storageType                          | Body | Enum    | X  | データストレージタイプ<br><ul> <li>デフォルト値:原本DBインスタンス値</li><li>例: `General SSD`</li></ul>                        |
 | storage.storageSize                          | Body | Number  | X  | データストレージサイズ(GB)<br/>- デフォルト値:原本DBインスタンス値<br/>- 最小値: `20`<br/>- 最大値: `2048` |
 | storage.storageAutoscale                     | Body | Object  | X  | データストレージ自動拡張オブジェクト                                                       |
-| storage.storageAutoscale.useStorageAutoscale | Body | Boolean | X  | ストレージ自動拡張を行うかどうか                                                            |
-| storage.storageAutoscale.threshold           | Body | Number  | X  | 自動拡張条件(%)<br/>- 最小値: `50`<br/>- 最大値: `95`                               |
-| storage.storageAutoscale.maxStorageSize      | Body | Number  | X  | 自動拡張最大サイズ(GB)<br/>- 最大値: `4096`                                         |
-| storage.storageAutoscale.cooldownTime        | Body | Number  | X  | 自動拡張クールダウン時間(分)<br/>- 最小値: `10`<br/>- 最大値: `1440`                         |
+| storage.storageAutoscale.useStorageAutoscale | Body | Boolean | X  | ストレージ自動拡張を行うかどうか   <br /> <ul><li>デフォルト値:原本DBインスタンス値</li></ul>                                                          |
+| storage.storageAutoscale.threshold           | Body | Number  | X  | 自動拡張条件(%)<br/><ul><li>デフォルト値:原本DBインスタンス値</li><li>最小値: `50`</li><li>最大値: `95`</li></ul>                               |
+| storage.storageAutoscale.maxStorageSize      | Body | Number  | X  | 自動拡張最大サイズ(GB)<br/><ul><li>デフォルト値:原本DBインスタンス値</li><li>最大値: `4096`</li></ul>                                         |
+| storage.storageAutoscale.cooldownTime        | Body | Number  | X  | 自動拡張クールダウン時間(分)<br/><ul><li>デフォルト値:原本DBインスタンス値</li><li>最小値: `10`</li><li>最大値: `1440`</li></ul>                         |
 | backup                                       | Body | Object  | X  | バックアップ情報オブジェクト                                                                |
 | backup.backupPeriod                          | Body | Number  | X  | バックアップ保管期間(日)<br/>- デフォルト値:原本DBインスタンス値<br/>- 最小値: `0`<br/>- 最大値: `730`       |
 | backup.ftwrlWaitTimeout                      | Body | Number  | X  | クエリ遅延待機時間(秒)<br/>- デフォルト値:原本DBインスタンス値<br/>- 最小値: `0`<br/>- 最大値: `21600`  |
@@ -1440,33 +1446,33 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 | dbInstanceId                                        | URL  | UUID    | O  | DBインスタンスの識別子                                                                                                                                                          |
 | restore                                             | Body | Object  | O  | 復元情報オブジェクト                                                                                                                                                              |
 | restore.restoreType                                 | Body | Enum    | O  | 復元タイプの種類<br><ul><li>`TIMESTAMP`:復元可能な時間内の時間を利用した時点復元タイプ</li><li>`BINLOG`:復元可能なバイナリログ位置を利用した時点復元タイプ</li><li>`BACKUP`:既存に作成したバックアップを利用したスナップショット復元タイプ</li></ul>                                                                                                                                                                                                                                                                                                            |
-| dbInstanceName                                      | Body | String  | X  | DBインスタンスを識別できる マスター名                                                                                                                                               |
-| dbInstanceCandidateName                             | Body | String  | X  | DBインスタンスを識別できる 予備マスター名(高可用性を使用する場合の必須値)                                                                                                                             |
-| description                                         | Body | String  | X  | DBインスタンスに対する追加情報                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| dbInstanceName                                      | Body | String  | O  | DBインスタンスを識別できる マスター名                                                                                                                                               |
+| dbInstanceCandidateName                             | Body | String  | O  | DBインスタンスを識別できる 予備マスター名(高可用性を使用する場合の必須値)                                                                                                                             |
+| description                                         | Body | String  | X  | DBインスタンスに対する追加情報                                                                                                                                                                                                    |
 | dbFlavorId                                          | Body | UUID    | X  | DBインスタンス仕様の識別子                                                                                                                                                       |
-| dbPort                                              | Body | Number  | X  | DBポート<br><ul><li>最小値: `3306`</li><li>最大値: `43306`</li></ul>                                                                                                             |
-| <span style="color:#313338">parameterGroupId</span> | Body | UUID    | X  | パラメータグループの識別子                                                                                                                                                          |
+| dbPort                                              | Body | Number  | X  | DBポート<br><ul><li> 기본값: 원본 DB 인스턴스 값 </li><li>最小値: `3306`</li><li>最大値: `43306`</li></ul>                                                                                                             |
+| parameterGroupId | Body | UUID    | X  | パラメータグループの識別子   <ul><li> 기본값: 원본 DB 인스턴스 값 </li></ul>                                                                                                                                                        |
 | dbSecurityGroupIds                                  | Body | Array   | X  | DBセキュリティグループの識別子リスト                                                                                                                                                      |
 | userGroupIds                                        | Body | Array   | X  | ユーザーグループの識別子リスト                                                                                                                                                        |
 | useHighAvailability                                 | Body | Boolean | X  | 高可用性を使用するかどうか<br><ul><li>デフォルト値: `false`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                       |
 | pingInterval                                        | Body | Number  | X  | 高可用性使用時Ping間隔(秒)<br><ul><li>デフォルト値: `3`</li><li>最小値: `1`</li><li>最大値: `600`</li></ul>                                                                                  |
 | useDefaultNotification                              | Body | Boolean | X  | 基本アラームを使用するかどうか<br><ul><li>デフォルト値: `false`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | useDeletionProtection                               | Body | Boolean | X  | 削除保護の有無<br>デフォルト値: `false`                                                                                                                                                |
-| useSlowQueryAnalysis                                | Body | Boolean | X  | Slow query分析を行うかどうか<br/>- デフォルト値: `true`                                                                                                                                      |
+| useSlowQueryAnalysis                                | Body | Boolean | X  | Slow query分析を行うかどうか<br/> <ul><li> デフォルト値: `true`</li></ul>                                                                                                                                      |
 | network                                             | Body | Object  | X  | ネットワーク情報オブジェクト                                                                                                                                                            |
 | network.subnetId                                    | Body | UUID    | X  | サブネットの識別子                                                                                                                                                              |
 | network.usePublicAccess                             | Body | Boolean | X  | 外部接続可否<br><ul><li>デフォルト値: `false`</li></ul>                                                                                                                           |
 | network.availabilityZone                            | Body | Enum    | X  | DBインスタンスを作成するアベイラビリティゾーン<br><ul><li>例: `kr-pub-a`</li></ul>                                                                                                                 |
 | storage                                             | Body | Object  | X  | ストレージ情報オブジェクト                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| storage.storageType                                 | Body | Enum    | X  | データストレージタイプ<br><ul><li>例: `General SSD`</li></ul>                                                                                                                      |
-| storage.storageSize                                 | Body | Number  | X  | データストレージサイズ(GB)<br><ul><li>最小値: `20`</li><li>最大値: `2048`</li></ul>                                                                                                      |
+| storage.storageType                                 | Body | Enum    | X  | データストレージタイプ<br><ul><li>기본값: 원본 DB 인스턴스 값</li><li>例: `General SSD`</li></ul>                                                                                                                      |
+| storage.storageSize                                 | Body | Number  | X  | データストレージサイズ(GB)<br><ul><li>기본값: 원본 DB 인스턴스 값</li><li>最小値: `20`</li><li>最大値: `2048`</li></ul>                                                                                                      |
 | storage.storageAutoscale                            | Body | Object  | X  | データストレージ自動拡張オブジェクト                                                                                                                                                     |
-| storage.storageAutoscale.useStorageAutoscale        | Body | Boolean | X  | ストレージ自動拡張を行うかどうか                                                                                                                                                          |
-| storage.storageAutoscale.threshold                  | Body | Number  | X  | 自動拡張条件(%)<br/>- 最小値: `50`<br/>- 最大値: `95`                                                                                                                             |
-| storage.storageAutoscale.maxStorageSize             | Body | Number  | X  | 自動拡張最大サイズ(GB)<br/>- 最大値: `4096`                                                                                                                                       |
-| storage.storageAutoscale.cooldownTime               | Body | Number  | X  | 自動拡張クールダウン時間(分)<br/>- 最小値: `10`<br/>- 最大値: `1440`                                                                                                                       |
+| storage.storageAutoscale.useStorageAutoscale        | Body | Boolean | X  | ストレージ自動拡張を行うかどうか        <ul><li>기본값: 원본 DB 인스턴스 값</li></li>                                                                                                                                                  |
+| storage.storageAutoscale.threshold                  | Body | Number  | X  | 自動拡張条件(%)<ul><li>기본값: 원본 DB 인스턴스 값</li><li> 最小値: `50`</li><li> 最大値: `95`   </li></ul>                                                                                                                          |
+| storage.storageAutoscale.maxStorageSize             | Body | Number  | X  | 自動拡張最大サイズ(GB)<ul><li>기본값: 원본 DB 인스턴스 값</li><li> 最大値: `4096`    </li></ul>                                                                                                                                   |
+| storage.storageAutoscale.cooldownTime               | Body | Number  | X  | 自動拡張クールダウン時間(分)<ul><li>기본값: 원본 DB 인스턴스 값</li><li> 最小値: `10`</li><li>最大値: `1440`         </li></ul>                                                                                                              |
 | backup                                              | Body | Object  | X  | バックアップ情報オブジェクト                                                                                                                                                              |
-| backup.backupPeriod                                 | Body | Number  | X  | バックアップ保管期間(日)<br><ul><li>最小値: `0`</li><li>最大値: `730`</li></ul>                                                                                                            |
+| backup.backupPeriod                                 | Body | Number  | X  | バックアップ保管期間(日)<br><ul><li>기본값: 원본 DB 인스턴스 값</li><li>最小値: `0`</li><li>最大値: `730`</li></ul>                                                                                                            |
 | backup.ftwrlWaitTimeout                             | Body | Number  | X  | クエリ遅延待機時間(秒)<br><ul><li>デフォルト値: `1800`</li><li>最小値: `0`</li><li>最大値: `21600`</li></ul>                                                                                   |
 | backup.backupRetryCount                             | Body | Number  | X  | バックアップ再試行回数<br><ul><li>デフォルト値: `0`</li><li>最小値: `0`</li><li>最大値: `10`</li></ul>                                                                                              |
 {{#if (eq engine.lowerCase "mysql")}}    
@@ -1672,7 +1678,7 @@ POST /v4.0/db-instances/restore-from-obs
 | description                                         | Body | String  | X  | DBインスタンスに対する追加情報                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 | dbFlavorId                                          | Body | UUID    | O  | DBインスタンス仕様の識別子                                                                      |
 | dbPort                                              | Body | Number  | O  | DBポート<br><ul><li>最小値: `3306`</li><li>最大値: `43306`</li></ul>                            |
-| <span style="color:#313338">parameterGroupId</span> | Body | UUID    | O  | パラメータグループの識別子                                                                         |
+| parameterGroupId | Body | UUID    | O  | パラメータグループの識別子                                                                         |
 | dbSecurityGroupIds                                  | Body | Array   | X  | DBセキュリティグループの識別子リスト                                                                     |
 | userGroupIds                                        | Body | Array   | X  | ユーザーグループの識別子リスト                                                                       |
 | useHighAvailability                                 | Body | Boolean | X  | 高可用性を使用するかどうか<br><ul><li>デフォルト値: `false`</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                       |
@@ -1823,6 +1829,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/high-availability
 | dbInstanceId        | URL  | UUID    | O  | DBインスタンスの識別子                                       |
 | useHighAvailability | Body | Boolean | O  | 高可用性を使用するかどうか                                       |
 | pingInterval        | Body | Number  | X  | 高可用性使用時Ping間隔(秒)<br/>- 最小値: `1`<br/>- 最大値: `600` |
+| dbInstanceCandidateName        | Body | String  | O  | DB 인스턴스를 식별할 수 있는 예비 마스터 이름 |
 
 #### レスポンス
 
@@ -3052,9 +3059,9 @@ GET /v4.0/backups
 このAPIはリクエスト本文を要求しません。
 
 | 名前         | 種類  | 形式   | 必須 | 説明                                                     |
-|--------------|-------|--------|----|----------------------------------------------------------|
-| page         | Query | Number | O  | 照会するリストのページ<br/>- 最小値: `1`                               |
-| size         | Query | Number | O  | 照会するリストのページサイズ<br/>- 最小値: `1`<br/>- 最大値: `100`           |
+|-------------------|-------|----------|----|------------------------------------|
+| page              | Query | Number   | X  | 조회할 목록의 페이지<br/>- 기본값: 1 <br/>- 최솟값: `1`                                                                                                           |
+| size              | Query | Number   | X  | 조회할 목록의 페이지 크기<br/>- 기본값: 20                                        |
 | backupType   | Query | Enum   | X  | バックアップタイプ<br/>- `AUTO`:自動<br/>- `MANUAL`:手動<br/>- デフォルト値:全体 |
 | dbInstanceId | Query | UUID   | X  | 原本DBインスタンスの識別子                                        |
 | dbVersion    | Query | Enum   | X  | DBエンジンタイプ                                               |
@@ -3130,7 +3137,7 @@ POST /v4.0/backups
 | 名前             | 種類 | 形式   | 必須 | 説明                                                       |
 |------------------|------|--------|----|------------------------------------------------------------|
 | backupName       | Body | String | O  | バックアップを識別できる名前                                          |
-| backupMethodType | Body | Enum   | O  | バックアップ方式タイプ種類<br/>- `FULL`:全体バックアップ<br/>- `INCREMENTAL`:増分バックアップ |
+| backupMethodType | Body | Enum   | O  | バックアップ方式タイプ種類<br/>- `FULL`:全体バックアップ<br/>- `INCREMENTAL`:増分バックアップ <br/>- `SNAPSHOT`: 스냅샷 백업|
 
 #### 全体バックアップ(backupMethodTypeが`FULL`の場合)
 
@@ -3173,6 +3180,30 @@ POST /v4.0/backups
 
 </p>
 </details>
+
+
+
+#### 스냅샷 백업(backupMethodType이 `SNAPSHOT`인 경우)
+
+| 이름           | 종류   | 형식   | 필수 | 설명           |
+|--------------|------|------|----|--------------|
+| dbInstanceId | Body | UUID | O  | DB 인스턴스의 식별자 |
+
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "backupName": "example-backup-name",
+    "backupMethodType": "SNAPSHOT",
+    "dbInstanceId": "142e6ccc-3bfb-4e1e-84f7-38861284fafd"
+}
+```
+
+</p>
+</details>
+
 
 
 #### レスポンス
@@ -3254,7 +3285,7 @@ POST /v4.0/backups/{backupId}/restore
 | dbInstanceCandidateName                      | Body | String  | X  | DBインスタンスを識別できる 予備マスター名(高可用性を使用する場合の必須値)                         |
 | description                                  | Body | String  | X  | DBインスタンスの追加情報                                                 |
 | dbFlavorId                                   | Body | UUID    | X  | DBインスタンス仕様の識別子                                                   |
-| dbPort                                       | Body | Integer | X  | DBポート<br/>- 最小値: `3306`<br/>- 最大値: `43306`                          |
+| dbPort                                       | Body | Integer | X  | DBポート <br/> - 기본값: 원본 DB 인스턴스 값     <br/>- 最小値: `3306`<br/>- 最大値: `43306`                          |
 | parameterGroupId                             | Body | UUID    | X  | パラメータグループの識別子                                                      |
 | dbSecurityGroupIds                           | Body | Array   | X  | DBセキュリティグループの識別子リスト                                                  ||network|Body|Object|O|ネットワーク情報オブジェクト|
 | userGroupIds                                 | Body | Array   | X  | ユーザーグループの識別子リスト                                                    |
@@ -3264,19 +3295,19 @@ POST /v4.0/backups/{backupId}/restore
 | useDeletionProtection                        | Body | Boolean | X  | 削除保護の有無<br/>- デフォルト値: `false`                                         | 
 | useSlowQueryAnalysis                         | Body | Boolean | X  | Slow query分析を行うかどうか<br/>- デフォルト値: `true`                                  |
 | network                                      | Body | Object  | X  | ネットワーク情報オブジェクト                                                        |
-| network.subnetId                             | Body | UUID    | X  | サブネットの識別子                                                          |
+| network.subnetId                             | Body | UUID    | X  | サブネットの識別子   <br/> - 기본값: 원본 DB 인스턴스 값                                                             |
 | network.usePublicAccess                      | Body | Boolean | X  | 外部接続可否<br/>- デフォルト値: `false`                                      |
 | network.availabilityZone                     | Body | Enum    | X  | DBインスタンスを作成するアベイラビリティゾーン<br/>- 例: `kr-pub-a`                            |
 | storage                                      | Body | Object  | X  | データストレージ情報オブジェクト                                                    |    
-| storage.storageType                          | Body | Enum    | X  | データストレージタイプ<br/>- 例: `General SSD`                                 |
-| storage.storageSize                          | Body | Number  | X  | データストレージサイズ(GB)<br/>- 最小値: `20`<br/>- 最大値: `2048`                   |
+| storage.storageType                          | Body | Enum    | X  | データストレージタイプ <br/> - 기본값: 원본 DB 인스턴스 값     <br/>- 例: `General SSD`                                 |
+| storage.storageSize                          | Body | Number  | X  | データストレージサイズ(GB) <br/> - 기본값: 원본 DB 인스턴스 값     <br/>- 最小値: `20`<br/>- 最大値: `2048`                   |
 | storage.storageAutoscale                     | Body | Object  | X  | データストレージ自動拡張オブジェクト                                                 |
-| storage.storageAutoscale.useStorageAutoscale | Body | Boolean | X  | ストレージ自動拡張を行うかどうか                                                      |
-| storage.storageAutoscale.threshold           | Body | Number  | X  | 自動拡張条件(%)<br/>- 最小値: `50`<br/>- 最大値: `95`                         |
-| storage.storageAutoscale.maxStorageSize      | Body | Number  | X  | 自動拡張最大サイズ(GB)<br/>- 最大値: `4096`                                   |
-| storage.storageAutoscale.cooldownTime        | Body | Number  | X  | 自動拡張クールダウン時間(分)<br/>- 最小値: `10`<br/>- 最大値: `1440`                   |
+| storage.storageAutoscale.useStorageAutoscale | Body | Boolean | X  | ストレージ自動拡張を行うかどう <br/> - 기본값: 원본 DB 인스턴스 값     か                                                      |
+| storage.storageAutoscale.threshold           | Body | Number  | X  | 自動拡張条件(%) <br/> - 기본값: 원본 DB 인스턴스 값     <br/>- 最小値: `50`<br/>- 最大値: `95`                         |
+| storage.storageAutoscale.maxStorageSize      | Body | Number  | X  | 自動拡張最大サイズ(GB) <br/> - 기본값: 원본 DB 인스턴스 값     <br/>- 最大値: `4096`                                   |
+| storage.storageAutoscale.cooldownTime        | Body | Number  | X  | 自動拡張クールダウン時間(分) <br/> - 기본값: 원본 DB 인스턴스 값     <br/>- 最小値: `10`<br/>- 最大値: `1440`                   |
 | backup                                       | Body | Object  | X  | バックアップ情報オブジェクト                                                          |
-| backup.backupPeriod                          | Body | Number  | X  | バックアップ保管期間(日)<br/>- 最小値: `0`<br/>- 最大値: `730`                         |
+| backup.backupPeriod                          | Body | Number  | X  | バックアップ保管期間(日) <br/> - 기본값: 원본 DB 인스턴스 값     <br/>- 最小値: `0`<br/>- 最大値: `730`                         |
 | backup.ftwrlWaitTimeout                      | Body | Number  | X  | クエリ遅延待機時間(秒)<br/>- デフォルト値: `1800`<br/>- 最小値: `0`<br/>- 最大値: `21600`  |
 | backup.backupRetryCount                      | Body | Number  | X  | バックアップ再試行回数<br/>- デフォルト値: `0`<br/>- 最小値: `0`<br/>- 最大値: `10`             |
 {{#if (eq engine.lowerCase "mysql")}}    
@@ -3382,6 +3413,11 @@ GET /v4.0/db-security-groups
 #### リクエスト
 
 このAPIはリクエスト本文を要求しません。
+
+| 이름                | 종류    | 형식       | 필수 | 설명                                                                                                                                   |
+|-------------------|-------|----------|----|--------------------------------------------------------------------------------------------------------------------------------------|
+| page              | Query | Number   | X  | 조회할 목록의 페이지<br/>- 기본값: 1 <br/>- 최솟값: `1`                                                                                                           |
+| size              | Query | Number   | X  | 조회할 목록의 페이지 크기<br/>- 기본값: 20                                        |
 
 #### レスポンス
 
@@ -4936,8 +4972,8 @@ GET /v4.0/events
 
 | 名前              | 種類  | 形式     | 必須 | 説明                                                                                                                                 |
 |-------------------|-------|----------|----|--------------------------------------------------------------------------------------------------------------------------------------|
-| page              | Query | Number   | O  | 照会するリストのページ<br/>- 最小値: `1`                                                                                                           |
-| size              | Query | Number   | O  | 照会するリストのページサイズ<br/>- 最小値: `1`<br/>- 最大値: `100`                                                                                       |
+| page              | Query | Number   | X  | 조회할 목록의 페이지<br/>- 기본값: 1 <br/>- 최솟값: `1`                                                                                                           |
+| size              | Query | Number   | X  | 조회할 목록의 페이지 크기<br/>- 기본값: 20                                        |
 | from              | Query | Datetime | O  | 開始日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                    |
 | to                | Query | Datetime | O  | 終了日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                    |
 | eventCategoryType | Query | Enum     | O  | 照会するイベントカテゴリータイプ<br/>- `ALL`:全体<br/>- `INSTANCE`: DBインスタンス<br/>- `BACKUP`:バックアップ<br/>- `DB_SECURITY_GROUP`: DBセキュリティグループ<br/>- `TENANT`:テナント |
@@ -5069,10 +5105,10 @@ GET /v4.0/event-subscriptions
 
 #### 요청
 
-| 이름                     | 종류    | 형식     | 필수 | 설명                                   |
-|------------------------|-------|--------|----|--------------------------------------|
-| page                   | Query | Number | O  | 조회할 목록의 페이지<br/>- 최솟값: `1`          |
-| size                   | Query | Number | O  | 조회할 목록의 페이지 크기<br/>- 최솟값: `1`<br/>- 최댓값: `100` |
+| 이름                | 종류    | 형식       | 필수 | 설명                                                                                                                                   |
+|-------------------|-------|----------|----|--------------------------------------------------------------------------------------------------------------------------------------|
+| page              | Query | Number   | X  | 조회할 목록의 페이지<br/>- 기본값: 1 <br/>- 최솟값: `1`                                                                                                           |
+| size              | Query | Number   | X  | 조회할 목록의 페이지 크기<br/>- 기본값: 20                                        |
 | eventSubscriptionId    | Query | UUID   | X  | 이벤트 구독의 식별자                          |
 | eventSubscriptionName  | Query | String | X  | 이벤트 구독을 식별할 수 있는 이름                 |
 | userGroupId            | Query | UUID   | X  | 사용자 그룹의 식별자                          |
