@@ -942,7 +942,7 @@ PUT /v4.0/db-instances/{dbInstanceId}
 |--------------------|------|---------|----------|-------------------------------------------------------------------------------------------------------------------|
 | dbInstanceId       | URL  | UUID    | O        | DB instance identifier                                                                                            |
 | dbInstanceName     | Body | String  | X        | Master name to identify DB instances                                                                              |
-| dbInstanceCandidateName| Body | String  | O        | Candidate name to identify DB instances                                                                               |
+| dbInstanceCandidateName| Body | String  | X        | Candidate name to identify DB instances                                                                               |
 | description        | Body | String  | X        | Additional information on DB instances                                                                            |
 | dbPort             | Body | Number  | X        | DB port<br/>- Minimum value: `3306`<br/>- Maximum value: `43306`                                                  |
 {{#if (eq engine.lowerCase "mysql")}}

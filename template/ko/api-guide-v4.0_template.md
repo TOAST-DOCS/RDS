@@ -949,7 +949,7 @@ PUT /v4.0/db-instances/{dbInstanceId}
 |-------------------------|------|---------|----|---------------------------------------------|
 | dbInstanceId            | URL  | UUID    | O  | DB 인스턴스의 식별자                                |
 | dbInstanceName          | Body | String  | X  | DB 인스턴스를 식별할 수 있는 마스터 이름                    |
-| dbInstanceCandidateName | Body | String  | O  | DB 인스턴스를 식별할 수 있는 예비 마스터 이름(고가용성 사용 시 필수 값) |
+| dbInstanceCandidateName | Body | String  | X  | DB 인스턴스를 식별할 수 있는 예비 마스터 이름(고가용성 사용 시 필수 값) |
 | description             | Body | String  | X  | DB 인스턴스에 대한 추가 정보                           |
 | dbPort                  | Body | Number  | X  | DB 포트<br/>- 최솟값: `3306`<br/>- 최댓값: `43306`  |
 {{#if (eq engine.lowerCase "mysql")}}    

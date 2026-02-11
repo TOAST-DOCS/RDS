@@ -949,7 +949,7 @@ PUT /v4.0/db-instances/{dbInstanceId}
 |-------------------------|------|---------|----|---------------------------------------------|
 | dbInstanceId            | URL  | UUID    | O  | DBインスタンスの識別子                               |
 | dbInstanceName          | Body | String  | X  | DBインスタンスを識別できる マスター名                   |
-| dbInstanceCandidateName | Body | String  | O  | DBインスタンスを識別できる 予備マスター名(高可用性を使用する場合の必須値) |
+| dbInstanceCandidateName | Body | String  | X  | DBインスタンスを識別できる 予備マスター名(高可用性を使用する場合の必須値) |
 | description             | Body | String  | X  | DBインスタンスに関する追加情報                          |
 | dbPort                  | Body | Number  | X  | DBポート<br/>- 最小値: `3306`<br/>- 最大値: `43306`  |
 {{#if (eq engine.lowerCase "mysql")}}    
