@@ -2187,7 +2187,7 @@ GET /v4.0/db-instances/{dbInstanceId}/network-info
 
 | 이름                     | 종류   | 형식     | 설명                                                                                                                                      |
 |------------------------|------|--------|-----------------------------------------------------------------------------------------------------------------------------------------|
-| availabilityZone       | Body | Enum   | DB 인스턴스를 생성할 가용성 영역                                                                                                                     |
+| availabilityZone       | Body | Enum   | DB 인스턴스를 생성한 가용성 영역                                                                                                                     |
 | subnet                 | Body | Object | 서브넷 객체                                                                                                                                  |
 | subnet.subnetId        | Body | UUID   | 서브넷의 식별자                                                                                                                                |
 | subnet.subnetName      | Body | UUID   | 서브넷을 식별할 수 있는 이름                                                                                                                        |

@@ -2186,7 +2186,7 @@ GET /v4.0/db-instances/{dbInstanceId}/network-info
 
 | 名前                   | 種類 | 形式   | 説明                                                                                                                                    |
 |------------------------|------|--------|-----------------------------------------------------------------------------------------------------------------------------------------|
-| availabilityZone       | Body | Enum   | DBインスタンスを作成するアベイラビリティゾーン                                                                                                                   |
+| availabilityZone       | Body | Enum   | DB 인스턴스를 생성한 가용성 영역                                                                                                                   |
 | subnet                 | Body | Object | サブネットオブジェクト                                                                                                                                |
 | subnet.subnetId        | Body | UUID   | サブネットの識別子                                                                                                                              |
 | subnet.subnetName      | Body | UUID   | サブネットの識別できる名前                                                                                                                 |

@@ -2179,7 +2179,7 @@ This API does not require a request body.
 
 | Name                   | Type | Format | Description                                                                                                                                                                                                |
 |------------------------|------|--------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| availabilityZone       | Body | Enum   | Availability zone where DB instance will be created                                                                                                                                                        |
+| availabilityZone       | Body | Enum   | DB 인스턴스를 생성한 가용성 영역 created                                                                                                                                                        |
 | subnet                 | Body | Object | Subnet object                                                                                                                                                                                              |
 | subnet.subnetId        | Body | UUID   | Subnet identifier                                                                                                                                                                                          |
 | subnet.subnetName      | Body | UUID   | Name to identify subnets                                                                                                                                                                                   |
