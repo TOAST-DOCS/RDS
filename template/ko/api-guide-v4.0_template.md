@@ -880,7 +880,7 @@ POST /v4.0/db-instances
 | backup.ftwrlWaitTimeout                      | Body | Number  | X  | 쿼리 지연 대기 시간(초)<br/>- 기본값: `1800`<br/>- 최솟값: `0`<br/>- 최댓값: `21600`                                                                                                                                                          |
 | backup.backupRetryCount                      | Body | Number  | X  | 백업 재시도 횟수<br/>- 기본값: `0`<br/>- 최솟값: `0`<br/>- 최댓값: `10`                                                                                                                                                                     |
 {{#if (eq engine.lowerCase "mysql")}}    
-| backup.replicationRegion                     | Body | Enum    | X  | 백업 복제 리전<br />- `KR1`: 한국(판교)<br/>- `KR2`: 한국(평촌)<br/>- `JP1`: 일본(도쿄)                                                                                                                                                       |
+| backup.replicationRegion                     | Body | Enum    | X  | 백업 복제 리전<br />- `KR1`: 한국(판교) 리전<br/>- `KR2`: 한국(평촌) 리전<br/>- `JP1`: 일본(도쿄) 리전                                                                                                                                                      |
 {{/if}}
 | backup.useBackupLock                         | Body | Boolean | X  | 테이블 잠금 사용 여부<br/>- 기본값: `true`                                                                                                                                                                                              |
 | backup.backupSchedules                       | Body | Array   | O  | 예정된 자동 백업 목록                                                                                                                                                                                                                   |
@@ -966,7 +966,7 @@ PUT /v4.0/db-instances/{dbInstanceId}
 | dbSecurityGroupIds | Body | Array   | X  | DB 보안 그룹의 식별자 목록                                                          |
 | executeBackup      | Body | Boolean | X  | 현재 시점 백업 진행 여부<br/>- 기본값: `false`                                         |
 | useOnlineFailover  | Body | Boolean | X  | 장애 조치를 이용한 재시작 여부<br/>고가용성을 사용 중인 DB 인스턴스에서만 사용 가능합니다.<br/>- 기본값: `false` |
-| waitReplicationDelay  | Body | Boolean | X  | 복제 지연을 기다리는 여부<br/>고가용성을 사용 중인 DB 인스턴스에서만 사용 가능합니다.<br/>- 기본값: `false` |
+| waitReplicationDelay  | Body | Boolean | X  | 복제 지연 해소 대기 여부<br/>고가용성을 사용 중인 DB 인스턴스에서만 사용 가능합니다.<br/>- 기본값: `false` |
 | useReadOnly  | Body | Boolean | X  | 읽기 전용으로 변경 여부<br/>고가용성을 사용 중인 DB 인스턴스에서만 사용 가능합니다.<br/>- 기본값: `false` |
 
 <details><summary>예시</summary>
@@ -1039,7 +1039,7 @@ POST /v4.0/db-instances/{dbInstanceId}/restart
 | dbInstanceId      | URL  | UUID    | O  | DB 인스턴스의 식별자                                                              |
 | useOnlineFailover | Body | Boolean | X  | 장애 조치를 이용한 재시작 여부<br/>고가용성을 사용 중인 DB 인스턴스에서만 사용 가능합니다.<br/>- 기본값: `false` |
 | executeBackup     | Body | Boolean | X  | 현재 시점 백업 진행 여부<br/>- 기본값: `false`                                         |
-| waitReplicationDelay     | Body | Boolean | X  | 복제 지연을 기다리는 여부<br/>고가용성을 사용 중인 DB 인스턴스에서만 사용 가능합니다.<br/>- 기본값: `false`                                         |
+| waitReplicationDelay     | Body | Boolean | X  | 복제 지연 해소 대기 여부<br/>고가용성을 사용 중인 DB 인스턴스에서만 사용 가능합니다.<br/>- 기본값: `false`                                         |
 | useReadOnly     | Body | Boolean | X  | 읽기 전용으로 변경 여부<br/>고가용성을 사용 중인 DB 인스턴스에서만 사용 가능합니다.<br/>- 기본값: `false`                                         |
 
 #### 응답
@@ -1193,7 +1193,7 @@ POST /v4.0/db-instances/{dbInstanceId}/replicate
 | backup.ftwrlWaitTimeout                      | Body | Number  | X  | 쿼리 지연 대기 시간(초)<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 최솟값: `0`<br/>- 최댓값: `21600`  |
 | backup.backupRetryCount                      | Body | Number  | X  | 백업 재시도 횟수<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 최솟값: `0`<br/>- 최댓값: `10`          |
 {{#if (eq engine.lowerCase "mysql")}}    
-| backup.replicationRegion                     | Body | Enum    | X  | 백업 복제 리전<br />- `KR1`: 한국(판교)<br/>- `KR2`: 한국(평촌)<br/>- `JP1`: 일본(도쿄)<br/>- 기본값: 원본 DB 인스턴스 값                                                                                                                                                       |
+| backup.replicationRegion                     | Body | Enum    | X  | 백업 복제 리전<br />- `KR1`: 한국(판교) 리전<br/>- `KR2`: 한국(평촌) 리전<br/>- `JP1`: 일본(도쿄) 리전<br/>- 기본값: 원본 DB 인스턴스 값                                                                                                                                                       |
 {{/if}}
 | backup.useBackupLock                         | Body | Boolean | X  | 테이블 잠금 사용 여부<br/>- 기본값: 원본 DB 인스턴스 값                                                                                                                                                                                                                |
 | backup.backupSchedules                       | Body | Array   | X  | 예정된 자동 백업 목록                                                                                                                                                                                                                                           |
@@ -1445,42 +1445,42 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 
 #### 공통 요청
 
-| 이름                                                  | 종류   | 형식      | 필수 | 설명                                                                                                                                                                      |
-|-----------------------------------------------------|------|---------|----|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| dbInstanceId                                        | URL  | UUID    | O  | DB 인스턴스의 식별자                                                                                                                                                            |
-| restore                                             | Body | Object  | O  | 복원 정보 객체                                                                                                                                                                |
-| restore.restoreType                                 | Body | Enum    | O  | 복원 타입 종류<br/>- `TIMESTAMP`: 복원 가능한 시간 이내의 시간을 이용한 시점 복원 타입<br/>- `BINLOG`: 복원 가능한 바이너리 로그 위치를 이용한 시점 복원 타입<br/>- `BACKUP`: 기존에 생성한 백업을 이용한 스냅샷 복원 타입 |
-| dbInstanceName                                      | Body | String  | O  | DB 인스턴스를 식별할 수 있는 마스터 이름                                                                                                               |
-| dbInstanceCandidateName                             | Body | String  | O  | DB 인스턴스를 식별할 수 있는 예비 마스터 이름<br/>- 고가용성 사용 시 필수                                                                                           |
-| description                                         | Body | String  | X  | DB 인스턴스에 대한 추가 정보                                                                                                                                                       |
-| dbFlavorId                                          | Body | UUID    | X  | DB 인스턴스 사양의 식별자                                                                                                                                                         |
-| dbPort                                              | Body | Number  | X  | DB 포트<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 최솟값: `3306`<br/>- 최댓값: `43306`                                                                                                             |
-| parameterGroupId                                    | Body | UUID    | X  | 파라미터 그룹의 식별자<br/>- 기본값: 원본 DB 인스턴스 값                                                                                                                                                     |
-| dbSecurityGroupIds                                  | Body | Array   | X  | DB 보안 그룹의 식별자 목록                                                                                                                                                        |
-| userGroupIds                                        | Body | Array   | X  | 사용자 그룹의 식별자 목록                                                                                                                                                          |
-| useHighAvailability                                 | Body | Boolean | X  | 고가용성 사용 여부<br/>- 기본값: `false`                                                                                                                            |
+| 이름                                                  | 종류   | 형식      | 필수 | 설명                                                                                                                                                   |
+|-----------------------------------------------------|------|---------|----|------------------------------------------------------------------------------------------------------------------------------------------------------|
+| dbInstanceId                                        | URL  | UUID    | O  | DB 인스턴스의 식별자                                                                                                                                         |
+| restore                                             | Body | Object  | O  | 복원 정보 객체                                                                                                                                             |
+| restore.restoreType                                 | Body | Enum    | O  | 복원 타입 종류<br/>- `TIMESTAMP`: 복원 가능한 시간 이내의 시간을 이용한 시점 복원 타입<br/>- `BINLOG`: 복원 가능한 바이너리 로그 위치를 이용한 시점 복원 타입<br/>- `BACKUP`: 기존에 생성한 백업을 이용한 스냅숏 복원 타입 |
+| dbInstanceName                                      | Body | String  | O  | DB 인스턴스를 식별할 수 있는 마스터 이름                                                                                                                             |
+| dbInstanceCandidateName                             | Body | String  | O  | DB 인스턴스를 식별할 수 있는 예비 마스터 이름<br/>- 고가용성 사용 시 필수                                                                                                       |
+| description                                         | Body | String  | X  | DB 인스턴스에 대한 추가 정보                                                                                                                                    |
+| dbFlavorId                                          | Body | UUID    | X  | DB 인스턴스 사양의 식별자                                                                                                                                      |
+| dbPort                                              | Body | Number  | X  | DB 포트<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 최솟값: `3306`<br/>- 최댓값: `43306`                                                                                   |
+| parameterGroupId                                    | Body | UUID    | X  | 파라미터 그룹의 식별자<br/>- 기본값: 원본 DB 인스턴스 값                                                                                                                 |
+| dbSecurityGroupIds                                  | Body | Array   | X  | DB 보안 그룹의 식별자 목록                                                                                                                                     |
+| userGroupIds                                        | Body | Array   | X  | 사용자 그룹의 식별자 목록                                                                                                                                       |
+| useHighAvailability                                 | Body | Boolean | X  | 고가용성 사용 여부<br/>- 기본값: `false`                                                                                                                        |
 | pingInterval                                        | Body | Number  | X  | 고가용성 사용 시 Ping 간격(초)<br/>- 기본값: `3`<br/>- 최솟값: `1`<br/>- 최댓값: `600`                                                                                  |
-| useDefaultNotification                              | Body | Boolean | X  | 기본 알림 사용 여부<br/>- 기본값: `false`                                                                                                                           |
-| useDeletionProtection                               | Body | Boolean | X  | 삭제 보호 여부<br>기본값: `false`                                                                                                                                                |
-| useSlowQueryAnalysis                                | Body | Boolean | X  | Slow query 분석 여부<br/>- 기본값: `true`                                                                                                                                      |
-| network                                             | Body | Object  | X  | 네트워크 정보 객체                                                                                                                                                              |
-| network.subnetId                                    | Body | UUID    | X  | 서브넷의 식별자<br/>- 기본값: 원본 DB 인스턴스 값                                                                                                                                                                |
-| network.usePublicAccess                             | Body | Boolean | X  | 외부 접속 가능 여부<br/>- 기본값: `false`                                                                                                                           |
-| network.availabilityZone                            | Body | Enum    | X  | DB 인스턴스를 생성할 가용성 영역<br/>- 예시: `kr-pub-a`<br/>- 기본값: 랜덤 선택                                                                                                                 |
-| storage                                             | Body | Object  | X  | 데이터 스토리지 정보 객체                                                                                                                                                          |
-| storage.storageType                                 | Body | Enum    | X  | 데이터 스토리지 타입<br/>- 예시: `General SSD`<br/>- 기본값: 원본 DB 인스턴스 값                                                                                                                      |
-| storage.storageSize                                 | Body | Number  | X  | 데이터 스토리지 크기(GB)<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 최솟값: `20`<br/>- 최댓값: `2048`                                                                                                      |
-| storage.storageAutoscale                            | Body | Object  | X  | 데이터 스토리지 자동 확장 객체                                                                                                                                                       |
-| storage.storageAutoscale.useStorageAutoscale        | Body | Boolean | X  | 스토리지 자동 확장 여부                                                                                                                                                           |
-| storage.storageAutoscale.threshold                  | Body | Number  | X  | 자동 확장 조건(%)<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 최솟값: `50`<br/>- 최댓값: `95`                                                                                                                             |
-| storage.storageAutoscale.maxStorageSize             | Body | Number  | X  | 자동 확장 최대 크기(GB) <br/>- 기본값: 원본 DB 인스턴스 값<br/>- 최댓값: `4096`                                                                                                                                   |
-| storage.storageAutoscale.cooldownTime               | Body | Number  | X  | 자동 확장 쿨다운 시간(분)<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 최솟값: `10`<br/>- 최댓값: `1440`                                                                                                 |
-| backup                                              | Body | Object  | X  | 백업 정보 객체                                                                                                                                                                |
-| backup.backupPeriod                                 | Body | Number  | X  | 백업 보관 기간(일)<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 최솟값: `0`<br/>- 최댓값: `730`                                                                                                            |
+| useDefaultNotification                              | Body | Boolean | X  | 기본 알림 사용 여부<br/>- 기본값: `false`                                                                                                                       |
+| useDeletionProtection                               | Body | Boolean | X  | 삭제 보호 여부<br>기본값: `false`                                                                                                                             |
+| useSlowQueryAnalysis                                | Body | Boolean | X  | Slow query 분석 여부<br/>- 기본값: `true`                                                                                                                   |
+| network                                             | Body | Object  | X  | 네트워크 정보 객체                                                                                                                                           |
+| network.subnetId                                    | Body | UUID    | X  | 서브넷의 식별자<br/>- 기본값: 원본 DB 인스턴스 값                                                                                                                     |
+| network.usePublicAccess                             | Body | Boolean | X  | 외부 접속 가능 여부<br/>- 기본값: `false`                                                                                                                       |
+| network.availabilityZone                            | Body | Enum    | X  | DB 인스턴스를 생성할 가용성 영역<br/>- 예시: `kr-pub-a`<br/>- 기본값: 랜덤 선택                                                                                            |
+| storage                                             | Body | Object  | X  | 데이터 스토리지 정보 객체                                                                                                                                       |
+| storage.storageType                                 | Body | Enum    | X  | 데이터 스토리지 타입<br/>- 예시: `General SSD`<br/>- 기본값: 원본 DB 인스턴스 값                                                                                          |
+| storage.storageSize                                 | Body | Number  | X  | 데이터 스토리지 크기(GB)<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 최솟값: `20`<br/>- 최댓값: `2048`                                                                            |
+| storage.storageAutoscale                            | Body | Object  | X  | 데이터 스토리지 자동 확장 객체                                                                                                                                    |
+| storage.storageAutoscale.useStorageAutoscale        | Body | Boolean | X  | 스토리지 자동 확장 여부                                                                                                                                        |
+| storage.storageAutoscale.threshold                  | Body | Number  | X  | 자동 확장 조건(%)<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 최솟값: `50`<br/>- 최댓값: `95`                                                                                  |
+| storage.storageAutoscale.maxStorageSize             | Body | Number  | X  | 자동 확장 최대 크기(GB) <br/>- 기본값: 원본 DB 인스턴스 값<br/>- 최댓값: `4096`                                                                                           |
+| storage.storageAutoscale.cooldownTime               | Body | Number  | X  | 자동 확장 쿨다운 시간(분)<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 최솟값: `10`<br/>- 최댓값: `1440`                                                                            |
+| backup                                              | Body | Object  | X  | 백업 정보 객체                                                                                                                                             |
+| backup.backupPeriod                                 | Body | Number  | X  | 백업 보관 기간(일)<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 최솟값: `0`<br/>- 최댓값: `730`                                                                                  |
 | backup.ftwrlWaitTimeout                             | Body | Number  | X  | 쿼리 지연 대기 시간(초)<br/>- 기본값: `1800`<br/>- 최솟값: `0`<br/>- 최댓값: `21600`                                                                                   |
 | backup.backupRetryCount                             | Body | Number  | X  | 백업 재시도 횟수<br/>- 기본값: `0`<br/>- 최솟값: `0`<br/>- 최댓값: `10`                                                                                              |
 {{#if (eq engine.lowerCase "mysql")}}
-| backup.replicationRegion | Body | Enum | X | 백업 복제 리전<br/>- `KR1`: 한국(판교)<br/>- `KR2`: 한국(평촌)<br/>- `JP1`: 일본(도쿄)                                                                                                                                                                                                                                                                                                                                                                              |
+| backup.replicationRegion | Body | Enum | X | 백업 복제 리전<br/>- `KR1`: 한국(판교) 리전<br/>- `KR2`: 한국(평촌) 리전<br/>- `JP1`: 일본(도쿄) 리전                                                                                                                                                                                                                                                                                                                                                                              |
 {{/if}}
 | backup.useBackupLock | Body | Boolean | X | 테이블 잠금 사용 여부<br/>- 기본값: `true`                                                                                                                                                                                                                                                                                                                                                                                                                        |
 | backup.backupSchedules | Body | Array | X | 예정된 자동 백업 목록<br/>- 기본값: 원본 DB 인스턴스 값                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
@@ -1707,7 +1707,7 @@ POST /v4.0/db-instances/restore-from-obs
 | backup.ftwrlWaitTimeout                             | Body | Number  | X  | 쿼리 지연 대기 시간(초)<br/>- 기본값: `1800`<br/>- 최솟값: `0`<br/>- 최댓값: `21600`  |
 | backup.backupRetryCount                             | Body | Number  | X  | 백업 재시도 횟수<br/>- 기본값: `0`<br/>- 최솟값: `0`<br/>- 최댓값: `10`             |
 {{#if (eq engine.lowerCase "mysql")}}
-| backup.replicationRegion | Body | Enum | X | 백업 복제 리전<br/>- `KR1`: 한국(판교)<br/>- `KR2`: 한국(평촌)<br/>- `JP1`: 일본(도쿄)                                                                                                                                                                                                                                                                                                                                                                               |
+| backup.replicationRegion | Body | Enum | X | 백업 복제 리전<br/>- `KR1`: 한국(판교) 리전<br/>- `KR2`: 한국(평촌) 리전<br/>- `JP1`: 일본(도쿄) 리전                                                                                                                                                                                                                                                                                                                                                                               |
 {{/if}}
 | backup.useBackupLock | Body | Boolean | X | 테이블 잠금 사용 여부<br/>- 기본값: `true`                                                                                                                                                                                                                                                                                                                                                                                                                         |
 | backup.backupSchedules | Body | Array | O | 예정된 자동 백업 목록                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
@@ -2133,7 +2133,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/backup-info
 | ftwrlWaitTimeout                      | Body | Number  | X  | 쿼리 지연 대기 시간(초)<br/>- 최솟값: `0`<br/>- 최댓값: `21600`                                                                                                                                                                            |
 | backupRetryCount                      | Body | Number  | X  | 백업 재시도 횟수<br/>- 최솟값: `0`<br/>- 최댓값: `10`                                                                                                                                                                                    |
 {{#if (eq engine.lowerCase "mysql")}}
-| replicationRegion                     | Body | Enum    | X  | 백업 복제 리전<br />- `KR1`: 한국(판교)<br/>- `KR2`: 한국(평촌)<br/>- `JP1`: 일본(도쿄)                                                                                                                                                       |
+| replicationRegion                     | Body | Enum    | X  | 백업 복제 리전<br />- `KR1`: 한국(판교) 리전<br/>- `KR2`: 한국(평촌) 리전<br/>- `JP1`: 일본(도쿄) 리전                                                                                                                                                       |
 {{/if}}
 | useBackupLock                         | Body | Boolean | X  | 테이블 잠금 사용 여부                                                                                                                                                                                                                |
 | backupSchedules                       | Body | Array   | X  | 예정된 자동 백업 목록                                                                                                                                                                                                                   |
@@ -2672,7 +2672,7 @@ GET /v4.0/db-instances/{dbInstanceId}/log-files/{logFileName}
 
 | 이름      | 종류   | 형식     | 설명                        |
 |---------|------|--------|---------------------------|
-| content | Body | String | 로그 파일 내용 (최대 65533 bytes) |
+| content | Body | String | 로그 파일 내용(최대 65533 Bytes) |
 
 <details><summary>예시</summary>
 <p>
@@ -2814,7 +2814,7 @@ POST /v4.0/db-instances/{dbInstanceId}/binlogs/purge
 | 이름                 | 종류   | 형식     | 필수 | 설명                                     |
 |--------------------|------|--------|----|----------------------------------------|
 | dbInstanceId       | URL  | UUID   | O  | DB 인스턴스의 식별자                           |
-| lastBinLogFileName | Body | String | O  | 삭제할 마지막 BinLog 파일 이름 (해당 파일 직전까지 삭제됨) |
+| lastBinLogFileName | Body | String | O  | 삭제할 마지막 BinLog 파일 이름(해당 파일 직전까지 삭제됨) |
 
 <details><summary>예시</summary>
 <p>
@@ -2923,7 +2923,7 @@ POST /v4.0/db-instances/{dbInstanceId}/certificates/upload
 | 이름               | 종류   | 형식     | 필수 | 설명                                                                           |
 |------------------|------|--------|----|------------------------------------------------------------------------------|
 | dbInstanceId     | URL  | UUID   | O  | DB 인스턴스의 식별자                                                                 |
-| certificateTypes | Body | Array  | O  | 업로드할 인증서 타입 목록<br/>- `CA_FILE`: CA 인증서<br/>- `CERT_FILE`: 인증서<br/>- `KEY_FILE`: 비밀 키 |
+| certificateTypes | Body | Array  | O  | 업로드할 인증서 타입<br/>- `CA_FILE`: CA 인증서<br/>- `CERT_FILE`: 인증서<br/>- `KEY_FILE`: 비밀 키 |
 | tenantId         | Body | String | O  | 인증서 파일이 저장될 오브젝트 스토리지의 테넌트 ID                                                |
 | username         | Body | String | O  | NHN Cloud 회원 또는 IAM 멤버 ID                                                    |
 | password         | Body | String | O  | 인증서 파일이 저장될 오브젝트 스토리지의 API 비밀번호                                              |
@@ -2984,21 +2984,21 @@ GET /v4.0/backups/{backupId}
 이 API는 요청 본문을 요구하지 않습니다.
 
 | 이름       | 종류  | 형식   | 필수 | 설명      |
-|----------|-----|------|----|----------|
+|----------|-----|------|----|---------|
 | backupId | URL | UUID | O  | 백업의 식별자 |
 
 #### 응답
 
-| 이름                      | 종류   | 형식       | 설명                                |
-|-------------------------|------|----------|-----------------------------------|
-| backup                  | Body | Object   | 백업 상세 정보                          |
-| backup.backupId         | Body | UUID     | 백업의 식별자                           |
-| backup.regionCode       | Body | Enum     | 리전 코드                             |
-| backup.backupName       | Body | String   | 백업을 식별할 수 있는 이름                   |
-| backup.backupStatus     | Body | Enum     | 백업의 현재 상태                         |
-| backup.dbInstanceId     | Body | UUID     | 원본 DB 인스턴스의 식별자                   |
-| backup.dbInstanceName   | Body | String   | 원본 DB 인스턴스의 이름                    |
-| backup.dbVersion        | Body | Enum     | DB 엔진 버전                          |
+| 이름                      | 종류   | 형식       | 설명              |
+|-------------------------|------|----------|-----------------|
+| backup                  | Body | Object   | 백업 상세 정보        |
+| backup.backupId         | Body | UUID     | 백업의 식별자         |
+| backup.regionCode       | Body | Enum     | 리전 코드           |
+| backup.backupName       | Body | String   | 백업을 식별할 수 있는 이름 |
+| backup.backupStatus     | Body | Enum     | 백업의 현재 상태       |
+| backup.dbInstanceId     | Body | UUID     | 원본 DB 인스턴스의 식별자 |
+| backup.dbInstanceName   | Body | String   | 원본 DB 인스턴스의 이름  |
+| backup.dbVersion        | Body | Enum     | DB 엔진 버전        |
 {{#if (eq engine.lowerCase "mysql")}}
 | backup.utilVersion      | Body | String   | 백업에 사용된 xtrabackup 유틸리티 버전        |
 {{/if}}
@@ -3143,10 +3143,10 @@ POST /v4.0/backups
 
 #### 공통 요청
 
-| 이름               | 종류   | 형식     | 필수 | 설명                                                         |
-|------------------|------|--------|----|------------------------------------------------------------|
-| backupName       | Body | String | O  | 백업을 식별할 수 있는 이름                                            |
-| backupMethodType | Body | Enum   | O  | 백업 방식 타입 종류<br/>- `FULL`: 전체 백업<br/>- `INCREMENTAL`: 증분 백업 <br/>- `SNAPSHOT`: 스냅샷 백업 |
+| 이름               | 종류   | 형식     | 필수 | 설명                                                                                   |
+|------------------|------|--------|----|--------------------------------------------------------------------------------------|
+| backupName       | Body | String | O  | 백업을 식별할 수 있는 이름                                                                      |
+| backupMethodType | Body | Enum   | O  | 백업 방식 타입 종류<br/>- `FULL`: 전체 백업<br/>- `INCREMENTAL`: 증분 백업 <br/>- `SNAPSHOT`: 스냅숏 백업 |
 
 #### 전체 백업(backupMethodType이 `FULL`인 경우)
 
@@ -3191,7 +3191,7 @@ POST /v4.0/backups
 </details>
 
 
-#### 스냅샷 백업(backupMethodType이 `SNAPSHOT`인 경우)
+#### 스냅숏 백업(backupMethodType이 `SNAPSHOT`인 경우)
 
 | 이름           | 종류   | 형식   | 필수 | 설명           |
 |--------------|------|------|----|--------------|
@@ -3318,7 +3318,7 @@ POST /v4.0/backups/{backupId}/restore
 | backup.ftwrlWaitTimeout                      | Body | Number  | X  | 쿼리 지연 대기 시간(초)<br/>- 기본값: `1800`<br/>- 최솟값: `0`<br/>- 최댓값: `21600`  |
 | backup.backupRetryCount                      | Body | Number  | X  | 백업 재시도 횟수<br/>- 기본값: `0`<br/>- 최솟값: `0`<br/>- 최댓값: `10`             |
 {{#if (eq engine.lowerCase "mysql")}}
-| backup.replicationRegion                     | Body | Enum    | X  | 백업 복제 리전<br />- `KR1`: 한국(판교)<br/>- `KR2`: 한국(평촌)<br/>- `JP1`: 일본(도쿄)                                                                                                                                                       |
+| backup.replicationRegion                     | Body | Enum    | X  | 백업 복제 리전<br />- `KR1`: 한국(판교) 리전<br/>- `KR2`: 한국(평촌) 리전<br/>- `JP1`: 일본(도쿄) 리전                                                                                                                                                       |
 {{/if}}
 | backup.useBackupLock                         | Body | Boolean | X  | 테이블 잠금 사용 여부<br/>- 기본값: `true`                                                                                                                                                                                              |
 | backup.backupSchedules                       | Body | Array   | X  | 예정된 자동 백업 목록<br/>- 기본값: 원본 DB 인스턴스 값                                                                                                                                                                                                                   |
@@ -5113,32 +5113,32 @@ GET /v4.0/event-subscriptions
 
 #### 요청
 
-| 이름                | 종류    | 형식       | 필수 | 설명                                                                                                                                   |
-|-------------------|-------|----------|----|--------------------------------------------------------------------------------------------------------------------------------------|
-| page              | Query | Number   | X  | 조회할 목록의 페이지<br/>- 기본값: 1 <br/>- 최솟값: `1`                                                                                                           |
-| size              | Query | Number   | X  | 조회할 목록의 페이지 크기<br/>- 기본값: 20                                        |
-| eventSubscriptionId    | Query | UUID   | X  | 이벤트 구독의 식별자                          |
-| eventSubscriptionName  | Query | String | X  | 이벤트 구독을 식별할 수 있는 이름                 |
-| userGroupId            | Query | UUID   | X  | 사용자 그룹의 식별자                          |
+| 이름                | 종류    | 형식       | 필수 | 설명                                       |
+|-------------------|-------|----------|----|------------------------------------------|
+| page              | Query | Number   | X  | 조회할 목록의 페이지<br/>- 기본값: 1 <br/>- 최솟값: `1` |
+| size              | Query | Number   | X  | 조회할 목록의 페이지 크기<br/>- 기본값: 20             |
+| eventSubscriptionId    | Query | UUID   | X  | 이벤트 구독의 식별자                              |
+| eventSubscriptionName  | Query | String | X  | 이벤트 구독을 식별할 수 있는 이름                      |
+| userGroupId            | Query | UUID   | X  | 사용자 그룹의 식별자                              |
 
 #### 응답
 
-| 이름                                            | 종류   | 형식       | 설명                  |
-|-----------------------------------------------|------|----------|---------------------|
-| totalCounts                                   | Body | Number   | 전체 이벤트 구독 목록 수      |
-| eventSubscriptions                            | Body | Array    | 이벤트 구독 목록           |
-| eventSubscriptions.eventSubscriptionId        | Body | UUID     | 이벤트 구독의 식별자         |
-| eventSubscriptions.eventCategoryType          | Body | Enum     | 이벤트 카테고리 유형         |
-| eventSubscriptions.eventSubscriptionName      | Body | String   | 이벤트 구독을 식별할 수 있는 이름 |
-| eventSubscriptions.enabled                    | Body | Boolean  | 활성화 여부              |
-| eventSubscriptions.notifyEmail                | Body | Boolean  | 이메일 발송 여부           |
-| eventSubscriptions.notifySms                  | Body | Boolean  | SMS 발송 여부           |
-| eventSubscriptions.eventCodes                 | Body | Array    | 구독할 이벤트 코드 목록       |
-| eventSubscriptions.sources                    | Body | Array    | 구독할 이벤트 소스 목록       |
-| eventSubscriptions.sources.sourceId           | Body | UUID     | 이벤트 소스의 식별자         |
-| eventSubscriptions.sources.eventCategoryType  | Body | Enum     | 이벤트 카테고리 유형         |
+| 이름                                            | 종류   | 형식       | 설명                       |
+|-----------------------------------------------|------|----------|--------------------------|
+| totalCounts                                   | Body | Number   | 전체 이벤트 구독 목록 수           |
+| eventSubscriptions                            | Body | Array    | 이벤트 구독 목록                |
+| eventSubscriptions.eventSubscriptionId        | Body | UUID     | 이벤트의 구독 식별자              |
+| eventSubscriptions.eventCategoryType          | Body | Enum     | 이벤트 카테고리 유형              |
+| eventSubscriptions.eventSubscriptionName      | Body | String   | 이벤트 구독을 식별할 수 있는 이름      |
+| eventSubscriptions.enabled                    | Body | Boolean  | 활성화 여부                   |
+| eventSubscriptions.notifyEmail                | Body | Boolean  | 이메일 발송 여부                |
+| eventSubscriptions.notifySms                  | Body | Boolean  | SMS 발송 여부                |
+| eventSubscriptions.eventCodes                 | Body | Array    | 구독할 이벤트 코드 목록            |
+| eventSubscriptions.sources                    | Body | Array    | 구독할 이벤트 소스 목록            |
+| eventSubscriptions.sources.sourceId           | Body | UUID     | 이벤트 소스의 식별자              |
+| eventSubscriptions.sources.eventCategoryType  | Body | Enum     | 이벤트 카테고리 유형              |
 | eventSubscriptions.userGroupIds               | Body | Array    | 이벤트 구독 중인 사용자 그룹의 식별자 목록 |
-| eventSubscriptions.createdYmdt                | Body | DateTime | 생성 일시               |
+| eventSubscriptions.createdYmdt                | Body | DateTime | 생성 일시                    |
 
 <details><summary>예시</summary>
 <p>

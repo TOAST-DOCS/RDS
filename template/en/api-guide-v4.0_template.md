@@ -959,7 +959,7 @@ PUT /v4.0/db-instances/{dbInstanceId}
 | dbSecurityGroupIds | Body | Array   | X        | DB security group identifiers                                                                                     |
 | executeBackup      | Body | Boolean | X        | Whether to execute backup at this time<br/>Default: `false`                                                       |
 | useOnlineFailover  | Body | Boolean | X        | Whether to restart using failover<br/>Available only for DB instance using high availability<br/>Default: `false` |
-| waitReplicationDelay  | Body | Boolean | X  | 복제 지연을 기다리는 여부<br/>고가용성을 사용 중인 DB 인스턴스에서만 사용 가능합니다.<br/>- 기본값: `false` |
+| waitReplicationDelay  | Body | Boolean | X  | 복제 지연 해소 대기 여부<br/>고가용성을 사용 중인 DB 인스턴스에서만 사용 가능합니다.<br/>- 기본값: `false` |
 | useReadOnly  | Body | Boolean | X  | 읽기 전용으로 변경 여부<br/>고가용성을 사용 중인 DB 인스턴스에서만 사용 가능합니다.<br/>- 기본값: `false` |
 
 <details><summary>Example</summary>
@@ -1033,8 +1033,8 @@ POST /v4.0/db-instances/{dbInstanceId}/restart
 | dbInstanceId      | URL  | UUID    | O        | DB instance identifier                                                                                            |
 | useOnlineFailover | Body | Boolean | X        | Whether to restart using failover<br/>Available only for DB instance using high availability<br/>Default: `false` |
 | executeBackup     | Body | Boolean | X        | Whether to execute backup at this time<br/>Default: `false`                                                       |
-| waitReplicationDelay     | Body | Boolean | X  | 복제 지연을 기다리는 여부<br/>고가용성을 사용 중인 DB 인스턴스에서만 사용 가능합니다.<br/>- 기본값: `false`                                         |
-| useReadOnly     | Body | Boolean | X  | 읽기 전용으로 변경 여부<br/>고가용성을 사용 중인 DB 인스턴스에서만 사용 가능합니다.<br/>- 기본값: `false`                                         |
+| waitReplicationDelay     | Body | Boolean | X  | 복제 지연 해소 대기 여부<br/>고가용성을 사용 중인 DB 인스턴스에서만 사용 가능합니다.<br/>- 기본값: `false`                                            |
+| useReadOnly     | Body | Boolean | X  | 읽기 전용으로 변경 여부<br/>고가용성을 사용 중인 DB 인스턴스에서만 사용 가능합니다.<br/>- 기본값: `false`                                             |
 
 #### Response
 
@@ -2659,9 +2659,9 @@ GET /v4.0/db-instances/{dbInstanceId}/log-files/{logFileName}
 
 #### 응답
 
-| 이름      | 종류   | 형식     | 설명                        |
-|---------|------|--------|---------------------------|
-| content | Body | String | 로그 파일 내용 (최대 65533 bytes) |
+| 이름      | 종류   | 형식     | 설명                       |
+|---------|------|--------|--------------------------|
+| content | Body | String | 로그 파일 내용(최대 65533 Bytes) |
 
 <details><summary>예시</summary>
 <p>
@@ -2800,10 +2800,10 @@ POST /v4.0/db-instances/{dbInstanceId}/binlogs/purge
 
 #### 요청
 
-| 이름                 | 종류   | 형식     | 필수 | 설명                                     |
-|--------------------|------|--------|----|----------------------------------------|
-| dbInstanceId       | URL  | UUID   | O  | DB 인스턴스의 식별자                           |
-| lastBinLogFileName | Body | String | O  | 삭제할 마지막 BinLog 파일 이름 (해당 파일 직전까지 삭제됨) |
+| 이름                 | 종류   | 형식     | 필수 | 설명                                    |
+|--------------------|------|--------|----|---------------------------------------|
+| dbInstanceId       | URL  | UUID   | O  | DB 인스턴스의 식별자                          |
+| lastBinLogFileName | Body | String | O  | 삭제할 마지막 BinLog 파일 이름(해당 파일 직전까지 삭제됨) |
 
 <details><summary>예시</summary>
 <p>
@@ -2912,7 +2912,7 @@ POST /v4.0/db-instances/{dbInstanceId}/certificates/upload
 | 이름               | 종류   | 형식     | 필수 | 설명                                                                           |
 |------------------|------|--------|----|------------------------------------------------------------------------------|
 | dbInstanceId     | URL  | UUID   | O  | DB 인스턴스의 식별자                                                                 |
-| certificateTypes | Body | Array  | O  | 업로드할 인증서 타입 목록<br/>- `CA_FILE`: CA 인증서<br/>- `CERT_FILE`: 인증서<br/>- `KEY_FILE`: 비밀 키 |
+| certificateTypes | Body | Array  | O  | 업로드할 인증서 타입<br/>- `CA_FILE`: CA 인증서<br/>- `CERT_FILE`: 인증서<br/>- `KEY_FILE`: 비밀 키 |
 | tenantId         | Body | String | O  | 인증서 파일이 저장될 오브젝트 스토리지의 테넌트 ID                                                |
 | username         | Body | String | O  | NHN Cloud 회원 또는 IAM 멤버 ID                                                    |
 | password         | Body | String | O  | 인증서 파일이 저장될 오브젝트 스토리지의 API 비밀번호                                              |
@@ -2973,21 +2973,21 @@ GET /v4.0/backups/{backupId}
 이 API는 요청 본문을 요구하지 않습니다.
 
 | 이름       | 종류  | 형식   | 필수 | 설명      |
-|----------|-----|------|----|----------|
+|----------|-----|------|----|---------|
 | backupId | URL | UUID | O  | 백업의 식별자 |
 
 #### 응답
 
-| 이름                      | 종류   | 형식       | 설명                                |
-|-------------------------|------|----------|-----------------------------------|
-| backup                  | Body | Object   | 백업 상세 정보                          |
-| backup.backupId         | Body | UUID     | 백업의 식별자                           |
-| backup.regionCode       | Body | Enum     | 리전 코드                             |
-| backup.backupName       | Body | String   | 백업을 식별할 수 있는 이름                   |
-| backup.backupStatus     | Body | Enum     | 백업의 현재 상태                         |
-| backup.dbInstanceId     | Body | UUID     | 원본 DB 인스턴스의 식별자                   |
-| backup.dbInstanceName   | Body | String   | 원본 DB 인스턴스의 이름                    |
-| backup.dbVersion        | Body | Enum     | DB 엔진 버전                          |
+| 이름                      | 종류   | 형식       | 설명              |
+|-------------------------|------|----------|-----------------|
+| backup                  | Body | Object   | 백업 상세 정보        |
+| backup.backupId         | Body | UUID     | 백업의 식별자         |
+| backup.regionCode       | Body | Enum     | 리전 코드           |
+| backup.backupName       | Body | String   | 백업을 식별할 수 있는 이름 |
+| backup.backupStatus     | Body | Enum     | 백업의 현재 상태       |
+| backup.dbInstanceId     | Body | UUID     | 원본 DB 인스턴스의 식별자 |
+| backup.dbInstanceName   | Body | String   | 원본 DB 인스턴스의 이름  |
+| backup.dbVersion        | Body | Enum     | DB 엔진 버전        |
 {{#if (eq engine.lowerCase "mysql")}}
 | backup.utilVersion      | Body | String   | 백업에 사용된 xtrabackup 유틸리티 버전        |
 {{/if}}
@@ -3132,10 +3132,10 @@ POST /v4.0/backups
 
 #### Common Request
 
-| Name             | Type | Format | Required | Description                                                                          |
-|------------------|------|--------|----------|--------------------------------------------------------------------------------------|
-| backupName       | Body | String | O        | Backup name                                                                          |
-| backupMethodType | Body | Enum   | O        | Backup method type<br/>- `FULL`: Full backup<br/>- `INCREMENTAL`: Incremental backup <br/>- `SNAPSHOT`: 스냅샷 백업|
+| Name             | Type | Format | Required | Description                                                                                                    |
+|------------------|------|--------|----------|----------------------------------------------------------------------------------------------------------------|
+| backupName       | Body | String | O        | Backup name                                                                                                    |
+| backupMethodType | Body | Enum   | O        | Backup method type<br/>- `FULL`: Full backup<br/>- `INCREMENTAL`: Incremental backup <br/>- `SNAPSHOT`: 스냅숏 백업 |
 
 #### If backupMethodType is `FULL`
 
@@ -3182,7 +3182,7 @@ POST /v4.0/backups
 
 
 
-#### 스냅샷 백업(backupMethodType이 `SNAPSHOT`인 경우)
+#### 스냅숏 백업(backupMethodType이 `SNAPSHOT`인 경우)
 
 | 이름           | 종류   | 형식   | 필수 | 설명           |
 |--------------|------|------|----|--------------|

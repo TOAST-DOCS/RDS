@@ -118,7 +118,7 @@ This API does not require a request body.
 | regions.regionCode | Body | Enum    | Region code<br/>`KR1`: Korea (Pangyo) Region<br/>`KR2`: Korea (Pyeongchon) Region<br/>`JP1`: Japan (Tokyo) Region |
 {{/if}}
 {{#if (eq engine.lowerCase "mariadb")}}
-| regions.regionCode | Body | Enum    | Region code<br/>`KR1`: Korea (Pangyo) |
+| regions.regionCode | Body | Enum    | Region code<br/>`KR1`: Korea (Pangyo) Region|
 {{/if}}
 | regions.isEnabled  | Body | Boolean | Whether to enable a region                                                                 |
 
