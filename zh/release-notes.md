@@ -4,79 +4,79 @@
 
 #### 기능 추가 및 개선
 
-- API v4.0 추가
-- 스냅샷 백업 기능 추가
-  - Cinder Storage Snapshot을 이용하여 DB 성능에 영향없이 백업을 수행
+* API v4.0 추가
+* 스냅샷 백업 기능 추가
+    * Cinder Storage Snapshot을 이용하여 DB 성능에 영향없이 백업을 수행
 
 ### January 13, 2026
 
 #### Feature Updates
 
-- Added maintenance feature
-  - Applied various DB instance modifications during your scheduled maintenance duration
-- Updated to grant ROLE_ADMIN privileges when the Direct Control for DB Schemas & Users setting is enabled
-- Added MySQL 8.0.44, 8.4.7 version
+* Added maintenance feature
+    * Applied various DB instance modifications during your scheduled maintenance duration
+* Updated to grant ROLE_ADMIN privileges when the Direct Control for DB Schemas & Users setting is enabled
+* Added MySQL 8.0.44, 8.4.7 version
 
 #### Bug Fixes
 
-- Fixed an issue where the authentication plugin was not selected by default when adding a user on MySQL 8.4 DB instances.
+* Fixed an issue where the authentication plugin was not selected by default when adding a user on MySQL 8.4 DB instances.
 
 ### November 11, 2025
 
 #### Feature Updates
 
-- Added version MySQL 8.4.6
-- Improved to record the cause of backup failure due to Lock acquisition failure in the event log.
-- Improved to display a warning message related to the password plugin when upgrading to version 8.4.
-- Fixed to allow creation of cross-region read replicas in subnets that do not have region peering set up.
+* Added version MySQL 8.4.6
+* Improved to record the cause of backup failure due to Lock acquisition failure in the event log.
+* Improved to display a warning message related to the password plugin when upgrading to version 8.4.
+* Fixed to allow creation of cross-region read replicas in subnets that do not have region peering set up.
 
 #### Bug Fixes
 
-- Fixed an issue where the failover status persisted when failover failed.
-- Fixed an issue where DB instances stopped before the July deployment could not be started.
-- Fixed an issue where unusable values could be used in server_audit_events.
-- Fixed an issue where the latest parameter group would not be applied after selecting multiple DB instances when using a different parameter group for read replicas.
-- Fixed an issue where an error notification modal would be displayed when deselecting a master in a group with read replicas in a different region.
-- Fixed an issue where unchangeable values would be changed when resetting a parameter group.
+* Fixed an issue where the failover status persisted when failover failed.
+* Fixed an issue where DB instances stopped before the July deployment could not be started.
+* Fixed an issue where unusable values could be used in server_audit_events.
+* Fixed an issue where the latest parameter group would not be applied after selecting multiple DB instances when using a different parameter group for read replicas.
+* Fixed an issue where an error notification modal would be displayed when deselecting a master in a group with read replicas in a different region.
+* Fixed an issue where unchangeable values would be changed when resetting a parameter group.
 
 ### September 09, 2025
 
 #### Feature Updates
 
-- Added MySQL 8.4 LTS version
-- Added MySQL 8.0.41, 8.0.42, 8.0.43 version
+* Added MySQL 8.4 LTS version
+* Added MySQL 8.0.41, 8.0.42, 8.0.43 version
 
 #### Bug Fixes
 
-- Fixed an issue where the standby master name was displayed with the current name entered when creating a high-availability instance after clicking on an already created high-availability instance.
-- Fixed an issue where the name of a read replica added to high-availability could not be modified.
-- Fixed an issue where the [Add VIP] drop-down menu was activated when adding a VIP to a DB instance was not possible.
-- Fixed an issue where the internal IP would intermittently disappear when DHCP renewal failed.
-- Fixed an issue where high-availability would stop functioning if a read replica creation failed on a high-availability instance.
-- Fixed an issue where subscription notifications would not work when multiple events subscribed to by the same organization occurred.
+* Fixed an issue where the standby master name was displayed with the current name entered when creating a high-availability instance after clicking on an already created high-availability instance.
+* Fixed an issue where the name of a read replica added to high-availability could not be modified.
+* Fixed an issue where the [Add VIP] drop-down menu was activated when adding a VIP to a DB instance was not possible.
+* Fixed an issue where the internal IP would intermittently disappear when DHCP renewal failed.
+* Fixed an issue where high-availability would stop functioning if a read replica creation failed on a high-availability instance.
+* Fixed an issue where subscription notifications would not work when multiple events subscribed to by the same organization occurred.
 
 ### July 15, 2025
 
 #### Added Features and Updates
 
-- Improved to disallow specifying the DB port type in egress rules of DB security groups
-- Changed to require entering the name of the candidate master for high-availability DB instances
-- Improved to allow DB instance resources to be checked in Resource Watcher
-- Fixed billing so that the failover master is charged normally until it is deleted
-- Improved to display accurate error messages when failover masters cannot be recovered due to missing binary logs
+* Improved to disallow specifying the DB port type in egress rules of DB security groups
+* Changed to require entering the name of the candidate master for high-availability DB instances
+* Improved to allow DB instance resources to be checked in Resource Watcher
+* Fixed billing so that the failover master is charged normally until it is deleted
+* Improved to display accurate error messages when failover masters cannot be recovered due to missing binary logs
 
 #### Bug Fixes
 
-- Fixed an issue where backup failed when special characters were included in the export path
-- Fixed an issue where the user group was not deleted from event subscriptions when the user group was deleted
-- Improved to display accurate error messages when deleting duplicate notification groups
+* Fixed an issue where backup failed when special characters were included in the export path
+* Fixed an issue where the user group was not deleted from event subscriptions when the user group was deleted
+* Improved to display accurate error messages when deleting duplicate notification groups
 
 ### May 13, 2025
 
 #### Added Features and Updates
 
 * Improved to support using VIP (Virtual IP)
-  * VIP is now issued for newly created DB instances and is always configured to point to the master DB instance. For existing DB instances, VIPs can be issued manually by clicking the [Add VIP] button in the console
+    * VIP is now issued for newly created DB instances and is always configured to point to the master DB instance. For existing DB instances, VIPs can be issued manually by clicking the [Add VIP] button in the console
 * Improved to allow explicitly disabling High Availability via the console when it is in an abnormal state
 * Improved to allow entering decimal values in monitoring settings
 * Improved to allow entering Korean characters in user group names
@@ -93,8 +93,8 @@
 #### Added Features and Updates
 
 * Added and modified API v3.0
-  * Added the API to list Log files
-  * Added the Export Log file API
+    * Added the API to list Log files
+    * Added the Export Log file API
 
 ### February 11, 2025
 
@@ -127,8 +127,8 @@
 
 * Add the procedure that controls foreign_key_checks
 * Added new parameters (MySQL 8.0.28 or later)
-  * `innodb_ddl_threads`
-  * `innodb_parallel_read_threads`
+    * `innodb_ddl_threads`
+    * `innodb_parallel_read_threads`
 
 #### Bug Fixes
 
@@ -145,16 +145,16 @@
 #### Added Features
 
 * Added Slow Query analytics
-  * Provided the Analytics tab with Slow Query analysis, Process List, and InnoDB Status monitoring features
-  * Provided the feature to disable Slow Query Analytics on the Edit DB Instance screen
+    * Provided the Analytics tab with Slow Query analysis, Process List, and InnoDB Status monitoring features
+    * Provided the feature to disable Slow Query Analytics on the Edit DB Instance screen
 * Improved to see which parameter items actually change when applying parameter group changes
 * Improved to expose warning text and raise an event when high availability status is abnormal
 * Improved to select a storage type when creating read replicas
 * Added MySQL 8.0.36 version
 * Added and modified API v3.0
-  * Added the `storage.storageType` field to DB instance replicate API request
-  * Added the `notificationGroupIds` field to DB instance detail API response
-  * Improved the ability to use project integration appkeys when calling API v3.0
+    * Added the `storage.storageType` field to DB instance replicate API request
+    * Added the `notificationGroupIds` field to DB instance detail API response
+    * Improved the ability to use project integration appkeys when calling API v3.0
 
 ### March 12, 2024
 
@@ -171,7 +171,7 @@
 
 * Added DB schema & user-directed control settings
 * Improved to better identify connected notification groups
-  * Exposed connected notification group information on the DB instance view details screen
+    * Exposed connected notification group information on the DB instance view details screen
 * `Added MySQL 8.0.35 version`
 
 ### January 9, 2024
@@ -186,9 +186,9 @@
 #### Added Features
 
 * Improved to make it easier to identify DB instances to which the changed parameter will be applied
-  * Added the 'Apply' button in front of the target name to apply the changed parameter on the DB instance list screen.
-  * Added the 'Apply' button to the parameter group item on the detail view screen of the DB instance to which the changed parameter will be applied.
-  * Add filter option that requires application of changed parameters
+    * Added the 'Apply' button in front of the target name to apply the changed parameter on the DB instance list screen.
+    * Added the 'Apply' button to the parameter group item on the detail view screen of the DB instance to which the changed parameter will be applied.
+    * Add filter option that requires application of changed parameters
 * Changed to retrieve servers that have been deleted within the last month when checking the View deleted servers on the server dashboard screen
 
 ### November 14, 2023.
@@ -199,7 +199,7 @@
 * Added forced promotion of DB instances
 * Improved to allow you to select notification type when subscribing to events
 * API v3.0 additions and changes
-  * Added the Export after backing up DB instance API
+    * Added the Export after backing up DB instance API
 
 ### October 17, 2023
 
@@ -209,9 +209,9 @@
 * Added the feature to enable previously created high availability instances of MySQL 5.7.33 or later to use the authentication plugin and TLS option.
 * Added the versions of MySQL 8.0.33 and MySQL 8.0.34
 * Added and modified API v3.0
-  * Added the API to list the last query to be restored
-  * Added `dbVersion` and `useDummy` fields to the Modify DB Instance API request
-  * Added `needToApplyParameterGroup`, `needMigration`, and `supportDbVersionUpgrade` fields to the List DB Instance API response.
+    * Added the API to list the last query to be restored
+    * Added `dbVersion` and `useDummy` fields to the Modify DB Instance API request
+    * Added `needToApplyParameterGroup`, `needMigration`, and `supportDbVersionUpgrade` fields to the List DB Instance API response.
 
 ### September 12, 2023
 
@@ -242,8 +242,8 @@
 #### Added Features and Updates
 
 * Added rebuild support when a candidate master fails
-  * The DB instance on the candidate master does not change, so the fixed IP address does not change
-  * All data in the database are deleted, and restored with the data of the master
+    * The DB instance on the candidate master does not change, so the fixed IP address does not change
+    * All data in the database are deleted, and restored with the data of the master
 * Made improvements so that, when adding a user to user groups, all users of organizatons and projects can be added
 
 ### May 16, 2023
@@ -253,26 +253,26 @@
 * Made improvements so that the user interface is consistent with NHN Cloud services
 * Made modifications so that manual backup is not deleted even when DB instances are deleted
 * Added parameter group feature
-  * The database settings of DB instance can be freely changed
-  * Applicable to multiple instances
-  * Changes to settings in an existing DB instance are migrated to a parameter group with the same name as the DB instance
+    * The database settings of DB instance can be freely changed
+    * Applicable to multiple instances
+    * Changes to settings in an existing DB instance are migrated to a parameter group with the same name as the DB instance
 * Added DB security group feature
-  * The access control of DB instance can be freely set
-  * Applicable to multiple instances
-  * Access control rules set on existing DB instances are migrated to the DB security group named as `{DB instance name}__{DB instance ID}` rule
+    * The access control of DB instance can be freely set
+    * Applicable to multiple instances
+    * Access control rules set on existing DB instances are migrated to the DB security group named as `{DB instance name}__{DB instance ID}` rule
 * Provided a screen to view DB instances grouped by replication arrangements
 * Displayed candidate master to console
-  * Available to secure storage by deleting the binary log of candidate master
-  * Various logs of candidate master can be checked and downloaded
+    * Available to secure storage by deleting the binary log of candidate master
+    * Various logs of candidate master can be checked and downloaded
 * Rebuilding read replica is available
-  * The fixed IP address does not change because the DB instance of the read replica remain unchanged
-  * All data in the database is deleted, and recovered with the data of the master
+    * The fixed IP address does not change because the DB instance of the read replica remain unchanged
+    * All data in the database is deleted, and recovered with the data of the master
 * Recovery of master with a completed failover
-  * High availability recovery of a new master and a master with a completed failover is available
-  * Recovery can fail, and an unrecoverable master with a completed failover can be rebuilt
+    * High availability recovery of a new master and a master with a completed failover is available
+    * Recovery can fail, and an unrecoverable master with a completed failover can be rebuilt
 * Rebuilding master with a completed failover
-  * The fixed IP does not change because DB instance of the master with a completed failover remain unchanged
-  * All data in the database is deleted, and recovered with the data of the master
+    * The fixed IP does not change because DB instance of the master with a completed failover remain unchanged
+    * All data in the database is deleted, and recovered with the data of the master
 * Added MySQL 8.0.32 version
 
 #### Bug Fixes
@@ -590,265 +590,265 @@
 
 #### Feature Updates
 
-- Improved the feature to limit the resource quota per project
+* Improved the feature to limit the resource quota per project
 
 #### Bug Fixes
 
-- Fixed a bug where instance restart is not performed properly in certain situations
+* Fixed a bug where instance restart is not performed properly in certain situations
 
 ### February 16, 2021
 
 #### Added Features
 
-- Added a feature that controls DB User and DB Schema through console
+* Added a feature that controls DB User and DB Schema through console
 
 #### Feature Updates
 
-- Tooltip provided when the DB file encryption feature is selected
-- Verification message displayed if query latency value is abnormal
+* Tooltip provided when the DB file encryption feature is selected
+* Verification message displayed if query latency value is abnormal
 
 #### Bug Fixes
 
-- Fixed a bug where project members cannot be registered as a Notification member if there are 20 or more project members
+* Fixed a bug where project members cannot be registered as a Notification member if there are 20 or more project members
 
 ### January 19, 2021
 
 #### Added Features
 
-- Added a feature to set Ping Interval (an interval to check the status of master instance) when using the high availability (HA) feature
-- Added HA suspend/resume features
-- Added a feature to set access control direction (inbound/outbound) in the **Access Control Settings** dialog box
-- Changed so that t2.c1m1 Flavor instance cannot be created anymore.
-- Changed so that the normal instances created with t2.c1m1 Flavor can no longer be switched to HA instances
+* Added a feature to set Ping Interval (an interval to check the status of master instance) when using the high availability (HA) feature
+* Added HA suspend/resume features
+* Added a feature to set access control direction (inbound/outbound) in the **Access Control Settings** dialog box
+* Changed so that t2.c1m1 Flavor instance cannot be created anymore.
+* Changed so that the normal instances created with t2.c1m1 Flavor can no longer be switched to HA instances
 
 ### December 15, 2020
 
 #### Added Features
 
-- Added a feature that enables users to set the --ftwrl-wait-timeout option value
+* Added a feature that enables users to set the --ftwrl-wait-timeout option value
 
 ### November 10, 2020
 
 #### Bug Fixes
 
-- Fixed an issue where automatic backup generation occasionally failed
-- Fixed an issue where automatic deletion of expired backup occasionally failed
+* Fixed an issue where automatic backup generation occasionally failed
+* Fixed an issue where automatic deletion of expired backup occasionally failed
 
 ### October 13, 2020
 
 #### Bug Fixes
 
-- Fixed an issue in which innodb_buffer_pool_size cannot be modified as intended
-- Fixed failed copy of the ha candidate master instance, when the require_secure_transport is on
-- Fixed delays in the backup of large-scale instance
+* Fixed an issue in which innodb_buffer_pool_size cannot be modified as intended
+* Fixed failed copy of the ha candidate master instance, when the require_secure_transport is on
+* Fixed delays in the backup of large-scale instance
 
 ### September 22, 2020
 
 #### Added Features
 
-- New region opened in Korea (Pyeongchon)
+* New region opened in Korea (Pyeongchon)
 
 ### September 15, 2020
 
 #### Added Features
 
-- Supports Monitoring API
+* Supports Monitoring API
 
 ### August 11, 2020
 
 #### Bug Fixes
 
-- Fixed an issue in which an invalid subnet appears on the list when user VPC subnet is unavailable
+* Fixed an issue in which an invalid subnet appears on the list when user VPC subnet is unavailable
 
 ### July 14, 2020
 
 #### Added Features
 
-- Further supports MySQL 8.0.18
+* Further supports MySQL 8.0.18
 
 ### December 10, 2019
 
 #### Added Features
 
-- Added the feature of database file encryption (Korea Region)
+* Added the feature of database file encryption (Korea Region)
 
 ### November 12, 2019
 
 #### Feature Updates
 
-- Updated failure detection and restoration of candidate master
+* Updated failure detection and restoration of candidate master
 
 #### Bug Fixes
 
-- Fixed infrequent backup failures
+* Fixed infrequent backup failures
 
 ### September 24, 2019
 
 #### Feature Updates
 
-- Improved speed for creating an instance (About 28 minutes -> 13 minutes, for HA instances)
-- Updated UX to allow new backups for point-in-time restoration, at the restart by using failover
-- Changed UI for enabling default alarm
+* Improved speed for creating an instance (About 28 minutes -> 13 minutes, for HA instances)
+* Updated UX to allow new backups for point-in-time restoration, at the restart by using failover
+* Changed UI for enabling default alarm
 
 ### August 13, 2019
 
 #### Feature Updates
 
-- Allowed to view event logs related to high availability more intuitively
+* Allowed to view event logs related to high availability more intuitively
 
 #### Bug Fixes
 
-- Fixed the occasional failure in creating or restoring DB instances
-- Fixed failed delivery of mails, notifying the deletion of DB instances
+* Fixed the occasional failure in creating or restoring DB instances
+* Fixed failed delivery of mails, notifying the deletion of DB instances
 
 ### July 23, 2019
 
 #### Added Features
 
-- Default Alarm added
-- Monitoring Item added
+* Default Alarm added
+* Monitoring Item added
 
 #### Feature Updates
 
-- Backup-related events no longer support alarms.
+* Backup-related events no longer support alarms.
 
 ### June 27, 2019
 
 #### Added Features
 
-- Japan Region added
+* Japan Region added
 
 ### June 25, 2019
 
 #### Added Features
 
-- High Availability added
+* High Availability added
 
 #### Feature Updates
 
-- Event period exposed on the page of instance details changed from 1 day to 7 days
+* Event period exposed on the page of instance details changed from 1 day to 7 days
 
 #### Bug Fixes
 
-- Fixed so that, when performing point-in-time restoration, the restoration can be performed from the time that can be recovered.
+* Fixed so that, when performing point-in-time restoration, the restoration can be performed from the time that can be recovered.
 
 ### May 14, 2019
 
 #### Feature Updates
 
-- Stronger authentication when instance is created or modified
-- Added UX to select/unselect all notification events
+* Stronger authentication when instance is created or modified
+* Added UX to select/unselect all notification events
 
 #### Bug Fixes
 
-- Fixed an issue where instances cannot be deleted intermittently when they are being created
-- Fixed an issue in which data volume is not properly changed when data storage is full
+* Fixed an issue where instances cannot be deleted intermittently when they are being created
+* Fixed an issue in which data volume is not properly changed when data storage is full
 
 ### March 12, 2019
 
 #### Feature Updates
 
-- Updated error messages that are vague with unpleasant looks.
-- Updated to allow modifying transaction-isolation on the console
+* Updated error messages that are vague with unpleasant looks.
+* Updated to allow modifying transaction-isolation on the console
 
 #### Bug Fixes
 
-- Removed the probability of long backup time which may take more than a day for 1TB database
+* Removed the probability of long backup time which may take more than a day for 1TB database
 
 ### February 26, 2019
 
 #### Added Features
 
-- Added the feature of SSD volume as storage for instance data
+* Added the feature of SSD volume as storage for instance data
 
 #### Feature Updates
 
-- Updated to set recipients of notification from project members
-- Updated features for x1, u2 flavor
+* Updated to set recipients of notification from project members
+* Updated features for x1, u2 flavor
 
 ### January 29, 2019
 
 #### Feature Updates
 
-- Changed the maximum instance volume to 1000G
+* Changed the maximum instance volume to 1000G
 
 ### December 14, 2018
 
 #### Bug Fixes
 
-- Fixed failed exposure of r2.c8m64
-- Fixed general logs that are not visible
-- Fixed bugs in the VPC subnet selection
+* Fixed failed exposure of r2.c8m64
+* Fixed general logs that are not visible
+* Fixed bugs in the VPC subnet selection
 
 ### December 11, 2018
 
 #### Feature Updates
 
-- Removed the peering feature
-- Feature updated to the method of network communication by using user VPC subnet
+* Removed the peering feature
+* Feature updated to the method of network communication by using user VPC subnet
 
 ### October 23, 2018
 
 #### Feature Updates
 
-- Shows description message for input items when instance is created/restored/replicated
-- Shows the mysql transaction_isolation option
+* Shows description message for input items when instance is created/restored/replicated
+* Shows the mysql transaction_isolation option
 
 ### October 16, 2018
 
 #### Added Features
 
-- Added the feature of changing instance flavor
-- Added the feature of extending instance storage
+* Added the feature of changing instance flavor
+* Added the feature of extending instance storage
 
 ### August 28, 2018
 
 #### Added Features
 
-- Allows to secure instance volume by deleting binary log files
+* Allows to secure instance volume by deleting binary log files
 
 ### July 24, 2018
 
 #### Added Features
 
-- Also supports MySQL 5.7.15
+* Also supports MySQL 5.7.15
 
 #### Bug Fixes
 
-- Fixed an issue in which an instance of the MySQL 5.7.19 version cannot be created, without floating IP
-- Fixed auto backups at particular situations, in which it takes twice the usual time
+* Fixed an issue in which an instance of the MySQL 5.7.19 version cannot be created, without floating IP
+* Fixed auto backups at particular situations, in which it takes twice the usual time
 
 ### May 29, 2018
 
 #### Added Features
 
-- Newly supports MySQL 5.7
+* Newly supports MySQL 5.7
 
 ### April 24, 2018
 
 #### Feature Updates
 
-- With port change of the master, the master access information is automatically changed for read only slave
-- Delete unnecessary logs after backup
+* With port change of the master, the master access information is automatically changed for read only slave
+* Delete unnecessary logs after backup
 
 #### Bug Fixes
 
-- Fixed pagination, in which Search Result > Create instance takes you to the search result page
-- Fixed the missing of a warning sign when it is tried to create an instance with Confirm Password left in blank
+* Fixed pagination, in which Search Result > Create instance takes you to the search result page
+* Fixed the missing of a warning sign when it is tried to create an instance with Confirm Password left in blank
 
 ### March 22, 2018
 
 #### Bug Fixes
 
-- Fixed an issue in which backup retention period remains on the list, even after it is changed to 'N/A'
-- Fixed the bug in which instance status shows Changing, even without instance setting updated
-- Fixed an issue in which QPS shows as negative number when an instance restarts
-- Fixed the bug in which only data is updated without date or time updates, at the click of Period Setting on the Monitoring page
+* Fixed an issue in which backup retention period remains on the list, even after it is changed to 'N/A'
+* Fixed the bug in which instance status shows Changing, even without instance setting updated
+* Fixed an issue in which QPS shows as negative number when an instance restarts
+* Fixed the bug in which only data is updated without date or time updates, at the click of Period Setting on the Monitoring page
 
 ### February 22, 2018
 
 #### New Releases
 
-- Relational Database Service (RDS) provides Relational Database in the cloud environment.
-- No complicated configuration is required to enable relational database.
-- Supports MySQL 5.6.33.
+* Relational Database Service (RDS) provides Relational Database in the cloud environment.
+* No complicated configuration is required to enable relational database.
+* Supports MySQL 5.6.33.
