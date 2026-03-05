@@ -215,6 +215,57 @@ This API does not require a request body.
 
 ---
 
+### 가용성 영역 목록 보기
+
+```http
+GET /v4.0/availability-zones
+```
+
+#### 필요 권한
+
+| 권한명                                     | 설명         |
+|-----------------------------------------|------------|
+| RDSfor{{engine.pascalCase}}:AvailabilityZone.List | 가용성 영역 목록 보기 |
+
+#### 요청
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+#### 응답
+
+| 이름                 | 종류   | 형식      | 설명                                                                         |
+|--------------------|------|---------|----------------------------------------------------------------------------|
+| availabilityZones  | Body | Array   | 가용성 영역 목록                                                                |
+| availabilityZones.availabilityZoneName | Body | String | 가용성 영역 이름                                                               |
+| availabilityZones.zoneState | Body | Object | 가용성 영역 상태 객체                                                          |
+| availabilityZones.zoneState.available | Body | Boolean | 가용성 영역의 사용 가능 여부                                                           |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "availabilityZones": [
+        {
+            "availabilityZoneName": "kr-pub-a",
+            "zoneState": {
+                "available": true
+            }
+        }
+    ]
+}
+```
+
+</p>
+</details>
+
+---
+
 ## Specifications of DB Instance
 
 ### List DB Instance Specifications
@@ -2941,6 +2992,242 @@ POST /v4.0/db-instances/{dbInstanceId}/certificates/upload
 | 이름    | 종류   | 형식   | 설명          |
 |-------|------|------|-------------|
 | jobId | Body | UUID | 요청한 작업의 식별자 |
+
+---
+
+## 유지 관리
+
+### 유지 관리 목록 보기
+
+```http
+GET /v4.0/db-instances/{dbInstanceId}/maintenances
+```
+
+#### 필요 권한
+
+| 권한명                                                | 설명        |
+|----------------------------------------------------|------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.Maintenance:List | 유지 관리 목록 보기 |
+
+#### 요청
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+| 이름           | 종류  | 형식   | 필수 | 설명                                     |
+|--------------|-----|------|----|----------------------------------------|
+| dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자                           |
+| type         | Query | Enum | X | 유지 관리 타입 |
+| statuses     | Query | Array | X | 유지 관리 상태 목록 |
+| category     | Query | Enum | X | 유지 관리 카테고리 |
+
+#### 응답
+
+| 이름                 | 종류   | 형식     | 설명                                     |
+|--------------------|------|--------|----------------------------------------|
+| totalCounts        | Body | Number | 유지 관리 목록 갯수                             |
+| maintenances       | Body | Array  | 유지 관리 목록                                |
+| maintenances.maintenanceId | Body | String | 유지 관리 아이디 |
+| maintenances.templateId | Body | String | 템플릿 아이디 |
+| maintenances.configId | Body | String | 설정 아이디 |
+| maintenances.dbInstanceId | Body | String | DB 인스턴스 아이디 |
+| maintenances.category | Body | Enum | 유지 관리 카테고리 |
+| maintenances.description | Body | String | 유지 관리 설명 |
+| maintenances.type | Body | Enum | 유지 관리 타입 |
+| maintenances.payload | Body | Object | 유지 관리 타입에 따른 Payload |
+| maintenances.required | Body | Boolean | 유지 관리 필수 여부 |
+| maintenances.deadlineYmdt | Body | DateTime | 유지 관리 강제 적용 일시 |
+| maintenances.status | Body | Enum | 유지 관리 상태 |
+| maintenances.executionType | Body | Enum | 유지 관리 실행 타입 |
+| maintenances.addedYmdt | Body | DateTime | 유지 관리 스케줄 등록 일시 |
+| maintenances.rdsJobId | Body | Number | 유지 관리 실행 Job 아이디 |
+| maintenances.executionStartedYmdt | Body | DateTime | 유지 관리 시작 일시 |
+| maintenances.executionCompletedYmdt | Body | DateTime | 유지 관리 종료 일시 |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "totalCounts": 1,
+    "maintenances": [
+        {
+            "maintenanceId": "m-1234",
+            "templateId": "t-1234",
+            "configId": "c-1234",
+            "dbInstanceId": "d067593b-1acc-4ccc-9e8a-cc72d6d79ec3",
+            "category": "MAINTENANCE",
+            "description": "정기 점검",
+            "type": "UPDATE_DB_INSTANCE",
+            "payload": {},
+            "required": false,
+            "deadlineYmdt": "2023-01-23T12:03:13+09:00",
+            "status": "WAITING",
+            "executionType": "MANUAL",
+            "addedYmdt": "2023-01-23T12:03:13+09:00",
+            "rdsJobId": null,
+            "executionStartedYmdt": null,
+            "executionCompletedYmdt": null
+        }
+    ]
+}
+```
+
+</p>
+</details>
+
+---
+
+### 유지 관리 즉시 실행하기
+
+```http
+POST /v4.0/db-instances/{dbInstanceId}/maintenances/execute-now
+```
+
+#### 필요 권한
+
+| 권한명                                                | 설명        |
+|----------------------------------------------------|------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.Maintenance:Execute | 유지 관리 즉시 실행하기 |
+
+#### 요청
+
+| 이름           | 종류  | 형식   | 필수 | 설명                                     |
+|--------------|-----|------|----|----------------------------------------|
+| dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자                           |
+| configId     | Body | String | O | 설정 아이디 |
+| category     | Body | Enum | O | 유지 관리 카테고리 |
+| description  | Body | String | X | 유지 관리 설명 |
+| type         | Body | Enum | O | 유지 관리 타입 |
+| payload      | Body | Object | O | 유지 관리 타입에 따른 Payload |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "configId": "c-1234",
+    "category": "MAINTENANCE",
+    "description": "정기 점검",
+    "type": "UPDATE_DB_INSTANCE",
+    "payload": {}
+}
+```
+
+</p>
+</details>
+
+#### 응답
+
+| 이름    | 종류   | 형식   | 설명          |
+|-------|------|------|-------------|
+| jobId | Body | UUID | 요청한 작업의 식별자 |
+
+---
+
+### 유지 관리 예약하기
+
+```http
+POST /v4.0/db-instances/{dbInstanceId}/maintenances/schedule
+```
+
+#### 필요 권한
+
+| 권한명                                                | 설명        |
+|----------------------------------------------------|------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.Maintenance:Update | 유지 관리 예약하기 |
+
+#### 요청
+
+| 이름           | 종류  | 형식   | 필수 | 설명                                     |
+|--------------|-----|------|----|----------------------------------------|
+| dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자                           |
+| configId     | Body | String | O | 설정 아이디 |
+| category     | Body | Enum | O | 유지 관리 카테고리 |
+| description  | Body | String | X | 유지 관리 설명 |
+| type         | Body | Enum | O | 유지 관리 타입 |
+| payload      | Body | Object | O | 유지 관리 타입에 따른 Payload |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "configId": "c-1234",
+    "category": "MAINTENANCE",
+    "description": "정기 점검",
+    "type": "UPDATE_DB_INSTANCE",
+    "payload": {}
+}
+```
+
+</p>
+</details>
+
+#### 응답
+
+이 API는 응답 본문을 반환하지 않습니다.
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
+
+---
+
+### 유지 관리 삭제하기
+
+```http
+DELETE /v4.0/db-instances/{dbInstanceId}/maintenances/{maintenanceId}
+```
+
+#### 필요 권한
+
+| 권한명                                                | 설명        |
+|----------------------------------------------------|------------|
+| RDSfor{{engine.pascalCase}}:DbInstance.Maintenance:Delete | 유지 관리 삭제하기 |
+
+#### 요청
+
+| 이름           | 종류  | 형식   | 필수 | 설명                                     |
+|--------------|-----|------|----|----------------------------------------|
+| dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자                           |
+| maintenanceId| URL | String | O  | 유지 관리 아이디                           |
+
+#### 응답
+
+이 API는 응답 본문을 반환하지 않습니다.
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
+}
+```
+
+</p>
+</details>
 
 ---
 
