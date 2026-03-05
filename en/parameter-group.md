@@ -38,6 +38,25 @@ After selecting two different parameter groups in the console, click the **Compa
 
 You are free to delete parameter groups except those already applied to the DB instances. To delete a parameter group already applied to a DB instance, you must first change the parameter group of all connected DB instances before you delete it.
 
+{{#if (eq engine.lowerCase "mysql")}}
+
+### Cluster Parameter Group
+
+Cluster Parameter Groups are provided to apply configurations for {{engine.pascalCase}} installed on your DB cluster. These groups are only available for DB clusters and are managed separately from standard DB instance parameter groups.
+
+#### Constraints
+
+A cluster parameter group has the following constraints:
+
+* **DB Cluster Only**: This can only be used with DB instance groups of the DB Cluster type. It cannot be applied to general DB instances.
+* **Fixed GTID Parameters**: Global transaction identifier (GTID)-related parameters are preset and cannot be modified.
+* `gtid_mode = ON`
+* `enforce_gtid_consistency = ON`
+* `binlog_format = ROW`
+* **Some Parameters Cannot Be Modified**: In addition to GTID-related parameters, some parameters cannot be modified to ensure the stability of the DB cluster.
+
+{{/if}}
+
 ## Parameter
 
 The parameter contains the following information.

@@ -107,6 +107,29 @@ When incremental backups are scheduled according to [Auto Backup Strategy](#Set-
 * A backup performed without table locks enabled cannot be a baseline backup.
 * If a new full backup was created after that backup was created, it cannot be the baseline backup.
 
+<<<<<<< HEAD:template/en/backup-and-restore.md
+## Snapshot Backup
+
+While existing backup methods can degrade performance when run directly on the DB instance, our **Storage Snapshot Backup** leverages Cinder snapshots—provided HA is active and healthy—to eliminate system overhead.
+Because all heavy lifting—such as validation and file conversion—is offloaded to a separate server, your database maintains peak performance even during backups.
+
+Main Features
+* Zero performance impact: DB instance performance is maintained at 100% even during backup operations.
+* Enhanced reliability: Rigorous verification processes ensure the reliability of your backup data.
+* Temporary High Availability (HA) suspension: HA features may be briefly paused during snapshot creation to ensure strict data consistency.
+
+### Pricing
+
+Unlike existing backup methods, Snapshot Backup incurs separate charges for the resources used during the backup process.
+
+| Category | Existing backup | Snapshot backup                 |
+| --- | --- |---------------------------|
+| Billing method | Included with DB instance (free of charge) | Additional charges apply for dedicated backup resources        |
+| Billable item | OBS upload fee (billed separately) | Shared backup server + volume + snapshot + OBS |
+
+* Shared backup server fee: This fee covers the use of backup servers for data validation and file conversion.
+    * Even when using shared resources, you are billed only for the actual time used during your backup operations.
+=======
 ## 스냅숏 백업
 
 기존 백업 방식은 백업 애플리케이션이 DB 인스턴스에서 실행되어 백업 중 성능 저하가 발생할 수 있었으나, **스토리지 스냅숏 백업**은 고가용성이 정상 상태로 활성화되어 있는 경우에 한해 Cinder 스토리지 스냅숏을 활용하여 백업을 수행합니다.
@@ -128,6 +151,7 @@ When incremental backups are scheduled according to [Auto Backup Strategy](#Set-
 
 * 공용 백업 서버 요금: 백업 데이터의 검증 및 변환을 위해 사용하는 공용 백업 서버의 사용 요금입니다.
   * 공용 리소스를 사용하더라도 각 고객이 실제 사용한 시간에 대해 과금됩니다.
+>>>>>>> 9ffa70b7eea85651d3e1a6f14fa27f835b88e3c0:template/en/backup-and-restore_template.md
 
 ## Backup Settings
 

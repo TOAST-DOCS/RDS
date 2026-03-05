@@ -8,8 +8,11 @@ In MySQL, the version number consists of version = `X.Y.Z.` In NHN Cloud's RDS f
 
 The versions specified below are available. New DB instance creation and read replicas are supported only for the top 7 minor versions per major version.
 Support for MySQL versions below 8.0.34 has ended in accordance with the MySQL LTS policy. We recommend upgrading your DB instances to the latest version.
+<<<<<<< HEAD:template/en/db-engine.md
+=======
 
 - Note: [https://blogs.oracle.com/mysql/introducing-mysql-innovation-and-longterm-support-lts-versions](https://blogs.oracle.com/mysql/introducing-mysql-innovation-and-longterm-support-lts-versions)
+>>>>>>> 9ffa70b7eea85651d3e1a6f14fa27f835b88e3c0:template/en/db-engine_template.md
 
 | Version              | Note                                                      |
 |----------------------|-----------------------------------------------------------|
@@ -25,12 +28,21 @@ Support for MySQL versions below 8.0.34 has ended in accordance with the MySQL L
 | MySQL 8.0.40         |                                                           |
 | MySQL 8.0.36         |                                                           |
 | MySQL 8.0.35         |                                                           |
+<<<<<<< HEAD:template/en/db-engine.md
+| MySQL 8.0.34         | Creation and read replicas unsupported                             | 
+| MySQL 8.0.33         | Creation and read replicas unsupported                             | 
+| MySQL 8.0.32         | Creation and read replicas unsupported                             | 
+| MySQL 8.0.28         | Creation and read replicas unsupported                             | 
+| MySQL 8.0.23         | Creation and read replicas unsupported                             |
+| MySQL 8.0.18         | Creation and read replicas unsupported                             |
+=======
 | MySQL 8.0.34         | Creation and read replicas unsupported                    | 
 | MySQL 8.0.33         | Creation and read replicas unsupported                    | 
 | MySQL 8.0.32         | Creation and read replicas unsupported                    | 
 | MySQL 8.0.28         | Creation and read replicas unsupported                    | 
 | MySQL 8.0.23         | Creation and read replicas unsupported                    |
 | MySQL 8.0.18         | Creation and read replicas unsupported                    |
+>>>>>>> 9ffa70b7eea85651d3e1a6f14fa27f835b88e3c0:template/en/db-engine_template.md
 | <strong>5.7</strong> |                                                           |
 | MySQL 5.7.37         |                                                           |
 | MySQL 5.7.33         | You cannot restore a DB instance from an external backup. |
@@ -47,7 +59,11 @@ Support for MySQL versions below 8.0.34 has ended in accordance with the MySQL L
 After creating the DB instance, you can change the DB engine version and modify the DB instance.
 
 > [Caution]
+<<<<<<< HEAD:template/en/db-engine.md
+When attempting to change the DB version, only an upgrade is supported; a downgrade is not supported.
+=======
 When attempting to change the DB version, only an upgrade is supported. a downgrade is not supported.
+>>>>>>> 9ffa70b7eea85651d3e1a6f14fa27f835b88e3c0:template/en/db-engine_template.md
 
 When upgrading the database engine version, a major version upgrade occurs if only the major version number is changed, and a minor version upgrade occurs if only the minor version number is changed.
 When attempting to upgrade the DB engine major version, you can upgrade to the next major version of the DB engine.
