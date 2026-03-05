@@ -6,9 +6,22 @@
 | {{this.text.en}} | {{this.endpoint}} |
 {{/each}}
 
+<<<<<<< HEAD:template/en/api-guide-v2.0.md
+
+## Authentication and Authorization
+
+AppKey and SecretKey are required to use the RDS for {{engine.pascalCase}} API.
+
+An Appkey is a unique authentication key issued for each NHN Cloud service, and a project integrated Appkey is a common authentication key that can be used across multiple services within a single NHN Cloud project.
+
+
+
+For more information about how to check and use an Appkey, see [Appkey](/nhncloud/ko/public-api/appkey). For more information about how to create and use a project integrated Appkey, see [Project Integrated Appkey](/nhncloud/ko/public-api/project-integrated-appkey).
+=======
 ## Authentication and Authorization
 
 An AppKey or a Project Integrated Appkey is required to use the RDS for {{engine.pascalCase}} API. An AppKey is a unique authentication key issued for each individual NHN Cloud service, while a Project Integrated Appkey is a common authentication key that can be shared across multiple services within a single NHN Cloud project. For more information on checking and using Appkeys, please refer to the [Appkey](/nhncloud/en/public-api/appkey). For more information on creating and using Project Integrated Appkeys, please refer to the [Project Integrated Appkey](/nhncloud/en/public-api/project-integrated-appkey).
+>>>>>>> 9ffa70b7eea85651d3e1a6f14fa27f835b88e3c0:template/en/api-guide-v2.0_template.md
 
 ## Monitoring
 
@@ -24,7 +37,11 @@ GET /v2.0/metrics
 
 | Name         | Type | Format | Required | Description                                     |
 |--------------|------|--------|----------|-------------------------------------------------|
+<<<<<<< HEAD:template/en/api-guide-v2.0.md
+| X-TC-APP-KEY | URL  | String | O        | RDS for {{engine.pascalCase}} Appkey or integrated Appkey for project |
+=======
 | X-TC-APP-KEY | URL  | String | O        | AppKey or Project Integrated Appkey for RDS for {{engine.pascalCase}} |
+>>>>>>> 9ffa70b7eea85651d3e1a6f14fa27f835b88e3c0:template/en/api-guide-v2.0_template.md
 
 #### Response
 
@@ -55,7 +72,11 @@ GET /rds/api/v2.0/metric-statistics
 
 | Name         | Type | Format | Required | Description                                     |
 |--------------|------|--------|----------|-------------------------------------------------|
+<<<<<<< HEAD:template/en/api-guide-v2.0.md
+| X-TC-APP-KEY | URL  | String | O        | RDS for {{engine.pascalCase}} or integrated Appkey for project |
+=======
 | X-TC-APP-KEY | URL  | String | O        | AppKey or Project Integrated Appkey for RDS for {{engine.pascalCase}} |
+>>>>>>> 9ffa70b7eea85651d3e1a6f14fa27f835b88e3c0:template/en/api-guide-v2.0_template.md
 
 #### Request
 

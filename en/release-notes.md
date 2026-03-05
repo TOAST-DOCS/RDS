@@ -1,5 +1,15 @@
 ## Database > RDS for MySQL > Release Notes
 
+<<<<<<< HEAD
+### March 10, 2026
+
+#### Feature Updates
+
+- Added API v4.0
+  - For more information, see **API v4.0 guide** document in the user guide.
+- Added snapshot backup feature
+  - Perform backups using Cinder storage snapshots with zero impact on DB performance
+=======
 ### 2026. 03. 10.
 
 #### 기능 추가 및 개선
@@ -8,6 +18,7 @@
   - 자세한 내용은 사용자 가이드의 **API v4.0 가이드** 문서를 참고하세요.
 - 스냅숏 백업 기능 추가
   - Cinder 스토리지 스냅숏을 이용하여 DB 성능에 영향을 주지 않고 백업 수행
+>>>>>>> 9ffa70b7eea85651d3e1a6f14fa27f835b88e3c0
 
 ### January 13, 2026
 

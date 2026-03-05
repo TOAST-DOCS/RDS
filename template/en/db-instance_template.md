@@ -47,12 +47,21 @@ MySQL versions below 8.0.34 have reached End of Support per the MySQL LTS policy
 | MySQL 8.0.40         |                                                           |
 | MySQL 8.0.36         |                                                           |
 | MySQL 8.0.35         |                                                           |
+<<<<<<< HEAD:template/en/db-instance.md
+| MySQL 8.0.34         | Creation and read replicas unsupported                             | 
+| MySQL 8.0.33         | Creation and read replicas unsupported                             | 
+| MySQL 8.0.32         | Creation and read replicas unsupported                             | 
+| MySQL 8.0.28         | Creation and read replicas unsupported                             | 
+| MySQL 8.0.23         | Creation and read replicas unsupported                            |
+| MySQL 8.0.18         | Creation and read replicas unsupported                            |
+=======
 | MySQL 8.0.34         | Creation and read replicas unsupported                    | 
 | MySQL 8.0.33         | Creation and read replicas unsupported                    | 
 | MySQL 8.0.32         | Creation and read replicas unsupported                    | 
 | MySQL 8.0.28         | Creation and read replicas unsupported                    | 
 | MySQL 8.0.23         | Creation and read replicas unsupported                    |
 | MySQL 8.0.18         | Creation and read replicas unsupported                    |
+>>>>>>> 9ffa70b7eea85651d3e1a6f14fa27f835b88e3c0:template/en/db-instance_template.md
 | <strong>5.7</strong> |                                                           |
 | MySQL 5.7.37         |                                                           |
 | MySQL 5.7.33         | You cannot restore a DB instance from an external backup. |
@@ -157,6 +166,8 @@ You can set a maintenance duration when creating or modifying a DB instance. If 
 
 > [Note]
 > A maintenance duration consists of a start day, a start time, and a duration (in 30-minute increments).
+<<<<<<< HEAD:template/en/db-instance.md
+
 #### Maintenance Task
 
 Maintenance tasks are categorized into User Maintenance and Provider Maintenance.
@@ -187,6 +198,38 @@ You can choose when to apply maintenance tasks.
 
 You can check the maintenance status of each instance in the DB instance list.
 
+=======
+#### Maintenance Task
+
+Maintenance tasks are categorized into User Maintenance and Provider Maintenance.
+
+**User Maintenance Task**
+
+A task that users manually schedule and execute.
+
+* DB instance modifications (e.g., changing instance specs, port updates, parameter group changes)
+* DB engine version upgrade
+* DB instance OS upgrade
+
+**Provider Maintenance Task**
+
+A maintenance task provided by NHN Cloud.
+
+* Apply parameter group changes
+* Migration for hypervisor maintenance
+
+#### Maintenance Execution Time
+
+You can choose when to apply maintenance tasks.
+
+* **Apply Immediately**: apply immediately upon request.
+* **Apply in the Next Maintenance Duration**: apply during the next maintenance duration.
+
+#### Maintenance Status
+
+You can check the maintenance status of each instance in the DB instance list.
+
+>>>>>>> 9ffa70b7eea85651d3e1a6f14fa27f835b88e3c0:template/en/db-instance_template.md
 | Status      | Description                                    |
 |---------|---------------------------------------|
 | None | There are no scheduled or pending maintenance tasks. |
@@ -197,6 +240,8 @@ You can check the maintenance status of each instance in the DB instance list.
 
 > [Note]
 > The maintenance status is not displayed for the standby instance of High Availability (HA) DB instances.
+<<<<<<< HEAD:template/en/db-instance.md
+
 #### Maintenance Tab
 
 You can find the following information on the Maintenance tab of the DB instance details page:
@@ -213,6 +258,24 @@ Upcoming maintenance tasks can be excluded from the maintenance duration using t
 
 All tasks within the maintenance duration are executed sequentially in the order they were registered. However, mandatory maintenance tasks that have expired will be prioritized and executed first. Any tasks not completed within the current duration will be rescheduled to the next maintenance duration.
 
+=======
+#### Maintenance Tab
+
+You can find the following information on the Maintenance tab of the DB instance details page:
+
+* Maintenance start day and duration
+* Next maintenance duration
+* Maintenance status
+* Upcoming maintenance tasks (Scheduled for the next duration)
+* Pending maintenance tasks
+
+Upcoming maintenance tasks can be excluded from the maintenance duration using the Hold or Delete buttons. For pending Provider maintenance tasks, you can manually apply them by selecting either **Apply Immediately** or **Apply in the Next Maintenance Duration**.
+
+#### Execution Order
+
+All tasks within the maintenance duration are executed sequentially in the order they were registered. However, mandatory maintenance tasks that have expired will be prioritized and executed first. Any tasks not completed within the current duration will be rescheduled to the next maintenance duration.
+
+>>>>>>> 9ffa70b7eea85651d3e1a6f14fa27f835b88e3c0:template/en/db-instance_template.md
 > [Note]
 > If a maintenance task is repeatedly deferred because the maintenance duration starts while an automated backup is in progress or the DB instance is in a 'Busy' state, that task will be skipped and rescheduled for the next duration. An event will be generated if a maintenance task is skipped.
 
@@ -239,7 +302,11 @@ If you activate deletion protection, you can protect DB instances from accidenta
 
 You can view DB instances created from the console. It can be viewed as groups of DB instances or as individual DB instances.
 
+<<<<<<< HEAD:template/en/db-instance.md
+![db-instance-list_en]({{url.cdn}}/26.01.13/db-instance-list_en.png)
+=======
 ![db-instance-list_en]({{url.cdn}}/26.01.13/db-instance-detail_en.png)
+>>>>>>> 9ffa70b7eea85651d3e1a6f14fa27f835b88e3c0:template/en/db-instance_template.md
 
 ❶ You can change DB instance screen mode.  
 ❷ By clicking on the button, you can open or close a DB instance that belongs to a group.  
@@ -264,7 +331,7 @@ The status of the DB instance consists of the following values and changes depen
 
 Search conditions that can be changed are as follows.
 
-![db-instance-filter_en]({{url.cdn}}/24.03.12/db-instance-filter_en.png)
+![db-instance-filter_en]({{url.cdn}}/26.01.13/db-instance-filter_en.png)
 
 ❶ You can search for DB instances with filtering conditions that require parameter changes to be applied.
 
@@ -272,7 +339,7 @@ Search conditions that can be changed are as follows.
 
 You can select a DB instance to view the details.
 
-![db-instance-detail_en]({{url.cdn}}/24.03.12/db-instance-detail_en.png)
+![db-instance-detail_en]({{url.cdn}}/26.01.13/db-instance-detail_en.png)
 
 ❶ When you click on the domain of the connection information, a pop-up window appears to confirm the IP address.
 ❷ When you click on DB Security Group, a pop-up window appears where you can check DB security rules.
@@ -325,7 +392,7 @@ Click on **Download** to charge Internet traffic as the size of the log file.
 
 ❹ For binary logs, you can download them in two forms. Click on **Import** and you will see a pop-up window where you can select the type of binary log.
 
-![db-instance-detail-log-bin_en]({{url.cdn}}/24.03.12/db-instance-detail-log-bin_en.png)
+![db-instance-detail-log-bin_en]({{url.cdn}}/26.01.13/db-instance-detail-log-bin_en.png)
 
 ❺ Select to use the mysqlbinlog utility to convert the binary log into SQL file and then download it.
 
@@ -333,7 +400,11 @@ Click on **Download** to charge Internet traffic as the size of the log file.
 
 The Maintenance tab allows you to monitor settings and status, and manage maintenance operations for your DB instance.
 
+<<<<<<< HEAD:template/en/db-instance.md
+![db-instance-detail-maintenance_ko]({{url.cdn}}/26.01.13/db-instance-detail-maintenance_ko.png)
+=======
 ![db-instance-detail-maintenance_en]({{url.cdn}}/26.01.13/db-instance-detail-maintenance_en.png)
+>>>>>>> 9ffa70b7eea85651d3e1a6f14fa27f835b88e3c0:template/en/db-instance_template.md
 
 #### Maintenance Information
 
@@ -348,10 +419,18 @@ At the top of the Maintenance tab, you can view the maintenance configuration de
 
 > [Note]
 > Even if you haven't set a maintenance duration, you can view the randomly assigned duration here.
+<<<<<<< HEAD:template/en/db-instance.md
+
 #### Upcoming Maintenance
 
 Upcoming Maintenance is a list of tasks scheduled to be executed during the next maintenance duration. When you perform actions such as modifying a DB instance or upgrading the DB engine version and select **Apply in the Next Maintenance Duration**, the task is added to this list.
 
+=======
+#### Upcoming Maintenance
+
+Upcoming Maintenance is a list of tasks scheduled to be executed during the next maintenance duration. When you perform actions such as modifying a DB instance or upgrading the DB engine version and select **Apply in the Next Maintenance Duration**, the task is added to this list.
+
+>>>>>>> 9ffa70b7eea85651d3e1a6f14fa27f835b88e3c0:template/en/db-instance_template.md
 | Item | Description |
 |------------|----------------------------------|
 | Description | A description of the maintenance task. |
@@ -369,17 +448,36 @@ Provider maintenance tasks will be moved to the Pending Maintenance list. You ca
 
 Pending Maintenance is a list of Provider maintenance tasks provided by NHN Cloud. This includes operations such as applying parameter group changes and migrations for hypervisor maintenance.
 
+<<<<<<< HEAD:template/en/db-instance.md
+| Item | Description |
+|------------|----------------------------------|
+| Description | A description of the maintenance task. |
+| Type | The type of maintenance task. |
+| Status | The current status of the maintenance task. |
+| Mandatory | Indicates whether the maintenance task is mandatory. |
+=======
 | Item        | Description                                                                 |
 |-------------|-----------------------------------------------------------------------------|
 | Description | A description of the maintenance task.                                      |
 | Type        | The type of maintenance task.                                               |
 | Status      | The current status of the maintenance task.                                 |
 | Mandatory   | Indicates whether the maintenance task is mandatory.                        |
+>>>>>>> 9ffa70b7eea85651d3e1a6f14fa27f835b88e3c0:template/en/db-instance_template.md
 | Forced Date | If the task is mandatory, it will be applied automatically after this date. |
 
 You can select a pending maintenance task and then click **Next** to select the execution time.
 
 **Apply Immediately**: apply immediately upon request. Click **Confirm** to execute immediately.
+<<<<<<< HEAD:template/en/db-instance.md
+![db-instance-detail-maintenance-immediately_ko]({{url.cdn}}/26.01.13/db-instance-detail-maintenance-immediately_ko.png)
+
+**Apply in the Next Maintenance Duration**: apply during the next maintenance duration. Click **Confirm** to move this task to the Upcoming Maintenance list.
+![db-instance-detail-maintenance-schedule_ko]({{url.cdn}}/26.01.13/db-instance-detail-maintenance-schedule_ko.png)
+
+> [Caution]
+> Required maintenance tasks can be applied at any time up to the mandatory application date. However, after the mandatory application date, they will automatically be performed during the next maintenance period.
+
+=======
 ![db-instance-detail-maintenance-immediately_en]({{url.cdn}}/26.01.13/db-instance-detail-maintenance-immediately_en.png)
 
 **Apply in the Next Maintenance Duration**: apply during the next maintenance duration. Click **Confirm** to move this task to the Upcoming Maintenance list.
@@ -387,6 +485,7 @@ You can select a pending maintenance task and then click **Next** to select the 
 
 > [Caution]
 > Required maintenance tasks can be applied at any time up to the mandatory application date. However, after the mandatory application date, they will automatically be performed during the next maintenance period.
+>>>>>>> 9ffa70b7eea85651d3e1a6f14fa27f835b88e3c0:template/en/db-instance_template.md
 > [Note]
 > If a maintenance task requires a restart, a pop-up screen will appear, allowing you to select additional options, such as failover or backup. For high-availability DB instances, you can minimize service downtime by using a restart with failover.
 
@@ -417,7 +516,11 @@ You cannot modify the name of the DB schema that has been created.
 
 #### Create a user
 
+<<<<<<< HEAD:template/en/db-instance.md
+![db-instance-detail-user-create-en]({{url.cdn}}/26.01.13/db-instance-detail-user-create-en.png)
+=======
 ![db-instance-detail-user-create-en]({{url.cdn}}/26.01.13/db-instance-detail-user-create-en.png))
+>>>>>>> 9ffa70b7eea85651d3e1a6f14fa27f835b88e3c0:template/en/db-instance_template.md
 
 ❶ Click on **+Create** and you'll see the Add User pop-up window.
 ❷ Enter a user ID.
@@ -466,7 +569,11 @@ GRANT EXECUTE ON `mysql`.* TO '{user_id}'@'{host}';
 
 | Authentication Plugin | Supported Versions                            |
 |-----------------------|-----------------------------------------------|
+<<<<<<< HEAD:template/en/db-instance.md
+| mysql_native_password | 8.4 version or below                                     |
+=======
 | mysql_native_password | 8.4 version or below                          |
+>>>>>>> 9ffa70b7eea85651d3e1a6f14fa27f835b88e3c0:template/en/db-instance_template.md
 | sha256_password       | 5.7.33 version or later and below 8.0 version |
 | caching_sha2_password | 8.0 version or later                          |
 
@@ -486,7 +593,11 @@ User authentication plug-ins and TLS options are supported in MySQL 5.7.33 and l
 If you set TLS option for your account to X509, you need a certificate to access the DB instance.
 
 ![db-instance-detail-user-cert-en]({{url.cdn}}/26.01.13/db-instance-detail-user-cert-en.png)
+<<<<<<< HEAD:template/en/db-instance.md
+![db-instance-detail-user-cert-down-en]({{url.cdn}}/26.01.13/db-instance-detail-user-cert-down-en.png)
+=======
 ![db-instance-detail-user-cert-down-en]({{url.cdn}}/24.03.12/db-instance-detail-user-cert-down-en.png)
+>>>>>>> 9ffa70b7eea85651d3e1a6f14fa27f835b88e3c0:template/en/db-instance_template.md
 
 ❶ Select the DB instance to which you want to download the certificate.
 ❷ Click on drop-down menu.
@@ -541,7 +652,10 @@ For high-availability DB instances, if there are any changes to items that need 
 
 ![modify-ha-popup-en]({{url.cdn}}/26.01.13/modify-ha-popup-en.png)
 
+<<<<<<< HEAD:template/en/db-instance.md
+=======
 
+>>>>>>> 9ffa70b7eea85651d3e1a6f14fa27f835b88e3c0:template/en/db-instance_template.md
 ❶ Modify your DB instance and schedule the update by selecting either **Apply in the Next Maintenance Duration** or **Apply Immediately**.
 ❷ If you do not use 'Reboot with Failover', changes will be applied sequentially to the master and standby instances, followed by a restart of the DB instance. For more details, please refer to the [Manual Failover section](db-instance/#manual-failover) for High Availability DB instances.
 
@@ -572,7 +686,11 @@ Operating system version upgrades behave differently depending on whether you ar
 
 When you click the OS Version Upgrade button for a single DB instance, the following pop-up screen appears.
 The maintenance feature is also available when upgrading the operating system version of a single DB instance.
+<<<<<<< HEAD:template/en/db-instance.md
+![db-instance-os-upgrade-single-popup-en.png]({{url.cdn}}/24.06.11/db-instance-os-upgrade-simple-popup-en.png)
+=======
 ![db-instance-os-upgrade-single-popup-en.png]({{url.cdn}}/26.01.13/db-instance-os-upgrade-simple-popup-en.png)
+>>>>>>> 9ffa70b7eea85651d3e1a6f14fa27f835b88e3c0:template/en/db-instance_template.md
 
 When you click the Upgrade Operating System Version for High Availability DB Instance button, the pop-up screen shown below appears. For more information, see [Manual failover item](db-instance/#manual-failover) of High Availability DB Instances.
 ![os-upgrade-ha-popup-en.png]({{url.cdn}}/26.01.13/os-upgrade-ha-popup-en.png)
@@ -799,7 +917,7 @@ Enabling Delete Protection protects DB instances from being accidentally deleted
 
 ❶ If you select the DB instance for which you want to change the Deletion Protection settings and click on **Change Deletion Protection Settings** menu from the drop-down menu, a pop-up window will appear.
 
-![deletion-protection-popup-en]({{url.cdn}}/24.03.12/deletion-protection-popup-en.png)
+![deletion-protection-popup-en]({{url.cdn}}/26.01.13/deletion-protection-popup-en.png)
 
 ❷ Change the Delete Protection settings and click on **Confirm**.
 
@@ -933,10 +1051,62 @@ High availability features can be temporarily stopped in situations where a temp
 
 Candidate master replication can be disrupted due to a variety of reasons, such as network disconnection, incorrect FEDERATED engine use, and replication settings from other masters. Candidate masters in a Stopped Replication state do not perform automatic failover. To resolve a backup master's Stopped Replication, the candidate master needs to be rebuilt. When rebuilding a candidate master, it removes all of the candidate master's databases and rebuilds them based on the master's database. In this process, if the backup file required for rebuilding does not exist in the master database, the backup is performed on the master, which can cause performance degradation.
 
+<<<<<<< HEAD:template/en/db-instance.md
+{{#if (eq engine.lowerCase "mysql")}}
+
+## DB Cluster
+
+A DB cluster is a DB instance group type that provides high availability and enhanced backup performance.
+
+### DB Cluster Characteristics
+
+DB clusters have the following characteristics:
+
+#### High Availability Configuration
+
+DB clusters are configured for high availability by default. The master and standby masters are created in different availability zones, providing fault-tolerant databases.
+
+#### GTID-Based Replication
+
+DB clusters use GTID (global transaction identifier)-based replication. The following parameters are mandatory and cannot be changed.
+
+* `gtid_mode = ON`
+* `enforce_gtid_consistency = ON`
+* `binlog_format = ROW`
+
+> [Caution] Some replication-related procedures are restricted due to GTID mode. For more information, see [{{engine.pascalCase}} Procedure](#{{engine.lowerCase}}-procedure).
+
+#### Improved Backup Performance
+
+DB clusters provide improved backup capabilities.
+
+* **Resource Savings**: Saves DB instance resources by up to 99% during backups.
+* **Reduced Backup Time**: Reduces overall backup time by over 90% compared to previous versions.
+
+> [Note]
+> In some cases, under heavy load on the DB instance, performance degradation due to backups may occur, as before.
+
+> [Note] Existing DB instance groups cannot be migrated to DB clusters. If necessary, please contact Customer Support.
+
+#### DB Cluster-Dedicated Parameter Group
+
+DB clusters use dedicated parameter groups. GTID-related parameters are preset in these parameter groups; some cannot be modified.
+
+{{/if}}
+
+=======
+>>>>>>> 9ffa70b7eea85651d3e1a6f14fa27f835b88e3c0:template/en/db-instance_template.md
 ## {{engine.pascalCase}} Procedure
 
 RDS for {{engine.pascalCase}} provides its own procedures for performing some of the features that are restricted from user accounts to provide user convenience.
 
+<<<<<<< HEAD:template/en/db-instance.md
+{{#if (eq engine.lowerCase "mysql")}}
+> [Caution] If the DB instance group is of DB cluster type, the use of replication-related procedures (tcrds_repl_*) is restricted.
+{{/if}}
+
+=======
+>>>>>>> 9ffa70b7eea85651d3e1a6f14fa27f835b88e3c0:template/en/db-instance_template.md
 ### tcrds_active_process
 
 * Make inquiry of Process list for ACTIVE status, not Sleep status.
@@ -966,7 +1136,11 @@ RDS for {{engine.pascalCase}} provides its own procedures for performing some of
 {{engine.lowerCase}}> CALL mysql.tcrds_current_lock();
 ```
 
+<<<<<<< HEAD:template/en/db-instance.md
+### tcrds_repl_changemaster (prior to 8.4) 
+=======
 ### tcrds_repl_changemaster (prior to 8.4)
+>>>>>>> 9ffa70b7eea85651d3e1a6f14fa27f835b88e3c0:template/en/db-instance_template.md
 
 * Used to import external {{engine.pascalCase}} DBs into NHN Cloud RDS using replication.
 * Replication configuration of NHN Cloud RDS is done with **Create replication** of the console.
