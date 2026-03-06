@@ -2,12 +2,12 @@
 
 ### 2026. 03. 10.
 
-#### 기능 추가 및 개선
+#### Feature Updates
 
-* API v4.0 추가
-    * 자세한 내용은 [API v4.0 가이드](/Database/RDS%20for%20MySQL/en/api-guide-v4.0/) 문서를 참고하세요.
-* 스냅숏 백업 기능 추가
-    * Cinder 스토리지 스냅숏을 이용하여 DB 성능에 영향을 주지 않고 백업 수행
+- Added API v4.0
+  - For more information, see [API v4.0 guide](/Database/RDS%20for%20MySQL/en/api-guide-v4.0/) document.
+- Added snapshot backup feature
+  - Perform backups using Cinder storage snapshots with zero impact on DB performance
 
 ### January 13, 2026
 

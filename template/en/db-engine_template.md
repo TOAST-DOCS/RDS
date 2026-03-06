@@ -24,7 +24,7 @@ Support for MySQL versions below 8.0.34 has ended in accordance with the MySQL L
 | MySQL 8.0.41         |                                                           |
 | MySQL 8.0.40         |                                                           |
 | MySQL 8.0.36         |                                                           |
-| MySQL 8.0.35         |                                                           |
+| MySQL 8.0.35         | Creation and read replicas unsupported                    |
 | MySQL 8.0.34         | Creation and read replicas unsupported                    | 
 | MySQL 8.0.33         | Creation and read replicas unsupported                    | 
 | MySQL 8.0.32         | Creation and read replicas unsupported                    | 

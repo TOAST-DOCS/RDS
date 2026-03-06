@@ -1,9 +1,9 @@
 ## Database > RDS for MariaDB > APIガイド
 
 
-## RDS for MariaDB API 공통 정보
+## RDS for MariaDB API共通情報
 
-### API 엔드포인트
+### APIエンドポイント
 
 | リージョン            | エンドポイント           |
 |------------------|-------------------|
@@ -896,7 +896,7 @@ PUT /v4.0/db-instances/{dbInstanceId}
 |-------------------------|------|---------|----|---------------------------------------------|
 | dbInstanceId            | URL  | UUID    | O  | DBインスタンスの識別子                               |
 | dbInstanceName          | Body | String  | X  | DBインスタンスを識別できる マスター名                   |
-| dbInstanceCandidateName | Body | String  | X  | DBインスタンスを識別できる 予備マスター名(高可用性を使用する場合の必須値) |
+| dbInstanceCandidateName | Body | String  | X  | DBインスタンスを識別できる 予備マスター名 |
 | description             | Body | String  | X  | DBインスタンスに関する追加情報                          |
 | dbPort                  | Body | Number  | X  | DBポート<br/>- 最小値: `3306`<br/>- 最大値: `43306`  |
 | useSlowQueryAnalysis | Body | Boolean  | X | Slow query分析を行うかどうか |
@@ -905,8 +905,8 @@ PUT /v4.0/db-instances/{dbInstanceId}
 | dbSecurityGroupIds | Body | Array   | X  | DBセキュリティグループの識別子リスト                                                        |
 | executeBackup      | Body | Boolean | X  | 現時点でバックアップを行うかどうか<br/>- デフォルト値: `false`                                       |
 | useOnlineFailover  | Body | Boolean | X  | フェイルオーバーを利用した再起動を行うかどうか<br/>高可用性を使用中のDBインスタンスでのみ使用可能です。<br/>- デフォルト値: `false` |
-| waitReplicationDelay  | Body | Boolean | X  | 복제 지연 해소 대기 여부<br/>고가용성을 사용 중인 DB 인스턴스에서만 사용 가능합니다.<br/>- 기본값: `false` |
-| useReadOnly  | Body | Boolean | X  | 읽기 전용으로 변경 여부<br/>고가용성을 사용 중인 DB 인스턴스에서만 사용 가능합니다.<br/>- 기본값: `false` |
+| waitReplicationDelay | Body | Boolean | X | レプリケーション遅延解消の待機有無<br/>高可用性を使用中のDBインスタンスでのみ使用可能です。<br/>- デフォルト値：`false` |
+| useReadOnly | Body | Boolean | X | 読み取り専用への変更有無<br/>高可用性を使用中のDBインスタンスでのみ使用可能です。<br/>- デフォルト値：`false` |
 
 <details><summary>例</summary>
 <p>
@@ -950,7 +950,7 @@ DELETE /v4.0/db-instances/{dbInstanceId}
 | 名前         | 種類 | 形式 | 必須 | 説明         |
 |--------------|-----|------|----|--------------|
 | dbInstanceId | URL | UUID | O  | DBインスタンスの識別子 |
-| deleteAutoBackup          | Body | Boolean  | X  | 자동 백업 삭제 여부<br/>- 기본값: `false` |
+| deleteAutoBackup | Body | Boolean | X | 自動バックアップの削除有無<br/>- デフォルト値：`false` |
 
 #### レスポンス
 
@@ -979,8 +979,8 @@ POST /v4.0/db-instances/{dbInstanceId}/restart
 | dbInstanceId      | URL  | UUID    | O  | DBインスタンスの識別子                                                                  |
 | useOnlineFailover | Body | Boolean | X  | フェイルオーバーを利用した再起動を行うかどうか<br/>高可用性を使用中のDBインスタンスでのみ使用可能です。<br/>- デフォルト値: `false` |
 | executeBackup     | Body | Boolean | X  | 現時点でバックアップを行うかどうか<br/>- デフォルト値: `false`                                       |
-| waitReplicationDelay     | Body | Boolean | X  | 복제 지연 해소 대기 여부<br/>고가용성을 사용 중인 DB 인스턴스에서만 사용 가능합니다.<br/>- 기본값: `false`        |
-| useReadOnly     | Body | Boolean | X  | 읽기 전용으로 변경 여부<br/>고가용성을 사용 중인 DB 인스턴스에서만 사용 가능합니다.<br/>- 기본값: `false`         |
+| waitReplicationDelay | Body | Boolean | X | レプリケーション遅延解消待機を行うかどうか<br/>高可用性を使用中のDBインスタンスでのみ使用可能です。<br/>- デフォルト値：`false` |
+| useReadOnly | Body | Boolean | X | 読み取り専用への変更を行うかどうか<br/>高可用性を使用中のDBインスタンスでのみ使用可能です。<br/>- デフォルト値：`false` |
 
 #### レスポンス
 
@@ -1390,8 +1390,8 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 | dbInstanceCandidateName                             | Body | String  | O  | DBインスタンスを識別できる 予備マスター名(高可用性を使用する場合の必須値)                                                                                                                             |
 | description                                         | Body | String  | X  | DBインスタンスに対する追加情報                                                                                                                                                                                                    |
 | dbFlavorId                                          | Body | UUID    | X  | DBインスタンス仕様の識別子                                                                                                                                                       |
-| dbPort                                              | Body | Number  | X  | DBポート<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 最小値: `3306`<br/>- 最大値: `43306`                                                                                                             |
-| parameterGroupId | Body | UUID    | X  | パラメータグループの識別子<br/>- 기본값: 원본 DB 인스턴스 값                                                                                                                                                        |
+| dbPort | Body | Number | X | DBポート<br/>- デフォルト値：原本DBインスタンスの値<br/>- 最小値：`3306`<br/>- 最大値：`43306` |
+| parameterGroupId | Body | UUID | X | パラメータグループの識別子<br/>- デフォルト値：原本DBインスタンスの値 |
 | dbSecurityGroupIds                                  | Body | Array   | X  | DBセキュリティグループの識別子リスト                                                                                                                                                      |
 | userGroupIds                                        | Body | Array   | X  | ユーザーグループの識別子リスト                                                                                                                                                        |
 | useHighAvailability                                 | Body | Boolean | X  | 高可用性を使用するかどうか<br/>- デフォルト値: `false`                                                                                                                                                                                                                                                                                                                                                                                                                       |
@@ -1404,14 +1404,14 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 | network.usePublicAccess                             | Body | Boolean | X  | 外部接続可否<br/>- デフォルト値: `false`                                                                                                                           |
 | network.availabilityZone                            | Body | Enum    | X  | DBインスタンスを作成するアベイラビリティゾーン<br/>- 例: `kr-pub-a`                                                                                                                 |
 | storage                                             | Body | Object  | X  | ストレージ情報オブジェクト                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| storage.storageType                                 | Body | Enum    | X  | データストレージタイプ<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 例: `General SSD`                                                                                                                      |
-| storage.storageSize                                 | Body | Number  | X  | データストレージサイズ(GB)<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 最小値: `20`<br/>- 最大値: `2048`                                                                                                      |
+| storage.storageType | Body | Enum | X | データストレージタイプ<br/>- デフォルト値：原本DBインスタンスの値<br/>- 例：`General SSD` |
+| storage.storageSize | Body | Number | X | データストレージサイズ(GB)<br/>- デフォルト値：原本DBインスタンスの値<br/>- 最小値：`20`<br/>- 最大値：`2048` |
 | storage.storageAutoscale                            | Body | Object  | X  | データストレージ自動拡張オブジェクト                                                                                                                                                     |
-| storage.storageAutoscale.useStorageAutoscale        | Body | Boolean | X  | ストレージ自動拡張を行うかどうか<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 最小値: `50`<br/>- 最大値: `95`                                                                                                                          |
-| storage.storageAutoscale.maxStorageSize             | Body | Number  | X  | 自動拡張最大サイズ(GB)<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 最大値: `4096`                                                                                                                                   |
-| storage.storageAutoscale.cooldownTime               | Body | Number  | X  | 自動拡張クールダウン時間(分)<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 最小値: `10`<br/>- 最大値: `1440`                                                                                                              |
+| storage.storageAutoscale.useStorageAutoscale | Body | Boolean | X | ストレージ自動拡張の使用有無<br/>- デフォルト値：原本DBインスタンスの値<br/>- デフォルト値：原本DBインスタンスの値<br/>- 最小値：`50`<br/>- 最大値：`95` |
+| storage.storageAutoscale.maxStorageSize | Body | Number | X | 自動拡張最大サイズ(GB)<br/>- デフォルト値：原本DBインスタンスの値<br/>- 最大値：`4096` |
+| storage.storageAutoscale.cooldownTime | Body | Number | X | 自動拡張クールダウン時間(分)<br/>- デフォルト値：原本DBインスタンスの値<br/>- 最小値：`10`<br/>- 最大値：`1440` |
 | backup                                              | Body | Object  | X  | バックアップ情報オブジェクト                                                                                                                                                              |
-| backup.backupPeriod                                 | Body | Number  | X  | バックアップ保管期間(日)<br/>- 기본값: 원본 DB 인스턴스 값<br/>- 最小値: `0`<br/>- 最大値: `730`                                                                                                            |
+| backup.backupPeriod | Body | Number | X | バックアップ保管期間(日)<br/>- デフォルト値：原本DBインスタンスの値<br/>- 最小値：`0`<br/>- 最大値：`730` |
 | backup.ftwrlWaitTimeout                             | Body | Number  | X  | クエリ遅延待機時間(秒)<br/>- デフォルト値: `1800`<br/>- 最小値: `0`<br/>- 最大値: `21600`                                                                                   |
 | backup.backupRetryCount                             | Body | Number  | X  | バックアップ再試行回数<br/>- デフォルト値: `0`<br/>- 最小値: `0`<br/>- 最大値: `10`                                                                                              |
 | backup.useBackupLock | Body | Boolean | X | テーブルロックを使用するかどうか<br/>- デフォルト値: `true`                                                                                                                                                                                                                                                                                                                                                                                                                        |
@@ -1762,7 +1762,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/high-availability
 | dbInstanceId        | URL  | UUID    | O  | DBインスタンスの識別子                                       |
 | useHighAvailability | Body | Boolean | O  | 高可用性を使用するかどうか                                       |
 | pingInterval        | Body | Number  | X  | 高可用性使用時Ping間隔(秒)<br/>- 最小値: `1`<br/>- 最大値: `600` |
-| dbInstanceCandidateName        | Body | String  | O  | DB 인스턴스를 식별할 수 있는 예비 마스터 이름 |
+| dbInstanceCandidateName | Body | String | O | DBインスタンスを識別できるスタンバイマスター名 |
 
 #### レスポンス
 
@@ -2535,35 +2535,35 @@ GET /v4.0/db-instances/{dbInstanceId}/log-files
 
 ---
 
-### 로그 파일 내용 보기
+### ログファイルの内容照会
 
 ```http
 GET /v4.0/db-instances/{dbInstanceId}/log-files/{logFileName}
 ```
 
-#### 필요 권한
+#### 必要な権限
 
-| 권한명                                           | 설명                    |
+| 権限名 | 説明 |
 |-----------------------------------------------|-----------------------|
-| RDSforMariaDB:DbInstanceLog.Get | DB 인스턴스 내 로그 파일 내용 보기 |
+| RDSforMariaDB:DbInstanceLog.Get | DBインスタンス内のログファイル内容照会 |
 
-#### 요청
+#### リクエスト
 
-이 API는 요청 본문을 요구하지 않습니다.
+このAPIはリクエストボディを要求しません。
 
-| 이름           | 종류    | 형식     | 필수 | 설명                                                                                                                                                                                              |
+| 名前 | 種類 | 形式 | 必須 | 説明 |
 |--------------|-------|--------|----|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| dbInstanceId | URL   | UUID   | O  | DB 인스턴스의 식별자                                                                                                                                                                                    |
-| logFileName  | URL   | String | O  | 로그 파일 이름                                                                                                                                                                                        |
-| logFileType  | Query | Enum   | O  | 로그 파일 타입 종류<br/>- `ERROR`: error.log<br/>- `BINLOG`: mysql-bin<br/>- `GENERAL`: general.log<br/>- `SLOW_QUERY`: slow_query.log<br/>- `AUDIT`: server_audit.log<br/>- `BACKUP`: xtra_full.log |
+| dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
+| logFileName | URL | String | O | ログファイル名 |
+| logFileType | Query | Enum | O | ログファイルタイプの種類<br/>- `ERROR`：error.log<br/>- `BINLOG`：mysql-bin<br/>- `GENERAL`：general.log<br/>- `SLOW_QUERY`：slow_query.log<br/>- `AUDIT`：server_audit.log<br/>- `BACKUP`：xtra_full.log |
 
-#### 응답
+#### レスポンス
 
-| 이름      | 종류   | 형식     | 설명                       |
+| 名前 | 種類 | 形式 | 説明 |
 |---------|------|--------|--------------------------|
-| content | Body | String | 로그 파일 내용(최대 65533 Bytes) |
+| content | Body | String | ログファイルの内容(最大65533 Bytes) |
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
@@ -2631,37 +2631,37 @@ POST /v4.0/db-instances/{dbInstanceId}/log-files/export
 
 ---
 
-### BinLog 목록 보기
+### BinLog一覧照会
 
 ```http
 GET /v4.0/db-instances/{dbInstanceId}/binlogs
 ```
 
-#### 필요 권한
+#### 必要な権限
 
-| 권한명                                               | 설명           |
+| 権限名 | 説明 |
 |---------------------------------------------------|---------------|
-| RDSforMariaDB:DbInstanceBinLog.List | BinLog 목록 보기 |
+| RDSforMariaDB:DbInstanceBinLog.List | BinLog一覧照会 |
 
-#### 요청
+#### リクエスト
 
-이 API는 요청 본문을 요구하지 않습니다.
+このAPIはリクエストボディを要求しません。
 
-| 이름           | 종류    | 형식      | 필수 | 설명                                                                                   |
+| 名前 | 種類 | 形式 | 必須 | 説明 |
 |--------------|-------|---------|----|---------------------------------------------------------------------------------------|
-| dbInstanceId | URL   | UUID    | O  | DB 인스턴스의 식별자                                                                         |
-| deletable    | Query | Boolean | X  | 삭제 가능한 BinLog만 조회할지 여부<br/>- `true`: 마지막 BinLog 제외<br/>- `false`: 전체<br/>- 기본값: `false` |
+| dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
+| deletable | Query | Boolean | X | 削除可能なBinLogのみ照会するかどうか<br/>- `true`：最後のBinLogを除く<br/>- `false`：全体<br/>- デフォルト値：`false` |
 
-#### 응답
+#### レスポンス
 
-| 이름                     | 종류   | 형식       | 설명                                |
+| 名前 | 種類 | 形式 | 説明 |
 |------------------------|------|----------|-----------------------------------|
-| binLogs                | Body | Array    | BinLog 파일 목록                      |
-| binLogs.binLogFileName | Body | String   | BinLog 파일 이름                      |
-| binLogs.binLogFileSize | Body | Number   | BinLog 파일 크기(Byte)                |
-| binLogs.createdYmdt    | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| binLogs | Body | Array | BinLogファイル一覧 |
+| binLogs.binLogFileName | Body | String | BinLogファイル名 |
+| binLogs.binLogFileSize | Body | Number | BinLogファイルサイズ(Byte) |
+| binLogs.createdYmdt | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
@@ -2686,26 +2686,26 @@ GET /v4.0/db-instances/{dbInstanceId}/binlogs
 
 ---
 
-### BinLog 삭제
+### BinLog削除
 
 ```http
 POST /v4.0/db-instances/{dbInstanceId}/binlogs/purge
 ```
 
-#### 필요 권한
+#### 必要な権限
 
-| 권한명                                                | 설명        |
+| 権限名 | 説明 |
 |----------------------------------------------------|------------|
-| RDSforMariaDB:DbInstanceBinLog.Purge | BinLog 삭제 |
+| RDSforMariaDB:DbInstanceBinLog.Purge | BinLog削除 |
 
-#### 요청
+#### リクエスト
 
-| 이름                 | 종류   | 형식     | 필수 | 설명                                    |
+| 名前 | 種類 | 形式 | 必須 | 説明 |
 |--------------------|------|--------|----|---------------------------------------|
-| dbInstanceId       | URL  | UUID   | O  | DB 인스턴스의 식별자                          |
-| lastBinLogFileName | Body | String | O  | 삭제할 마지막 BinLog 파일 이름(해당 파일 직전까지 삭제됨) |
+| dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
+| lastBinLogFileName | Body | String | O | 削除する最後のBinLogファイル名(該当ファイルの直前まで削除されます) |
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
@@ -2717,11 +2717,11 @@ POST /v4.0/db-instances/{dbInstanceId}/binlogs/purge
 </p>
 </details>
 
-#### 응답
+#### レスポンス
 
-이 API는 응답 본문을 반환하지 않습니다.
+このAPIはレスポンスボディを返しません。
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
@@ -2739,37 +2739,37 @@ POST /v4.0/db-instances/{dbInstanceId}/binlogs/purge
 
 ---
 
-### 인증서 파일 목록 보기
+### 証明書ファイル一覧照会
 
 ```http
 GET /v4.0/db-instances/{dbInstanceId}/certificates
 ```
 
-#### 필요 권한
+#### 必要な権限
 
-| 권한명                                                    | 설명           |
+| 権限名 | 説明 |
 |--------------------------------------------------------|---------------|
-| RDSforMariaDB:DbInstanceCertificate.List | 인증서 파일 목록 보기 |
+| RDSforMariaDB:DbInstanceCertificate.List | 証明書ファイル一覧照会 |
 
-#### 요청
+#### リクエスト
 
-이 API는 요청 본문을 요구하지 않습니다.
+このAPIはリクエストボディを要求しません。
 
-| 이름           | 종류  | 형식   | 필수 | 설명           |
+| 名前 | 種類 | 形式 | 必須 | 説明 |
 |--------------|-----|------|----|---------------|
-| dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
+| dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
 
-#### 응답
+#### レスポンス
 
-| 이름                           | 종류   | 형식       | 설명                                                                           |
+| 名前 | 種類 | 形式 | 説明 |
 |------------------------------|------|----------|------------------------------------------------------------------------------|
-| certificates                 | Body | Array    | 인증서 파일 목록                                                                    |
-| certificates.fileName        | Body | String   | 인증서 파일 이름                                                                    |
-| certificates.certificateType | Body | Enum     | 인증서 타입<br/>- `CA_FILE`: CA 인증서<br/>- `CERT_FILE`: 인증서<br/>- `KEY_FILE`: 비밀 키 |
-| certificates.fileSize        | Body | Number   | 인증서 파일 크기(Byte)                                                              |
-| certificates.createdYmdt     | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                            |
+| certificates | Body | Array | 証明書ファイル一覧 |
+| certificates.fileName | Body | String | 証明書ファイル名 |
+| certificates.certificateType | Body | Enum | 証明書タイプ<br/>- `CA_FILE`：CA証明書<br/>- `CERT_FILE`：証明書<br/>- `KEY_FILE`：秘密鍵 |
+| certificates.fileSize | Body | Number | 証明書ファイルサイズ(Byte) |
+| certificates.createdYmdt | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
@@ -2795,31 +2795,31 @@ GET /v4.0/db-instances/{dbInstanceId}/certificates
 
 ---
 
-### 인증서 파일 내보내기
+### 証明書ファイルエクスポート
 
 ```http
 POST /v4.0/db-instances/{dbInstanceId}/certificates/upload
 ```
 
-#### 필요 권한
+#### 必要な権限
 
-| 권한명                                                      | 설명          |
+| 権限名 | 説明 |
 |----------------------------------------------------------|-------------|
-| RDSforMariaDB:DbInstanceCertificate.Export | 인증서 파일 내보내기 |
+| RDSforMariaDB:DbInstanceCertificate.Export | 証明書ファイルエクスポート |
 
-#### 요청
+#### リクエスト
 
-| 이름               | 종류   | 형식     | 필수 | 설명                                                                           |
+| 名前 | 種類 | 形式 | 必須 | 説明 |
 |------------------|------|--------|----|------------------------------------------------------------------------------|
-| dbInstanceId     | URL  | UUID   | O  | DB 인스턴스의 식별자                                                                 |
-| certificateTypes | Body | Array  | O  | 업로드할 인증서 타입<br/>- `CA_FILE`: CA 인증서<br/>- `CERT_FILE`: 인증서<br/>- `KEY_FILE`: 비밀 키 |
-| tenantId         | Body | String | O  | 인증서 파일이 저장될 오브젝트 스토리지의 테넌트 ID                                                |
-| username         | Body | String | O  | NHN Cloud 회원 또는 IAM 멤버 ID                                                    |
-| password         | Body | String | O  | 인증서 파일이 저장될 오브젝트 스토리지의 API 비밀번호                                              |
-| targetContainer  | Body | String | O  | 인증서 파일이 저장될 오브젝트 스토리지의 컨테이너                                                  |
-| objectPath       | Body | String | O  | 컨테이너에 저장될 인증서 파일의 경로                                                         |
+| dbInstanceId | URL | UUID | O | DBインスタンスの識別子 |
+| certificateTypes | Body | Array | O | アップロードする証明書タイプ<br/>- `CA_FILE`：CA証明書<br/>- `CERT_FILE`：証明書<br/>- `KEY_FILE`：秘密鍵 |
+| tenantId | Body | String | O | 証明書ファイルが保存されるObject StorageのテナントID |
+| username | Body | String | O | NHN CloudメンバーまたはIAMメンバーID |
+| password | Body | String | O | 証明書ファイルが保存されるObject StorageのAPIパスワード |
+| targetContainer | Body | String | O | 証明書ファイルが保存されるObject Storageのコンテナ |
+| objectPath | Body | String | O | コンテナに保存される証明書ファイルのパス |
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
@@ -2836,11 +2836,11 @@ POST /v4.0/db-instances/{dbInstanceId}/certificates/upload
 </p>
 </details>
 
-#### 응답
+#### レスポンス
 
-| 이름    | 종류   | 형식   | 설명          |
+| 名前 | 種類 | 形式 | 説明 |
 |-------|------|------|-------------|
-| jobId | Body | UUID | 요청한 작업의 식별자 |
+| jobId | Body | UUID | リクエストされたジョブの識別子 |
 
 ---
 
@@ -2856,49 +2856,49 @@ POST /v4.0/db-instances/{dbInstanceId}/certificates/upload
 | `DELETED`    | バックアップが削除されている場合 |
 | `ERROR`      | エラーが発生した場合 |
 
-### 백업 상세 보기
+### バックアップ詳細照会
 
 ```http
 GET /v4.0/backups/{backupId}
 ```
 
-#### 필요 권한
+#### 必要な権限
 
-| 권한명                                    | 설명       |
+| 権限名 | 説明 |
 |----------------------------------------|----------|
-| RDSforMariaDB:Backup.Get | 백업 상세 보기 |
+| RDSforMariaDB:Backup.Get | バックアップ詳細照会 |
 
-#### 요청
+#### リクエスト
 
-이 API는 요청 본문을 요구하지 않습니다.
+このAPIはリクエストボディを要求しません。
 
-| 이름       | 종류  | 형식   | 필수 | 설명      |
+| 名前 | 種類 | 形式 | 必須 | 説明 |
 |----------|-----|------|----|---------|
-| backupId | URL | UUID | O  | 백업의 식별자 |
+| backupId | URL | UUID | O | バックアップの識別子 |
 
-#### 응답
+#### レスポンス
 
-| 이름                      | 종류   | 형식       | 설명              |
+| 名前 | 種類 | 形式 | 説明 |
 |-------------------------|------|----------|-----------------|
-| backup                  | Body | Object   | 백업 상세 정보        |
-| backup.backupId         | Body | UUID     | 백업의 식별자         |
-| backup.regionCode       | Body | Enum     | 리전 코드           |
-| backup.backupName       | Body | String   | 백업을 식별할 수 있는 이름 |
-| backup.backupStatus     | Body | Enum     | 백업의 현재 상태       |
-| backup.dbInstanceId     | Body | UUID     | 원본 DB 인스턴스의 식별자 |
-| backup.dbInstanceName   | Body | String   | 원본 DB 인스턴스의 이름  |
-| backup.dbVersion        | Body | Enum     | DB 엔진 버전        |
-| backup.backupType       | Body | Enum     | 백업 유형                             |
-| backup.backupMethodType | Body | Enum     | 백업 방식                             |
-| backup.backupFileType   | Body | Enum     | 백업 파일 유형                          |
-| backup.backupSize       | Body | Number   | 백업의 크기(Byte)                      |
-| backup.isReplicable     | Body | Boolean  | 복제 가능 여부                          |
-| backup.binLogFileName   | Body | String   | 바이너리 로그 파일명                       |
-| backup.binLogPosition   | Body | Number   | 바이너리 로그 위치                        |
-| backup.createdYmdt      | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
-| backup.updatedYmdt      | Body | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| backup | Body | Object | バックアップ詳細情報 |
+| backup.backupId | Body | UUID | バックアップの識別子 |
+| backup.regionCode | Body | Enum | リージョンコード |
+| backup.backupName | Body | String | バックアップを識別できる名前 |
+| backup.backupStatus | Body | Enum | バックアップの現在のステータス |
+| backup.dbInstanceId | Body | UUID | 原本DBインスタンスの識別子 |
+| backup.dbInstanceName | Body | String | 原本DBインスタンスの名前 |
+| backup.dbVersion | Body | Enum | DBエンジンバージョン |
+| backup.backupType | Body | Enum | バックアップタイプ |
+| backup.backupMethodType | Body | Enum | バックアップ方式 |
+| backup.backupFileType | Body | Enum | バックアップファイルタイプ |
+| backup.backupSize | Body | Number | バックアップのサイズ(Byte) |
+| backup.isReplicable | Body | Boolean | レプリケーション可否 |
+| backup.binLogFileName | Body | String | バイナリログファイル名 |
+| backup.binLogPosition | Body | Number | バイナリログ位置 |
+| backup.createdYmdt | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| backup.updatedYmdt | Body | DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
@@ -2950,8 +2950,8 @@ GET /v4.0/backups
 
 | 名前         | 種類  | 形式   | 必須 | 説明                                                     |
 |-------------------|-------|----------|----|------------------------------------|
-| page              | Query | Number   | X  | 조회할 목록의 페이지<br/>- 기본값: 1 <br/>- 최솟값: `1`                                                                                                           |
-| size              | Query | Number   | X  | 조회할 목록의 페이지 크기<br/>- 기본값: 20                                        |
+| page | Query | Number | X | 照会する一覧のページ<br/>- デフォルト値：1 <br/>- 最小値：`1` |
+| size | Query | Number | X | 照会する一覧のページサイズ<br/>- デフォルト値：20 |
 | backupType   | Query | Enum   | X  | バックアップタイプ<br/>- `AUTO`:自動<br/>- `MANUAL`:手動<br/>- デフォルト値:全体 |
 | dbInstanceId | Query | UUID   | X  | 原本DBインスタンスの識別子                                        |
 | dbVersion    | Query | Enum   | X  | DBエンジンタイプ                                               |
@@ -3021,7 +3021,7 @@ POST /v4.0/backups
 | 名前             | 種類 | 形式   | 必須 | 説明                                                                                         |
 |------------------|------|--------|----|--------------------------------------------------------------------------------------------|
 | backupName       | Body | String | O  | バックアップを識別できる名前                                                                             |
-| backupMethodType | Body | Enum   | O  | バックアップ方式タイプ種類<br/>- `FULL`:全体バックアップ<br/>- `INCREMENTAL`:増分バックアップ <br/>- `SNAPSHOT`: 스냅숏 백업 |
+| backupMethodType | Body | Enum | O | バックアップ方式タイプ種類<br/>- `FULL`：全体バックアップ<br/>- `INCREMENTAL`：増分バックアップ<br/>- `SNAPSHOT`：スナップショットバックアップ |
 
 #### 全体バックアップ(backupMethodTypeが`FULL`の場合)
 
@@ -3067,14 +3067,14 @@ POST /v4.0/backups
 
 
 
-#### 스냅숏 백업(backupMethodType이 `SNAPSHOT`인 경우)
+#### スナップショットバックアップ(backupMethodTypeが`SNAPSHOT`の場合)
 
-| 이름           | 종류   | 형식   | 필수 | 설명           |
+| 名前 | 種類 | 形式 | 必須 | 説明 |
 |--------------|------|------|----|--------------|
-| dbInstanceId | Body | UUID | O  | DB 인스턴스의 식별자 |
+| dbInstanceId | Body | UUID | O | DBインスタンスの識別子 |
 
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
@@ -3169,7 +3169,7 @@ POST /v4.0/backups/{backupId}/restore
 | dbInstanceCandidateName                      | Body | String  | X  | DBインスタンスを識別できる 予備マスター名(高可用性を使用する場合の必須値)                         |
 | description                                  | Body | String  | X  | DBインスタンスの追加情報                                                 |
 | dbFlavorId                                   | Body | UUID    | X  | DBインスタンス仕様の識別子                                                   |
-| dbPort                                       | Body | Integer | X  | DBポート <br/> - 기본값: 원본 DB 인스턴스 값     <br/>- 最小値: `3306`<br/>- 最大値: `43306`                          |
+| dbPort | Body | Integer | X | DBポート<br/>- デフォルト値：原本DBインスタンスの値<br/>- 最小値：`3306`<br/>- 最大値：`43306` |
 | parameterGroupId                             | Body | UUID    | X  | パラメータグループの識別子                                                      |
 | dbSecurityGroupIds                           | Body | Array   | X  | DBセキュリティグループの識別子リスト                                                  ||network|Body|Object|O|ネットワーク情報オブジェクト|
 | userGroupIds                                 | Body | Array   | X  | ユーザーグループの識別子リスト                                                    |
@@ -3179,19 +3179,19 @@ POST /v4.0/backups/{backupId}/restore
 | useDeletionProtection                        | Body | Boolean | X  | 削除保護の有無<br/>- デフォルト値: `false`                                         | 
 | useSlowQueryAnalysis                         | Body | Boolean | X  | Slow query分析を行うかどうか<br/>- デフォルト値: `true`                                  |
 | network                                      | Body | Object  | X  | ネットワーク情報オブジェクト                                                        |
-| network.subnetId                             | Body | UUID    | X  | サブネットの識別子   <br/> - 기본값: 원본 DB 인스턴스 값                                                             |
+| network.subnetId | Body | UUID | X | サブネットの識別子<br/>- デフォルト値：原本DBインスタンスの値 |
 | network.usePublicAccess                      | Body | Boolean | X  | 外部接続可否<br/>- デフォルト値: `false`                                      |
 | network.availabilityZone                     | Body | Enum    | X  | DBインスタンスを作成するアベイラビリティゾーン<br/>- 例: `kr-pub-a`                            |
 | storage                                      | Body | Object  | X  | データストレージ情報オブジェクト                                                    |    
-| storage.storageType                          | Body | Enum    | X  | データストレージタイプ <br/> - 기본값: 원본 DB 인스턴스 값     <br/>- 例: `General SSD`                                 |
-| storage.storageSize                          | Body | Number  | X  | データストレージサイズ(GB) <br/> - 기본값: 원본 DB 인스턴스 값     <br/>- 最小値: `20`<br/>- 最大値: `2048`                   |
+| storage.storageType | Body | Enum | X | データストレージタイプ<br/>- デフォルト値：原本DBインスタンスの値<br/>- 例：`General SSD` |
+| storage.storageSize | Body | Number | X | データストレージサイズ(GB)<br/>- デフォルト値：原本DBインスタンスの値<br/>- 最小値：`20`<br/>- 最大値：`2048` |
 | storage.storageAutoscale                     | Body | Object  | X  | データストレージ自動拡張オブジェクト                                                 |
-| storage.storageAutoscale.useStorageAutoscale | Body | Boolean | X  | ストレージ自動拡張を行うかどう <br/> - 기본값: 원본 DB 인스턴스 값     か                                                      |
-| storage.storageAutoscale.threshold           | Body | Number  | X  | 自動拡張条件(%) <br/> - 기본값: 원본 DB 인스턴스 값     <br/>- 最小値: `50`<br/>- 最大値: `95`                         |
-| storage.storageAutoscale.maxStorageSize      | Body | Number  | X  | 自動拡張最大サイズ(GB) <br/> - 기본값: 원본 DB 인스턴스 값     <br/>- 最大値: `4096`                                   |
-| storage.storageAutoscale.cooldownTime        | Body | Number  | X  | 自動拡張クールダウン時間(分) <br/> - 기본값: 원본 DB 인스턴스 값     <br/>- 最小値: `10`<br/>- 最大値: `1440`                   |
+| storage.storageAutoscale.useStorageAutoscale | Body | Boolean | X | ストレージ自動拡張を行うかどう<br/>- デフォルト値：原本DBインスタンスの値 か |
+| storage.storageAutoscale.threshold | Body | Number | X | 自動拡張条件(%)<br/>- デフォルト値：原本DBインスタンスの値<br/>- 最小値：`50`<br/>- 最大値：`95` |
+| storage.storageAutoscale.maxStorageSize | Body | Number | X | 自動拡張最大サイズ(GB)<br/>- デフォルト値：原本DBインスタンスの値<br/>- 最大値：`4096` |
+| storage.storageAutoscale.cooldownTime | Body | Number | X | 自動拡張クールダウン時間(分)<br/>- デフォルト値：原本DBインスタンスの値<br/>- 最小値：`10`<br/>- 最大値：`1440` |
 | backup                                       | Body | Object  | X  | バックアップ情報オブジェクト                                                          |
-| backup.backupPeriod                          | Body | Number  | X  | バックアップ保管期間(日) <br/> - 기본값: 원본 DB 인스턴스 값     <br/>- 最小値: `0`<br/>- 最大値: `730`                         |
+| backup.backupPeriod | Body | Number | X | バックアップ保管期間(日)<br/>- デフォルト値：原本DBインスタンスの値<br/>- 最小値：`0`<br/>- 最大値：`730` |
 | backup.ftwrlWaitTimeout                      | Body | Number  | X  | クエリ遅延待機時間(秒)<br/>- デフォルト値: `1800`<br/>- 最小値: `0`<br/>- 最大値: `21600`  |
 | backup.backupRetryCount                      | Body | Number  | X  | バックアップ再試行回数<br/>- デフォルト値: `0`<br/>- 最小値: `0`<br/>- 最大値: `10`             |
 | backup.useBackupLock                         | Body | Boolean | X  | テーブルロックを使用するかどうか<br/>- デフォルト値: `true`                                                                                                                                                                                              |
@@ -3295,10 +3295,10 @@ GET /v4.0/db-security-groups
 
 このAPIはリクエスト本文を要求しません。
 
-| 이름                | 종류    | 형식       | 필수 | 설명                                                                                                                                   |
+| 名前 | 種類 | 形式 | 必須 | 説明 |
 |-------------------|-------|----------|----|--------------------------------------------------------------------------------------------------------------------------------------|
-| page              | Query | Number   | X  | 조회할 목록의 페이지<br/>- 기본값: 1 <br/>- 최솟값: `1`                                                                                                           |
-| size              | Query | Number   | X  | 조회할 목록의 페이지 크기<br/>- 기본값: 20                                        |
+| page | Query | Number | X | 照会する一覧のページ<br/>- デフォルト値：1 <br/>- 最小値：`1` |
+| size | Query | Number | X | 照会する一覧のページサイズ<br/>- デフォルト値：20 |
 
 #### レスポンス
 
@@ -4853,8 +4853,8 @@ GET /v4.0/events
 
 | 名前              | 種類  | 形式     | 必須 | 説明                                                                                                                                 |
 |-------------------|-------|----------|----|--------------------------------------------------------------------------------------------------------------------------------------|
-| page              | Query | Number   | X  | 조회할 목록의 페이지<br/>- 기본값: 1 <br/>- 최솟값: `1`                                                                                                           |
-| size              | Query | Number   | X  | 조회할 목록의 페이지 크기<br/>- 기본값: 20                                        |
+| page | Query | Number | X | 照会する一覧のページ<br/>- デフォルト値：1 <br/>- 最小値：`1` |
+| size | Query | Number | X | 照会する一覧のページサイズ<br/>- デフォルト値：20 |
 | from              | Query | Datetime | O  | 開始日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                    |
 | to                | Query | Datetime | O  | 終了日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                    |
 | eventCategoryType | Query | Enum     | O  | 照会するイベントカテゴリータイプ<br/>- `ALL`:全体<br/>- `INSTANCE`: DBインスタンス<br/>- `BACKUP`:バックアップ<br/>- `DB_SECURITY_GROUP`: DBセキュリティグループ<br/>- `TENANT`:テナント |
@@ -4905,7 +4905,7 @@ GET /v4.0/events
                 },
                 {
                     "langCode": "KO",
-                    "message": "DBインスタンス起動"
+                    "message": "DB 인스턴스 시작"
                 },
                 {
                     "langCode": "ZH",
@@ -4970,50 +4970,50 @@ GET /v4.0/event-codes
 </details>
 
 ---
-## 이벤트 구독
+## イベント購読
 
-### 이벤트 구독 목록 조회
+### イベント購読一覧照会
 
 ```http
 GET /v4.0/event-subscriptions
 ```
 
-#### 필요 권한
+#### 必要な権限
 
-| 권한명                                                    | 설명            |
+| 権限名 | 説明 |
 |---------------------------------------------------------|---------------|
-| RDSforMariaDB:EventSubscription.List | 이벤트 구독 목록 조회 |
+| RDSforMariaDB:EventSubscription.List | イベント購読一覧照会 |
 
-#### 요청
+#### リクエスト
 
-| 이름                | 종류    | 형식       | 필수 | 설명                                                                                                                                   |
+| 名前 | 種類 | 形式 | 必須 | 説明 |
 |-------------------|-------|----------|----|--------------------------------------------------------------------------------------------------------------------------------------|
-| page              | Query | Number   | X  | 조회할 목록의 페이지<br/>- 기본값: 1 <br/>- 최솟값: `1`                                                                                                           |
-| size              | Query | Number   | X  | 조회할 목록의 페이지 크기<br/>- 기본값: 20                                        |
-| eventSubscriptionId    | Query | UUID   | X  | 이벤트 구독의 식별자                          |
-| eventSubscriptionName  | Query | String | X  | 이벤트 구독을 식별할 수 있는 이름                 |
-| userGroupId            | Query | UUID   | X  | 사용자 그룹의 식별자                          |
+| page | Query | Number | X | 照会する一覧のページ<br/>- デフォルト値：1 <br/>- 最小値：`1` |
+| size | Query | Number | X | 照会する一覧のページサイズ<br/>- デフォルト値：20 |
+| eventSubscriptionId | Query | UUID | X | イベント購読の識別子 |
+| eventSubscriptionName | Query | String | X | イベント購読を識別できる名前 |
+| userGroupId | Query | UUID | X | ユーザーグループの識別子 |
 
-#### 응답
+#### レスポンス
 
-| 이름                                            | 종류   | 형식       | 설명                  |
+| 名前 | 種類 | 形式 | 説明 |
 |-----------------------------------------------|------|----------|---------------------|
-| totalCounts                                   | Body | Number   | 전체 이벤트 구독 목록 수      |
-| eventSubscriptions                            | Body | Array    | 이벤트 구독 목록           |
-| eventSubscriptions.eventSubscriptionId        | Body | UUID     | 이벤트 구독의 식별자         |
-| eventSubscriptions.eventCategoryType          | Body | Enum     | 이벤트 카테고리 유형         |
-| eventSubscriptions.eventSubscriptionName      | Body | String   | 이벤트 구독을 식별할 수 있는 이름 |
-| eventSubscriptions.enabled                    | Body | Boolean  | 활성화 여부              |
-| eventSubscriptions.notifyEmail                | Body | Boolean  | 이메일 발송 여부           |
-| eventSubscriptions.notifySms                  | Body | Boolean  | SMS 발송 여부           |
-| eventSubscriptions.eventCodes                 | Body | Array    | 구독할 이벤트 코드 목록       |
-| eventSubscriptions.sources                    | Body | Array    | 구독할 이벤트 소스 목록       |
-| eventSubscriptions.sources.sourceId           | Body | UUID     | 이벤트 소스의 식별자         |
-| eventSubscriptions.sources.eventCategoryType  | Body | Enum     | 이벤트 카테고리 유형         |
-| eventSubscriptions.userGroupIds               | Body | Array    | 이벤트 구독 중인 사용자 그룹의 식별자 목록 |
-| eventSubscriptions.createdYmdt                | Body | DateTime | 생성 일시               |
+| totalCounts | Body | Number | 全イベント購読一覧数 |
+| eventSubscriptions | Body | Array | イベント購読一覧 |
+| eventSubscriptions.eventSubscriptionId | Body | UUID | イベント購読の識別子 |
+| eventSubscriptions.eventCategoryType | Body | Enum | イベントカテゴリタイプ |
+| eventSubscriptions.eventSubscriptionName | Body | String | イベント購読を識別できる名前 |
+| eventSubscriptions.enabled                    | Body | Boolean  | 有効かどうか              |
+| eventSubscriptions.notifyEmail | Body | Boolean | メール送信の有無 |
+| eventSubscriptions.notifySms | Body | Boolean | SMS送信の有無 |
+| eventSubscriptions.eventCodes | Body | Array | 購読するイベントコード一覧 |
+| eventSubscriptions.sources | Body | Array | 購読するイベントソース一覧 |
+| eventSubscriptions.sources.sourceId | Body | UUID | イベントソースの識別子 |
+| eventSubscriptions.sources.eventCategoryType | Body | Enum | イベントカテゴーリタイプ |
+| eventSubscriptions.userGroupIds | Body | Array | イベント購読中のユーザーグループの識別子一覧 |
+| eventSubscriptions.createdYmdt | Body | DateTime | 作成日時 |
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
@@ -5055,34 +5055,34 @@ GET /v4.0/event-subscriptions
 
 ---
 
-### 이벤트 구독 생성하기
+### イベント購読作成
 
 ```http
 POST /v4.0/event-subscriptions
 ```
 
-#### 필요 권한
+#### 必要な権限
 
-| 권한명                                                      | 설명           |
+| 権限名 | 説明 |
 |----------------------------------------------------------|--------------|
-| RDSforMariaDB:EventSubscription.Create | 이벤트 구독 생성하기 |
+| RDSforMariaDB:EventSubscription.Create | イベント購読作成 |
 
-#### 요청
+#### リクエスト
 
-| 이름                           | 종류   | 형식      | 필수 | 설명                                    |
+| 名前 | 種類 | 形式 | 必須 | 説明 |
 |------------------------------|------|---------|----|-----------------------------------------|
-| eventCategoryType            | Body | Enum    | O  | 이벤트 카테고리 유형                          |
-| eventSubscriptionName        | Body | String  | O  | 이벤트 구독을 식별할 수 있는 이름<br/>- 최대 길이: `100` |
-| enabled                      | Body | Boolean | O  | 활성화 여부                                |
-| notifyEmail                  | Body | Boolean | O  | 이메일 발송 여부                             |
-| notifySms                    | Body | Boolean | O  | SMS 발송 여부                             |
-| eventCodes                   | Body | Array   | O  | 구독할 이벤트 코드 목록                        |
-| sources                      | Body | Array   | O  | 구독할 이벤트 소스 목록                        |
-| sources.sourceId             | Body | UUID    | O  | 이벤트 소스의 식별자                          |
-| sources.eventCategoryType    | Body | Enum    | O  | 이벤트 카테고리 유형                          |
-| userGroupIds                 | Body | Array   | O  | 이벤트 구독할 사용자 그룹의 식별자 목록              |
+| eventCategoryType | Body | Enum | O | イベントカテゴリータイプ |
+| eventSubscriptionName | Body | String | O | イベント購読を識別できる名前<br/>- 最大長：`100` |
+| enabled                      | Body | Boolean | O  | 有効かどうか                                |
+| notifyEmail | Body | Boolean | O | メール送信の有無 |
+| notifySms | Body | Boolean | O | SMS送信の有無 |
+| eventCodes | Body | Array | O | 購読するイベントコード一覧 |
+| sources | Body | Array | O | 購読するイベントソース一覧 |
+| sources.sourceId | Body | UUID | O | イベントソースの識別子 |
+| sources.eventCategoryType | Body | Enum | O | イベントカテゴリータイプ |
+| userGroupIds | Body | Array | O | イベント購読するユーザーグループの識別子一覧 |
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
@@ -5110,13 +5110,13 @@ POST /v4.0/event-subscriptions
 </p>
 </details>
 
-#### 응답
+#### レスポンス
 
-| 이름                    | 종류   | 형식   | 설명          |
+| 名前 | 種類 | 形式 | 説明 |
 |-----------------------|------|------|-------------|
-| eventSubscriptionId   | Body | UUID | 이벤트 구독의 식별자 |
+| eventSubscriptionId | Body | UUID | イベント購読の識別子 |
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
@@ -5135,35 +5135,35 @@ POST /v4.0/event-subscriptions
 
 ---
 
-### 이벤트 구독 수정하기
+### イベント購読修正
 
 ```http
 PUT /v4.0/event-subscriptions/{eventSubscriptionId}
 ```
 
-#### 필요 권한
+#### 必要な権限
 
-| 권한명                                                      | 설명           |
+| 権限名 | 説明 |
 |----------------------------------------------------------|--------------|
-| RDSforMariaDB:EventSubscription.Modify | 이벤트 구독 수정하기 |
+| RDSforMariaDB:EventSubscription.Modify | イベント購読修正 |
 
-#### 요청
+#### リクエスト
 
-| 이름                           | 종류   | 형식      | 필수 | 설명                              |
+| 名前 | 種類 | 形式 | 必須 | 説明 |
 |------------------------------|------|---------|----|-----------------------------------|
-| eventSubscriptionId          | URL  | UUID    | O  | 이벤트 구독의 식별자                    |
-| eventCategoryType            | Body | Enum    | X  | 이벤트 카테고리 유형                    |
-| eventSubscriptionName        | Body | String  | X  | 이벤트 구독을 식별할 수 있는 이름           |
-| enabled                      | Body | Boolean | X  | 활성화 여부                          |
-| notifyEmail                  | Body | Boolean | X  | 이메일 발송 여부                       |
-| notifySms                    | Body | Boolean | X  | SMS 발송 여부                       |
-| eventCodes                   | Body | Array   | X  | 구독할 이벤트 코드 목록                  |
-| sources                      | Body | Array   | X  | 구독할 이벤트 소스 목록                  |
-| sources.sourceId             | Body | UUID    | X  | 이벤트 소스의 식별자                    |
-| sources.eventCategoryType    | Body | Enum    | X  | 이벤트 카테고리 유형                    |
-| userGroupIds                 | Body | Array   | X  | 이벤트 구독할 사용자 그룹의 식별자 목록        |
+| eventSubscriptionId | URL | UUID | O | イベント購読の識別子 |
+| eventCategoryType | Body | Enum | X | イベントカテゴリータイプ |
+| eventSubscriptionName | Body | String | X | イベント購読を識別できる名前 |
+| enabled                      | Body | Boolean | X  | 有効かどうか                          |
+| notifyEmail | Body | Boolean | X | メール送信の有無 |
+| notifySms | Body | Boolean | X | SMS送信の有無 |
+| eventCodes | Body | Array | X | 購読するイベントコード一覧 |
+| sources | Body | Array | X | 購読するイベントソース一覧 |
+| sources.sourceId | Body | UUID | X | イベントソースの識別子 |
+| sources.eventCategoryType | Body | Enum | X | イベントカテゴリータイプ |
+| userGroupIds | Body | Array | X | イベント購読するユーザーグループの識別子一覧 |
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
@@ -5192,11 +5192,11 @@ PUT /v4.0/event-subscriptions/{eventSubscriptionId}
 </p>
 </details>
 
-#### 응답
+#### レスポンス
 
-이 API는 응답 본문을 반환하지 않습니다.
+このAPIはレスポンスボディを返しません。
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
@@ -5214,29 +5214,29 @@ PUT /v4.0/event-subscriptions/{eventSubscriptionId}
 
 ---
 
-### 이벤트 구독 삭제하기
+### イベント購読削除
 
 ```http
 DELETE /v4.0/event-subscriptions/{eventSubscriptionId}
 ```
 
-#### 필요 권한
+#### 必要な権限
 
-| 권한명                                                      | 설명           |
+| 権限名 | 説明 |
 |----------------------------------------------------------|--------------|
-| RDSforMariaDB:EventSubscription.Delete | 이벤트 구독 삭제하기 |
+| RDSforMariaDB:EventSubscription.Delete | イベント購読削除 |
 
-#### 요청
+#### リクエスト
 
-| 이름                    | 종류  | 형식   | 필수 | 설명          |
+| 名前 | 種類 | 形式 | 必須 | 説明 |
 |-----------------------|-----|------|----|-------------|
-| eventSubscriptionId   | URL | UUID | O  | 이벤트 구독의 식별자 |
+| eventSubscriptionId | URL | UUID | O | イベント購読の識別子 |
 
-#### 응답
+#### レスポンス
 
-이 API는 응답 본문을 반환하지 않습니다.
+このAPIはレスポンスボディを返しません。
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json

@@ -1,8 +1,8 @@
 ## Database > RDS for {{engine.pascalCase}} > API Guide
 
-## RDS for {{engine.pascalCase}} API 공통 정보
+## RDS for {{engine.pascalCase}} API Common Information
 
-### API 엔드포인트
+### API Endpoint
 
 | Region | Endpoint |
 |--------|----------|
@@ -2816,7 +2816,7 @@ POST /v3.0/db-security-groups
 | rules.etherType     | Body | Enum   | O        | Ether type<br/>- `IPV4`: IPv4<br/>- `IPV6`: IPv6                                                                                                                                                                                 |
 | rules.cidr          | Body | String | O        | Remote source for traffic to allow<br/>- Example: `1.1.1.1/32`                                                                                                                                                                   |
 | rules.port          | Body | Object | O        | Port object                                                                                                                                                                                                                      |
-| rules.port.portType | Body | Enum   | O        | Port type<br/>- `DB_PORT`: Sets to DB instance port value. Values for `minPort` 값과 `maxPort` are not required.<br/>- `PORT`: 지정된 포트값으로 설정됩니다. `minPort`값과 `maxPort`값이 같아야 합니다.<br/>- `PORT_RANGE`: Sets to specified port range. |
+| rules.port.portType | Body | Enum   | O        | Port type<br/>- `DB_PORT`: Sets to DB instance port value. Values for `minPort` and `maxPort` are not required.<br/>- `PORT`: Sets to the specified port value. `minPort` and `maxPort` must be the same.<br/>- `PORT_RANGE`: Sets to specified port range. |
 | rules.port.minPort  | Body | Number | X        | Minimum port range<br/>- Minimum value: 1                                                                                                                                                                                        |
 | rules.port.maxPort  | Body | Number | X        | Maximum port range<br/>- Maximum value: 65535                                                                                                                                                                                    |
 
@@ -2957,7 +2957,7 @@ POST /v3.0/db-security-groups/{dbSecurityGroupId}/rules
 | direction         | Body | Enum   | O        | Communication direction<br/>- `INGRESS`: Inbound<br/>- `EGRESS`: Outbound                                                                                                                                                        |
 | etherType         | Body | Enum   | O        | Ether type<br/>- `IPV4`: IPv4<br/>- `IPV6`: IPv6                                                                                                                                                                                 |
 | port              | Body | Object | O        | Port object                                                                                                                                                                                                                      |
-| port.portType     | Body | Enum   | O        | Port type<br/>- `DB_PORT`: Sets to DB instance port value. Values for `minPort` 값과 `maxPort` are not required.<br/>- `PORT`: 지정된 포트값으로 설정됩니다. `minPort`값과 `maxPort`값이 같아야 합니다.<br/>- `PORT_RANGE`: Sets to specified port range. |
+| port.portType     | Body | Enum   | O        | Port type<br/>- `DB_PORT`: Sets to DB instance port value. Values for `minPort` and `maxPort` are not required.<br/>- `PORT`: Sets to the specified port value. `minPort` and `maxPort` must be the same.<br/>- `PORT_RANGE`: Sets to specified port range. |
 | port.minPort      | Body | Number | X        | Minimum port range<br/>- Minimum value: 1                                                                                                                                                                                        |
 | port.maxPort      | Body | Number | X        | Maximum port range<br/>- Maximum value: 65535                                                                                                                                                                                    |
 | cidr              | Body | String | O        | Remote source for traffic to allow<br/>- Example: `1.1.1.1/32`                                                                                                                                                                   |
@@ -3008,7 +3008,7 @@ PUT /v3.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 | direction         | Body | Enum   | O        | Communication direction<br/>- `INGRESS`: Inbound<br/>- `EGRESS`: Outbound                                                                                                                                                        |
 | etherType         | Body | Enum   | O        | Ether type<br/>- `IPV4`: IPv4<br/>- `IPV6`: IPv6                                                                                                                                                                                 |
 | port              | Body | Object | O        | Port object                                                                                                                                                                                                                      |
-| port.portType     | Body | Enum   | O        | Port type<br/>- `DB_PORT`: Sets to DB instance port value. Values for `minPort` 값과 `maxPort` are not required.<br/>- `PORT`: 지정된 포트값으로 설정됩니다. `minPort`값과 `maxPort`값이 같아야 합니다.<br/>- `PORT_RANGE`: Sets to specified port range. |
+| port.portType     | Body | Enum   | O        | Port type<br/>- `DB_PORT`: Sets to DB instance port value. Values for `minPort` and `maxPort` are not required.<br/>- `PORT`: Sets to the specified port value. `minPort` and `maxPort` must be the same.<br/>- `PORT_RANGE`: Sets to specified port range. |
 | port.minPort      | Body | Number | X        | Minimum port range<br/>- Minimum value: 1                                                                                                                                                                                        |
 | port.maxPort      | Body | Number | X        | Maximum port range<br/>- Maximum value: 65535                                                                                                                                                                                    |
 | cidr              | Body | String | O        | Remote source for traffic to allow<br/>- Example: `1.1.1.1/32`                                                                                                                                                                   |

@@ -1,8 +1,8 @@
 ## Database > RDS for MariaDB > APIガイド
 
-## RDS for MariaDB API 공통 정보
+## RDS for MariaDB API共通情報
 
-### API 엔드포인트
+### APIエンドポイント
 
 | リージョン           | エンドポイント                                       |
 |-----------------|-----------------------------------------------|
@@ -3993,7 +3993,7 @@ GET /v3.0/events
                 },
                 {
                     "langCode": "KO",
-                    "message": "DBインスタンス起動"
+                    "message": "DB 인스턴스 시작"
                 },
                 {
                     "langCode": "ZH",
