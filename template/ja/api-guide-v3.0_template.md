@@ -1,8 +1,8 @@
 ## Database > RDS for {{engine.pascalCase}} > APIガイド
 
-## RDS for {{engine.pascalCase}} API 공통 정보
+## RDS for {{engine.pascalCase}} API共通情報
 
-### API 엔드포인트
+### APIエンドポイント
 
 | リージョン           | エンドポイント                                       |
 |-----------------|-----------------------------------------------|
@@ -4103,7 +4103,7 @@ GET /v3.0/events
                 },
                 {
                     "langCode": "KO",
-                    "message": "DBインスタンス起動"
+                    "message": "DB 인스턴스 시작"
                 },
                 {
                     "langCode": "ZH",
