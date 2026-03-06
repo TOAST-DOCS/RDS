@@ -7,7 +7,7 @@
 
 | リージョン            | エンドポイント           |
 |------------------|-------------------|
-| 한국(판교) 리전 | https://kr1-rds-mariadb.api.gov-nhncloudservice.com |
+| 韓国(パンギョ)リージョン | https://kr1-rds-mariadb.api.gov-nhncloudservice.com |
 
 ### 認証及び権限
 

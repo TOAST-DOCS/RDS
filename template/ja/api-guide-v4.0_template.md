@@ -8,7 +8,7 @@
 | リージョン            | エンドポイント           |
 |------------------|-------------------|
 {{#each regions}}
-| {{this.text.ko}} | {{this.endpoint}} |
+| {{this.text.ja}} | {{this.endpoint}} |
 {{/each}}
 
 ### 認証及び権限

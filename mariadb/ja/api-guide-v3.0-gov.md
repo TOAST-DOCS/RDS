@@ -2095,6 +2095,7 @@ PUT /v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 | dbUserId             | URL  | UUID   | O  | DBユーザーの識別子                                                                                             |
 | dbPassword           | Body | String | X  | DBユーザーアカウントのパスワード<br/>- 最小長さ: `4`<br/>- 最大長さ: `256`                                                    |
 | authorityType        | Body | Enum   | X  | DBユーザー権限タイプ<br/>- `READ`: SELECTクエリ実行可能な権限<br/>- `CRUD`: DMLクエリ実行可能な権限<br/>- `DDL`: DDLクエリ実行可能な権限<br/> |
+| authenticationPlugin | Body | Enum   | X  | 認証プラグイン<br/>- デフォルト値: `NATIVE`(未対応の場合は`ED25519`)<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519` |
 
 <details><summary>例</summary>
 <p>
