@@ -815,8 +815,11 @@ POST /v3.0/db-instances
 | useDefaultNotification                   | Body | Boolean | X        | Whether to use default notification<br/>Default: `false`                                                              |
 | useDeletionProtection                    | Body | Boolean | X        | Whether to protect against deletion<br/>Default: `false`                                                              |
 {{#if (eq engine.lowerCase "mysql")}}
-| authenticationPlugin                     | Body | Enum    | X        | Authentication Plugin<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password                                                                                                                                     |
+| authenticationPlugin                     | Body | Enum    | X        | Authentication Plugin<br/>- Default: `NATIVE`(`CACHING_SHA2` if not supported)<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password                                                                                                                                     |
 | tlsOption                                | Body | Enum    | X        | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                                                                                                                                                              |
+{{/if}}
+{{#if (eq engine.lowerCase "mariadb")}}
+| authenticationPlugin                     | Body | Enum    | X        | Authentication Plugin<br/>- Default: `NATIVE`(`ED25519` if not supported)<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519`                                                                                                                                                                                |
 {{/if}}
 | network                                  | Body | Object  | O        | Network information objects                                                                                                                                                                                                                                               |
 | network.subnetId                         | Body | UUID    | O        | Subnet identifier                                                                                                                                                                                                                                                         |
@@ -2084,6 +2087,9 @@ This API does not require a request body.
 | dbUsers.authenticationPlugin | Body | Enum     | Authentication Plugin<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password                                    |
 | dbUsers.tlsOption            | Body | Enum     | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                                                             |
 {{/if}}
+{{#if (eq engine.lowerCase "mariadb")}}
+| dbUsers.authenticationPlugin | Body | Enum     | Authentication Plugin<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519` |
+{{/if}}
 | dbUsers.createdYmdt          | Body | DateTime | Created date and time (YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                                       |
 | dbUsers.updatedYmdt          | Body | DateTime | Modified date and time (YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                                      |
 
@@ -2136,11 +2142,14 @@ POST /v3.0/db-instances/{dbInstanceId}/db-users
 | host                 | Body | String | O        | DB user account host name<br/>- Example: `1.1.1.%`                                                                                                                       |
 | authorityType        | Body | Enum   | O        | DB user permission type<br/>- `READ`: Permission to execute SELECT query<br/>- `CRUD`: Permission to execute DML query<br/>- `DDL`: Permission to execute DDL query<br/> |
 {{#if (eq engine.lowerCase "mysql")}}
-| authenticationPlugin | Body | Enum   | X        | Authentication Plugin<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password                                    |
+| authenticationPlugin | Body | Enum   | X        | Authentication Plugin<br/>- Default: `NATIVE`(`CACHING_SHA2` if not supported)<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password                                    |
 | tlsOption            | Body | Enum   | X        | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                                                             |
 
 > [Caution]
 > Only DB instances whose `supportAuthenticationPlugin` value is true can set the values of `authenticationPlugin` and `tlsOption`.
+{{/if}}
+{{#if (eq engine.lowerCase "mariadb")}}
+| authenticationPlugin | Body | Enum   | X        | Authentication Plugin<br/>- Default: `NATIVE`(`ED25519` if not supported)<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519`                                                                                                                                                                                |
 {{/if}}
 
 <details><summary>Example</summary>

@@ -796,7 +796,7 @@ POST /v3.0/db-instances
 | useDefaultNotification                   | Body | Boolean | X  | 基本通知の使用有無<br/>- デフォルト値: `false`                                     |
 | useDeletionProtection                    | Body | Boolean | X  | 削除保護の有無<br/>- デフォルト値: `false`                                       |
 | useSlowQueryAnalysis                     | Body | Boolean | X  | スロークエリの分析有無<br/>- デフォルト値: `true`                                    |
-| authenticationPlugin                     | Body | Enum    | X  | 認証プラグイン<br/>- デフォルト値: `NATIVE: `mysql_native_password`<br />- SHA256: `sha256_password`<br />- CACHING_SHA2: `caching_sha2_password`                                                                                           |
+| authenticationPlugin                     | Body | Enum    | X  | 認証プラグイン<br/>- デフォルト値: `NATIVE`(未対応の場合は`CACHING_SHA2`)<br/>- NATIVE: `mysql_native_password`<br />- SHA256: `sha256_password`<br />- CACHING_SHA2: `caching_sha2_password`                                                                                           |
 | tlsOption                                | Body | Enum    | X  | TLS Option<br/>- デフォルト値: `NONE`                                                                                                                                                                                                |
 | network                                  | Body | Object  | O  | ネットワーク情報オブジェクト                                                                                                                                                                                                                 |
 | network.subnetId                         | Body | UUID    | O  | サブネットの識別子                                                                                                                                                                                                                      |
@@ -2088,7 +2088,7 @@ POST /v3.0/db-instances/{dbInstanceId}/db-users
 | dbPassword           | Body | String | O  | DBユーザーアカウントのパスワード<br/>- 最小長さ: `4`<br/>- 最大長さ: `256`                                                    |
 | host                 | Body | String | O  | DBユーザーアカウントのホスト名<br/>- 例: `1.1.1.%`                                                                    |
 | authorityType        | Body | Enum   | O  | DBユーザー権限タイプ<br/>- `READ`: SELECTクエリ実行可能な権限<br/>- `CRUD`: DMLクエリ実行可能な権限<br/>- `DDL`: DDLクエリ実行可能な権限<br/> |
-| authenticationPlugin | Body | Enum   | X  | 認証プラグイン<br/>- NATIVE: `mysql_native_password`<br />- SHA256: `sha256_password`<br />- CACHING_SHA2: `caching_sha2_password` |
+| authenticationPlugin | Body | Enum   | X  | 認証プラグイン<br/>- デフォルト値: `NATIVE`(未対応の場合は`CACHING_SHA2`)<br/>- NATIVE: `mysql_native_password`<br />- SHA256: `sha256_password`<br />- CACHING_SHA2: `caching_sha2_password` |
 | tlsOption            | Body | Enum   | X  | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                |
 
 > [注意]

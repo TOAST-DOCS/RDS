@@ -808,7 +808,7 @@ POST /v4.0/db-instances
 | useDefaultNotification                       | Body | Boolean | X  | 基本通知の使用有無<br/>- デフォルト値: `false`                                     |
 | useDeletionProtection                        | Body | Boolean | X  | 削除保護の有無<br/>- デフォルト値: `false`                                       |
 | useSlowQueryAnalysis                         | Body | Boolean | X  | スロークエリ分析の有無<br/>- デフォルト値: `true`                                    |
-| authenticationPlugin                         | Body | Enum    | X  | 認証プラグイン<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519`                                                                                                                                                                                   |
+| authenticationPlugin                         | Body | Enum    | X  | 認証プラグイン<br/>- デフォルト値: `NATIVE`(未対応の場合は`ED25519`)<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519`                                                                                                                                                                                   |
 | network                                      | Body | Object  | O  | ネットワーク情報オブジェクト                                                                                                                                                                                                                 |
 | network.subnetId                             | Body | UUID    | O  | サブネットの識別子                                                                                                                                                                                                                      |
 | network.usePublicAccess                      | Body | Boolean | X  | 外部接続可否<br/>- デフォルト値: `false`                                                                                                                                                                                                   |
@@ -2215,6 +2215,7 @@ GET /v4.0/db-instances/{dbInstanceId}/db-users
 | dbUsers.host                 | Body | String   | DBユーザーアカウントのホスト名                                                                                                            |
 | dbUsers.authorityType        | Body | Enum     | DBユーザー権限タイプ<br/>- `READ`: SELECTクエリ実行可能な権限<br/>- `CRUD`: DMLクエリ実行可能な権限<br/>- `DDL`: DDLクエリ実行可能な権限<br/>                      |
 | dbUsers.dbUserStatus         | Body | Enum     | DBユーザーの現在状態<br/>- `STABLE`:作成済み<br/>- `CREATING`:作成中<br/>- `UPDATING`:修正中<br/>- `DELETING`:削除中<br/>- `DELETED`:削除済み         |
+| dbUsers.authenticationPlugin | Body | Enum     | 認証プラグイン<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519` |
 | dbUsers.createdYmdt          | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                            |
 | dbUsers.updatedYmdt          | Body | DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                            |
 
@@ -2269,7 +2270,7 @@ POST /v4.0/db-instances/{dbInstanceId}/db-users
 | dbPassword           | Body | String | O  | DBユーザーアカウントのパスワード<br/>- 最小長さ: `4`<br/>- 最大長さ: `256`                                                    |
 | host                 | Body | String | O  | DBユーザーアカウントのホスト名<br/>- 例: `1.1.1.%`                                                                    |
 | authorityType        | Body | Enum   | O  | DBユーザー権限タイプ<br/>- `READ`: SELECTクエリ実行可能な権限<br/>- `CRUD`: DMLクエリ実行可能な権限<br/>- `DDL`: DDLクエリ実行可能な権限<br/> |
-| authenticationPlugin | Body | Enum   | X  | 認証プラグイン<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519` |
+| authenticationPlugin | Body | Enum   | X  | 認証プラグイン<br/>- デフォルト値: `NATIVE`(未対応の場合は`ED25519`)<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519` |
 
 <details><summary>例</summary>
 <p>

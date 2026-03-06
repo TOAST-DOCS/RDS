@@ -822,11 +822,11 @@ POST /v3.0/db-instances
 | useDefaultNotification  | Body | Boolean | X  | 기본 알림 사용 여부<br/>- 기본값: `false`                                      |
 | useDeletionProtection   | Body | Boolean | X  | 삭제 보호 여부<br/>- 기본값: `false`                                         |
 {{#if (eq engine.lowerCase "mysql")}}
-| authenticationPlugin                         | Body | Enum    | X  | 인증 플러그인<br/>- NATIVE: `mysql_native_password`<br />- SHA256: `sha256_password`<br />- CACHING_SHA2: `caching_sha2_password`                                                                                                     |
+| authenticationPlugin                         | Body | Enum    | X  | 인증 플러그인<br/>- 기본값: `NATIVE`(미지원 시 `CACHING_SHA2`)<br/>- NATIVE: `mysql_native_password`<br />- SHA256: `sha256_password`<br />- CACHING_SHA2: `caching_sha2_password`                                                                                                     |
 | tlsOption                                    | Body | Enum    | X  | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                                                                                                                |
 {{/if}}
 {{#if (eq engine.lowerCase "mariadb")}}
-| authenticationPlugin                         | Body | Enum    | X  | 인증 플러그인<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519` |
+| authenticationPlugin                         | Body | Enum    | X  | 인증 플러그인<br/>- 기본값: `NATIVE`(미지원 시 `ED25519`)<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519` |
 {{/if}}
 | network                                      | Body | Object  | O  | 네트워크 정보 객체                                                                                                                                                                                                                  |
 | network.subnetId                             | Body | UUID    | O  | 서브넷의 식별자                                                                                                                                                                                                                    |
@@ -2095,7 +2095,7 @@ GET /v3.0/db-instances/{dbInstanceId}/db-users
 | dbUsers.tlsOption            | Body | Enum     | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                |
 {{/if}}
 {{#if (eq engine.lowerCase "mariadb")}}
-| authenticationPlugin         | Body | Enum    | X  | 인증 플러그인<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519` |
+| dbUsers.authenticationPlugin         | Body | Enum    | 인증 플러그인<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519` |
 {{/if}}
 | dbUsers.createdYmdt          | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                           |
 | dbUsers.updatedYmdt          | Body | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                           |
@@ -2149,14 +2149,14 @@ POST /v3.0/db-instances/{dbInstanceId}/db-users
 | host                 | Body | String | O  | DB 사용자 계정의 호스트명<br/>- 예시: `1.1.1.%`                                                                              |
 | authorityType        | Body | Enum   | O  | DB 사용자 권한 타입<br/>- `READ`: SELECT 쿼리 수행 가능한 권한<br/>- `CRUD`: DML 쿼리 수행 가능한 권한<br/>- `DDL`: DDL 쿼리 수행 가능한 권한<br/> |
 {{#if (eq engine.lowerCase "mysql")}}
-| authenticationPlugin | Body | Enum   | X  | 인증 플러그인<br/>- NATIVE: `mysql_native_password`<br />- SHA256: `sha256_password`<br />- CACHING_SHA2: `caching_sha2_password` |
+| authenticationPlugin | Body | Enum   | X  | 인증 플러그인<br/>- 기본값: `NATIVE`(미지원 시 `CACHING_SHA2`)<br/>- NATIVE: `mysql_native_password`<br />- SHA256: `sha256_password`<br />- CACHING_SHA2: `caching_sha2_password` |
 | tlsOption            | Body | Enum   | X  | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                            |
 
 > [주의]
 > DB 인스턴스의 `supportAuthenticationPlugin` 값이 true인 DB 인스턴스만 `authenticationPlugin`, `tlsOption`의 값을 설정할 수 있습니다.
 {{/if}}
 {{#if (eq engine.lowerCase "mariadb")}}
-| authenticationPlugin | Body | Enum    | X  | 인증 플러그인<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519` |
+| authenticationPlugin | Body | Enum    | X  | 인증 플러그인<br/>- 기본값: `NATIVE`(미지원 시 `ED25519`)<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519` |
 {{/if}}
 
 <details><summary>예시</summary>
