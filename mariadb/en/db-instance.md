@@ -212,7 +212,7 @@ You can view DB instances created from the console. It can be viewed as groups o
 
 The status of the DB instance consists of the following values and changes depending on the behavior of the user and the current status.
 
-| **Failed Training** : Indicates the number of failed lessons.                | Description                                            |
+| Status                | Description                                            |
 |-------------------|-----------------------------------------------|
 | BEFORE_CREATE     | Before Create                                         |
 | AVAILABLE         | Available                                         |
@@ -1233,7 +1233,7 @@ mariadb> call mysql.tcrds_repl_replica_start;
 mariadb> call mysql.tcrds_repl_init();
 ```
 
-## Delete Registry Account
+## Appendix
 
 ### Appendix 1. DB Instance Migration Guide for Hypervisor Maintenance
 

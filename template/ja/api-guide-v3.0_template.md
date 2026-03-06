@@ -2203,6 +2203,9 @@ PUT /v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 > DBインスタンスの`supportAuthenticationPlugin`値がtrueであるDBインスタンスのみ`authenticationPlugin`、`tlsOption`の値を修正できます。
 > `authenticationPlugin`の値は`dbPassword`と同時に修正する必要があります。
 {{/if}}
+{{#if (eq engine.lowerCase "mariadb")}}
+| authenticationPlugin | Body | Enum   | X  | 認証プラグイン<br/>- デフォルト値: `NATIVE`(未対応の場合は`ED25519`)<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519` |
+{{/if}}
 
 <details><summary>例</summary>
 <p>

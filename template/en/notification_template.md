@@ -229,6 +229,52 @@ usage rate of 90% or higher for more than 5 minutes. Notification is not sent, e
 
 Performance metrics items that can be monitored are as follows.
 
+| Item                                   | Unit                              |
+|----------------------------------------|-----------------------------------|
+| CPU Usage Rate                         | %                                 |
+| CPU Usage (IO Wait)                    | %                                 |
+| CPU Usage (Nice)                       | %                                 |
+| CPU Usage (System)                     | %                                 |
+| CPU Usage (User)                       | %                                 |
+| Load Average 1M                        |                                   |
+| Load Average 5M                        |                                   |
+| Load Average 15M                       |                                   |
+| Memory Usage                           | %                                 |
+| Memory Usage (bytes)                   | MB                                |
+| Memory Free (bytes)                    | MB                                |
+| Memory Buffer (bytes)                  | MB                                |
+| Cached Memory (bytes)                  | MB                                |
+| Swap Usage                             | MB                                |
+| Swap Total Size                        | MB                                |
+| Storage Usage                          | %                                 |
+| Storage Remaining Usage                | MB                                |
+| Storage IO Read                        | KB/sec                            |
+| Storage IO Write                       | KB/sec                            |
+| Data Storage Defect                    | Abnormal: 0, Normal: 1           |
+| Network in BPS                         | KB/sec                            |
+| Network out BPS                        | KB/sec                            |
+| Database Connection Status             | Unable to access: 0, Able to access: 1 |
+| Queries Per Second                     | counts/sec                        |
+| Connection Total                       | counts                            |
+| Connection Running                     | counts                            |
+| Connection Cached                      | counts                            |
+| Connection Ratio                       | counts                            |
+| Database Activity Select               | counts/sec                        |
+| Database Activity Insert               | counts/sec                        |
+| Database Activity Update               | counts/sec                        |
+| Database Activity Delete               | counts/sec                        |
+| Database Activity Replace              | counts/sec                        |
+| Database Activity Call                 | counts/sec                        |
+| Buffer Pool Total                      | MB                                |
+| Buffer Pool Used                       | MB                                |
+| Slow Query                             | counts/min                        |
+| Replication Delay                      | sec                               |
+| Row Access Index                       | counts/min                        |
+| Row Access Full scan                   | counts/min                        |
+| Database Replication IO Thread Status  | Abnormal: 0, Normal: 1           |
+| Database Replication SQL Thread Status | Abnormal: 0, Normal: 1           |
+| Database Replication Threads Status    | Abnormal: 0, Normal: 1           |
+
 ### Add Monitoring Setting
 
 ![notification_group_02_en.png]({{url.cdn}}/23.04.11/notification_group_02_en.png)

@@ -57,14 +57,17 @@ The API responds with "200 OK" to all API requests. For more information on the 
 
 ### DB engine type
 
-| DB engine type | Available for creation | Available for restoration from OBS |
-|-----------------|----------|------------------|
-| MARIADB_V10330  | O        | O                |
-| MARIADB_V10611  | O        | O                |
-| MARIADB_V10612  | O        | O                |
-| MARIADB_V10616  | O        | O                |
-| MARIADB_V101107 | O        | O                |
-| MARIADB_V101108 | O        | O                |
+| DB engine type | Available for creation | Available for restoration from OBS | Authentication Plugin Support |
+|-----------------|----------|------------------|--|
+| MARIADB_V10330  | O        | O                | NATIVE, ED25519 |
+| MARIADB_V10611  | O        | O                | NATIVE, ED25519 |
+| MARIADB_V10612  | O        | O                | NATIVE, ED25519 |
+| MARIADB_V10616  | O        | O                | NATIVE, ED25519 |
+| MARIADB_V10622  | O        | O                | NATIVE, ED25519 |
+| MARIADB_V101107 | O        | O                | NATIVE, ED25519 |
+| MARIADB_V101108 | O        | O                | NATIVE, ED25519 |
+| MARIADB_V101113 | O        | O                | NATIVE, ED25519 |
+| MARIADB_V11407  | O        | O                | NATIVE, ED25519 |
 
 * You can use the value for the dbVersion field of ENUM type.
 * Depending on the version, creation or restoration may not be possible.
@@ -1321,7 +1324,7 @@ GET /v4.0/db-instances/{dbInstanceId}/restoration-info/last-query
 | dbInstanceId | URL   | UUID   | O        | DB instance identifier                                                                                                                                                                                                             |
 | restoreType  | Query | Enum   | O        | Restoration type<br/>- `TIMESTAMP`: A point-in-time restoration type using the time within the restorable time<br/>- `BINLOG`: A point-in-time restoration type using a binary log location that can be restored. |
 
-#### If restoreType is `BACKUP`
+#### If restoreType is `TIMESTAMP`
 
 | Name        | Type  | Format   | Required | Description                                           |
 |-------------|-------|----------|----------|-------------------------------------------------------|
@@ -3584,7 +3587,7 @@ This API does not return a response body.
 
 ---
 
-### Create DB Security Group
+### Create DB Security Group Rule
 
 ```http
 POST /v4.0/db-security-groups/{dbSecurityGroupId}/rules
@@ -4471,7 +4474,7 @@ This API does not require a request body.
 
 ---
 
-### List Notification Groups
+### View Notification Group Details
 
 ```http
 GET /v4.0/notification-groups/{notificationGroupId}
@@ -5211,7 +5214,7 @@ This API does not return a response body.
 
 ---
 
-### Delete an Event Subcription
+### Delete an Event Subscription
 
 ```http
 DELETE /v4.0/event-subscriptions/{eventSubscriptionId}
