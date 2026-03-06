@@ -858,11 +858,11 @@ POST /v4.0/db-instances
 | useDeletionProtection                        | Body | Boolean | X  | 削除保護の有無<br/>- デフォルト値: `false`                                       |
 | useSlowQueryAnalysis                         | Body | Boolean | X  | スロークエリ分析の有無<br/>- デフォルト値: `true`                                    |
 {{#if (eq engine.lowerCase "mysql")}}
-| authenticationPlugin                         | Body | Enum    | X  | 認証プラグイン<br/>- NATIVE: `mysql_native_password`<br />- SHA256: `sha256_password`<br />- CACHING_SHA2: `caching_sha2_password`                                                                                                    |
+| authenticationPlugin                         | Body | Enum    | X  | 認証プラグイン<br/>- デフォルト値: `NATIVE`(未対応の場合は`CACHING_SHA2`)<br/>- NATIVE: `mysql_native_password`<br />- SHA256: `sha256_password`<br />- CACHING_SHA2: `caching_sha2_password`                                                                                                    |
 | tlsOption                                    | Body | Enum    | X  | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                                                                                                                   |
 {{/if}}
 {{#if (eq engine.lowerCase "mariadb")}}
-| authenticationPlugin                         | Body | Enum    | X  | 認証プラグイン<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519`                                                                                                                                                                                   |
+| authenticationPlugin                         | Body | Enum    | X  | 認証プラグイン<br/>- デフォルト値: `NATIVE`(未対応の場合は`ED25519`)<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519`                                                                                                                                                                                   |
 {{/if}}
 | network                                      | Body | Object  | O  | ネットワーク情報オブジェクト                                                                                                                                                                                                                 |
 | network.subnetId                             | Body | UUID    | O  | サブネットの識別子                                                                                                                                                                                                                      |
@@ -2293,6 +2293,9 @@ GET /v4.0/db-instances/{dbInstanceId}/db-users
 | dbUsers.authenticationPlugin | Body | Enum     | 認証プラグイン<br/>- NATIVE: `mysql_native_password`<br />- SHA256: `sha256_password`<br />- CACHING_SHA2: `caching_sha2_password` |
 | dbUsers.tlsOption            | Body | Enum     | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                |
 {{/if}}
+{{#if (eq engine.lowerCase "mariadb")}}
+| dbUsers.authenticationPlugin | Body | Enum     | 認証プラグイン<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519` |
+{{/if}}
 | dbUsers.createdYmdt          | Body | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                            |
 | dbUsers.updatedYmdt          | Body | DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                            |
 
@@ -2352,14 +2355,14 @@ POST /v4.0/db-instances/{dbInstanceId}/db-users
 | host                 | Body | String | O  | DBユーザーアカウントのホスト名<br/>- 例: `1.1.1.%`                                                                    |
 | authorityType        | Body | Enum   | O  | DBユーザー権限タイプ<br/>- `READ`: SELECTクエリ実行可能な権限<br/>- `CRUD`: DMLクエリ実行可能な権限<br/>- `DDL`: DDLクエリ実行可能な権限<br/> |
 {{#if (eq engine.lowerCase "mysql")}}
-| authenticationPlugin | Body | Enum   | X  | 認証プラグイン<br/>- NATIVE: `mysql_native_password`<br />- SHA256: `sha256_password`<br />- CACHING_SHA2: `caching_sha2_password` |
+| authenticationPlugin | Body | Enum   | X  | 認証プラグイン<br/>- デフォルト値: `NATIVE`(未対応の場合は`CACHING_SHA2`)<br/>- NATIVE: `mysql_native_password`<br />- SHA256: `sha256_password`<br />- CACHING_SHA2: `caching_sha2_password` |
 | tlsOption            | Body | Enum   | X  | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                |
 
 > [注意]
 > DBインスタンスの`supportAuthenticationPlugin`値がtrueであるDBインスタンスのみ`authenticationPlugin`、`tlsOption`の値を設定できます。
 {{/if}}
 {{#if (eq engine.lowerCase "mariadb")}}
-| authenticationPlugin | Body | Enum   | X  | 認証プラグイン<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519` |
+| authenticationPlugin | Body | Enum   | X  | 認証プラグイン<br/>- デフォルト値: `NATIVE`(未対応の場合は`ED25519`)<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519` |
 {{/if}}
 
 <details><summary>例</summary>

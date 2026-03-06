@@ -807,7 +807,7 @@ POST /v4.0/db-instances
 | useDefaultNotification  | Body  | Boolean | X  | 기본 알림 사용 여부<br/>- 기본값: `false`                                      |
 | useDeletionProtection   | Body  | Boolean | X  | 삭제 보호 여부<br/>- 기본값: `false`                                         |
 | useSlowQueryAnalysis    | Body  | Boolean | X  | Slow query 분석 여부<br/>- 기본값: `true`                                  |
-| authenticationPlugin                         | Body | Enum    | X  | 인증 플러그인<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519` |
+| authenticationPlugin                         | Body | Enum    | X  | 인증 플러그인<br/>- 기본값: `NATIVE`(미지원 시 `ED25519`)<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519` |
 | network                                      | Body | Object  | O  | 네트워크 정보 객체                                                                                                                                                                                                                  |
 | network.subnetId                             | Body | UUID    | O  | 서브넷의 식별자                                                                                                                                                                                                                    |
 | network.usePublicAccess                      | Body | Boolean | X  | 외부 접속 가능  여부<br/>- 기본값: `false`                                                                                                                                                                                             |
@@ -2215,7 +2215,7 @@ GET /v4.0/db-instances/{dbInstanceId}/db-users
 | dbUsers.host                 | Body | String   | DB 사용자 계정의 호스트 이름                                                                                                           |
 | dbUsers.authorityType        | Body | Enum     | DB 사용자 권한 타입<br/>- `READ`: SELECT 쿼리 수행 가능한 권한<br/>- `CRUD`: DML 쿼리 수행 가능한 권한<br/>- `DDL`: DDL 쿼리 수행 가능한 권한<br/>            |
 | dbUsers.dbUserStatus         | Body | Enum     | DB 사용자의 현재 상태<br/>- `STABLE`: 생성됨<br/>- `CREATING`: 생성 중<br/>- `UPDATING`: 수정 중<br/>- `DELETING`: 삭제 중<br/>- `DELETED`: 삭제됨 |
-| authenticationPlugin         | Body | Enum    | X  | 인증 플러그인<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519` |
+| dbUsers.authenticationPlugin         | Body | Enum    | 인증 플러그인<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519` |
 | dbUsers.createdYmdt          | Body | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                           |
 | dbUsers.updatedYmdt          | Body | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                           |
 
@@ -2270,7 +2270,7 @@ POST /v4.0/db-instances/{dbInstanceId}/db-users
 | dbPassword           | Body | String | O  | DB 사용자 계정 암호<br/>- 최소 길이: `4`<br/>- 최대 길이: `256`                                                                 |
 | host                 | Body | String | O  | DB 사용자 계정의 호스트명<br/>- 예시: `1.1.1.%`                                                                              |
 | authorityType        | Body | Enum   | O  | DB 사용자 권한 타입<br/>- `READ`: SELECT 쿼리 수행 가능한 권한<br/>- `CRUD`: DML 쿼리 수행 가능한 권한<br/>- `DDL`: DDL 쿼리 수행 가능한 권한<br/> |
-| authenticationPlugin | Body | Enum    | X  | 인증 플러그인<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519` |
+| authenticationPlugin | Body | Enum    | X  | 인증 플러그인<br/>- 기본값: `NATIVE`(미지원 시 `ED25519`)<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519` |
 
 <details><summary>예시</summary>
 <p>

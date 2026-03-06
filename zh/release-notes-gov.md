@@ -1,5 +1,15 @@
 ## Database > RDS for MySQL > Release Notes
 
+### March 12, 2026
+
+#### Feature Updates
+
+* Added API v4.0
+    * For more information, see [API v4.0 guide](/Database/RDS%20for%20MySQL/zh/api-guide-v4.0/) document.
+* Added snapshot backup feature
+    * Perform backups using Cinder storage snapshots with zero impact on DB performance
+* Added MySQL 8.0.45, 8.4.8 version
+
 ### January 15, 2026
 
 #### Feature Updates
