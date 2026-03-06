@@ -119,6 +119,9 @@ For dummy DB instances, a temporary candidate master is created during the upgra
 When a DB instance is configured for high availability, the engine version of the candidate master is upgraded first, and then failover is used to promote the candidate master to master. Because failover briefly interrupts the service on the master, you can initiate failover at any time.
 The manual control of failover during version upgrade allows you to initiate failover directly from the console.
 
+> [Caution]
+> If manual control of failover is not triggered for more than 60 hours, the upgrade operation is automatically cancelled.
+
 ### When using an Outdated Operating System
 
 For DB instances created before May 10, 2022, the DB instance will be replaced when the internal operating system is outdated so the DB version is upgraded. During the replacement process, the DB instance's identifier and internal IP address will be changed. The monitored instances in notification groups and event sources in event subscriptions are automatically replaced with the changed identifiers. For a single DB instance, you must use a dummy DB instance when changing DB versions. For high-availability DB instances, the roles of the master and spare master are changed using failover during the DB instance replacement process. Failover may fail if the master is heavily loaded, so it is recommended that you perform DB version change during off-peak hours.  

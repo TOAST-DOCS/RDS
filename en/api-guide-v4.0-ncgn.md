@@ -57,24 +57,28 @@ The API responds with "200 OK" to all API requests. For more information on the 
 
 ### DB engine type
 
-| DB engine type | Available for creation | Available for restoration from OBS |
-| -------- | -------- | ---------------- |
-| MYSQL_V5633 | X | X |
-| MYSQL_V5715 | O | O |
-| MYSQL_V5719 | O | O |
-| MYSQL_V5726 | O | O |
-| MYSQL_V5731 | X | X |
-| MYSQL_V5733 | O | X |
-| MYSQL_V5737 | O | O |
-| MYSQL_V8018 | O | O |
-| MYSQL_V8023 | O | O |
-| MYSQL_V8028 | O | O |
-| MYSQL_V8032 | O | O |
-| MYSQL_V8033 | O | O |
-| MYSQL_V8034 | O | O |
-| MYSQL_V8035 | O | O |
-| MYSQL_V8036 | O | O |
-| MYSQL_V8040 | O | O |
+| DB engine type | Available for creation | Available for restoration from OBS | Authentication Plugin Support |
+|--------------|----------|-----------------|--------|
+| MYSQL\_V5633 | X        | X               | NATIVE |
+| MYSQL\_V5715 | O        | O               | NATIVE |
+| MYSQL\_V5719 | O        | O               | NATIVE |
+| MYSQL\_V5726 | O        | O               | NATIVE |
+| MYSQL\_V5731 | X        | X               | NATIVE |
+| MYSQL\_V5733 | O        | X               | NATIVE, SHA256 |
+| MYSQL\_V5737 | O        | O               | NATIVE, SHA256 |
+| MYSQL\_V8018 | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL\_V8023 | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL\_V8028 | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL\_V8032 | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL\_V8033 | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL\_V8034 | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL_V8035  | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL_V8036  | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL_V8040  | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL_V8041  | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL_V8042  | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL_V8043  | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL_V8405  | O        | O               | CACHING_SHA2 |
 
 * You can use the value for the dbVersion field of ENUM type.
 * Depending on the version, creation or restoration may not be possible.
@@ -1344,7 +1348,7 @@ GET /v4.0/db-instances/{dbInstanceId}/restoration-info/last-query
 | dbInstanceId | URL   | UUID   | O        | DB instance identifier                                                                                                                                                                                                             |
 | restoreType  | Query | Enum   | O        | Restoration type<br/>- `TIMESTAMP`: A point-in-time restoration type using the time within the restorable time<br/>- `BINLOG`: A point-in-time restoration type using a binary log location that can be restored. |
 
-#### If restoreType is `BACKUP`
+#### If restoreType is `TIMESTAMP`
 
 | Name        | Type  | Format   | Required | Description                                           |
 |-------------|-------|----------|----------|-------------------------------------------------------|
@@ -3629,7 +3633,7 @@ This API does not return a response body.
 
 ---
 
-### Create DB Security Group
+### Create DB Security Group Rule
 
 ```http
 POST /v4.0/db-security-groups/{dbSecurityGroupId}/rules
@@ -4516,7 +4520,7 @@ This API does not require a request body.
 
 ---
 
-### List Notification Groups
+### View Notification Group Details
 
 ```http
 GET /v4.0/notification-groups/{notificationGroupId}
@@ -5256,7 +5260,7 @@ This API does not return a response body.
 
 ---
 
-### Delete an Event Subcription
+### Delete an Event Subscription
 
 ```http
 DELETE /v4.0/event-subscriptions/{eventSubscriptionId}

@@ -64,34 +64,41 @@ The API responds with "200 OK" to all API requests. For more information on the 
 ### DB engine type
 
 {{#if (eq engine.lowerCase "mysql")}}
-| DB engine type | Available for creation | Available for restoration from OBS |
-| -------- | -------- | ---------------- |
-| MYSQL_V5633 | X | X |
-| MYSQL_V5715 | O | O |
-| MYSQL_V5719 | O | O |
-| MYSQL_V5726 | O | O |
-| MYSQL_V5731 | X | X |
-| MYSQL_V5733 | O | X |
-| MYSQL_V5737 | O | O |
-| MYSQL_V8018 | O | O |
-| MYSQL_V8023 | O | O |
-| MYSQL_V8028 | O | O |
-| MYSQL_V8032 | O | O |
-| MYSQL_V8033 | O | O |
-| MYSQL_V8034 | O | O |
-| MYSQL_V8035 | O | O |
-| MYSQL_V8036 | O | O |
-| MYSQL_V8040 | O | O |
+| DB engine type | Available for creation | Available for restoration from OBS | Authentication Plugin Support |
+|--------------|----------|-----------------|--------|
+| MYSQL\_V5633 | X        | X               | NATIVE |
+| MYSQL\_V5715 | O        | O               | NATIVE |
+| MYSQL\_V5719 | O        | O               | NATIVE |
+| MYSQL\_V5726 | O        | O               | NATIVE |
+| MYSQL\_V5731 | X        | X               | NATIVE |
+| MYSQL\_V5733 | O        | X               | NATIVE, SHA256 |
+| MYSQL\_V5737 | O        | O               | NATIVE, SHA256 |
+| MYSQL\_V8018 | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL\_V8023 | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL\_V8028 | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL\_V8032 | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL\_V8033 | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL\_V8034 | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL_V8035  | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL_V8036  | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL_V8040  | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL_V8041  | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL_V8042  | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL_V8043  | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL_V8405  | O        | O               | CACHING_SHA2 |
 {{/if}}
 {{#if (eq engine.lowerCase "mariadb")}}
-| DB engine type | Available for creation | Available for restoration from OBS |
-|-----------------|----------|------------------|
-| MARIADB_V10330  | O        | O                |
-| MARIADB_V10611  | O        | O                |
-| MARIADB_V10612  | O        | O                |
-| MARIADB_V10616  | O        | O                |
-| MARIADB_V101107 | O        | O                |
-| MARIADB_V101108 | O        | O                |
+| DB engine type | Available for creation | Available for restoration from OBS | Authentication Plugin Support |
+|-----------------|----------|------------------|--|
+| MARIADB_V10330  | O        | O                | NATIVE, ED25519 |
+| MARIADB_V10611  | O        | O                | NATIVE, ED25519 |
+| MARIADB_V10612  | O        | O                | NATIVE, ED25519 |
+| MARIADB_V10616  | O        | O                | NATIVE, ED25519 |
+| MARIADB_V10622  | O        | O                | NATIVE, ED25519 |
+| MARIADB_V101107 | O        | O                | NATIVE, ED25519 |
+| MARIADB_V101108 | O        | O                | NATIVE, ED25519 |
+| MARIADB_V101113 | O        | O                | NATIVE, ED25519 |
+| MARIADB_V11407  | O        | O                | NATIVE, ED25519 |
 {{/if}}
 
 * You can use the value for the dbVersion field of ENUM type.
@@ -503,7 +510,7 @@ This API does not require a request body.
 
 ## DB Instance Group
 
-### List DB Instances
+### List DB Instance Groups
 
 ```http
 GET /v3.0/db-instance-groups
@@ -1304,7 +1311,7 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info/last-query
 | dbInstanceId | URL   | UUID   | O        | DB instance identifier                                                                                                                                                                                                             |
 | restoreType  | Query | Enum   | O        | Restoration type<br/>- `TIMESTAMP`: A point-in-time restoration type using the time within the restorable time<br/>- `BINLOG`: A point-in-time restoration type using a binary log location that can be restored. |
 
-#### If restoreType is `BACKUP`
+#### If restoreType is `TIMESTAMP`
 
 | Name        | Type  | Format   | Required | Description                                           |
 |-------------|-------|----------|----------|-------------------------------------------------------|
@@ -2204,6 +2211,9 @@ PUT /v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 > Only DB instances whose `supportAuthenticationPlugin` value is true can modify the values of `authenticationPlugin` and `tlsOption`.
 > The value of`authenticationPlugin`must be modified at the same time `as dbPassword`.
 {{/if}}
+{{#if (eq engine.lowerCase "mariadb")}}
+| authenticationPlugin | Body | Enum    | X        | Authentication Plugin<br/>- Default: `NATIVE`(`ED25519` if not supported)<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519` |
+{{/if}}
 
 <details><summary>Example</summary>
 <p>
@@ -2951,7 +2961,7 @@ This API does not return a response body.
 
 ---
 
-### Create DB Security Group
+### Create DB Security Group Rule
 
 ```http
 POST /v3.0/db-security-groups/{dbSecurityGroupId}/rules
@@ -3736,7 +3746,7 @@ This API does not require a request body.
 
 ---
 
-### List Notification Groups
+### View Notification Group Details
 
 ```http
 GET /v3.0/notification-groups/{notificationGroupId}

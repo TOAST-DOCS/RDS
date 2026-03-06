@@ -7,9 +7,9 @@
 
 | リージョン            | エンドポイント           |
 |------------------|-------------------|
-| 한국(판교) 리전 | https://kr1-rds-mysql.api.nhncloudservice.com |
-| 한국(평촌) 리전 | https://kr2-rds-mysql.api.nhncloudservice.com |
-| 일본 리전 | https://jp1-rds-mysql.api.nhncloudservice.com |
+| 韓国(パンギョ)リージョン | https://kr1-rds-mysql.api.nhncloudservice.com |
+| 韓国(ピョンチョン)リージョン | https://kr2-rds-mysql.api.nhncloudservice.com |
+| 日本リージョン | https://jp1-rds-mysql.api.nhncloudservice.com |
 
 ### 認証及び権限
 

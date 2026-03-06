@@ -49,7 +49,7 @@
 | INSTC_14_01 | INSTANCE          | はい     | Floating IP接続解除                       |
 | INSTC_15_00 | INSTANCE          | はい     | DBインスタンスの複製開始                         |
 | INSTC_15_01 | INSTANCE          | はい     | DBインスタンスの複製完了                         |
-| INSTC_15_04 | のINSTANCE         | はい     | DBインスタンスの複製失敗                         |
+| INSTC_15_04 | INSTANCE          | はい     | DBインスタンスの複製失敗                         |
 | INSTC_16_00 | INSTANCE          | はい     | DBインスタンスの昇格開始                         |
 | INSTC_16_01 | INSTANCE          | はい     | DBインスタンスの昇格完了                         |
 | INSTC_16_04 | INSTANCE          | はい     | DBインスタンスの昇格失敗                         |

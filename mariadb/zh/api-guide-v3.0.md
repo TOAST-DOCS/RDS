@@ -61,14 +61,17 @@ The API responds with "200 OK" to all API requests. For more information on the 
 
 ### DB engine type
 
-| DB engine type | Available for creation | Available for restoration from OBS |
-|-----------------|----------|------------------|
-| MARIADB_V10330  | O        | O                |
-| MARIADB_V10611  | O        | O                |
-| MARIADB_V10612  | O        | O                |
-| MARIADB_V10616  | O        | O                |
-| MARIADB_V101107 | O        | O                |
-| MARIADB_V101108 | O        | O                |
+| DB engine type | Available for creation | Available for restoration from OBS | Authentication Plugin Support |
+|-----------------|----------|------------------|--|
+| MARIADB_V10330  | O        | O                | NATIVE, ED25519 |
+| MARIADB_V10611  | O        | O                | NATIVE, ED25519 |
+| MARIADB_V10612  | O        | O                | NATIVE, ED25519 |
+| MARIADB_V10616  | O        | O                | NATIVE, ED25519 |
+| MARIADB_V10622  | O        | O                | NATIVE, ED25519 |
+| MARIADB_V101107 | O        | O                | NATIVE, ED25519 |
+| MARIADB_V101108 | O        | O                | NATIVE, ED25519 |
+| MARIADB_V101113 | O        | O                | NATIVE, ED25519 |
+| MARIADB_V11407  | O        | O                | NATIVE, ED25519 |
 
 * You can use the value for the dbVersion field of ENUM type.
 * Depending on the version, creation or restoration may not be possible.
@@ -458,7 +461,7 @@ This API does not require a request body.
 
 ## DB Instance Group
 
-### List DB Instances
+### List DB Instance Groups
 
 ```http
 GET /v3.0/db-instance-groups
@@ -1243,7 +1246,7 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info/last-query
 | dbInstanceId | URL   | UUID   | O        | DB instance identifier                                                                                                                                                                                                             |
 | restoreType  | Query | Enum   | O        | Restoration type<br/>- `TIMESTAMP`: A point-in-time restoration type using the time within the restorable time<br/>- `BINLOG`: A point-in-time restoration type using a binary log location that can be restored. |
 
-#### If restoreType is `BACKUP`
+#### If restoreType is `TIMESTAMP`
 
 | Name        | Type  | Format   | Required | Description                                           |
 |-------------|-------|----------|----------|-------------------------------------------------------|
@@ -2100,6 +2103,7 @@ PUT /v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 | dbUserId             | URL  | UUID   | O        | DB user identifier                                                                                                                                                       |
 | dbPassword           | Body | String | X        | DB user account password<br/>- Minimum length: `4`<br/>- Maximum length: `256`                                                                                           |
 | authorityType        | Body | Enum   | X        | DB user permission type<br/>- `READ`: Permission to execute SELECT query<br/>- `CRUD`: Permission to execute DML query<br/>- `DDL`: Permission to execute DDL query<br/> |
+| authenticationPlugin | Body | Enum    | X        | Authentication Plugin<br/>- Default: `NATIVE`(`ED25519` if not supported)<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519` |
 
 <details><summary>Example</summary>
 <p>
@@ -2838,7 +2842,7 @@ This API does not return a response body.
 
 ---
 
-### Create DB Security Group
+### Create DB Security Group Rule
 
 ```http
 POST /v3.0/db-security-groups/{dbSecurityGroupId}/rules
@@ -3623,7 +3627,7 @@ This API does not require a request body.
 
 ---
 
-### List Notification Groups
+### View Notification Group Details
 
 ```http
 GET /v3.0/notification-groups/{notificationGroupId}
