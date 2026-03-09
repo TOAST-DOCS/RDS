@@ -80,7 +80,12 @@ The API responds with "200 OK" to all API requests. For more information on the 
 | MYSQL_V8041  | O        | O               | NATIVE, CACHING_SHA2 |
 | MYSQL_V8042  | O        | O               | NATIVE, CACHING_SHA2 |
 | MYSQL_V8043  | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL_V8044  | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL_V8045  | O        | O               | NATIVE, CACHING_SHA2 |
 | MYSQL_V8405  | O        | O               | CACHING_SHA2 |
+| MYSQL_V8406  | O        | O               | CACHING_SHA2 |
+| MYSQL_V8407  | O        | O               | CACHING_SHA2 |
+| MYSQL_V8408  | O        | O               | CACHING_SHA2 |
 
 * You can use the value for the dbVersion field of ENUM type.
 * Depending on the version, creation or restoration may not be possible.
