@@ -2,7 +2,7 @@
 
 ## DB Engine
 
-In MySQL, the version number consists of version = `X.Y.Z.` In NHN Cloud's RDS for MySQL, `X.Y` represents the major version and `Z` represents the minor version.
+In MySQL, the version number consists of version = `X.Y.Z` In NHN Cloud's RDS for MySQL, `X.Y` represents the major version and `Z` represents the minor version.
 
 ### DB engine version provided by RDS
 
@@ -106,7 +106,7 @@ Upgrade Path
 1.	First, upgrade to MySQL 8.0.23 or higher
 2.	Then, upgrade to MySQL 8.4
 
-This is because MySQL 8.4 requires at least version 8.0.23 for metadata and internal schema compatibility. Upgrading from versions below 8.0.23 is not supported.
+This is because the minimum compatible version required by MySQL 8.4 is 8.0.23 or higher, and compatibility of metadata and internal schema structure is not guaranteed in environments lower than that version.
 
 #### Upgrading the DB Engine Version Using a Dummy DB Instance 
 

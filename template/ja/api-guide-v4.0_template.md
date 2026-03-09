@@ -958,7 +958,7 @@ PUT /v4.0/db-instances/{dbInstanceId}
 | dbPort                  | Body | Number  | X  | DBポート<br/>- 最小値: `3306`<br/>- 最大値: `43306`  |
 {{#if (eq engine.lowerCase "mysql")}}    
 | dbVersion          | Body | Enum    | X  | DBエンジンタイプ                                                                                                                            |
-| useDummy           | Body | Boolean | X  | 単一DBインスタンスのDBバージョンアップグレード時にダミーを使用するかどうか<br/>Default: `false`                  |
+| useDummy           | Body | Boolean | X  | 単一DBインスタンスのDBバージョンアップグレード時にダミーを使用するかどうか<br/>デフォルト値: `false`                  |
 {{/if}}
 | useSlowQueryAnalysis | Body | Boolean  | X | Slow query分析を行うかどうか |
 | dbFlavorId         | Body | UUID    | X  | DBインスタンス仕様の識別子                                                         |
@@ -3293,9 +3293,9 @@ POST /v4.0/backups/{backupId}/restore
 | dbInstanceName                               | Body | String  | O  | DBインスタンスを識別できる マスター名                                           |
 | dbInstanceCandidateName                      | Body | String  | X  | DBインスタンスを識別できる 予備マスター名(高可用性を使用する場合の必須値)                         |
 | description                                  | Body | String  | X  | DBインスタンスの追加情報                                                 |
-| dbFlavorId                                   | Body | UUID    | X  | DBインスタンス仕様の識別子                                                   |
+| dbFlavorId                                   | Body | UUID    | X  | DBインスタンス仕様の識別子<br/>- デフォルト値：原本DBインスタンスの値                                                   |
 | dbPort | Body | Integer | X | DBポート<br/>- デフォルト値：原本DBインスタンスの値<br/>- 最小値：`3306`<br/>- 最大値：`43306` |
-| parameterGroupId                             | Body | UUID    | X  | パラメータグループの識別子                                                      |
+| parameterGroupId                             | Body | UUID    | X  | パラメータグループの識別子<br/>- デフォルト値：原本DBインスタンスの値                                                      |
 | dbSecurityGroupIds                           | Body | Array   | X  | DBセキュリティグループの識別子リスト                                                  ||network|Body|Object|O|ネットワーク情報オブジェクト|
 | userGroupIds                                 | Body | Array   | X  | ユーザーグループの識別子リスト                                                    |
 | useHighAvailability                          | Body | Boolean | X  | 高可用性を使用するかどうか<br/>- デフォルト値: `false`                                       |
@@ -3306,12 +3306,12 @@ POST /v4.0/backups/{backupId}/restore
 | network                                      | Body | Object  | X  | ネットワーク情報オブジェクト                                                        |
 | network.subnetId | Body | UUID | X | サブネットの識別子<br/>- デフォルト値：原本DBインスタンスの値 |
 | network.usePublicAccess                      | Body | Boolean | X  | 外部接続可否<br/>- デフォルト値: `false`                                      |
-| network.availabilityZone                     | Body | Enum    | X  | DBインスタンスを作成するアベイラビリティゾーン<br/>- 例: `kr-pub-a`                            |
+| network.availabilityZone                     | Body | Enum    | X  | DBインスタンスを作成するアベイラビリティゾーン<br/>- 例: `kr-pub-a`<br/>- デフォルト値：ランダム選択                            |
 | storage                                      | Body | Object  | X  | データストレージ情報オブジェクト                                                    |    
 | storage.storageType | Body | Enum | X | データストレージタイプ<br/>- デフォルト値：原本DBインスタンスの値<br/>- 例：`General SSD` |
 | storage.storageSize | Body | Number | X | データストレージサイズ(GB)<br/>- デフォルト値：原本DBインスタンスの値<br/>- 最小値：`20`<br/>- 最大値：`2048` |
 | storage.storageAutoscale                     | Body | Object  | X  | データストレージ自動拡張オブジェクト                                                 |
-| storage.storageAutoscale.useStorageAutoscale | Body | Boolean | X | ストレージ自動拡張を行うかどう<br/>- デフォルト値：原本DBインスタンスの値 か |
+| storage.storageAutoscale.useStorageAutoscale | Body | Boolean | X | ストレージ自動拡張を行うかどうか<br/>- デフォルト値：原本DBインスタンスの値 |
 | storage.storageAutoscale.threshold | Body | Number | X | 自動拡張条件(%)<br/>- デフォルト値：原本DBインスタンスの値<br/>- 最小値：`50`<br/>- 最大値：`95` |
 | storage.storageAutoscale.maxStorageSize | Body | Number | X | 自動拡張最大サイズ(GB)<br/>- デフォルト値：原本DBインスタンスの値<br/>- 最大値：`4096` |
 | storage.storageAutoscale.cooldownTime | Body | Number | X | 自動拡張クールダウン時間(分)<br/>- デフォルト値：原本DBインスタンスの値<br/>- 最小値：`10`<br/>- 最大値：`1440` |
@@ -3323,7 +3323,7 @@ POST /v4.0/backups/{backupId}/restore
 | backup.replicationRegion                     | Body | Enum    | X  | バックアップ複製リージョン<br />- `KR1`:韓国(パンギョ)<br/>- `KR2`:韓国(ピョンチョン)<br/>- `JP1`:日本(東京)                                                                                                                                                       |
 {{/if}}
 | backup.useBackupLock                         | Body | Boolean | X  | テーブルロックを使用するかどうか<br/>- デフォルト値: `true`                                                                                                                                                                                              |
-| backup.backupSchedules                       | Body | Array   | X  | 予定された自動バックアップリスト                                                                                                                                                                                                                 |
+| backup.backupSchedules                       | Body | Array   | X  | 予定された自動バックアップリスト<br/>- デフォルト値：原本DBインスタンスの値                                                                                                                                                                                                                 |
 | backup.backupSchedules.backupWndBgnTime      | Body | String  | O  | バックアップ開始時刻<br/>- 例: `00:00:00`                                                                                                                                                                                               |
 | backup.backupSchedules.backupWndDuration     | Body | Enum    | O  | バックアップDuration<br/>バックアップ開始時刻からDuration内に自動バックアップが実行されます。<br/>- `HALF_AN_HOUR`: 30分<br/>- `ONE_HOUR`: 1時間<br/>- `ONE_HOUR_AND_HALF`: 1時間30分<br/>- `TWO_HOURS`: 2時間<br/>- `TWO_HOURS_AND_HALF`: 2時間30分<br/>- `THREE_HOURS`: 3時間 |
 

@@ -47,7 +47,7 @@ RDS for MySQL uses Percona XtraBackup to back up databases. You have to use the 
 
 ## Backup Type
 
-Backups can be categorized into manual and automa backups.
+Backups can be categorized into manual and automatic backups.
 
 ### Manual Backup
 
@@ -103,7 +103,7 @@ The following limitations exist for backups that are the basis for incremental b
 * If the DB instance that took that backup has been deleted or is unable to take a backup due to failure, it cannot be the baseline backup.
 * Backups created before the September 2024 scheduled release cannot be baseline backups.
 
-When incremental backups are scheduled according to [Auto Backup Strategy](#Set-Auto-Backup), a baseline backup that satisfies the above constraints, plus the following additional constraints, is automatically selected. If no baseline backup satisfies the constraints, a full backup is performed regardless of the auto backup strategy.
+When incremental backups are scheduled according to [Auto Backup Strategy](#set-auto-backup), a baseline backup that satisfies the above constraints, plus the following additional constraints, is automatically selected. If no baseline backup satisfies the constraints, a full backup is performed regardless of the auto backup strategy.
 * A backup performed on a candidate master, read replica that is in a replication down state cannot be a baseline backup.
 * A backup performed without table locks enabled cannot be a baseline backup.
 * If a new full backup was created after that backup was created, it cannot be the baseline backup.
@@ -137,17 +137,18 @@ When creating and modifying DB instances, you can specify settings that will be 
 ![db-instance-backup-form-en]({{url.cdn}}/24.11.12/db-instance-backup-form-en.png)
 
 ### Common Settings
+
 The following topics are common to both auto and manual backups.
 
 **Use Table Lock**
 
-* `FLUSH TABLES WITH READ LOCK` ets whether the syntax is enabled or disabled.
+* `FLUSH TABLES WITH READ LOCK` Sets whether the syntax is enabled or disabled.
 * Table lock enables the `FLUSH TABLES WITH READ LOCK` syntax periodically during backups to ensure consistency in backup data. If `FLUSH TABLES WITH READ LOCK` syntax fails to run, the backup will fail.
 * You can disable table locking if the DML query load is high during a backup. If you do not use table lock, `FLUSH TABLES WITH READ LOCK` syntax will not run, so a high DML load does not cause the backup to fail. However, backups without table lock may not ensure consistency of backup data, and as a result, some operations, including restore and replication processes, are not supported for backups created without table lock and for DB instances with table locking disabled.
 
-**Query Latency Dash Time (second)**
+**Query Delay Wait Time (second)**
 
-* When using table lock, set the wait time for `FLUSH TABLES WITH READ LOCK` syntax. `FLUSH TABLES WITH READ LOCK` syntax will wait for the query latency dash time. It can be set from 0 to 21,600 seconds. Longer settings reduce the likelihood of backup failures due to DML query load, but may result in longer overall backup times.
+* When using table lock, set the wait time for `FLUSH TABLES WITH READ LOCK` syntax. `FLUSH TABLES WITH READ LOCK` syntax will wait for the query delay wait time. It can be set from 0 to 21,600 seconds. Longer settings reduce the likelihood of backup failures due to DML query load, but may result in longer overall backup times.
 
 
 ### Set Auto Backup

@@ -144,7 +144,7 @@ DB security groups are used to restrict access in case of external intrusion. Yo
 
 ### Backup
 
-You can set up periodic backups of the databases in your DB instance, or you can create backups at any time through the console. Performance may degrade during backups. To avoid affecting service, it is better to perform back up at a time when the service is under low load. If you do not want the backup to degrade performance, you can use a high-availability configuration or perform backups from a read replica. Backup files are stored on internal object storage and are charged based on the
+You can set up periodic backups of the databases in your DB instance, or you can create backups at any time through the console. Performance may degrade during backups. To avoid affecting service, it is better to perform back up at a time when the service is under low load. If you do not want the backup to degrade performance, you can use a high-availability configuration, back up only the incremental data since the previous backup, or perform backups from a read replica. Backup files are stored on internal backup storage and are charged based on the
 size of backup storage. You can export to user object storage in NHN Cloud if necessary. To prepare for unexpected failures, we recommend that you set up backups to be conducted periodically. For more details on backup, see [Backup and Restore](backup-and-restore/).
 
 ### Maintenance
@@ -157,6 +157,7 @@ You can set a maintenance duration when creating or modifying a DB instance. If 
 
 > [Note]
 > A maintenance duration consists of a start day, a start time, and a duration (in 30-minute increments).
+
 #### Maintenance Task
 
 Maintenance tasks are categorized into User Maintenance and Provider Maintenance.
@@ -196,7 +197,8 @@ You can check the maintenance status of each instance in the DB instance list.
 | Available | A non-required provider maintenance task is pending/in preparation. |
 
 > [Note]
-> The maintenance status is not displayed for the standby instance of High Availability (HA) DB instances.
+> The maintenance status is not displayed for the candidate master of High Availability (HA) DB instances.
+
 #### Maintenance Tab
 
 You can find the following information on the Maintenance tab of the DB instance details page:
@@ -348,6 +350,7 @@ At the top of the Maintenance tab, you can view the maintenance configuration de
 
 > [Note]
 > Even if you haven't set a maintenance duration, you can view the randomly assigned duration here.
+
 #### Upcoming Maintenance
 
 Upcoming Maintenance is a list of tasks scheduled to be executed during the next maintenance duration. When you perform actions such as modifying a DB instance or upgrading the DB engine version and select **Apply in the Next Maintenance Duration**, the task is added to this list.
@@ -429,7 +432,7 @@ User ID has the following restrictions.
 * `mysql.session`, `mysql.sys`, `mysql.infoschema`, `sqlgw`, `admin`, `etladm`, `alertman`, `prom`, `rds_admin`, `rds_mha`, `rds_repl` are not allowed to be used as User ID.
 
 ❸ Enter a password.
-❹ Enter a Host IP to allow connection. Using `%` character lets you range the Host IPs you want to allow. For example, `1.1.1.1%` means all IPs between `1.1.0` and `1.1.1.255`.
+❹ Enter a Host IP to allow connection. Using `%` character lets you range the Host IPs you want to allow. For example, `1.1.1.%` means all IPs between `1.1.1.0` and `1.1.1.255`.
 ❺ Select the permissions that you want to grant to users. The permissions and descriptions that you can grant are as follows.
 
 **READ**
@@ -544,7 +547,7 @@ For high-availability DB instances, if there are any changes to items that need 
 
 
 ❶ Modify your DB instance and schedule the update by selecting either **Apply in the Next Maintenance Duration** or **Apply Immediately**.
-❷ If you do not use 'Reboot with Failover', changes will be applied sequentially to the master and standby instances, followed by a restart of the DB instance. For more details, please refer to the [Manual Failover section](db-instance/#manual-failover) for High Availability DB instances.
+❷ If you do not use 'Reboot with Failover', changes will be applied sequentially to the master and candidate master, followed by a restart of the DB instance. For more details, please refer to the [Manual Failover section](db-instance/#manual-failover) for High Availability DB instances.
 
 ### DB Schema & Direct User Control
 
@@ -600,7 +603,7 @@ Select the binary log and press **Confirm** to delete all binary logs created pr
 
 {{#if (eq engine.lowerCase "mysql")}}
 > [Note] 
-> You can set the storage period for binary logs with the `expire_logs_days` in MySQL 5.7 and later and the `binlog_expire_logs_seconds` parameter in MySQL 5.8 and later.
+> You can set the storage period for binary logs with the `expire_logs_days` in MySQL 5.7 and below and the `binlog_expire_logs_seconds` parameter in MySQL 5.8 and later.
 {{/if}}
 {{#if (eq engine.lowerCase "mariadb")}}
 > [Note]
@@ -656,7 +659,7 @@ You can upload an external {{engine.pascalCase}} backup file to user object stor
 
 ## Export backup files to the object storage after backup
 
-You can export backup files to user object storage in NHN Cloud at the same time as you perform a backup. Refer to [Export Backup](backup-and-restore/#export) for more information.
+After backup, you can export backup files to user object storage in NHN Cloud. Refer to [Export Backup](backup-and-restore/#export) for more information.
 
 ## Read Replica
 
@@ -768,7 +771,7 @@ of `Last_Errno` is 1062, you can call the Procedure below until the error disapp
 If you can't resolve the replication issue of read replica, you can restore it to its normal state by rebuilding. This process deletes all databases in the read replica and rebuilds it anew based on the master database. During rebuilding, read replicas are unavailable to use. Rebuilding read replicas requires backup files and binary logs created with the Enable Table Lock option among DB instances in the replication group. If you don't have a backup file, refer to [Create Read Replica](#_22) for actions and precautions.
 
 > [Note]
-Connection information (domain, IP) does not change after rebuilding.
+> Connection information (domain, IP) does not change after rebuilding.
 
 ## Restart DB instance
 
@@ -811,7 +814,7 @@ Enabling Delete Protection protects DB instances from being accidentally deleted
 <a id="ha-db-instance"></a>
 ## High Availability DB Instances
 
-High availability DB instances increase availability, data durability, and provide fault tolerant databases. High availability DB instances consist of master and candidate master and are created in different availability zones. Candidate master is a DB instance for failover and is not normally available. For high availability DB instances, backups are performed on the sample master.
+High availability DB instances increase availability, data durability, and provide fault tolerant databases. High availability DB instances consist of master and candidate master and are created in different availability zones. Candidate master is a DB instance for failover and is not normally available. For high availability DB instances, backups are performed on the candidate master.
 
 > [Note]
 > For high availability DB instances, if you set to use {{engine.pascalCase}} query statement to force replication from another DB instance or from a master in external {{engine.pascalCase}}, high availability and some features do not work properly.
@@ -825,7 +828,7 @@ Candidate master has a process for detecting failures, which periodically detect
 
 ### Automatic Failover
 
-When the candidate master fails the master's health check four times in a row, it determines that the master is unable to provide service and automatically performs a failover. In order to prevent split brains, disconnect all user security groups assigned to the failed master to block external connections, and the preliminary master will take over the role of the master. A record in the internal domain for access are changed from the failed master to the preliminary master, so no changes to the
+When the candidate master fails the master's health check four times in a row, it determines that the master is unable to provide service and automatically performs a failover. In order to prevent split brains, disconnect all user security groups assigned to the failed master to block external connections, and the candidate master will take over the role of the master. A record in the internal domain for access are changed from the failed master to the candidate master, so no changes to the
 application are required. When failover is completed, the type of failed over master changes to the failed over master and the type of candidate master changes to the master. No failover is performed until the failed over master is recovered or rebuilt. Promoted master takes over all automatic backups of the failover master. Point-in-time restoration using existing backups is not supported because the master changes during failover and all binary logs are deleted. You can restore point-in-time
 from the time the new backup was performed on the promoted master.
 
@@ -926,9 +929,9 @@ You can apply changes to the candidate master first and then observe the trend, 
 
 When you enable Resolve Replication Delays option, you can wait for replication delays for the candidate master and read replicas in the Replication group to disappear.
 
-#### Block usage load
+#### Block write load
 
-You can select to further block the usage load while resolving replication delays. Blocking the usage load puts the master in read-only mode and sets all change queries to fail immediately before performing the failover.
+You can select to further block the write load while resolving replication delays. Blocking the write load puts the master in read-only mode and sets all change queries to fail immediately before performing the failover.
 
 ### High availability suspended
 
@@ -964,7 +967,7 @@ RDS for {{engine.pascalCase}} provides its own procedures for performing some of
 
 * Check the processes currently waiting for a lock and the process information occupying the lock.
 * (w) Process information that column information waits to obtain locks
-* (w) Process information that column information waits to obtain locks
+* (B) Process information that column information occupies locks
 * To force shutdown a process that occupies a lock, check the (B)PROCESS column and perform call tcrds_process_kill(process_id).
 
 ```
@@ -996,7 +999,7 @@ ex) call mysql.tcrds_repl_changemaster('10.162.1.1',10000,'db_repl','password','
 
 ### tcrds_repl_changesource (after 8.4)
 
-* Used when importing an external MySQL DB to NHN Cloud RDS using replication.
+* Used when importing an external {{engine.pascalCase}} DB to NHN Cloud RDS using replication.
 * Replication configuration for NHN Cloud RDS can be done through **Create Replica** in the console.
 
 ```
@@ -1005,8 +1008,8 @@ ex) call mysql.tcrds_repl_changemaster('10.162.1.1',10000,'db_repl','password','
 
 * Parameter Details
     * master_instance_ip: IP of the replication target (Master) server
-    * master_instance_port: MySQL of the replication target (Master) server
-    * user_id_for_replication: Replication account to connect to MySQL on the replication target (Master) server
+    * master_instance_port: {{engine.pascalCase}} port on the replication target (Master) server
+    * user_id_for_replication: Replication account to connect to {{engine.pascalCase}} on the replication target (Master) server
     * password_for_replication_user: account passowrd for replication
     * SOURCE_LOG_FILE: Binary log file name of the replication target (Master)
     * SOURCE_LOG_POS: binary log position of the replication target (Master)
@@ -1015,7 +1018,7 @@ ex) call mysql.tcrds_repl_changemaster('10.162.1.1',10000,'db_repl','password','
 ex) call mysql.tcrds_repl_changesource('10.162.1.1',10000,'db_repl','password','mysql-bin.000001',4);
 ```
 
-> [Caution] The replication account must be created in the MYSQL.
+> [Caution] The replication account must be created in the replication target (Master) {{engine.pascalCase}}.
 
 ### tcrds_repl_init
 
@@ -1064,7 +1067,7 @@ ex) call mysql.tcrds_repl_changesource('10.162.1.1',10000,'db_repl','password','
 * If you run the TCRDS_REPL_SKIP_REPL_ERROR procedure when the Duplicate Key error occurs, you can address the replica error.
     * Before 8.4: perform SQL_SLAVE_SKIP_COUNTER=1.
     * After 8.4: perform SQL_REPLICA_SKIP_COUNTER=1.
-* `MySQL error code 1062: 'Duplicate entry ? for key ?'`
+* `{{engine.pascalCase}} error code 1062: 'Duplicate entry ? for key ?'`
 
 ```
 {{engine.lowerCase}}> CALL mysql.tcrds_repl_skip_repl_error();
@@ -1086,7 +1089,7 @@ e.g. {{engine.pascalCase}} error code 1236 (ER_MASTER_FATAL_ERROR_READING_BINLOG
 * Change the replication information so that you can read the next binary log log.
 * If you run the TCRDS_REXT_CHANGESOURCE procedure when the following replication error occurs, you can issue the replication error.
 
-e.g. MySQL error code 1236 (ER_SOURCE_FATAL_ERROR_READING_BINLOG): Got fatal error from source when reading data from binary log
+e.g. {{engine.pascalCase}} error code 1236 (ER_SOURCE_FATAL_ERROR_READING_BINLOG): Got fatal error from source when reading data from binary log
 
 ```
 {{engine.lowerCase}}> CALL mysql.tcrds_repl_next_changesource();
@@ -1128,7 +1131,7 @@ CALL mysql.tcrds_innodb_monitor_reset('module_dml');
 ## Data Migration
 
 * RDS can be exported as data to or imported from NHN Cloud RDS using mysqldump.
-* The mysqldump utility is provided by default when {{engine.lowerCase}} is installed.
+* The mysqldump utility is provided by default when {{engine.pascalCase}} is installed.
 
 ### Export using mysqldump
 

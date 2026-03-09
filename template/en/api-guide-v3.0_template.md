@@ -85,7 +85,12 @@ The API responds with "200 OK" to all API requests. For more information on the 
 | MYSQL_V8041  | O        | O               | NATIVE, CACHING_SHA2 |
 | MYSQL_V8042  | O        | O               | NATIVE, CACHING_SHA2 |
 | MYSQL_V8043  | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL_V8044  | O        | O               | NATIVE, CACHING_SHA2 |
+| MYSQL_V8045  | O        | O               | NATIVE, CACHING_SHA2 |
 | MYSQL_V8405  | O        | O               | CACHING_SHA2 |
+| MYSQL_V8406  | O        | O               | CACHING_SHA2 |
+| MYSQL_V8407  | O        | O               | CACHING_SHA2 |
+| MYSQL_V8408  | O        | O               | CACHING_SHA2 |
 {{/if}}
 {{#if (eq engine.lowerCase "mariadb")}}
 | DB engine type | Available for creation | Available for restoration from OBS | Authentication Plugin Support |
@@ -122,10 +127,10 @@ This API does not require a request body.
 |---------|------|--------|-------------|
 | regions | Body | Array  | Region list |
 {{#if (eq engine.lowerCase "mysql")}}
-| regions.regionCode | Body | Enum    | Region code<br/>`KR1`: Korea (Pangyo) Region<br/>`KR2`: Korea (Pyeongchon) Region<br/>`JP1`: Japan (Tokyo) Region |
+| regions.regionCode | Body | Enum    | Region code<br/>- `KR1`: Korea (Pangyo) Region<br/>- `KR2`: Korea (Pyeongchon) Region<br/>- `JP1`: Japan (Tokyo) Region |
 {{/if}}
 {{#if (eq engine.lowerCase "mariadb")}}
-| regions.regionCode | Body | Enum    | Region code<br/>`KR1`: Korea (Pangyo) Region|
+| regions.regionCode | Body | Enum    | Region code<br/>- `KR1`: Korea (Pangyo) Region|
 {{/if}}
 | regions.isEnabled  | Body | Boolean | Whether to enable a region                                                                 |
 
@@ -682,7 +687,7 @@ This API does not require a request body.
 | dbInstances.dbPort            | Body | Number   | DB port                                                                                                                                                                 |
 | dbInstances.dbInstanceType    | Body | Enum     | DB instance role type<br/>- `MASTER`: Master<br/>- `FAILED_MASTER`: Failed over master<br/>- `CANDIDATE_MASTER`: Candidate master<br/>- `READ_ONLY_SLAVE`: Read replica |
 | dbInstances.dbInstanceStatus  | Body | Enum     | DB instance current status                                                                                                                                              |
-| dbInstances.progressStatus    | Body | Enum     | DB instance current status                                                                                                                                              |
+| dbInstances.progressStatus    | Body | Enum     | DB instance current progress status                                                                                                                                     |
 | dbInstances.createdYmdt       | Body | DateTime | Created date and time (YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                                      |
 | dbInstances.updatedYmdt       | Body | DateTime | Modified date and time (YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                                                                     |
 
@@ -822,7 +827,7 @@ POST /v3.0/db-instances
 | useDefaultNotification                   | Body | Boolean | X        | Whether to use default notification<br/>- Default: `false`                                                              |
 | useDeletionProtection                    | Body | Boolean | X        | Whether to protect against deletion<br/>- Default: `false`                                                              |
 {{#if (eq engine.lowerCase "mysql")}}
-| authenticationPlugin                     | Body | Enum    | X        | Authentication Plugin<br/>- Default: `NATIVE`(`CACHING_SHA2` if not supported)<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password                                                                                                                                     |
+| authenticationPlugin                     | Body | Enum    | X        | Authentication Plugin<br/>- Default: `NATIVE`(`CACHING_SHA2` if not supported)<br/>- NATIVE: `mysql_native_password`<br />- SHA256: `sha256_password`<br />- CACHING_SHA2: `caching_sha2_password`                                                                                                                                     |
 | tlsOption                                | Body | Enum    | X        | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                                                                                                                                                              |
 {{/if}}
 {{#if (eq engine.lowerCase "mariadb")}}
@@ -2089,9 +2094,9 @@ This API does not require a request body.
 | dbUsers.dbUserName           | Body | String   | DB user account name                                                                                                                                                     |
 | dbUsers.host                 | Body | String   | DB user account host name                                                                                                                                                |
 | dbUsers.authorityType        | Body | Enum     | DB user permission type<br/>- `READ`: Permission to execute SELECT query<br/>- `CRUD`: Permission to execute DML query<br/>- `DDL`: Permission to execute DDL query<br/> |
-| dbUsers.dbUserStatus         | Body | Enum     | DB user current status<br/>- `STABLE`: Created<br/>(CREATING: Creating,<br/>- `UPDATING`: Modifying<br/>DELETING: Deleting,<br/>- `DELETED`: Deleted                     |
+| dbUsers.dbUserStatus         | Body | Enum     | DB user current status<br/>- `STABLE`: Created<br/>- `CREATING`: Creating<br/>- `UPDATING`: Modifying<br/>- `DELETING`: Deleting<br/>- `DELETED`: Deleted                     |
 {{#if (eq engine.lowerCase "mysql")}}
-| dbUsers.authenticationPlugin | Body | Enum     | Authentication Plugin<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password                                    |
+| dbUsers.authenticationPlugin | Body | Enum     | Authentication Plugin<br/>- NATIVE: `mysql_native_password`<br />- SHA256: `sha256_password`<br />- CACHING_SHA2: `caching_sha2_password`                                    |
 | dbUsers.tlsOption            | Body | Enum     | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                                                             |
 {{/if}}
 {{#if (eq engine.lowerCase "mariadb")}}
@@ -2149,7 +2154,7 @@ POST /v3.0/db-instances/{dbInstanceId}/db-users
 | host                 | Body | String | O        | DB user account host name<br/>- Example: `1.1.1.%`                                                                                                                       |
 | authorityType        | Body | Enum   | O        | DB user permission type<br/>- `READ`: Permission to execute SELECT query<br/>- `CRUD`: Permission to execute DML query<br/>- `DDL`: Permission to execute DDL query<br/> |
 {{#if (eq engine.lowerCase "mysql")}}
-| authenticationPlugin | Body | Enum   | X        | Authentication Plugin<br/>- Default: `NATIVE`(`CACHING_SHA2` if not supported)<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password                                    |
+| authenticationPlugin | Body | Enum   | X        | Authentication Plugin<br/>- Default: `NATIVE`(`CACHING_SHA2` if not supported)<br/>- NATIVE: `mysql_native_password`<br />- SHA256: `sha256_password`<br />- CACHING_SHA2: `caching_sha2_password`                                    |
 | tlsOption            | Body | Enum   | X        | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                                                             |
 
 > [Caution]
@@ -2204,7 +2209,7 @@ PUT /v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 | dbPassword           | Body | String | X        | DB user account password<br/>- Minimum length: `4`<br/>- Maximum length: `256`                                                                                           |
 | authorityType        | Body | Enum   | X        | DB user permission type<br/>- `READ`: Permission to execute SELECT query<br/>- `CRUD`: Permission to execute DML query<br/>- `DDL`: Permission to execute DDL query<br/> |
 {{#if (eq engine.lowerCase "mysql")}}
-| authenticationPlugin | Body | Enum   | X        | Authentication Plugin<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password                                    |
+| authenticationPlugin | Body | Enum   | X        | Authentication Plugin<br/>- NATIVE: `mysql_native_password`<br />- SHA256: `sha256_password`<br />- CACHING_SHA2: `caching_sha2_password`                                    |
 | tlsOption            | Body | Enum   | X        | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                                                             |
 
 > [Caution]
@@ -2212,7 +2217,7 @@ PUT /v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 > The value of`authenticationPlugin`must be modified at the same time `as dbPassword`.
 {{/if}}
 {{#if (eq engine.lowerCase "mariadb")}}
-| authenticationPlugin | Body | Enum    | X        | Authentication Plugin<br/>- Default: `NATIVE`(`ED25519` if not supported)<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519` |
+| authenticationPlugin | Body | Enum    | X        | Authentication Plugin<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519` |
 {{/if}}
 
 <details><summary>Example</summary>
@@ -2279,7 +2284,7 @@ This API does not require a request body.
 | dbSchemas                | Body | Array    | DB schema list                                                                                                               |
 | dbSchemas.dbSchemaId     | Body | UUID     | DB schema identifier                                                                                                         |
 | dbSchemas.dbSchemaName   | Body | String   | DB schema name                                                                                                               |
-| dbSchemas.dbSchemaStatus | Body | Enum     | DB instance current status<br/>- `STABLE`: Created<br/>(CREATING: Creating,<br/>DELETING: Deleting,<br/>- `DELETED`: Deleted |
+| dbSchemas.dbSchemaStatus | Body | Enum     | DB schema current status<br/>- `STABLE`: Created<br/>- `CREATING`: Creating<br/>- `DELETING`: Deleting<br/>- `DELETED`: Deleted |
 | dbSchemas.createdYmdt    | Body | DateTime | Created date and time (YYYY-MM-DDThh:mm:ss.SSSTZD)                                                                           |
 
 <details><summary>Example</summary>
@@ -3831,7 +3836,7 @@ POST /v3.0/notification-groups
 | notificationGroupName | Body | String  | O        | Name to identify notification groups                        |
 | notifyEmail           | Body | Boolean | X        | Whether to be notified by email<br/>- Default: `true`         |
 | notifySms             | Body | Boolean | X        | Whether to be notified by SMS<br/>- Default: `true`           |
-| isEnabled             | Body | Boolean | X        | Indicates whether the flavor is enabled<br/>- Default: `true` |
+| isEnabled             | Body | Boolean | X        | Whether enabled<br/>- Default: `true`                         |
 | dbInstanceIds         | Body | Array   | O        | DB instance identifiers to monitor                          |
 | userGroupIds          | Body | Array   | O        | User group identifiers                                      |
 
