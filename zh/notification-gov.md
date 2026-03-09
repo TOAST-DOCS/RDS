@@ -4,7 +4,7 @@
 
 Event refers to an important event that occurs either by RDS for MySQL or by user. Event consists of the event type, the date and time of occurrence, the original source and the message. Event can be viewed from the console, and you can receive notifications of event occurrence by email or SMS through subscription. The event type and the possible events are as follows.
 
-| Event Code        | Event Category    | Availability | Description                                                                   |
+| Event Code        | Event Type        | Subscribable | Description                                                                   |
 |-------------------|-------------------|--------------|-------------------------------------------------------------------------------|
 | BACUP_01_00       | BACKUP            | No           | Backup of DB instance started                                                 |
 | BACUP_01_01       | BACKUP            | No           | Backup of DB instance completed                                               |
@@ -26,7 +26,7 @@ Event refers to an important event that occurs either by RDS for MySQL or by use
 | INSTC_01_01       | INSTANCE          | No           | Creating DB instance completed                                                |
 | INSTC_01_04       | INSTANCE          | No           | Creating DB instance failed                                                   |
 | INSTC_02_01       | INSTANCE          | Yes          | DB instance started                                                           |
-| INSTC_03_01       | INSTANCE          | Yes          | DB instanced ended                                                            |
+| INSTC_03_01       | INSTANCE          | Yes          | DB instance ended                                                            |
 | INSTC_04_00       | INSTANCE          | Yes          | Deleting DB instance started                                                  |
 | INSTC_04_01       | INSTANCE          | Yes          | Deleting DB instance completed                                                |
 | INSTC_04_04       | INSTANCE          | Yes          | Deleting DB instance failed                                                   |
@@ -83,7 +83,7 @@ Event refers to an important event that occurs either by RDS for MySQL or by use
 | INSTC_34_04       | INSTANCE          | Yes          | High availability suspension failed                                           |
 | INSTC_35_01       | INSTANCE          | Yes          | High availability restarted                                                   |
 | INSTC_35_04       | INSTANCE          | Yes          | High availability restart failed                                              |
-| INSTC_36_01       | INSTANCE          | Yes          | Instance restart using failover                                               |
+| INSTC_36_01       | INSTANCE          | Yes          | Instance restart using failover completed                                     |
 | INSTC_36_04       | INSTANCE          | Yes          | Instance restart using failover failed                                        |
 | INSTC_37_01       | INSTANCE          | Yes          | DB User created                                                               |
 | INSTC_37_04       | INSTANCE          | Yes          | DB user creation failed                                                       |
@@ -190,20 +190,21 @@ You can subscribe to events by event type, code, and source. When you subscribe 
 
 You can manage users as groups to receive notifications. Notification target must be registered as a project member. If the users in the user group are excluded from the project members, they will not be notified even if they belong to the user group.
 
-> [Caution] If there is no mobile phone information for the reason of not performing real name authentication, you will not receive SMS notifications.
+> [Caution]
+> If there is no mobile phone information for the reason of not performing real name authentication, you will not receive SMS notifications.
 
 ### Create User Group
 
 ![user_group_01_en](https://static.toastoven.net/prod_rds/mysql/23.06.13/user_group_01_en.png)
 
-* ❶ When you click**Create user group**, a pop-up screen appears where you can create user groups.
+* ❶ When you click **Create user group**, a pop-up screen appears where you can create user groups.
 * ❷ Users added to the user group appear.
 * ❸ Press **x** to exclude added users.
 * ❹ If there are many users in the user list, you can limit the results by entering search criteria.
 * ❺ Add **all project members** to the notified users.
-  * You cannot add individual users. If you do, it is canceled.
-  * When sending an alrm using the user group, the alarm is sent to all project members at the time.
-* ❻ Click **Add** to add a user to the user group.
+  * When added, individual user additions are canceled.
+  * When sending an alarm using the user group, the alarm is sent to all project members at the time.
+* ❻ Click **OK** to add a user to the user group.
 
 ## Notification Group
 

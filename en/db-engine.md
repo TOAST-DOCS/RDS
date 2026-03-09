@@ -2,7 +2,7 @@
 
 ## DB Engine
 
-In MySQL, the version number consists of version = `X.Y.Z.` In NHN Cloud's RDS for MySQL, `X.Y` represents the major version and `Z` represents the minor version.
+In MySQL, the version number consists of version = `X.Y.Z` In NHN Cloud's RDS for MySQL, `X.Y` represents the major version and `Z` represents the minor version.
 
 ### DB engine version provided by RDS
 
@@ -40,12 +40,11 @@ Support for MySQL versions below 8.0.34 has ended in accordance with the MySQL L
 | <strong>5.6</strong> |                                                           |
 | MySQL 5.6.33         | This version is no longer supported.                      |
 
-
 ### Manage DB Engine Version
 After creating the DB instance, you can change the DB engine version and modify the DB instance.
 
 > [Caution]
-When attempting to change the DB version, only an upgrade is supported. a downgrade is not supported.
+> When attempting to change the DB version, only an upgrade is supported. A downgrade is not supported.
 
 When upgrading the database engine version, a major version upgrade occurs if only the major version number is changed, and a minor version upgrade occurs if only the minor version number is changed.
 When attempting to upgrade the DB engine major version, you can upgrade to the next major version of the DB engine.
@@ -82,7 +81,7 @@ For the results of `DB Engine upgrade pre-check`in the console and the results o
 
 Also, you must check items that have been removed or changed in 8.0.
 - [Changes in SQL](https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-sql-changes)
-- [Features Removed in MySQL8.0](https://dev.mysql.com/doc/refman/8.0/en/mysql-nutshell.html#mysql-nutshell-removals)
+- [Features Removed in MySQL 8.0](https://dev.mysql.com/doc/refman/8.0/en/mysql-nutshell.html#mysql-nutshell-removals)
 
 
 #### Pre-check for Upgrading MySQL 8.0 to MySQL 8.4
@@ -105,14 +104,14 @@ Upgrade Path
 1.	First, upgrade to MySQL 8.0.23 or higher
 2.	Then, upgrade to MySQL 8.4
 
-This is because MySQL 8.4 requires at least version 8.0.23 for metadata and internal schema compatibility. Upgrading from versions below 8.0.23 is not supported.
+This is because the minimum compatible version required by MySQL 8.4 is 8.0.23 or higher, and compatibility of metadata and internal schema structure is not guaranteed in environments lower than that version.
 
 #### Upgrading the DB Engine Version Using a Dummy DB Instance 
 
 When trying to change the DB engine version in the Modify DB Instance window, you can select whether to use a dummy DB instance to ensure high availability during the version upgrade process. If you choose to use a dummy DB instance, a candidate master for DB version upgrade is created. 
 
 > [Caution]
-For dummy DB instances, a temporary candidate master is created during the upgrade process, so this option is only available for non-high-availability configurations.
+> For dummy DB instances, a temporary candidate master is created during the upgrade process, so this option is only available for non-high-availability configurations.
 
 #### Manual Control of Failover When Upgrading High Availability DB Instances
 
@@ -136,7 +135,7 @@ For DB instances created before May 10, 2022, the DB instance will be replaced w
 - RDS for MySQL uses the MariaDB Audit plug-in to provide an auditing plug-in for MySQL DB instances. 
 
 > [Caution]
-This plugin may not be supported by all versions of MySQL and will be unavailable when upgrading to an unsupported version.
+> This plugin may not be supported by all versions of MySQL and will be unavailable when upgrading to an unsupported version.
 
 #### Supported Versions
 | MySQL version        | Whether to support server audit plugins |
@@ -165,5 +164,5 @@ This plugin may not be supported by all versions of MySQL and will be unavailabl
 | MySQL 5.7.26         | O                                       |
 | MySQL 5.7.19         | O                                       |
 | MySQL 5.7.15         | X                                       |
-| <strong>5.6</strong> |                                         |
+| <strong>MySQL 5.6</strong> |                                         |
 | MySQL 5.6.33         | O                                       |
