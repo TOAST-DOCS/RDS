@@ -851,10 +851,10 @@ POST /v4.0/db-instances
 | parameterGroupId        | Body | UUID    | O        | Parameter group identifier                                                                                            |
 | dbSecurityGroupIds      | Body | Array   | X        | DB security group identifiers                                                                                         |
 | userGroupIds            | Body | Array   | X        | User group identifiers                                                                                                |
-| useHighAvailability     | Body | Boolean | X        | Whether to use high availability<br/>Default: `false`                                                                 |
-| pingInterval            | Body | Number  | X        | Ping interval (sec) when using high availability<br/>Default: `3`<br/>- Minimum value: `1`<br/>- Maximum value: `600` |
-| useDefaultNotification  | Body | Boolean | X        | Whether to use default notification<br/>Default: `false`                                                              |
-| useDeletionProtection   | Body | Boolean | X        | Whether to protect against deletion<br/>Default: `false`                                                              |
+| useHighAvailability     | Body | Boolean | X        | Whether to use high availability<br/>- Default: `false`                                                                 |
+| pingInterval            | Body | Number  | X        | Ping interval (sec) when using high availability<br/>- Default: `3`<br/>- Minimum value: `1`<br/>- Maximum value: `600` |
+| useDefaultNotification  | Body | Boolean | X        | Whether to use default notification<br/>- Default: `false`                                                              |
+| useDeletionProtection   | Body | Boolean | X        | Whether to protect against deletion<br/>- Default: `false`                                                              |
 | useSlowQueryAnalysis    | Body | Boolean | X        | Whether to analyze slow queries<br/>- Default: `true`                                                                 |
 {{#if (eq engine.lowerCase "mysql")}}
 | authenticationPlugin                     | Body | Enum    | X        | Authentication Plugin<br/>- Default: `NATIVE`(`CACHING_SHA2` if not supported)<br/>- NATIVE: `mysql_native_password`<br />- SHA256: sha256_password<br />- CACHING_SHA2: caching_sha2_password                                                                                                                                     |
@@ -865,7 +865,7 @@ POST /v4.0/db-instances
 {{/if}}
 | network                                  | Body | Object  | O        | Network information objects                                                                                                                                                                                                                                               |
 | network.subnetId                         | Body | UUID    | O        | Subnet identifier                                                                                                                                                                                                                                                         |
-| network.usePublicAccess                  | Body | Boolean | X        | External access is available or not<br/>Default: `false`                                                                                                                                                                                                                  |
+| network.usePublicAccess                  | Body | Boolean | X        | External access is available or not<br/>- Default: `false`                                                                                                                                                                                                                  |
 | network.availabilityZone                 | Body | Enum    | O        | Availability zone where DB instance will be created<br/>- Example: `kr-pub-a`                                                                                                                                                                                             |
 | storage                                  | Body | Object  | O        | Storage information objects                                                                                                                                                                                                                                               |    
 | storage.storageType                      | Body | Enum    | O        | Block Storage Type<br/>- Example: `General SSD`                                                                                                                                                                                                                           |
@@ -877,12 +877,12 @@ POST /v4.0/db-instances
 | storage.storageAutoscale.cooldownTime        | Body | Number  | X  | Auto scaling cooldown time (minutes)<br/>- Minimum value: `10`<br/>- Maximum value: `1440` |
 | backup                                   | Body | Object  | O        | Backup information objects                                                                                                                                                                                                                                                |
 | backup.backupPeriod                      | Body | Number  | O        | Backup retention period<br/>- Minimum value: `0`<br/>- Maximum value: `730`                                                                                                                                                                                               |
-| backup.ftwrlWaitTimeout                  | Body | Number  | X        | Query latency (sec)<br/>Default: `1800`<br/>- Minimum value: `0`<br/>- Maximum value: `21600`                                                                                                                                                                                |
-| backup.backupRetryCount                  | Body | Number  | X        | Number of backup retries<br/>Default: `0`<br/>- Minimum value: `0`<br/>- Maximum value: `10`                                                                                                                                                                              |
+| backup.ftwrlWaitTimeout                  | Body | Number  | X        | Query latency (sec)<br/>- Default: `1800`<br/>- Minimum value: `0`<br/>- Maximum value: `21600`                                                                                                                                                                                |
+| backup.backupRetryCount                  | Body | Number  | X        | Number of backup retries<br/>- Default: `0`<br/>- Minimum value: `0`<br/>- Maximum value: `10`                                                                                                                                                                              |
 {{#if (eq engine.lowerCase "mysql")}}
 | backup.replicationRegion                 | Body | Enum    | X        | Backup replication region<br />- `KR1`: Korea (Pangyo) Region<br/>- `KR2`: Korea (Pyeongchon) Region<br/>- `JP1`: Japan (Tokyo) Region                                                                                                                                    |
 {{/if}}
-| backup.useBackupLock                     | Body | Boolean | X        | Whether to use table lock<br/>Default: `true`                                                                                                                                                                                                                             |
+| backup.useBackupLock                     | Body | Boolean | X        | Whether to use table lock<br/>- Default: `true`                                                                                                                                                                                                                             |
 | backup.backupSchedules                   | Body | Array   | O        | Scheduled auto backup list                                                                                                                                                                                                                                                |
 | backup.backupSchedules.backupWndBgnTime  | Body | String  | O        | Backup started time<br/>- Example: `00:00:00`                                                                                                                                                                                                                             |
 | backup.backupSchedules.backupWndDuration | Body | Enum    | O        | Backup duration<br/>Auto backup proceeds within duration from backup start time.<br/>- `HALF_AN_HOUR`: 30 minutes<br/>- `ONE_HOUR`: 1 hour<br/>- `ONE_HOUR_AND_HALF`: 1.5 hour<br/>- `TWO_HOURS`: 2 hour<br/>- `TWO_HOURS_AND_HALF`: 2.5 hour<br/>- `THREE_HOURS`: 3 hour |
@@ -958,14 +958,14 @@ PUT /v4.0/db-instances/{dbInstanceId}
 | dbPort             | Body | Number  | X        | DB port<br/>- Minimum value: `3306`<br/>- Maximum value: `43306`                                                  |
 {{#if (eq engine.lowerCase "mysql")}}
 | dbVersion          | Body | Enum    | X        | DB engine type                                                                                                    |
-| useDummy           | Body | Boolean | X        | Whether to use dummies when upgrading the DB version of a single DB instance<br/>Default: `false`                 |
+| useDummy           | Body | Boolean | X        | Whether to use dummies when upgrading the DB version of a single DB instance<br/>- Default: `false`                 |
 {{/if}}
 | useSlowQueryAnalysis | Body | Boolean  | X | Whether to analyze slow queries |
 | dbFlavorId         | Body | UUID    | X        | Identifier of DB instance specifications                                                                          |
 | parameterGroupId   | Body | UUID    | X        | Parameter group identifier                                                                                        |
 | dbSecurityGroupIds | Body | Array   | X        | DB security group identifiers                                                                                     |
-| executeBackup      | Body | Boolean | X        | Whether to execute backup at this time<br/>Default: `false`                                                       |
-| useOnlineFailover  | Body | Boolean | X        | Whether to restart using failover<br/>Available only for DB instance using high availability<br/>Default: `false` |
+| executeBackup      | Body | Boolean | X        | Whether to execute backup at this time<br/>- Default: `false`                                                       |
+| useOnlineFailover  | Body | Boolean | X        | Whether to restart using failover<br/>Available only for DB instance using high availability<br/>- Default: `false` |
 | waitReplicationDelay  | Body | Boolean | X  | Wait for replication lag to clear<br/>Available only for DB instances with high availability enabled.<br/>- Default: `false` |
 | useReadOnly  | Body | Boolean | X  | Switch to read-only mode<br/>Available only for DB instances with high availability enabled.<br/>- Default: `false` |
 
@@ -1038,8 +1038,8 @@ POST /v4.0/db-instances/{dbInstanceId}/restart
 | Name              | Type | Format  | Required | Description                                                                                                       |
 |-------------------|------|---------|----------|-------------------------------------------------------------------------------------------------------------------|
 | dbInstanceId      | URL  | UUID    | O        | DB instance identifier                                                                                            |
-| useOnlineFailover | Body | Boolean | X        | Whether to restart using failover<br/>Available only for DB instance using high availability<br/>Default: `false` |
-| executeBackup     | Body | Boolean | X        | Whether to execute backup at this time<br/>Default: `false`                                                       |
+| useOnlineFailover | Body | Boolean | X        | Whether to restart using failover<br/>Available only for DB instance using high availability<br/>- Default: `false` |
+| executeBackup     | Body | Boolean | X        | Whether to execute backup at this time<br/>- Default: `false`                                                       |
 | waitReplicationDelay     | Body | Boolean | X  | Wait for replication lag to clear<br/>Available only for DB instances with high availability enabled.<br/>- Default: `false`                                         |
 | useReadOnly     | Body | Boolean | X  | Switch to read-only mode<br/>Available only for DB instances with high availability enabled.<br/>- Default: `false`
 
@@ -1173,8 +1173,8 @@ POST /v4.0/db-instances/{dbInstanceId}/replicate
 | parameterGroupId                             | Body | UUID    | X        | Parameter group identifier<br/>- Default: Original DB instance value                                                        |
 | dbSecurityGroupIds                           | Body | Array   | X        | DB security group identifiers<br/>- Default: Original DB instance value                                                     |
 | userGroupIds                                 | Body | Array   | X        | User group identifiers                                                                                                      |
-| useDefaultNotification                       | Body | Boolean | X        | Whether to use default notification<br/>Default: `false`                                                                    |
-| useDeletionProtection                        | Body | Boolean | X        | Whether to protect against deletion<br/>Default: `false`                                                                    |
+| useDefaultNotification                       | Body | Boolean | X        | Whether to use default notification<br/>- Default: `false`                                                                    |
+| useDeletionProtection                        | Body | Boolean | X        | Whether to protect against deletion<br/>- Default: `false`                                                                    |
 | useSlowQueryAnalysis                         | Body | Boolean | X        | Whether to analyze Slow query<br/>- Default: `true`                                                                                      |
 | network                                      | Body | Object  | O        | Network information objects                                                                                                 |
 | network.usePublicAccess                      | Body | Boolean | X        | External access is available or not<br/>- Default: Original DB instance value                                               |
@@ -2033,7 +2033,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/storage-info
 |--------------------------------------|------|---------|----------|-------------------------------------------------------------------------------------------------------------------|
 | dbInstanceId                         | URL  | UUID    | O        | DB instance identifier                                                                                            |
 | storageSize                          | Body | Number  | O        | Block Storage Size (GB)<br/>- Minimum value: Current value<br/>- Maximum value: `2048`                            |
-| useOnlineFailover                    | Body | Boolean | X        | Whether to restart using failover<br/>Available only for DB instance using high availability<br/>Default: `false` |
+| useOnlineFailover                    | Body | Boolean | X        | Whether to restart using failover<br/>Available only for DB instance using high availability<br/>- Default: `false` |
 | storageAutoscale                     | Body | Object  | X        |Block Storage Auto Scaling Objects                                                                                                 |
 | storageAutoscale.useStorageAutoscale | Body | Boolean | X        | Whether to enable storage auto scaling                                                                                                     |
 | storageAutoscale.threshold           | Body | Number  | X        | Auto scale out conditions (%)<br/>- Minimum value: `50`<br/>- Maximum value: `95`                                                                       |
@@ -3295,14 +3295,14 @@ POST /v4.0/backups/{backupId}/restore
 | parameterGroupId                             | Body | UUID    | X        | Parameter group identifier                                                                                                                |
 | dbSecurityGroupIds                           | Body | Array   | X        | DB security group identifiers                                                                                                             |
 | userGroupIds                                 | Body | Array   | X        | User group identifiers                                                                                                                    |
-| useHighAvailability                          | Body | Boolean | X        | Whether to use high availability<br/>Default: `false`                                                                                     |
-| pingInterval                                 | Body | Number  | X        | Ping interval (sec) when using high availability<br/>Default: `6`<br/>- Minimum value: `1`<br/>- Maximum value: `600`                     |
-| useDefaultNotification                       | Body | Boolean | X        | Whether to use default notification<br/>Default: `false`                                                                                  |
-| useDeletionProtection                        | Body | Boolean | X        | Whether to protect against deletion<br/>Default: `false`                                                                                  | 
+| useHighAvailability                          | Body | Boolean | X        | Whether to use high availability<br/>- Default: `false`                                                                                     |
+| pingInterval                                 | Body | Number  | X        | Ping interval (sec) when using high availability<br/>- Default: `6`<br/>- Minimum value: `1`<br/>- Maximum value: `600`                     |
+| useDefaultNotification                       | Body | Boolean | X        | Whether to use default notification<br/>- Default: `false`                                                                                  |
+| useDeletionProtection                        | Body | Boolean | X        | Whether to protect against deletion<br/>- Default: `false`                                                                                  | 
 | useSlowQueryAnalysis                         | Body | Boolean | X        | Whether to analyze slow queries<br/>- Default: `true`                                                                                     |
 | network                                      | Body | Object  | X        | Network information objects                                                                                                               |
 | network.subnetId                             | Body | UUID    | X        | Subnet identifier                                                                                                                         |
-| network.usePublicAccess                      | Body | Boolean | X        | External access is available or not<br/>Default: `false`                                                                                  |
+| network.usePublicAccess                      | Body | Boolean | X        | External access is available or not<br/>- Default: `false`                                                                                  |
 | network.availabilityZone                     | Body | Enum    | X        | Availability zone where DB instance will be created<br/>- Example: `kr-pub-a`                                                             |
 | storage                                      | Body | Object  | X        | Storage information objects                                                                                                               |    
 | storage.storageType                          | Body | Enum    | X        | Block Storage Type <br/> - Default: Source DB instance value     <br/>- Example: `General SSD`                                            |
@@ -3314,12 +3314,12 @@ POST /v4.0/backups/{backupId}/restore
 | storage.storageAutoscale.cooldownTime        | Body | Number  | X        | Auto scaling cooldown time (minutes) <br/> - Default: Source DB instance value     <br/>- Minimum value: `10`<br/>- Maximum value: `1440` |
 | backup                                       | Body | Object  | X        | Backup information objects                                                                                                                |
 | backup.backupPeriod                          | Body | Number  | X        | Backup retention period <br/> - Default: Source DB instance value     <br/>- Minimum value: `0`<br/>- Maximum value: `730`                |
-| backup.ftwrlWaitTimeout                      | Body | Number  | X        | Query latency (sec)<br/>Default: `6`<br/>- Minimum value: `0`<br/>- Maximum value: `21600`                                                |
-| backup.backupRetryCount                      | Body | Number  | X        | Number of backup retries<br/>Default: `6`<br/>- Minimum value: `0`<br/>- Maximum value: `10`                                              |
+| backup.ftwrlWaitTimeout                      | Body | Number  | X        | Query latency (sec)<br/>- Default: `6`<br/>- Minimum value: `0`<br/>- Maximum value: `21600`                                                |
+| backup.backupRetryCount                      | Body | Number  | X        | Number of backup retries<br/>- Default: `6`<br/>- Minimum value: `0`<br/>- Maximum value: `10`                                              |
 {{#if (eq engine.lowerCase "mysql")}}
 | backup.replicationRegion                 | Body | Enum    | X        | Backup replication region<br />- `KR1`: Korea (Pangyo) Region<br/>- `KR2`: Korea (Pyeongchon) Region<br/>- `JP1`: Japan (Tokyo) Region                                                                                                                                    |
 {{/if}}
-| backup.useBackupLock                     | Body | Boolean | X        | Whether to use table lock<br/>Default: `true`                                                                                                                                                                                                                             |
+| backup.useBackupLock                     | Body | Boolean | X        | Whether to use table lock<br/>- Default: `true`                                                                                                                                                                                                                             |
 | backup.backupSchedules                   | Body | Array   | X        | Scheduled auto backup list                                                                                                                                                                                                                                                |
 | backup.backupSchedules.backupWndBgnTime  | Body | String  | O        | Backup started time<br/>- Example: `00:00:00`                                                                                                                                                                                                                             |
 | backup.backupSchedules.backupWndDuration | Body | Enum    | O        | Backup duration<br/>Auto backup proceeds within duration from backup start time.<br/>- `HALF_AN_HOUR`: 30 minutes<br/>- `ONE_HOUR`: 1 hour<br/>- `ONE_HOUR_AND_HALF`: 1.5 hour<br/>- `TWO_HOURS`: 2 hour<br/>- `TWO_HOURS_AND_HALF`: 2.5 hour<br/>- `THREE_HOURS`: 3 hour |
@@ -4691,9 +4691,9 @@ POST /v4.0/notification-groups
 | Name                  | Type | Format  | Required | Description                                                 |
 |-----------------------|------|---------|----------|-------------------------------------------------------------|
 | notificationGroupName | Body | String  | O        | Name to identify notification groups                        |
-| notifyEmail           | Body | Boolean | X        | Whether to be notified by email<br/>Default: `true`         |
-| notifySms             | Body | Boolean | X        | Whether to be notified by SMS<br/>Default: `true`           |
-| isEnabled             | Body | Boolean | X        | Indicates whether the flavor is enabled<br/>Default: `true` |
+| notifyEmail           | Body | Boolean | X        | Whether to be notified by email<br/>- Default: `true`         |
+| notifySms             | Body | Boolean | X        | Whether to be notified by SMS<br/>- Default: `true`           |
+| isEnabled             | Body | Boolean | X        | Indicates whether the flavor is enabled<br/>- Default: `true` |
 | dbInstanceIds         | Body | Array   | O        | DB instance identifiers to monitor                          |
 | userGroupIds          | Body | Array   | O        | User group identifiers                                      |
 
