@@ -1,6 +1,5 @@
 ## Database > RDS for {{engine.pascalCase}} > APIガイド
 
-
 ## RDS for {{engine.pascalCase}} API共通情報
 
 ### APIエンドポイント
@@ -1465,14 +1464,15 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 | useDeletionProtection                               | Body | Boolean | X  | 削除保護の有無<br>デフォルト値: `false`                                                                                                                                                |
 | useSlowQueryAnalysis                                | Body | Boolean | X  | Slow query分析を行うかどうか<br/>- デフォルト値: `true`                                                                                                                                      |
 | network                                             | Body | Object  | X  | ネットワーク情報オブジェクト                                                                                                                                                            |
-| network.subnetId                                    | Body | UUID    | X  | サブネットの識別子                                                                                                                                                              |
+| network.subnetId                                    | Body | UUID    | X  | サブネットの識別子<br/>- デフォルト値: 原本DBインスタンスの値                                                                                                                                                              |
 | network.usePublicAccess                             | Body | Boolean | X  | 外部接続可否<br/>- デフォルト値: `false`                                                                                                                           |
-| network.availabilityZone                            | Body | Enum    | X  | DBインスタンスを作成するアベイラビリティゾーン<br/>- 例: `kr-pub-a`                                                                                                                 |
+| network.availabilityZone                            | Body | Enum    | X  | DBインスタンスを作成するアベイラビリティゾーン<br/>- 例: `kr-pub-a`<br/>- デフォルト値: ランダム選択                                                                                                                 |
 | storage                                             | Body | Object  | X  | ストレージ情報オブジェクト                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | storage.storageType | Body | Enum | X | データストレージタイプ<br/>- デフォルト値：原本DBインスタンスの値<br/>- 例：`General SSD` |
 | storage.storageSize | Body | Number | X | データストレージサイズ(GB)<br/>- デフォルト値：原本DBインスタンスの値<br/>- 最小値：`20`<br/>- 最大値：`2048` |
 | storage.storageAutoscale                            | Body | Object  | X  | データストレージ自動拡張オブジェクト                                                                                                                                                     |
-| storage.storageAutoscale.useStorageAutoscale | Body | Boolean | X | ストレージ自動拡張の使用有無<br/>- デフォルト値：原本DBインスタンスの値<br/>- デフォルト値：原本DBインスタンスの値<br/>- 最小値：`50`<br/>- 最大値：`95` |
+| storage.storageAutoscale.useStorageAutoscale | Body | Boolean | X | ストレージ自動拡張の使用有無 |
+| storage.storageAutoscale.threshold | Body | Number | X | 自動拡張条件(%)<br/>- デフォルト値：原本DBインスタンスの値<br/>- 最小値：`50`<br/>- 最大値：`95` |
 | storage.storageAutoscale.maxStorageSize | Body | Number | X | 自動拡張最大サイズ(GB)<br/>- デフォルト値：原本DBインスタンスの値<br/>- 最大値：`4096` |
 | storage.storageAutoscale.cooldownTime | Body | Number | X | 自動拡張クールダウン時間(分)<br/>- デフォルト値：原本DBインスタンスの値<br/>- 最小値：`10`<br/>- 最大値：`1440` |
 | backup                                              | Body | Object  | X  | バックアップ情報オブジェクト                                                                                                                                                              |
@@ -3048,6 +3048,8 @@ GET /v4.0/backups/{backupId}
 
 </p>
 </details>
+
+---
 
 ### バックアップリスト照会
 

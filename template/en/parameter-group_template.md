@@ -20,7 +20,7 @@ You can create a new parameter group based on an existing parameter group. The c
 
 ### Reset Parameter Group
 
-When you group parameters, you change the values of all parameters to the default values for the DB engine version.
+When you reset the parameter group, you change the values of all parameters to the default values for the DB engine version.
 
 <a id="apply"></a>
 ### Apply Parameter Group
@@ -28,7 +28,8 @@ When you group parameters, you change the values of all parameters to the defaul
 When creating or modifying a DB instance, you can select the parameter groups to apply to the DB instance. One parameter group is applied to one DB instance, and one parameter group can be applied to multiple DB instances. If a parameter in a parameter group is changed, the change does not immediately apply to the DB instance. If an associated DB instance exists, the parameter group changes to `Need to Apply`. On the DB Instances list screen, select the DB instance associated with the parameter
 group, and then click **Apply Parameter Group Changes** to reflect the changes in the parameters to the DB instance. When changes to the parameter group are applied to all associated DB instances, the parameter group changes to `Applied `.
 
-> [Caution] If the parameters that require restart have changed, the DB instance will be restarted during applying changes.
+> [Caution]
+> If the parameters that require restart have changed, the DB instance will be restarted during applying changes.
 
 ### Compare Parameter Group
 
@@ -49,7 +50,7 @@ The parameter contains the following information.
 | Value            | Value to be applied to parameters.                                                                                                                                                                                |
 | Allowed values   | Range of values applicable to parameters.<br/>                                                                                                                                                                    | 
 | Application Type | Either ` Static` or ` Dynamic`.<br/>For `Static`, the DB instance must be restarted to apply the parameter changes.<br/>For `Dynamic`, the parameters are applied immediately without restarting the DB instance. | 
-| Data Format      | Format of the parameter value.                                                                                                                                                                                    | |
+| Data Format      | Format of the parameter value.                                                                                                                                                                                    |
 | Use Formula      | Whether the formula is available to use.                                                                                                                                                                          |
 
 ### Parameter Variables, Formulas, and Functions
@@ -107,7 +108,7 @@ In GTID mode, the following constraints are applied when doing enforce_gtid_cons
 
 ### Customer Recommended Precautions
 
-1. If you do use a transactional storage engine like INNODB, do not perform updates in one transaction. If you do use a transactional storage engine like INNODB, do not perform updates in one transaction.
+1. If possible, do not use non-transactional storage engines like MyISAM. If you do, do not perform updates in one transaction with a transactional storage engine like INNODB.
 2. Do not use the CREATE TABLE ... SELECT statement (for versions prior to 8.0.21).
     ```
     e.g.  
@@ -138,10 +139,10 @@ To apply GTID smoothly, gtid_mode (gtid application stage) and enforce_gtid_cons
 | 2     | Every DB instance | enforce_gtid_consistency = ON   | Errors occur in problematic SQL.                          | Change the parameter group and apply.<br>Problematic queries can no longer be executed with GTID.                                                                               |
 | 3     | Every DB instance | gtid_mode = OFF_PERMISSIVE      | Prepare Replicas to Handle GTIDs                          | Change the parameter group and apply.<br>All replicas must first become OFF_PERMISSIVE to avoid issues.                                                                         |
 | 4     | Every DB instance | gtid_mode = ON_PERMISSIVE       | Source generates GTID                                     | Change the parameter group and apply.                                                                                                                                           |
-| 5     | Every DB instance | -                               | Check for Remaining ANONYMOUS Transactions                | `SHOW STATUS LIKE 'ONGOING_ANONYMOUS_TRANSACTION_COUNT';`<br>모All servers must return a result of 0 at least once.                                                              |
+| 5     | Every DB instance | -                               | Check for Remaining ANONYMOUS Transactions                | `SHOW STATUS LIKE 'ONGOING_ANONYMOUS_TRANSACTION_COUNT';`<br>All servers must return a result of 0 at least once.                                                              |
 | 6     | Every DB instance | gtid_mode = ON                  | All transactions use only GTID                            | Change the parameter group and apply.                                                                                                                                           |
 
-> [Warning]
+> [Caution]
 > * After changing the parameter group at each step, you must always perform [Apply parameter group changes] (parameter-group/#apply).
 > * Changing the gtid_mode and enforce_gtid_consistency parameters may require a DB instance restart.
 > * Disabling GTIDs is done in the reverse order of applying them.

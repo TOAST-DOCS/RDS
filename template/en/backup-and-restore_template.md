@@ -10,7 +10,7 @@ high-availability configuration or back up only increments of data since the pre
 > High availability DB instances perform backups on the redundant master so that the storage performance of the master is not degraded.
 > However, backups can be performed on the master even if it is a high availability DB instance in the following cases.
 > * If a backup cannot be performed due to a candidate master failure.
-> * If you do not have a read replica in a situation where you need a backup taken from a DB instance other than the candidate master for rebuilding the candidate master and you do not have a read replica
+> * If you do not have a read replica in a situation where you need a backup taken from a DB instance other than the candidate master for rebuilding the candidate master
 
 {{#if (eq engine.lowerCase "mysql")}}
 RDS for MySQL uses Percona XtraBackup to back up databases. You have to use the same version of Percona XtraBackup that RDS for MySQL uses to restore to backup of external MySQL or to restore to backup of RDS for MySQL Percona XtraBackup version in line with DB engine version is as follows.
@@ -37,8 +37,8 @@ RDS for MySQL uses Percona XtraBackup to back up databases. You have to use the 
 | 8.4.5         | 8.4.0              |
 
 * For detailed information about installing XtraBackup, visit the Percona home page.
-  * https://www.percona.com/doc/percona-xtrabackup/2.4/index.html
-  * https://www.percona.com/doc/percona-xtrabackup/8.0/index.html
+  * https://docs.percona.com/percona-xtrabackup/2.4/
+  * https://docs.percona.com/percona-xtrabackup/8.0/
   * https://docs.percona.com/percona-xtrabackup/8.4/
 
 > [Note]
@@ -90,6 +90,7 @@ When restoring to an incremental backup, the restore proceeds from the first ful
 
 > [Caution]
 > Restoring from incremental backups may take more time than restoring from a full backup, which is proportional to the sum of the capacity of the incremental backups required for the restore.
+
 #### Baseline Backup
 
 Incremental backups require a backup to baseline data changes on. An incremental backup can also be the baseline backup for a new incremental backup.
@@ -230,7 +231,7 @@ You can export backup files stored in internal backup storage to user object sto
 
 ![backup-export-en]({{url.cdn}}/24.03.12/backup-export-en.png)
 
-Select the backup file to export from the **Backup** tab and click **Export to Object Storage**.
+❷ Select the backup file to export from the **Backup** tab and click **Export to Object Storage**.
 
 > [Note]
 > For manual backups, if the source DB instance that performed the backup was deleted, you cannot export the backup.
@@ -342,7 +343,7 @@ mariabackup --defaults-file={my.cnf path} --user {user} --password '{password}' 
 
 * The maximum file size that can be uploaded at a time is 5GB.
 * If the backup file is larger than 5GB, you have to use a utility such as split to cut the backup file to less than 5GB and upload it in multi-part.
-* For detailed information, refer to [Multipart Upload](/Storage/Object%20Storage/ko/api-guide/#_44).
+* For detailed information, refer to [Multipart Upload](/Storage/Object%20Storage/en/api-guide/#_45).
 
 (4) After accessing the console of the project you want to restore, on the DB Instances tab, click the **Restore to Backup in Object Storage** button.
 
@@ -359,7 +360,7 @@ mariabackup --defaults-file={my.cnf path} --user {user} --password '{password}' 
 You can use the backup file in RDS for MySQL to restore the database in MySQL directly. Only full backups can be restored; incremental backup reflection is not supported. When restoring a RDS for MySQL backup file, refer to the [Backup](backup-and-restore/#overview) and use the same version as Percona XtraBackup used by RDS for MySQL.
 {{/if}}
 {{#if (eq engine.lowerCase "mariadb")}}
-You can use the backup file in RDS for MariaDB to restore the database in MariaDB directly. Only full backups can be restored; incremental backup reflection is not supported. When restoring a RDS for MariaDB backup file, refer to the [Backup](backup-and-restore/#_1) and use the same version as Percona XtraBackup used by RDS for MariaDB.
+You can use the backup file in RDS for MariaDB to restore the database in MariaDB directly. Only full backups can be restored; incremental backup reflection is not supported.
 {{/if}}
 
 (1) Export backup of RDS for {{engine.pascalCase}} to object storage with reference to the [Export Backup](backup-and-restore/#export).
@@ -410,7 +411,7 @@ rm -rf {MariaDB data storage path}/*
 ```
 cat {backup file storage path} | xbstream -x -C {MariaDB data storage  path} 
 mariabackup --decompress {MariaDB data storage  path}
-innobackupex --defaults-file={my.cnf path} --apply-log {MariaDB data storage path} 
+mariabackup --defaults-file={my.cnf path} --apply-log {MariaDB data storage path}
 ```
 
 (6) Delete unnecessary files after unzipping files.

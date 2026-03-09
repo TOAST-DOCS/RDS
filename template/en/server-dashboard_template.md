@@ -26,7 +26,7 @@ Use a layout to show the size and position of charts. When the service is enable
 ![layout_03_en]({{url.cdn}}/23.04.11/layout_03_en.png)
 
 * ❶ You can select multiple charts that you want to add by checking the check box.
-* ❷ When you click a chart name, a chart preview appears in the red square area on the left.
+* ❷ When you click a chart name, a chart preview appears in the area on the left.
 * ❸ Click **Add** to add all selected charts.
 
 ### Change and Delete Charts in Layout
@@ -85,4 +85,4 @@ DB instances and server groups appear together in the list of servers on the lef
 
 ![server_group_02_en]({{url.cdn}}/23.04.11/server_group_02_en.png)
 
-* ❶ **:You can change or delete the server group by clicking **.
+* ❶ You can change or delete the server group by clicking the menu icon displayed on the right of each item in the server list.

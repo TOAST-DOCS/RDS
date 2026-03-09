@@ -2,7 +2,7 @@
 
 ## Process List, InnoDB Status
 
-RDS for MySQL collects queries performed on the database and the status of the InnoDB engine. The results of `information_schema.processlist`and `SHOW ENGINE INNODB STATUS`are collected once per second, and you can view the last four days of data in the Analytics tab of the console.
+RDS for {{engine.pascalCase}} collects queries performed on the database and the status of the InnoDB engine. The results of `information_schema.processlist`and `SHOW ENGINE INNODB STATUS`are collected once per second, and you can view the last four days of data in the Analytics tab of the console.
 
 > [Note] The collected data is stored in internal backup storage and is not charged separately.
 

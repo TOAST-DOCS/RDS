@@ -809,7 +809,7 @@ POST /v3.0/db-instances
 | 名前                                       | 種類   | 形式      | 必須 | 説明                                                                  |
 |------------------------------------------|------|---------|----|---------------------------------------------------------------------|
 | dbInstanceName                           | Body | String  | O  | DBインスタンスを識別できる マスター名                                                |
-| dbInstanceCandidateName                  | Body | String  | O  | DBインスタンスを識別できる 予備マスター名(高可用性を使用する場合の必須値)                             |
+| dbInstanceCandidateName                  | Body | String  | X  | DBインスタンスを識別できる 予備マスター名(高可用性を使用する場合の必須値)                             |
 | description                              | Body | String  | X  | DBインスタンスに関する追加情報                                                    |
 | dbFlavorId                               | Body | UUID    | O  | DBインスタンス仕様の識別子                                                      |
 | dbVersion                                | Body | Enum    | O  | DBエンジンタイプ                                                           |
@@ -823,10 +823,9 @@ POST /v3.0/db-instances
 | pingInterval                             | Body | Number  | X  | 高可用性使用時のPing間隔(秒)<br/>- デフォルト値: `3`<br/>- 最小値: `1`<br/>- 最大値: `600` |
 | useDefaultNotification                   | Body | Boolean | X  | 基本通知の使用有無<br/>- デフォルト値: `false`                                     |
 | useDeletionProtection                    | Body | Boolean | X  | 削除保護の有無<br/>- デフォルト値: `false`                                       |
-| useSlowQueryAnalysis                     | Body | Boolean | X  | スロークエリの分析有無<br/>- デフォルト値: `true`                                    |
 {{#if (eq engine.lowerCase "mysql")}}
 | authenticationPlugin                     | Body | Enum    | X  | 認証プラグイン<br/>- デフォルト値: `NATIVE`(未対応の場合は`CACHING_SHA2`)<br/>- NATIVE: `mysql_native_password`<br />- SHA256: `sha256_password`<br />- CACHING_SHA2: `caching_sha2_password`                                                                                           |
-| tlsOption                                | Body | Enum    | X  | TLS Option<br/>- デフォルト値: `NONE`                                                                                                                                                                                                |
+| tlsOption                                | Body | Enum    | X  | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                                                                                                                                |
 {{/if}}
 {{#if (eq engine.lowerCase "mariadb")}}
 | authenticationPlugin                     | Body | Enum    | X  | 認証プラグイン<br/>- デフォルト値: `NATIVE`(未対応の場合は`ED25519`)<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519`                                                                                                                                                                                   |
@@ -1376,7 +1375,7 @@ POST /v3.0/db-instances/{dbInstanceId}/restore
 | userGroupIds                                        | Body | Array   | X  | ユーザーグループの識別子リスト                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
 | useHighAvailability                                 | Body | Boolean | X  | 高可用性を使用するかどうか<br/>- デフォルト値: `false`                                                                                                                                                                                                                                                                                                                                                                                                                       |
 | pingInterval                                        | Body | Number  | X  | 高可用性使用時Ping間隔(秒)<br/>- デフォルト値: `3`<br/>- 最小値: `1`<br/>- 最大値: `600`                                                                                                                                                                                                                                                                                                                                                                                    |
-| useDefaultNotification                              | Body | Boolean | X  | 基本アラームを使用するかどうか<br/>- デフォルト値: `false`                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| useDefaultNotification                              | Body | Boolean | X  | 基本通知を使用するかどうか<br/>- デフォルト値: `false`                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | network                                             | Body | Object  | O  | ネットワーク情報オブジェクト                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | network.subnetId                                    | Body | UUID    | O  | サブネットの識別子                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 | network.usePublicAccess                             | Body | Boolean | X  | 外部接続可否<br/>- デフォルト値: `false`                                                                                                                                                                                                                                                                                                                                                                                                                              |
@@ -1586,7 +1585,7 @@ POST /v3.0/db-instances/restore-from-obs
 | userGroupIds                                        | Body | Array   | X  | ユーザーグループの識別子リスト                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
 | useHighAvailability                                 | Body | Boolean | X  | 高可用性を使用するかどうか<br/>- デフォルト値: `false`                                                                                                                                                                                                                                                                                                                                                                                                                       |
 | pingInterval                                        | Body | Number  | X  | 高可用性使用時Ping間隔(秒)<br/>- デフォルト値: `3`<br/>- 最小値: `1`<br/>- 最大値: `600`                                                                                                                                                                                                                                                                                                                                                                                    |
-| useDefaultNotification                              | Body | Boolean | X  | 基本アラームを使用するかどうか<br/>- デフォルト値: `false`                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| useDefaultNotification                              | Body | Boolean | X  | 基本通知を使用するかどうか<br/>- デフォルト値: `false`                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | network                                             | Body | Object  | O  | ネットワーク情報オブジェクト                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | network.subnetId                                    | Body | UUID    | O  | サブネットの識別子                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 | network.usePublicAccess                             | Body | Boolean | X  | 外部接続可否<br/>- デフォルト値: `false`                                                                                                                                                                                                                                                                                                                                                                                                                              |
@@ -3735,7 +3734,7 @@ GET /v3.0/notification-groups
 
 ---
 
-### アラームグループの詳細を表示
+### 通知グループの詳細を表示
 
 ```http
 GET /v3.0/notification-groups/{notificationGroupId}
@@ -3802,7 +3801,7 @@ GET /v3.0/notification-groups/{notificationGroupId}
 
 ---
 
-### アラームグループを作成する
+### 通知グループを作成する
 
 ```http
 POST /v3.0/notification-groups
@@ -3843,7 +3842,7 @@ POST /v3.0/notification-groups
 
 ---
 
-### アラームグループを修正する
+### 通知グループを修正する
 
 ```http
 PUT /v3.0/notification-groups/{notificationGroupId}
@@ -3896,7 +3895,7 @@ PUT /v3.0/notification-groups/{notificationGroupId}
 </details>
 ---
 
-### アラームグループを削除する
+### 通知グループを削除する
 
 ```http
 DELETE /v3.0/notification-groups/{notificationGroupId}

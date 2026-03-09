@@ -104,10 +104,10 @@ The type of DB instance that you have already created can be easily changed thro
 It stores the database's data files in data storage. DB instances support two types of data storage: HDD and SSD. Performance and price vary depending on the type of data storage, so you need to choose the right type depending on the database workload. Data storage can range from 20GB to 2TB.
 
 > [Caution]
-You cannot change the data storage type for DB instance that you have already created.
+> You cannot change the data storage type for DB instance that you have already created.
 
 > [Note]
-To use more than 2TB of data storage, contact NHN Cloud Customer Center.
+> To use more than 2TB of data storage, contact NHN Cloud Customer Center.
 
 Because the following tasks increase the I/O usage of data storage, the performance of DB instance may be degraded during the process.
 
@@ -235,11 +235,11 @@ When you create a DB instance, you can set default notifications. If setting def
 
 If you activate deletion protection, you can protect DB instances from accidental deletion.
 
-## DB instances
+## DB Instance List
 
 You can view DB instances created from the console. It can be viewed as groups of DB instances or as individual DB instances.
 
-![db-instance-list_en]({{url.cdn}}/26.01.13/db-instance-detail_en.png)
+![db-instance-list_en]({{url.cdn}}/26.01.13/db-instance-list_en.png)
 
 ❶ You can change DB instance screen mode.  
 ❷ By clicking on the button, you can open or close a DB instance that belongs to a group.  
@@ -264,7 +264,7 @@ The status of the DB instance consists of the following values and changes depen
 
 Search conditions that can be changed are as follows.
 
-![db-instance-filter_en]({{url.cdn}}/24.03.12/db-instance-filter_en.png)
+![db-instance-filter_en]({{url.cdn}}/26.01.13/db-instance-filter_en.png)
 
 ❶ You can search for DB instances with filtering conditions that require parameter changes to be applied.
 
@@ -272,7 +272,7 @@ Search conditions that can be changed are as follows.
 
 You can select a DB instance to view the details.
 
-![db-instance-detail_en]({{url.cdn}}/24.03.12/db-instance-detail_en.png)
+![db-instance-detail_en]({{url.cdn}}/26.01.13/db-instance-detail_en.png)
 
 ❶ When you click on the domain of the connection information, a pop-up window appears to confirm the IP address.
 ❷ When you click on DB Security Group, a pop-up window appears where you can check DB security rules.
@@ -320,8 +320,8 @@ You can view and download various log files from Log tab of DB instance. Log fil
 ❸ When download is ready, **Download** button will be exposed. Click to download the log.
 
 > [Caution]
-When **Import** is clicked, the log file is uploaded to backup storage for approximately 5 minutes and the backup storage capacity will be charged to the size of the log file.
-Click on **Download** to charge Internet traffic as the size of the log file.
+> When **Import** is clicked, the log file is uploaded to backup storage for approximately 5 minutes and the backup storage capacity will be charged to the size of the log file.
+> Click on **Download** to charge Internet traffic as the size of the log file.
 
 ❹ For binary logs, you can download them in two forms. Click on **Import** and you will see a pop-up window where you can select the type of binary log.
 
@@ -383,10 +383,11 @@ You can select a pending maintenance task and then click **Next** to select the 
 ![db-instance-detail-maintenance-immediately_en]({{url.cdn}}/26.01.13/db-instance-detail-maintenance-immediately_en.png)
 
 **Apply in the Next Maintenance Duration**: apply during the next maintenance duration. Click **Confirm** to move this task to the Upcoming Maintenance list.
-![db-instance-detail-maintenance-schedule_]({{url.cdn}}/26.01.13/db-instance-detail-maintenance-schedule_en.png)
+![db-instance-detail-maintenance-schedule_en]({{url.cdn}}/26.01.13/db-instance-detail-maintenance-schedule_en.png)
 
 > [Caution]
 > Required maintenance tasks can be applied at any time up to the mandatory application date. However, after the mandatory application date, they will automatically be performed during the next maintenance period.
+
 > [Note]
 > If a maintenance task requires a restart, a pop-up screen will appear, allowing you to select additional options, such as failover or backup. For high-availability DB instances, you can minimize service downtime by using a restart with failover.
 
@@ -417,7 +418,7 @@ You cannot modify the name of the DB schema that has been created.
 
 #### Create a user
 
-![db-instance-detail-user-create-en]({{url.cdn}}/26.01.13/db-instance-detail-user-create-en.png))
+![db-instance-detail-user-create-en]({{url.cdn}}/26.01.13/db-instance-detail-user-create-en.png)
 
 ❶ Click on **+Create** and you'll see the Add User pop-up window.
 ❷ Enter a user ID.
@@ -479,7 +480,7 @@ GRANT EXECUTE ON `mysql`.* TO '{user_id}'@'{host}';
 | X509       | An encrypted connection is applied and a certificate is required for access. The certificate required for access can be downloaded from the console. |
 
 > [Note]
-User authentication plug-ins and TLS options are supported in MySQL 5.7.33 and later versions.
+> User authentication plug-ins and TLS options are supported in MySQL 5.7.33 and later versions.
 
 #### Download Authentication Certificate
 
@@ -495,8 +496,8 @@ If you set TLS option for your account to X509, you need a certificate to access
 ❺ When you are ready to download, the **Download** button appears. Click to download the certificate file.
 
 > [Caution]
-When **Import** is clicked, the certificate file will be uploaded to backup storage for approximately 5 minutes, and the backup storage capacity will be charged to the size of the certificate file.
-Click on**Download** to charge Internet traffic as much as the size of the certificate file.
+> When **Import** is clicked, the certificate file will be uploaded to backup storage for approximately 5 minutes, and the backup storage capacity will be charged to the size of the certificate file.
+> Click on **Download** to charge Internet traffic as much as the size of the certificate file.
 {{/if}}
 
 #### Edit users
@@ -554,7 +555,7 @@ GRANT CREATE,DROP,LOCK TABLES,REFERENCES,EVENT,ALTER,INDEX,INSERT,SELECT,UPDATE,
 ```
 
 > [Caution]
-If you change it to Disabled again after using direct control
+> If you change it to Disabled again after using direct control
 > * Already granted permissions are not revoked. If you use the command to add DB schema or users at this time, the data in the console may not match.
 > * All users that exist in the database, regardless of the permissions granted to them, are represented by CUSTOM permissions.
 
@@ -605,6 +606,9 @@ Select the binary log and press **Confirm** to delete all binary logs created pr
 > [Note]
 > You can set the storage period for binary logs with the `binlog_expire_logs_seconds` parameter.
 {{/if}}
+
+> [Caution]
+> Depending on the deleted binary logs, point-in-time restoration may not be possible.
 
 ## Expand Storage Size
 
@@ -669,11 +673,11 @@ To create read replicas, you need backup files and binary logs created with the 
 If there is no DB instance that meets the criteria, the request to create a read replica will fail.
 
 > [Caution]
-The read replica creation time may increase in proportion to the database size of the master.
-For DB instances that are backed up, there may be a drop in storage I/O performance during the read replica creation process.
+> The read replica creation time may increase in proportion to the database size of the master.
+> For DB instances that are backed up, there may be a drop in storage I/O performance during the read replica creation process.
 
 > [Note]
-Backup storage charges can be as much as the size of a binary log required for the read replica creation process.
+> Backup storage charges can be as much as the size of a binary log required for the read replica creation process.
 
 To create a read replica from the console,
 
@@ -697,7 +701,7 @@ When you create a read replica, you cannot change the items listed below because
 If you support region peering when you select a region to create a read replica, you can create a read replica on a sub-net belonging to a different region VPC by connecting region peering between VPCs that exist in different regions. However, selecting a region that is different from the region of the original DB instance might cause replication delays and does not support DB version upgrades.
 
 > [Caution]
-If the route settings are incorrect, even if the region peering is connected, the creation of a read replica might fail or the replication might be interrupted.
+> If the route settings are incorrect, even if the region peering is connected, the creation of a read replica might fail or the replication might be interrupted.
 {{/if}}
 
 #### Availability Zone
@@ -741,10 +745,10 @@ Select whether or not to enable deletion protection. Refer to [Deletion Protecti
 The process of breaking the replication relationship with the master and converting a read replica to an independent master is called promotion. The promoted master will act as an independent DB instance. If there is a replication delay between the read replica and the master that you want to promote, the promotion will not take place until the delay is resolved. Once promoted, a DB instance cannot be reverted to the previous replication relationship.
 
 > [Caution]
-If the master DB instance is in an abnormal state, you cannot proceed with the promotion operations.
+> If the master DB instance is in an abnormal state, you cannot proceed with the promotion operations.
 
 > [Note]
-You can perform promotion operations from the same region's console as the region where the read replica is located.
+> You can perform promotion operations from the same region's console as the region where the read replica is located.
 
 ### Force Promotion of Read Replicas
 
@@ -780,10 +784,11 @@ To restart a DB instance from the console
 
 If {{engine.pascalCase}} in the DB instance is not working properly, you can force a restart. For forced restart, issue a SIGTERM command in {{engine.pascalCase}} and wait 10 minutes for it to shut down normally. If {{engine.pascalCase}} shuts down normally within 10 minutes, reboot the virtual machine afterward. If it does not shut down normally within 10 minutes, force a reboot of the virtual machine. If the virtual machine is forced to reboot, some of the transactions you are working on might be lost and the data volume might be corrupted, making recovery impossible. After a forced restart, the state of the DB instance might not return to the available state. Contact Customer Center if this situation occurs.
 
-> [Caution] Because there is a possibility of data loss or data volume corruption, this feature should not be used except in urgent and unavoidable circumstances.
+> [Caution]
+> Because there is a possibility of data loss or data volume corruption, this feature should not be used except in urgent and unavoidable circumstances.
 
 > [Note]
-For high availability DB instances, you cannot force restart.
+> For high availability DB instances, you cannot force restart.
 
 To force restart a DB instance, from the console
 
@@ -861,11 +866,11 @@ If the failed over master fails to recover, you can re-enable the high availabil
 If there is no DB instance that meets the condition, the failover master rebuild request fails.
 
 > [Caution]
-In proportion to the size of the master's database, the time to rebuild the failover master can be increased.
-For DB instances where backups are performed, storage I/O performance may be degraded during the failover master rebuilding.
+> In proportion to the size of the master's database, the time to rebuild the failover master can be increased.
+> For DB instances where backups are performed, storage I/O performance may be degraded during the failover master rebuilding.
 
 > [Note]
-Backup storage charges can be as much as the size of the binary log required for the failover master rebuild process.
+> Backup storage charges can be as much as the size of the binary log required for the failover master rebuild process.
 
 To rebuild a failover master, from the console
 
@@ -915,7 +920,7 @@ You can apply changes to the candidate master first and then observe the trend, 
 ![db-instance-ha-wait-manual-failover-en]({{url.cdn}}/26.01.13/db-instance-ha-wait-manual-failover-en.png)
 
 > [Caution]
-While waiting for a failover, no automatic failover occurs.
+> While waiting for a failover, no automatic failover occurs.
 
 #### Waiting for Resolve Replication Delay
 

@@ -33,7 +33,7 @@ You can create multiple DB security rules in one DB security group. When you set
 | Description | You can add a description for DB security group rules.                                                                                                                                                                                                                               |
 
 > [Caution]
-> DB port cannot be set to transmit direction.
+> DB port cannot be set to outbound direction.
 
 ### Change DB Security Rules
 

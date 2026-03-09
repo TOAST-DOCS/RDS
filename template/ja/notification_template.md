@@ -231,10 +231,10 @@
 | 項目                         | 単位              |
 |----------------------------|-----------------|
 | CPU使用率                     | %               |
-| CPU使用率(IO Wait)            | %               |
-| CPU使用率(Nice)               | %               |
-| CPU使用率(System)             | %               |
-| CPU使用率(User)               | %               |
+| CPU使用量(IO Wait)            | %               |
+| CPU使用量(Nice)               | %               |
+| CPU使用量(System)             | %               |
+| CPU使用量(User)               | %               |
 | Load Average 1M            |                 |
 | Load Average 5M            |                 |
 | Load Average 15M           |                 |
