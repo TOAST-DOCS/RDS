@@ -6,7 +6,7 @@ The version number of {{engine.pascalCase}} follows the `X.Y.Z` format. In NHN C
 
 ### DB engine version provided by RDS
 
-The versions specified below are available. New DB instance creation and read replicas are supported only for the top 7 minor versions per major version.
+The versions specified below are available. New DB instance creation and Read Replicas are supported only for the top 7 minor versions per major version.
 {{#if (eq engine.lowerCase "mysql")}}
 Support for MySQL versions below 8.0.34 has ended under the MySQL LTS policy. We recommend upgrading your DB instances to the latest version.
 
@@ -28,14 +28,14 @@ Support for MySQL versions below 8.0.34 has ended under the MySQL LTS policy. We
 | MySQL 8.0.42         |                                                           |
 | MySQL 8.0.41         |                                                           |
 | MySQL 8.0.40         |                                                           |
-| MySQL 8.0.36         | Creation and read replicas unsupported                    |
-| MySQL 8.0.35         | Creation and read replicas unsupported                    |
-| MySQL 8.0.34         | Creation and read replicas unsupported                    |
-| MySQL 8.0.33         | Creation and read replicas unsupported                    |
-| MySQL 8.0.32         | Creation and read replicas unsupported                    |
-| MySQL 8.0.28         | Creation and read replicas unsupported                    |
-| MySQL 8.0.23         | Creation and read replicas unsupported                    |
-| MySQL 8.0.18         | Creation and read replicas unsupported                    |
+| MySQL 8.0.36         | Creation and Read Replicas unsupported                    |
+| MySQL 8.0.35         | Creation and Read Replicas unsupported                    |
+| MySQL 8.0.34         | Creation and Read Replicas unsupported                    |
+| MySQL 8.0.33         | Creation and Read Replicas unsupported                    |
+| MySQL 8.0.32         | Creation and Read Replicas unsupported                    |
+| MySQL 8.0.28         | Creation and Read Replicas unsupported                    |
+| MySQL 8.0.23         | Creation and Read Replicas unsupported                    |
+| MySQL 8.0.18         | Creation and Read Replicas unsupported                    |
 | <strong>5.7</strong> |                                                           |
 | MySQL 5.7.37         |                                                           |
 | MySQL 5.7.33         | You cannot restore a DB instance from an external backup. |
@@ -65,13 +65,13 @@ Support for MySQL versions below 8.0.34 has ended under the MySQL LTS policy. We
 | MariaDB 10.11.8        |                                        |
 | MariaDB 10.11.7        |                                        |
 | <strong>10.6</strong>  |                                        |
-| MariaDB 10.6.25        | Creation and read replicas unsupported |
-| MariaDB 10.6.22        | Creation and read replicas unsupported |
-| MariaDB 10.6.16        | Creation and read replicas unsupported |
-| MariaDB 10.6.12        | Creation and read replicas unsupported |
-| MariaDB 10.6.11        | Creation and read replicas unsupported |
+| MariaDB 10.6.25        | Creation and Read Replicas unsupported |
+| MariaDB 10.6.22        | Creation and Read Replicas unsupported |
+| MariaDB 10.6.16        | Creation and Read Replicas unsupported |
+| MariaDB 10.6.12        | Creation and Read Replicas unsupported |
+| MariaDB 10.6.11        | Creation and Read Replicas unsupported |
 | <strong>10.3</strong>  |                                        |
-| MariaDB 10.3.30        | Creation and read replicas unsupported |
+| MariaDB 10.3.30        | Creation and Read Replicas unsupported |
 {{/if}}
 
 ### Manage DB Engine Version
@@ -165,14 +165,14 @@ For more information, refer to the official documentation below:
 
 #### Upgrading the DB Engine Version Using a Dummy DB Instance 
 
-When trying to change the DB engine version in the Modify DB Instance window, you can select whether to use a dummy DB instance to ensure high availability during the version upgrade process. If you choose to use a dummy DB instance, a candidate master for DB version upgrade is created. 
+When trying to change the DB engine version in the Modify DB Instance window, you can select whether to use a dummy DB instance to ensure high availability during the version upgrade process. If you choose to use a dummy DB instance, a Standby for DB version upgrade is created. 
 
 > [Caution]
-> For dummy DB instances, a temporary candidate master is created during the upgrade process, so this option is only available for non-high-availability configurations.
+> For dummy DB instances, a temporary Standby is created during the upgrade process, so this option is only available for non-high-availability configurations.
 
 #### Manual Control of Failover When Upgrading High Availability DB Instances
 
-When a DB instance is configured for high availability, the engine version of the candidate master is upgraded first, and then failover is used to promote the candidate master to master. Because failover briefly interrupts the service on the master, you can initiate failover at any time.
+When a DB instance is configured for high availability, the engine version of the Standby is upgraded first, and then failover is used to promote the Standby to Primary. Because failover briefly interrupts the service on the Primary, you can initiate failover at any time.
 The manual control of failover during version upgrade allows you to initiate failover directly from the console.
 
 > [Caution]
@@ -180,7 +180,7 @@ The manual control of failover during version upgrade allows you to initiate fai
 
 ### When using an Outdated Operating System
 
-For DB instances with an outdated internal operating system, an operating system version upgrade accompanied by VM replacement is required before upgrading the DB version. Monitored instances in notification groups and event sources in event subscriptions automatically update to the changed identifiers. For single DB instances, it is recommended to use a dummy DB instance when changing the DB version. For high availability DB instances, the roles of the master and standby master are changed using failover during the DB instance replacement process. If the master is under heavy load, failover may fail, so it is recommended to perform DB version changes during periods of low load.
+For DB instances with an outdated internal operating system, an operating system version upgrade accompanied by VM replacement is required before upgrading the DB version. Monitored instances in notification groups and event sources in event subscriptions automatically update to the changed identifiers. For single DB instances, it is recommended to use a dummy DB instance when changing the DB version. For high availability DB instances, the roles of the Primary and Standby are changed using failover during the DB instance replacement process. If the Primary is under heavy load, failover may fail, so it is recommended to perform DB version changes during periods of low load.
 
 > [Caution]
 > Be careful when using the internal IP of an existing DB instance directly in an IP ACL or security group.

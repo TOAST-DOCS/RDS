@@ -97,7 +97,7 @@ Event refers to an important event that occurs either by RDS for {{engine.pascal
 | INSTC_43_04       | INSTANCE          | No           | RAM capacity limit                                                            |
 | INSTC_44_04       | INSTANCE          | No           | Individual volume limit                                                       |
 | INSTC_45_04       | INSTANCE          | No           | Total project volume limit                                                    |
-| INSTC_46_04       | INSTANCE          | No           | Read-only slaves limit                                                        |
+| INSTC_46_04       | INSTANCE          | No           | Read Replicas limit                                                        |
 | INSTC_47_00       | INSTANCE          | Yes          | DB instance backup and export started                                         |
 | INSTC_47_01       | INSTANCE          | Yes          | DB instance backed up and exported                                            |
 | INSTC_47_04       | INSTANCE          | Yes          | DB instance backup and export failed                                          |
@@ -132,9 +132,9 @@ Event refers to an important event that occurs either by RDS for {{engine.pascal
 | INSTC_60_00       | INSTANCE          | Yes          | DB instance migration started                                                 |
 | INSTC_60_01       | INSTANCE          | Yes          | DB instance migration completed                                               |
 | INSTC_60_04       | INSTANCE          | Yes          | DB instance migration failed                                                  |
-| INSTC_61_00       | INSTANCE          | Yes          | Candidate master rebuilding started                                           |
-| INSTC_61_01       | INSTANCE          | Yes          | Candidate master rebuilding completed                                         |
-| INSTC_61_04       | INSTANCE          | Yes          | Candidate master rebuilding failed                                            |
+| INSTC_61_00       | INSTANCE          | Yes          | Standby rebuilding started                                           |
+| INSTC_61_01       | INSTANCE          | Yes          | Standby rebuilding completed                                         |
+| INSTC_61_04       | INSTANCE          | Yes          | Standby rebuilding failed                                            |
 | INSTC_62_00       | INSTANCE          | Yes          | DB engine version upgrade started                                             |
 | INSTC_62_01       | INSTANCE          | Yes          | DB engine version upgrade completed                                           |
 | INSTC_62_04       | INSTANCE          | Yes          | DB engine version upgrade failed                                              |
@@ -171,7 +171,7 @@ Event refers to an important event that occurs either by RDS for {{engine.pascal
 | TENAT_02_04       | TENANT            | Yes          | RAM capacity limit	                                                           |
 | TENAT_03_04       | TENANT            | Yes          | Individual volume limit                                                       |
 | TENAT_04_04       | TENANT            | Yes          | Total project volume limit                                                    |
-| TENAT_05_04       | TENANT            | Yes          | Read-only slaves limit                                                        |
+| TENAT_05_04       | TENANT            | Yes          | Read Replicas limit                                                        |
 
 ## Subscribe to Event
 

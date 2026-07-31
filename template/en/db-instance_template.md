@@ -12,7 +12,7 @@ DB instance name has the following restrictions.
 * DB instance name contains alphabets, numbers, and - _ between 1 and 100 characters. ,and the first character must be an alphabet.
 
 > [Note]
-> After the maintenance in July 2025, for high-availability DB instances, the name of the candidate master must be entered in addition to the master. The candidate master name follows the same restrictions as the master name, and the two names must be different. For DB instances created before this maintenance, the candidate master name is the same as the master.
+> After the maintenance in July 2025, for high-availability DB instances, the name of the Standby must be entered in addition to the Primary. The Standby name follows the same restrictions as the Primary name, and the two names must be different. For DB instances created before this maintenance, the Standby name is the same as the Primary.
 
 ## Create DB Instance
 
@@ -27,7 +27,7 @@ NHN Cloud has divided the entire system into several availability zones to prepa
 
 ### DB Engine
 
-The versions specified below are available. New DB instance creation and read replica additions are supported only for the seven most recent minor versions of each major version.
+The versions specified below are available. New DB instance creation and Read Replica additions are supported only for the seven most recent minor versions of each major version.
 {{#if (eq engine.lowerCase "mysql")}}
 MySQL versions below 8.0.34 have reached End of Support per the MySQL LTS policy. We recommend upgrading your DB instances to the latest version.
 
@@ -47,14 +47,14 @@ MySQL versions below 8.0.34 have reached End of Support per the MySQL LTS policy
 | MySQL 8.0.42         |                                                           |
 | MySQL 8.0.41         |                                                           |
 | MySQL 8.0.40         |                                                           |
-| MySQL 8.0.36         | Creation and read replicas unsupported                    |
-| MySQL 8.0.35         | Creation and read replicas unsupported                    |
-| MySQL 8.0.34         | Creation and read replicas unsupported                    |
-| MySQL 8.0.33         | Creation and read replicas unsupported                    |
-| MySQL 8.0.32         | Creation and read replicas unsupported                    |
-| MySQL 8.0.28         | Creation and read replicas unsupported                    |
-| MySQL 8.0.23         | Creation and read replicas unsupported                    |
-| MySQL 8.0.18         | Creation and read replicas unsupported                    |
+| MySQL 8.0.36         | Creation and Read Replicas unsupported                    |
+| MySQL 8.0.35         | Creation and Read Replicas unsupported                    |
+| MySQL 8.0.34         | Creation and Read Replicas unsupported                    |
+| MySQL 8.0.33         | Creation and Read Replicas unsupported                    |
+| MySQL 8.0.32         | Creation and Read Replicas unsupported                    |
+| MySQL 8.0.28         | Creation and Read Replicas unsupported                    |
+| MySQL 8.0.23         | Creation and Read Replicas unsupported                    |
+| MySQL 8.0.18         | Creation and Read Replicas unsupported                    |
 | <strong>5.7</strong> |                                                           |
 | MySQL 5.7.37         |                                                           |
 | MySQL 5.7.33         | You cannot restore a DB instance from an external backup. |
@@ -87,13 +87,13 @@ Details about DB engine can be found in [DB Engine](db-engine/).
 | MariaDB 10.11.8        |    |
 | MariaDB 10.11.7        |    |
 | <strong>10.6</strong>  |    |
-| MariaDB 10.6.25        | Creation and read replicas unsupported   |
-| MariaDB 10.6.22        | Creation and read replicas unsupported   |
-| MariaDB 10.6.16        | Creation and read replicas unsupported   |
-| MariaDB 10.6.12        | Creation and read replicas unsupported   |
-| MariaDB 10.6.11        | Creation and read replicas unsupported   |
+| MariaDB 10.6.25        | Creation and Read Replicas unsupported   |
+| MariaDB 10.6.22        | Creation and Read Replicas unsupported   |
+| MariaDB 10.6.16        | Creation and Read Replicas unsupported   |
+| MariaDB 10.6.12        | Creation and Read Replicas unsupported   |
+| MariaDB 10.6.11        | Creation and Read Replicas unsupported   |
 | <strong>10.3</strong>  |    |
-| MariaDB 10.3.30        | Creation and read replicas unsupported   |
+| MariaDB 10.3.30        | Creation and Read Replicas unsupported   |
 
 Details about DB engine can be found in [DB Engine](db-engine/).
 {{/if}}
@@ -129,15 +129,15 @@ Because the following tasks increase the I/O usage of data storage, the performa
 
 * Back up single DB instance
 * Configuring High Availability for single DB Instance
-* Create read replications
-* Rebuild Read Replication
-* Rebuild Candidate Master
+* Create Read Replica
+* Rebuild Read Replica
+* Rebuild Standby
 * Restore to a certain point in time
 * Export backup files to object storage after backing up from a single DB instance
 
 ### High Availability
 
-High availability DB instances increase availability, data durability, and provide fault tolerant databases. High availability DB instances consist of master and candidate master and are created in different availability zones. Candidate master is a DB instance for failover and is not normally available. For high availability DB instances, backups are performed on candidate master, which avoids performance degradation caused by backups. Several features provided by a high availability DB instance can be found in [High Availability DB Instance](db-instance/#ha-db-instance).
+High availability DB instances increase availability, data durability, and provide fault tolerant databases. High availability DB instances consist of Primary and Standby and are created in different availability zones. Standby is a DB instance for failover and is not normally available. For high availability DB instances, backups are performed on Standby, which avoids performance degradation caused by backups. Several features provided by a high availability DB instance can be found in [High Availability DB Instance](db-instance/#ha-db-instance).
 
 ### Network
 
@@ -160,7 +160,7 @@ DB security groups are used to restrict access in case of external intrusion. Yo
 
 ### Backup
 
-You can set up periodic backups of the databases in your DB instance, or you can create backups at any time through the console. Performance may degrade during backups. To avoid affecting service, it is better to perform back up at a time when the service is under low load. If you do not want the backup to degrade performance, you can use a high-availability configuration, back up only the incremental data since the previous backup, or perform backups from a read replica. Backup files are stored on internal backup storage and are charged based on the
+You can set up periodic backups of the databases in your DB instance, or you can create backups at any time through the console. Performance may degrade during backups. To avoid affecting service, it is better to perform back up at a time when the service is under low load. If you do not want the backup to degrade performance, you can use a high-availability configuration, back up only the incremental data since the previous backup, or perform backups from a Read Replica. Backup files are stored on internal backup storage and are charged based on the
 size of backup storage. You can export to user object storage in NHN Cloud if necessary. To prepare for unexpected failures, we recommend that you set up backups to be conducted periodically. For more details on backup, see [Backup and Restore](backup-and-restore/).
 
 ### Maintenance
@@ -213,7 +213,7 @@ You can check the maintenance status of each instance in the DB instance list.
 | Available | A non-required provider maintenance task is pending/in preparation. |
 
 > [Note]
-> The maintenance status is not displayed for the candidate master of High Availability (HA) DB instances.
+> The maintenance status is not displayed for the Standby of High Availability (HA) DB instances.
 
 #### Maintenance Tab
 
@@ -300,15 +300,15 @@ You can select a DB instance to view the details.
 
 ### Access Information
 
-When you create a DB instance, it issues an internal domain. The internal domain refers to the IP address that belongs to the user's VPC subnet. For high-availability DB instances, the internal domain does not change even if the candidate master is changed to a new master due to failover. Therefore, unless there is a special reason, applications must use the internal domain for access information.
+When you create a DB instance, it issues an internal domain. The internal domain refers to the IP address that belongs to the user's VPC subnet. For high-availability DB instances, the internal domain does not change even if the Standby is changed to a new Primary due to failover. Therefore, unless there is a special reason, applications must use the internal domain for access information.
 
 If you created a floating IP, issue additional external domains. The external domain points to the address of the floating IP. Because external domains or floating IPs are accessible from outside, you must protect the DB instance by setting the rules of DB security group appropriately.
 
 ### Virtual IP
 
-Starting with DB instances created after the May 2025 maintenance, VIP (Virtual IP) is supported. The VIP is an IP address within the user's VPC subnet. For high-availability DB instances, the VIP is always the current master. Application connection information must use either the VIP directly or the internal (VIP) domain.
+Starting with DB instances created after the May 2025 maintenance, VIP (Virtual IP) is supported. The VIP is an IP address within the user's VPC subnet. For high-availability DB instances, the VIP is always the current Primary. Application connection information must use either the VIP directly or the internal (VIP) domain.
 
-For DB instances created before the May 2025 maintenance, you can add a VIP by selecting **Add VIP** in the web console. When a VIP is added, both the existing internal domain and the internal (VIP) domain are provided. However, if a failover occurs, the VIP is the candidate master, while the internal domain may not be. Therefore, after adding a VIP, you must update the application's connection information to use either the VIP or the internal (VIP) domain.
+For DB instances created before the May 2025 maintenance, you can add a VIP by selecting **Add VIP** in the web console. When a VIP is added, both the existing internal domain and the internal (VIP) domain are provided. However, if a failover occurs, the VIP is the Standby, while the internal domain may not be. Therefore, after adding a VIP, you must update the application's connection information to use either the VIP or the internal (VIP) domain.
 
 > [Note]
 > After the maintenance in September 2025, VIP will no longer be supported in the Japan (Tokyo) region and some public projects. (You cannot connect to a VIP from an instance or DB instance in a different subnet.)
@@ -564,7 +564,7 @@ For high-availability DB instances, if there are any changes to items that need 
 
 
 ❶ Modify your DB instance and schedule the update by selecting either **Apply in the Next Maintenance Duration** or **Apply Immediately**.
-❷ If you do not use 'Reboot with Failover', changes will be applied sequentially to the master and candidate master, followed by a restart of the DB instance. For more details, please refer to the [Manual Failover section](db-instance/#manual-failover) for High Availability DB instances.
+❷ If you do not use 'Reboot with Failover', changes will be applied sequentially to the Primary and Standby, followed by a restart of the DB instance. For more details, please refer to the [Manual Failover section](db-instance/#manual-failover) for High Availability DB instances.
 
 ### DB Schema & Direct User Control
 
@@ -603,7 +603,7 @@ When you click the Upgrade Operating System Version for High Availability DB Ins
 
 ## Delete DB Instance
 
-You can delete DB instances that are no longer in use. If you delete a master, you will also delete both the candidate master and read replicas that belong to that replication group. Because deleted DB instances cannot be recovered, we recommend that you enable the Delete Protection settings for important DB instances.
+You can delete DB instances that are no longer in use. If you delete a Primary, you will also delete both the Standby and Read Replicas that belong to that replication group. Because deleted DB instances cannot be recovered, we recommend that you enable the Delete Protection settings for important DB instances.
 
 ## Backup
 
@@ -669,7 +669,7 @@ High-availability DB instances provide a restart feature using failover to incre
 
 ![db-instance-parameter-ha-en]({{url.cdn}}/26.01.13/db-instance-parameter-ha-en.png)
 
-If restart with failover is not enabled, the DB instance is restarted after the changes are sequentially applied to the master and candidate master. For more information, refer to [Manual failover item](db-instance/#manual-failover) in a high availability DB instance.
+If restart with failover is not enabled, the DB instance is restarted after the changes are sequentially applied to the Primary and Standby. For more information, refer to [Manual failover item](db-instance/#manual-failover) in a high availability DB instance.
 
 ## Recover from backup in object storage
 
@@ -681,36 +681,37 @@ After backup, you can export backup files to user object storage in NHN Cloud. R
 
 ## Read Replica
 
-To improve read performance, you can create read -replicas that can be used for read-only. You can create up to 5 read replicas per master. You cannot create read replicas of read replicas.
+To improve read performance, you can create Read Replicas that can be used for read-only. You can create up to 5 Read Replicas per Primary. You cannot create Read Replicas of Read Replicas.
 
-### Create read replications
+<a id="create-read-replica"></a>
+### Create Read Replica
 
-To create read replicas, you need backup files and binary logs created with the Enable table lock option among DB instances in the replication group. If you do not have a backup file, use the following steps to select DB instance for which you want to back up.
+To create Read Replicas, you need backup files and binary logs created with the Enable table lock option among DB instances in the replication group. If you do not have a backup file, use the following steps to select DB instance for which you want to back up.
 
-❶ Read replica with auto backup enabled
-❷ Candidate master with auto backup enabled
-❸ Master with auto backup enabled
+❶ Read Replica with auto backup enabled
+❷ Standby with auto backup enabled
+❸ Primary with auto backup enabled
 
-If there is no DB instance that meets the criteria, the request to create a read replica will fail.
+If there is no DB instance that meets the criteria, the request to create a Read Replica will fail.
 
 > [Caution]
-> The read replica creation time may increase in proportion to the database size of the master.
-> For DB instances that are backed up, there may be a drop in storage I/O performance during the read replica creation process.
+> The Read Replica creation time may increase in proportion to the database size of the Primary.
+> For DB instances that are backed up, there may be a drop in storage I/O performance during the Read Replica creation process.
 
 > [Note]
-> Backup storage charges can be as much as the size of a binary log required for the read replica creation process.
+> Backup storage charges can be as much as the size of a binary log required for the Read Replica creation process.
 
-To create a read replica from the console,
+To create a Read Replica from the console,
 
 ![db-instance-replica-create-en]({{url.cdn}}/26.01.13/db-instance-replica-create-en.png)
 
 ❶ Select the source DB instance and click on **Create Read Replica**
 
-You can create a read replica using the settings below.
+You can create a Read Replica using the settings below.
 
 #### Non-Editable Items
 
-When you create a read replica, you cannot change the items listed below because they follow the settings of source DB instance.
+When you create a Read Replica, you cannot change the items listed below because they follow the settings of source DB instance.
 
 * DB Engine
 * Data Storage Type
@@ -719,19 +720,19 @@ When you create a read replica, you cannot change the items listed below because
 {{#if regions.[1]}}
 #### Read Replica Region
 
-If you support region peering when you select a region to create a read replica, you can create a read replica on a sub-net belonging to a different region VPC by connecting region peering between VPCs that exist in different regions. However, selecting a region that is different from the region of the original DB instance might cause replication delays and does not support DB version upgrades.
+If you support region peering when you select a region to create a Read Replica, you can create a Read Replica on a sub-net belonging to a different region VPC by connecting region peering between VPCs that exist in different regions. However, selecting a region that is different from the region of the original DB instance might cause replication delays and does not support DB version upgrades.
 
 > [Caution]
-> If the route settings are incorrect, even if the region peering is connected, the creation of a read replica might fail or the replication might be interrupted.
+> If the route settings are incorrect, even if the region peering is connected, the creation of a Read Replica might fail or the replication might be interrupted.
 {{/if}}
 
 #### Availability Zone
 
-Select the availability zone for read replica. Refer to [Availability Zone](#_1) for a detailed description.
+Select the availability zone for Read Replica. Refer to [Availability Zone](#_1) for a detailed description.
 
 #### DB Instance Type
 
-It is recommended that read replicas be created to the same specification or higher than the master; creating them to a lower specification can cause replication delays.
+It is recommended that Read Replicas be created to the same specification or higher than the Primary; creating them to a lower specification can cause replication delays.
 
 #### Data Storage Size
 
@@ -739,19 +740,19 @@ It is recommended to make it the same size as the source DB instance. If you set
 
 #### Floating IP
 
-Select whether or not to use floating IP for read replicas. Refer to [Floating IP](#ip) for a detailed description.
+Select whether or not to use floating IP for Read Replicas. Refer to [Floating IP](#ip) for a detailed description.
 
 #### Parameter group
 
-If you do not need to change replication-related settings when selecting a parameter group for a read replica, we recommend that you select the same parameter group as the original DB instance. Refer to [Parameter Group](parameter-group/) for a detailed description of the parameter groups.
+If you do not need to change replication-related settings when selecting a parameter group for a Read Replica, we recommend that you select the same parameter group as the original DB instance. Refer to [Parameter Group](parameter-group/) for a detailed description of the parameter groups.
 
 #### DB Security Group
 
-Select the DB security group that you want to apply to read replicas. Because the rules required for replication are applied automatically, you do not need to add replication-related rules to DB security group separately. Refer to [DB security group](db-security-group/) for a detailed description of the DB security group.
+Select the DB security group that you want to apply to Read Replicas. Because the rules required for replication are applied automatically, you do not need to add replication-related rules to DB security group separately. Refer to [DB security group](db-security-group/) for a detailed description of the DB security group.
 
 #### Backup
 
-Select backup settings for the read replica. Refer to [Backup and Restore](backup-and-restore/) for a detailed description of backup.
+Select backup settings for the Read Replica. Refer to [Backup and Restore](backup-and-restore/) for a detailed description of backup.
 
 #### Default notification
 
@@ -761,23 +762,23 @@ Select whether or not to enable default notifications, refer to [default notific
 
 Select whether or not to enable deletion protection. Refer to [Deletion Protection](#_8) for a detailed description.
 
-### Promote read replication
+### Promote Read Replica
 
-The process of breaking the replication relationship with the master and converting a read replica to an independent master is called promotion. The promoted master will act as an independent DB instance. If there is a replication delay between the read replica and the master that you want to promote, the promotion will not take place until the delay is resolved. Once promoted, a DB instance cannot be reverted to the previous replication relationship.
+The process of breaking the replication relationship with the Primary and converting a Read Replica to an independent Primary is called promotion. The promoted Primary will act as an independent DB instance. If there is a replication delay between the Read Replica and the Primary that you want to promote, the promotion will not take place until the delay is resolved. Once promoted, a DB instance cannot be reverted to the previous replication relationship.
 
 > [Caution]
-> If the master DB instance is in an abnormal state, you cannot proceed with the promotion operations.
+> If the Primary DB instance is in an abnormal state, you cannot proceed with the promotion operations.
 
 > [Note]
-> You can perform promotion operations from the same region's console as the region where the read replica is located.
+> You can perform promotion operations from the same region's console as the region where the Read Replica is located.
 
 ### Force Promotion of Read Replicas
 
-Force promotion is processed based on current point-in-time data of the read replica, regardless of the state of the master or original region. Reproduction delays can result in data loss. Therefore, we do not recommend using this feature unless you are in a situation where you urgently need to put the read replica into service.
+Force promotion is processed based on current point-in-time data of the Read Replica, regardless of the state of the Primary or original region. Reproduction delays can result in data loss. Therefore, we do not recommend using this feature unless you are in a situation where you urgently need to put the Read Replica into service.
 
 ### Stop Replication of Read Replicas
 
-Read replicas can be stopped for several reasons. If the status of the read replica is `Replication stopped`, you must quickly determine the cause and perform normalization. If the ` Replication stopped` status persists for a long time, the replication delay will increase. If you do not have the binary log required for normalization, you must rebuild the read replica. The reason for replication stop can be determined by the `SHOW SLAVE STATUS` command in the read replica. If the value
+Read Replicas can be stopped for several reasons. If the status of the Read Replica is `Replication stopped`, you must quickly determine the cause and perform normalization. If the ` Replication stopped` status persists for a long time, the replication delay will increase. If you do not have the binary log required for normalization, you must rebuild the Read Replica. The reason for replication stop can be determined by the `SHOW SLAVE STATUS` command in the Read Replica. If the value
 of `Last_Errno` is 1062, you can call the Procedure below until the error disappears.
 
 ```
@@ -786,14 +787,14 @@ of `Last_Errno` is 1062, you can call the Procedure below until the error disapp
 
 ### Rebuild Read Replica
 
-If you can't resolve the replication issue of read replica, you can restore it to its normal state by rebuilding. This process deletes all databases in the read replica and rebuilds it anew based on the master database. During rebuilding, read replicas are unavailable to use. Rebuilding read replicas requires backup files and binary logs created with the Enable Table Lock option among DB instances in the replication group. If you don't have a backup file, refer to [Create Read Replica](#_22) for actions and precautions.
+If you can't resolve the replication issue of Read Replica, you can restore it to its normal state by rebuilding. This process deletes all databases in the Read Replica and rebuilds it anew based on the Primary database. During rebuilding, Read Replicas are unavailable to use. Rebuilding Read Replicas requires backup files and binary logs created with the Enable Table Lock option among DB instances in the replication group. If you don't have a backup file, refer to [Create Read Replica](#create-read-replica) for actions and precautions.
 
 > [Note]
 > Connection information (domain, IP) does not change after rebuilding.
 
 ## Restart DB instance
 
-You can restart a DB instance when you restart {{engine.pascalCase}} or want to manually do failover a high availability DB instance. We recommend that you perform it during low service load times to minimize restart times. For high availability DB instances, if restarting with failover is not enabled, restart the candidate master first, then restart the master. For restarting with failover feature, refer to [Manual Failover](#_42) item.
+You can restart a DB instance when you restart {{engine.pascalCase}} or want to manually do failover a high availability DB instance. We recommend that you perform it during low service load times to minimize restart times. For high availability DB instances, if restarting with failover is not enabled, restart the Standby first, then restart the Primary. For restarting with failover feature, refer to [Manual Failover](#manual-failover) item.
 
 To restart a DB instance from the console
 
@@ -832,81 +833,81 @@ Enabling Delete Protection protects DB instances from being accidentally deleted
 <a id="ha-db-instance"></a>
 ## High Availability DB Instances
 
-High availability DB instances increase availability, data durability, and provide fault tolerant databases. High availability DB instances consist of master and candidate master and are created in different availability zones. Candidate master is a DB instance for failover and is not normally available. For high availability DB instances, backups are performed on the candidate master.
+High availability DB instances increase availability, data durability, and provide fault tolerant databases. High availability DB instances consist of Primary and Standby and are created in different availability zones. Standby is a DB instance for failover and is not normally available. For high availability DB instances, backups are performed on the Standby.
 
 > [Note]
 > For high availability DB instances, if you set to use {{engine.pascalCase}} query statement to force replication from another DB instance or from a master in external {{engine.pascalCase}}, high availability and some features do not work properly.
 
 ### Failure Detection
 
-Candidate master has a process for detecting failures, which periodically detects the state of the master. This detection period is called ping interval and takes failover if four consecutive health checks fail. The shorter the ping interval, the more sensitive to the fault respond is, and the longer the ping interval, the less insensitive the fault respond is. It is important to set the appropriate ping interval for the service load accordingly.
+Standby has a process for detecting failures, which periodically detects the state of the Primary. This detection period is called ping interval and takes failover if four consecutive health checks fail. The shorter the ping interval, the more sensitive to the fault respond is, and the longer the ping interval, the less insensitive the fault respond is. It is important to set the appropriate ping interval for the service load accordingly.
 
 > [Note]
-> When the master's storage usage is full, the high availability monitoring process detects it as a failure and takes action, which you should be taken note of.
+> When the Primary's storage usage is full, the high availability monitoring process detects it as a failure and takes action, which you should be taken note of.
 
 ### Automatic Failover
 
-When the candidate master fails the master's health check four times in a row, it determines that the master is unable to provide service and automatically performs a failover. In order to prevent split brains, disconnect all user security groups assigned to the failed master to block external connections, and the candidate master will take over the role of the master. A record in the internal domain for access are changed from the failed master to the candidate master, so no changes to the application are required. When failover is completed, the type of failed over master changes to the failed over master and the type of candidate master changes to the master. No failover is performed until the failed over master is recovered or rebuilt. Promoted master takes over all automatic backups of the failover master. Point-in-time restoration using existing backups is not supported because the master changes during failover and all binary logs are deleted. You can restore point-in-time
-from the time the new backup was performed on the promoted master.
+When the Standby fails the Primary's health check four times in a row, it determines that the Primary is unable to provide service and automatically performs a failover. In order to prevent split brains, disconnect all user security groups assigned to the failed Primary to block external connections, and the Standby will take over the role of the Primary. A record in the internal domain for access are changed from the failed Primary to the Standby, so no changes to the application are required. When failover is completed, the type of the failed Primary changes to Failed Over Primary and the type of Standby changes to the Primary. No failover is performed until the Failed Over Primary is recovered or rebuilt. Promoted Primary takes over all automatic backups of the Failed Over Primary. Point-in-time restoration using existing backups is not supported because the Primary changes during failover and all binary logs are deleted. You can restore point-in-time
+from the time the new backup was performed on the promoted Primary.
 
 > [Note]
 > As the high availability feature is based on a domain, if a client trying to connect is in a network environment where the DNS server cannot be reached, the DB instance cannot be accessed through the domain, and normal connection is not possible in the event of failover. It takes approximately 3 seconds for the changes to A record in the internal domain to take effect, but may vary depending on the DNS Cache policy in the client environment where attempting to connect.
 
 > [Caution]
-> If the position number value of the binary log between master and candidate master differs by more than 100,000,000, there is no failover.
+> If the position number value of the binary log between Primary and Standby differs by more than 100,000,000, there is no failover.
 > If `replicate-ignore-db` or `replicate-ignore-table` is applied, changes to that DB or table will not be replicated and failover may fail.
 
-### Failed over Master
+### Failed Over Primary
 
-A master that fails and conducts failover is called failover master. Backups of failed over master are not automatically performed, and all other features other than failed over master recovery, rebuild, separate, and delete are not performed.
+A Primary that fails and conducts failover is called Failed Over Primary. Backups of Failed Over Primary are not automatically performed, and all other features other than Failed Over Primary recovery, rebuild, separate, and delete are not performed.
 
-### Recover Failed Over Master
+### Recover Failed Over Primary
 
-If the data is not consistent during failover and the binary log is not lost from the point of failure to the point of attempting recovery, the failed over and promoted masters can be recovered back to the high availability configuration. Because it re-configure replication relationships with the promoted master in the database of the failed over master, recovery fails once the data became inconsistent or once the binary log required for recovery was lost.
+If the data is not consistent during failover and the binary log is not lost from the point of failure to the point of attempting recovery, the Failed Over Primary and the promoted Primary can be recovered back to the high availability configuration. Because it re-configure replication relationships with the promoted Primary in the database of the Failed Over Primary, recovery fails once the data became inconsistent or once the binary log required for recovery was lost.
 
-If the failed over master fails to recover, you can re-enable the high availability feature by rebuilding.
+If the Failed Over Primary fails to recover, you can re-enable the high availability feature by rebuilding.
 
 > [Note]
 > Recovery is not supported for DB instances where failover occurred before April 11, 2023.
 
-To recover a failover master, from the console
+To recover a Failed Over Primary, from the console
 
 ![db-instance-failover-repair-en]({{url.cdn}}/26.01.13/db-instance-failover-repair-en.png)
 
-❶ Select the failover master you want to recover from and click on **Recover 	
-Failed Over Master** menu from the drop-down menu.
+❶ Select the Failed Over Primary you want to recover from and click on **Recover 	
+Failed Over Primary** menu from the drop-down menu.
 
-### Rebuild Failed over Master
+### Rebuild Failed Over Primary
 
-If the failed over master fails to recover, you can re-enable the high availability feature by rebuilding. Unlike recovery, rebuild removes all databases from the failed over master and rebuilds them based on the promoted master's database. In this process, if you do not have a backup file, use the following order to select the DB instance to perform backup.
+If the Failed Over Primary fails to recover, you can re-enable the high availability feature by rebuilding. Unlike recovery, rebuild removes all databases from the Failed Over Primary and rebuilds them based on the promoted Primary's database. In this process, if you do not have a backup file, use the following order to select the DB instance to perform backup.
 
 ❶ Read Replica with auto backup enabled
-❷ Master with auto backup enabled
+❷ Primary with auto backup enabled
 
-If there is no DB instance that meets the condition, the failover master rebuild request fails.
+If there is no DB instance that meets the condition, the Failed Over Primary rebuild request fails.
 
 > [Caution]
-> In proportion to the size of the master's database, the time to rebuild the failover master can be increased.
-> For DB instances where backups are performed, storage I/O performance may be degraded during the failover master rebuilding.
+> In proportion to the size of the Primary's database, the time to rebuild the Failed Over Primary can be increased.
+> For DB instances where backups are performed, storage I/O performance may be degraded during the Failed Over Primary rebuilding.
 
 > [Note]
-> Backup storage charges can be as much as the size of the binary log required for the failover master rebuild process.
+> Backup storage charges can be as much as the size of the binary log required for the Failed Over Primary rebuild process.
 
-To rebuild a failover master, from the console
+To rebuild a Failed Over Primary, from the console
 
 ![db-instance-failover-rebuild-en]({{url.cdn}}/26.01.13/db-instance-failover-rebuild-en.png)
 
-❶ Select the failover master you want to rebuild and click on **Rebuild failover master** menu from the drop-down menu.
+❶ Select the Failed Over Primary you want to rebuild and click on **Rebuild Failed Over Primary** menu from the drop-down menu.
 
-### Separate Failed over Master
+### Separate Failed Over Primary
 
-If recovery of a failed over master fails and data correction is required, you can disable the high availability feature by separating that master. The replication relationship between the separated master and the promoted master is broken, and each behaves as a normal DB instance. After separation, you cannot recover to the existing configuration.
+If recovery of a Failed Over Primary fails and data correction is required, you can disable the high availability feature by separating that Failed Over Primary. The replication relationship between the separated Primary and the promoted Primary is broken, and each behaves as a normal DB instance. After separation, you cannot recover to the existing configuration.
 
-To separate failover master, from the console
+To separate Failed Over Primary, from the console
 
 ![db-instance-failover-split-en]({{url.cdn}}/26.01.13/db-instance-failover-split-en.png)
 
-❶ Select the failed master you want to isolate and click on **Separate failed over master** menu from the drop-down menu.
+❶ Select the Failed Over Primary you want to isolate and click on **Separate Failed Over Primary** menu from the drop-down menu.
 
 <a id="manual-failover"></a>
 ### Manual Failover
@@ -918,14 +919,14 @@ For a high availability DB instance, you can select whether or not to restart wi
 * Apply changes to parameters that require restart
 * DB Instances migration for Hypervisor Check
 
-After a restart using failover, the backup master will be restarted first. After that, the backup master will be promoted to the master through failover, and the existing master will act as the candidate master. Upon promotion, the A record in the internal domain for the connection will be changed from master to candidate master, so no application changes are required. The promoted master succeeds to all automatic backups of the old master. Point-in-time restoration with existing backups is not supported because the master changes during the failover and all binary logs are deleted. You can restore points-in-time from the time when the new backup is performed on the promoted master.
+After a restart using failover, the Standby will be restarted first. After that, the Standby will be promoted to the Primary through failover, and the existing Primary will act as the Standby. Upon promotion, the A record in the internal domain for the connection will be changed from Primary to Standby, so no application changes are required. The promoted Primary succeeds to all automatic backups of the old Primary. Point-in-time restoration with existing backups is not supported because the Primary changes during the failover and all binary logs are deleted. You can restore points-in-time from the time when the new backup is performed on the promoted Primary.
 
 > [Note]
 > Because the high availability feature is domain-based, if the client attempting to connect is in a network environment where the DNS server cannot be accessed, the DB instance cannot be accessed through the domain, and successful connection is not possible in the event of a failover.
 > It takes approximately 3 seconds to reflect changes in the A record in the internal domain. The time required may vary depending on the DNS Cache policy of the client environment attempting to connect.
 
 > [Caution]
-> If the Seconds_Behind_Master value of the read replica included in the replication group with the candidate master is greater than or equal to 1, replication delay is considered to have occurred and a manual failover will fail. It is recommended that you perform manual failover during off-peak hours. Restart failures due to replication delays can be verified through the Events screen.
+> If the Seconds_Behind_Master value of the Read Replica included in the replication group with the Standby is greater than or equal to 1, replication delay is considered to have occurred and a manual failover will fail. It is recommended that you perform manual failover during off-peak hours. Restart failures due to replication delays can be verified through the Events screen.
 
 When restarting with a failover, you can select the following additional items to increase stability.
 
@@ -935,7 +936,7 @@ Because all binary logs are deleted during the failover process, you can proceed
 
 #### Manual Control of Failover
 
-You can apply changes to the candidate master first and then observe the trend, or you can control when you want to perform a failover at the exact time from the console. When you select Failover Manual Control, the ❶ console displays the **Failover** button after the candidate master restarts. Click on this button to activate the failover, which can wait up to 5 days for the failover to occur. If the failover is not enabled within five days, the task will be automatically cancelled.
+You can apply changes to the Standby first and then observe the trend, or you can control when you want to perform a failover at the exact time from the console. When you select Failover Manual Control, the ❶ console displays the **Failover** button after the Standby restarts. Click on this button to activate the failover, which can wait up to 5 days for the failover to occur. If the failover is not enabled within five days, the task will be automatically cancelled.
 
 ![db-instance-ha-wait-manual-failover-en]({{url.cdn}}/26.01.13/db-instance-ha-wait-manual-failover-en.png)
 
@@ -944,19 +945,19 @@ You can apply changes to the candidate master first and then observe the trend, 
 
 #### Waiting for Resolve Replication Delay
 
-When you enable Resolve Replication Delays option, you can wait for replication delays for the candidate master and read replicas in the Replication group to disappear.
+When you enable Resolve Replication Delays option, you can wait for replication delays for the Standby and Read Replicas in the Replication group to disappear.
 
 #### Block write load
 
-You can select to further block the write load while resolving replication delays. Blocking the write load puts the master in read-only mode and sets all change queries to fail immediately before performing the failover.
+You can select to further block the write load while resolving replication delays. Blocking the write load puts the Primary in read-only mode and sets all change queries to fail immediately before performing the failover.
 
 ### High availability suspended
 
 High availability features can be temporarily stopped in situations where a temporary operation can cause a connection outage or heavy load. When a high availability feature is suspended, it does not detect a failure and does not perform a failover action. When a high availability feature is suspended, performing an operation that requires a restart does not restart the suspended high availability feature. It is not recommended to leave data replication in a pause state for an extended period of time because high availability feature is paused and data replication is successful or failure is not detected.
 
-### Rebuild Candidate Master
+### Rebuild Standby
 
-Candidate master replication can be disrupted due to a variety of reasons, such as network disconnection, incorrect FEDERATED engine use, and replication settings from other masters. Candidate masters in a Stopped Replication state do not perform automatic failover. To resolve a backup master's Stopped Replication, the candidate master needs to be rebuilt. When rebuilding a candidate master, it removes all of the candidate master's databases and rebuilds them based on the master's database. In this process, if the backup file required for rebuilding does not exist in the master database, the backup is performed on the master, which can cause performance degradation.
+Standby replication can be disrupted due to a variety of reasons, such as network disconnection, incorrect FEDERATED engine use, and replication settings from other Primaries. Standbys in a Stopped Replication state do not perform automatic failover. To resolve a Standby's Stopped Replication, the Standby needs to be rebuilt. When rebuilding a Standby, it removes all of the Standby's databases and rebuilds them based on the Primary's database. In this process, if the backup file required for rebuilding does not exist in the Primary database, the backup is performed on the Primary, which can cause performance degradation.
 
 ## {{engine.pascalCase}} Procedure
 
@@ -1196,15 +1197,15 @@ mysqldump -h{external_db_host} -u{external_db_id} -p{external_db_password} --por
 
 * Replication allows you export data from NHN Cloud RDS to external DB.
 * The external db version has to be the same as or later than the version of NHN Cloud RDS.
-* Prepare an instance of NHN Cloud RDS Master or Read Only Slave to export data.
+* Prepare an instance of NHN Cloud RDS Primary or Read Replica to export data.
 * Create Floating IP to connect to NHN Cloud RDS instances to export data.
-* When exporting from Master RDS instance.
+* When exporting from Primary RDS instance.
 
 ```
 mysqldump -h{rds_master_instance_floating_ip} -u{db_id} -p{db_password} --port={db_port} --single-transaction --master-data=2 --routines --events --triggers --databases {database_name1, database_name2, ...} > {local_path_and_file_name}
 ```
 
-* When exporting from Read Only Slave RDS.
+* When exporting from Read Replica RDS.
 
 ```
 mysqldump -h{rds_read_only_slave_instance_floating_ip} -u{db_id} -p{db_password} --port={db_port} --single-transaction --dump-slave=2 --routines --events --triggers --databases {database_name1, database_name2, ...} > {local_path_and_file_name}
@@ -1360,20 +1361,14 @@ NHN Cloud periodically updates the hypervisor software of the DB instance to imp
 DB instances running on a hypervisor that requires maintenance must be migrated to the hypervisor where maintenance has been completed.
 
 You can start migrating DB instances from the NHN Cloud console.
-When you select a specific DB instance according to the parameter and migrate it, if the associated DB instance (e.g., Slave instance) is also an inspection target, it proceeds with the migration together.
+When you select a specific DB instance according to the parameter and migrate it, if the associated DB instance (e.g., Read Replica instance) is also an inspection target, it proceeds with the migration together.
 Follow the guide below to use the migration feature on the console.
 Navigate to the project where the specified DB instance to be checked.
 
 #### 1. Check the DB instance that requires maintenance.
 
-You can check for hypervisor migration tasks by clicking **Required** in the **Maintenance** menu, or by visiting the **Maintenance** tab in the **DB Instance Details**.
-
-![rds_planed_migration_0]({{url.cdn}}/planned_migration_alarm/26.01.13/image0_en.png)
-
-❶ Click the **View** button for hypervisor migration maintenance.
-❷ You can view detailed information about the hypervisor migration.
-
-![rds_planed_migration_1]({{url.cdn}}/planned_migration_alarm/26.01.13/image1_en.png)
+Check the DB instances subject to maintenance in the list on the **DB Instance** tab. You can check for hypervisor migration tasks by clicking **Required** in the **Maintenance** menu, or by visiting the **Maintenance** tab in the **DB Instance Details**.
+Click **View** on the hypervisor migration maintenance task to view detailed information about the hypervisor migration.
 
 #### 2. Make sure you close any running applications on the DB instance.
 
@@ -1382,17 +1377,12 @@ If it is inevitable to affect the service, please contact NHN Cloud Customer Sup
 
 #### 3. You can apply migration to DB instances targeted for maintenance.
 
-![rds_planed_migration_2]({{url.cdn}}/planned_migration_alarm/26.01.13/image2_en.png)
-
-❶ Click **Apply Immediately** to perform the hypervisor migration right away.
-❷ Click **Apply in the Next Maintenance Duration** to schedule the hypervisor migration for your preferred maintenance duration.
+Select the DB instance to migrate, and then click **Apply Immediately** to perform the hypervisor migration right away.
+Click **Apply in the Next Maintenance Duration** to schedule the hypervisor migration for your preferred maintenance duration.
 
 #### 4. Wait for the DB instance migration to finish.
 
 If the DB instance state does not change, do 'refresh'.
-
-![rds_planed_migration_3]({{url.cdn}}/planned_migration_alarm/26.01.13/image3_en.png)
-
 No operations can be performed on the DB instance while migration is in progress.
 If the DB instance migration is not completed normally, it is automatically reported to the administrator, and NHN Cloud will contact you.
 
@@ -1405,9 +1395,9 @@ When using Federated Storage Engine, make sure you consider the following.
 * Make sure you need to allow the outbound direction to remote nodes.
     * You can add rules from DB security group.
     * Refer to [DB Security Group](db-security-group/) for more information.
-* When using a configuration that adds Read Only Slave to RDS that serves as a local node, you need to specify a federated table in replicate-ignore-table of parameter.
-    * When you configure Read Only Slave, the federated table is also replicated, allowing the Master and Read Only Slave to look at the remote node together.
-    * In this case, the data input performed on the Master is performed on the remote node according to the federated setting, and the same input is performed on the Read Only Slave, which may lead to stop replication due to duplicate key errors.
+* When using a configuration that adds Read Replica to RDS that serves as a local node, you need to specify a federated table in replicate-ignore-table of parameter.
+    * When you configure Read Replica, the federated table is also replicated, allowing the Primary and Read Replica to look at the remote node together.
+    * In this case, the data input performed on the Primary is performed on the remote node according to the federated setting, and the same input is performed on the Read Replica, which may lead to stop replication due to duplicate key errors.
     * Make sure you need to configure the settings of replicate-ignore-table so that Read Only Save does not replicate a federated table.
 
 #### For configuration using RDS as a remote node

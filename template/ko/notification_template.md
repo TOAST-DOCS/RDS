@@ -97,7 +97,7 @@
 | INSTC_43_04 | INSTANCE          | 아니오      | RAM 용량 제한                            |
 | INSTC_44_04 | INSTANCE          | 아니오      | 개별 볼륨 크기 제한                          |
 | INSTC_45_04 | INSTANCE          | 아니오      | 프로젝트 전체 볼륨 크기 제한                     |
-| INSTC_46_04 | INSTANCE          | 아니오      | Read Only Slave 개수 제한                |
+| INSTC_46_04 | INSTANCE          | 아니오      | Read Replica 개수 제한                |
 | INSTC_47_00 | INSTANCE          | 예        | DB 인스턴스 백업 및 내보내기 시작                 |
 | INSTC_47_01 | INSTANCE          | 예        | DB 인스턴스 백업 및 내보내기 완료                 |
 | INSTC_47_04 | INSTANCE          | 예        | DB 인스턴스 백업 및 내보내기 실패                 |
@@ -132,9 +132,9 @@
 | INSTC_60_00 | INSTANCE          | 예        | DB 인스턴스 마이그레이션 시작                    |
 | INSTC_60_01 | INSTANCE          | 예        | DB 인스턴스 마이그레이션 완료                    |
 | INSTC_60_04 | INSTANCE          | 예        | DB 인스턴스 마이그레이션 실패                    |
-| INSTC_61_00 | INSTANCE          | 예        | 예비 마스터 재구축 시작                        |
-| INSTC_61_01 | INSTANCE          | 예        | 예비 마스터 재구축 완료                        |
-| INSTC_61_04 | INSTANCE          | 예        | 예비 마스터 재구축 실패                        |
+| INSTC_61_00 | INSTANCE          | 예        | Standby 재구축 시작                        |
+| INSTC_61_01 | INSTANCE          | 예        | Standby 재구축 완료                        |
+| INSTC_61_04 | INSTANCE          | 예        | Standby 재구축 실패                        |
 | INSTC_62_00 | INSTANCE          | 예        | DB 엔진 버전 업그레이드 시작                    |
 | INSTC_62_01 | INSTANCE          | 예        | DB 엔진 버전 업그레이드 완료                    |
 | INSTC_62_04 | INSTANCE          | 예        | DB 엔진 버전 업그레이드 실패                    |
@@ -171,7 +171,7 @@
 | TENAT_02_04 | TENANT            | 예        | RAM 용량 제한	                           |
 | TENAT_03_04 | TENANT            | 예        | 개별 볼륨 크기 제한                          |
 | TENAT_04_04 | TENANT            | 예        | 프로젝트 전체 볼륨 크기 제한                     |
-| TENAT_05_04 | TENANT            | 예        | Read Only Slave 개수 제한                |
+| TENAT_05_04 | TENANT            | 예        | Read Replica 개수 제한                |
 
 ## 이벤트 구독
 

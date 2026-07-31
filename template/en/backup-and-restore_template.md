@@ -4,13 +4,13 @@
 ## Backup Overview
 
 You can prepare in advance to recover the database of DB instance in case of failure. You can perform backups through the console whenever necessary, and you can configure to perform backups periodically. During backup, storage performance of the DB instance on which the backup is performed can be degraded. To avoid affecting service, it is better to perform back up at a time when the service is under low load. If you do not want the backup to degrade performance, you can use a
-high-availability configuration or back up only increments of data since the previous backup, or perform backups from read replica.
+high-availability configuration or back up only increments of data since the previous backup, or perform backups from Read Replica.
 
 > [Note]
-> High availability DB instances perform backups on the redundant master so that the storage performance of the master is not degraded.
-> However, backups can be performed on the master even if it is a high availability DB instance in the following cases.
-> * If a backup cannot be performed due to a candidate master failure.
-> * If you do not have a read replica in a situation where you need a backup taken from a DB instance other than the candidate master for rebuilding the candidate master
+> High availability DB instances perform backups on the Standby so that the storage performance of the Primary is not degraded.
+> However, backups can be performed on the Primary even if it is a high availability DB instance in the following cases.
+> * If a backup cannot be performed due to a Standby failure.
+> * If you do not have a Read Replica in a situation where you need a backup taken from a DB instance other than the Standby for rebuilding the Standby
 
 {{#if (eq engine.lowerCase "mysql")}}
 RDS for MySQL uses Percona XtraBackup to back up databases. You have to use the same version of Percona XtraBackup that RDS for MySQL uses to restore to backup of external MySQL or to restore to backup of RDS for MySQL Percona XtraBackup version in line with DB engine version is as follows.
@@ -104,7 +104,7 @@ The following limitations exist for backups that are the basis for incremental b
 * Backups created before the September 2024 scheduled release cannot be baseline backups.
 
 When incremental backups are scheduled according to [Auto Backup Strategy](#set-auto-backup), a baseline backup that satisfies the above constraints, plus the following additional constraints, is automatically selected. If no baseline backup satisfies the constraints, a full backup is performed regardless of the auto backup strategy.
-* A backup performed on a candidate master, read replica that is in a replication down state cannot be a baseline backup.
+* A backup performed on a Standby, Read Replica that is in a replication down state cannot be a baseline backup.
 * A backup performed without table locks enabled cannot be a baseline backup.
 * If a new full backup was created after that backup was created, it cannot be the baseline backup.
 
