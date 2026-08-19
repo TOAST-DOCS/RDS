@@ -88,13 +88,8 @@ for (let config of configs) {
                 continue;
             }
 
-            let template;
-
-            if (language === 'zh') {
-                template = fs.readFileSync(`template/en/${doc}_template.md`, 'utf-8');
-            } else {
-                template = fs.readFileSync(`template/${language}/${doc}_template.md`, 'utf-8');
-            }
+            // zh 는 en 템플릿을 그대로 사용
+            const template = fs.readFileSync(`${language === 'zh' ? 'en' : language}/${doc}_template.md`, 'utf-8');
 
             const fileName = config.env === 'public' ? `${doc}.md` : `${doc}-${config.env}.md`;
             const compiled = Handlebars.compile(template);
@@ -105,11 +100,8 @@ for (let config of configs) {
                 result = result.replace(/\[(.*)]\((?!.*png)(?!#)(?!http)([^)]*?)(\/#[^)]*|\/)\)/g,`[$1]($2-${config.env}$3)`);
             }
 
-            if (config.engine === 'mysql') {
-                fs.writeFileSync(`${language}/${fileName}`, result);
-            } else {
-                fs.writeFileSync(`${config.engine}/${language}/${fileName}`, result);
-            }
+            fs.mkdirSync(`${config.engine}/${language}`, { recursive: true });
+            fs.writeFileSync(`${config.engine}/${language}/${fileName}`, result);
 
             console.log(`${config.engine}/${language}/${fileName} created`);
         }
