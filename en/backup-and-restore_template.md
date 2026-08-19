@@ -1,7 +1,10 @@
-## Database > RDS for {{engine.pascalCase}} > Backup and Restoration
+<!-- pre-align:aligned sig=fc4a4521d735 -->
+
+<a id="database-rds-for-enginepascalcase-backup-and-restoration"></a>
+## Database > RDS for {{engine.pascalCase}} > Backup and Restoration { #database-rds-for-enginepascalcase-backup-and-restoration }
 
 <a id="overview"></a>
-## Backup Overview
+## Backup Overview { #overview }
 
 You can prepare in advance to recover the database of DB instance in case of failure. You can perform backups through the console whenever necessary, and you can configure to perform backups periodically. During backup, storage performance of the DB instance on which the backup is performed can be degraded. To avoid affecting service, it is better to perform back up at a time when the service is under low load. If you do not want the backup to degrade performance, you can use a
 high-availability configuration or back up only increments of data since the previous backup, or perform backups from read replica.
@@ -45,11 +48,13 @@ RDS for MySQL uses Percona XtraBackup to back up databases. You have to use the 
 > On August 17, 2023, the version of the XtraBackup utility was upgraded. The XtraBackup version used for the previous backup can be found in the console.
 {{/if}}
 
-## Backup Type
+<a id="backup-type"></a>
+## Backup Type { #backup-type }
 
 Backups can be categorized into manual and automatic backups.
 
-### Manual Backup
+<a id="manual-backup"></a>
+### Manual Backup { #manual-backup }
 
 You can perform a manual backup from the console to permanently save a database at a specific point in time. Unlike auto backups, manual backups are not deleted when the DB instance is deleted, unless you explicitly delete the backup.
 When creating a manual backup, you must specify a name for the backup, with the following limitations.
@@ -69,20 +74,24 @@ When creating a manual backup, you must specify a name for the backup, with the 
 ❸ You can create an incremental backup by selecting a baseline backup from the backup list and then clicking **Create incremental backup**. Some backups cannot be selected as a baseline backup; for a detailed description of baseline [backups](#baseline-backup), see [Baseline backups](#baseline-backup).
 
 
-### Auto Backup
+<a id="auto-backup"></a>
+### Auto Backup { #auto-backup }
 
 In addition to performing backups manually, auto backups can occur when required for restore operations or based on scheduled auto backup settings.
 For settings that apply during auto backups, see [Auto Backup Settings](#set-auto-backup).
 
-## Backup Method
+<a id="backup-method"></a>
+## Backup Method { #backup-method }
 
 Full and incremental backups are available.
 
-### Full Backup
+<a id="full-backup"></a>
+### Full Backup { #full-backup }
 
 Backs up all data in the DB instance.
 
-### Incremental Backup
+<a id="incremental-backup"></a>
+### Incremental Backup { #incremental-backup }
 
 Incremental backups only back up data changes since the baseline backup was performed. Recommended if your data is mostly immutable.
 Incremental backups are always performed on the DB instance that performed the baseline backup.
@@ -91,6 +100,7 @@ When restoring to an incremental backup, the restore proceeds from the first ful
 > [Caution]
 > Restoring from incremental backups may take more time than restoring from a full backup, which is proportional to the sum of the capacity of the incremental backups required for the restore.
 
+<a id="incremental-backup-a-idbaseline-backupabaseline-backup"></a>
 #### <a id="baseline-backup"></a>Baseline Backup
 
 Incremental backups require a backup to baseline data changes on. An incremental backup can also be the baseline backup for a new incremental backup.
@@ -108,7 +118,8 @@ When incremental backups are scheduled according to [Auto Backup Strategy](#set-
 * A backup performed without table locks enabled cannot be a baseline backup.
 * If a new full backup was created after that backup was created, it cannot be the baseline backup.
 
-## Snapshot Backup
+<a id="snapshot-backup"></a>
+## Snapshot Backup { #snapshot-backup }
 
 While existing backup methods can degrade performance when run directly on the DB instance, our **Storage Snapshot Backup** leverages Cinder snapshots—provided HA is active and healthy—to eliminate system overhead.
 Because all heavy lifting—such as validation and file conversion—is offloaded to a separate server, your database maintains peak performance even during backups.
@@ -118,7 +129,8 @@ Main Features
 * Enhanced reliability: Rigorous verification processes ensure the reliability of your backup data.
 * Temporary High Availability (HA) suspension: HA features may be briefly paused during snapshot creation to ensure strict data consistency.
 
-### Pricing
+<a id="pricing"></a>
+### Pricing { #pricing }
 
 Unlike existing backup methods, Snapshot Backup incurs separate charges for the resources used during the backup process.
 
@@ -130,13 +142,15 @@ Unlike existing backup methods, Snapshot Backup incurs separate charges for the 
 * Shared backup server fee: This fee covers the use of backup servers for data validation and file conversion.
     * Even when using shared resources, you are billed only for the actual time used during your backup operations.
 
-## Backup Settings
+<a id="backup-settings"></a>
+## Backup Settings { #backup-settings }
 
 When creating and modifying DB instances, you can specify settings that will be applied to backups.
 
 ![db-instance-backup-form-en]({{url.cdn}}/24.11.12/db-instance-backup-form-en.png)
 
-### Common Settings
+<a id="common-settings"></a>
+### Common Settings { #common-settings }
 
 The following topics are common to both auto and manual backups.
 
@@ -151,7 +165,8 @@ The following topics are common to both auto and manual backups.
 * When using table lock, set the wait time for `FLUSH TABLES WITH READ LOCK` syntax. `FLUSH TABLES WITH READ LOCK` syntax will wait for the query delay wait time. It can be set from 0 to 21,600 seconds. Longer settings reduce the likelihood of backup failures due to DML query load, but may result in longer overall backup times.
 
 
-### <a id="set-auto-backup"></a>Set Auto Backup
+<a id="a-idset-auto-backupaset-auto-backup"></a>
+### <a id="set-auto-backup"></a>Set Auto Backup { #a-idset-auto-backupaset-auto-backup }
 
 The following items apply only to auto backups.
 
@@ -200,13 +215,15 @@ The following items apply only to auto backups.
 > If no incremental baseline backup exists, a full backup might be performed even though it is the scheduled turn to perform an incremental backup.
 > For a detailed description of incremental baseline backups, see [Baseline Backup](#baseline-backup).
 
-### Backup Storage and Pricing
+<a id="backup-storage-and-pricing"></a>
+### Backup Storage and Pricing { #backup-storage-and-pricing }
 
 All backup files are uploaded to the internal backup storage and stored. For manual backups, they are stored permanently until you delete them separately, and backup storage charges are incurred depending on the backup capacity. For auto backups, it is stored for the set retention period and charges for the full size of the auto backup file, which exceeds the storage size of the DB instance. If you do not have direct access to the internal backup storage where the backup file is stored, and when you need backup file, you can export the backup file to the object storage in NHN Cloud.
 
 <a id="export"></a>
-### Export Backup
+### Export Backup { #export }
 
+<a id="export-files-while-performing-backup"></a>
 #### Export Files While Performing Backup
 
 After a backup, you can export the backup file to user object storage. This is not supported for incremental backups.
@@ -222,6 +239,7 @@ After a backup, you can export the backup file to user object storage. This is n
 ❺ Enter the container of the object storage where the backup will be saved.
 ❻ Enter the path to the backup that will be stored in the container. The folder name can be up to 255 bytes, and the full path can be up to 1024 bytes. Certain forms (. or ..) are not allowed, and special characters (' " < > ;) and spaces are not allowed.
 
+<a id="export-backup-files"></a>
 #### Export Backup Files
 
 You can export backup files stored in internal backup storage to user object storage. Not supported for incremental backups.
@@ -238,14 +256,15 @@ You can export backup files stored in internal backup storage to user object sto
 > For manual backups, if the source DB instance that performed the backup was deleted, you cannot export the backup.
 
 <a id="restore"></a>
-## Restoration
+## Restoration { #restore }
 
 Backups allow you to restore data to any point in time. Restoration always creates new DB instance and cannot be restored to the existing DB instance. You can restore only to the same DB engine version as the source DB instance from which you performed the backup. Supports restoring snapshots to the point in time when the backup was created, and restoring point in time to a specific point in time. You can restore it as backup of external MySQL as well as backup that you created in RDS for {{engine.pascalCase}}.
 
 > [Caution]
 > Restoration might fail if the data storage size of the DB instance that you want to restore is smaller than the data storage size of the source DB instance that you backed up, or if you use a different parameter group than the parameter group of the source DB instance.
 
-### Snapshot Restoration
+<a id="snapshot-restoration"></a>
+### Snapshot Restoration { #snapshot-restoration }
 
 You can restore using only the backup file, so you don't need the original DB instance from which the backup was taken. To restore a snapshot from the console,
 
@@ -259,7 +278,8 @@ Or
 
 ❶ On the Backup tab, select the backup file you want to restore, and then click **Restore Snapshot**.
 
-### Point-in-time Restoration
+<a id="point-in-time-restoration"></a>
+### Point-in-time Restoration { #point-in-time-restoration }
 
 Restoring to a particular point in time is called point-in-time restoration. You can restore to a specific position in the binary log, as well as to restore to a specific time. Point-in-time restoration requires backup file and binary log from the time you performed the backup to the time you wanted the restore. Binary logs are stored in the storage of the source DB instance where the backup is performed. Shorter binary log retention period allows you to use more storage capacity, but it may be
 difficult to restore to the desired point in time. For the cases listed below, you may not be able to restore to the desired point in time because there is no binary log required for point-in-time restoration.
@@ -275,6 +295,7 @@ To restore a point in time from the console
 
 ❶ Select the DB instance you want to restore to a point in time and click **\+ Restore Point-In-Time** to go to the page where you can set up a point in time restore.
 
+<a id="point-in-time-restoration-restore-with-timestamp"></a>
 #### Restore with Timestamp
 
 When restoring with a timestamp, proceed with the restoration based on the backup file closest to the selected point in time, and then applies a binary log up to the desired point in time.
@@ -292,6 +313,7 @@ When restoring with a timestamp, proceed with the restoration based on the backu
 ❸ Click **Confirm the last query to be restored** to display a pop-up screen where you can confirm the last query to be restored.
 
 
+<a id="point-in-time-restoration-restore-using-binary-logs"></a>
 #### Restore using binary logs
 
 The restore with binary log process first restores to the selected backup file and then applies the binary log to the desired location.
@@ -303,7 +325,7 @@ The restore with binary log process first restores to the selected backup file a
 ❻ Enter a specific location for the binary log.
 
 <a id="restore-from-external"></a>
-### Restoration with External {{engine.pascalCase}} Backup
+### Restoration with External {{engine.pascalCase}} Backup { #restore-from-external }
 
 {{#if (eq engine.lowerCase "mysql")}}
 You can use an external MySQL backup file to create a DB instance. When creating an external MySQL backup file, refer to [Backup](backup-and-restore/#overview) and use the same version as the Percona XtraBackup used by RDS for MySQL.
@@ -355,7 +377,8 @@ mariabackup --defaults-file={my.cnf path} --user {user} --password '{password}' 
 > The backup file on the object storage has to be the same version of MySQL that you want to restore.
 {{/if}}
 
-### Restoration by Using RDS for {{engine.pascalCase}} Backup
+<a id="restoration-by-using-rds-for-enginepascalcase-backup"></a>
+### Restoration by Using RDS for {{engine.pascalCase}} Backup { #restoration-by-using-rds-for-enginepascalcase-backup }
 
 {{#if (eq engine.lowerCase "mysql")}}
 You can use the backup file in RDS for MySQL to restore the database in MySQL directly. Only full backups can be restored; incremental backup reflection is not supported. When restoring a RDS for MySQL backup file, refer to the [Backup](backup-and-restore/#overview) and use the same version as Percona XtraBackup used by RDS for MySQL.

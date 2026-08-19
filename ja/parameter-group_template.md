@@ -1,10 +1,15 @@
-## Database > RDS for {{engine.pascalCase}} > パラメータグループ
+<!-- pre-align:aligned sig=6154a9778849 -->
 
-## パラメータグループ
+<a id="database-rds-for-enginepascalcase-parameter-group"></a>
+## Database > RDS for {{engine.pascalCase}} > パラメータグループ { #database-rds-for-enginepascalcase-parameter-group }
+
+<a id="parameter-group"></a>
+## パラメータグループ { #parameter-group }
 
 RDS for {{engine.pascalCase}}はDBインスタンスにインストールされた{{engine.pascalCase}}の設定を適用するためにパラメータグループ機能を提供します。パラメータグループは{{engine.pascalCase}}を設定できるパラメータの集合です。サービス起動時、すべてのDBエンジンのバージョン別に基本パラメータグループを提供します。基本パラメータグループは`default.{DBエンジンバージョン名}`で提供され、バージョン別に推奨する基本パラメータ値で構成されています。基本パラメータグループは一般パラメータグループと同じように修正したり、削除することができます。
 
-### パラメータグループの作成
+<a id="create-parameter-group"></a>
+### パラメータグループの作成 { #create-parameter-group }
 
 必要に応じてパラメータコンソールでパラメータグループを作成できます。パラメータグループはDBエンジンバージョンごとに作成し、名前を付与することができ、下記のような制約事項があります。
 
@@ -13,31 +18,36 @@ RDS for {{engine.pascalCase}}はDBインスタンスにインストールされ�
 
 パラメータグループの作成時、パラメータは常にデフォルト値で作成されます。既存のパラメータグループを基準に作成するには、パラメータコピー機能を利用してパラメータグループを作成する必要があります。
 
-### パラメータグループのコピー
+<a id="copy-parameter-group"></a>
+### パラメータグループのコピー { #copy-parameter-group }
 
 既存のパラメータグループを基準に新規パラメータグループを作成します。コピーした新規パラメータグループは、元のパラメータグループのパラメータ値で構成されます。元のパラメータグループとコピーしたパラメータグループの間には、いかなる関係もなく、元のパラメータグループの変更や削除は、コピーしたパラメータグループにいかなる影響も与えません。
 
-### パラメータグループのリセット
+<a id="reset-parameter-group"></a>
+### パラメータグループのリセット { #reset-parameter-group }
 
 パラメータグループをリセットすると、すべてのパラメータの値をDBエンジンバージョンのデフォルト値に変更します。
 
 <a id="apply"></a>
-### パラメータグループの適用
+### パラメータグループの適用 { #apply }
 
 DBインスタンスの作成または修正時、DBインスタンスに適用するパラメータグループを選択できます。1つのDBインスタンスに1つのパラメータグループが適用され、1つのパラメータグループは複数のDBインスタンスに適用できます。パラメータグループのパラメータが変更されると、その変更はすぐにDBインスタンスに適用されません。接続されたDBインスタンスが存在する場合、パラメータグループは`適用必要`状態に変更されます。DBインスタンスリスト画面でパラメータグループと接続されたDBインスタンスを選択した後、**パラメータグループの変更内容を適用**をクリックしてパラメータの変更をDBインスタンスに反映できます。接続されたすべてのDBインスタンスにパラメータグループの変更が適用されると、パラメータグループは`適用完了`状態に変更されます。
 
 > [注意]
 > 再起動が必要なパラメータが変更された場合、適用過程でDBインスタンスが再起動されます。
 
-### パラメータグループの比較
+<a id="compare-parameter-group"></a>
+### パラメータグループの比較 { #compare-parameter-group }
 
 コンソールで異なる2つのパラメータグループを選択した後、**比較**をクリックすると、パラメータが何が違うかを確認できます。同じDBエンジンだけでなく、異なるDBエンジンバージョンのパラメータグループも比較できます。
 
-### パラメータグループの削除
+<a id="delete-parameter-group"></a>
+### パラメータグループの削除 { #delete-parameter-group }
 
 DBインスタンスに適用しているパラメータグループ以外は、自由に削除できます。DBインスタンスに適用しているパラメータグループを削除するには、削除する前に接続されたすべてのDBインスタンスのパラメータグループを先に変更する必要があります。
 
-## パラメータ
+<a id="parameter"></a>
+## パラメータ { #parameter }
 
 パラメータは下記のような情報を含んでいます。
 
@@ -51,7 +61,8 @@ DBインスタンスに適用しているパラメータグループ以外は、
 | データ形式  | パラメータ値の形式を示します。                                                                                                                 | 
 | 数式の使用  | 数式を使用するかどうかを示します。                                                                                                               |
 
-### パラメータ変数、数式および関数
+<a id="parameter-variables-formulas-and-functions"></a>
+### パラメータ変数、数式および関数 { #parameter-variables-formulas-and-functions }
 
 特定のパラメータは固定された値を使うより、DBインスタンスと関連付けられた値を利用した式で表現する方が良い場合があります。これをサポートするために、`NUMERIC`、`INTEGER`データ形式については、あらかじめ定義された変数、式、関数を使用できます。
 
@@ -77,22 +88,26 @@ DBインスタンスに適用しているパラメータグループ以外は、
 ramSizeByte * 6 / 10
 ```
 
-### パラメータの変更
+<a id="change-parameter"></a>
+### パラメータの変更 { #change-parameter }
 
 コンソールでパラメータグループを選択した後、**パラメータ編集**をクリックしてパラメータを変更できます。変更できないパラメータは、値が一般テキストで表示され、変更できるパラメータは、値を変更できるINPUTが表示されます。編集画面で**変更内容のプレビュー**をクリックすると、変更されたパラメータを確認できる別のポップアップ画面が表示され、**リセット**を押すと、変更する前に戻すことができます。編集モードで変更したすべての値は、**変更を保存**をクリックするとパラメータグループに反映されます。変更されたパラメータグループのDBインスタンスへの反映は[パラメータグループ適用](parameter-group/#apply)項目を参照してください。
 
 {{#if (eq engine.lowerCase "mysql")}}
-## GTIDの制約条件
+<a id="gtid-constraints"></a>
+## GTIDの制約条件 { #gtid-constraints }
 
 GTIDモードでenforce_gtid_consistency=ONに設定すると、次の制約が適用されます。参考: [https://dev.mysql.com/doc/refman/8.4/en/replication-gtids-restrictions.html](https://dev.mysql.com/doc/refman/8.4/en/replication-gtids-restrictions.html)
 
-### ENFORCE_GTID_CONSISTENCY
+<a id="enforcegtidconsistency"></a>
+### ENFORCE_GTID_CONSISTENCY { #enforcegtidconsistency }
 
 * OFF:制約対象クエリを許可
 * WARN:制約対象クエリを許可するが、warning(警告)が発生
 * ON:制約対象クエリを許可しない
 
-### お客様への影響
+<a id="customer-impact"></a>
+### お客様への影響 { #customer-impact }
 
 > GTIDを利用したレプリケーションでは、以下の制限事項に該当するクエリは使用できなくなります(エラーが発生します)。
 1. 非トランザクションストレージエンジンに関連する更新
@@ -102,7 +117,8 @@ GTIDモードでenforce_gtid_consistency=ONに設定すると、次の制約が�
 2. CREATE TABLE ... SELECT構文(8.0.21以前のバージョンの場合)
 3. binlog_formatがSTATEMENTの場合、トランザクション/プロシージャ/関数/トリガーの内部で一時テーブルを作成/削除することはできません。
 
-### お客様に推奨される事前措置
+<a id="customer-recommended-precautions"></a>
+### お客様に推奨される事前措置 { #customer-recommended-precautions }
 
 1. 可能な限り、MyISAMのような非トランザクションストレージエンジンは使用しないでください。使用する場合は、InnoDBのようなトランザクションストレージエンジンとの更新を一つのトランザクションで実行しないでください。
 2. CREATE TABLE ... SELECT構文(8.0.21以前のバージョンの場合)は使用しないでください。
@@ -113,9 +129,11 @@ GTIDモードでenforce_gtid_consistency=ONに設定すると、次の制約が�
     create table tbl_backup like tbl_ori; insert tbl_backup select * from tbl_ori;
     ```
 
-## GTID適用手順
+<a id="gtid-application-stage"></a>
+## GTID適用手順 { #gtid-application-stage }
 
-### gtid_mode
+<a id="gtidmode"></a>
+### gtid_mode { #gtidmode }
 
 | 値              | ソースでの動作   | レプリカでの動作  |
 |:---------------|:----------|:----------|
@@ -124,7 +142,8 @@ GTIDモードでenforce_gtid_consistency=ONに設定すると、次の制約が�
 | ON_PERMISSIVE  | GTID適用    | GTID適用    |
 | ON             | GTIDのみ処理  | GTIDのみ処理  |
 
-### RDSでのGTID適用手順
+<a id="gtid-application-process-in-rds"></a>
+### RDSでのGTID適用手順 { #gtid-application-process-in-rds }
 
 GTIDを円滑に適用するためには、gtid_mode(GTIDの適用手順)とenforce_gtid_consistency(クエリ適用の制限手順)を、パラメータグループを通じて次の順序で適用する必要があります。
 - 参考: [https://dev.mysql.com/doc/refman/8.4/en/replication-mode-change-online-enable-gtids.html](https://dev.mysql.com/doc/refman/8.4/en/replication-mode-change-online-enable-gtids.html)
