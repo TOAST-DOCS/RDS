@@ -2,7 +2,7 @@ const fs = require('fs');
 const Handlebars = require('handlebars');
 require('handlebars-helpers')();
 
-const languages = ['ko', 'en', 'ja', 'zh'];
+const languages = ['ko', 'en', 'ja'];
 const docs = [
     'analysis',
     'api-guide-v2.0',
