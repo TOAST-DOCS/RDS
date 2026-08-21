@@ -2,7 +2,7 @@ const fs = require('fs');
 const Handlebars = require('handlebars');
 require('handlebars-helpers')();
 
-const languages = ['ko', 'en', 'ja'];
+const languages = ['ko', 'en', 'ja', 'zh'];
 const docs = [
     'analysis',
     'api-guide-v2.0',
@@ -88,8 +88,13 @@ for (let config of configs) {
                 continue;
             }
 
-            // zh 는 en 템플릿을 그대로 사용
-            const template = fs.readFileSync(`${language === 'zh' ? 'en' : language}/${doc}_template.md`, 'utf-8');
+            let template;
+
+            if (language === 'zh') {
+                template = fs.readFileSync(`template/en/${doc}_template.md`, 'utf-8');
+            } else {
+                template = fs.readFileSync(`template/${language}/${doc}_template.md`, 'utf-8');
+            }
 
             const fileName = config.env === 'public' ? `${doc}.md` : `${doc}-${config.env}.md`;
             const compiled = Handlebars.compile(template);
@@ -100,8 +105,11 @@ for (let config of configs) {
                 result = result.replace(/\[(.*)]\((?!.*png)(?!#)(?!http)([^)]*?)(\/#[^)]*|\/)\)/g,`[$1]($2-${config.env}$3)`);
             }
 
-            fs.mkdirSync(`${config.engine}/${language}`, { recursive: true });
-            fs.writeFileSync(`${config.engine}/${language}/${fileName}`, result);
+            if (config.engine === 'mysql') {
+                fs.writeFileSync(`${language}/${fileName}`, result);
+            } else {
+                fs.writeFileSync(`${config.engine}/${language}/${fileName}`, result);
+            }
 
             console.log(`${config.engine}/${language}/${fileName} created`);
         }
