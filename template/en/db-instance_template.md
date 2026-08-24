@@ -847,8 +847,8 @@ Standby has a process for detecting failures, which periodically detects the sta
 
 ### Automatic Failover
 
-When the Standby fails the Primary's health check four times in a row, it determines that the Primary is unable to provide service and automatically performs a failover. In order to prevent split brains, disconnect all user security groups assigned to the failed Primary to block external connections, and the Standby will take over the role of the Primary. A record in the internal domain for access are changed from the failed Primary to the Standby, so no changes to the application are required. When failover is completed, the type of the failed Primary changes to Failed Over Primary and the type of Standby changes to the Primary. No failover is performed until the Failed Over Primary is recovered or rebuilt. Promoted Primary takes over all automatic backups of the Failed Over Primary. Point-in-time restoration using existing backups is not supported because the Primary changes during failover and all binary logs are deleted. You can restore point-in-time
-from the time the new backup was performed on the promoted Primary.
+When the Standby fails the Primary's health check four times in a row, it determines that the Primary is unable to provide service and automatically performs a failover. In order to prevent split brains, disconnect all user security groups assigned to the failed Primary to block external connections, and the Standby will take over the role of the Primary. A record in the internal domain for access are changed from the failed Primary to the Standby, so no changes to the application are required. When failover is completed, the type of the failed Primary changes to Failed Over Primary and the type of Standby changes to the Primary. No failover is performed until the Failed Over Primary is recovered or rebuilt. The new Primary takes over all automatic backups of the Failed Over Primary. Point-in-time restoration using existing backups is not supported because the Primary changes during failover and all binary logs are deleted. You can restore point-in-time
+from the time the new backup was performed on the new Primary.
 
 > [Note]
 > As the high availability feature is based on a domain, if a client trying to connect is in a network environment where the DNS server cannot be reached, the DB instance cannot be accessed through the domain, and normal connection is not possible in the event of failover. It takes approximately 3 seconds for the changes to A record in the internal domain to take effect, but may vary depending on the DNS Cache policy in the client environment where attempting to connect.
@@ -863,7 +863,7 @@ A Primary that fails and conducts failover is called Failed Over Primary. Backup
 
 ### Recover Failed Over Primary
 
-If the data is not consistent during failover and the binary log is not lost from the point of failure to the point of attempting recovery, the Failed Over Primary and the promoted Primary can be recovered back to the high availability configuration. Because it re-configure replication relationships with the promoted Primary in the database of the Failed Over Primary, recovery fails once the data became inconsistent or once the binary log required for recovery was lost.
+If the data is not consistent during failover and the binary log is not lost from the point of failure to the point of attempting recovery, the Failed Over Primary and the new Primary can be recovered back to the high availability configuration. Because it re-configure replication relationships with the new Primary in the database of the Failed Over Primary, recovery fails once the data became inconsistent or once the binary log required for recovery was lost.
 
 If the Failed Over Primary fails to recover, you can re-enable the high availability feature by rebuilding.
 
@@ -879,7 +879,7 @@ Failed Over Primary** menu from the drop-down menu.
 
 ### Rebuild Failed Over Primary
 
-If the Failed Over Primary fails to recover, you can re-enable the high availability feature by rebuilding. Unlike recovery, rebuild removes all databases from the Failed Over Primary and rebuilds them based on the promoted Primary's database. In this process, if you do not have a backup file, use the following order to select the DB instance to perform backup.
+If the Failed Over Primary fails to recover, you can re-enable the high availability feature by rebuilding. Unlike recovery, rebuild removes all databases from the Failed Over Primary and rebuilds them based on the new Primary's database. In this process, if you do not have a backup file, use the following order to select the DB instance to perform backup.
 
 ❶ Read Replica with auto backup enabled
 ❷ Primary with auto backup enabled
@@ -901,7 +901,7 @@ To rebuild a Failed Over Primary, from the console
 
 ### Separate Failed Over Primary
 
-If recovery of a Failed Over Primary fails and data correction is required, you can disable the high availability feature by separating that Failed Over Primary. The replication relationship between the separated Primary and the promoted Primary is broken, and each behaves as a normal DB instance. After separation, you cannot recover to the existing configuration.
+If recovery of a Failed Over Primary fails and data correction is required, you can disable the high availability feature by separating that Failed Over Primary. The replication relationship between the separated Primary and the new Primary is broken, and each behaves as a normal DB instance. After separation, you cannot recover to the existing configuration.
 
 To separate Failed Over Primary, from the console
 
@@ -919,7 +919,7 @@ For a high availability DB instance, you can select whether or not to restart wi
 * Apply changes to parameters that require restart
 * DB Instances migration for Hypervisor Check
 
-After a restart using failover, the Standby will be restarted first. After that, the Standby will be promoted to the Primary through failover, and the existing Primary will act as the Standby. Upon promotion, the A record in the internal domain for the connection will be changed from Primary to Standby, so no application changes are required. The promoted Primary succeeds to all automatic backups of the old Primary. Point-in-time restoration with existing backups is not supported because the Primary changes during the failover and all binary logs are deleted. You can restore points-in-time from the time when the new backup is performed on the promoted Primary.
+After a restart using failover, the Standby will be restarted first. After that, the Standby becomes the Primary through failover, and the existing Primary will act as the Standby. At this point, the A record in the internal domain for the connection will be changed from Primary to Standby, so no application changes are required. The new Primary succeeds to all automatic backups of the old Primary. Point-in-time restoration with existing backups is not supported because the Primary changes during the failover and all binary logs are deleted. You can restore points-in-time from the time when the new backup is performed on the new Primary.
 
 > [Note]
 > Because the high availability feature is domain-based, if the client attempting to connect is in a network environment where the DNS server cannot be accessed, the DB instance cannot be accessed through the domain, and successful connection is not possible in the event of a failover.

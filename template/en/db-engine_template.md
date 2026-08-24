@@ -172,7 +172,7 @@ When trying to change the DB engine version in the Modify DB Instance window, yo
 
 #### Manual Control of Failover When Upgrading High Availability DB Instances
 
-When a DB instance is configured for high availability, the engine version of the Standby is upgraded first, and then failover is used to promote the Standby to Primary. Because failover briefly interrupts the service on the Primary, you can initiate failover at any time.
+When a DB instance is configured for high availability, the engine version of the Standby is upgraded first, and then failover is used to switch the Standby to Primary. Because failover briefly interrupts the service on the Primary, you can initiate failover at any time.
 The manual control of failover during version upgrade allows you to initiate failover directly from the console.
 
 > [Caution]

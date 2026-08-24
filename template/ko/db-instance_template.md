@@ -841,7 +841,7 @@ Standby에는 장애를 감지하기 위한 프로세스가 있으며 주기적�
 
 ### 자동 장애 조치
 
-Standby에서 Primary의 상태 체크에 4회 연속 실패할 경우 Primary가 서비스를 제공하지 못한다고 판단하여 자동으로 장애 조치를 수행합니다. 스플릿 브레인 방지를 위해 장애가 발생한 Primary에 할당된 모든 사용자 보안 그룹의 연결을 해제하여 외부의 접속을 차단하며, Standby가 Primary의 역할을 대신합니다. 접속을 위한 내부 도메인의 A record는 장애가 발생한 Primary에서 Standby로 변경되므로, 응용 프로그램의 변경은 필요하지 않습니다. 장애 조치가 완료되면 장애가 발생한 Primary의 종류는 Failed Over Primary로, Standby의 종류는 Primary로 변경됩니다. Failed Over Primary를 복구하거나 재구축하기 전까지 장애 조치가 수행되지 않습니다. 승격된 Primary는 Failed Over Primary의 모든 자동 백업을 승계합니다. 장애 조치 과정에서 Primary가 변경되면 바이너리 로그가 모두 삭제되므로 기존 백업을 이용한 시점 복원은 지원하지 않습니다. 승격된 Primary에서 신규로 백업이 수행된 시각부터 시점 복원을 할 수 있습니다.
+Standby에서 Primary의 상태 체크에 4회 연속 실패할 경우 Primary가 서비스를 제공하지 못한다고 판단하여 자동으로 장애 조치를 수행합니다. 스플릿 브레인 방지를 위해 장애가 발생한 Primary에 할당된 모든 사용자 보안 그룹의 연결을 해제하여 외부의 접속을 차단하며, Standby가 Primary의 역할을 대신합니다. 접속을 위한 내부 도메인의 A record는 장애가 발생한 Primary에서 Standby로 변경되므로, 응용 프로그램의 변경은 필요하지 않습니다. 장애 조치가 완료되면 장애가 발생한 Primary의 종류는 Failed Over Primary로, Standby의 종류는 Primary로 변경됩니다. Failed Over Primary를 복구하거나 재구축하기 전까지 장애 조치가 수행되지 않습니다. 새 Primary는 Failed Over Primary의 모든 자동 백업을 승계합니다. 장애 조치 과정에서 Primary가 변경되면 바이너리 로그가 모두 삭제되므로 기존 백업을 이용한 시점 복원은 지원하지 않습니다. 새 Primary에서 신규로 백업이 수행된 시각부터 시점 복원을 할 수 있습니다.
 
 > [참고]
 > 고가용성 기능은 도메인을 기반으로 하고 있기 때문에 접속을 시도하는 클라이언트가 DNS 서버에 접속할 수 없는 네트워크 환경일 경우 도메인을 통해 DB 인스턴스에 접속할 수 없고, 장애 조치 발생 시 정상적인 접속이 불가능합니다.
@@ -858,7 +858,7 @@ Standby에서 Primary의 상태 체크에 4회 연속 실패할 경우 Primary�
 
 ### Failed Over Primary 복구
 
-장애 조치 과정에서 데이터의 정합성이 깨지지 않았고, 장애가 발생한 시점부터 복구를 시도하는 시점까지 바이너리 로그(binary log)가 유실되지 않았다면 Failed Over Primary와 승격된 Primary를 다시 고가용성 구성으로 복구할 수 있습니다. Failed Over Primary의 데이터베이스 그대로 승격된 Primary와 복제 관계를 다시 설정하므로 데이터의 정합성이 깨졌거나 복구에 필요한 바이너리 로그(binary log)가 유실되었다면 복구는 실패합니다. Failed Over Primary 복구에 실패할 경우 재구축으로 다시 고가용성 기능을 활성화할 수 있습니다.
+장애 조치 과정에서 데이터의 정합성이 깨지지 않았고, 장애가 발생한 시점부터 복구를 시도하는 시점까지 바이너리 로그(binary log)가 유실되지 않았다면 Failed Over Primary와 새 Primary를 다시 고가용성 구성으로 복구할 수 있습니다. Failed Over Primary의 데이터베이스 그대로 새 Primary와 복제 관계를 다시 설정하므로 데이터의 정합성이 깨졌거나 복구에 필요한 바이너리 로그(binary log)가 유실되었다면 복구는 실패합니다. Failed Over Primary 복구에 실패할 경우 재구축으로 다시 고가용성 기능을 활성화할 수 있습니다.
 
 > [참고]
 > 2023년 4월 11일 이전에 장애 조치가 발생한 DB 인스턴스는 복구를 지원하지 않습니다.
@@ -871,7 +871,7 @@ Failed Over Primary를 복구하려면 콘솔에서
 
 ### Failed Over Primary 재구축
 
-Failed Over Primary 복구에 실패할 경우 재구축을 이용해 다시 고가용성 기능을 활성화할 수 있습니다. 재구축은 복구와 달리 Failed Over Primary의 데이터베이스를 모두 제거하고, 승격된 Primary의 데이터베이스를 토대로 재구축합니다. Failed Over Primary를 재구축하려면 복제 그룹에 속한 DB 인스턴스 중 테이블 잠금 사용 옵션으로 생성된 백업 파일 및 바이너리 로그(binary log)가 필요합니다. 백업 파일이 없는 경우 다음 순서에 따라 백업을 수행할 DB 인스턴스를 선택합니다.
+Failed Over Primary 복구에 실패할 경우 재구축을 이용해 다시 고가용성 기능을 활성화할 수 있습니다. 재구축은 복구와 달리 Failed Over Primary의 데이터베이스를 모두 제거하고, 새 Primary의 데이터베이스를 토대로 재구축합니다. Failed Over Primary를 재구축하려면 복제 그룹에 속한 DB 인스턴스 중 테이블 잠금 사용 옵션으로 생성된 백업 파일 및 바이너리 로그(binary log)가 필요합니다. 백업 파일이 없는 경우 다음 순서에 따라 백업을 수행할 DB 인스턴스를 선택합니다.
 
 ❶ 자동 백업 설정한 Read Replica
 ❷ 자동 백업 설정한 Primary
@@ -893,7 +893,7 @@ Failed Over Primary를 재구축하려면 콘솔에서
 
 ### Failed Over Primary 분리
 
-Failed Over Primary 복구에 실패하여 데이터 보정이 필요할 경우 Failed Over Primary를 분리하여 고가용성 기능을 비활성화할 수 있습니다. 분리된 Primary와 승격된 Primary 간의 복제 관계가 끊어지며 각각 일반 DB 인스턴스로 동작합니다. 분리된 이후에는 다시 원래 구성으로 복구가 불가능합니다.
+Failed Over Primary 복구에 실패하여 데이터 보정이 필요할 경우 Failed Over Primary를 분리하여 고가용성 기능을 비활성화할 수 있습니다. 분리된 Primary와 새 Primary 간의 복제 관계가 끊어지며 각각 일반 DB 인스턴스로 동작합니다. 분리된 이후에는 다시 원래 구성으로 복구가 불가능합니다.
 
 Failed Over Primary를 분리하려면 콘솔에서
 
@@ -911,7 +911,7 @@ Failed Over Primary를 분리하려면 콘솔에서
 * 재시작이 필요한 파라미터의 변경을 적용
 * 하이퍼바이저 점검을 위한 DB 인스턴스 마이그레이션
 
-장애 조치를 이용한 재시작을 하면 Standby를 먼저 재시작합니다. 이후 장애 조치로 Standby를 Primary로 승격하고 기존 Primary는 Standby 역할을 합니다. 승격 시 접속을 위한 내부 도메인의 A record는 Primary에서 Standby로 변경되므로, 응용 프로그램의 변경은 필요하지 않습니다. 승격된 Primary는 이전 Primary의 모든 자동 백업을 승계합니다. 장애 조치 과정에서 Primary가 변경되며 바이너리 로그(binary log)가 모두 삭제되기 때문에 기존 백업을 이용한 시점 복원은 지원하지 않습니다. 승격된 Primary에서 신규로 백업이 수행된 시각부터 시점 복원을 할 수 있습니다.
+장애 조치를 이용한 재시작을 하면 Standby를 먼저 재시작합니다. 이후 장애 조치로 Standby가 Primary가 되고 기존 Primary는 Standby 역할을 합니다. 이때 접속을 위한 내부 도메인의 A record는 Primary에서 Standby로 변경되므로, 응용 프로그램의 변경은 필요하지 않습니다. 새 Primary는 이전 Primary의 모든 자동 백업을 승계합니다. 장애 조치 과정에서 Primary가 변경되며 바이너리 로그(binary log)가 모두 삭제되기 때문에 기존 백업을 이용한 시점 복원은 지원하지 않습니다. 새 Primary에서 신규로 백업이 수행된 시각부터 시점 복원을 할 수 있습니다.
 
 > [참고]
 > 고가용성 기능은 도메인을 기반으로 하고 있기 때문에 접속을 시도하는 클라이언트가 DNS 서버에 접속할 수 없는 네트워크 환경일 경우 도메인을 통해 DB 인스턴스에 접속할 수 없고, 장애 조치 발생 시 정상적인 접속이 불가능합니다.
