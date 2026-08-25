@@ -282,6 +282,174 @@ DB 인스턴스의 상태는 아래와 같은 값으로 구성되며, 사용자�
 
 ❶ 파라미터 변경 사항 적용이 필요한 DB 인스턴스를 필터링 조건으로 검색할 수 있습니다.
 
+## DB 인스턴스 그룹 상세
+
+DB 인스턴스 목록을 **그룹** 화면으로 본 뒤 DB 인스턴스 그룹을 선택하면 그룹 상세 정보를 확인할 수 있습니다. 그룹 상세 화면에는 다음 탭이 표시됩니다.
+
+| 탭 | 설명 |
+|---|---|
+| 기본 정보 | DB 인스턴스 그룹 이름과 ID, 고가용성 구성, Primary 및 Standby 이름, Ping 설정을 확인합니다. |
+| DB 스키마 & 사용자 | 그룹에 속한 DB 인스턴스의 DB 스키마와 사용자를 관리합니다. DB 스키마와 사용자 기능은 개별 DB 인스턴스 상세가 아닌 DB 인스턴스 그룹 상세에서 제공합니다. |
+
+### DB 스키마 & 사용자
+
+DB 인스턴스 그룹 상세의 **DB 스키마 & 사용자** 탭에서는 그룹에 속한 데이터베이스의 스키마와 사용자를 조회 및 제어할 수 있습니다.
+
+#### DB 스키마 생성
+
+![db-instance-detail-schema_ko]({{url.cdn}}/26.01.13/db-instance-detail-schema_ko.png)
+
+❶ **생성**을 클릭하면 DB 스키마의 이름을 입력할 수 있는 팝업 창이 나타납니다.
+❷ DB 스키마 이름을 입력한 뒤 **확인**을 클릭하여 DB 스키마를 생성할 수 있습니다.
+
+DB 스키마 이름은 아래와 같은 제약 사항이 있습니다.
+
+* 1~64자의 영문자, 숫자, _만 사용할 수 있으며, 첫 번째 글자는 영문자만 사용할 수 있습니다.
+* `information_schema`, `performance_schema`, `db_helper`, `sys`, `mysql`, `rds_maintenance`는 DB 스키마 이름으로 사용할 수 없습니다.
+
+생성된 DB 스키마의 이름은 수정할 수 없습니다.
+
+#### DB 스키마 삭제
+
+![db-instance-detail-schema-delete-ko]({{url.cdn}}/26.01.13/db-instance-detail-schema-delete-ko.png)
+
+❶ 삭제할 DB 스키마를 선택 후 드롭다운 메뉴를 클릭합니다.
+❷ **삭제** 메뉴를 클릭하면 삭제 확인 팝업 화면이 나타납니다. **확인**을 클릭하여 삭제를 요청할 수 있습니다.
+
+#### 사용자 생성
+
+![db-instance-detail-user-create-ko]({{url.cdn}}/26.01.13/db-instance-detail-user-create-ko.png)
+
+❶ **+ 생성**을 클릭하면 사용자 추가 팝업 화면이 나타납니다.
+❷ 사용자 ID를 입력합니다.
+
+사용자 ID는 아래와 같은 제약 사항이 있습니다.
+
+* 1~32자여야 합니다.
+* `mysql.session`, `mysql.sys`, `mysql.infoschema`, `sqlgw`, `admin`, `etladm`, `alertman`, `prom`, `rds_admin`, `rds_mha`, `rds_repl`은 사용자 ID로 사용할 수 없습니다.
+
+❸ Password를 입력합니다.
+❹ 접속을 허용할 Host IP를 입력합니다. `%` 문자를 사용하면 허용할 Host IP를 범위로 지정할 수 있습니다. 예: `1.1.1.%`는 `1.1.1.0`~`1.1.1.255` 사이의 모든 IP를 의미합니다.
+❺ 사용자에게 부여할 권한을 선택합니다. 부여할 수 있는 권한과 설명은 다음과 같습니다.
+
+**READ**
+* 조회 권한이 있습니다.
+
+```sql
+GRANT SELECT, SHOW VIEW, PROCESS, SHOW DATABASES, REPLICATION SLAVE, REPLICATION CLIENT ON *.* TO '{user_id}'@'{host}';
+GRANT SELECT ON `mysql`.* TO '{user_id}'@'{host}';
+GRANT SELECT, EXECUTE ON `sys`.* TO '{user_id}'@'{host}';
+GRANT SELECT ON `performance_schema`.* TO '{user_id}'@'{host}';
+```
+
+**CRUD**
+* READ 권한을 포함하며, 데이터를 변경할 수 있는 권한이 있습니다.
+
+```sql
+GRANT INSERT, UPDATE, DELETE, CREATE TEMPORARY TABLES, LOCK TABLES, EXECUTE ON *.* TO '{user_id}'@'{host}';
+```
+
+**DDL**
+* CRUD 권한을 포함하며, DDL 쿼리를 실행할 수 있는 권한이 있습니다.
+
+```sql
+GRANT CREATE, DROP, INDEX, ALTER, CREATE VIEW, REFERENCES, EVENT, ALTER ROUTINE, CREATE ROUTINE, TRIGGER, RELOAD ON *.* TO '{user_id}'@'{host}';
+GRANT EXECUTE ON `mysql`.* TO '{user_id}'@'{host}';
+```
+
+**CUSTOM**
+* 외부 데이터베이스 백업으로부터 DB 인스턴스를 복원한 경우, 데이터베이스에 존재하는 모든 사용자는 CUSTOM 권한으로 표현됩니다.
+* CUSTOM 권한 템플릿에는 어떤 권한이 있는지 알 수 없습니다.
+* CUSTOM 권한 템플릿에서 다른 권한 템플릿으로 변경한 경우 다시 CUSTOM 권한 템플릿으로 변경할 수 없습니다.
+
+{{#if (eq engine.lowerCase "mysql")}}
+❻ 사용자 인증에 적용할 플러그인을 선택합니다. 선택할 수 있는 버전별 플러그인은 다음과 같습니다.
+
+| 인증 플러그인               | 지원 버전                  |
+|-----------------------|------------------------|
+| mysql_native_password | 8.4 버전 미만              |
+| sha256_password       | 5.7.33 버전 이상 8.0 버전 미만 |
+| caching_sha2_password | 8.0 버전 이상              |
+
+❼ DB 인스턴스의 연결 암호화 옵션을 선택합니다.
+
+| TLS Option | 설명                                                               |
+|------------|------------------------------------------------------------------|
+| NONE       | 암호화된 연결을 적용하지 않습니다.                                              |
+| SSL        | 암호화된 연결을 적용합니다.                                                  |
+| X509       | 암호화된 연결을 적용하며 접속 시 인증서가 필요합니다. 접속에 필요한 인증서는 콘솔에서 다운로드할 수 있습니다. |
+
+> [참고]
+> 사용자 인증 플러그인과 TLS Option은 MySQL 5.7.33 버전 이상에서 지원합니다.
+
+#### 인증서 다운로드
+
+사용자 계정의 TLS Option을 X509로 설정한 경우 DB 인스턴스에 접속하려면 인증서가 필요합니다.
+
+![db-instance-detail-user-cert-ko]({{url.cdn}}/26.01.13/db-instance-detail-user-cert-ko.png)
+![db-instance-detail-user-cert-down-ko]({{url.cdn}}/24.03.12/db-instance-detail-user-cert-down-ko.png)
+
+❶ 인증서를 내려받을 DB 인스턴스를 선택합니다.
+❷ 드롭다운 메뉴를 클릭합니다.
+❸ **인증서 다운로드**를 클릭하면 인증서를 내려받을 수 있는 팝업 화면이 나타납니다.
+❹ 내려받을 파일 하단의 **가져오기**를 클릭합니다.
+❺ 내려받을 준비가 되면 **다운로드** 버튼이 나타납니다. 클릭하면 인증서 파일을 내려받을 수 있습니다.
+
+> [주의]
+> **가져오기**를 클릭하면 약 5분간 인증서 파일이 백업 스토리지에 업로드되며, 인증서 파일의 크기만큼 백업 스토리지 용량이 과금됩니다.
+> **다운로드**를 클릭하면 인증서 파일의 크기만큼 인터넷 트래픽이 과금됩니다.
+{{/if}}
+
+#### 사용자 수정
+
+![db-instance-detail-user-modify-ko]({{url.cdn}}/26.01.13/db-instance-detail-user-modify-ko.png)
+
+❶ 수정할 사용자 행의 **수정**을 클릭하면 사용자 정보를 수정할 수 있는 팝업 화면이 나타납니다.
+❷ Password를 입력하지 않으면 변경되지 않습니다.
+❸ 사용자 인증에 적용할 플러그인을 변경하려면 반드시 Password를 변경해야 합니다.
+
+#### 사용자 삭제
+
+![db-instance-detail-user-delete-ko]({{url.cdn}}/26.01.13/db-instance-detail-user-delete-ko.png)
+
+❶ 삭제할 사용자를 선택 후 드롭다운 메뉴를 클릭합니다.
+❷ **삭제**를 클릭하면 **삭제 확인** 팝업 화면이 나타납니다. **확인**을 클릭하여 삭제를 요청할 수 있습니다.
+
+## DB 인스턴스 그룹 수정
+
+그룹 상세 화면의 **기본 정보** 탭에서 **수정**을 클릭하면 그룹 단위로 설정을 변경할 수 있습니다. 변경 요청은 비동기로 처리되며, 완료될 때까지 해당 그룹의 상태와 진행 중인 작업을 확인합니다.
+
+수정 화면에서 다음 항목을 변경할 수 있습니다.
+
+| 항목 | 설명 |
+|---|---|
+| DB 인스턴스 그룹 이름 | 1~100자의 영문자, 숫자, `-`, `_`, `.`를 사용할 수 있으며 첫 글자는 영문자여야 합니다. |
+| Primary 이름 | 그룹 이름과는 별도로 관리됩니다. |
+| 고가용성 여부 | 단일 구성은 고가용성 구성으로 전환할 수 있고, 고가용성 구성은 단일 구성으로 전환할 수 있습니다. |
+| Standby 이름 | 고가용성을 새로 설정할 때 입력합니다. Primary 이름과 같을 수 없으며, 이름 규칙은 Primary와 같습니다. |
+| Ping 간격 | 고가용성 구성에서 1~600초 범위로 설정합니다. |
+| Ping 방식 | 고가용성 구성에서 `INSERT` 또는 `SELECT` 중 선택합니다. |
+| DB 스키마 & 사용자 직접 제어 | 그룹에 속한 DB 인스턴스의 스키마와 사용자 직접 제어 사용 여부를 변경합니다. |
+
+> [주의]
+> * 고가용성을 해제하면 Standby가 삭제되고 단일 구성으로 전환됩니다. Standby에만 존재하는 데이터나 설정이 없는지 확인한 뒤 진행하세요.
+> * 장애 조치가 진행 중인 DB 인스턴스 그룹에서는 고가용성 여부를 변경할 수 없습니다.
+> * 사설망에서는 Primary 이름을 변경할 수 없습니다. 또한 기존 고가용성 구성의 Standby 이름은 변경할 수 없으며, 고가용성을 새로 설정할 때만 Standby 이름을 입력할 수 있습니다.
+> * 고가용성 구성에서 Primary와 Standby의 이름은 서로 달라야 합니다.
+
+### DB 스키마 & 사용자 직접 제어
+
+RDS for {{engine.pascalCase}}에서는 DB 스키마와 사용자를 손쉽게 관리할 수 있도록 콘솔에서 관리 기능을 제공하지만, 사용자가 직접 제어할 수 있도록 설정하는 기능도 제공합니다. 직접 제어를 사용하면 현재 생성된 모든 사용자에게 아래 권한을 부여합니다.
+
+```sql
+GRANT CREATE,DROP,LOCK TABLES,REFERENCES,EVENT,ALTER,INDEX,INSERT,SELECT,UPDATE,DELETE,CREATE VIEW,SHOW VIEW,CREATE ROUTINE,ALTER ROUTINE,EXECUTE,CREATE USER,PROCESS,RELOAD,REPLICATION SLAVE,REPLICATION CLIENT,SHOW DATABASES, CREATE TEMPORARY TABLES,TRIGGER ON *.* TO '{user_id}'@'{host}' WITH GRANT OPTION;
+```
+
+> [주의]
+> 직접 제어 사용 이후 다시 사용 안 함으로 변경하면
+> * 기존에 부여한 권한을 회수하지 않습니다. 이때 명령어를 사용해 DB 스키마나 사용자를 추가하면 콘솔의 데이터와 정합성이 맞지 않을 수 있습니다.
+> * 사용자에게 부여된 권한과 상관없이 데이터베이스에 존재하는 모든 사용자는 CUSTOM 권한으로 표현됩니다.
+
 ## DB 인스턴스 상세
 
 DB 인스턴스를 선택하면 상세 정보를 볼 수 있습니다.
@@ -406,130 +574,6 @@ Provider 유지 관리 작업은 보류 중인 유지 관리 목록으로 이동
 > [참고]
 > 유지 관리 작업 적용 시 재시작이 필요한 경우 장애 조치, 백업 등의 추가 옵션을 선택할 수 있는 팝업 화면이 나타납니다. 고가용성 DB 인스턴스는 장애 조치를 이용한 재시작을 사용하여 서비스 중단 시간을 최소화할 수 있습니다.
 
-### DB 스키마 & 사용자
-
-DB 인스턴스의 **DB 스키마 & 사용자** 탭에서는 데이터베이스에 생성된 스키마와 사용자를 조회 및 제어할 수 있습니다.
-
-#### DB 스키마 생성
-
-![db-instance-detail-schema_ko]({{url.cdn}}/26.01.13/db-instance-detail-schema_ko.png)
-
-❶ **생성**을 클릭하면 DB 스키마의 이름을 입력할 수 있는 팝업 창이 나타납니다.
-❷ DB 스키마 이름을 입력한 뒤 **확인**을 클릭하여 DB 스키마를 생성할 수 있습니다.
-
-DB 스키마 이름은 아래와 같은 제약 사항이 있습니다.
-
-* 1~64자의 영문자, 숫자, _만 사용할 수 있으며, 첫 번째 글자는 영문자만 사용할 수 있습니다.
-* `information_schema`, `performance_schema`, `db_helper`, `sys`, `mysql`, `rds_maintenance`는 DB 스키마 이름으로 사용할 수 없습니다.
-
-생성된 DB 스키마의 이름은 수정할 수 없습니다.
-
-#### DB 스키마 삭제
-
-![db-instance-detail-schema-delete-ko]({{url.cdn}}/26.01.13/db-instance-detail-schema-delete-ko.png)
-
-❶ 삭제할 DB 스키마를 선택 후 드롭다운 메뉴를 클릭합니다.
-❷ **삭제** 메뉴를 클릭하면 삭제 확인 팝업 화면이 나타납니다. **확인**을 클릭하여 삭제를 요청할 수 있습니다.
-
-#### 사용자 생성
-
-![db-instance-detail-user-create-ko]({{url.cdn}}/26.01.13/db-instance-detail-user-create-ko.png)
-
-❶ **+ 생성**을 클릭하면 사용자 추가 팝업 화면이 나타납니다.
-❷ 사용자 ID를 입력합니다.
-
-사용자 ID는 아래와 같은 제약 사항이 있습니다.
-
-* 1~32자여야 합니다.
-* `mysql.session`, `mysql.sys`, `mysql.infoschema`, `sqlgw`, `admin`, `etladm`, `alertman`, `prom`, `rds_admin`, `rds_mha`, `rds_repl`은 사용자 ID로 사용할 수 없습니다.
-
-❸ Password를 입력합니다.
-❹ 접속을 허용할 Host IP를 입력합니다. `%` 문자를 사용하면 허용할 Host IP를 범위로 지정할 수 있습니다. 예: `1.1.1.%`는 `1.1.1.0`~`1.1.1.255` 사이의 모든 IP를 의미합니다.
-❺ 사용자에게 부여할 권한을 선택합니다. 부여할 수 있는 권한과 설명은 다음과 같습니다.
-
-**READ**
-* 조회 권한이 있습니다.
-
-```sql
-GRANT SELECT, SHOW VIEW, PROCESS, SHOW DATABASES, REPLICATION SLAVE, REPLICATION CLIENT ON *.* TO '{user_id}'@'{host}';
-GRANT SELECT ON `mysql`.* TO '{user_id}'@'{host}';
-GRANT SELECT, EXECUTE ON `sys`.* TO '{user_id}'@'{host}';
-GRANT SELECT ON `performance_schema`.* TO '{user_id}'@'{host}';
-```
-
-**CRUD**
-* READ 권한을 포함하며, 데이터를 변경할 수 있는 권한이 있습니다.
-
-```sql
-GRANT INSERT, UPDATE, DELETE, CREATE TEMPORARY TABLES, LOCK TABLES, EXECUTE ON *.* TO '{user_id}'@'{host}';
-```
-
-**DDL**
-* CRUD 권한을 포함하며, DDL 쿼리를 실행할 수 있는 권한이 있습니다.
-
-```sql
-GRANT CREATE, DROP, INDEX, ALTER, CREATE VIEW, REFERENCES, EVENT, ALTER ROUTINE, CREATE ROUTINE, TRIGGER, RELOAD ON *.* TO '{user_id}'@'{host}';
-GRANT EXECUTE ON `mysql`.* TO '{user_id}'@'{host}';
-```
-
-**CUSTOM**
-* 외부 데이터베이스 백업으로부터 DB 인스턴스를 복원한 경우, 데이터베이스에 존재하는 모든 사용자는 CUSTOM 권한으로 표현됩니다.
-* CUSTOM 권한 템플릿에는 어떤 권한이 있는지 알 수 없습니다.
-* CUSTOM 권한 템플릿에서 다른 권한 템플릿으로 변경한 경우 다시 CUSTOM 권한 템플릿으로 변경할 수 없습니다.
-
-{{#if (eq engine.lowerCase "mysql")}}
-❻ 사용자 인증에 적용할 플러그인을 선택합니다. 선택할 수 있는 버전별 플러그인은 다음과 같습니다.
-
-| 인증 플러그인               | 지원 버전                  |
-|-----------------------|------------------------|
-| mysql_native_password | 8.4 버전 미만              |
-| sha256_password       | 5.7.33 버전 이상 8.0 버전 미만 |
-| caching_sha2_password | 8.0 버전 이상              |
-
-❼ DB 인스턴스의 연결 암호화 옵션을 선택합니다.
-
-| TLS Option | 설명                                                               |
-|------------|------------------------------------------------------------------|
-| NONE       | 암호화된 연결을 적용하지 않습니다.                                              |
-| SSL        | 암호화된 연결을 적용합니다.                                                  |
-| X509       | 암호화된 연결을 적용하며 접속 시 인증서가 필요합니다. 접속에 필요한 인증서는 콘솔에서 다운로드할 수 있습니다. |
-
-> [참고]
-> 사용자 인증 플러그인과 TLS Option은 MySQL 5.7.33 버전 이상에서 지원합니다.
-
-#### 인증서 다운로드
-
-사용자 계정의 TLS Option을 X509로 설정한 경우 DB 인스턴스에 접속하려면 인증서가 필요합니다.
-
-![db-instance-detail-user-cert-ko]({{url.cdn}}/26.01.13/db-instance-detail-user-cert-ko.png)
-![db-instance-detail-user-cert-down-ko]({{url.cdn}}/24.03.12/db-instance-detail-user-cert-down-ko.png)
-
-❶ 인증서를 내려받을 DB 인스턴스를 선택합니다.
-❷ 드롭다운 메뉴를 클릭합니다.
-❸ **인증서 다운로드**를 클릭하면 인증서를 내려받을 수 있는 팝업 화면이 나타납니다.
-❹ 내려받을 파일 하단의 **가져오기**를 클릭합니다.
-❺ 내려받을 준비가 되면 **다운로드** 버튼이 나타납니다. 클릭하면 인증서 파일을 내려받을 수 있습니다.
-
-> [주의]
-> **가져오기**를 클릭하면 약 5분간 인증서 파일이 백업 스토리지에 업로드되며, 인증서 파일의 크기만큼 백업 스토리지 용량이 과금됩니다.
-> **다운로드**를 클릭하면 인증서 파일의 크기만큼 인터넷 트래픽이 과금됩니다.
-{{/if}}
-
-#### 사용자 수정
-
-![db-instance-detail-user-modify-ko]({{url.cdn}}/26.01.13/db-instance-detail-user-modify-ko.png)
-
-❶ 수정할 사용자 행의 **수정**을 클릭하면 사용자 정보를 수정할 수 있는 팝업 화면이 나타납니다.
-❷ Password를 입력하지 않으면 변경되지 않습니다.
-❸ 사용자 인증에 적용할 플러그인을 변경하려면 반드시 Password를 변경해야 합니다.
-
-#### 사용자 삭제
-
-![db-instance-detail-user-delete-ko]({{url.cdn}}/26.01.13/db-instance-detail-user-delete-ko.png)
-
-❶ 삭제할 사용자를 선택 후 드롭다운 메뉴를 클릭합니다.
-❷ **삭제**를 클릭하면 **삭제 확인** 팝업 화면이 나타납니다. **확인**을 클릭하여 삭제를 요청할 수 있습니다.
-
 ## DB 인스턴스 수정
 
 콘솔에서 생성된 DB 인스턴스의 다양한 항목을 손쉽게 변경할 수 있습니다. 변경 요청한 항목은 순차적으로 DB 인스턴스에 적용합니다. 적용 과정에서 재시작이 필요할 경우 모든 변경을 적용한 후 DB 인스턴스를 재시작합니다. 변경 불가능한 항목과 재시작이 필요한 항목은 다음과 같습니다.
@@ -552,7 +596,6 @@ GRANT EXECUTE ON `mysql`.* TO '{user_id}'@'{host}';
 | DB 보안 그룹     | 예        | 아니오                     |
 | 백업 설정        | 예        | 아니오                     |
 | 스토리지 자동 확장   | 예        | 아니오                     |
-| 스키마 & 사용자 제어 | 예        | 아니오                     |
 
 고가용성 DB 인스턴스는 재시작이 필요한 항목의 변경이 있으면 안정성을 높이고 순단 시간을 줄이기 위해 장애 조치를 이용한 재시작 기능을 제공합니다.
 
@@ -560,19 +603,6 @@ GRANT EXECUTE ON `mysql`.* TO '{user_id}'@'{host}';
 
 ❶ 유지 관리 기능으로 **다음 유지 관리 기간에 적용** 또는 **즉시 적용**을 선택해 DB 인스턴스 수정을 수행할 수 있습니다.
 ❷ 장애 조치를 이용한 재시작을 사용하지 않으면 마스터와 예비 마스터에 변경 사항을 순차적으로 적용한 후 DB 인스턴스를 재시작합니다. 자세한 사항은 고가용성 DB 인스턴스의 [수동 장애 조치 항목](db-instance/#manual-failover)을 참고합니다.
-
-### DB 스키마 & 사용자 직접 제어
-
-RDS for {{engine.pascalCase}}에서는 DB 스키마와 사용자를 손쉽게 관리할 수 있도록 콘솔에서 관리 기능을 제공하지만, 사용자가 직접 제어할 수 있도록 설정하는 기능도 제공합니다. 직접 제어를 사용하면 현재 생성된 모든 사용자에게 아래 권한을 부여합니다.
-
-```sql
-GRANT CREATE,DROP,LOCK TABLES,REFERENCES,EVENT,ALTER,INDEX,INSERT,SELECT,UPDATE,DELETE,CREATE VIEW,SHOW VIEW,CREATE ROUTINE,ALTER ROUTINE,EXECUTE,CREATE USER,PROCESS,RELOAD,REPLICATION SLAVE,REPLICATION CLIENT,SHOW DATABASES, CREATE TEMPORARY TABLES,TRIGGER ON *.* TO '{user_id}'@'{host}' WITH GRANT OPTION;
-```
-
-> [주의]
-> 직접 제어 사용 이후 다시 사용 안 함으로 변경하면
-> * 기존에 부여한 권한을 회수하지 않습니다. 이때 명령어를 사용해 DB 스키마나 사용자를 추가하면 콘솔의 데이터와 정합성이 맞지 않을 수 있습니다.
-> * 사용자에게 부여된 권한과 상관없이 데이터베이스에 존재하는 모든 사용자는 CUSTOM 권한으로 표현됩니다.
 
 ## DB 인스턴스 운영체제 업그레이드
 DB 인스턴스 운영체제 업그레이드를 지원합니다. 운영체제 업그레이드로 보안 취약점을 해결하거나 운영체제의 EOL에 대응할 수 있습니다.
