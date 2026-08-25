@@ -83,6 +83,8 @@ After creating the DB instance, you can change the DB engine version and modify 
 When upgrading the database engine version, a major version upgrade occurs if only the major version number is changed, and a minor version upgrade occurs if only the minor version number is changed.
 When attempting to upgrade the DB engine major version, you can upgrade to the next major version of the DB engine.
 
+마이너 버전은 사용자가 직접 업그레이드하지 않아도 자동으로 업그레이드하도록 설정할 수 있습니다. 자세한 내용은 [마이너 버전 자동 업그레이드](db-instance/#auto-minor-version-upgrade)를 참고합니다.
+
 {{#if (eq engine.lowerCase "mysql")}}
 #### Pre-inspection for upgrading from MySQL 5.7 to MySQL 8.0
 
