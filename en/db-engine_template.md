@@ -83,8 +83,8 @@ Support for MySQL versions below 8.0.34 has ended under the MySQL LTS policy. We
 ### Manage DB Engine Version { #manage-db-engine-version }
 After creating the DB instance, you can change the DB engine version and modify the DB instance.
 
-> [Caution]
-> When attempting to change the DB version, only an upgrade is supported. A downgrade is not supported.
+!!! danger "Caution"
+    When attempting to change the DB version, only an upgrade is supported. A downgrade is not supported.
 
 When upgrading the database engine version, a major version upgrade occurs if only the major version number is changed, and a minor version upgrade occurs if only the minor version number is changed.
 When attempting to upgrade the DB engine major version, you can upgrade to the next major version of the DB engine.
@@ -179,8 +179,8 @@ For more information, refer to the official documentation below:
 
 When trying to change the DB engine version in the Modify DB Instance window, you can select whether to use a dummy DB instance to ensure high availability during the version upgrade process. If you choose to use a dummy DB instance, a Standby for DB version upgrade is created. 
 
-> [Caution]
-> For dummy DB instances, a temporary Standby is created during the upgrade process, so this option is only available for non-high-availability configurations.
+!!! danger "Caution"
+    For dummy DB instances, a temporary Standby is created during the upgrade process, so this option is only available for non-high-availability configurations.
 
 <a id="manage-db-engine-version-manual-control-of-failover-when-upgrading-high-availability-db-instances"></a>
 #### Manual Control of Failover When Upgrading High Availability DB Instances
@@ -188,16 +188,16 @@ When trying to change the DB engine version in the Modify DB Instance window, yo
 When a DB instance is configured for high availability, the engine version of the Standby is upgraded first, and then failover is used to switch the Standby to Primary. Because failover briefly interrupts the service on the Primary, you can initiate failover at any time.
 The manual control of failover during version upgrade allows you to initiate failover directly from the console.
 
-> [Caution]
-> If manual control of failover is not triggered for more than 60 hours, the upgrade operation is automatically cancelled.
+!!! danger "Caution"
+    If manual control of failover is not triggered for more than 60 hours, the upgrade operation is automatically cancelled.
 
 <a id="when-using-an-outdated-operating-system"></a>
 ### When using an Outdated Operating System { #when-using-an-outdated-operating-system }
 
 For DB instances with an outdated internal operating system, an operating system version upgrade accompanied by VM replacement is required before upgrading the DB version. Monitored instances in notification groups and event sources in event subscriptions automatically update to the changed identifiers. For single DB instances, it is recommended to use a dummy DB instance when changing the DB version. For high availability DB instances, the roles of the Primary and Standby are changed using failover during the DB instance replacement process. If the Primary is under heavy load, failover may fail, so it is recommended to perform DB version changes during periods of low load.
 
-> [Caution]
-> Be careful when using the internal IP of an existing DB instance directly in an IP ACL or security group.
+!!! danger "Caution"
+    Be careful when using the internal IP of an existing DB instance directly in an IP ACL or security group.
 
 {{#if (eq engine.lowerCase "mysql")}}
 <a id="options-for-mysql"></a>
@@ -208,8 +208,8 @@ For DB instances with an outdated internal operating system, an operating system
 
 RDS for MySQL uses the MariaDB Audit plug-in to provide an auditing plug-in for MySQL DB instances.
 
-> [Caution]
-> This plugin may not be supported by all versions of MySQL and will be unavailable when upgrading to an unsupported version.
+!!! danger "Caution"
+    This plugin may not be supported by all versions of MySQL and will be unavailable when upgrading to an unsupported version.
 
 <a id="support-for-the-mariadb-server-audit-plugin-for-mysql-supported-versions"></a>
 #### Supported Versions

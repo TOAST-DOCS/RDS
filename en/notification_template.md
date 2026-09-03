@@ -196,8 +196,8 @@ You can subscribe to events by event type, code, and source. When you subscribe 
 
 You can manage users as groups to receive notifications. Notification target must be registered as a project member. If the users in the user group are excluded from the project members, they will not be notified even if they belong to the user group.
 
-> [Caution]
-> If there is no mobile phone information for the reason of not performing real name authentication, you will not receive SMS notifications.
+!!! danger "Caution"
+    If there is no mobile phone information for the reason of not performing real name authentication, you will not receive SMS notifications.
 
 <a id="create-user-group"></a>
 ### Create User Group { #create-user-group }

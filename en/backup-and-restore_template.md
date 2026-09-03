@@ -9,11 +9,11 @@
 You can prepare in advance to recover the database of DB instance in case of failure. You can perform backups through the console whenever necessary, and you can configure to perform backups periodically. During backup, storage performance of the DB instance on which the backup is performed can be degraded. To avoid affecting service, it is better to perform back up at a time when the service is under low load. If you do not want the backup to degrade performance, you can use a
 high-availability configuration or back up only increments of data since the previous backup, or perform backups from Read Replica.
 
-> [Note]
-> High availability DB instances perform backups on the Standby so that the storage performance of the Primary is not degraded.
-> However, backups can be performed on the Primary even if it is a high availability DB instance in the following cases.
-> * If a backup cannot be performed due to a Standby failure.
-> * If you do not have a Read Replica in a situation where you need a backup taken from a DB instance other than the Standby for rebuilding the Standby
+!!! tip "Note"
+    High availability DB instances perform backups on the Standby so that the storage performance of the Primary is not degraded.
+    However, backups can be performed on the Primary even if it is a high availability DB instance in the following cases.
+    * If a backup cannot be performed due to a Standby failure.
+    * If you do not have a Read Replica in a situation where you need a backup taken from a DB instance other than the Standby for rebuilding the Standby
 
 {{#if (eq engine.lowerCase "mysql")}}
 RDS for MySQL uses Percona XtraBackup to back up databases. You have to use the same version of Percona XtraBackup that RDS for MySQL uses to restore to backup of external MySQL or to restore to backup of RDS for MySQL Percona XtraBackup version in line with DB engine version is as follows.
@@ -44,8 +44,8 @@ RDS for MySQL uses Percona XtraBackup to back up databases. You have to use the 
       * https://docs.percona.com/percona-xtrabackup/8.0/
       * https://docs.percona.com/percona-xtrabackup/8.4/
 
-> [Note]
-> On August 17, 2023, the version of the XtraBackup utility was upgraded. The XtraBackup version used for the previous backup can be found in the console.
+!!! tip "Note"
+    On August 17, 2023, the version of the XtraBackup utility was upgraded. The XtraBackup version used for the previous backup can be found in the console.
 {{/if}}
 
 <a id="backup-type"></a>
@@ -97,8 +97,8 @@ Incremental backups only back up data changes since the baseline backup was perf
 Incremental backups are always performed on the DB instance that performed the baseline backup.
 When restoring to an incremental backup, the restore proceeds from the first full backup created, and all increments are reflected sequentially until the selected incremental backup is reached.
 
-> [Caution]
-> Restoring from incremental backups may take more time than restoring from a full backup, which is proportional to the sum of the capacity of the incremental backups required for the restore.
+!!! danger "Caution"
+    Restoring from incremental backups may take more time than restoring from a full backup, which is proportional to the sum of the capacity of the incremental backups required for the restore.
 
 <a id="incremental-backup-a-idbaseline-backupabaseline-backup"></a>
 #### <a id="baseline-backup"></a>Baseline Backup
@@ -178,8 +178,8 @@ The following items apply only to auto backups.
 
 * Sets the time period for storing auto backups on storage. It can be kept for up to 730 days, and if the auto backup archive period changes, the expired auto backup files will be deleted immediately.
 
-> [Caution]
-> Incrementally created backups are deleted when the baseline backup is deleted, even if the auto backup retention period has not passed.
+!!! danger "Caution"
+    Incrementally created backups are deleted when the baseline backup is deleted, even if the auto backup retention period has not passed.
 
 {{#if regions.[1]}}
 **Auto Backup Replication Region**
@@ -210,10 +210,10 @@ The following items apply only to auto backups.
 
 * Allows you set the time that the backup automatically takes place. It consists of the backup start time and the backup window. You can set the backup run time multiple times so that it does not overlap. Performs backup at any point in the backup window based on the start time of the backup. The backup window is not related to the total running time of the backup. Backup time is proportional to the size of the database and the service load. If the backup fails, retry the backup based on the number of backups retries if it does not exceed the backup window.
 
-> [Caution]
-> A backup might not be performed in some situations, such as when a previous backup does not terminate.
-> If no incremental baseline backup exists, a full backup might be performed even though it is the scheduled turn to perform an incremental backup.
-> For a detailed description of incremental baseline backups, see [Baseline Backup](#baseline-backup).
+!!! danger "Caution"
+    A backup might not be performed in some situations, such as when a previous backup does not terminate.
+    If no incremental baseline backup exists, a full backup might be performed even though it is the scheduled turn to perform an incremental backup.
+    For a detailed description of incremental baseline backups, see [Baseline Backup](#baseline-backup).
 
 <a id="backup-storage-and-pricing"></a>
 ### Backup Storage and Pricing { #backup-storage-and-pricing }
@@ -252,16 +252,16 @@ You can export backup files stored in internal backup storage to user object sto
 
 ❷ Select the backup file to export from the **Backup** tab and click **Export to Object Storage**.
 
-> [Note]
-> For manual backups, if the source DB instance that performed the backup was deleted, you cannot export the backup.
+!!! tip "Note"
+    For manual backups, if the source DB instance that performed the backup was deleted, you cannot export the backup.
 
 <a id="restore"></a>
 ## Restoration { #restore }
 
 Backups allow you to restore data to any point in time. Restoration always creates new DB instance and cannot be restored to the existing DB instance. You can restore only to the same DB engine version as the source DB instance from which you performed the backup. Supports restoring snapshots to the point in time when the backup was created, and restoring point in time to a specific point in time. You can restore it as backup of external MySQL as well as backup that you created in RDS for {{engine.pascalCase}}.
 
-> [Caution]
-> Restoration might fail if the data storage size of the DB instance that you want to restore is smaller than the data storage size of the source DB instance that you backed up, or if you use a different parameter group than the parameter group of the source DB instance.
+!!! danger "Caution"
+    Restoration might fail if the data storage size of the DB instance that you want to restore is smaller than the data storage size of the source DB instance that you backed up, or if you use a different parameter group than the parameter group of the source DB instance.
 
 <a id="snapshot-restoration"></a>
 ### Snapshot Restoration { #snapshot-restoration }
@@ -334,8 +334,8 @@ You can use an external MySQL backup file to create a DB instance. When creating
 You can use an external MariaDB backup file to create a DB instance.
 {{/if}}
 
-> [Caution]
-> If the setting value of innodb\_data\_file\_path is not ibdata1:12M:autoextend, it is unable to restore to DB instance of RDS for {{engine.pascalCase}}.
+!!! danger "Caution"
+    If the setting value of innodb\_data\_file\_path is not ibdata1:12M:autoextend, it is unable to restore to DB instance of RDS for {{engine.pascalCase}}.
 
 {{#if (eq engine.lowerCase "mysql")}}
 (1) Use the command below to perform a backup on the server where MySQL is installed.
@@ -371,10 +371,10 @@ mariabackup --defaults-file={my.cnf path} --user {user} --password '{password}' 
 (4) After accessing the console of the project you want to restore, on the DB Instances tab, click the **Restore to Backup in Object Storage** button.
 
 {{#if (eq engine.lowerCase "mysql")}}
-> [Caution]
-> In the current version of 5.7.33, restoring DB instances using backup files on object storage is restricted.
-> If use a version other than the recommended XtraBackup, it may not work properly.
-> The backup file on the object storage has to be the same version of MySQL that you want to restore.
+!!! danger "Caution"
+    In the current version of 5.7.33, restoring DB instances using backup files on object storage is restricted.
+    If use a version other than the recommended XtraBackup, it may not work properly.
+    The backup file on the object storage has to be the same version of MySQL that you want to restore.
 {{/if}}
 
 <a id="restoration-by-using-rds-for-enginepascalcase-backup"></a>
