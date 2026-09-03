@@ -1,10 +1,15 @@
-## Database > RDS for {{engine.pascalCase}} > DBエンジン
+<!-- pre-align:aligned sig=c01d6c6c712e -->
 
-## DBエンジン
+<a id="database-rds-for-enginepascalcase-db-engine"></a>
+## Database > RDS for {{engine.pascalCase}} > DBエンジン { #database-rds-for-enginepascalcase-db-engine }
+
+<a id="db-engine"></a>
+## DBエンジン { #db-engine }
 
 {{engine.pascalCase}}でバージョン番号はバージョン= `X.Y.Z`で構成されます。NHN CloudのRDS for {{engine.pascalCase}}では、`X.Y`の場合はメジャーバージョンを、`Z`はマイナーバージョンを表します。
 
-### RDSが提供するDBエンジンのバージョン
+<a id="db-engine-version-provided-by-rds"></a>
+### RDSが提供するDBエンジンのバージョン { #db-engine-version-provided-by-rds }
 
 以下に記載されたバージョンを使用できます。新規DBインスタンスの作成及びRead Replicaの追加は、メジャーバージョンごとに上位7つのマイナーバージョンまでのみサポートします。
 {{#if (eq engine.lowerCase "mysql")}}
@@ -74,7 +79,8 @@ MySQL 8.0.34未満のバージョンは、MySQL LTSサポートポリシーに�
 | MariaDB 10.3.30        | 新規に作成したりRead Replicaを追加することはできません |
 {{/if}}
 
-### DBエンジンバージョン管理
+<a id="manage-db-engine-version"></a>
+### DBエンジンバージョン管理 { #manage-db-engine-version }
 DBインスタンスの作成後、DBインスタンスの修正と一緒にDBエンジンのバージョンを変更できます。
 
 > [注意]
@@ -84,6 +90,7 @@ DBエンジンのバージョンアップグレードが行われる場合、メ
 DBエンジンのメジャーバージョンのアップグレードを試みる場合は、次のメジャーバージョンのDBエンジンのバージョンに対してアップグレードが可能です。
 
 {{#if (eq engine.lowerCase "mysql")}}
+<a id="manage-db-engine-version-pre-inspection-for-upgrading-from-mysql-57-to-mysql-80"></a>
 #### MySQL 5.7からMySQL 8.0へのアップグレードのための事前点検
 
 MySQL 8.0とMySQL 5.7は相当数の非互換性要素が含まれています。したがって、`5.7`から`8.0`バージョンにメジャーバージョンDBエンジンのアップグレードを行う場合、問題が発生する可能性があります。このため、問題発生が予想される一部の項目に対する事前点検が必要です。以下は事前点検が必要な項目です。
@@ -119,6 +126,7 @@ DBバージョンアップグレードの事前点検については、次の方
 - [8.0で削除された機能ガイド](https://dev.mysql.com/doc/refman/8.0/en/mysql-nutshell.html#mysql-nutshell-removals)
 
 
+<a id="manage-db-engine-version-pre-check-for-upgrading-mysql-80-to-mysql-84"></a>
 #### MySQL 8.0からMySQL 8.4へアップグレードするための事前チェック
 
 MySQL 8.4にアップグレードするためには、MySQL 8.0へのアップグレードが完了している必要があります。`8.0`から`8.4`バージョンへのメジャーバージョンDBエンジンのアップグレードを行う場合、問題の発生が予想される一部の項目について、事前のチェックが必要です。
@@ -130,6 +138,7 @@ MySQL 8.4にアップグレードするためには、MySQL 8.0へのアップ�
 - [互換性のない変更項目ガイド](https://dev.mysql.com/doc/refman/8.4/en/upgrading-from-previous-series.html#upgrade-incompatible-changes)
 - [8.4で削除された機能ガイド](https://dev.mysql.com/doc/refman/8.4/en/mysql-nutshell.html#mysql-nutshell-removals)
 
+<a id="manage-db-engine-version-mysql-version-upgrade-constraints"></a>
 #### MySQLバージョンアップグレードの制約事項
 
 MySQL 8.0.18バージョンは、直接MySQL 8.4にアップグレードできません。
@@ -143,6 +152,7 @@ MySQL 8.0.18バージョンは、直接MySQL 8.4にアップグレードでき�
 {{/if}}
 
 {{#if (eq engine.lowerCase "mariadb")}}
+<a id="manage-db-engine-version-pre-check"></a>
 #### 事前確認
 
 DBエンジンのメジャーバージョンアップグレードを進める前に、以下の事項を事前に確認することを推奨します。
@@ -152,6 +162,7 @@ DBエンジンのメジャーバージョンアップグレードを進める前
 
 コンソールでDBのバージョンアップグレードを試行する際、`DBエンジンアップグレード事前確認`ボタンを使用して事前チェックの結果を確認できます。個別のDBインスタンスのログタブに生成された`db_version_upgrade_compatibility.log`から、詳細データを確認できます。
 
+<a id="manage-db-engine-version-notes-on-upgrading-from-mariadb-114-to-mariadb-118"></a>
 #### MariaDB 11.4からMariaDB 11.8へのアップグレード時の確認事項
 
 MariaDB 11.8にアップグレードするには、まずMariaDB 11.4にアップグレードされている必要があります。`11.4`から`11.8`へメジャーバージョンアップグレードを進める場合、以下の事項を確認する必要があります。
@@ -163,6 +174,7 @@ MariaDB 11.8にアップグレードするには、まずMariaDB 11.4にアッ�
 - [MariaDB 11.8 リリースノート](https://mariadb.com/docs/release-notes/community-server/11.8/what-is-mariadb-118#upgrading)
 {{/if}}
 
+<a id="manage-db-engine-version-upgrading-the-db-engine-version-using-a-dummy-db-instance"></a>
 #### ダミーDBインスタンスを使用したDBエンジンバージョンアップグレード 
 
 DBインスタンスの修正ウィンドウでDBエンジンのバージョンを変更しようとする時、ダミーDBインスタンスの使用有無を選択してバージョンアップの過程で高可用性を得ることができます。ダミーDBインスタンスの使用を選択すると、DBバージョンアップグレードのためのStandbyが生成されます。
@@ -170,6 +182,7 @@ DBインスタンスの修正ウィンドウでDBエンジンのバージョン�
 > [注意]
 > ダミーDBインスタンスの場合、アップグレード過程で一時的なStandbyを生成するため、このオプションは高可用性構成でない場合にのみ使用できます。
 
+<a id="manage-db-engine-version-manual-control-of-failover-when-upgrading-high-availability-db-instances"></a>
 #### 高可用性DBインスタンスをアップグレードする際にフェイルオーバー手動制御
 
 DBインスタンスが高可用性で構成されている場合、Standbyのエンジンバージョンを先にアップグレードした後、フェイルオーバーを使用してStandbyをPrimaryに切り替えます。フェイルオーバーは、Primaryのサービスを一時的に中断させるため、ユーザーが望むタイミングでフェイルオーバーを開始できます。
@@ -178,7 +191,8 @@ DBインスタンスが高可用性で構成されている場合、Standbyの�
 > [注意]
 > フェイルオーバー手動制御は、60時間以上トリガーされない場合、自動的にアップグレード作業がキャンセルされます。
 
-### 古いOSを使用する場合
+<a id="when-using-an-outdated-operating-system"></a>
+### 古いOSを使用する場合 { #when-using-an-outdated-operating-system }
 
 内部OSが古いDBインスタンスの場合、DBバージョンをアップグレードする前に、VMの交換を伴うOSバージョンのアップグレードが必要です。通知グループの監視対象インスタンス及びイベントサブスクリプションのイベントソースは、変更された識別子に自動で置き換えられます。単一DBインスタンスの場合、DBバージョンの変更時にダミーDBインスタンスの使用を推奨します。高可用性DBインスタンスの場合、DBインスタンスの交換プロセスにおいてフェイルオーバーを利用し、PrimaryとStandbyのロールが変更されます。Primaryの負荷が高い場合、フェイルオーバーに失敗する可能性があるため、DBバージョンの変更は負荷が低い時間帯に実行することを推奨します。
 
@@ -186,15 +200,18 @@ DBインスタンスが高可用性で構成されている場合、Standbyの�
 > IP ACLまたはセキュリティグループで既存DBインスタンスの内部IPを直接使用する場合、注意が必要です。
 
 {{#if (eq engine.lowerCase "mysql")}}
-## MySQL用のオプション
+<a id="options-for-mysql"></a>
+## MySQL用のオプション { #options-for-mysql }
 
-### MySQL用のMariaDBサーバー監査プラグインをサポート
+<a id="support-for-the-mariadb-server-audit-plugin-for-mysql"></a>
+### MySQL用のMariaDBサーバー監査プラグインをサポート { #support-for-the-mariadb-server-audit-plugin-for-mysql }
 
 - RDS for MySQLでは、MariaDB監査プラグインを使用してMySQL DBインスタンス用の監査プラグインを提供します。 
 
 > [注意]
 > 一部のMySQLバージョンではサポートしない場合があり、サポートしないバージョンにバージョンアップする場合、該当プラグインを使用できません。
 
+<a id="support-for-the-mariadb-server-audit-plugin-for-mysql-supported-versions"></a>
 #### サポートバージョン
 | MySQLバージョン                 | サーバー監査プラグインサポートの有無 |
 |----------------------------|--------------------|

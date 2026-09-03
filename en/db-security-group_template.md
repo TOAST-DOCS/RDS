@@ -1,6 +1,10 @@
-## Database > RDS for {{engine.pascalCase}} > DB Security Group
+<!-- pre-align:aligned sig=5f5b28f2bca5 -->
 
-## DB Security Group
+<a id="database-rds-for-enginepascalcase-db-security-group"></a>
+## Database > RDS for {{engine.pascalCase}} > DB Security Group { #database-rds-for-enginepascalcase-db-security-group }
+
+<a id="db-security-group"></a>
+## DB Security Group { #db-security-group }
 
 DB security groups are used to protect DB instances by controlling the incoming and outgoing traffic of DB instances. The positive security model is used to only allow the traffic specified by rules and block the rest. Unless you connect DB security groups to DB instances, all incoming and outgoing traffic is not allowed. Even if the DB security group is created, the rule will not apply if the DB security group is not set for the DB instance. You can apply multiple DB security groups to DB
 instances. Main features of DB security group are as follows.
@@ -16,11 +20,13 @@ DB security group consists of name, description, and a number of DB security rul
 * Must be unique for each region.
 * Must consist of alphabets, numbers, and some special characters (-, _, .) between 1 and 100 characters, and the first character must be an alphabet.
 
-### Applying DB Security Groups
+<a id="applying-db-security-groups"></a>
+### Applying DB Security Groups { #applying-db-security-groups }
 
 When you create a DB instance, you can select the DB security group to apply. You can apply multiple DB security groups to DB instances. The rules of DB security groups already applied also apply to DB instances. You can freely change the applied DB instance on the Modify DB Instance screen.
 
-## DB Security Rules
+<a id="db-security-rules"></a>
+## DB Security Rules { #db-security-rules }
 
 You can create multiple DB security rules in one DB security group. When you set up DB security groups in a DB instance, all DB security rules created in that DB security group are applied.
 
@@ -35,6 +41,7 @@ You can create multiple DB security rules in one DB security group. When you set
 > [Caution]
 > DB port cannot be set to outbound direction.
 
-### Change DB Security Rules
+<a id="change-db-security-rules"></a>
+### Change DB Security Rules { #change-db-security-rules }
 
 When changes occur, such as creating, modifying, or deleting DB security rules, the changes are applied sequentially to the DB instances attached with the DB security group. You cannot add new DB security rules to DB security group or modify or delete other DB security rules until they are applied to all DB instances attached with DB security group.

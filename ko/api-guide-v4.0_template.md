@@ -1,8 +1,13 @@
-## Database > RDS for {{engine.pascalCase}} > API 가이드
+<!-- pre-align:aligned sig=7de1400fff9a -->
 
-## RDS for {{engine.pascalCase}} API 공통 정보
+<a id="database-rds-for-enginepascalcase-api-guide"></a>
+## Database > RDS for {{engine.pascalCase}} > API 가이드 { #database-rds-for-enginepascalcase-api-guide }
 
-### API 엔드포인트
+<a id="rds-for-enginepascalcase-api-common-information"></a>
+## RDS for {{engine.pascalCase}} API 공통 정보 { #rds-for-enginepascalcase-api-common-information }
+
+<a id="api-endpoint"></a>
+### API 엔드포인트 { #api-endpoint }
 
 | 리전        | 엔드포인트                                         |
 |-----------|-----------------------------------------------|
@@ -10,7 +15,8 @@
 | {{this.text.ko}} | {{this.endpoint}} |
 {{/each}}
 
-### 인증 및 권한
+<a id="authentication-and-authorization"></a>
+### 인증 및 권한 { #authentication-and-authorization }
 
 RDS for {{engine.pascalCase}}은(는) API 호출 시 인증/인가를 위해 User Access Key 토큰을 사용합니다. User Access Key 토큰은 User Access Key를 기반으로 발급되는 Bearer 타입의 일시적 액세스 토큰입니다. User Access Key 토큰 발급 및 사용에 대한 자세한 내용은 [User Access Key 토큰](/nhncloud/ko/public-api/user-access-key-token)을 참고하세요.
 발급 받은 토큰은 Appkey와 함께 요청 Header에 포함해야 합니다.
@@ -35,10 +41,12 @@ API 요청 시 인증에 실패하거나 권한이 없을 경우 다음과 같�
 | 80401      | Unauthorized  | 인증에 실패했습니다. |
 | 80403      | Forbidden     | 권한이 없습니다.   |
 
-### 응답 공통 정보
+<a id="common-response-information"></a>
+### 응답 공통 정보 { #common-response-information }
 
 모든 API 요청에 '200 OK'로 응답합니다. 자세한 응답 결과는 응답 본문의 헤더를 참고합니다.
 
+<a id="common-response-information-response-body"></a>
 #### 응답 본문
 ```json
 {
@@ -50,6 +58,7 @@ API 요청 시 인증에 실패하거나 권한이 없을 경우 다음과 같�
 }
 ```
 
+<a id="common-response-information-field"></a>
 #### 필드
 | 이름            | 형식      | 설명                                      |
 |---------------|---------|-----------------------------------------|
@@ -58,7 +67,8 @@ API 요청 시 인증에 실패하거나 권한이 없을 경우 다음과 같�
 | isSuccessful  | Boolean | 성공 여부                                   |
 
 
-### DB 엔진 유형
+<a id="db-engine-type"></a>
+### DB 엔진 유형 { #db-engine-type }
 
 {{#if (eq engine.lowerCase "mysql")}}
 | DB 엔진 유형     | 생성 가능 여부 | OBS로부터 복원 가능 여부 | 인증 플러그인 지원 |
@@ -106,24 +116,29 @@ API 요청 시 인증에 실패하거나 권한이 없을 경우 다음과 같�
 * ENUM 타입의 dbVersion 필드에서 해당 값을 사용할 수 있습니다.
 * 버전에 따라 생성 또는 복원이 불가능한 경우가 있을 수 있습니다.
 
-## 프로젝트 정보
+<a id="project-information"></a>
+## 프로젝트 정보 { #project-information }
 
-### 리전 목록 보기
+<a id="list-regions"></a>
+### 리전 목록 보기 { #list-regions }
 
 ```http
 GET /v4.0/project/regions
 ```
 
+<a id="list-regions-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                     | 설명         |
 |-----------------------------------------|------------|
 | RDSfor{{engine.pascalCase}}:Project.Get | 프로젝트 정보 조회 |
 
+<a id="list-regions-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
+<a id="list-regions-response"></a>
 #### 응답
 
 | 이름                 | 종류   | 형식      | 설명                                                                         |
@@ -176,22 +191,26 @@ GET /v4.0/project/regions
 
 ---
 
-### 프로젝트 멤버 목록 보기
+<a id="list-project-members"></a>
+### 프로젝트 멤버 목록 보기 { #list-project-members }
 
 ```http
 GET /v4.0/project/members
 ```
 
+<a id="list-project-members-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                     | 설명         |
 |-----------------------------------------|------------|
 | RDSfor{{engine.pascalCase}}:Project.Get | 프로젝트 정보 조회 |
 
+<a id="list-project-members-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
+<a id="list-project-members-response"></a>
 #### 응답
 
 | 이름                   | 종류   | 형식     | 설명              |
@@ -228,24 +247,29 @@ GET /v4.0/project/members
 
 ---
 
-## DB 인스턴스 사양
+<a id="specifications-of-db-instance"></a>
+## DB 인스턴스 사양 { #specifications-of-db-instance }
 
-### DB 인스턴스 사양 목록 보기
+<a id="list-db-instance-specifications"></a>
+### DB 인스턴스 사양 목록 보기 { #list-db-instance-specifications }
 
 ```http
 GET /v4.0/db-flavors
 ```
 
+<a id="list-db-instance-specifications-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                       | 설명               |
 |-------------------------------------------|------------------|
 | RDSfor{{engine.pascalCase}}:DbFlavor.List | DB 인스턴스 사양 목록 보기 |
 
+<a id="list-db-instance-specifications-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
+<a id="list-db-instance-specifications-response"></a>
 #### 응답
 
 | 이름                     | 종류   | 형식     | 설명              |
@@ -282,24 +306,29 @@ GET /v4.0/db-flavors
 
 ---
 
-## 네트워크
+<a id="network"></a>
+## 네트워크 { #network }
 
-### 서브넷 목록 보기
+<a id="list-subnets"></a>
+### 서브넷 목록 보기 { #list-subnets }
 
 ```http
 GET /v4.0/network/subnets
 ```
 
+<a id="list-subnets-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                      | 설명        |
 |------------------------------------------|-----------|
 | RDSfor{{engine.pascalCase}}:Network.List | 서브넷 목록 보기 |
 
+<a id="list-subnets-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
+<a id="list-subnets-response"></a>
 #### 응답
 
 | 이름                       | 종류   | 형식      | 설명               |
@@ -338,24 +367,29 @@ GET /v4.0/network/subnets
 
 ---
 
-## DB 엔진
+<a id="db-engine"></a>
+## DB 엔진 { #db-engine }
 
-### DB 엔진 목록 보기
+<a id="list-db-engines"></a>
+### DB 엔진 목록 보기 { #list-db-engines }
 
 ```http
 GET /v4.0/db-versions
 ```
 
+<a id="list-db-engines-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                        | 설명          |
 |--------------------------------------------|-------------|
 | RDSfor{{engine.pascalCase}}:DbVersion.List | DB 엔진 목록 보기 |
 
+<a id="list-db-engines-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
+<a id="list-db-engines-response"></a>
 #### 응답
 
 | 이름                           | 종류   | 형식      | 설명                    |
@@ -390,24 +424,29 @@ GET /v4.0/db-versions
 
 ---
 
-## 데이터 스토리지
+<a id="storage"></a>
+## 데이터 스토리지 { #storage }
 
-### 데이터 스토리지 타입 목록 보기
+<a id="list-storage-type"></a>
+### 데이터 스토리지 타입 목록 보기 { #list-storage-type }
 
 ```http
 GET /v4.0/storage-types
 ```
 
+<a id="list-storage-type-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                      | 설명                |
 |------------------------------------------|-------------------|
 | RDSfor{{engine.pascalCase}}:Storage.List | 데이터 스토리지 타입 목록 보기 |
 
+<a id="list-storage-type-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
+<a id="list-storage-type-response"></a>
 #### 응답
 
 | 이름           | 종류   | 형식    | 설명             |
@@ -436,9 +475,11 @@ GET /v4.0/storage-types
 
 ---
 
-## 작업 정보
+<a id="task-information"></a>
+## 작업 정보 { #task-information }
 
-### 작업 상태
+<a id="task-status"></a>
+### 작업 상태 { #task-status }
 
 | 상태명                | 설명                   |
 |--------------------|----------------------|
@@ -455,18 +496,21 @@ GET /v4.0/storage-types
 | `DELETED`          | 작업이 삭제된 경우           |
 | `FAIL_TO_READY`    | 작업 준비에 실패한 경우        |
 
-### 작업 정보 상세 보기
+<a id="list-task-details"></a>
+### 작업 정보 상세 보기 { #list-task-details }
 
 ```http
 GET /v4.0/jobs/{jobId}
 ```
 
+<a id="list-task-details-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                 | 설명          |
 |-------------------------------------|-------------|
 | RDSfor{{engine.pascalCase}}:Job.Get | 작업 정보 상세 보기 |
 
+<a id="list-task-details-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -475,6 +519,7 @@ GET /v4.0/jobs/{jobId}
 |-------|-----|------|----|---------|
 | jobId | URL | UUID | O  | 작업의 식별자 |
 
+<a id="list-task-details-response"></a>
 #### 응답
 
 | 이름                             | 종류   | 형식       | 설명                                |
@@ -515,24 +560,29 @@ GET /v4.0/jobs/{jobId}
 
 ---
 
-## DB 인스턴스 그룹
+<a id="db-instance-group"></a>
+## DB 인스턴스 그룹 { #db-instance-group }
 
-### DB 인스턴스 그룹 목록 보기
+<a id="list-db-instance-groups"></a>
+### DB 인스턴스 그룹 목록 보기 { #list-db-instance-groups }
 
 ```http
 GET /v4.0/db-instance-groups
 ```
 
+<a id="list-db-instance-groups-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                              | 설명               |
 |--------------------------------------------------|------------------|
 | RDSfor{{engine.pascalCase}}:DbInstanceGroup.List | DB 인스턴스 그룹 목록 보기 |
 
+<a id="list-db-instance-groups-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
+<a id="list-db-instance-groups-response"></a>
 #### 응답
 
 | 이름                                 | 종류   | 형식       | 설명                                                                       |
@@ -569,18 +619,21 @@ GET /v4.0/db-instance-groups
 
 ---
 
-### DB 인스턴스 그룹 상세 보기
+<a id="list-db-instance-group-details"></a>
+### DB 인스턴스 그룹 상세 보기 { #list-db-instance-group-details }
 
 ```http
 GET /v4.0/db-instance-groups/{dbInstanceGroupId}
 ```
 
+<a id="list-db-instance-group-details-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                             | 설명               |
 |-------------------------------------------------|------------------|
 | RDSfor{{engine.pascalCase}}:DbInstanceGroup.Get | DB 인스턴스 그룹 상세 보기 |
 
+<a id="list-db-instance-group-details-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -589,6 +642,7 @@ GET /v4.0/db-instance-groups/{dbInstanceGroupId}
 |-------------------|-----|------|----|-----------------|
 | dbInstanceGroupId | URL | UUID | O  | DB 인스턴스 그룹의 식별자 |
 
+<a id="list-db-instance-group-details-response"></a>
 #### 응답
 
 | 이름                           | 종류   | 형식       | 설명                                                                                                                                    |
@@ -631,9 +685,11 @@ GET /v4.0/db-instance-groups/{dbInstanceGroupId}
 
 ---
 
-## DB 인스턴스
+<a id="db-instance"></a>
+## DB 인스턴스 { #db-instance }
 
-### DB 인스턴스 상태
+<a id="db-instance-status"></a>
+### DB 인스턴스 상태 { #db-instance-status }
 
 | 상태                  | 설명                           |
 |---------------------|------------------------------|
@@ -647,7 +703,8 @@ GET /v4.0/db-instance-groups/{dbInstanceGroupId}
 | `SHUTDOWN`          | DB 인스턴스가 중지된 경우              |
 | `DELETED`           | DB 인스턴스가 삭제된 경우              |
 
-### DB 인스턴스 진행 상태
+<a id="db-instance-progress-status"></a>
+### DB 인스턴스 진행 상태 { #db-instance-progress-status }
 
 | 상태                         | 설명           |
 |----------------------------|--------------|
@@ -678,22 +735,26 @@ GET /v4.0/db-instance-groups/{dbInstanceGroupId}
 | `SYNCING_USER`             | 사용자 동기화 중	   |
 | `UPDATING_USER`            | 사용자 수정 중	    |
 
-### DB 인스턴스 목록 보기
+<a id="list-db-instances"></a>
+### DB 인스턴스 목록 보기 { #list-db-instances }
 
 ```http
 GET /v4.0/db-instances
 ```
 
+<a id="list-db-instances-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                         | 설명            |
 |---------------------------------------------|---------------|
 | RDSfor{{engine.pascalCase}}:DbInstance.List | DB 인스턴스 목록 보기 |
 
+<a id="list-db-instances-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
+<a id="list-db-instances-response"></a>
 #### 응답
 
 | 이름                            | 종류   | 형식       | 설명                                                                                                                                    |
@@ -744,18 +805,21 @@ GET /v4.0/db-instances
 
 ---
 
-### DB 인스턴스 상세 보기
+<a id="list-db-instance-details"></a>
+### DB 인스턴스 상세 보기 { #list-db-instance-details }
 
 ```http
 GET /v4.0/db-instances/{dbInstanceId}
 ```
 
+<a id="list-db-instance-details-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                        | 설명            |
 |--------------------------------------------|---------------|
 | RDSfor{{engine.pascalCase}}:DbInstance.Get | DB 인스턴스 상세 보기 |
 
+<a id="list-db-instance-details-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -764,6 +828,7 @@ GET /v4.0/db-instances/{dbInstanceId}
 |--------------|-----|------|----|--------------|
 | dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
 
+<a id="list-db-instance-details-response"></a>
 #### 응답
 
 | 이름                          | 종류   | 형식       | 설명                                                                                                                                    |
@@ -829,18 +894,21 @@ GET /v4.0/db-instances/{dbInstanceId}
 
 ---
 
-### DB 인스턴스 생성하기
+<a id="create-db-instance"></a>
+### DB 인스턴스 생성하기 { #create-db-instance }
 
 ```http
 POST /v4.0/db-instances
 ```
 
+<a id="create-db-instance-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                           | 설명           |
 |-----------------------------------------------|--------------|
 | RDSfor{{engine.pascalCase}}:DbInstance.Create | DB 인스턴스 생성하기 |
 
+<a id="create-db-instance-request"></a>
 #### 요청
 
 | 이름                      | 종류    | 형식      | 필수 | 설명                                                                  |
@@ -933,6 +1001,7 @@ POST /v4.0/db-instances
 </p>
 </details>
 
+<a id="create-db-instance-response"></a>
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -941,18 +1010,21 @@ POST /v4.0/db-instances
 
 ---
 
-### DB 인스턴스 수정하기
+<a id="modify-db-instance"></a>
+### DB 인스턴스 수정하기 { #modify-db-instance }
 
 ```http
 PUT /v4.0/db-instances/{dbInstanceId}
 ```
 
+<a id="modify-db-instance-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                           | 설명           |
 |-----------------------------------------------|--------------|
 | RDSfor{{engine.pascalCase}}:DbInstance.Modify | DB 인스턴스 수정하기 |
 
+<a id="modify-db-instance-request"></a>
 #### 요청
 
 | 이름                      | 종류   | 형식      | 필수 | 설명                                          |
@@ -991,6 +1063,7 @@ PUT /v4.0/db-instances/{dbInstanceId}
 </p>
 </details>
 
+<a id="modify-db-instance-response"></a>
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -999,18 +1072,21 @@ PUT /v4.0/db-instances/{dbInstanceId}
 
 ---
 
-### DB 인스턴스 삭제하기
+<a id="delete-db-instance"></a>
+### DB 인스턴스 삭제하기 { #delete-db-instance }
 
 ```http
 DELETE /v4.0/db-instances/{dbInstanceId}
 ```
 
+<a id="delete-db-instance-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                           | 설명           |
 |-----------------------------------------------|--------------|
 | RDSfor{{engine.pascalCase}}:DbInstance.Delete | DB 인스턴스 삭제하기 |
 
+<a id="delete-db-instance-request"></a>
 #### 요청
 
 | 이름           | 종류  | 형식   | 필수 | 설명           |
@@ -1018,6 +1094,7 @@ DELETE /v4.0/db-instances/{dbInstanceId}
 | dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
 | deleteAutoBackup          | Body | Boolean  | X  | 자동 백업 삭제 여부<br/>- 기본값: `false` |
 
+<a id="delete-db-instance-response"></a>
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -1026,18 +1103,21 @@ DELETE /v4.0/db-instances/{dbInstanceId}
 
 ---
 
-### DB 인스턴스 재시작하기
+<a id="restart-db-instance"></a>
+### DB 인스턴스 재시작하기 { #restart-db-instance }
 
 ```http
 POST /v4.0/db-instances/{dbInstanceId}/restart
 ```
 
+<a id="restart-db-instance-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                            | 설명            |
 |------------------------------------------------|---------------|
 | RDSfor{{engine.pascalCase}}:DbInstance.Restart | DB 인스턴스 재시작하기 |
 
+<a id="restart-db-instance-request"></a>
 #### 요청
 
 | 이름                | 종류   | 형식      | 필수 | 설명                                                                        |
@@ -1048,6 +1128,7 @@ POST /v4.0/db-instances/{dbInstanceId}/restart
 | waitReplicationDelay     | Body | Boolean | X  | 복제 지연 해소 대기 여부<br/>고가용성을 사용 중인 DB 인스턴스에서만 사용 가능합니다.<br/>- 기본값: `false`                                         |
 | useReadOnly     | Body | Boolean | X  | 읽기 전용으로 변경 여부<br/>고가용성을 사용 중인 DB 인스턴스에서만 사용 가능합니다.<br/>- 기본값: `false`                                         |
 
+<a id="restart-db-instance-response"></a>
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -1055,18 +1136,21 @@ POST /v4.0/db-instances/{dbInstanceId}/restart
 | jobId | Body | UUID | 요청한 작업의 식별자 |
 
 ---
-### DB 인스턴스 강제 재시작하기
+<a id="force-restart-db-instance"></a>
+### DB 인스턴스 강제 재시작하기 { #force-restart-db-instance }
 
 ```http
 POST /v4.0/db-instances/{dbInstanceId}/force-restart
 ```
 
+<a id="force-restart-db-instance-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                                 | 설명               |
 |-----------------------------------------------------|------------------|
 | RDSfor{{engine.pascalCase}}:DbInstance.ForceRestart | DB 인스턴스 강제 재시작하기 |
 
+<a id="force-restart-db-instance-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -1077,6 +1161,7 @@ POST /v4.0/db-instances/{dbInstanceId}/force-restart
 | dbInstanceId      | URL  | UUID    | O  | DB 인스턴스의 식별자                                                              |
 
 
+<a id="force-restart-db-instance-response"></a>
 #### 응답
 
 이 API는 응답 본문을 반환하지 않습니다.
@@ -1100,18 +1185,21 @@ POST /v4.0/db-instances/{dbInstanceId}/force-restart
 
 ---
 
-### DB 인스턴스 시작하기
+<a id="start-db-instance"></a>
+### DB 인스턴스 시작하기 { #start-db-instance }
 
 ```http
 POST /v4.0/db-instances/{dbInstanceId}/start
 ```
 
+<a id="start-db-instance-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                          | 설명           |
 |----------------------------------------------|--------------|
 | RDSfor{{engine.pascalCase}}:DbInstance.Start | DB 인스턴스 시작하기 |
 
+<a id="start-db-instance-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -1120,6 +1208,7 @@ POST /v4.0/db-instances/{dbInstanceId}/start
 |--------------|-----|------|----|--------------|
 | dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
 
+<a id="start-db-instance-response"></a>
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -1128,18 +1217,21 @@ POST /v4.0/db-instances/{dbInstanceId}/start
 
 ---
 
-### DB 인스턴스 정지하기
+<a id="stop-db-instance"></a>
+### DB 인스턴스 정지하기 { #stop-db-instance }
 
 ```http
 POST /v4.0/db-instances/{dbInstanceId}/stop
 ```
 
+<a id="stop-db-instance-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                         | 설명           |
 |---------------------------------------------|--------------|
 | RDSfor{{engine.pascalCase}}:DbInstance.Stop | DB 인스턴스 정지하기 |
 
+<a id="stop-db-instance-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -1148,6 +1240,7 @@ POST /v4.0/db-instances/{dbInstanceId}/stop
 |--------------|-----|------|----|--------------|
 | dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
 
+<a id="stop-db-instance-response"></a>
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -1156,18 +1249,21 @@ POST /v4.0/db-instances/{dbInstanceId}/stop
 
 ---
 
-### DB 인스턴스 복제하기
+<a id="replicate-db-instance"></a>
+### DB 인스턴스 복제하기 { #replicate-db-instance }
 
 ```http
 POST /v4.0/db-instances/{dbInstanceId}/replicate
 ```
 
+<a id="replicate-db-instance-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                              | 설명           |
 |--------------------------------------------------|--------------|
 | RDSfor{{engine.pascalCase}}:DbInstance.Replicate | DB 인스턴스 복제하기 |
 
+<a id="replicate-db-instance-request"></a>
 #### 요청
 
 | 이름                                           | 종류   | 형식      | 필수 | 설명                                                                        |
@@ -1226,6 +1322,7 @@ POST /v4.0/db-instances/{dbInstanceId}/replicate
 </p>
 </details>
 
+<a id="replicate-db-instance-response"></a>
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -1234,18 +1331,21 @@ POST /v4.0/db-instances/{dbInstanceId}/replicate
 
 ---
 
-### DB 인스턴스 승격하기
+<a id="promote-db-instance"></a>
+### DB 인스턴스 승격하기 { #promote-db-instance }
 
 ```http
 POST /v4.0/db-instances/{dbInstanceId}/promote
 ```
 
+<a id="promote-db-instance-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                            | 설명           |
 |------------------------------------------------|--------------|
 | RDSfor{{engine.pascalCase}}:DbInstance.Promote | DB 인스턴스 승격하기 |
 
+<a id="promote-db-instance-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -1254,6 +1354,7 @@ POST /v4.0/db-instances/{dbInstanceId}/promote
 |--------------|-----|------|----|--------------|
 | dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
 
+<a id="promote-db-instance-response"></a>
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -1262,18 +1363,21 @@ POST /v4.0/db-instances/{dbInstanceId}/promote
 
 ---
 
-### DB 인스턴스 재구축하기
+<a id="rebuild-db-instance"></a>
+### DB 인스턴스 재구축하기 { #rebuild-db-instance }
 
 ```http
 POST /v4.0/db-instances/{dbInstanceId}/rebuild
 ```
 
+<a id="rebuild-db-instance-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                            | 설명            |
 |------------------------------------------------|---------------|
 | RDSfor{{engine.pascalCase}}:DbInstance.Rebuild | DB 인스턴스 재구축하기 |
 
+<a id="rebuild-db-instance-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -1282,6 +1386,7 @@ POST /v4.0/db-instances/{dbInstanceId}/rebuild
 |--------------|-----|------|----|--------------|
 | dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
 
+<a id="rebuild-db-instance-response"></a>
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -1290,24 +1395,28 @@ POST /v4.0/db-instances/{dbInstanceId}/rebuild
 
 ---
 
-### 복원 정보 조회
+<a id="view-restoration-information"></a>
+### 복원 정보 조회 { #view-restoration-information }
 
 ```http
 GET /v4.0/db-instances/{dbInstanceId}/restoration-info
 ```
 
+<a id="view-restoration-information-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                        | 설명            |
 |--------------------------------------------|---------------|
 | RDSfor{{engine.pascalCase}}:DbInstance.Get | DB 인스턴스 상세 보기 |
 
+<a id="view-restoration-information-request"></a>
 #### 요청
 
 | 이름           | 종류  | 형식   | 필수 | 설명           |
 |--------------|-----|------|----|--------------|
 | dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
 
+<a id="view-restoration-information-response"></a>
 #### 응답
 
 | 이름                                      | 종류   | 형식       | 설명                                                                                                                                                                           |
@@ -1377,18 +1486,21 @@ GET /v4.0/db-instances/{dbInstanceId}/restoration-info
 
 ---
 
-### 복원될 마지막 쿼리 조회
+<a id="view-the-last-query-to-be-restored"></a>
+### 복원될 마지막 쿼리 조회 { #view-the-last-query-to-be-restored }
 
 ```http
 GET /v4.0/db-instances/{dbInstanceId}/restoration-info/last-query
 ```
 
+<a id="view-the-last-query-to-be-restored-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                        | 설명            |
 |--------------------------------------------|---------------|
 | RDSfor{{engine.pascalCase}}:DbInstance.Get | DB 인스턴스 상세 보기 |
 
+<a id="view-the-last-query-to-be-restored-common-request"></a>
 #### 공통 요청
 
 | 이름           | 종류    | 형식   | 필수 | 설명                                                                                                                          |
@@ -1396,12 +1508,14 @@ GET /v4.0/db-instances/{dbInstanceId}/restoration-info/last-query
 | dbInstanceId | URL   | UUID | O  | DB 인스턴스의 식별자                                                                                                                |
 | restoreType  | Query | Enum | O  | 복원 타입 종류<br/>- `TIMESTAMP`: 복원 가능한 시간 이내의 시간을 이용한 시점 복원 타입<br/>- `BINLOG`: 복원 가능한 바이너리 로그 위치를 이용한 시점 복원 타입 |
 
+<a id="view-the-last-query-to-be-restored-if-restoretype-is-timestamp"></a>
 #### restoreType이 `TIMESTAMP`인 경우
 
 | 이름          | 종류    | 형식       | 필수 | 설명                                        |
 |-------------|-------|----------|----|-------------------------------------------|
 | restoreYmdt | Query | DateTime | O  | DB 인스턴스 복원 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 
+<a id="view-the-last-query-to-be-restored-if-restoretype-is-binlog"></a>
 #### restoreType이 `BINLOG`인 경우
 
 | 이름             | 종류    | 형식     | 필수 | 설명                 |
@@ -1410,6 +1524,7 @@ GET /v4.0/db-instances/{dbInstanceId}/restoration-info/last-query
 | binLogFileName | Query | String | O  | 복원에 사용할 바이너리 로그 이름 |
 | binLogPosition | Query | Number | O  | 복원에 사용할 바이너리 로그 위치 |
 
+<a id="view-the-last-query-to-be-restored-response"></a>
 #### 응답
 
 | 이름           | 종류   | 형식       | 설명                                   |
@@ -1437,18 +1552,21 @@ GET /v4.0/db-instances/{dbInstanceId}/restoration-info/last-query
 
 ---
 
-### 복원
+<a id="restoration"></a>
+### 복원 { #restoration }
 
 ```http
 POST /v4.0/db-instances/{dbInstanceId}/restore
 ```
 
+<a id="restoration-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                            | 설명           |
 |------------------------------------------------|--------------|
 | RDSfor{{engine.pascalCase}}:DbInstance.Restore | DB 인스턴스 복원하기 |
 
+<a id="restoration-common-request"></a>
 #### 공통 요청
 
 | 이름                                                  | 종류   | 형식      | 필수 | 설명                                                                                                                                                   |
@@ -1494,6 +1612,7 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 | backup.backupSchedules.backupWndBgnTime | Body | String | X | 백업 시작 시각<br/>- 예시: `00:00:00`                                                                                                                                                                                                                                                                                                                                                                                                                         |
 | backup.backupSchedules.backupWndDuration | Body | Enum | X | 백업 Duration<br>백업 시작 시각부터 Duration 안에 자동 백업이 실행됩니다.<br/>- `HALF_AN_HOUR`: 30분<br/>- `ONE_HOUR`: 1시간<br/>- `ONE_HOUR_AND_HALF`: 1시간 30분<br/>- `TWO_HOURS`: 2시간<br/>- `TWO_HOURS_AND_HALF`: 2시간 30분<br/>- `THREE_HOURS`: 3시간 |
 
+<a id="restoration-request-when-restoring-a-point-in-time-restoration-using-timestamp-if-restoretype-is-timestamp"></a>
 #### Timestamp를 이용한 시점 복원 시 요청(restoreType이 `TIMESTAMP`인 경우)
 
 | 이름                  | 종류   | 형식       | 필수 | 설명                                                                                             |
@@ -1544,6 +1663,7 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 </p>
 </details>
 
+<a id="restoration-request-for-point-in-time-restoration-using-binary-logs-if-restoretype-is-binlog"></a>
 #### 바이너리 로그를 이용한 시점 복원 시 요청(restoreType이 `BINLOG`인 경우)
 
 | 이름                            | 종류   | 형식     | 필수 | 설명                 |
@@ -1601,6 +1721,7 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 </p>
 </details>
 
+<a id="restoration-request-when-restoring-from-backup-if-restoretype-is-backup"></a>
 #### 백업을 이용한 복원 시 요청(restoreType이 `BACKUP`인 경우)
 
 | 이름               | 종류   | 형식   | 필수                           | 설명              |
@@ -1652,6 +1773,7 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 </p>
 </details>
 
+<a id="restoration-response"></a>
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -1661,18 +1783,21 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 
 ---
 
-### 오브젝트 스토리지로부터 복원
+<a id="restore-from-object-storage"></a>
+### 오브젝트 스토리지로부터 복원 { #restore-from-object-storage }
 
 ```http
 POST /v4.0/db-instances/restore-from-obs
 ```
 
+<a id="restore-from-object-storage-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                                   | 설명                      |
 |-------------------------------------------------------|-------------------------|
 | RDSfor{{engine.pascalCase}}:DbInstance.RestoreFromObs | DB 인스턴스 오브젝트 스토리지로부터 복원 |
 
+<a id="restore-from-object-storage-request"></a>
 #### 요청
 
 | 이름                                                  | 종류   | 형식      | 필수 | 설명                                                                                     |
@@ -1771,6 +1896,7 @@ POST /v4.0/db-instances/restore-from-obs
 </p>
 </details>
 
+<a id="restore-from-object-storage-response"></a>
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -1781,18 +1907,21 @@ POST /v4.0/db-instances/restore-from-obs
 ---
 
 
-### DB 인스턴스 삭제 보호 설정 변경하기
+<a id="change-db-instance-deletion-protection-settings"></a>
+### DB 인스턴스 삭제 보호 설정 변경하기 { #change-db-instance-deletion-protection-settings }
 
 ```http
 PUT /v4.0/db-instances/{dbInstanceId}/deletion-protection
 ```
 
+<a id="change-db-instance-deletion-protection-settings-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                           | 설명           |
 |-----------------------------------------------|--------------|
 | RDSfor{{engine.pascalCase}}:DbInstance.Modify | DB 인스턴스 수정하기 |
 
+<a id="change-db-instance-deletion-protection-settings-request"></a>
 #### 요청
 
 | 이름                    | 종류   | 형식      | 필수 | 설명           |
@@ -1800,6 +1929,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/deletion-protection
 | dbInstanceId          | URL  | UUID    | O  | DB 인스턴스의 식별자 |
 | useDeletionProtection | Body | Boolean | O  | 삭제 보호 여부     |
 
+<a id="change-db-instance-deletion-protection-settings-response"></a>
 #### 응답
 
 이 API는 응답 본문을 반환하지 않습니다.
@@ -1822,7 +1952,8 @@ PUT /v4.0/db-instances/{dbInstanceId}/deletion-protection
 
 ---
 
-### 고가용성 상태
+<a id="high-availability-status"></a>
+### 고가용성 상태 { #high-availability-status }
 
 | 상태                               | 설명                              |
 |----------------------------------|---------------------------------|
@@ -1843,18 +1974,21 @@ PUT /v4.0/db-instances/{dbInstanceId}/deletion-protection
 
 ---
 
-### 고가용성 정보 보기
+<a id="view-high-availability-information"></a>
+### 고가용성 정보 보기 { #view-high-availability-information }
 
 ```http
 GET /v4.0/db-instances/{dbInstanceId}/high-availability
 ```
 
+<a id="view-high-availability-information-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                              | 설명         |
 |----------------------------------------------------|------------|
 | RDSfor{{engine.pascalCase}}:DbInstance.Get | DB 인스턴스 상세 보기 |
 
+<a id="view-high-availability-information-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -1863,6 +1997,7 @@ GET /v4.0/db-instances/{dbInstanceId}/high-availability
 |--------------|-----|------|----|--------------|
 | dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
 
+<a id="view-high-availability-information-response"></a>
 #### 응답
 
 | 이름                  | 종류   | 형식      | 설명                                                                                                                  |
@@ -1896,18 +2031,21 @@ GET /v4.0/db-instances/{dbInstanceId}/high-availability
 
 ---
 
-### 고가용성 수정하기
+<a id="modify-high-availability"></a>
+### 고가용성 수정하기 { #modify-high-availability }
 
 ```http
 PUT /v4.0/db-instances/{dbInstanceId}/high-availability
 ```
 
+<a id="modify-high-availability-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                                 | 설명        |
 |-----------------------------------------------------|-----------|
 | RDSfor{{engine.pascalCase}}:HighAvailability.Modify | 고가용성 수정하기 |
 
+<a id="modify-high-availability-request"></a>
 #### 요청
 
 | 이름                  | 종류   | 형식      | 필수 | 설명                                                   |
@@ -1918,6 +2056,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/high-availability
 | pingType            | Body | Enum    | X  | 고가용성 사용 시 Ping 타입<br/>- `INSERT`<br/>- `SELECT` |
 | dbInstanceCandidateName        | Body | String  | O  | DB 인스턴스를 식별할 수 있는 예비 마스터 이름<br/>- 고가용성 사용 시 필수값 |
 
+<a id="modify-high-availability-response"></a>
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -1926,18 +2065,21 @@ PUT /v4.0/db-instances/{dbInstanceId}/high-availability
 
 ---
 
-### 고가용성 다시 시작하기
+<a id="restart-high-availability"></a>
+### 고가용성 다시 시작하기 { #restart-high-availability }
 
 ```http
 POST /v4.0/db-instances/{dbInstanceId}/high-availability/resume
 ```
 
+<a id="restart-high-availability-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                                 | 설명           |
 |-----------------------------------------------------|--------------|
 | RDSfor{{engine.pascalCase}}:HighAvailability.Resume | 고가용성 다시 시작하기 |
 
+<a id="restart-high-availability-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -1946,6 +2088,7 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/resume
 |--------------|-----|------|----|--------------|
 | dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
 
+<a id="restart-high-availability-response"></a>
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -1954,18 +2097,21 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/resume
 
 ---
 
-### 고가용성 일시 중지하기
+<a id="pause-high-availability"></a>
+### 고가용성 일시 중지하기 { #pause-high-availability }
 
 ```http
 POST /v4.0/db-instances/{dbInstanceId}/high-availability/pause
 ```
 
+<a id="pause-high-availability-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                                | 설명           |
 |----------------------------------------------------|--------------|
 | RDSfor{{engine.pascalCase}}:HighAvailability.Pause | 고가용성 일시 중지하기 |
 
+<a id="pause-high-availability-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -1974,6 +2120,7 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/pause
 |--------------|-----|------|----|--------------|
 | dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
 
+<a id="pause-high-availability-response"></a>
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -1982,18 +2129,21 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/pause
 
 ---
 
-### 고가용성 복구하기
+<a id="recover-high-availability"></a>
+### 고가용성 복구하기 { #recover-high-availability }
 
 ```http
 POST /v4.0/db-instances/{dbInstanceId}/high-availability/repair
 ```
 
+<a id="recover-high-availability-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                                 | 설명        |
 |-----------------------------------------------------|-----------|
 | RDSfor{{engine.pascalCase}}:HighAvailability.Repair | 고가용성 복구하기 |
 
+<a id="recover-high-availability-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -2002,6 +2152,7 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/repair
 |--------------|-----|------|----|--------------|
 | dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
 
+<a id="recover-high-availability-response"></a>
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -2010,18 +2161,21 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/repair
 
 ---
 
-### 고가용성 분리하기
+<a id="separate-high-availability"></a>
+### 고가용성 분리하기 { #separate-high-availability }
 
 ```http
 POST /v4.0/db-instances/{dbInstanceId}/high-availability/split
 ```
 
+<a id="separate-high-availability-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                                | 설명        |
 |----------------------------------------------------|-----------|
 | RDSfor{{engine.pascalCase}}:HighAvailability.Split | 고가용성 분리하기 |
 
+<a id="separate-high-availability-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -2030,6 +2184,7 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/split
 |--------------|-----|------|----|--------------|
 | dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
 
+<a id="separate-high-availability-response"></a>
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -2038,18 +2193,21 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/split
 
 ---
 
-### 데이터 스토리지 정보 보기
+<a id="view-storage-information"></a>
+### 데이터 스토리지 정보 보기 { #view-storage-information }
 
 ```http
 GET /v4.0/db-instances/{dbInstanceId}/storage-info
 ```
 
+<a id="view-storage-information-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                        | 설명            |
 |--------------------------------------------|---------------|
 | RDSfor{{engine.pascalCase}}:DbInstance.Get | DB 인스턴스 상세 보기 |
 
+<a id="view-storage-information-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -2058,6 +2216,7 @@ GET /v4.0/db-instances/{dbInstanceId}/storage-info
 |--------------|-----|------|----|--------------|
 | dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
 
+<a id="view-storage-information-response"></a>
 #### 응답
 
 | 이름                                   | 종류   | 형식      | 설명                                                                                   |
@@ -2099,18 +2258,21 @@ GET /v4.0/db-instances/{dbInstanceId}/storage-info
 
 ---
 
-### 데이터 스토리지 정보 수정하기
+<a id="modify-storage-information"></a>
+### 데이터 스토리지 정보 수정하기 { #modify-storage-information }
 
 ```http
 PUT /v4.0/db-instances/{dbInstanceId}/storage-info
 ```
 
+<a id="modify-storage-information-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                           | 설명           |
 |-----------------------------------------------|--------------|
 | RDSfor{{engine.pascalCase}}:DbInstance.Modify | DB 인스턴스 수정하기 |
 
+<a id="modify-storage-information-request"></a>
 #### 요청
 
 | 이름                                   | 종류   | 형식      | 필수 | 설명                                                                        |
@@ -2124,6 +2286,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/storage-info
 | storageAutoscale.maxStorageSize      | Body | Number  | X  | 자동 확장 최대 크기(GB)<br/>- 최댓값: `4096`                                         |
 | storageAutoscale.cooldownTime        | Body | Number  | X  | 자동 확장 쿨다운 시간(분)<br/>- 최솟값: `10`<br/>- 최댓값: `1440`                         |
 
+<a id="modify-storage-information-response"></a>
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -2132,18 +2295,21 @@ PUT /v4.0/db-instances/{dbInstanceId}/storage-info
 
 ---
 
-### 백업 정보 보기
+<a id="view-backup-information"></a>
+### 백업 정보 보기 { #view-backup-information }
 
 ```http
 GET /v4.0/db-instances/{dbInstanceId}/backup-info
 ```
 
+<a id="view-backup-information-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                        | 설명            |
 |--------------------------------------------|---------------|
 | RDSfor{{engine.pascalCase}}:DbInstance.Get | DB 인스턴스 상세 보기 |
 
+<a id="view-backup-information-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -2152,6 +2318,7 @@ GET /v4.0/db-instances/{dbInstanceId}/backup-info
 |--------------|-----|------|----|--------------|
 | dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
 
+<a id="view-backup-information-response"></a>
 #### 응답
 
 | 이름                                | 종류   | 형식      | 설명             |
@@ -2195,18 +2362,21 @@ GET /v4.0/db-instances/{dbInstanceId}/backup-info
 
 ---
 
-### 백업 정보 수정하기
+<a id="modify-backup-information"></a>
+### 백업 정보 수정하기 { #modify-backup-information }
 
 ```http
 PUT /v4.0/db-instances/{dbInstanceId}/backup-info
 ```
 
+<a id="modify-backup-information-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                           | 설명           |
 |-----------------------------------------------|--------------|
 | RDSfor{{engine.pascalCase}}:DbInstance.Modify | DB 인스턴스 수정하기 |
 
+<a id="modify-backup-information-request"></a>
 #### 요청
 
 | 이름                                    | 종류   | 형식      | 필수 | 설명                                                                                                                                                                                                                          |
@@ -2242,6 +2412,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/backup-info
 </p>
 </details>
 
+<a id="modify-backup-information-response"></a>
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -2250,18 +2421,21 @@ PUT /v4.0/db-instances/{dbInstanceId}/backup-info
 
 ---
 
-### 네트워크 정보 보기
+<a id="list-network-information"></a>
+### 네트워크 정보 보기 { #list-network-information }
 
 ```http
 GET /v4.0/db-instances/{dbInstanceId}/network-info
 ```
 
+<a id="list-network-information-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                        | 설명            |
 |--------------------------------------------|---------------|
 | RDSfor{{engine.pascalCase}}:DbInstance.Get | DB 인스턴스 상세 보기 |
 
+<a id="list-network-information-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -2270,6 +2444,7 @@ GET /v4.0/db-instances/{dbInstanceId}/network-info
 |--------------|-----|------|----|--------------|
 | dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
 
+<a id="list-network-information-response"></a>
 #### 응답
 
 | 이름                     | 종류   | 형식     | 설명                                                                                                                                      |
@@ -2315,18 +2490,21 @@ GET /v4.0/db-instances/{dbInstanceId}/network-info
 
 ---
 
-### 네트워크 정보 수정하기
+<a id="modify-network-information"></a>
+### 네트워크 정보 수정하기 { #modify-network-information }
 
 ```http
 PUT /v4.0/db-instances/{dbInstanceId}/network-info
 ```
 
+<a id="modify-network-information-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                           | 설명           |
 |-----------------------------------------------|--------------|
 | RDSfor{{engine.pascalCase}}:DbInstance.Modify | DB 인스턴스 수정하기 |
 
+<a id="modify-network-information-request"></a>
 #### 요청
 
 | 이름              | 종류   | 형식      | 필수 | 설명           |
@@ -2334,6 +2512,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/network-info
 | dbInstanceId    | URL  | UUID    | O  | DB 인스턴스의 식별자 |
 | usePublicAccess | Body | Boolean | O  | 외부 접속 가능 여부 |
 
+<a id="modify-network-information-response"></a>
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -2342,18 +2521,21 @@ PUT /v4.0/db-instances/{dbInstanceId}/network-info
 
 ---
 
-### DB 사용자 목록 보기
+<a id="list-db-users"></a>
+### DB 사용자 목록 보기 { #list-db-users }
 
 ```http
 GET /v4.0/db-instances/{dbInstanceId}/db-users
 ```
 
+<a id="list-db-users-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                             | 설명                  |
 |-------------------------------------------------|---------------------|
 | RDSfor{{engine.pascalCase}}:DbInstanceUser.List | DB 인스턴스 내 사용자 목록 보기 |
 
+<a id="list-db-users-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -2362,6 +2544,7 @@ GET /v4.0/db-instances/{dbInstanceId}/db-users
 |--------------|-----|------|----|--------------|
 | dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
 
+<a id="list-db-users-response"></a>
 #### 응답
 
 | 이름                           | 종류   | 형식       | 설명                                                                                                                          |
@@ -2415,19 +2598,22 @@ GET /v4.0/db-instances/{dbInstanceId}/db-users
 
 ---
 
-### DB 사용자 생성하기
+<a id="create-db-user"></a>
+### DB 사용자 생성하기 { #create-db-user }
 
 ```http
 POST /v4.0/db-instances/{dbInstanceId}/db-users
 ```
 
 
+<a id="create-db-user-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                               | 설명                 |
 |---------------------------------------------------|--------------------|
 | RDSfor{{engine.pascalCase}}:DbInstanceUser.Create | DB 인스턴스 내 사용자 생성하기 |
 
+<a id="create-db-user-request"></a>
 #### 요청
 
 | 이름                   | 종류   | 형식     | 필수 | 설명                                                                                                               |
@@ -2470,6 +2656,7 @@ POST /v4.0/db-instances/{dbInstanceId}/db-users
 </p>
 </details>
 
+<a id="create-db-user-response"></a>
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -2478,18 +2665,21 @@ POST /v4.0/db-instances/{dbInstanceId}/db-users
 
 ---
 
-### DB 사용자 수정하기
+<a id="modify-db-user"></a>
+### DB 사용자 수정하기 { #modify-db-user }
 
 ```http
 PUT /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 ```
 
+<a id="modify-db-user-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                               | 설명                 |
 |---------------------------------------------------|--------------------|
 | RDSfor{{engine.pascalCase}}:DbInstanceUser.Modify | DB 인스턴스 내 사용자 수정하기 |
 
+<a id="modify-db-user-request"></a>
 #### 요청
 
 | 이름                   | 종류   | 형식     | 필수 | 설명                                                                                                               |
@@ -2522,6 +2712,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 </p>
 </details>
 
+<a id="modify-db-user-response"></a>
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -2530,18 +2721,21 @@ PUT /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 
 ---
 
-### DB 사용자 삭제하기
+<a id="delete-db-user"></a>
+### DB 사용자 삭제하기 { #delete-db-user }
 
 ```http
 DELETE /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 ```
 
+<a id="delete-db-user-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                               | 설명                 |
 |---------------------------------------------------|--------------------|
 | RDSfor{{engine.pascalCase}}:DbInstanceUser.Delete | DB 인스턴스 내 사용자 삭제하기 |
 
+<a id="delete-db-user-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -2551,6 +2745,7 @@ DELETE /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 | dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
 | dbUserId     | URL | UUID | O  | DB 사용자의 식별자  |
 
+<a id="delete-db-user-response"></a>
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -2559,18 +2754,21 @@ DELETE /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 
 ---
 
-### DB 스키마 목록 보기
+<a id="list-db-schema"></a>
+### DB 스키마 목록 보기 { #list-db-schema }
 
 ```http
 GET /v4.0/db-instances/{dbInstanceId}/db-schemas
 ```
 
+<a id="list-db-schema-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                               | 설명                  |
 |---------------------------------------------------|---------------------|
 | RDSfor{{engine.pascalCase}}:DbInstanceSchema.List | DB 인스턴스 내 스키마 목록 보기 |
 
+<a id="list-db-schema-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -2579,6 +2777,7 @@ GET /v4.0/db-instances/{dbInstanceId}/db-schemas
 |--------------|-----|------|----|--------------|
 | dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
 
+<a id="list-db-schema-response"></a>
 #### 응답
 
 | 이름                       | 종류   | 형식       | 설명                                                                                                   |
@@ -2615,18 +2814,21 @@ GET /v4.0/db-instances/{dbInstanceId}/db-schemas
 
 ---
 
-### DB 스키마 생성하기
+<a id="create-db-schema"></a>
+### DB 스키마 생성하기 { #create-db-schema }
 
 ```http
 POST /v4.0/db-instances/{dbInstanceId}/db-schemas
 ```
 
+<a id="create-db-schema-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                                 | 설명                 |
 |-----------------------------------------------------|--------------------|
 | RDSfor{{engine.pascalCase}}:DbInstanceSchema.Create | DB 인스턴스 내 스키마 생성하기 |
 
+<a id="create-db-schema-request"></a>
 #### 요청
 
 | 이름           | 종류   | 형식     | 필수 | 설명           |
@@ -2634,6 +2836,7 @@ POST /v4.0/db-instances/{dbInstanceId}/db-schemas
 | dbInstanceId | URL  | UUID   | O  | DB 인스턴스의 식별자 |
 | dbSchemaName | Body | String | O  | DB 스키마 이름    |
 
+<a id="create-db-schema-response"></a>
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -2642,18 +2845,21 @@ POST /v4.0/db-instances/{dbInstanceId}/db-schemas
 
 ---
 
-### DB 스키마 삭제하기
+<a id="delete-db-schema"></a>
+### DB 스키마 삭제하기 { #delete-db-schema }
 
 ```http
 DELETE /v4.0/db-instances/{dbInstanceId}/db-schemas/{dbSchemaId}
 ```
 
+<a id="delete-db-schema-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                                 | 설명                 |
 |-----------------------------------------------------|--------------------|
 | RDSfor{{engine.pascalCase}}:DbInstanceSchema.Delete | DB 인스턴스 내 스키마 삭제하기 |
 
+<a id="delete-db-schema-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -2663,6 +2869,7 @@ DELETE /v4.0/db-instances/{dbInstanceId}/db-schemas/{dbSchemaId}
 | dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
 | dbSchemaId   | URL | UUID | O  | DB 스키마의 식별자  |
 
+<a id="delete-db-schema-response"></a>
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -2671,18 +2878,21 @@ DELETE /v4.0/db-instances/{dbInstanceId}/db-schemas/{dbSchemaId}
 
 ---
 
-### 로그 파일 목록 보기
+<a id="list-log-files"></a>
+### 로그 파일 목록 보기 { #list-log-files }
 
 ```http
 GET /v4.0/db-instances/{dbInstanceId}/log-files
 ```
 
+<a id="list-log-files-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                            | 설명                    |
 |------------------------------------------------|-----------------------|
 | RDSfor{{engine.pascalCase}}:DbInstanceLog.List | DB 인스턴스 내 로그 파일 목록 보기 |
 
+<a id="list-log-files-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -2692,6 +2902,7 @@ GET /v4.0/db-instances/{dbInstanceId}/log-files
 | dbInstanceId | URL   | UUID  | O  | DB 인스턴스의 식별자                                                                                                                                                                                    |
 | logFileTypes | Query | Array | X  | 로그 파일 타입 종류 목록<br/>- `ERROR`: error.log<br/>- `BINLOG`: mysql-bin<br/>- `GENERAL`: general.log<br/>- `SLOW_QUERY`: slow_query.log<br/>- `AUDIT`: server_audit.log<br/>- `BACKUP`: xtra_full.log |
 
+<a id="list-log-files-response"></a>
 #### 응답
 
 | 이름                   | 종류   | 형식       | 설명                                                                                                                                                                                           |
@@ -2729,18 +2940,21 @@ GET /v4.0/db-instances/{dbInstanceId}/log-files
 
 ---
 
-### 로그 파일 내용 보기
+<a id="view-log-file-contents"></a>
+### 로그 파일 내용 보기 { #view-log-file-contents }
 
 ```http
 GET /v4.0/db-instances/{dbInstanceId}/log-files/{logFileName}
 ```
 
+<a id="view-log-file-contents-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                           | 설명                    |
 |-----------------------------------------------|-----------------------|
 | RDSfor{{engine.pascalCase}}:DbInstanceLog.Get | DB 인스턴스 내 로그 파일 내용 보기 |
 
+<a id="view-log-file-contents-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -2751,6 +2965,7 @@ GET /v4.0/db-instances/{dbInstanceId}/log-files/{logFileName}
 | logFileName  | URL   | String | O  | 로그 파일명                                                                                                                                                                                        |
 | logFileType  | Query | Enum   | O  | 로그 파일 타입 종류<br/>- `ERROR`: error.log<br/>- `BINLOG`: mysql-bin<br/>- `GENERAL`: general.log<br/>- `SLOW_QUERY`: slow_query.log<br/>- `AUDIT`: server_audit.log<br/>- `BACKUP`: xtra_full.log |
 
+<a id="view-log-file-contents-response"></a>
 #### 응답
 
 | 이름      | 종류   | 형식     | 설명                        |
@@ -2776,18 +2991,21 @@ GET /v4.0/db-instances/{dbInstanceId}/log-files/{logFileName}
 
 ---
 
-### 로그 파일 내보내기
+<a id="export-log-file"></a>
+### 로그 파일 내보내기 { #export-log-file }
 
 ```http
 POST /v4.0/db-instances/{dbInstanceId}/log-files/export
 ```
 
+<a id="export-log-file-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                              | 설명                   |
 |--------------------------------------------------|----------------------|
 | RDSfor{{engine.pascalCase}}:DbInstanceLog.Export | DB 인스턴스 내 로그 파일 내보내기 |
 
+<a id="export-log-file-request"></a>
 #### 요청
 
 | 이름              | 종류   | 형식     | 필수 | 설명                             |
@@ -2817,6 +3035,7 @@ POST /v4.0/db-instances/{dbInstanceId}/log-files/export
 </p>
 </details>
 
+<a id="export-log-file-response"></a>
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -2825,18 +3044,21 @@ POST /v4.0/db-instances/{dbInstanceId}/log-files/export
 
 ---
 
-### BinLog 목록 보기
+<a id="view-binlog-lists"></a>
+### BinLog 목록 보기 { #view-binlog-lists }
 
 ```http
 GET /v4.0/db-instances/{dbInstanceId}/binlogs
 ```
 
+<a id="view-binlog-lists-required-permission"></a>
 #### 필요 권한
 
 | 권한명                                               | 설명           |
 |---------------------------------------------------|---------------|
 | RDSfor{{engine.pascalCase}}:DbInstanceBinLog.List | BinLog 목록 보기 |
 
+<a id="view-binlog-lists-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -2846,6 +3068,7 @@ GET /v4.0/db-instances/{dbInstanceId}/binlogs
 | dbInstanceId | URL   | UUID    | O  | DB 인스턴스의 식별자                                                                         |
 | deletable    | Query | Boolean | X  | 삭제 가능한 BinLog만 조회할지 여부<br/>- `true`: 마지막 BinLog 제외<br/>- `false`: 전체<br/>- 기본값: `false` |
 
+<a id="view-binlog-lists-response"></a>
 #### 응답
 
 | 이름                     | 종류   | 형식       | 설명                                |
@@ -2880,18 +3103,21 @@ GET /v4.0/db-instances/{dbInstanceId}/binlogs
 
 ---
 
-### BinLog 삭제
+<a id="delete-binlog"></a>
+### BinLog 삭제 { #delete-binlog }
 
 ```http
 POST /v4.0/db-instances/{dbInstanceId}/binlogs/purge
 ```
 
+<a id="delete-binlog-required-permission"></a>
 #### 필요 권한
 
 | 권한명                                                | 설명        |
 |----------------------------------------------------|------------|
 | RDSfor{{engine.pascalCase}}:DbInstanceBinLog.Purge | BinLog 삭제 |
 
+<a id="delete-binlog-request"></a>
 #### 요청
 
 | 이름                 | 종류   | 형식     | 필수 | 설명                                     |
@@ -2911,6 +3137,7 @@ POST /v4.0/db-instances/{dbInstanceId}/binlogs/purge
 </p>
 </details>
 
+<a id="delete-binlog-response"></a>
 #### 응답
 
 이 API는 응답 본문을 반환하지 않습니다.
@@ -2933,18 +3160,21 @@ POST /v4.0/db-instances/{dbInstanceId}/binlogs/purge
 
 ---
 
-### 인증서 파일 목록 보기
+<a id="view-certificate-file-lists"></a>
+### 인증서 파일 목록 보기 { #view-certificate-file-lists }
 
 ```http
 GET /v4.0/db-instances/{dbInstanceId}/certificates
 ```
 
+<a id="view-certificate-file-lists-required-permission"></a>
 #### 필요 권한
 
 | 권한명                                                    | 설명           |
 |--------------------------------------------------------|---------------|
 | RDSfor{{engine.pascalCase}}:DbInstanceCertificate.List | 인증서 파일 목록 보기 |
 
+<a id="view-certificate-file-lists-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -2953,6 +3183,7 @@ GET /v4.0/db-instances/{dbInstanceId}/certificates
 |--------------|-----|------|----|---------------|
 | dbInstanceId | URL | UUID | O  | DB 인스턴스의 식별자 |
 
+<a id="view-certificate-file-lists-response"></a>
 #### 응답
 
 | 이름                           | 종류   | 형식       | 설명                                                                           |
@@ -2989,18 +3220,21 @@ GET /v4.0/db-instances/{dbInstanceId}/certificates
 
 ---
 
-### 인증서 파일 내보내기
+<a id="export-a-certificate-file"></a>
+### 인증서 파일 내보내기 { #export-a-certificate-file }
 
 ```http
 POST /v4.0/db-instances/{dbInstanceId}/certificates/upload
 ```
 
+<a id="export-a-certificate-file-required-permission"></a>
 #### 필요 권한
 
 | 권한명                                                      | 설명          |
 |----------------------------------------------------------|-------------|
 | RDSfor{{engine.pascalCase}}:DbInstanceCertificate.Export | 인증서 파일 내보내기 |
 
+<a id="export-a-certificate-file-request"></a>
 #### 요청
 
 | 이름               | 종류   | 형식     | 필수 | 설명                                                                           |
@@ -3030,6 +3264,7 @@ POST /v4.0/db-instances/{dbInstanceId}/certificates/upload
 </p>
 </details>
 
+<a id="export-a-certificate-file-response"></a>
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -3038,9 +3273,11 @@ POST /v4.0/db-instances/{dbInstanceId}/certificates/upload
 
 ---
 
-## 백업
+<a id="backups"></a>
+## 백업 { #backups }
 
-### 백업 상태
+<a id="backup-status"></a>
+### 백업 상태 { #backup-status }
 
 | 상태           | 설명           |
 |--------------|--------------|
@@ -3050,18 +3287,21 @@ POST /v4.0/db-instances/{dbInstanceId}/certificates/upload
 | `DELETED`    | 백업이 삭제된 경우   |
 | `ERROR`      | 오류가 발생한 경우   |
 
-### 백업 상세 보기
+<a id="view-backup-details"></a>
+### 백업 상세 보기 { #view-backup-details }
 
 ```http
 GET /v4.0/backups/{backupId}
 ```
 
+<a id="view-backup-details-required-permission"></a>
 #### 필요 권한
 
 | 권한명                                    | 설명       |
 |----------------------------------------|----------|
 | RDSfor{{engine.pascalCase}}:Backup.Get | 백업 상세 보기 |
 
+<a id="view-backup-details-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -3070,6 +3310,7 @@ GET /v4.0/backups/{backupId}
 |----------|-----|------|----|---------|
 | backupId | URL | UUID | O  | 백업의 식별자 |
 
+<a id="view-backup-details-response"></a>
 #### 응답
 
 | 이름                      | 종류   | 형식       | 설명              |
@@ -3134,18 +3375,21 @@ GET /v4.0/backups/{backupId}
 
 ---
 
-### 백업 목록 조회
+<a id="retrieve-backup-list"></a>
+### 백업 목록 조회 { #retrieve-backup-list }
 
 ```http
 GET /v4.0/backups
 ```
 
+<a id="retrieve-backup-list-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                     | 설명       |
 |-----------------------------------------|----------|
 | RDSfor{{engine.pascalCase}}:Backup.List | 백업 목록 조회 |
 
+<a id="retrieve-backup-list-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -3158,6 +3402,7 @@ GET /v4.0/backups
 | dbInstanceId | Query | UUID   | X  | 원본 DB 인스턴스의 식별자                                          |
 | dbVersion    | Query | Enum   | X  | DB 엔진 유형                                                 |
 
+<a id="retrieve-backup-list-response"></a>
 #### 응답
 
 | 이름                   | 종류   | 형식       | 설명                                |
@@ -3212,18 +3457,21 @@ GET /v4.0/backups
 
 ---
 
-### 백업 생성하기
+<a id="create-backup"></a>
+### 백업 생성하기 { #create-backup }
 
 ```http
 POST /v4.0/backups
 ```
 
+<a id="create-backup-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                       | 설명      |
 |-------------------------------------------|---------|
 | RDSfor{{engine.pascalCase}}:Backup.Create | 백업 생성하기 |
 
+<a id="create-backup-common-request"></a>
 #### 공통 요청
 
 | 이름               | 종류   | 형식     | 필수 | 설명                                                                                   |
@@ -3231,6 +3479,7 @@ POST /v4.0/backups
 | backupName       | Body | String | O  | 백업을 식별할 수 있는 이름                                                                      |
 | backupMethodType | Body | Enum   | O  | 백업 방식 타입 종류<br/>- `FULL`: 전체 백업<br/>- `INCREMENTAL`: 증분 백업 <br/>- `SNAPSHOT`: 스냅숏 백업 |
 
+<a id="create-backup-if-backupmethodtype-is-full"></a>
 #### 전체 백업(backupMethodType이 `FULL`인 경우)
 
 | 이름           | 종류   | 형식   | 필수 | 설명           |
@@ -3252,6 +3501,7 @@ POST /v4.0/backups
 </p>
 </details>
 
+<a id="create-backup-if-backupmethodtype-is-incremental"></a>
 #### 증분 백업(backupMethodType이 `INCREMENTAL`인 경우)
 
 | 이름           | 종류   | 형식   | 필수 | 설명         |
@@ -3274,6 +3524,7 @@ POST /v4.0/backups
 </details>
 
 
+<a id="create-backup-snapshot-backup-if-backupmethodtype-is-snapshot"></a>
 #### 스냅숏 백업(backupMethodType이 `SNAPSHOT`인 경우)
 
 | 이름           | 종류   | 형식   | 필수 | 설명           |
@@ -3296,6 +3547,7 @@ POST /v4.0/backups
 </details>
 
 
+<a id="create-backup-response"></a>
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -3304,18 +3556,21 @@ POST /v4.0/backups
 
 ---
 
-### 백업 내보내기
+<a id="export-backup"></a>
+### 백업 내보내기 { #export-backup }
 
 ```http
 POST /v4.0/backups/{backupId}/export
 ```
 
+<a id="export-backup-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                       | 설명      |
 |-------------------------------------------|---------|
 | RDSfor{{engine.pascalCase}}:Backup.Export | 백업 내보내기 |
 
+<a id="export-backup-request"></a>
 #### 요청
 
 | 이름              | 종류   | 형식     | 필수 | 설명                          |
@@ -3343,6 +3598,7 @@ POST /v4.0/backups/{backupId}/export
 </p>
 </details>
 
+<a id="export-backup-response"></a>
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -3354,18 +3610,21 @@ POST /v4.0/backups/{backupId}/export
 
 ---
 
-### 백업 복원하기
+<a id="restore-backup"></a>
+### 백업 복원하기 { #restore-backup }
 
 ```http
 POST /v4.0/backups/{backupId}/restore
 ```
 
+<a id="restore-backup-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                        | 설명      |
 |--------------------------------------------|---------|
 | RDSfor{{engine.pascalCase}}:Backup.Restore | 백업 복원하기 |
 
+<a id="restore-backup-request"></a>
 #### 요청
 
 | 이름                                           | 종류   | 형식      | 필수 | 설명                                                                  |
@@ -3442,6 +3701,7 @@ POST /v4.0/backups/{backupId}/restore
 </p>
 </details>
 
+<a id="restore-backup-response"></a>
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -3450,18 +3710,21 @@ POST /v4.0/backups/{backupId}/restore
 
 ---
 
-### 백업 삭제하기
+<a id="delete-backup"></a>
+### 백업 삭제하기 { #delete-backup }
 
 ```http
 DELETE /v4.0/backups/{backupId}
 ```
 
+<a id="delete-backup-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                       | 설명      |
 |-------------------------------------------|---------|
 | RDSfor{{engine.pascalCase}}:Backup.Delete | 백업 삭제하기 |
 
+<a id="delete-backup-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -3470,6 +3733,7 @@ DELETE /v4.0/backups/{backupId}
 |----------|-----|------|----|---------|
 | backupId | URL | UUID | O  | 백업의 식별자 |
 
+<a id="delete-backup-response"></a>
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -3478,9 +3742,11 @@ DELETE /v4.0/backups/{backupId}
 
 ---
 
-## DB 보안 그룹
+<a id="db-security-group"></a>
+## DB 보안 그룹 { #db-security-group }
 
-### DB 보안 그룹 진행 상태
+<a id="db-security-group-progress"></a>
+### DB 보안 그룹 진행 상태 { #db-security-group-progress }
 
 | 상태              | 설명           |
 |-----------------|--------------|
@@ -3489,18 +3755,21 @@ DELETE /v4.0/backups/{backupId}
 | `UPDATING_RULE` | 규칙 정책 수정 중   |
 | `DELETING_RULE` | 규칙 정책 삭제 중   |
 
-### DB 보안 그룹 목록 보기
+<a id="list-db-security-groups"></a>
+### DB 보안 그룹 목록 보기 { #list-db-security-groups }
 
 ```http
 GET /v4.0/db-security-groups
 ```
 
+<a id="list-db-security-groups-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                              | 설명             |
 |--------------------------------------------------|----------------|
 | RDSfor{{engine.pascalCase}}:DbSecurityGroup.List | DB 보안 그룹 목록 보기 |
 
+<a id="list-db-security-groups-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -3510,6 +3779,7 @@ GET /v4.0/db-security-groups
 | page              | Query | Number   | X  | 조회할 목록의 페이지<br/>- 기본값: 1 <br/>- 최솟값: `1`                                                                                                           |
 | size              | Query | Number   | X  | 조회할 목록의 페이지 크기<br/>- 기본값: 20                                        |
 
+<a id="list-db-security-groups-response"></a>
 #### 응답
 
 | 이름                                   | 종류   | 형식       | 설명                                |
@@ -3550,18 +3820,21 @@ GET /v4.0/db-security-groups
 
 ---
 
-### DB 보안 그룹 상세 보기
+<a id="list-db-security-group-details"></a>
+### DB 보안 그룹 상세 보기 { #list-db-security-group-details }
 
 ```http
 GET /v4.0/db-security-groups/{dbSecurityGroupId}
 ```
 
+<a id="list-db-security-group-details-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                             | 설명             |
 |-------------------------------------------------|----------------|
 | RDSfor{{engine.pascalCase}}:DbSecurityGroup.Get | DB 보안 그룹 상세 보기 |
 
+<a id="list-db-security-group-details-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -3570,6 +3843,7 @@ GET /v4.0/db-security-groups/{dbSecurityGroupId}
 |-------------------|-----|------|----|---------------|
 | dbSecurityGroupId | URL | UUID | O  | DB 보안 그룹의 식별자 |
 
+<a id="list-db-security-group-details-response"></a>
 #### 응답
 
 | 이름                  | 종류   | 형식       | 설명                                                                                                                 |
@@ -3635,18 +3909,21 @@ GET /v4.0/db-security-groups/{dbSecurityGroupId}
 
 ---
 
-### DB 보안 그룹 생성하기
+<a id="create-db-security-group"></a>
+### DB 보안 그룹 생성하기 { #create-db-security-group }
 
 ```http
 POST /v4.0/db-security-groups
 ```
 
+<a id="create-db-security-group-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                                | 설명            |
 |----------------------------------------------------|---------------|
 | RDSfor{{engine.pascalCase}}:DbSecurityGroup.Create | DB 보안 그룹 생성하기 |
 
+<a id="create-db-security-group-request"></a>
 #### 요청
 
 | 이름                  | 종류   | 형식     | 필수 | 설명                                                                                                                                                                                       |
@@ -3691,6 +3968,7 @@ POST /v4.0/db-security-groups
 </p>
 </details>
 
+<a id="create-db-security-group-response"></a>
 #### 응답
 
 | 이름                | 종류   | 형식   | 설명            |
@@ -3699,18 +3977,21 @@ POST /v4.0/db-security-groups
 
 ---
 
-### DB 보안 그룹 수정하기
+<a id="modify-db-security-group"></a>
+### DB 보안 그룹 수정하기 { #modify-db-security-group }
 
 ```http
 PUT /v4.0/db-security-groups/{dbSecurityGroupId}
 ```
 
+<a id="modify-db-security-group-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                                | 설명            |
 |----------------------------------------------------|---------------|
 | RDSfor{{engine.pascalCase}}:DbSecurityGroup.Modify | DB 보안 그룹 수정하기 |
 
+<a id="modify-db-security-group-request"></a>
 #### 요청
 
 | 이름                  | 종류   | 형식     | 필수 | 설명                    |
@@ -3732,6 +4013,7 @@ PUT /v4.0/db-security-groups/{dbSecurityGroupId}
 </p>
 </details>
 
+<a id="modify-db-security-group-response"></a>
 #### 응답
 
 이 API는 응답 본문을 반환하지 않습니다.
@@ -3755,18 +4037,21 @@ PUT /v4.0/db-security-groups/{dbSecurityGroupId}
 
 ---
 
-### DB 보안 그룹 삭제하기
+<a id="delete-db-security-group"></a>
+### DB 보안 그룹 삭제하기 { #delete-db-security-group }
 
 ```http
 DELETE /v4.0/db-security-groups/{dbSecurityGroupId}
 ```
 
+<a id="delete-db-security-group-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                                | 설명            |
 |----------------------------------------------------|---------------|
 | RDSfor{{engine.pascalCase}}:DbSecurityGroup.Delete | DB 보안 그룹 삭제하기 |
 
+<a id="delete-db-security-group-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -3775,6 +4060,7 @@ DELETE /v4.0/db-security-groups/{dbSecurityGroupId}
 |-------------------|-----|------|----|---------------|
 | dbSecurityGroupId | URL | UUID | O  | DB 보안 그룹의 식별자 |
 
+<a id="delete-db-security-group-response"></a>
 #### 응답
 
 이 API는 응답 본문을 반환하지 않습니다.
@@ -3797,18 +4083,21 @@ DELETE /v4.0/db-security-groups/{dbSecurityGroupId}
 
 ---
 
-### DB 보안 그룹 규칙 생성하기
+<a id="create-db-security-group-rule"></a>
+### DB 보안 그룹 규칙 생성하기 { #create-db-security-group-rule }
 
 ```http
 POST /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 ```
 
+<a id="create-db-security-group-rule-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                                    | 설명               |
 |--------------------------------------------------------|------------------|
 | RDSfor{{engine.pascalCase}}:DbSecurityGroupRule.Create | DB 보안 그룹 규칙 생성하기 |
 
+<a id="create-db-security-group-rule-request"></a>
 #### 요청
 
 | 이름                | 종류   | 형식     | 필수 | 설명                                                                                                                                                                                       |
@@ -3845,6 +4134,7 @@ POST /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 </p>
 </details>
 
+<a id="create-db-security-group-rule-response"></a>
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -3853,18 +4143,21 @@ POST /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 
 ---
 
-### DB 보안 그룹 규칙 수정하기
+<a id="modify-db-security-group-rule"></a>
+### DB 보안 그룹 규칙 수정하기 { #modify-db-security-group-rule }
 
 ```http
 PUT /v4.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 ```
 
+<a id="modify-db-security-group-rule-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                                    | 설명               |
 |--------------------------------------------------------|------------------|
 | RDSfor{{engine.pascalCase}}:DbSecurityGroupRule.Modify | DB 보안 그룹 규칙 수정하기 |
 
+<a id="modify-db-security-group-rule-request"></a>
 #### 요청
 
 | 이름                | 종류   | 형식     | 필수 | 설명                                                                                                                                                                                       |
@@ -3900,6 +4193,7 @@ PUT /v4.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 </p>
 </details>
 
+<a id="modify-db-security-group-rule-response"></a>
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -3908,18 +4202,21 @@ PUT /v4.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 
 ---
 
-### DB 보안 그룹 규칙 삭제하기
+<a id="delete-db-security-group-rule"></a>
+### DB 보안 그룹 규칙 삭제하기 { #delete-db-security-group-rule }
 
 ```http
 DELETE /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 ```
 
+<a id="delete-db-security-group-rule-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                                    | 설명               |
 |--------------------------------------------------------|------------------|
 | RDSfor{{engine.pascalCase}}:DbSecurityGroupRule.Create | DB 보안 그룹 규칙 삭제하기 |
 
+<a id="delete-db-security-group-rule-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -3929,6 +4226,7 @@ DELETE /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 | dbSecurityGroupId | URL   | UUID  | O  | DB 보안 그룹의 식별자       |
 | ruleIds           | Query | Array | O  | DB 보안 그룹 규칙의 식별자 목록 |
 
+<a id="delete-db-security-group-rule-response"></a>
 #### 응답
 
 | 이름    | 종류   | 형식   | 설명          |
@@ -3937,20 +4235,24 @@ DELETE /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 
 ---
 
-## 파라미터 그룹
+<a id="parameter-group"></a>
+## 파라미터 그룹 { #parameter-group }
 
-### 파라미터 그룹 목록 보기
+<a id="list-parameter-groups"></a>
+### 파라미터 그룹 목록 보기 { #list-parameter-groups }
 
 ```http
 GET /v4.0/parameter-groups
 ```
 
+<a id="list-parameter-groups-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                             | 설명            |
 |-------------------------------------------------|---------------|
 | RDSfor{{engine.pascalCase}}:ParameterGroup.List | 파라미터 그룹 목록 보기 |
 
+<a id="list-parameter-groups-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -3959,6 +4261,7 @@ GET /v4.0/parameter-groups
 |-----------|-------|------|----|----------|
 | dbVersion | Query | Enum | X  | DB 엔진 유형 |
 
+<a id="list-parameter-groups-response"></a>
 #### 응답
 
 | 이름                                   | 종류   | 형식       | 설명                                                                |
@@ -4002,18 +4305,21 @@ GET /v4.0/parameter-groups
 
 ---
 
-### 파라미터 그룹 상세 보기
+<a id="list-parameter-group-details"></a>
+### 파라미터 그룹 상세 보기 { #list-parameter-group-details }
 
 ```http
 GET /v4.0/parameter-groups/{parameterGroupId}
 ```
 
+<a id="list-parameter-group-details-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                            | 설명            |
 |------------------------------------------------|---------------|
 | RDSfor{{engine.pascalCase}}:ParameterGroup.Get | 파라미터 그룹 상세 보기 |
 
+<a id="list-parameter-group-details-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -4022,6 +4328,7 @@ GET /v4.0/parameter-groups/{parameterGroupId}
 |------------------|-----|------|----|--------------|
 | parameterGroupId | URL | UUID | O  | 파라미터 그룹의 식별자 |
 
+<a id="list-parameter-group-details-response"></a>
 #### 응답
 
 | 이름                            | 종류   | 형식       | 설명                                                                                                     |
@@ -4083,18 +4390,21 @@ GET /v4.0/parameter-groups/{parameterGroupId}
 
 ---
 
-### 파라미터 그룹 생성하기
+<a id="create-parameter-group"></a>
+### 파라미터 그룹 생성하기 { #create-parameter-group }
 
 ```http
 POST /v4.0/parameter-groups
 ```
 
+<a id="create-parameter-group-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                               | 설명           |
 |---------------------------------------------------|--------------|
 | RDSfor{{engine.pascalCase}}:ParameterGroup.Create | 파라미터 그룹 생성하기 |
 
+<a id="create-parameter-group-request"></a>
 #### 요청
 
 | 이름                 | 종류   | 형식     | 필수 | 설명                   |
@@ -4116,6 +4426,7 @@ POST /v4.0/parameter-groups
 </p>
 </details>
 
+<a id="create-parameter-group-response"></a>
 #### 응답
 
 | 이름               | 종류   | 형식   | 설명           |
@@ -4124,18 +4435,21 @@ POST /v4.0/parameter-groups
 
 ---
 
-### 파라미터 그룹 복사하기
+<a id="copy-parameter-group"></a>
+### 파라미터 그룹 복사하기 { #copy-parameter-group }
 
 ```http
 POST /v4.0/parameter-groups/{parameterGroupId}/copy
 ```
 
+<a id="copy-parameter-group-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                             | 설명           |
 |-------------------------------------------------|--------------|
 | RDSfor{{engine.pascalCase}}:ParameterGroup.Copy | 파라미터 그룹 복사하기 |
 
+<a id="copy-parameter-group-request"></a>
 #### 요청
 
 | 이름                 | 종류   | 형식     | 필수 | 설명                   |
@@ -4157,6 +4471,7 @@ POST /v4.0/parameter-groups/{parameterGroupId}/copy
 </p>
 </details>
 
+<a id="copy-parameter-group-response"></a>
 #### 응답
 
 | 이름               | 종류   | 형식   | 설명           |
@@ -4165,18 +4480,21 @@ POST /v4.0/parameter-groups/{parameterGroupId}/copy
 
 ---
 
-### 파라미터 그룹 수정하기
+<a id="modify-parameter-group"></a>
+### 파라미터 그룹 수정하기 { #modify-parameter-group }
 
 ```http
 PUT /v4.0/parameter-groups/{parameterGroupId}
 ```
 
+<a id="modify-parameter-group-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                               | 설명           |
 |---------------------------------------------------|--------------|
 | RDSfor{{engine.pascalCase}}:ParameterGroup.Modify | 파라미터 그룹 수정하기 |
 
+<a id="modify-parameter-group-request"></a>
 #### 요청
 
 | 이름                 | 종류   | 형식     | 필수 | 설명                   |
@@ -4197,6 +4515,7 @@ PUT /v4.0/parameter-groups/{parameterGroupId}
 </p>
 </details>
 
+<a id="modify-parameter-group-response"></a>
 #### 응답
 
 이 API는 응답 본문을 반환하지 않습니다.
@@ -4219,18 +4538,21 @@ PUT /v4.0/parameter-groups/{parameterGroupId}
 
 ---
 
-### 파라미터 수정하기
+<a id="modify-parameter"></a>
+### 파라미터 수정하기 { #modify-parameter }
 
 ```http
 PUT /v4.0/parameter-groups/{parameterGroupId}/parameters
 ```
 
+<a id="modify-parameter-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                               | 설명           |
 |---------------------------------------------------|--------------|
 | RDSfor{{engine.pascalCase}}:ParameterGroup.Modify | 파라미터 그룹 수정하기 |
 
+<a id="modify-parameter-request"></a>
 #### 요청
 
 | 이름                             | 종류   | 형식     | 필수 | 설명           |
@@ -4257,6 +4579,7 @@ PUT /v4.0/parameter-groups/{parameterGroupId}/parameters
 </p>
 </details>
 
+<a id="modify-parameter-response"></a>
 #### 응답
 
 이 API는 응답 본문을 반환하지 않습니다.
@@ -4279,24 +4602,28 @@ PUT /v4.0/parameter-groups/{parameterGroupId}/parameters
 
 ---
 
-### 파라미터 그룹 재설정하기
+<a id="reset-parameter-group"></a>
+### 파라미터 그룹 재설정하기 { #reset-parameter-group }
 
 ```http
 PUT /v4.0/parameter-groups/{parameterGroupId}/reset
 ```
 
+<a id="reset-parameter-group-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                              | 설명            |
 |--------------------------------------------------|---------------|
 | RDSfor{{engine.pascalCase}}:ParameterGroup.Reset | 파라미터 그룹 재설정하기 |
 
+<a id="reset-parameter-group-request"></a>
 #### 요청
 
 | 이름               | 종류  | 형식   | 필수 | 설명           |
 |------------------|-----|------|----|--------------|
 | parameterGroupId | URL | UUID | O  | 파라미터 그룹의 식별자 |
 
+<a id="reset-parameter-group-response"></a>
 #### 응답
 
 이 API는 응답 본문을 반환하지 않습니다.
@@ -4319,18 +4646,21 @@ PUT /v4.0/parameter-groups/{parameterGroupId}/reset
 
 ---
 
-### 파라미터 그룹 삭제하기
+<a id="delete-parameter-group"></a>
+### 파라미터 그룹 삭제하기 { #delete-parameter-group }
 
 ```http
 DELETE /v4.0/parameter-groups/{parameterGroupId}
 ```
 
+<a id="delete-parameter-group-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                               | 설명           |
 |---------------------------------------------------|--------------|
 | RDSfor{{engine.pascalCase}}:ParameterGroup.Delete | 파라미터 그룹 삭제하기 |
 
+<a id="delete-parameter-group-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -4339,6 +4669,7 @@ DELETE /v4.0/parameter-groups/{parameterGroupId}
 |------------------|-----|------|----|--------------|
 | parameterGroupId | URL | UUID | O  | 파라미터 그룹의 식별자 |
 
+<a id="delete-parameter-group-response"></a>
 #### 응답
 
 이 API는 응답 본문을 반환하지 않습니다.
@@ -4361,24 +4692,29 @@ DELETE /v4.0/parameter-groups/{parameterGroupId}
 
 ---
 
-## 사용자 그룹
+<a id="user-group"></a>
+## 사용자 그룹 { #user-group }
 
-### 사용자 그룹 목록 보기
+<a id="list-user-groups"></a>
+### 사용자 그룹 목록 보기 { #list-user-groups }
 
 ```http
 GET /v4.0/user-groups
 ```
 
+<a id="list-user-groups-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                        | 설명           |
 |--------------------------------------------|--------------|
 | RDSfor{{engine.pascalCase}}:UserGroup.List | 사용자 그룹 목록 보기 |
 
+<a id="list-user-groups-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
+<a id="list-user-groups-response"></a>
 #### 응답
 
 | 이름                       | 종류   | 형식       | 설명                                |
@@ -4415,18 +4751,21 @@ GET /v4.0/user-groups
 
 ---
 
-### 사용자 그룹 상세 보기
+<a id="list-user-group-details"></a>
+### 사용자 그룹 상세 보기 { #list-user-group-details }
 
 ```http
 GET /v4.0/user-groups/{userGroupId}
 ```
 
+<a id="list-user-group-details-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                       | 설명           |
 |-------------------------------------------|--------------|
 | RDSfor{{engine.pascalCase}}:UserGroup.Get | 사용자 그룹 상세 보기 |
 
+<a id="list-user-group-details-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -4435,6 +4774,7 @@ GET /v4.0/user-groups/{userGroupId}
 |-------------|-----|------|----|-------------|
 | userGroupId | URL | UUID | O  | 사용자 그룹의 식별자 |
 
+<a id="list-user-group-details-response"></a>
 #### 응답
 
 | 이름                | 종류   | 형식       | 설명                                                                                                        |
@@ -4475,18 +4815,21 @@ GET /v4.0/user-groups/{userGroupId}
 
 ---
 
-### 사용자 그룹 생성하기
+<a id="create-user-group"></a>
+### 사용자 그룹 생성하기 { #create-user-group }
 
 ```http
 POST /v4.0/user-groups
 ```
 
+<a id="create-user-group-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                          | 설명          |
 |----------------------------------------------|-------------|
 | RDSfor{{engine.pascalCase}}:UserGroup.Create | 사용자 그룹 생성하기 |
 
+<a id="create-user-group-request"></a>
 #### 요청
 
 | 이름            | 종류   | 형식      | 필수 | 설명                                                        |
@@ -4517,6 +4860,7 @@ POST /v4.0/user-groups
 </p>
 </details>
 
+<a id="create-user-group-response"></a>
 #### 응답
 
 | 이름          | 종류   | 형식   | 설명          |
@@ -4525,18 +4869,21 @@ POST /v4.0/user-groups
 
 ---
 
-### 사용자 그룹 수정하기
+<a id="modify-user-group"></a>
+### 사용자 그룹 수정하기 { #modify-user-group }
 
 ```http
 PUT /v4.0/user-groups/{userGroupId}
 ```
 
+<a id="modify-user-group-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                          | 설명          |
 |----------------------------------------------|-------------|
 | RDSfor{{engine.pascalCase}}:UserGroup.Modify | 사용자 그룹 수정하기 |
 
+<a id="modify-user-group-request"></a>
 #### 요청
 
 | 이름            | 종류   | 형식      | 필수 | 설명                                                 |
@@ -4562,6 +4909,7 @@ PUT /v4.0/user-groups/{userGroupId}
 </p>
 </details>
 
+<a id="modify-user-group-response"></a>
 #### 응답
 
 이 API는 응답 본문을 반환하지 않습니다.
@@ -4584,24 +4932,28 @@ PUT /v4.0/user-groups/{userGroupId}
 
 ---
 
-### 사용자 그룹 삭제하기
+<a id="delete-user-group"></a>
+### 사용자 그룹 삭제하기 { #delete-user-group }
 
 ```http
 DELETE /v4.0/user-groups/{userGroupId}
 ```
 
+<a id="delete-user-group-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                          | 설명          |
 |----------------------------------------------|-------------|
 | RDSfor{{engine.pascalCase}}:UserGroup.Delete | 사용자 그룹 삭제하기 |
 
+<a id="delete-user-group-request"></a>
 #### 요청
 
 | 이름          | 종류  | 형식   | 필수 | 설명          |
 |-------------|-----|------|----|-------------|
 | userGroupId | URL | UUID | O  | 사용자 그룹의 식별자 |
 
+<a id="delete-user-group-response"></a>
 #### 응답
 
 이 API는 응답 본문을 반환하지 않습니다.
@@ -4624,24 +4976,29 @@ DELETE /v4.0/user-groups/{userGroupId}
 
 ---
 
-## 알림 그룹
+<a id="notification-group"></a>
+## 알림 그룹 { #notification-group }
 
-### 알림 그룹 목록 보기
+<a id="list-notification-groups"></a>
+### 알림 그룹 목록 보기 { #list-notification-groups }
 
 ```http
 GET /v4.0/notification-groups
 ```
 
+<a id="list-notification-groups-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                                | 설명          |
 |----------------------------------------------------|-------------|
 | RDSfor{{engine.pascalCase}}:NotificationGroup.List | 알림 그룹 목록 보기 |
 
+<a id="list-notification-groups-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
+<a id="list-notification-groups-response"></a>
 #### 응답
 
 | 이름                                       | 종류   | 형식       | 설명                                |
@@ -4684,18 +5041,21 @@ GET /v4.0/notification-groups
 
 ---
 
-### 알림 그룹 상세 보기
+<a id="view-notification-group-details"></a>
+### 알림 그룹 상세 보기 { #view-notification-group-details }
 
 ```http
 GET /v4.0/notification-groups/{notificationGroupId}
 ```
 
+<a id="view-notification-group-details-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                               | 설명          |
 |---------------------------------------------------|-------------|
 | RDSfor{{engine.pascalCase}}:NotificationGroup.Get | 알림 그룹 상세 보기 |
 
+<a id="view-notification-group-details-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -4704,6 +5064,7 @@ GET /v4.0/notification-groups/{notificationGroupId}
 |---------------------|-----|------|----|------------|
 | notificationGroupId | URL | UUID | O  | 알림 그룹의 식별자 |
 
+<a id="view-notification-group-details-response"></a>
 #### 응답
 
 | 이름                         | 종류   | 형식       | 설명                                |
@@ -4759,18 +5120,21 @@ GET /v4.0/notification-groups/{notificationGroupId}
 
 ---
 
-### 알림 그룹 생성하기
+<a id="create-notification-group"></a>
+### 알림 그룹 생성하기 { #create-notification-group }
 
 ```http
 POST /v4.0/notification-groups
 ```
 
+<a id="create-notification-group-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                                  | 설명         |
 |------------------------------------------------------|------------|
 | RDSfor{{engine.pascalCase}}:NotificationGroup.Create | 알림 그룹 생성하기 |
 
+<a id="create-notification-group-request"></a>
 #### 요청
 
 | 이름                    | 종류   | 형식      | 필수 | 설명                          |
@@ -4802,6 +5166,7 @@ POST /v4.0/notification-groups
 </p>
 </details>
 
+<a id="create-notification-group-response"></a>
 #### 응답
 
 | 이름                  | 종류   | 형식   | 설명         |
@@ -4810,18 +5175,21 @@ POST /v4.0/notification-groups
 
 ---
 
-### 알림 그룹 수정하기
+<a id="modify-notification-group"></a>
+### 알림 그룹 수정하기 { #modify-notification-group }
 
 ```http
 PUT /v4.0/notification-groups/{notificationGroupId}
 ```
 
+<a id="modify-notification-group-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                                  | 설명         |
 |------------------------------------------------------|------------|
 | RDSfor{{engine.pascalCase}}:NotificationGroup.Modify | 알림 그룹 수정하기 |
 
+<a id="modify-notification-group-request"></a>
 #### 요청
 
 | 이름                    | 종류   | 형식      | 필수 | 설명                    |
@@ -4850,6 +5218,7 @@ PUT /v4.0/notification-groups/{notificationGroupId}
 </p>
 </details>
 
+<a id="modify-notification-group-response"></a>
 #### 응답
 
 이 API는 응답 본문을 반환하지 않습니다.
@@ -4872,18 +5241,21 @@ PUT /v4.0/notification-groups/{notificationGroupId}
 
 ---
 
-### 알림 그룹 삭제하기
+<a id="delete-notification-group"></a>
+### 알림 그룹 삭제하기 { #delete-notification-group }
 
 ```http
 DELETE /v4.0/notification-groups/{notificationGroupId}
 ```
 
+<a id="delete-notification-group-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                                  | 설명         |
 |------------------------------------------------------|------------|
 | RDSfor{{engine.pascalCase}}:NotificationGroup.Delete | 알림 그룹 삭제하기 |
 
+<a id="delete-notification-group-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -4892,6 +5264,7 @@ DELETE /v4.0/notification-groups/{notificationGroupId}
 |---------------------|-----|------|----|------------|
 | notificationGroupId | URL | UUID | O  | 알림 그룹의 식별자 |
 
+<a id="delete-notification-group-response"></a>
 #### 응답
 
 이 API는 응답 본문을 반환하지 않습니다.
@@ -4914,24 +5287,29 @@ DELETE /v4.0/notification-groups/{notificationGroupId}
 
 ---
 
-## 모니터링
+<a id="monitoring"></a>
+## 모니터링 { #monitoring }
 
-### Metric 목록 보기
+<a id="list-metric-list"></a>
+### Metric 목록 보기 { #list-metric-list }
 
 ```http
 GET /v4.0/metrics
 ```
 
+<a id="list-metric-list-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                     | 설명       |
 |-----------------------------------------|----------|
 | RDSfor{{engine.pascalCase}}:Metric.List | 통계 정보 조회 |
 
+<a id="list-metric-list-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
+<a id="list-metric-list-response"></a>
 #### 응답
 
 | 이름                  | 종류   | 형식     | 설명        |
@@ -4964,18 +5342,21 @@ GET /v4.0/metrics
 
 ---
 
-### 통계 정보 조회
+<a id="view-stats"></a>
+### 통계 정보 조회 { #view-stats }
 
 ```http
 GET /v4.0/metric-statistics
 ```
 
+<a id="view-stats-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                     | 설명       |
 |-----------------------------------------|----------|
 | RDSfor{{engine.pascalCase}}:Metric.List | 통계 정보 조회 |
 
+<a id="view-stats-request"></a>
 #### 요청
 
 | 이름           | 종류    | 형식       | 필수 | 설명                                |
@@ -4986,6 +5367,7 @@ GET /v4.0/metric-statistics
 | to           | Query | Datetime | O  | 종료 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 | interval     | Query | Number   | X  | 조회 간격                             |
 
+<a id="view-stats-response"></a>
 #### 응답
 
 | 이름                                | 종류   | 형식        | 설명       |
@@ -5030,9 +5412,11 @@ GET /v4.0/metric-statistics
 
 ---
 
-## 이벤트
+<a id="event"></a>
+## 이벤트 { #event }
 
-### 이벤트 카테고리
+<a id="event-category"></a>
+### 이벤트 카테고리 { #event-category }
 
 이벤트는 카테고리로 분류할 수 있으며 아래와 같습니다.
 
@@ -5045,18 +5429,21 @@ GET /v4.0/metric-statistics
 | TENANT      | 테넌트     |
 | MONITORING  | 모니터링    |
 
-### 이벤트 목록 조회
+<a id="list-events"></a>
+### 이벤트 목록 조회 { #list-events }
 
 ```http
 GET /v4.0/events
 ```
 
+<a id="list-events-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                    | 설명        |
 |----------------------------------------|-----------|
 | RDSfor{{engine.pascalCase}}:Event.List | 이벤트 목록 보기 |
 
+<a id="list-events-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -5072,6 +5459,7 @@ GET /v4.0/events
 | keyword           | Query | String   | X  | 이벤트 메시지에 포함된 문자열 검색어                                                                                                                 |
 | ascendingOrder    | Query | Enum     | X  | 이벤트 메시지 정렬 순서<br/>- `ASC`: 오름차순<br/>- `DESC`: 내림차순<br/>- 기본값: `DESC`                                                                 |
 
+<a id="list-events-response"></a>
 #### 응답
 
 | 이름                       | 종류   | 형식       | 설명                                    |
@@ -5133,22 +5521,26 @@ GET /v4.0/events
 
 ---
 
-### 구독 가능한 이벤트 코드 목록 보기
+<a id="list-subscribable-event-codes"></a>
+### 구독 가능한 이벤트 코드 목록 보기 { #list-subscribable-event-codes }
 
 ```http
 GET /v4.0/event-codes
 ```
 
+<a id="list-subscribable-event-codes-required-permissions"></a>
 #### 필요 권한
 
 | 권한명                                    | 설명        |
 |----------------------------------------|-----------|
 | RDSfor{{engine.pascalCase}}:Event.List | 이벤트 목록 보기 |
 
+<a id="list-subscribable-event-codes-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
+<a id="list-subscribable-event-codes-response"></a>
 #### 응답
 
 | 이름                           | 종류   | 형식    | 설명          |
@@ -5181,20 +5573,24 @@ GET /v4.0/event-codes
 
 ---
 
-## 이벤트 구독
+<a id="event-subscription"></a>
+## 이벤트 구독 { #event-subscription }
 
-### 이벤트 구독 목록 조회
+<a id="list-event-subscriptions"></a>
+### 이벤트 구독 목록 조회 { #list-event-subscriptions }
 
 ```http
 GET /v4.0/event-subscriptions
 ```
 
+<a id="list-event-subscriptions-required-permission"></a>
 #### 필요 권한
 
 | 권한명                                                    | 설명            |
 |---------------------------------------------------------|---------------|
 | RDSfor{{engine.pascalCase}}:EventSubscription.List | 이벤트 구독 목록 조회 |
 
+<a id="list-event-subscriptions-request"></a>
 #### 요청
 
 | 이름                | 종류    | 형식       | 필수 | 설명                                       |
@@ -5205,6 +5601,7 @@ GET /v4.0/event-subscriptions
 | eventSubscriptionName  | Query | String | X  | 이벤트 구독을 식별할 수 있는 이름                      |
 | userGroupId            | Query | UUID   | X  | 사용자 그룹의 식별자                              |
 
+<a id="list-event-subscriptions-response"></a>
 #### 응답
 
 | 이름                                            | 종류   | 형식       | 설명                       |
@@ -5266,18 +5663,21 @@ GET /v4.0/event-subscriptions
 
 ---
 
-### 이벤트 구독 생성하기
+<a id="create-an-event-subscription"></a>
+### 이벤트 구독 생성하기 { #create-an-event-subscription }
 
 ```http
 POST /v4.0/event-subscriptions
 ```
 
+<a id="create-an-event-subscription-required-permission"></a>
 #### 필요 권한
 
 | 권한명                                                      | 설명           |
 |----------------------------------------------------------|--------------|
 | RDSfor{{engine.pascalCase}}:EventSubscription.Create | 이벤트 구독 생성하기 |
 
+<a id="create-an-event-subscription-request"></a>
 #### 요청
 
 | 이름                           | 종류   | 형식      | 필수 | 설명                                    |
@@ -5321,6 +5721,7 @@ POST /v4.0/event-subscriptions
 </p>
 </details>
 
+<a id="create-an-event-subscription-response"></a>
 #### 응답
 
 | 이름                    | 종류   | 형식   | 설명          |
@@ -5346,18 +5747,21 @@ POST /v4.0/event-subscriptions
 
 ---
 
-### 이벤트 구독 수정하기
+<a id="modify-an-event-subscription"></a>
+### 이벤트 구독 수정하기 { #modify-an-event-subscription }
 
 ```http
 PUT /v4.0/event-subscriptions/{eventSubscriptionId}
 ```
 
+<a id="modify-an-event-subscription-required-permission"></a>
 #### 필요 권한
 
 | 권한명                                                      | 설명           |
 |----------------------------------------------------------|--------------|
 | RDSfor{{engine.pascalCase}}:EventSubscription.Modify | 이벤트 구독 수정하기 |
 
+<a id="modify-an-event-subscription-request"></a>
 #### 요청
 
 | 이름                           | 종류   | 형식      | 필수 | 설명                              |
@@ -5403,6 +5807,7 @@ PUT /v4.0/event-subscriptions/{eventSubscriptionId}
 </p>
 </details>
 
+<a id="modify-an-event-subscription-response"></a>
 #### 응답
 
 이 API는 응답 본문을 반환하지 않습니다.
@@ -5425,24 +5830,28 @@ PUT /v4.0/event-subscriptions/{eventSubscriptionId}
 
 ---
 
-### 이벤트 구독 삭제하기
+<a id="delete-an-event-subscription"></a>
+### 이벤트 구독 삭제하기 { #delete-an-event-subscription }
 
 ```http
 DELETE /v4.0/event-subscriptions/{eventSubscriptionId}
 ```
 
+<a id="delete-an-event-subscription-required-permission"></a>
 #### 필요 권한
 
 | 권한명                                                      | 설명           |
 |----------------------------------------------------------|--------------|
 | RDSfor{{engine.pascalCase}}:EventSubscription.Delete | 이벤트 구독 삭제하기 |
 
+<a id="delete-an-event-subscription-request"></a>
 #### 요청
 
 | 이름                    | 종류  | 형식   | 필수 | 설명          |
 |-----------------------|-----|------|----|-------------|
 | eventSubscriptionId   | URL | UUID | O  | 이벤트 구독의 식별자 |
 
+<a id="delete-an-event-subscription-response"></a>
 #### 응답
 
 이 API는 응답 본문을 반환하지 않습니다.

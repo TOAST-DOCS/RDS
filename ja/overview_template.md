@@ -1,8 +1,12 @@
-## Database > RDS for {{engine.pascalCase}} > 概要
+<!-- pre-align:aligned sig=ca8f6a430f7f -->
+
+<a id="database-rds-for-enginepascalcase-overview"></a>
+## Database > RDS for {{engine.pascalCase}} > 概要 { #database-rds-for-enginepascalcase-overview }
 
 RDS for {{engine.pascalCase}}は、{{engine.pascalCase}}データベースをクラウド環境で使用できるサービスです。簡単に{{engine.pascalCase}}がインストールされた仮想機器を使用できます。
 
-## 主な機能
+<a id="main-features"></a>
+## 主な機能 { #main-features }
 
 * 簡単に希望する仕様とボリュームサイズで{{engine.pascalCase}}データベースを使用できます。
 * 障害が発生しても可用性に問題がないように高可用性機能を設定できます。

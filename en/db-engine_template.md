@@ -1,10 +1,15 @@
-## Database > RDS for {{engine.pascalCase}} > DB Engine
+<!-- pre-align:aligned sig=c01d6c6c712e -->
 
-## DB Engine
+<a id="database-rds-for-enginepascalcase-db-engine"></a>
+## Database > RDS for {{engine.pascalCase}} > DB Engine { #database-rds-for-enginepascalcase-db-engine }
+
+<a id="db-engine"></a>
+## DB Engine { #db-engine }
 
 The version number of {{engine.pascalCase}} follows the `X.Y.Z` format. In NHN Cloud's RDS for {{engine.pascalCase}}, `X.Y` represents the major version and `Z` represents the minor version.
 
-### DB engine version provided by RDS
+<a id="db-engine-version-provided-by-rds"></a>
+### DB engine version provided by RDS { #db-engine-version-provided-by-rds }
 
 The versions specified below are available. New DB instance creation and Read Replicas are supported only for the top 7 minor versions per major version.
 {{#if (eq engine.lowerCase "mysql")}}
@@ -74,7 +79,8 @@ Support for MySQL versions below 8.0.34 has ended under the MySQL LTS policy. We
 | MariaDB 10.3.30        | Creation and Read Replicas unsupported |
 {{/if}}
 
-### Manage DB Engine Version
+<a id="manage-db-engine-version"></a>
+### Manage DB Engine Version { #manage-db-engine-version }
 After creating the DB instance, you can change the DB engine version and modify the DB instance.
 
 > [Caution]
@@ -84,6 +90,7 @@ When upgrading the database engine version, a major version upgrade occurs if on
 When attempting to upgrade the DB engine major version, you can upgrade to the next major version of the DB engine.
 
 {{#if (eq engine.lowerCase "mysql")}}
+<a id="manage-db-engine-version-pre-inspection-for-upgrading-from-mysql-57-to-mysql-80"></a>
 #### Pre-inspection for upgrading from MySQL 5.7 to MySQL 8.0
 
 MySQL 8.0 and MySQL 5.7 have several incompatibilities. So if you are doing a major version DB engine upgrade from `5.7` to version `8.0`, you may run into issues. Therefore, a pre-inspection process is required for some items that are expected to cause problems. The following items require prior inspection:
@@ -119,6 +126,7 @@ Also, you must check items that have been removed or changed in 8.0.
 - [Features Removed in MySQL 8.0](https://dev.mysql.com/doc/refman/8.0/en/mysql-nutshell.html#mysql-nutshell-removals)
 
 
+<a id="manage-db-engine-version-pre-check-for-upgrading-mysql-80-to-mysql-84"></a>
 #### Pre-check for Upgrading MySQL 8.0 to MySQL 8.4
 
 To upgrade to MySQL 8.4, you must have already upgraded to MySQL 8.0. When upgrading a major version of the DB engine from `8.0` to `8.4`, a pre-check is required for certain items that are expected to cause problems.
@@ -130,6 +138,7 @@ Also, you must check what has been removed or changed in 8.4.
 - [Guide to Incompatible Changes](https://dev.mysql.com/doc/refman/8.4/en/upgrading-from-previous-series.html#upgrade-incompatible-changes)
 - [Guide to Features Removed in 8.4](https://dev.mysql.com/doc/refman/8.4/en/mysql-nutshell.html#mysql-nutshell-removals)
 
+<a id="manage-db-engine-version-mysql-version-upgrade-constraints"></a>
 #### MySQL Version Upgrade Constraints
 
 Direct upgrade from version 8.0.18 to MySQL 8.4 is not supported.
@@ -143,6 +152,7 @@ This is because the minimum compatible version required by MySQL 8.4 is 8.0.23 o
 {{/if}}
 
 {{#if (eq engine.lowerCase "mariadb")}}
+<a id="manage-db-engine-version-pre-check"></a>
 #### Pre-Check
 
 Before proceeding with a DB engine major version upgrade, it is recommended to check the following in advance.
@@ -152,6 +162,7 @@ Before proceeding with a DB engine major version upgrade, it is recommended to c
 
 When attempting a DB version upgrade in the console, you can check the pre-check results using the **DB Engine Upgrade Pre-Check** button. Detailed information can also be found in the `db_version_upgrade_compatibility.log` file generated in the Log tab of the individual DB instance.
 
+<a id="manage-db-engine-version-notes-on-upgrading-from-mariadb-114-to-mariadb-118"></a>
 #### Notes on Upgrading from MariaDB 11.4 to MariaDB 11.8
 
 To upgrade to MariaDB 11.8, the instance must first be upgraded to MariaDB 11.4. When performing a major version upgrade from `11.4` to `11.8`, the following must be checked.
@@ -163,6 +174,7 @@ For more information, refer to the official documentation below:
 - [MariaDB 11.8 release notes](https://mariadb.com/docs/release-notes/community-server/11.8/what-is-mariadb-118#upgrading)
 {{/if}}
 
+<a id="manage-db-engine-version-upgrading-the-db-engine-version-using-a-dummy-db-instance"></a>
 #### Upgrading the DB Engine Version Using a Dummy DB Instance 
 
 When trying to change the DB engine version in the Modify DB Instance window, you can select whether to use a dummy DB instance to ensure high availability during the version upgrade process. If you choose to use a dummy DB instance, a Standby for DB version upgrade is created. 
@@ -170,6 +182,7 @@ When trying to change the DB engine version in the Modify DB Instance window, yo
 > [Caution]
 > For dummy DB instances, a temporary Standby is created during the upgrade process, so this option is only available for non-high-availability configurations.
 
+<a id="manage-db-engine-version-manual-control-of-failover-when-upgrading-high-availability-db-instances"></a>
 #### Manual Control of Failover When Upgrading High Availability DB Instances
 
 When a DB instance is configured for high availability, the engine version of the Standby is upgraded first, and then failover is used to switch the Standby to Primary. Because failover briefly interrupts the service on the Primary, you can initiate failover at any time.
@@ -178,7 +191,8 @@ The manual control of failover during version upgrade allows you to initiate fai
 > [Caution]
 > If manual control of failover is not triggered for more than 60 hours, the upgrade operation is automatically cancelled.
 
-### When using an Outdated Operating System
+<a id="when-using-an-outdated-operating-system"></a>
+### When using an Outdated Operating System { #when-using-an-outdated-operating-system }
 
 For DB instances with an outdated internal operating system, an operating system version upgrade accompanied by VM replacement is required before upgrading the DB version. Monitored instances in notification groups and event sources in event subscriptions automatically update to the changed identifiers. For single DB instances, it is recommended to use a dummy DB instance when changing the DB version. For high availability DB instances, the roles of the Primary and Standby are changed using failover during the DB instance replacement process. If the Primary is under heavy load, failover may fail, so it is recommended to perform DB version changes during periods of low load.
 
@@ -186,15 +200,18 @@ For DB instances with an outdated internal operating system, an operating system
 > Be careful when using the internal IP of an existing DB instance directly in an IP ACL or security group.
 
 {{#if (eq engine.lowerCase "mysql")}}
-## Options for MySQL
+<a id="options-for-mysql"></a>
+## Options for MySQL { #options-for-mysql }
 
-### Support for the MariaDB Server Audit plugin for MySQL
+<a id="support-for-the-mariadb-server-audit-plugin-for-mysql"></a>
+### Support for the MariaDB Server Audit plugin for MySQL { #support-for-the-mariadb-server-audit-plugin-for-mysql }
 
 RDS for MySQL uses the MariaDB Audit plug-in to provide an auditing plug-in for MySQL DB instances.
 
 > [Caution]
 > This plugin may not be supported by all versions of MySQL and will be unavailable when upgrading to an unsupported version.
 
+<a id="support-for-the-mariadb-server-audit-plugin-for-mysql-supported-versions"></a>
 #### Supported Versions
 | MySQL version              | Whether to support server audit plugins |
 |----------------------------|-----------------------------------------|

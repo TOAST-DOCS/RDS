@@ -1,6 +1,10 @@
-## Database > RDS for {{engine.pascalCase}} > DB Instance
+<!-- pre-align:aligned sig=6567c272c6dd -->
 
-## DB Instance
+<a id="database-rds-for-enginepascalcase-db-instance"></a>
+## Database > RDS for {{engine.pascalCase}} > DB Instance { #database-rds-for-enginepascalcase-db-instance }
+
+<a id="db-instance"></a>
+## DB Instance { #db-instance }
 
 DB instance is a concept that encompasses virtual equipment and installed {{engine.pascalCase}}, a unit of {{engine.pascalCase}} provided by RDS for {{engine.pascalCase}}.
 You do not have direct access to the operating system of the DB instance, but only to the database through the port you entered when you created the DB instance. The available port ranges have the following restrictions. The available port range is between 3306 and 43306.
@@ -14,18 +18,21 @@ DB instance name has the following restrictions.
 > [Note]
 > After the maintenance in July 2025, for high-availability DB instances, the name of the Standby must be entered in addition to the Primary. The Standby name follows the same restrictions as the Primary name, and the two names must be different. For DB instances created before this maintenance, the Standby name is the same as the Primary.
 
-## Create DB Instance
+<a id="create-db-instance"></a>
+## Create DB Instance { #create-db-instance }
 
 You can create DB instance with the following settings.
 
-### Availability Zone
+<a id="availability-zone"></a>
+### Availability Zone { #availability-zone }
 
 NHN Cloud has divided the entire system into several availability zones to prepare for failures caused by physical hardware problems. These availability zones are storage systems, network switches, top surfaces, and power supplies, which are all configured separately for each zone. Failure within one availability zone does not affect other availability zones, increasing the availability of the entire service. Deploying DB instances across multiple availability zones can further increase the service availability. Network communication is possible between DB instances that are scattered across multiple availability zones, and there is no network usage charge.
 
 > [Caution]
 > You cannot change the availability zone of DB instance that you have already created.
 
-### DB Engine
+<a id="db-engine"></a>
+### DB Engine { #db-engine }
 
 The versions specified below are available. New DB instance creation and Read Replica additions are supported only for the seven most recent minor versions of each major version.
 {{#if (eq engine.lowerCase "mysql")}}
@@ -98,7 +105,8 @@ Details about DB engine can be found in [DB Engine](db-engine/).
 Details about DB engine can be found in [DB Engine](db-engine/).
 {{/if}}
 
-### DB Instance Type
+<a id="db-instance-type"></a>
+### DB Instance Type { #db-instance-type }
 
 DB instances have different CPU cores and memory capacity depending on the type.
 When creating a DB instance, you must select an appropriate DB instance type according to the database workload.
@@ -115,7 +123,8 @@ The type of DB instance that you have already created can be easily changed thro
 > [Caution]
 > If you change the type of DB instance that you have already created, the DB instance will be terminated, causing a service downtime of several minutes.
 
-### Data Storage
+<a id="data-storage"></a>
+### Data Storage { #data-storage }
 
 It stores the database's data files in data storage. DB instances support two types of data storage: HDD and SSD. Performance and price vary depending on the type of data storage, so you need to choose the right type depending on the database workload. Data storage can range from 20GB to 2TB.
 
@@ -135,38 +144,46 @@ Because the following tasks increase the I/O usage of data storage, the performa
 * Restore to a certain point in time
 * Export backup files to object storage after backing up from a single DB instance
 
-### High Availability
+<a id="high-availability"></a>
+### High Availability { #high-availability }
 
 High availability DB instances increase availability, data durability, and provide fault tolerant databases. High availability DB instances consist of Primary and Standby and are created in different availability zones. Standby is a DB instance for failover and is not normally available. For high availability DB instances, backups are performed on Standby, which avoids performance degradation caused by backups. Several features provided by a high availability DB instance can be found in [High Availability DB Instance](db-instance/#ha-db-instance).
 
-### Network
+<a id="network"></a>
+### Network { #network }
 
 When create DB instance, you have to select the VPC subnet to connect to. You can communicate without a separate floating IP between instances of Compute service connected to the same subnet and you will not be charged for network traffic. DB instances block all network access by default, so you must apply DB security groups if you want to connect.
 
 > [Caution]
 > You cannot change the subnet of DB instance that you have already created.
 
-### Floating IP
+<a id="floating-ip"></a>
+### Floating IP { #floating-ip }
 
 To access DB instance from the outside, you must connect the floating IP to DB instance. You can create a floating IP only if you connect the subnet to which the Internet Gateway is connected. Floating IP is charged upon use, and separately, if traffic is directed to the Internet through floating IP, it is charged separately.
 
-### Parameter group
+<a id="parameter-group"></a>
+### Parameter group { #parameter-group }
 
 A parameter group is a set of parameters that allow you to set up a database installed on DB instance. You have to select one parameter group when creating a DB instance. You can change parameter groups freely after creating. Refer to [Parameter Group](parameter-group/) for a detailed description of parameter groups.
 
-### DB Security Group
+<a id="db-security-group"></a>
+### DB Security Group { #db-security-group }
 
 DB security groups are used to restrict access in case of external intrusion. You can allow access to specific port ranges or database ports for incoming and outgoing traffic. You can apply multiple DB security groups to DB instance. For more details on DB security groups, see the [DB security groups](db-security-group/).
 
-### Backup
+<a id="backup"></a>
+### Backup { #backup }
 
 You can set up periodic backups of the databases in your DB instance, or you can create backups at any time through the console. Performance may degrade during backups. To avoid affecting service, it is better to perform back up at a time when the service is under low load. If you do not want the backup to degrade performance, you can use a high-availability configuration, back up only the incremental data since the previous backup, or perform backups from a Read Replica. Backup files are stored on internal backup storage and are charged based on the
 size of backup storage. You can export to user object storage in NHN Cloud if necessary. To prepare for unexpected failures, we recommend that you set up backups to be conducted periodically. For more details on backup, see [Backup and Restore](backup-and-restore/).
 
-### Maintenance
+<a id="maintenance"></a>
+### Maintenance { #maintenance }
 
 The Maintenance feature allows you to schedule various changes to your DB instance at your preferred time. Since tasks such as modifying instances or upgrading the DB engine and operating system require a restart, downtime may occur. By scheduling a maintenance duration, you can ensure these operations occur during periods of low service load.
 
+<a id="maintenance-duration"></a>
 #### Maintenance Duration
 
 You can set a maintenance duration when creating or modifying a DB instance. If no duration is specified, a 30-minute slot will be automatically assigned at random between 10 PM and 6 AM. Note that the maintenance duration cannot overlap with the automated backup duration.
@@ -174,6 +191,7 @@ You can set a maintenance duration when creating or modifying a DB instance. If 
 > [Note]
 > A maintenance duration consists of a start day, a start time, and a duration (in 30-minute increments).
 
+<a id="maintenance-task"></a>
 #### Maintenance Task
 
 Maintenance tasks are categorized into User Maintenance and Provider Maintenance.
@@ -193,6 +211,7 @@ A maintenance task provided by NHN Cloud.
 * Apply parameter group changes
 * Migration for hypervisor maintenance
 
+<a id="maintenance-execution-time"></a>
 #### Maintenance Execution Time
 
 You can choose when to apply maintenance tasks.
@@ -200,6 +219,7 @@ You can choose when to apply maintenance tasks.
 * **Apply Immediately**: apply immediately upon request.
 * **Apply in the Next Maintenance Duration**: apply during the next maintenance duration.
 
+<a id="maintenance-status"></a>
 #### Maintenance Status
 
 You can check the maintenance status of each instance in the DB instance list.
@@ -215,6 +235,7 @@ You can check the maintenance status of each instance in the DB instance list.
 > [Note]
 > The maintenance status is not displayed for the Standby of High Availability (HA) DB instances.
 
+<a id="maintenance-tab"></a>
 #### Maintenance Tab
 
 You can find the following information on the Maintenance tab of the DB instance details page:
@@ -227,6 +248,7 @@ You can find the following information on the Maintenance tab of the DB instance
 
 Upcoming maintenance tasks can be excluded from the maintenance duration clicking the **Hold** or **Delete** buttons. For pending Provider maintenance tasks, you can manually apply them by selecting either **Apply Immediately** or **Apply in the Next Maintenance Duration**.
 
+<a id="maintenance-execution-order"></a>
 #### Execution Order
 
 All tasks within the maintenance duration are executed sequentially in the order they were registered. However, mandatory maintenance tasks that have expired will be prioritized and executed first. Any tasks not completed within the current duration will be rescheduled to the next maintenance duration.
@@ -234,7 +256,8 @@ All tasks within the maintenance duration are executed sequentially in the order
 > [Note]
 > If a maintenance task is repeatedly deferred because the maintenance duration starts while an automated backup is in progress or the DB instance is in a 'Busy' state, that task will be skipped and rescheduled for the next duration. An event will be generated if a maintenance task is skipped.
 
-### Default Notification
+<a id="default-notification"></a>
+### Default Notification { #default-notification }
 
 When you create a DB instance, you can set default notifications. If setting default notifications, it will create a new notification group with the name `{DB instance name}-default` and will automatically set the notification items below. You can freely modify and delete alert groups that are created as default notifications. For more details on the notification group, see the [ notification group ](notification/).
 
@@ -249,11 +272,13 @@ When you create a DB instance, you can set default notifications. If setting def
 | Memory Usage               | >=                | 90%             | 5 minutes |
 | Slow Query                 | >=                | 60 counts/min   | 5 minutes |
 
-### Deletion Protection
+<a id="deletion-protection"></a>
+### Deletion Protection { #deletion-protection }
 
 If you activate deletion protection, you can protect DB instances from accidental deletion.
 
-## DB Instance List
+<a id="db-instance-list"></a>
+## DB Instance List { #db-instance-list }
 
 You can view DB instances created from the console. It can be viewed as groups of DB instances or as individual DB instances.
 
@@ -286,7 +311,8 @@ Search conditions that can be changed are as follows.
 
 ❶ You can search for DB instances with filtering conditions that require parameter changes to be applied.
 
-## DB Instance Details
+<a id="db-instance-details"></a>
+## DB Instance Details { #db-instance-details }
 
 You can select a DB instance to view the details.
 
@@ -298,13 +324,15 @@ You can select a DB instance to view the details.
 ❹ Drag and drop the screen to adjust the height of the Details information panel.
 ❺ You can adjust the height of the Details information panel to a pre-determined height.
 
-### Access Information
+<a id="access-information"></a>
+### Access Information { #access-information }
 
 When you create a DB instance, it issues an internal domain. The internal domain refers to the IP address that belongs to the user's VPC subnet. For high-availability DB instances, the internal domain does not change even if the Standby is changed to a new Primary due to failover. Therefore, unless there is a special reason, applications must use the internal domain for access information.
 
 If you created a floating IP, issue additional external domains. The external domain points to the address of the floating IP. Because external domains or floating IPs are accessible from outside, you must protect the DB instance by setting the rules of DB security group appropriately.
 
-### Virtual IP
+<a id="virtual-ip"></a>
+### Virtual IP { #virtual-ip }
 
 Starting with DB instances created after the May 2025 maintenance, VIP (Virtual IP) is supported. The VIP is an IP address within the user's VPC subnet. For high-availability DB instances, the VIP is always the current Primary. Application connection information must use either the VIP directly or the internal (VIP) domain.
 
@@ -314,7 +342,8 @@ For DB instances created before the May 2025 maintenance, you can add a VIP by s
 > After the maintenance in September 2025, VIP will no longer be supported in the Japan (Tokyo) region and some public projects. (You cannot connect to a VIP from an instance or DB instance in a different subnet.)
 > In environments that do not support VIPs, VIPs created after the May 2025 maintenance will not be deleted, but will no longer be visible in the console.
 
-### Log
+<a id="log"></a>
+### Log { #log }
 
 You can view and download various log files from Log tab of DB instance. Log files are rotated to the settings set as below. Some log files can be enabled or disabled in the parameter group.
 
@@ -347,12 +376,14 @@ You can view and download various log files from Log tab of DB instance. Log fil
 
 ❺ Select to use the mysqlbinlog utility to convert the binary log into SQL file and then download it.
 
-### Maintenance
+<a id="db-instance-details-maintenance"></a>
+### Maintenance { #db-instance-details-maintenance }
 
 The Maintenance tab allows you to monitor settings and status, and manage maintenance operations for your DB instance.
 
 ![db-instance-detail-maintenance_en]({{url.cdn}}/26.01.13/db-instance-detail-maintenance_en.png)
 
+<a id="db-instance-details-maintenance-maintenance-information"></a>
 #### Maintenance Information
 
 At the top of the Maintenance tab, you can view the maintenance configuration details for the current DB instance.
@@ -367,6 +398,7 @@ At the top of the Maintenance tab, you can view the maintenance configuration de
 > [Note]
 > Even if you haven't set a maintenance duration, you can view the randomly assigned duration here.
 
+<a id="db-instance-details-maintenance-upcoming-maintenance"></a>
 #### Upcoming Maintenance
 
 Upcoming Maintenance is a list of tasks scheduled to be executed during the next maintenance duration. When you perform actions such as modifying a DB instance or upgrading the DB engine version and select **Apply in the Next Maintenance Duration**, the task is added to this list.
@@ -384,6 +416,7 @@ Upcoming maintenance tasks can be excluded from the maintenance duration by sele
 If deleted, these tasks are canceled. To apply them again in a future duration, you must perform the original action once more.
 Provider maintenance tasks will be moved to the Pending Maintenance list. You can move them back to the Upcoming Maintenance list at any time from the Pending Maintenance list.
 
+<a id="db-instance-details-maintenance-pending-maintenance"></a>
 #### Pending Maintenance
 
 Pending Maintenance is a list of Provider maintenance tasks provided by NHN Cloud. This includes operations such as applying parameter group changes and migrations for hypervisor maintenance.
@@ -410,10 +443,12 @@ You can select a pending maintenance task and then click **Next** to select the 
 > [Note]
 > If a maintenance task requires a restart, a pop-up screen will appear, allowing you to select additional options, such as failover or backup. For high-availability DB instances, you can minimize service downtime by using a restart with failover.
 
-### DB Schema and Users
+<a id="db-schema-and-users"></a>
+### DB Schema and Users { #db-schema-and-users }
 
 DB instance's **DB Schema and User** tab allows you to query and control the schema and users created in the database.
 
+<a id="db-schema-and-users-db-schema-created"></a>
 #### DB schema created
 
 ![db-instance-detail-schema_en]({{url.cdn}}/26.01.13/db-instance-detail-schema_en.png)
@@ -428,6 +463,7 @@ DB schema name has the following restrictions.
 
 You cannot modify the name of the DB schema that has been created.
 
+<a id="db-schema-and-users-db-schema-deleted"></a>
 #### DB schema deleted
 
 ![db-instance-detail-schema-delete-en]({{url.cdn}}/26.01.13/db-instance-detail-schema-delete-en.png)
@@ -435,6 +471,7 @@ You cannot modify the name of the DB schema that has been created.
 ❶ Select DB schema you want to delete and click on the drop-down menu.
 ❷ Click on **Delete** menu and pop-up window will appear to confirm deletion. You can request to delete by clicking on **Confirm**.
 
+<a id="db-schema-and-users-create-a-user"></a>
 #### Create a user
 
 ![db-instance-detail-user-create-en]({{url.cdn}}/26.01.13/db-instance-detail-user-create-en.png)
@@ -501,6 +538,7 @@ GRANT EXECUTE ON `mysql`.* TO '{user_id}'@'{host}';
 > [Note]
 > User authentication plug-ins and TLS options are supported in MySQL 5.7.33 and later versions.
 
+<a id="db-schema-and-users-download-authentication-certificate"></a>
 #### Download Authentication Certificate
 
 If you set TLS option for your account to X509, you need a certificate to access the DB instance.
@@ -519,6 +557,7 @@ If you set TLS option for your account to X509, you need a certificate to access
 > Click on **Download** to charge Internet traffic as much as the size of the certificate file.
 {{/if}}
 
+<a id="db-schema-and-users-edit-users"></a>
 #### Edit users
 
 ![db-instance-detail-user-modify-en]({{url.cdn}}/26.01.13/db-instance-detail-user-modify-en.png)
@@ -527,6 +566,7 @@ If you set TLS option for your account to X509, you need a certificate to access
 ❷ If you do not enter Password, it will not be changed.
 ❸ If you want to change the plug-in that applies to user authentication, you must change the password.
 
+<a id="db-schema-and-users-deleting-a-user"></a>
 #### Deleting a user
 
 ![db-instance-detail-user-delete-en]({{url.cdn}}/26.01.13/db-instance-detail-user-delete-en.png)
@@ -534,7 +574,8 @@ If you set TLS option for your account to X509, you need a certificate to access
 ❶ Select the user you want to delete and click on the drop-down menu.
 ❷ Click on **Delete** and **Confirm Delete** pop-up window will appear. You can request deletion by clicking on **Confirm**.
 
-## Modify DB instance
+<a id="modify-db-instance"></a>
+## Modify DB instance { #modify-db-instance }
 
 You can easily change various items in DB instances created through console. Changes requested are applied to DB instances sequentially. If restarting is required during the application process, apply all changes and restart DB instance. The following are the items that cannot be changed and require restarting.
 
@@ -566,7 +607,8 @@ For high-availability DB instances, if there are any changes to items that need 
 ❶ Modify your DB instance and schedule the update by selecting either **Apply in the Next Maintenance Duration** or **Apply Immediately**.
 ❷ If you do not use 'Reboot with Failover', changes will be applied sequentially to the Primary and Standby, followed by a restart of the DB instance. For more details, please refer to the [Manual Failover section](db-instance/#manual-failover) for High Availability DB instances.
 
-### DB Schema & Direct User Control
+<a id="db-schema-direct-user-control"></a>
+### DB Schema & Direct User Control { #db-schema-direct-user-control }
 
 RDS for {{engine.pascalCase}} provides management from the console to make it easier to manage DB schemas and users, but it also provides the feature to set up so that users can control themselves. Direct control grants all currently created users the following privileges.
 
@@ -579,7 +621,8 @@ GRANT CREATE,DROP,LOCK TABLES,REFERENCES,EVENT,ALTER,INDEX,INSERT,SELECT,UPDATE,
 > * Already granted permissions are not revoked. If you use the command to add DB schema or users at this time, the data in the console may not match.
 > * All users that exist in the database, regardless of the permissions granted to them, are represented by CUSTOM permissions.
 
-## Upgrade DB instance operating system
+<a id="upgrade-db-instance-operating-system"></a>
+## Upgrade DB instance operating system { #upgrade-db-instance-operating-system }
 Supports DB instance operating system upgrades. By upgrading the operating system, you can resolve security vulnerabilities or respond to the end of life (EOL) of the operating system.
 Caution is required when upgrading the operating system because it may result in service disruption. Highly available DB instances can minimize service disruption through failover.
 
@@ -601,19 +644,23 @@ When you click the Upgrade Operating System Version for High Availability DB Ins
 ❶ You can use the maintenance feature through the Maintenance Application Method settings.
 ❷ Only the With Failover method is provided.
 
-## Delete DB Instance
+<a id="delete-db-instance"></a>
+## Delete DB Instance { #delete-db-instance }
 
 You can delete DB instances that are no longer in use. If you delete a Primary, you will also delete both the Standby and Read Replicas that belong to that replication group. Because deleted DB instances cannot be recovered, we recommend that you enable the Delete Protection settings for important DB instances.
 
-## Backup
+<a id="backup-2"></a>
+## Backup { #backup-2 }
 
 You can prepare in advance to recover the database of your DB instance in case of failure. You can perform backups from the console whenever necessary or you can set up periodic backups. Refer to [Backup](backup-and-restore/#overview) for more information.
 
-## Restoration
+<a id="restoration"></a>
+## Restoration { #restoration }
 
 You can use backups to restore data to any point in time. Restore always creates a new DB instance and cannot be restored to an existing DB instance. Refer to [Restore](backup-and-restore/#restore) for more information.
 
-## Secure Capacity
+<a id="secure-capacity"></a>
+## Secure Capacity { #secure-capacity }
 
 If the capacity of the data storage is insufficient due to the excessive generation of binary logs from rapid load, you can delete the binary logs using Secure Capacity feature in console. When you select Secure Capacity in console, you will see a pop-up window where you can select the binary logs for DB instance.
 Select the binary log and press **Confirm** to delete all binary logs created prior to the selected item. The Secure Capacity is a feature that temporarily secures capacity. If you keep running out of capacity, you must set the storage period for the binary log or expand the size of the data storage to match your service load.
@@ -630,11 +677,13 @@ Select the binary log and press **Confirm** to delete all binary logs created pr
 > [Caution]
 > Depending on the deleted binary logs, point-in-time restoration may not be possible.
 
-## Expand Storage Size
+<a id="expand-storage-size"></a>
+## Expand Storage Size { #expand-storage-size }
 
 You can scale up the data storage size of a DB instance. The expansion takes effect immediately without restarting the DB instance.
 
-## Auto Scale Storage
+<a id="auto-scale-storage"></a>
+## Auto Scale Storage { #auto-scale-storage }
 
 You can automatically scale the data storage size of a DB instance. With auto storage expansion, you can maintain the availability of your database by automatically scaling up when data storage runs out of capacity.
 
@@ -650,7 +699,8 @@ The amount of increase when the auto scale storage feature runs is set to the la
 * 10% of storage size
 * Data storage usage growth in the last hour * cooldown (in hours)
 
-## Apply parameter group changes
+<a id="apply-parameter-group-changes"></a>
+## Apply parameter group changes { #apply-parameter-group-changes }
 
 Changes made to a parameter group linked to a DB instance are not automatically applied to that instance.
 If the parameters currently applied to the DB instance differ from the settings in the linked parameter group, an **Apply Parameter Changes** maintenance task is created, and the maintenance status is updated.
@@ -671,20 +721,23 @@ High-availability DB instances provide a restart feature using failover to incre
 
 If restart with failover is not enabled, the DB instance is restarted after the changes are sequentially applied to the Primary and Standby. For more information, refer to [Manual failover item](db-instance/#manual-failover) in a high availability DB instance.
 
-## Recover from backup in object storage
+<a id="recover-from-backup-in-object-storage"></a>
+## Recover from backup in object storage { #recover-from-backup-in-object-storage }
 
 You can upload an external {{engine.pascalCase}} backup file to user object storage in NHN Cloud to restore it to DB instance in RDS for {{engine.pascalCase}}. For more information, refer to [Restore with External {{engine.pascalCase}} Backup](backup-and-restore/#restore-from-external).
 
-## Export backup files to the object storage after backup
+<a id="export-backup-files-to-the-object-storage-after-backup"></a>
+## Export backup files to the object storage after backup { #export-backup-files-to-the-object-storage-after-backup }
 
 After backup, you can export backup files to user object storage in NHN Cloud. Refer to [Export Backup](backup-and-restore/#export) for more information.
 
-## Read Replica
+<a id="read-replica"></a>
+## Read Replica { #read-replica }
 
 To improve read performance, you can create Read Replicas that can be used for read-only. You can create up to 5 Read Replicas per Primary. You cannot create Read Replicas of Read Replicas.
 
-<a id="create-read-replica"></a>
-### Create Read Replica
+<a id="create-read-replications"></a>
+### Create Read Replica { #create-read-replications }
 
 To create Read Replicas, you need backup files and binary logs created with the Enable table lock option among DB instances in the replication group. If you do not have a backup file, use the following steps to select DB instance for which you want to back up.
 
@@ -709,6 +762,7 @@ To create a Read Replica from the console,
 
 You can create a Read Replica using the settings below.
 
+<a id="create-read-replications-non-editable-items"></a>
 #### Non-Editable Items
 
 When you create a Read Replica, you cannot change the items listed below because they follow the settings of source DB instance.
@@ -718,6 +772,7 @@ When you create a Read Replica, you cannot change the items listed below because
 * User VPC Sub-nets
 
 {{#if regions.[1]}}
+<a id="create-read-replications-read-replica-region"></a>
 #### Read Replica Region
 
 If you support region peering when you select a region to create a Read Replica, you can create a Read Replica on a sub-net belonging to a different region VPC by connecting region peering between VPCs that exist in different regions. However, selecting a region that is different from the region of the original DB instance might cause replication delays and does not support DB version upgrades.
@@ -726,43 +781,53 @@ If you support region peering when you select a region to create a Read Replica,
 > If the route settings are incorrect, even if the region peering is connected, the creation of a Read Replica might fail or the replication might be interrupted.
 {{/if}}
 
+<a id="create-read-replications-availability-zone"></a>
 #### Availability Zone
 
 Select the availability zone for Read Replica. Refer to [Availability Zone](#_1) for a detailed description.
 
+<a id="create-read-replications-db-instance-type"></a>
 #### DB Instance Type
 
 It is recommended that Read Replicas be created to the same specification or higher than the Primary; creating them to a lower specification can cause replication delays.
 
+<a id="create-read-replications-data-storage-size"></a>
 #### Data Storage Size
 
 It is recommended to make it the same size as the source DB instance. If you set a smaller size, the replication process may be interrupted due to insufficient data storage capacity.
 
+<a id="create-read-replications-floating-ip"></a>
 #### Floating IP
 
 Select whether or not to use floating IP for Read Replicas. Refer to [Floating IP](#ip) for a detailed description.
 
+<a id="create-read-replications-parameter-group"></a>
 #### Parameter group
 
 If you do not need to change replication-related settings when selecting a parameter group for a Read Replica, we recommend that you select the same parameter group as the original DB instance. Refer to [Parameter Group](parameter-group/) for a detailed description of the parameter groups.
 
+<a id="create-read-replications-db-security-group"></a>
 #### DB Security Group
 
 Select the DB security group that you want to apply to Read Replicas. Because the rules required for replication are applied automatically, you do not need to add replication-related rules to DB security group separately. Refer to [DB security group](db-security-group/) for a detailed description of the DB security group.
 
+<a id="create-read-replications-backup"></a>
 #### Backup
 
 Select backup settings for the Read Replica. Refer to [Backup and Restore](backup-and-restore/) for a detailed description of backup.
 
+<a id="create-read-replications-default-notification"></a>
 #### Default notification
 
 Select whether or not to enable default notifications, refer to [default notifications](#_7) for a detailed description.
 
+<a id="create-read-replications-deletion-protection"></a>
 #### Deletion Protection
 
 Select whether or not to enable deletion protection. Refer to [Deletion Protection](#_8) for a detailed description.
 
-### Promote Read Replica
+<a id="promote-read-replication"></a>
+### Promote Read Replica { #promote-read-replication }
 
 The process of breaking the replication relationship with the Primary and converting a Read Replica to an independent Primary is called promotion. The promoted Primary will act as an independent DB instance. If there is a replication delay between the Read Replica and the Primary that you want to promote, the promotion will not take place until the delay is resolved. Once promoted, a DB instance cannot be reverted to the previous replication relationship.
 
@@ -772,11 +837,13 @@ The process of breaking the replication relationship with the Primary and conver
 > [Note]
 > You can perform promotion operations from the same region's console as the region where the Read Replica is located.
 
-### Force Promotion of Read Replicas
+<a id="force-promotion-of-read-replicas"></a>
+### Force Promotion of Read Replicas { #force-promotion-of-read-replicas }
 
 Force promotion is processed based on current point-in-time data of the Read Replica, regardless of the state of the Primary or original region. Reproduction delays can result in data loss. Therefore, we do not recommend using this feature unless you are in a situation where you urgently need to put the Read Replica into service.
 
-### Stop Replication of Read Replicas
+<a id="stop-replication-of-read-replicas"></a>
+### Stop Replication of Read Replicas { #stop-replication-of-read-replicas }
 
 Read Replicas can be stopped for several reasons. If the status of the Read Replica is `Replication stopped`, you must quickly determine the cause and perform normalization. If the ` Replication stopped` status persists for a long time, the replication delay will increase. If you do not have the binary log required for normalization, you must rebuild the Read Replica. The reason for replication stop can be determined by the `SHOW SLAVE STATUS` command in the Read Replica. If the value
 of `Last_Errno` is 1062, you can call the Procedure below until the error disappears.
@@ -785,14 +852,16 @@ of `Last_Errno` is 1062, you can call the Procedure below until the error disapp
 {{engine.lowerCase}}> CALL mysql.tcrds_repl_skip_repl_error();
 ```
 
-### Rebuild Read Replica
+<a id="rebuild-read-replica"></a>
+### Rebuild Read Replica { #rebuild-read-replica }
 
-If you can't resolve the replication issue of Read Replica, you can restore it to its normal state by rebuilding. This process deletes all databases in the Read Replica and rebuilds it anew based on the Primary database. During rebuilding, Read Replicas are unavailable to use. Rebuilding Read Replicas requires backup files and binary logs created with the Enable Table Lock option among DB instances in the replication group. If you don't have a backup file, refer to [Create Read Replica](#create-read-replica) for actions and precautions.
+If you can't resolve the replication issue of Read Replica, you can restore it to its normal state by rebuilding. This process deletes all databases in the Read Replica and rebuilds it anew based on the Primary database. During rebuilding, Read Replicas are unavailable to use. Rebuilding Read Replicas requires backup files and binary logs created with the Enable Table Lock option among DB instances in the replication group. If you don't have a backup file, refer to [Create Read Replica](#create-read-replications) for actions and precautions.
 
 > [Note]
 > Connection information (domain, IP) does not change after rebuilding.
 
-## Restart DB instance
+<a id="restart-db-instance"></a>
+## Restart DB instance { #restart-db-instance }
 
 You can restart a DB instance when you restart {{engine.pascalCase}} or want to manually do failover a high availability DB instance. We recommend that you perform it during low service load times to minimize restart times. For high availability DB instances, if restarting with failover is not enabled, restart the Standby first, then restart the Primary. For restarting with failover feature, refer to [Manual Failover](#manual-failover) item.
 
@@ -802,7 +871,8 @@ To restart a DB instance from the console
 
 ❶ Select the DB instance you want to restart and click on **Restart DB instance** menu from the drop-down menu.
 
-## DB instance force restart
+<a id="db-instance-force-restart"></a>
+## DB instance force restart { #db-instance-force-restart }
 
 If {{engine.pascalCase}} in the DB instance is not working properly, you can force a restart. For forced restart, issue a SIGTERM command in {{engine.pascalCase}} and wait 10 minutes for it to shut down normally. If {{engine.pascalCase}} shuts down normally within 10 minutes, reboot the virtual machine afterward. If it does not shut down normally within 10 minutes, force a reboot of the virtual machine. If the virtual machine is forced to reboot, some of the transactions you are working on might be lost and the data volume might be corrupted, making recovery impossible. After a forced restart, the state of the DB instance might not return to the available state. Contact Customer Support if this situation occurs.
 
@@ -818,7 +888,8 @@ To force restart a DB instance, from the console
 
 ❶ Select the DB instance for which you want a forced restart and from the drop-down menu, click on **Force Restart DB instance** menu.
 
-## Change Deletion Protection Settings
+<a id="change-deletion-protection-settings"></a>
+## Change Deletion Protection Settings { #change-deletion-protection-settings }
 
 Enabling Delete Protection protects DB instances from being accidentally deleted. You cannot delete DB instances until Delete Protection is disabled. To change Delete Protection settings
 
@@ -831,21 +902,23 @@ Enabling Delete Protection protects DB instances from being accidentally deleted
 ❷ Change the Delete Protection settings and click on **Confirm**.
 
 <a id="ha-db-instance"></a>
-## High Availability DB Instances
+## High Availability DB Instances { #ha-db-instance }
 
 High availability DB instances increase availability, data durability, and provide fault tolerant databases. High availability DB instances consist of Primary and Standby and are created in different availability zones. Standby is a DB instance for failover and is not normally available. For high availability DB instances, backups are performed on the Standby.
 
 > [Note]
 > For high availability DB instances, if you set to use {{engine.pascalCase}} query statement to force replication from another DB instance or from a master in external {{engine.pascalCase}}, high availability and some features do not work properly.
 
-### Failure Detection
+<a id="failure-detection"></a>
+### Failure Detection { #failure-detection }
 
 Standby has a process for detecting failures, which periodically detects the state of the Primary. This detection period is called ping interval and takes failover if four consecutive health checks fail. The shorter the ping interval, the more sensitive to the fault respond is, and the longer the ping interval, the less insensitive the fault respond is. It is important to set the appropriate ping interval for the service load accordingly.
 
 > [Note]
 > When the Primary's storage usage is full, the high availability monitoring process detects it as a failure and takes action, which you should be taken note of.
 
-### Automatic Failover
+<a id="automatic-failover"></a>
+### Automatic Failover { #automatic-failover }
 
 When the Standby fails the Primary's health check four times in a row, it determines that the Primary is unable to provide service and automatically performs a failover. In order to prevent split brains, disconnect all user security groups assigned to the failed Primary to block external connections, and the Standby will take over the role of the Primary. A record in the internal domain for access are changed from the failed Primary to the Standby, so no changes to the application are required. When failover is completed, the type of the failed Primary changes to Failed Over Primary and the type of Standby changes to the Primary. No failover is performed until the Failed Over Primary is recovered or rebuilt. The new Primary takes over all automatic backups of the Failed Over Primary. Point-in-time restoration using existing backups is not supported because the Primary changes during failover and all binary logs are deleted. You can restore point-in-time
 from the time the new backup was performed on the new Primary.
@@ -857,11 +930,13 @@ from the time the new backup was performed on the new Primary.
 > If the position number value of the binary log between Primary and Standby differs by more than 100,000,000, there is no failover.
 > If `replicate-ignore-db` or `replicate-ignore-table` is applied, changes to that DB or table will not be replicated and failover may fail.
 
-### Failed Over Primary
+<a id="failed-over-master"></a>
+### Failed Over Primary { #failed-over-master }
 
 A Primary that fails and conducts failover is called Failed Over Primary. Backups of Failed Over Primary are not automatically performed, and all other features other than Failed Over Primary recovery, rebuild, separate, and delete are not performed.
 
-### Recover Failed Over Primary
+<a id="recover-failed-over-master"></a>
+### Recover Failed Over Primary { #recover-failed-over-master }
 
 If the data is not consistent during failover and the binary log is not lost from the point of failure to the point of attempting recovery, the Failed Over Primary and the new Primary can be recovered back to the high availability configuration. Because it re-configure replication relationships with the new Primary in the database of the Failed Over Primary, recovery fails once the data became inconsistent or once the binary log required for recovery was lost.
 
@@ -877,7 +952,8 @@ To recover a Failed Over Primary, from the console
 ❶ Select the Failed Over Primary you want to recover from and click on **Recover 	
 Failed Over Primary** menu from the drop-down menu.
 
-### Rebuild Failed Over Primary
+<a id="rebuild-failed-over-master"></a>
+### Rebuild Failed Over Primary { #rebuild-failed-over-master }
 
 If the Failed Over Primary fails to recover, you can re-enable the high availability feature by rebuilding. Unlike recovery, rebuild removes all databases from the Failed Over Primary and rebuilds them based on the new Primary's database. In this process, if you do not have a backup file, use the following order to select the DB instance to perform backup.
 
@@ -899,7 +975,8 @@ To rebuild a Failed Over Primary, from the console
 
 ❶ Select the Failed Over Primary you want to rebuild and click on **Rebuild Failed Over Primary** menu from the drop-down menu.
 
-### Separate Failed Over Primary
+<a id="separate-failed-over-master"></a>
+### Separate Failed Over Primary { #separate-failed-over-master }
 
 If recovery of a Failed Over Primary fails and data correction is required, you can disable the high availability feature by separating that Failed Over Primary. The replication relationship between the separated Primary and the new Primary is broken, and each behaves as a normal DB instance. After separation, you cannot recover to the existing configuration.
 
@@ -910,7 +987,7 @@ To separate Failed Over Primary, from the console
 ❶ Select the Failed Over Primary you want to isolate and click on **Separate Failed Over Primary** menu from the drop-down menu.
 
 <a id="manual-failover"></a>
-### Manual Failover
+### Manual Failover { #manual-failover }
 
 For a high availability DB instance, you can select whether or not to restart with a failover when you perform an operation that accompanies a restart, which is as follows.
 
@@ -930,10 +1007,12 @@ After a restart using failover, the Standby will be restarted first. After that,
 
 When restarting with a failover, you can select the following additional items to increase stability.
 
+<a id="manual-failover-progress-current-point-in-time-backup"></a>
 #### Progress current point-in-time backup
 
 Because all binary logs are deleted during the failover process, you can proceed with manual backups immediately after the failover is complete.
 
+<a id="manual-failover-manual-control-of-failover"></a>
 #### Manual Control of Failover
 
 You can apply changes to the Standby first and then observe the trend, or you can control when you want to perform a failover at the exact time from the console. When you select Failover Manual Control, the ❶ console displays the **Failover** button after the Standby restarts. Click on this button to activate the failover, which can wait up to 5 days for the failover to occur. If the failover is not enabled within five days, the task will be automatically cancelled.
@@ -943,27 +1022,33 @@ You can apply changes to the Standby first and then observe the trend, or you ca
 > [Caution]
 > While waiting for a failover, no automatic failover occurs.
 
+<a id="manual-failover-waiting-for-resolve-replication-delay"></a>
 #### Waiting for Resolve Replication Delay
 
 When you enable Resolve Replication Delays option, you can wait for replication delays for the Standby and Read Replicas in the Replication group to disappear.
 
+<a id="manual-failover-block-write-load"></a>
 #### Block write load
 
 You can select to further block the write load while resolving replication delays. Blocking the write load puts the Primary in read-only mode and sets all change queries to fail immediately before performing the failover.
 
-### High availability suspended
+<a id="high-availability-suspended"></a>
+### High availability suspended { #high-availability-suspended }
 
 High availability features can be temporarily stopped in situations where a temporary operation can cause a connection outage or heavy load. When a high availability feature is suspended, it does not detect a failure and does not perform a failover action. When a high availability feature is suspended, performing an operation that requires a restart does not restart the suspended high availability feature. It is not recommended to leave data replication in a pause state for an extended period of time because high availability feature is paused and data replication is successful or failure is not detected.
 
-### Rebuild Standby
+<a id="rebuild-candidate-master"></a>
+### Rebuild Standby { #rebuild-candidate-master }
 
 Standby replication can be disrupted due to a variety of reasons, such as network disconnection, incorrect FEDERATED engine use, and replication settings from other Primaries. Standbys in a Stopped Replication state do not perform automatic failover. To resolve a Standby's Stopped Replication, the Standby needs to be rebuilt. When rebuilding a Standby, it removes all of the Standby's databases and rebuilds them based on the Primary's database. In this process, if the backup file required for rebuilding does not exist in the Primary database, the backup is performed on the Primary, which can cause performance degradation.
 
-## {{engine.pascalCase}} Procedure
+<a id="enginepascalcase-procedure"></a>
+## {{engine.pascalCase}} Procedure { #enginepascalcase-procedure }
 
 RDS for {{engine.pascalCase}} provides its own procedures for performing some of the features that are restricted from user accounts to provide user convenience.
 
-### tcrds_active_process
+<a id="tcrdsactiveprocess"></a>
+### tcrds_active_process { #tcrdsactiveprocess }
 
 * Make inquiry of Process list for ACTIVE status, not Sleep status.
 * Data output is displayed in order of longest performance time to shortest, and the query value (SQL) is displayed up to a hundred digits.
@@ -972,7 +1057,8 @@ RDS for {{engine.pascalCase}} provides its own procedures for performing some of
 {{engine.lowerCase}}> CALL mysql.tcrds_active_process();
 ```
 
-### tcrds_process_kill
+<a id="tcrdsprocesskill"></a>
+### tcrds_process_kill { #tcrdsprocesskill }
 
 * Forces to end a specific process.
 * Process ID to end can be checked in information_schema.processlist, and the process information can be checked using the tcrds_active_process and tcrds_current_lock procedures.
@@ -981,7 +1067,8 @@ RDS for {{engine.pascalCase}} provides its own procedures for performing some of
 {{engine.lowerCase}}> CALL mysql.tcrds_process_kill(processlist_id );
 ```
 
-### tcrds_current_lock
+<a id="tcrdscurrentlock"></a>
+### tcrds_current_lock { #tcrdscurrentlock }
 
 * Check the processes currently waiting for a lock and the process information occupying the lock.
 * (w) Process information that column information waits to obtain locks
@@ -992,7 +1079,8 @@ RDS for {{engine.pascalCase}} provides its own procedures for performing some of
 {{engine.lowerCase}}> CALL mysql.tcrds_current_lock();
 ```
 
-### tcrds_repl_changemaster (prior to 8.4)
+<a id="tcrdsreplchangemaster-prior-to-84"></a>
+### tcrds_repl_changemaster (prior to 8.4) { #tcrdsreplchangemaster-prior-to-84 }
 
 * Used to import external {{engine.pascalCase}} DBs into NHN Cloud RDS using replication.
 * Replication configuration of NHN Cloud RDS is done with **Create replication** of the console.
@@ -1015,7 +1103,8 @@ ex) call mysql.tcrds_repl_changemaster('10.162.1.1',10000,'db_repl','password','
 
 > [Caution] The account for replication must be created in {{engine.pascalCase}} of the replication target (Master).
 
-### tcrds_repl_changesource (after 8.4)
+<a id="tcrdsreplchangesource-after-84"></a>
+### tcrds_repl_changesource (after 8.4) { #tcrdsreplchangesource-after-84 }
 
 * Used when importing an external {{engine.pascalCase}} DB to NHN Cloud RDS using replication.
 * Replication configuration for NHN Cloud RDS can be done through **Create Replica** in the console.
@@ -1038,7 +1127,8 @@ ex) call mysql.tcrds_repl_changesource('10.162.1.1',10000,'db_repl','password','
 
 > [Caution] The replication account must be created in the replication target (Master) {{engine.pascalCase}}.
 
-### tcrds_repl_init
+<a id="tcrdsreplinit"></a>
+### tcrds_repl_init { #tcrdsreplinit }
 
 * Reset {{engine.pascalCase}} replication information.
 
@@ -1046,7 +1136,8 @@ ex) call mysql.tcrds_repl_changesource('10.162.1.1',10000,'db_repl','password','
 {{engine.lowerCase}}> CALL mysql.tcrds_repl_init();
 ```
 
-### tcrds_repl_slave_stop (before 8.4)
+<a id="tcrdsreplslavestop-before-84"></a>
+### tcrds_repl_slave_stop (before 8.4) { #tcrdsreplslavestop-before-84 }
 
 * Stop {{engine.pascalCase}} replication.
 
@@ -1054,7 +1145,8 @@ ex) call mysql.tcrds_repl_changesource('10.162.1.1',10000,'db_repl','password','
 {{engine.lowerCase}}> CALL mysql.tcrds_repl_slave_stop();
 ```
 
-### tcrds_repl_replica_stop (after 8.4)
+<a id="tcrdsreplreplicastop-after-84"></a>
+### tcrds_repl_replica_stop (after 8.4) { #tcrdsreplreplicastop-after-84 }
 
 * Stop {{engine.pascalCase}} replication.
 
@@ -1062,7 +1154,8 @@ ex) call mysql.tcrds_repl_changesource('10.162.1.1',10000,'db_repl','password','
 {{engine.lowerCase}}> CALL mysql.tcrds_repl_replica_stop();
 ```
 
-### tcrds_repl_slave_start (before 8.4)
+<a id="tcrdsreplslavestart-before-84"></a>
+### tcrds_repl_slave_start (before 8.4) { #tcrdsreplslavestart-before-84 }
 
 * Start {{engine.pascalCase}} replication.
 
@@ -1071,7 +1164,8 @@ ex) call mysql.tcrds_repl_changesource('10.162.1.1',10000,'db_repl','password','
 
 ```
 
-### tcrds_repl_replica_start (after 8.4)
+<a id="tcrdsreplreplicastart-after-84"></a>
+### tcrds_repl_replica_start (after 8.4) { #tcrdsreplreplicastart-after-84 }
 
 * Start {{engine.pascalCase}} replication.
 
@@ -1080,7 +1174,8 @@ ex) call mysql.tcrds_repl_changesource('10.162.1.1',10000,'db_repl','password','
 
 ```
 
-### tcrds_repl_skip_repl_error
+<a id="tcrdsreplskipreplerror"></a>
+### tcrds_repl_skip_repl_error { #tcrdsreplskipreplerror }
 
 * If you run the TCRDS_REPL_SKIP_REPL_ERROR procedure when the Duplicate Key error occurs, you can address the replica error.
       * Before 8.4: perform SQL_SLAVE_SKIP_COUNTER=1.
@@ -1091,7 +1186,8 @@ ex) call mysql.tcrds_repl_changesource('10.162.1.1',10000,'db_repl','password','
 {{engine.lowerCase}}> CALL mysql.tcrds_repl_skip_repl_error();
 ```
 
-### tcrds_repl_next_changemaster (before 8.4)
+<a id="tcrdsreplnextchangemaster-before-84"></a>
+### tcrds_repl_next_changemaster (before 8.4) { #tcrdsreplnextchangemaster-before-84 }
 
 * Changes replication information to read the next binary log of master.
 * When the following replication errors happens, run tcrds_repl_next_changemaster procedure to resolve the replication errors.
@@ -1102,7 +1198,8 @@ e.g. {{engine.pascalCase}} error code 1236 (ER_MASTER_FATAL_ERROR_READING_BINLOG
 {{engine.lowerCase}}> CALL mysql.tcrds_repl_next_changemaster();
 ```
 
-### tcrds_repl_next_changesource (after 8.4)
+<a id="tcrdsreplnextchangesource-after-84"></a>
+### tcrds_repl_next_changesource (after 8.4) { #tcrdsreplnextchangesource-after-84 }
 
 * Change the replication information so that you can read the next binary log log.
 * If you run the TCRDS_REXT_CHANGESOURCE procedure when the following replication error occurs, you can issue the replication error.
@@ -1113,7 +1210,8 @@ e.g. {{engine.pascalCase}} error code 1236 (ER_SOURCE_FATAL_ERROR_READING_BINLOG
 {{engine.lowerCase}}> CALL mysql.tcrds_repl_next_changesource();
 ```
 
-### tcrds_innodb_monitor_reset
+<a id="tcrdsinnodbmonitorreset"></a>
+### tcrds_innodb_monitor_reset { #tcrdsinnodbmonitorreset }
 
 * A procedure that runs innodb_monitor_reset variables that reset the counter in Information_schema.INNODB_METRICS table to zero.
 * Run the following query: `SET GLOBAL innodb_monitor_reset = '{counter-name|module_name|pattern|all}';`.
@@ -1128,7 +1226,8 @@ ex) CALL mysql.tcrds_innodb_monitor_reset('dml_reads');
 CALL mysql.tcrds_innodb_monitor_reset('module_dml');
 ```
 
-### tcrds_innodb_monitor_reset_all
+<a id="tcrdsinnodbmonitorresetall"></a>
+### tcrds_innodb_monitor_reset_all { #tcrdsinnodbmonitorresetall }
 
 * A procedure to run innodb_monitor_reset_all variables to reset counter value.
 * To use innodb_monitor_reset_all, the counter should be in disable state.
@@ -1138,7 +1237,8 @@ CALL mysql.tcrds_innodb_monitor_reset('module_dml');
 {{engine.lowerCase}}> CALL mysql.tcrds_innodb_monitor_reset_all('{counter-name|module_name|pattern|all}');
 ```
 
-### tcrds_foreign_key_checks
+<a id="tcrdsforeignkeychecks"></a>
+### tcrds_foreign_key_checks { #tcrdsforeignkeychecks }
 * A procedure that controls the `foreign_key_checks` variable that checks for foreign key constraints.
 * Run the following query: `SET GLOBAL foreign_key_checks ='ON|OFF';`.
 
@@ -1146,31 +1246,36 @@ CALL mysql.tcrds_innodb_monitor_reset('module_dml');
 {{engine.lowerCase}}> CALL mysql.tcrds_foreign_key_checks('{0|1|'OFF'|'ON'}');
 ```
 
-## Data Migration
+<a id="data-migration"></a>
+## Data Migration { #data-migration }
 
 * RDS can be exported as data to or imported from NHN Cloud RDS using mysqldump.
 * The mysqldump utility is provided by default when {{engine.pascalCase}} is installed.
 
-### Export using mysqldump
+<a id="export-using-mysqldump"></a>
+### Export using mysqldump { #export-using-mysqldump }
 
 * Prepare and use an instance of NHN Cloud RDS.
 * Check that the external instance on which you want to store the data to be exported, or the computer on which the local client is installed, has sufficient capacity.
 * If you need to export data outside of NHN Cloud, create Floating IP and connect it to the RDS instance where you want to export the data.
 * Export data externally using the mysqldump command below.
 
+<a id="export-using-mysqldump-when-exporting-files"></a>
 #### When exporting files
 
 ```
 mysqldump -h{rds_instance_floating_ip} -u{db_id} -p{db_password} --port={db_port} --single-transaction --routines --events --triggers --databases {database_name1, database_name2, ...} > {local_path_and_file_name}
 ```
 
+<a id="export-using-mysqldump-exporting-in-enginelowercase-db-out-of-nhn-cloud-rds"></a>
 #### Exporting in {{engine.lowerCase}} db out of NHN Cloud RDS
 
 ```
 mysqldump -h{rds_instance_floating_ip} -u{db_id} -p{db_password} --port={db_port} --single-transaction --routines --events --triggers --databases {database_name1, database_name2, ...} | mysql -h{external_db_host} -u{external_db_id} -p{external_db_password} --port={external_db_port}
 ```
 
-### Import by using mysqldump
+<a id="import-by-using-mysqldump"></a>
+### Import by using mysqldump { #import-by-using-mysqldump }
 
 
 * Prepare db outside NHN Cloud RDS to import data.
@@ -1182,18 +1287,21 @@ mysqldump -h{rds_instance_floating_ip} -u{db_id} -p{db_password} --port={db_port
 mysqldump -h{external_db_host} -u{external_db_id} -p{external_db_password} --port={external_db_port} --single-transaction --set-gtid-purged=off --routines --events --triggers --databases {database_name1, database_name2, ...} | mysql -h{rds_instance_floating_ip} -u{db_id} -p{db_password} --port={db_port}
 ```
 
+<a id="import-by-using-mysqldump-when-error-1227-occurs-during-data-importing"></a>
 #### When `ERROR 1227` occurs during data importing
 
 * `ERROR 1227` occurs when a stored object (trigger, view, function, or event) in the mysqldump file has DEFINER definition.
 * To resolve the error, delete the `DEFINER` part of the mysqldump file and proceed.
 
+<a id="import-by-using-mysqldump-when-error-1418-occurs-during-data-importing"></a>
 #### When `ERROR 1418` occurs during data importing
 
 * `ERROR 1418` occurs when the function declaration in the mysqldump file does not contain NO SQL, READS SQL DATA, or DETERMINISTIC and binary logging is enabled.
     * For detailed information, refer to [The Binary Log](https://dev.mysql.com/doc/refman/8.0/en/binary-log.html) MySQL document.
 * To resolve the error, Parameter value of `log_bin_trust_function_creators` of DB instance to which you want to apply mysqldump file should be changed to `1`.
 
-### Export by using replication
+<a id="export-by-using-replication"></a>
+### Export by using replication { #export-by-using-replication }
 
 * Replication allows you export data from NHN Cloud RDS to external DB.
 * The external db version has to be the same as or later than the version of NHN Cloud RDS.
@@ -1267,7 +1375,8 @@ START REPLICA;
 
 * If the source data of the external DB and the NHN Cloud RDS instance are identical, use the STOP SLAVE command to the external DB to terminate the replication
 
-### Import with Replication
+<a id="import-with-replication"></a>
+### Import with Replication { #import-with-replication }
 
 * You can import external DBs into NHN Cloud RDS using replication.
 * NHN Cloud RDS version has to be the same as or later than the external DB version.
@@ -1353,9 +1462,11 @@ mysql -h{rds_master_instance_floating_ip} -u{db_id} -p{db_password} --port={db_p
 {{engine.lowerCase}}> call mysql.tcrds_repl_init();
 ```
 
-## Appendix
+<a id="appendix"></a>
+## Appendix { #appendix }
 
-### Appendix 1. DB Instance Migration Guide for Hypervisor Maintenance
+<a id="appendix-1-db-instance-migration-guide-for-hypervisor-maintenance"></a>
+### Appendix 1. DB Instance Migration Guide for Hypervisor Maintenance { #appendix-1-db-instance-migration-guide-for-hypervisor-maintenance }
 
 NHN Cloud periodically updates the hypervisor software of the DB instance to improve security and stability.
 DB instances running on a hypervisor that requires maintenance must be migrated to the hypervisor where maintenance has been completed.
@@ -1365,31 +1476,37 @@ When you select a specific DB instance according to the parameter and migrate it
 Follow the guide below to use the migration feature on the console.
 Navigate to the project where the specified DB instance to be checked.
 
+<a id="appendix-1-db-instance-migration-guide-for-hypervisor-maintenance-check-the-db-instance-that-requires-maintenance"></a>
 #### 1. Check the DB instance that requires maintenance.
 
 Check the DB instances subject to maintenance in the list on the **DB Instance** tab. You can check for hypervisor migration tasks by clicking **Required** in the **Maintenance** menu, or by visiting the **Maintenance** tab in the **DB Instance Details**.
 Click **View** on the hypervisor migration maintenance task to view detailed information about the hypervisor migration.
 
+<a id="appendix-1-db-instance-migration-guide-for-hypervisor-maintenance-make-sure-you-close-any-running-applications-on-the-db-instance"></a>
 #### 2. Make sure you close any running applications on the DB instance.
 
 Take appropriate measures to avoid affecting services connected to the DB.
 If it is inevitable to affect the service, please contact NHN Cloud Customer Support, and we will guide you on appropriate measures.
 
+<a id="appendix-1-db-instance-migration-guide-for-hypervisor-maintenance-you-can-apply-migration-to-db-instances-targeted-for-maintenance"></a>
 #### 3. You can apply migration to DB instances targeted for maintenance.
 
 Select the DB instance to migrate, and then click **Apply Immediately** to perform the hypervisor migration right away.
 Click **Apply in the Next Maintenance Duration** to schedule the hypervisor migration for your preferred maintenance duration.
 
+<a id="appendix-1-db-instance-migration-guide-for-hypervisor-maintenance-wait-for-the-db-instance-migration-to-finish"></a>
 #### 4. Wait for the DB instance migration to finish.
 
 If the DB instance state does not change, do 'refresh'.
 No operations can be performed on the DB instance while migration is in progress.
 If the DB instance migration is not completed normally, it is automatically reported to the administrator, and NHN Cloud will contact you.
 
-### Appendix 2. Configuration guide for using Federated Storage Engine with RDS
+<a id="appendix-2-configuration-guide-for-using-federated-storage-engine-with-rds"></a>
+### Appendix 2. Configuration guide for using Federated Storage Engine with RDS { #appendix-2-configuration-guide-for-using-federated-storage-engine-with-rds }
 
 When using Federated Storage Engine, make sure you consider the following.
 
+<a id="appendix-2-configuration-guide-for-using-federated-storage-engine-with-rds-for-configuration-using-rds-as-a-local-node"></a>
 #### For configuration using RDS as a local node
 
 * Make sure you need to allow the outbound direction to remote nodes.
@@ -1400,6 +1517,7 @@ When using Federated Storage Engine, make sure you consider the following.
     * In this case, the data input performed on the Primary is performed on the remote node according to the federated setting, and the same input is performed on the Read Replica, which may lead to stop replication due to duplicate key errors.
     * Make sure you need to configure the settings of replicate-ignore-table so that Read Only Save does not replicate a federated table.
 
+<a id="appendix-2-configuration-guide-for-using-federated-storage-engine-with-rds-for-configuration-using-rds-as-a-remote-node"></a>
 #### For configuration using RDS as a remote node
 
 * Make sure you need to allow the inbound direction to local nodes.
@@ -1407,13 +1525,14 @@ When using Federated Storage Engine, make sure you consider the following.
     * Refer to [DB Security Group](db-security-group/) for more information.
 
 <a id="security-patch"></a>
-### Appendix 3. Security Patch
+### Appendix 3. Security Patch { #security-patch }
 
 NHN Cloud periodically manages security vulnerabilities (CVEs) found in the operating systems of DB instances and provides security patch maintenance tasks for affected DB instances.
 Security patches work by applying the latest security updates that resolve the current vulnerabilities of DB instances.
 Follow the guide below to use the security patch feature in the console.
 Navigate to the project that contains the DB instances designated as security patch targets.
 
+<a id="security-patch-check-the-db-instances-targeted-for-security-patching"></a>
 #### 1. Check the DB instances targeted for security patching.
 
 You can check whether a security patch maintenance task exists by clicking **Required** or **Available** under **Maintenance**, or by checking the **Maintenance** tab in **DB Instance Details**.
@@ -1432,12 +1551,14 @@ You can check information on security vulnerabilities that can be resolved by pr
 > [Note]
 > Vulnerability severity is classified as CRITICAL, HIGH, MEDIUM, or LOW.
 
+<a id="security-patch-check-the-applications-connected-to-the-db-instances-targeted-for-security-patching"></a>
 #### 2. Check the applications connected to the DB instances targeted for security patching.
 
 Security patching may cause a brief service interruption on the DB instance.
 For high-availability DB instances, service interruptions can be minimized through failover. For single DB instances, the security patch is applied through a restart.
 Take appropriate measures to avoid affecting services connected to the DB.
 
+<a id="security-patch-select-when-to-apply-the-security-patch"></a>
 #### 3. Select when to apply the security patch.
 
 ![patch-security-maintenance-en]({{url.cdn}}/26.05.12/patch-security-maintenance-en.png)
@@ -1452,6 +1573,7 @@ When applying to a high-availability DB instance, the following options can also
 * **Wait for replication lag**: Waits until replication lag is resolved before proceeding with the security patch.
 * **Read Only mode**: Uses read-only mode while the security patch is being performed.
 
+<a id="security-patch-wait-until-the-security-patch-is-complete"></a>
 #### 4. Wait until the security patch is complete.
 
 If the DB instance status does not change, refresh the page.

@@ -1,6 +1,10 @@
-## Database > RDS for {{engine.pascalCase}} > 通知
+<!-- pre-align:aligned sig=ffcf287dccd2 -->
 
-## イベント
+<a id="database-rds-for-enginepascalcase-notification"></a>
+## Database > RDS for {{engine.pascalCase}} > 通知 { #database-rds-for-enginepascalcase-notification }
+
+<a id="event"></a>
+## イベント { #event }
 
 イベントとは、RDS for {{engine.pascalCase}}やユーザーによって発生した重要なイベントを意味します。イベントはイベントタイプ、発生日時、元ソースとメッセージで構成されます。イベントはコンソールで照会可能で、購読することでメール、SMSでイベント発生通知を受けることができます。イベントの種類と発生するイベントは下記の通りです。
 
@@ -173,7 +177,8 @@
 | TENAT_04_04 | TENANT            | はい     | プロジェクト全体のボリュームサイズ制限                   |
 | TENAT_05_04 | TENANT            | はい     | Read Replica数制限                    |
 
-## イベント購読
+<a id="subscribe-to-event"></a>
+## イベント購読 { #subscribe-to-event }
 
 イベントタイプ、コード、ソースに分けてイベントを購読できます。イベントタイプで購読すると、イベントタイプに含まれるすべてのイベントコードの通知を受け取ります。通知が広範すぎる場合、イベントコードとソースに細分化して購読できます。プロジェクトメンバーのみ通知を受けるユーザーとして選択できます。基本的にはメールでイベント通知が送信され、実名認証した携帯電話番号が登録された場合のみSMSで追加イベント通知が送信されます。
 
@@ -186,14 +191,16 @@
 * ❺ イベント通知を受け取るユーザーグループを選択します。
 * ❻ 有効にするかどうかを選択します。`いいえ`を選択した場合、イベント発生通知を送信しません。
 
-## ユーザーグループ
+<a id="user-group"></a>
+## ユーザーグループ { #user-group }
 
 通知を受けるユーザーをグループで管理できます。通知対象は必ずプロジェクトメンバーとして登録されている必要があります。ユーザーグループに属するユーザーがプロジェクトメンバーから除外されると、ユーザーグループに属していても通知を受けることができません。
 
 > [注意]
 > 実名認証を行っておらず、携帯電話情報がない場合、SMS通知を受けることができません。
 
-### ユーザーグループの作成
+<a id="create-user-group"></a>
+### ユーザーグループの作成 { #create-user-group }
 
 ![user_group_01_ja]({{url.cdn}}/23.06.13/user_group_01_ja.png)
 
@@ -206,11 +213,13 @@
     * 該当ユーザーグループを利用してアラームを送信する場合、その時点で全プロジェクトメンバーを対象にアラームを送信します。
 * ❻ **OK**を押してユーザーグループにユーザーを追加します。
 
-## 通知グループ
+<a id="notification-group"></a>
+## 通知グループ { #notification-group }
 
 通知グループを通じて、パフォーマンス指標に関する通知を受けることができます。通知グループに監視対象インスタンスと通知を受けるユーザーグループを指定します。監視設定で通知を受けるパフォーマンス指標のしきい値と条件を設定します。設定された指標が監視設定の条件を満たすと、接続されたユーザーグループに通知が送信されます。通知グループに設定された通知タイプによって、SMSまたはメールで通知を送信します。
 
-### 通知グループの作成
+<a id="create-notification-group"></a>
+### 通知グループの作成 { #create-notification-group }
 
 ![notification_group_01_ja.png]({{url.cdn}}/23.04.11/notification_group_01_ja.png)
 
@@ -220,11 +229,13 @@
 * ❹ 監視対象DBインスタンスを選択します。
 * ❺ 通知を受け取るユーザーグループを選択します。
 
-## 監視設定
+<a id="monitoring-settings"></a>
+## 監視設定 { #monitoring-settings }
 
 監視設定は、監視項目、比較方法、しきい値、および持続時間で構成されます。監視項目の性能指標値としきい値を比較し、条件を満たしているかどうかを判断します。持続時間以上連続して条件を満たした場合、通知を送信します。例えば、CPU使用率のしきい値が90%以上で持続時間が5分であれば、その通知グループと連動されたDBインスタンスのCPU使用率が90%以上の状態が5分以上続いた時、ユーザーグループに定義されたユーザーに通知を送信します。もし、CPU使用率が90%以上になっても、5分以内に90%未満になれば、通知は発生しません。
 
-### 監視設定項目
+<a id="monitoring-settings-items"></a>
+### 監視設定項目 { #monitoring-settings-items }
 
 監視可能な性能指標項目は次のとおりです。
 
@@ -274,7 +285,8 @@
 | Database Replication SQL Thread Status | 異常: 0、正常: 1     |
 | Database Replication Threads Status    | 異常: 0、正常: 1     |
 
-### 監視設定の追加
+<a id="add-monitoring-setting"></a>
+### 監視設定の追加 { #add-monitoring-setting }
 
 ![notification_group_02_ja.png]({{url.cdn}}/23.04.11/notification_group_02_ja.png)
 
@@ -282,7 +294,8 @@
 * ❷ **監視設定の追加**を押して新規監視設定を追加します。
 * ❸ 監視する項目と比較方法、しきい値、持続時間を入力した後、**追加**をクリックします。
 
-### 監視設定の変更および削除
+<a id="change-and-delete-monitoring-settings"></a>
+### 監視設定の変更および削除 { #change-and-delete-monitoring-settings }
 
 ![notification_group_03_ja.png]({{url.cdn}}/23.04.11/notification_group_03_ja.png)
 
