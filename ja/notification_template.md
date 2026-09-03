@@ -1,3 +1,5 @@
+<!-- machine_translated: true -->
+
 <!-- pre-align:aligned sig=ffcf287dccd2 -->
 
 <a id="database-rds-for-enginepascalcase-notification"></a>
@@ -101,7 +103,7 @@
 | INSTC_43_04 | INSTANCE          | いいえ    | RAM容量制限                               |
 | INSTC_44_04 | INSTANCE          | いいえ    | 個別ボリュームサイズ制限                          |
 | INSTC_45_04 | INSTANCE          | いいえ    | プロジェクト全体ボリュームサイズ制限                    |
-| INSTC_46_04 | INSTANCE          | いいえ    | Read Replica数制限                    |
+| INSTC_46_04 | INSTANCE          | いいえ      | Read Replica 数の制限                |
 | INSTC_47_00 | INSTANCE          | はい     | DBインスタンスのバックアップおよびエクスポート開始            |
 | INSTC_47_01 | INSTANCE          | はい     | DBインスタンスのバックアップおよびエクスポート完了            |
 | INSTC_47_04 | INSTANCE          | はい     | DBインスタンスのバックアップおよびエクスポート失敗            |
@@ -136,9 +138,9 @@
 | INSTC_60_00 | INSTANCE          | はい     | DBインスタンスのマイグレーション開始                   |
 | INSTC_60_01 | INSTANCE          | はい     | DBインスタンスのマイグレーション完了                   |
 | INSTC_60_04 | INSTANCE          | はい     | DBインスタンスのマイグレーション失敗                   |
-| INSTC_61_00 | INSTANCE          | はい     | Standby再構築開始                           |
-| INSTC_61_01 | INSTANCE          | はい     | Standby再構築完了                           |
-| INSTC_61_04 | INSTANCE          | はい     | Standby再構築失敗                           |
+| INSTC_61_00 | INSTANCE          | はい        | スタンバイ再構築開始                        |
+| INSTC_61_01 | INSTANCE          | はい        | Standby 再構築完了                        |
+| INSTC_61_04 | INSTANCE          | はい        | Standby 再構築失敗                        |
 | INSTC_62_00 | INSTANCE          | はい     | DBエンジンバージョンアップグレード開始                  |
 | INSTC_62_01 | INSTANCE          | はい     | DBエンジンバージョンアップグレード完了                  |
 | INSTC_62_04 | INSTANCE          | はい     | DBエンジンバージョンアップグレード失敗                  |
@@ -175,7 +177,7 @@
 | TENAT_02_04 | TENANT            | はい     | RAM容量制限	                              |
 | TENAT_03_04 | TENANT            | はい     | 個別ボリュームサイズ制限                          |
 | TENAT_04_04 | TENANT            | はい     | プロジェクト全体のボリュームサイズ制限                   |
-| TENAT_05_04 | TENANT            | はい     | Read Replica数制限                    |
+| TENAT_05_04 | TENANT            | はい        | Read Replica 数の制限                |
 
 <a id="subscribe-to-event"></a>
 ## イベント購読 { #subscribe-to-event }
@@ -197,7 +199,7 @@
 通知を受けるユーザーをグループで管理できます。通知対象は必ずプロジェクトメンバーとして登録されている必要があります。ユーザーグループに属するユーザーがプロジェクトメンバーから除外されると、ユーザーグループに属していても通知を受けることができません。
 
 !!! danger "注意"
-    実名認証を行っておらず、携帯電話情報がない場合、SMS通知を受けることができません。
+    実名認証を行っていないため携帯電話情報がない場合、SMS 通知を受け取ることができません。
 
 <a id="create-user-group"></a>
 ### ユーザーグループの作成 { #create-user-group }
