@@ -1,8 +1,12 @@
-## Database > RDS for {{engine.pascalCase}} > 개요
+<!-- pre-align:aligned sig=ca8f6a430f7f -->
+
+<a id="database-rds-for-enginepascalcase-overview"></a>
+## Database > RDS for {{engine.pascalCase}} > 개요 { #database-rds-for-enginepascalcase-overview }
 
 RDS for {{engine.pascalCase}}은 {{engine.pascalCase}} 데이터베이스를 클라우드 환경에서 사용할 수 있는 서비스입니다. 손쉽게 {{engine.pascalCase}}이 설치된 가상 장비를 사용할 수 있습니다.
 
-## 주요 기능
+<a id="main-features"></a>
+## 주요 기능 { #main-features }
 
 * 손쉽게 원하는 사양 및 볼륨 크기로 {{engine.pascalCase}} 데이터베이스를 사용할 수 있습니다.
 * 장애가 발생하더라도 가용성에 문제가 없도록 고가용성 기능을 설정할 수 있습니다.
