@@ -1,3 +1,5 @@
+<!-- machine_translated: true -->
+
 <!-- pre-align:aligned sig=fc4a4521d735 -->
 
 <a id="database-rds-for-enginepascalcase-backup-and-restoration"></a>
@@ -6,14 +8,13 @@
 <a id="overview"></a>
 ## Backup Overview { #overview }
 
-You can prepare in advance to recover the database of DB instance in case of failure. You can perform backups through the console whenever necessary, and you can configure to perform backups periodically. During backup, storage performance of the DB instance on which the backup is performed can be degraded. To avoid affecting service, it is better to perform back up at a time when the service is under low load. If you do not want the backup to degrade performance, you can use a
-high-availability configuration or back up only increments of data since the previous backup, or perform backups from Read Replica.
+You can prepare in advance to recover the DB instance's database in case of failure. You can perform backups through the console whenever necessary, and you can configure it to perform backups periodically. During backup, the storage performance of the DB instance on which the backup runs may degrade. To avoid affecting service, we recommend that you perform backups when the service is under low load. If you do not want the backup to degrade performance, you can use a high-availability configuration, back up only increments of data since the previous backup, or perform backups from a read replica.
 
 !!! tip "Note"
     High availability DB instances perform backups on the Standby so that the storage performance of the Primary is not degraded.
     However, backups can be performed on the Primary even if it is a high availability DB instance in the following cases.
     * If a backup cannot be performed due to a Standby failure.
-    * If you do not have a Read Replica in a situation where you need a backup taken from a DB instance other than the Standby for rebuilding the Standby
+    * If you do not have a Read Replica in a situation where a backup taken from a DB instance other than the Standby is needed for rebuilding the Standby.
 
 {{#if (eq engine.lowerCase "mysql")}}
 RDS for MySQL uses Percona XtraBackup to back up databases. You have to use the same version of Percona XtraBackup that RDS for MySQL uses to restore to backup of external MySQL or to restore to backup of RDS for MySQL Percona XtraBackup version in line with DB engine version is as follows.
@@ -113,8 +114,8 @@ The following limitations exist for backups that are the basis for incremental b
 * If the DB instance that took that backup has been deleted or is unable to take a backup due to failure, it cannot be the baseline backup.
 * Backups created before the September 2024 scheduled release cannot be baseline backups.
 
-When incremental backups are scheduled according to [Auto Backup Strategy](#set-auto-backup), a baseline backup that satisfies the above constraints, plus the following additional constraints, is automatically selected. If no baseline backup satisfies the constraints, a full backup is performed regardless of the auto backup strategy.
-* A backup performed on a Standby, Read Replica that is in a replication down state cannot be a baseline backup.
+When an incremental backup runs according to the [automatic backup strategy](#set-auto-backup), a baseline backup that meets the above constraints as well as the following additional constraints is automatically selected. If no baseline backup satisfies the constraints, a full backup is performed regardless of the automatic backup strategy.
+* A backup performed on a Standby or Read Replica that is in a replication down state cannot be a baseline backup.
 * A backup performed without table locks enabled cannot be a baseline backup.
 * If a new full backup was created after that backup was created, it cannot be the baseline backup.
 
@@ -226,7 +227,7 @@ All backup files are uploaded to the internal backup storage and stored. For man
 <a id="export-files-while-performing-backup"></a>
 #### Export Files While Performing Backup
 
-After a backup, you can export the backup file to user object storage. This is not supported for incremental backups.
+After a backup, you can export the backup file to object storage. This is not supported for incremental backups.
 
 ![db-instance-list-export-obs-en]({{url.cdn}}/24.03.12/db-instance-list-export-obs-en.png)
 
@@ -242,7 +243,7 @@ After a backup, you can export the backup file to user object storage. This is n
 <a id="export-backup-files"></a>
 #### Export Backup Files
 
-You can export backup files stored in internal backup storage to user object storage. Not supported for incremental backups.
+You can export backup files stored in internal backup storage to object storage. Not supported for incremental backups.
 
 ![db-instance-detail-backup-export-en]({{url.cdn}}/24.03.12/db-instance-detail-backup-export-en.png)
 
@@ -252,7 +253,7 @@ You can export backup files stored in internal backup storage to user object sto
 
 ❷ Select the backup file to export from the **Backup** tab and click **Export to Object Storage**.
 
-!!! tip "Note"
+!!! tip "Tip"
     For manual backups, if the source DB instance that performed the backup was deleted, you cannot export the backup.
 
 <a id="restore"></a>
@@ -335,7 +336,7 @@ You can use an external MariaDB backup file to create a DB instance.
 {{/if}}
 
 !!! danger "Caution"
-    If the setting value of innodb\_data\_file\_path is not ibdata1:12M:autoextend, it is unable to restore to DB instance of RDS for {{engine.pascalCase}}.
+    If the setting value of innodb_data_file_path is not ibdata1:12M:autoextend, you cannot restore to the DB instance of RDS for {{engine.pascalCase}}.
 
 {{#if (eq engine.lowerCase "mysql")}}
 (1) Use the command below to perform a backup on the server where MySQL is installed.
@@ -372,9 +373,10 @@ mariabackup --defaults-file={my.cnf path} --user {user} --password '{password}' 
 
 {{#if (eq engine.lowerCase "mysql")}}
 !!! danger "Caution"
-    In the current version of 5.7.33, restoring DB instances using backup files on object storage is restricted.
-    If use a version other than the recommended XtraBackup, it may not work properly.
-    The backup file on the object storage has to be the same version of MySQL that you want to restore.
+    In the current version of 5.7.33, restoring DB instances using backup files in object storage is restricted.
+    It might not work properly if you use an XtraBackup version other than the ones recommended.
+    The backup file in object storage and the MySQL version to restore must be the same.
+
 {{/if}}
 
 <a id="restoration-by-using-rds-for-enginepascalcase-backup"></a>
