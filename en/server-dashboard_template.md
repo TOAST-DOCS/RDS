@@ -1,6 +1,10 @@
-## Database > RDS for {{engine.pascalCase}} > Server Dashboard
+<!-- pre-align:aligned sig=6e0e3f357ac5 -->
 
-## Server Dashboard
+<a id="database-rds-for-enginepascalcase-server-dashboard"></a>
+## Database > RDS for {{engine.pascalCase}} > Server Dashboard { #database-rds-for-enginepascalcase-server-dashboard }
+
+<a id="server-dashboard"></a>
+## Server Dashboard { #server-dashboard }
 
 You can visualize performance metrics in chart form on the server dashboard. Charts are arranged according to a preset layout. Metrics are collected once every minute and kept for up to 1 year. Retention period by aggregation unit is as follows.
 
@@ -8,7 +12,8 @@ You can visualize performance metrics in chart form on the server dashboard. Cha
 |----------------|------------------| 
 | 1 minute | 1 year |
 
-## Layout
+<a id="layout"></a>
+## Layout { #layout }
 
 Use a layout to show the size and position of charts. When the service is enabled, 2 layouts are provided by default, `Default system index` and `Default {{engine.pascalCase}} index`. Default layouts cannot be changed or deleted and you cannot add charts or change or delete charts that have been added. If you want to view charts in addition to the default layouts, you can create a layout and add charts.
 
@@ -17,7 +22,8 @@ Use a layout to show the size and position of charts. When the service is enable
 ❶ When you click **Create Layout**, a pop-up window appears where you can create a layout.
 ❷ Enter a layout name and click **Create** to create a layout.
 
-### Add Charts to Layout
+<a id="add-charts-to-layout"></a>
+### Add Charts to Layout { #add-charts-to-layout }
 
 ![layout_02_en]({{url.cdn}}/23.04.11/layout_02_en.png)
 
@@ -30,7 +36,8 @@ Use a layout to show the size and position of charts. When the service is enable
 ❷ When you click a chart name, a chart preview appears in the area on the left.
 ❸ Click **Add** to add all selected charts.
 
-### Change and Delete Charts in Layout
+<a id="change-and-delete-charts-in-layout"></a>
+### Change and Delete Charts in Layout { #change-and-delete-charts-in-layout }
 
 ![layout_04_en]({{url.cdn}}/23.04.11/layout_04_en.png)
 
@@ -38,7 +45,8 @@ Use a layout to show the size and position of charts. When the service is enable
 ❷ You can resize the chart by dragging and dropping the bottom right area of the chart.
 ❸ When you click **x** in the upper right corner of the chart, the chart is deleted from the layout.
 
-## Chart
+<a id="chart"></a>
+## Chart { #chart }
 
 You can view various performance metrics for DB instance in chart form. Each performance metric consists of a different type of chart. In addition to default system metrics, {{engine.pascalCase}} provides various performance metrics in chart form. Metrics that can be found for each chart are as follows.
 
@@ -64,18 +72,21 @@ You can view various performance metrics for DB instance in chart form. Each per
 | Data Storage Defect        | disk fault status                                                                                                                    | Abnormal: 0, Normal: 1                                         |
 | Replication Thread Status  | replication IO / SQL thread status                                                                                                   | Abnormal: 0, Normal: 1                                         |
 
-## Server Group
+<a id="server-group"></a>
+## Server Group { #server-group }
 
 Server group allows you to view performance metrics for multiple DB instances in a single chart. Performance metrics appear in a single chart for each DB instance that belongs to a server group. Charts that consist of multiple performance metrics are all changed to individual performance metrics across server groups.
 
-### Create Server Group
+<a id="create-server-group"></a>
+### Create Server Group { #create-server-group }
 
 ![chart_01_en]({{url.cdn}}/23.04.11/chart_01_en.png)
 
 ❶ **Add Group** displays a pop-up window where you can create groups.
 ❷ Select DB instance to add to server groups.
 
-### Server Group Settings
+<a id="server-group-settings"></a>
+### Server Group Settings { #server-group-settings }
 
 DB instances and server groups appear together in the list of servers on the left side of the server dashboard.
 

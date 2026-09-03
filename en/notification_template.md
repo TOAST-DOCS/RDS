@@ -1,6 +1,10 @@
-## Database > RDS for {{engine.pascalCase}} > Notification
+<!-- pre-align:aligned sig=ffcf287dccd2 -->
 
-## Event
+<a id="database-rds-for-enginepascalcase-notification"></a>
+## Database > RDS for {{engine.pascalCase}} > Notification { #database-rds-for-enginepascalcase-notification }
+
+<a id="event"></a>
+## Event { #event }
 
 Event refers to an important event that occurs either by RDS for {{engine.pascalCase}} or by user. Event consists of the event type, the date and time of occurrence, the original source and the message. Event can be viewed from the console, and you can receive notifications of event occurrence by email or SMS through subscription. The event type and the possible events are as follows.
 
@@ -173,7 +177,8 @@ Event refers to an important event that occurs either by RDS for {{engine.pascal
 | TENAT_04_04       | TENANT            | Yes          | Total project volume limit                                                    |
 | TENAT_05_04       | TENANT            | Yes          | Read-only slaves limit                                                        |
 
-## Subscribe to Event
+<a id="subscribe-to-event"></a>
+## Subscribe to Event { #subscribe-to-event }
 
 You can subscribe to events by event type, code, and source. When you subscribe by event type, you will be notified of all the event codes included in the event type. If the notification is too broad, you can subscribe by event code and source. You can select only project members as the users to receive notifications. By default, event notifications are sent by email, and additional event notifications are sent by SMS only if mobile phone number with real name authentication is registered.
 
@@ -186,14 +191,16 @@ You can subscribe to events by event type, code, and source. When you subscribe 
 * ❺ Select the user group to receive event notifications.
 * ❻ Select whether to enable or not. If it is not enabled, no event notification is to be sent.
 
-## User Group
+<a id="user-group"></a>
+## User Group { #user-group }
 
 You can manage users as groups to receive notifications. Notification target must be registered as a project member. If the users in the user group are excluded from the project members, they will not be notified even if they belong to the user group.
 
 > [Caution]
 > If there is no mobile phone information for the reason of not performing real name authentication, you will not receive SMS notifications.
 
-### Create User Group
+<a id="create-user-group"></a>
+### Create User Group { #create-user-group }
 
 ![user_group_01_en]({{url.cdn}}/23.06.13/user_group_01_en.png)
 
@@ -206,12 +213,14 @@ You can manage users as groups to receive notifications. Notification target mus
     * When sending an alarm using the user group, the alarm is sent to all project members at the time.
 * ❻ Click **OK** to add a user to the user group.
 
-## Notification Group
+<a id="notification-group"></a>
+## Notification Group { #notification-group }
 
 Notification group allows you to receive notifications about performance metrics. Specify which instances are monitored in the notification group and which user groups are notified. Set the thresholds and conditions for performance metrics to be notified through the monitoring settings. Once the set metrics meet the conditions in the monitoring settings, notifications to the associated user groups are sent. Notifications are sent by SMS or email, depending on the type of notification set in the
 notification group.
 
-### Create Notification Group
+<a id="create-notification-group"></a>
+### Create Notification Group { #create-notification-group }
 
 ![notification_group_01_en.png]({{url.cdn}}/23.04.11/notification_group_01_en.png)
 
@@ -221,12 +230,14 @@ notification group.
 * ❹ Select a DB instance to be monitored.
 * ❺ Select a group of users to be notified.
 
-## Monitoring Settings
+<a id="monitoring-settings"></a>
+## Monitoring Settings { #monitoring-settings }
 
 The monitoring settings consist of items, comparison method, threshold, and duration. Compare the performance metrics and threshold values of monitoring items to determine if the conditions are met. Notification is sent if the condition is met continuously for longer than the duration. For example, if the CPU usage rate is greater than 90% and the duration is 5 minutes, sends notifications to users defined in user groups, when the DB instance linked with that notification group has sustained CPU
 usage rate of 90% or higher for more than 5 minutes. Notification is not sent, even though CPU usage rate reaches 90% or higher but it falls below 90% within 5 minutes.
 
-### Monitoring Settings Items
+<a id="monitoring-settings-items"></a>
+### Monitoring Settings Items { #monitoring-settings-items }
 
 Performance metrics items that can be monitored are as follows.
 
@@ -276,7 +287,8 @@ Performance metrics items that can be monitored are as follows.
 | Database Replication SQL Thread Status | Abnormal: 0, Normal: 1           |
 | Database Replication Threads Status    | Abnormal: 0, Normal: 1           |
 
-### Add Monitoring Setting
+<a id="add-monitoring-setting"></a>
+### Add Monitoring Setting { #add-monitoring-setting }
 
 ![notification_group_02_en.png]({{url.cdn}}/23.04.11/notification_group_02_en.png)
 
@@ -284,7 +296,8 @@ Performance metrics items that can be monitored are as follows.
 * ❷ Click **Add Monitoring Settings** to add new monitoring settings.
 * ❸ Enter the items you want to monitor and the comparison method, threshold value, and the duration, and then click **Add**.
 
-### Change and Delete Monitoring Settings
+<a id="change-and-delete-monitoring-settings"></a>
+### Change and Delete Monitoring Settings { #change-and-delete-monitoring-settings }
 
 ![notification_group_03_en.png]({{url.cdn}}/23.04.11/notification_group_03_en.png)
 

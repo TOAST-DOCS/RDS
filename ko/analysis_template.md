@@ -1,6 +1,10 @@
-## Database > RDS for {{engine.pascalCase}} > 분석
+<!-- pre-align:aligned sig=44a5340e8b3f -->
 
-## Process List, InnoDB Status
+<a id="database-rds-for-enginepascalcase-analysis"></a>
+## Database > RDS for {{engine.pascalCase}} > 분석 { #database-rds-for-enginepascalcase-analysis }
+
+<a id="process-list-innodb-status"></a>
+## Process List, InnoDB Status { #process-list-innodb-status }
 
 데이터베이스에서 수행된 쿼리와 InnoDB 엔진의 상태를 수집합니다. 1초에 한 번씩 `information_schema.processlist`의 결과와, `SHOW ENGINE INNODB STATUS`의 결과를 수집하며 최근 4일간의 데이터를 콘솔의 분석 탭에서 조회할 수 있습니다.
 
@@ -21,7 +25,8 @@
 | Query         | 실행 중인 쿼리                                          |
 | InnoDB Status | InnoDB 상태 정보                                      |
 
-## Slow Query
+<a id="slow-query"></a>
+## Slow Query { #slow-query }
 
 데이터베이스에서 발생한 Slow Query를 분석하여 결과를 수집합니다. Percona에서 제공하는 쿼리 분석 도구인 pt-query-digest를 사용하여 1분에 한 번씩 분석하며 최근 30일간의 데이터를 콘솔의 분석 탭에서 조회할 수 있습니다.
 
