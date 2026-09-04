@@ -311,6 +311,184 @@ DBインスタンスの状態は下記のような値で構成され、ユーザ
 
 ❶パラメータ変更事項適用が必要なDBインスタンスをフィルタリング条件で検索できます。
 
+<a id="db-instance-group-details"></a>
+## DB 인스턴스 그룹 상세 { #db-instance-group-details }
+
+DB 인스턴스 목록을 **그룹** 화면으로 본 뒤 DB 인스턴스 그룹을 선택하면 그룹 상세 정보를 확인할 수 있습니다. 그룹 상세 화면에는 다음 탭이 표시됩니다.
+
+| 탭             | 설명                                                                                                |
+|---------------|---------------------------------------------------------------------------------------------------|
+| 기본 정보         | DB 인스턴스 그룹 이름과 ID, 고가용성 구성, Primary 및 Standby 이름, Ping 설정을 확인합니다.                                  |
+| DB 스키마 & 사용자 | 그룹에 속한 DB 인스턴스의 DB 스키마와 사용자를 관리합니다. DB 스키마와 사용자 기능은 개별 DB 인스턴스 상세가 아닌 DB 인스턴스 그룹 상세에서 제공합니다. |
+
+<a id="db-schema-and-users"></a>
+### DBスキーマ&ユーザー { #db-schema-and-users }
+
+DB 인스턴스 그룹 상세의 **DB 스키마 & 사용자** 탭에서는 그룹에 속한 데이터베이스의 스키마와 사용자를 조회 및 제어할 수 있습니다.
+
+<a id="db-schema-and-users-db-schema-created"></a>
+#### DBスキーマの作成
+
+![db-instance-detail-schema_ja]({{url.cdn}}/26.01.13/db-instance-detail-schema_ja.png)
+
+❶ **作成**をクリックすると、DBスキーマの名前を入力できるポップアップウィンドウが表示されます。
+❷ DBスキーマ名を入力した後、**確認**をクリックしてDBスキーマを作成することができます。
+
+DBスキーマ名には下記のような制約事項があります。
+
+* 1～64文字の間のアルファベット、数字、_のみ使用でき、最初の文字は英字のみ使用できます。
+* `information_schema`, `performance_schema`, `db_helper`, `sys`, `mysql`, `rds_maintenance`はDBスキーマ名として使用できません。
+
+作成されたDBスキーマの名前は修正できません。
+
+<a id="db-schema-and-users-db-schema-deleted"></a>
+#### DBスキーマの削除
+
+![db-instance-detail-schema-delete-ja]({{url.cdn}}/26.01.13/db-instance-detail-schema-delete-ja.png)
+
+❶削除するDBスキーマを選択し、ドロップダウンメニューをクリックします。
+❷ **削除**メニューをクリックすると、削除確認ポップアップ画面が表示されます。**確認**をクリックして削除をリクエストできます。
+
+<a id="db-schema-and-users-create-a-user"></a>
+#### ユーザーの作成
+
+![db-instance-detail-user-create-ja]({{url.cdn}}/26.01.13/db-instance-detail-user-create-ja.png)
+
+❶ **+作成**をクリックすると、ユーザー追加ポップアップ画面が表示されます。
+❷ユーザーIDを入力します。
+
+ユーザーIDには以下のような制約があります。
+
+* 1～32文字の間の文字でなければなりません。
+* `mysql.session`, `mysql.sys`, `mysql.infoschema`, `sqlgw`, `admin`, `etladm`, `alertman`, `prom`, `rds_admin`, `rds_mha`, `rds_repl`はユーザーIDとして使用できません。
+
+❸ Passwordを入力します。
+❹接続を許可するHost IPを入力します。`%`文字を利用すると、許可するHost IPを範囲として指定できます。例えば、`1.1.1.%`は、`1.1.1.0`~`1.1.1.255`の間のすべてのIPを意味します。
+❺ユーザーに付与する権限を選択します。付与できる権限と説明は次のとおりです。
+
+**READ**
+* 照会権限を持っています。
+
+```sql
+GRANT SELECT, SHOW VIEW, PROCESS, SHOW DATABASES, REPLICATION SLAVE, REPLICATION CLIENT ON *.* TO '{user_id}'@'{host}';
+GRANT SELECT ON `mysql`.* TO '{user_id}'@'{host}';
+GRANT SELECT, EXECUTE ON `sys`.* TO '{user_id}'@'{host}';
+GRANT SELECT ON `performance_schema`.* TO '{user_id}'@'{host}';
+```
+
+**CRUD**
+* READ権限を含み、データを変更する権限を持っています。
+
+```sql
+GRANT INSERT, UPDATE, DELETE, CREATE TEMPORARY TABLES, LOCK TABLES, EXECUTE ON *.* TO '{user_id}'@'{host}';
+```
+
+**DDL**
+* CRUD権限を含み、DDLクエリを実行する権限を持っています。
+
+```sql
+GRANT CREATE, DROP, INDEX, ALTER, CREATE VIEW, REFERENCES, EVENT, ALTER ROUTINE, CREATE ROUTINE, TRIGGER, RELOAD ON *.* TO '{user_id}'@'{host}';
+GRANT EXECUTE ON `mysql`.* TO '{user_id}'@'{host}';
+```
+
+**CUSTOM**
+* 外部データベースのバックアップからDBインスタンスを復元した場合、データベースに存在する全てのユーザーはCUSTOM権限で表現されます。
+* CUSTOM権限テンプレートにはどのような権限があるのか分かりません。
+* CUSTOM権限テンプレートから他の権限テンプレートに変更した場合、再びCUSTOM権限テンプレートに変更することはできません。
+
+{{#if (eq engine.lowerCase "mysql")}}
+❻ユーザー認証に適用するプラグインを選択します。選択できるバージョン別プラグインは次のとおりです。
+
+| 認証プラグイン               | サポートバージョン               |
+|-----------------------|-------------------------|
+| mysql_native_password | 8.4バージョン未満              |
+| sha256_password       | 5.7.33バージョン以上8.0バージョン未満 |
+| caching_sha2_password | 8.0バージョン以上              |
+
+❼ DBインスタンスの接続暗号化オプションを選択します。
+
+| TLS Option | 説明                                                             |
+|------------|------------------------------------------------------------------|
+| NONE       | 暗号化された接続を適用しません。                                              |
+| SSL        | 暗号化された接続を適用します。                                                  |
+| X509       | 暗号化された接続を適用し、接続時に証明書が必要です。接続に必要な証明書はコンソールからダウンロードできます。 | 
+
+!!! tip "参考"
+    ユーザー認証プラグインとTLS OptionはMySQL 5.7.33バージョン以上でサポートします。
+
+<a id="db-schema-and-users-download-authentication-certificate"></a>
+#### 証明書のダウンロード
+
+ユーザーアカウントのTLS OptionをX509に設定した場合、DBインスタンスに接続するには証明書が必要です。
+
+![db-instance-detail-user-cert-ja]({{url.cdn}}/26.01.13/db-instance-detail-user-cert-ja.png)
+![db-instance-detail-user-cert-down-ja]({{url.cdn}}/24.03.12/db-instance-detail-user-cert-down-ja.png)
+
+❶証明書をダウンロードするDBインスタンスを選択します。
+❷ドロップダウンメニューをクリックします。
+❸ **証明書ダウンロード**をクリックすると、証明書をダウンロードできるポップアップ画面が表示されます。
+❹ダウンロードするファイルの下部にある**インポート**をクリックします。
+❺ダウンロードの準備ができると、**ダウンロード**ボタンが表示されます。クリックすると、証明書ファイルをダウンロードできます。
+
+!!! danger "注意"
+    **インポート**をクリックすると、約5分間、証明書ファイルがバックアップストレージにアップロードされ、証明書ファイルのサイズ分だけバックアップストレージ容量が課金されます。
+    **ダウンロード**をクリックすると、証明書ファイルのサイズ分だけインターネットトラフィックが課金されます。
+{{/if}}
+
+<a id="db-schema-and-users-edit-users"></a>
+#### ユーザーの修正
+
+![db-instance-detail-user-modify-ja]({{url.cdn}}/26.01.13/db-instance-detail-user-modify-ja.png)
+
+❶修正するユーザー行の**修正**をクリックすると、ユーザー情報を修正できるポップアップ画面が表示されます。
+❷ Passwordを入力しないと変更されません。
+❸ユーザー認証に適用するプラグインを変更するには、必ずPasswordを変更する必要があります。
+
+<a id="db-schema-and-users-deleting-a-user"></a>
+#### ユーザーの削除
+
+![db-instance-detail-user-delete-ja]({{url.cdn}}/26.01.13/db-instance-detail-user-delete-ja.png)
+
+❶削除するユーザーを選択し、ドロップダウンメニューをクリックします。
+❷ **削除**をクリックすると、**削除確認**ポップアップ画面が表示されます。**確認**をクリックして削除をリクエストできます。
+
+<a id="modify-db-instance-group"></a>
+## DB 인스턴스 그룹 수정 { #modify-db-instance-group }
+
+그룹 상세 화면의 **기본 정보** 탭에서 **수정**을 클릭하면 그룹 단위로 설정을 변경할 수 있습니다. 변경 요청은 비동기로 처리되며, 완료될 때까지 해당 그룹의 상태와 진행 중인 작업을 확인합니다.
+
+수정 화면에서 다음 항목을 변경할 수 있습니다.
+
+| 항목                 | 설명                                                                     |
+|--------------------|------------------------------------------------------------------------|
+| DB 인스턴스 그룹 이름      | 1~100자의 영문자, 숫자, `-`, `_`, `.`를 사용할 수 있으며 첫 글자는 영문자여야 합니다.             |
+| Primary 이름         | 그룹 이름과는 별도로 관리됩니다.                                                     |
+| 고가용성 여부            | 단일 구성은 고가용성 구성으로 전환할 수 있고, 고가용성 구성은 단일 구성으로 전환할 수 있습니다.                |
+| Standby 이름         | 고가용성을 새로 설정할 때 입력합니다. Primary 이름과 같을 수 없으며, 이름 규칙은 Primary와 같습니다.      |
+| Ping 간격            | 고가용성 구성에서 1~600초 범위로 설정합니다.                                            |
+| Ping 방식            | 고가용성 구성에서 `INSERT` 또는 `SELECT` 중 선택합니다.                                 |
+| DB 스키마 & 사용자 직접 제어 | 그룹에 속한 DB 인스턴스의 스키마와 사용자 직접 제어 사용 여부를 변경합니다.                           |
+
+!!! danger "注意"
+    * 고가용성을 해제하면 Standby가 삭제되고 단일 구성으로 전환됩니다. Standby에만 존재하는 데이터나 설정이 없는지 확인한 뒤 진행하세요.
+    * 장애 조치가 진행 중인 DB 인스턴스 그룹에서는 고가용성 여부를 변경할 수 없습니다.
+    * 사설망에서는 Primary 이름을 변경할 수 없습니다. 또한 기존 고가용성 구성의 Standby 이름은 변경할 수 없으며, 고가용성을 새로 설정할 때만 Standby 이름을 입력할 수 있습니다.
+    * 고가용성 구성에서 Primary와 Standby의 이름은 서로 달라야 합니다.
+
+<a id="db-schema-direct-user-control"></a>
+### DBスキーマ&ユーザー直接制御 { #db-schema-direct-user-control }
+
+RDS for {{engine.pascalCase}}ではDBスキーマとユーザーを簡単に管理できるようにコンソールで管理機能を提供していますが、ユーザーが直接制御できるように設定する機能も提供しています。直接制御を使う場合、現在作成されている全てのユーザーに下記の権限を付与します。
+
+```sql
+GRANT CREATE,DROP,LOCK TABLES,REFERENCES,EVENT,ALTER,INDEX,INSERT,SELECT,UPDATE,DELETE,CREATE VIEW,SHOW VIEW,CREATE ROUTINE,ALTER ROUTINE,EXECUTE,CREATE USER,PROCESS,RELOAD,REPLICATION SLAVE,REPLICATION CLIENT,SHOW DATABASES, CREATE TEMPORARY TABLES,TRIGGER ON *.* TO '{user_id}'@'{host}' WITH GRANT OPTION;
+```
+
+!!! danger "注意"
+    直接制御を使用した後、再び使用しないに変更すると
+    * 既に付与した権限を回収しません。 この時、コマンドを使用してDBスキーマやユーザーを追加すると、コンソールのデータと整合性が合わなくなる場合があります。
+    * ユーザーに付与された権限と関係なく、データベースに存在するすべてのユーザーはCUSTOM権限で表現されます。
+
 <a id="db-instance-details"></a>
 ## DBインスタンスの詳細 { #db-instance-details }
 
@@ -444,137 +622,6 @@ Providerメンテナンス作業は、保留中のメンテナンスリストに
 !!! tip "参考"
     メンテナンス作業適用時に再起動が必要な場合、フェイルオーバー、バックアップなどの追加オプションを選択できるポップアップ画面が表示されます。高可用性DBインスタンスの場合、フェイルオーバーを利用した再起動を使用してサービス中断時間を最小化できます。
 
-<a id="db-schema-and-users"></a>
-### DBスキーマ&ユーザー { #db-schema-and-users }
-
-DBインスタンスの**DBスキーマ＆ユーザー**タブでは、データベースに作成されたスキーマとユーザーの照会及び制御を行うことができます。
-
-<a id="db-schema-and-users-db-schema-created"></a>
-#### DBスキーマの作成
-
-![db-instance-detail-schema_ja]({{url.cdn}}/26.01.13/db-instance-detail-schema_ja.png)
-
-❶ **作成**をクリックすると、DBスキーマの名前を入力できるポップアップウィンドウが表示されます。
-❷ DBスキーマ名を入力した後、**確認**をクリックしてDBスキーマを作成することができます。
-
-DBスキーマ名には下記のような制約事項があります。
-
-* 1～64文字の間のアルファベット、数字、_のみ使用でき、最初の文字は英字のみ使用できます。
-* `information_schema`, `performance_schema`, `db_helper`, `sys`, `mysql`, `rds_maintenance`はDBスキーマ名として使用できません。
-
-作成されたDBスキーマの名前は修正できません。
-
-<a id="db-schema-and-users-db-schema-deleted"></a>
-#### DBスキーマの削除
-
-![db-instance-detail-schema-delete-ja]({{url.cdn}}/26.01.13/db-instance-detail-schema-delete-ja.png)
-
-❶削除するDBスキーマを選択し、ドロップダウンメニューをクリックします。
-❷ **削除**メニューをクリックすると、削除確認ポップアップ画面が表示されます。**確認**をクリックして削除をリクエストできます。
-
-<a id="db-schema-and-users-create-a-user"></a>
-#### ユーザーの作成
-
-![db-instance-detail-user-create-ja]({{url.cdn}}/26.01.13/db-instance-detail-user-create-ja.png)
-
-❶ **+作成**をクリックすると、ユーザー追加ポップアップ画面が表示されます。
-❷ユーザーIDを入力します。
-
-ユーザーIDには以下のような制約があります。
-
-* 1～32文字の間の文字でなければなりません。
-* `mysql.session`, `mysql.sys`, `mysql.infoschema`, `sqlgw`, `admin`, `etladm`, `alertman`, `prom`, `rds_admin`, `rds_mha`, `rds_repl`はユーザーIDとして使用できません。
-
-❸ Passwordを入力します。
-❹接続を許可するHost IPを入力します。`%`文字を利用すると、許可するHost IPを範囲として指定できます。例えば、`1.1.1.%`は、`1.1.1.0`~`1.1.1.255`の間のすべてのIPを意味します。
-❺ユーザーに付与する権限を選択します。付与できる権限と説明は次のとおりです。
-
-**READ**
-* 照会権限を持っています。
-
-```sql
-GRANT SELECT, SHOW VIEW, PROCESS, SHOW DATABASES, REPLICATION SLAVE, REPLICATION CLIENT ON *.* TO '{user_id}'@'{host}';
-GRANT SELECT ON `mysql`.* TO '{user_id}'@'{host}';
-GRANT SELECT, EXECUTE ON `sys`.* TO '{user_id}'@'{host}';
-GRANT SELECT ON `performance_schema`.* TO '{user_id}'@'{host}';
-```
-
-**CRUD**
-* READ権限を含み、データを変更する権限を持っています。
-
-```sql
-GRANT INSERT, UPDATE, DELETE, CREATE TEMPORARY TABLES, LOCK TABLES, EXECUTE ON *.* TO '{user_id}'@'{host}';
-```
-
-**DDL**
-* CRUD権限を含み、DDLクエリを実行する権限を持っています。
-
-```sql
-GRANT CREATE, DROP, INDEX, ALTER, CREATE VIEW, REFERENCES, EVENT, ALTER ROUTINE, CREATE ROUTINE, TRIGGER, RELOAD ON *.* TO '{user_id}'@'{host}';
-GRANT EXECUTE ON `mysql`.* TO '{user_id}'@'{host}';
-```
-
-**CUSTOM**
-* 外部データベースのバックアップからDBインスタンスを復元した場合、データベースに存在する全てのユーザーはCUSTOM権限で表現されます。
-* CUSTOM権限テンプレートにはどのような権限があるのか分かりません。
-* CUSTOM権限テンプレートから他の権限テンプレートに変更した場合、再びCUSTOM権限テンプレートに変更することはできません。
-
-{{#if (eq engine.lowerCase "mysql")}}
-❻ユーザー認証に適用するプラグインを選択します。選択できるバージョン別プラグインは次のとおりです。
-
-| 認証プラグイン               | サポートバージョン               |
-|-----------------------|-------------------------|
-| mysql_native_password | 8.4バージョン未満              |
-| sha256_password       | 5.7.33バージョン以上8.0バージョン未満 |
-| caching_sha2_password | 8.0バージョン以上              |
-
-❼ DBインスタンスの接続暗号化オプションを選択します。
-
-| TLS Option | 説明                                                             |
-|------------|------------------------------------------------------------------|
-| NONE       | 暗号化された接続を適用しません。                                              |
-| SSL        | 暗号化された接続を適用します。                                                  |
-| X509       | 暗号化された接続を適用し、接続時に証明書が必要です。接続に必要な証明書はコンソールからダウンロードできます。 | 
-
-!!! tip "参考"
-    ユーザー認証プラグインとTLS OptionはMySQL 5.7.33バージョン以上でサポートします。
-
-<a id="db-schema-and-users-download-authentication-certificate"></a>
-#### 証明書のダウンロード
-
-ユーザーアカウントのTLS OptionをX509に設定した場合、DBインスタンスに接続するには証明書が必要です。
-
-![db-instance-detail-user-cert-ja]({{url.cdn}}/26.01.13/db-instance-detail-user-cert-ja.png)
-![db-instance-detail-user-cert-down-ja]({{url.cdn}}/24.03.12/db-instance-detail-user-cert-down-ja.png)
-
-❶証明書をダウンロードするDBインスタンスを選択します。
-❷ドロップダウンメニューをクリックします。
-❸ **証明書ダウンロード**をクリックすると、証明書をダウンロードできるポップアップ画面が表示されます。
-❹ダウンロードするファイルの下部にある**インポート**をクリックします。
-❺ダウンロードの準備ができると、**ダウンロード**ボタンが表示されます。クリックすると、証明書ファイルをダウンロードできます。
-
-!!! danger "注意"
-    **インポート**をクリックすると、約5分間、証明書ファイルがバックアップストレージにアップロードされ、証明書ファイルのサイズ分だけバックアップストレージ容量が課金されます。
-    **ダウンロード**をクリックすると、証明書ファイルのサイズ分だけインターネットトラフィックが課金されます。
-{{/if}}
-
-<a id="db-schema-and-users-edit-users"></a>
-#### ユーザーの修正
-
-![db-instance-detail-user-modify-ja]({{url.cdn}}/26.01.13/db-instance-detail-user-modify-ja.png)
-
-❶修正するユーザー行の**修正**をクリックすると、ユーザー情報を修正できるポップアップ画面が表示されます。
-❷ Passwordを入力しないと変更されません。
-❸ユーザー認証に適用するプラグインを変更するには、必ずPasswordを変更する必要があります。
-
-<a id="db-schema-and-users-deleting-a-user"></a>
-#### ユーザーの削除
-
-![db-instance-detail-user-delete-ja]({{url.cdn}}/26.01.13/db-instance-detail-user-delete-ja.png)
-
-❶削除するユーザーを選択し、ドロップダウンメニューをクリックします。
-❷ **削除**をクリックすると、**削除確認**ポップアップ画面が表示されます。**確認**をクリックして削除をリクエストできます。
-
 <a id="modify-db-instance"></a>
 ## DBインスタンスの修正 { #modify-db-instance }
 
@@ -586,9 +633,6 @@ GRANT EXECUTE ON `mysql`.* TO '{user_id}'@'{host}';
 | DBエンジン      | はい       | はい                      |
 | DBインスタンスタイプ | はい       | はい                      |
 | データストレージ種類 | いいえ     |                         |
-| 高可用性の有無     | はい       | いいえ                    |
-| Ping間隔    | はい       | いいえ                    | 
-| Ping方式       | はい        | いいえ                     |
 | 名前         | はい       | いいえ                    |
 | 説明         | はい       | いいえ                    |
 | DBポート      | はい       | はい                      |
@@ -598,7 +642,6 @@ GRANT EXECUTE ON `mysql`.* TO '{user_id}'@'{host}';
 | DBセキュリティグループ   | はい       | いいえ                    |
 | バックアップ設定      | はい       | いいえ                    |
 | 自動ストレージ拡張  | はい        | いいえ                     |
-| スキーマ&ユーザー制御 | はい       | いいえ                    |
 
 高可用性DBインスタンスの場合、再起動が必要な項目の変更がある場合、安定性を高め、瞬断時間を減らすためにフェイルオーバーを利用した再起動機能を提供します。
 
@@ -606,20 +649,6 @@ GRANT EXECUTE ON `mysql`.* TO '{user_id}'@'{host}';
 
 ❶ メンテナンス機能で**次回のメンテナンス期間に適用**または**即時適用**を通じてDBインスタンスの修正を進めることができます。
 ❷ フェイルオーバーを利用した再起動を使用しない場合、PrimaryとStandbyに変更事項を順次適用した後、DBインスタンスを再起動します。詳細は高可用性DBインスタンスの[手動フェイルオーバー項目](db-instance/#manual-failover)を参照してください。
-
-<a id="db-schema-direct-user-control"></a>
-### DBスキーマ&ユーザー直接制御 { #db-schema-direct-user-control }
-
-RDS for {{engine.pascalCase}}ではDBスキーマとユーザーを簡単に管理できるようにコンソールで管理機能を提供していますが、ユーザーが直接制御できるように設定する機能も提供しています。直接制御を使う場合、現在作成されている全てのユーザーに下記の権限を付与します。
-
-```sql
-GRANT CREATE,DROP,LOCK TABLES,REFERENCES,EVENT,ALTER,INDEX,INSERT,SELECT,UPDATE,DELETE,CREATE VIEW,SHOW VIEW,CREATE ROUTINE,ALTER ROUTINE,EXECUTE,CREATE USER,PROCESS,RELOAD,REPLICATION SLAVE,REPLICATION CLIENT,SHOW DATABASES, CREATE TEMPORARY TABLES,TRIGGER ON *.* TO '{user_id}'@'{host}' WITH GRANT OPTION;
-```
-
-!!! danger "注意"
-    直接制御を使用した後、再び使用しないに変更すると
-    * 既に付与した権限を回収しません。 この時、コマンドを使用してDBスキーマやユーザーを追加すると、コンソールのデータと整合性が合わなくなる場合があります。
-    * ユーザーに付与された権限と関係なく、データベースに存在するすべてのユーザーはCUSTOM権限で表現されます。
 
 <a id="upgrade-db-instance-operating-system"></a>
 ## DBインスタンスOSアップグレード { #upgrade-db-instance-operating-system }
