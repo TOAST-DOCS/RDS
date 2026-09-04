@@ -89,6 +89,8 @@ DBインスタンスの作成後、DBインスタンスの修正と一緒にDB�
 DBエンジンのバージョンアップグレードが行われる場合、メジャーバージョン番号のみ変更される場合はメジャーバージョンアップグレード、マイナーバージョン番号のみ変更される場合はマイナーバージョンアップグレードとみなします。
 DBエンジンのメジャーバージョンのアップグレードを試みる場合は、次のメジャーバージョンのDBエンジンのバージョンに対してアップグレードが可能です。
 
+마이너 버전은 사용자가 직접 업그레이드하지 않아도 자동으로 업그레이드하도록 설정할 수 있습니다. 자세한 내용은 [마이너 버전 자동 업그레이드](db-instance/#maintenance-auto-minor-version-upgrade)를 참고합니다.
+
 {{#if (eq engine.lowerCase "mysql")}}
 <a id="manage-db-engine-version-pre-inspection-for-upgrading-from-mysql-57-to-mysql-80"></a>
 #### MySQL 5.7からMySQL 8.0へのアップグレードのための事前点検
