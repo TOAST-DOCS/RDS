@@ -311,6 +311,184 @@ Search conditions that can be changed are as follows.
 
 ❶ You can search for DB instances with filtering conditions that require parameter changes to be applied.
 
+<a id="db-instance-group-details"></a>
+## DB 인스턴스 그룹 상세 { #db-instance-group-details }
+
+DB 인스턴스 목록을 **그룹** 화면으로 본 뒤 DB 인스턴스 그룹을 선택하면 그룹 상세 정보를 확인할 수 있습니다. 그룹 상세 화면에는 다음 탭이 표시됩니다.
+
+| 탭             | 설명                                                                                                |
+|---------------|---------------------------------------------------------------------------------------------------|
+| 기본 정보         | DB 인스턴스 그룹 이름과 ID, 고가용성 구성, Primary 및 Standby 이름, Ping 설정을 확인합니다.                                  |
+| DB 스키마 & 사용자 | 그룹에 속한 DB 인스턴스의 DB 스키마와 사용자를 관리합니다. DB 스키마와 사용자 기능은 개별 DB 인스턴스 상세가 아닌 DB 인스턴스 그룹 상세에서 제공합니다. |
+
+<a id="db-schema-and-users"></a>
+### DB Schema and Users { #db-schema-and-users }
+
+DB 인스턴스 그룹 상세의 **DB 스키마 & 사용자** 탭에서는 그룹에 속한 데이터베이스의 스키마와 사용자를 조회 및 제어할 수 있습니다.
+
+<a id="db-schema-and-users-db-schema-created"></a>
+#### DB schema created
+
+![db-instance-detail-schema_en]({{url.cdn}}/26.01.13/db-instance-detail-schema_en.png)
+
+❶ Click on **Create** and a pop-up window will appear where you can enter the name of DB schema.
+❷ You can create a DB schema by entering the DB schema name and clicking on **Confirm**.
+
+DB schema name has the following restrictions.
+
+* You can only use alphabets, numbers, and _ from 1 to 64 characters and the first letter can only contain alphabetic characters.
+* `information_schema`, `performance_schema`, `db_helper`, `sys`, `mysql`, `rds_maintenance` are not allowed to be used as DB schema name.
+
+You cannot modify the name of the DB schema that has been created.
+
+<a id="db-schema-and-users-db-schema-deleted"></a>
+#### DB schema deleted
+
+![db-instance-detail-schema-delete-en]({{url.cdn}}/26.01.13/db-instance-detail-schema-delete-en.png)
+
+❶ Select DB schema you want to delete and click on the drop-down menu.
+❷ Click on **Delete** menu and pop-up window will appear to confirm deletion. You can request to delete by clicking on **Confirm**.
+
+<a id="db-schema-and-users-create-a-user"></a>
+#### Create a user
+
+![db-instance-detail-user-create-en]({{url.cdn}}/26.01.13/db-instance-detail-user-create-en.png)
+
+❶ Click on **+Create** and you'll see the Add User pop-up window.
+❷ Enter a user ID.
+
+User ID has the following restrictions.
+
+* It must be between 1 and 32 characters.
+* `mysql.session`, `mysql.sys`, `mysql.infoschema`, `sqlgw`, `admin`, `etladm`, `alertman`, `prom`, `rds_admin`, `rds_mha`, `rds_repl` are not allowed to be used as User ID.
+
+❸ Enter a password.
+❹ Enter a Host IP to allow connection. Using `%` character lets you range the Host IPs you want to allow. For example, `1.1.1.%` means all IPs between `1.1.1.0` and `1.1.1.255`.
+❺ Select the permissions that you want to grant to users. The permissions and descriptions that you can grant are as follows.
+
+**READ**
+* You have permission to view.
+
+```sql
+GRANT SELECT, SHOW VIEW, PROCESS, SHOW DATABASES, REPLICATION SLAVE, REPLICATION CLIENT ON *.* TO '{user_id}'@'{host}';
+GRANT SELECT ON `mysql`.* TO '{user_id}'@'{host}';
+GRANT SELECT, EXECUTE ON `sys`.* TO '{user_id}'@'{host}';
+GRANT SELECT ON `performance_schema`.* TO '{user_id}'@'{host}';
+```
+
+**CRUD**
+* Includes READ permission, and has permission to modify data.
+
+```sql
+GRANT INSERT, UPDATE, DELETE, CREATE TEMPORARY TABLES, LOCK TABLES, EXECUTE ON *.* TO '{user_id}'@'{host}';
+```
+
+**DDL**
+* Includes CRUD permissions and has permissions to execute DDL queries.
+
+```sql
+GRANT CREATE, DROP, INDEX, ALTER, CREATE VIEW, REFERENCES, EVENT, ALTER ROUTINE, CREATE ROUTINE, TRIGGER, RELOAD ON *.* TO '{user_id}'@'{host}';
+GRANT EXECUTE ON `mysql`.* TO '{user_id}'@'{host}';
+```
+
+**CUSTOM**
+* When restoring a DB instance from an external database backup, all users that exist in the database are represented with the CUSTOM permission.
+* You cannot check what permissions are in the CUSTOM permission template.
+* If you change from one CUSTOM permission template to another permission template, you cannot change back to a CUSTOM permission template.
+
+{{#if (eq engine.lowerCase "mysql")}}
+❻ Select the plug-in to apply to user authentication. The following plug-ins are available for each version.
+
+| Authentication Plugin | Supported Versions                            |
+|-----------------------|-----------------------------------------------|
+| mysql_native_password | 8.4 version or below                          |
+| sha256_password       | 5.7.33 version or later and below 8.0 version |
+| caching_sha2_password | 8.0 version or later                          |
+
+❼ Select the connection encryption option for DB instances.
+
+| TLS Option | Description                                                                                                                                          |
+|------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
+| NONE       | Encrypted connections are not applied.                                                                                                               |
+| SSL        | Encrypted connections are applied.                                                                                                                   |
+| X509       | An encrypted connection is applied and a certificate is required for access. The certificate required for access can be downloaded from the console. |
+
+!!! tip "Note"
+    User authentication plug-ins and TLS options are supported in MySQL 5.7.33 and later versions.
+
+<a id="db-schema-and-users-download-authentication-certificate"></a>
+#### Download Authentication Certificate
+
+If you set TLS option for your account to X509, you need a certificate to access the DB instance.
+
+![db-instance-detail-user-cert-en]({{url.cdn}}/26.01.13/db-instance-detail-user-cert-en.png)
+![db-instance-detail-user-cert-down-en]({{url.cdn}}/24.03.12/db-instance-detail-user-cert-down-en.png)
+
+❶ Select the DB instance to which you want to download the certificate.
+❷ Click on drop-down menu.
+❸ Click on **Download Certificate** and you will see a pop-up window where you can download the certificate.
+❹ Click on **Import** at the bottom of the file you want to download.
+❺ When you are ready to download, the **Download** button appears. Click to download the certificate file.
+
+!!! danger "Caution"
+    When **Import** is clicked, the certificate file will be uploaded to backup storage for approximately 5 minutes, and the backup storage capacity will be charged to the size of the certificate file.
+    Click on **Download** to charge Internet traffic as much as the size of the certificate file.
+{{/if}}
+
+<a id="db-schema-and-users-edit-users"></a>
+#### Edit users
+
+![db-instance-detail-user-modify-en]({{url.cdn}}/26.01.13/db-instance-detail-user-modify-en.png)
+
+❶ Click on **Modify** on the user row you want to modify and you will see a pop-up window where you can modify your information.
+❷ If you do not enter Password, it will not be changed.
+❸ If you want to change the plug-in that applies to user authentication, you must change the password.
+
+<a id="db-schema-and-users-deleting-a-user"></a>
+#### Deleting a user
+
+![db-instance-detail-user-delete-en]({{url.cdn}}/26.01.13/db-instance-detail-user-delete-en.png)
+
+❶ Select the user you want to delete and click on the drop-down menu.
+❷ Click on **Delete** and **Confirm Delete** pop-up window will appear. You can request deletion by clicking on **Confirm**.
+
+<a id="modify-db-instance-group"></a>
+## DB 인스턴스 그룹 수정 { #modify-db-instance-group }
+
+그룹 상세 화면의 **기본 정보** 탭에서 **수정**을 클릭하면 그룹 단위로 설정을 변경할 수 있습니다. 변경 요청은 비동기로 처리되며, 완료될 때까지 해당 그룹의 상태와 진행 중인 작업을 확인합니다.
+
+수정 화면에서 다음 항목을 변경할 수 있습니다.
+
+| 항목                 | 설명                                                                     |
+|--------------------|------------------------------------------------------------------------|
+| DB 인스턴스 그룹 이름      | 1~100자의 영문자, 숫자, `-`, `_`, `.`를 사용할 수 있으며 첫 글자는 영문자여야 합니다.             |
+| Primary 이름         | 그룹 이름과는 별도로 관리됩니다.                                                     |
+| 고가용성 여부            | 단일 구성은 고가용성 구성으로 전환할 수 있고, 고가용성 구성은 단일 구성으로 전환할 수 있습니다.                |
+| Standby 이름         | 고가용성을 새로 설정할 때 입력합니다. Primary 이름과 같을 수 없으며, 이름 규칙은 Primary와 같습니다.      |
+| Ping 간격            | 고가용성 구성에서 1~600초 범위로 설정합니다.                                            |
+| Ping 방식            | 고가용성 구성에서 `INSERT` 또는 `SELECT` 중 선택합니다.                                 |
+| DB 스키마 & 사용자 직접 제어 | 그룹에 속한 DB 인스턴스의 스키마와 사용자 직접 제어 사용 여부를 변경합니다.                           |
+
+!!! danger "Caution"
+    * 고가용성을 해제하면 Standby가 삭제되고 단일 구성으로 전환됩니다. Standby에만 존재하는 데이터나 설정이 없는지 확인한 뒤 진행하세요.
+    * 장애 조치가 진행 중인 DB 인스턴스 그룹에서는 고가용성 여부를 변경할 수 없습니다.
+    * 사설망에서는 Primary 이름을 변경할 수 없습니다. 또한 기존 고가용성 구성의 Standby 이름은 변경할 수 없으며, 고가용성을 새로 설정할 때만 Standby 이름을 입력할 수 있습니다.
+    * 고가용성 구성에서 Primary와 Standby의 이름은 서로 달라야 합니다.
+
+<a id="db-schema-direct-user-control"></a>
+### DB Schema & Direct User Control { #db-schema-direct-user-control }
+
+RDS for {{engine.pascalCase}} provides management from the console to make it easier to manage DB schemas and users, but it also provides the feature to set up so that users can control themselves. Direct control grants all currently created users the following privileges.
+
+```sql
+GRANT CREATE,DROP,LOCK TABLES,REFERENCES,EVENT,ALTER,INDEX,INSERT,SELECT,UPDATE,DELETE,CREATE VIEW,SHOW VIEW,CREATE ROUTINE,ALTER ROUTINE,EXECUTE,CREATE USER,PROCESS,RELOAD,REPLICATION SLAVE,REPLICATION CLIENT,SHOW DATABASES, CREATE TEMPORARY TABLES,TRIGGER ON *.* TO '{user_id}'@'{host}' WITH GRANT OPTION;
+```
+
+!!! danger "Caution"
+    If you change it to Disabled again after using direct control
+    * Already granted permissions are not revoked. If you use the command to add DB schema or users at this time, the data in the console may not match.
+    * All users that exist in the database, regardless of the permissions granted to them, are represented by CUSTOM permissions.
+
 <a id="db-instance-details"></a>
 ## DB Instance Details { #db-instance-details }
 
@@ -443,137 +621,6 @@ You can select a pending maintenance task and then click **Next** to select the 
 !!! tip "Note"
     If a maintenance task requires a restart, a pop-up screen will appear, allowing you to select additional options, such as failover or backup. For high-availability DB instances, you can minimize service downtime by using a restart with failover.
 
-<a id="db-schema-and-users"></a>
-### DB Schema and Users { #db-schema-and-users }
-
-DB instance's **DB Schema and User** tab allows you to query and control the schema and users created in the database.
-
-<a id="db-schema-and-users-db-schema-created"></a>
-#### DB schema created
-
-![db-instance-detail-schema_en]({{url.cdn}}/26.01.13/db-instance-detail-schema_en.png)
-
-❶ Click on **Create** and a pop-up window will appear where you can enter the name of DB schema.
-❷ You can create a DB schema by entering the DB schema name and clicking on **Confirm**.
-
-DB schema name has the following restrictions.
-
-* You can only use alphabets, numbers, and _ from 1 to 64 characters and the first letter can only contain alphabetic characters.
-* `information_schema`, `performance_schema`, `db_helper`, `sys`, `mysql`, `rds_maintenance` are not allowed to be used as DB schema name.
-
-You cannot modify the name of the DB schema that has been created.
-
-<a id="db-schema-and-users-db-schema-deleted"></a>
-#### DB schema deleted
-
-![db-instance-detail-schema-delete-en]({{url.cdn}}/26.01.13/db-instance-detail-schema-delete-en.png)
-
-❶ Select DB schema you want to delete and click on the drop-down menu.
-❷ Click on **Delete** menu and pop-up window will appear to confirm deletion. You can request to delete by clicking on **Confirm**.
-
-<a id="db-schema-and-users-create-a-user"></a>
-#### Create a user
-
-![db-instance-detail-user-create-en]({{url.cdn}}/26.01.13/db-instance-detail-user-create-en.png)
-
-❶ Click on **+Create** and you'll see the Add User pop-up window.
-❷ Enter a user ID.
-
-User ID has the following restrictions.
-
-* It must be between 1 and 32 characters.
-* `mysql.session`, `mysql.sys`, `mysql.infoschema`, `sqlgw`, `admin`, `etladm`, `alertman`, `prom`, `rds_admin`, `rds_mha`, `rds_repl` are not allowed to be used as User ID.
-
-❸ Enter a password.
-❹ Enter a Host IP to allow connection. Using `%` character lets you range the Host IPs you want to allow. For example, `1.1.1.%` means all IPs between `1.1.1.0` and `1.1.1.255`.
-❺ Select the permissions that you want to grant to users. The permissions and descriptions that you can grant are as follows.
-
-**READ**
-* You have permission to view.
-
-```sql
-GRANT SELECT, SHOW VIEW, PROCESS, SHOW DATABASES, REPLICATION SLAVE, REPLICATION CLIENT ON *.* TO '{user_id}'@'{host}';
-GRANT SELECT ON `mysql`.* TO '{user_id}'@'{host}';
-GRANT SELECT, EXECUTE ON `sys`.* TO '{user_id}'@'{host}';
-GRANT SELECT ON `performance_schema`.* TO '{user_id}'@'{host}';
-```
-
-**CRUD**
-* Includes READ permission, and has permission to modify data.
-
-```sql
-GRANT INSERT, UPDATE, DELETE, CREATE TEMPORARY TABLES, LOCK TABLES, EXECUTE ON *.* TO '{user_id}'@'{host}';
-```
-
-**DDL**
-* Includes CRUD permissions and has permissions to execute DDL queries.
-
-```sql
-GRANT CREATE, DROP, INDEX, ALTER, CREATE VIEW, REFERENCES, EVENT, ALTER ROUTINE, CREATE ROUTINE, TRIGGER, RELOAD ON *.* TO '{user_id}'@'{host}';
-GRANT EXECUTE ON `mysql`.* TO '{user_id}'@'{host}';
-```
-
-**CUSTOM**
-* When restoring a DB instance from an external database backup, all users that exist in the database are represented with the CUSTOM permission.
-* You cannot check what permissions are in the CUSTOM permission template.
-* If you change from one CUSTOM permission template to another permission template, you cannot change back to a CUSTOM permission template.
-
-{{#if (eq engine.lowerCase "mysql")}}
-❻ Select the plug-in to apply to user authentication. The following plug-ins are available for each version.
-
-| Authentication Plugin | Supported Versions                            |
-|-----------------------|-----------------------------------------------|
-| mysql_native_password | 8.4 version or below                          |
-| sha256_password       | 5.7.33 version or later and below 8.0 version |
-| caching_sha2_password | 8.0 version or later                          |
-
-❼ Select the connection encryption option for DB instances.
-
-| TLS Option | Description                                                                                                                                          |
-|------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
-| NONE       | Encrypted connections are not applied.                                                                                                               |
-| SSL        | Encrypted connections are applied.                                                                                                                   |
-| X509       | An encrypted connection is applied and a certificate is required for access. The certificate required for access can be downloaded from the console. |
-
-!!! tip "Note"
-    User authentication plug-ins and TLS options are supported in MySQL 5.7.33 and later versions.
-
-<a id="db-schema-and-users-download-authentication-certificate"></a>
-#### Download Authentication Certificate
-
-If you set TLS option for your account to X509, you need a certificate to access the DB instance.
-
-![db-instance-detail-user-cert-en]({{url.cdn}}/26.01.13/db-instance-detail-user-cert-en.png)
-![db-instance-detail-user-cert-down-en]({{url.cdn}}/24.03.12/db-instance-detail-user-cert-down-en.png)
-
-❶ Select the DB instance to which you want to download the certificate.
-❷ Click on drop-down menu.
-❸ Click on **Download Certificate** and you will see a pop-up window where you can download the certificate.
-❹ Click on **Import** at the bottom of the file you want to download.
-❺ When you are ready to download, the **Download** button appears. Click to download the certificate file.
-
-!!! danger "Caution"
-    When **Import** is clicked, the certificate file will be uploaded to backup storage for approximately 5 minutes, and the backup storage capacity will be charged to the size of the certificate file.
-    Click on **Download** to charge Internet traffic as much as the size of the certificate file.
-{{/if}}
-
-<a id="db-schema-and-users-edit-users"></a>
-#### Edit users
-
-![db-instance-detail-user-modify-en]({{url.cdn}}/26.01.13/db-instance-detail-user-modify-en.png)
-
-❶ Click on **Modify** on the user row you want to modify and you will see a pop-up window where you can modify your information.
-❷ If you do not enter Password, it will not be changed.
-❸ If you want to change the plug-in that applies to user authentication, you must change the password.
-
-<a id="db-schema-and-users-deleting-a-user"></a>
-#### Deleting a user
-
-![db-instance-detail-user-delete-en]({{url.cdn}}/26.01.13/db-instance-detail-user-delete-en.png)
-
-❶ Select the user you want to delete and click on the drop-down menu.
-❷ Click on **Delete** and **Confirm Delete** pop-up window will appear. You can request deletion by clicking on **Confirm**.
-
 <a id="modify-db-instance"></a>
 ## Modify DB instance { #modify-db-instance }
 
@@ -585,9 +632,6 @@ You can easily change various items in DB instances created through console. Cha
 | DB Engine        | Yes        | Yes                       |
 | DB Instance Type   | Yes        | Yes                       |
 | Data Storage Type  | No      |                         |
-| Whether high availability or not      | Yes        | No                     |
-| Ping interval      | Yes        | No                     |
-| Ping method      | Yes        | No                     |
 | Name           | Yes        | No                     |
 | Description           | Yes        | No                     |
 | DB port        | Yes        | Yes                       |
@@ -597,7 +641,6 @@ You can easily change various items in DB instances created through console. Cha
 | DB Security Group     | Yes        | No                     |
 | Backup Settings        | Yes        | No                     |
 | Storage Auto Scale | Yes        | No                     | 
-| Schema & User Control | Yes        | No                     |
 
 For high-availability DB instances, if there are any changes to items that need to be restarted, it provides a restart capability using failover to increase stability and reduce disconnected time.
 
@@ -606,20 +649,6 @@ For high-availability DB instances, if there are any changes to items that need 
 
 ❶ Modify your DB instance and schedule the update by selecting either **Apply in the Next Maintenance Duration** or **Apply Immediately**.
 ❷ If you do not use 'Reboot with Failover', changes will be applied sequentially to the Primary and Standby, followed by a restart of the DB instance. For more details, please refer to the [Manual Failover section](db-instance/#manual-failover) for High Availability DB instances.
-
-<a id="db-schema-direct-user-control"></a>
-### DB Schema & Direct User Control { #db-schema-direct-user-control }
-
-RDS for {{engine.pascalCase}} provides management from the console to make it easier to manage DB schemas and users, but it also provides the feature to set up so that users can control themselves. Direct control grants all currently created users the following privileges.
-
-```sql
-GRANT CREATE,DROP,LOCK TABLES,REFERENCES,EVENT,ALTER,INDEX,INSERT,SELECT,UPDATE,DELETE,CREATE VIEW,SHOW VIEW,CREATE ROUTINE,ALTER ROUTINE,EXECUTE,CREATE USER,PROCESS,RELOAD,REPLICATION SLAVE,REPLICATION CLIENT,SHOW DATABASES, CREATE TEMPORARY TABLES,TRIGGER ON *.* TO '{user_id}'@'{host}' WITH GRANT OPTION;
-```
-
-!!! danger "Caution"
-    If you change it to Disabled again after using direct control
-    * Already granted permissions are not revoked. If you use the command to add DB schema or users at this time, the data in the console may not match.
-    * All users that exist in the database, regardless of the permissions granted to them, are represented by CUSTOM permissions.
 
 <a id="upgrade-db-instance-operating-system"></a>
 ## Upgrade DB instance operating system { #upgrade-db-instance-operating-system }
