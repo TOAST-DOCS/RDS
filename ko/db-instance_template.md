@@ -47,6 +47,8 @@ MySQL 8.0.34 미만 버전은 MySQL LTS 지원 정책에 따라 지원이 종료
 | MySQL 8.4.6          |                                |
 | MySQL 8.4.5          |                                |
 | <strong>8.0</strong> |                                |
+| MySQL 8.0.46         |                                |
+| MySQL 8.0.45         |                                |
 | MySQL 8.0.44         |                                |
 | MySQL 8.0.43         |                                |
 | MySQL 8.0.42         |                                |
