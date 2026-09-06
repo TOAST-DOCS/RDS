@@ -176,7 +176,7 @@ DB security groups are used to restrict access in case of external intrusion. Yo
 ### Backup { #backup }
 
 You can set up periodic backups of the databases in your DB instance, or you can create backups at any time through the console. Performance may degrade during backups. To avoid affecting service, it is better to perform back up at a time when the service is under low load. If you do not want the backup to degrade performance, you can use a high-availability configuration, back up only the incremental data since the previous backup, or perform backups from a Read Replica. Backup files are stored on internal backup storage and are charged based on the
-size of backup storage. You can export to user object storage in NHN Cloud if necessary. To prepare for unexpected failures, we recommend that you set up backups to be conducted periodically. For more details on backup, see [Backup and Restore](backup-and-restore/).
+size of backup storage. You can export to NHN Cloud object storage if necessary. To prepare for unexpected failures, we recommend that you set up backups to be conducted periodically. For more details on backup, see [Backup and Restore](backup-and-restore/).
 
 <a id="maintenance"></a>
 ### Maintenance { #maintenance }
@@ -336,7 +336,7 @@ If you created a floating IP, issue additional external domains. The external do
 
 Starting with DB instances created after the May 2025 maintenance, VIP (Virtual IP) is supported. The VIP is an IP address within the user's VPC subnet. For high-availability DB instances, the VIP is always the current Primary. Application connection information must use either the VIP directly or the internal (VIP) domain.
 
-For DB instances created before the May 2025 maintenance, you can add a VIP by selecting **Add VIP** in the web console. When a VIP is added, both the existing internal domain and the internal (VIP) domain are provided. However, if a failover occurs, the VIP is the Standby, while the internal domain may not be. Therefore, after adding a VIP, you must update the application's connection information to use either the VIP or the internal (VIP) domain.
+For DB instances created before the May 2025 maintenance, you can add a VIP by selecting **Add VIP** in the NHN Cloud console. When a VIP is added, both the existing internal domain and the internal (VIP) domain are provided. However, if a failover occurs, the VIP is the Standby, while the internal domain may not be. Therefore, after adding a VIP, you must update the application's connection information to use either the VIP or the internal (VIP) domain.
 
 !!! tip "Note"
     After the maintenance in September 2025, VIP will no longer be supported in the Japan (Tokyo) region and some public projects. (You cannot connect to a VIP from an instance or DB instance in a different subnet.)
@@ -724,12 +724,12 @@ If restart with failover is not enabled, the DB instance is restarted after the 
 <a id="recover-from-backup-in-object-storage"></a>
 ## Recover from backup in object storage { #recover-from-backup-in-object-storage }
 
-You can upload an external {{engine.pascalCase}} backup file to user object storage in NHN Cloud to restore it to DB instance in RDS for {{engine.pascalCase}}. For more information, refer to [Restore with External {{engine.pascalCase}} Backup](backup-and-restore/#restore-from-external).
+You can upload an external {{engine.pascalCase}} backup file to NHN Cloud object storage to restore it to DB instance in RDS for {{engine.pascalCase}}. For more information, refer to [Restore with External {{engine.pascalCase}} Backup](backup-and-restore/#restore-from-external).
 
 <a id="export-backup-files-to-the-object-storage-after-backup"></a>
 ## Export backup files to the object storage after backup { #export-backup-files-to-the-object-storage-after-backup }
 
-After backup, you can export backup files to user object storage in NHN Cloud. Refer to [Export Backup](backup-and-restore/#export) for more information.
+After backup, you can export backup files to object storage. Refer to [Export Backup](backup-and-restore/#export) for more information.
 
 <a id="read-replica"></a>
 ## Read Replica { #read-replica }
@@ -955,7 +955,7 @@ Failed Over Primary** menu from the drop-down menu.
 <a id="rebuild-failed-over-master"></a>
 ### Rebuild Failed Over Primary { #rebuild-failed-over-master }
 
-If the Failed Over Primary fails to recover, you can re-enable the high availability feature by rebuilding. Unlike recovery, rebuild removes all databases from the Failed Over Primary and rebuilds them based on the new Primary's database. In this process, if you do not have a backup file, use the following order to select the DB instance to perform backup.
+If the Failed Over Primary fails to recover, you can re-enable the high availability feature by rebuilding. Unlike recovery, rebuild removes all databases from the Failed Over Primary and rebuilds them based on the new Primary's database. Rebuilding a Failed Over Primary requires backup files and binary logs created with the Enable Table Lock option among DB instances in the replication group. If you do not have a backup file, use the following order to select the DB instance to perform backup.
 
 ❶ Read Replica with auto backup enabled
 ❷ Primary with auto backup enabled
@@ -1309,6 +1309,7 @@ mysqldump -h{external_db_host} -u{external_db_id} -p{external_db_password} --por
 * The external db version has to be the same as or later than the version of NHN Cloud RDS.
 * Prepare an instance of NHN Cloud RDS Primary or Read Replica to export data.
 * Create Floating IP to connect to NHN Cloud RDS instances to export data.
+* Use the command below to export data from the NHN Cloud RDS instance to a file.
 * When exporting from Primary RDS instance.
 
 ```

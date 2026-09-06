@@ -226,7 +226,7 @@ All backup files are uploaded to the internal backup storage and stored. For man
 <a id="export-files-while-performing-backup"></a>
 #### Export Files While Performing Backup
 
-After a backup, you can export the backup file to user object storage. This is not supported for incremental backups.
+After a backup, you can export the backup file to object storage. This is not supported for incremental backups.
 
 ![db-instance-list-export-obs-en]({{url.cdn}}/24.03.12/db-instance-list-export-obs-en.png)
 
@@ -242,7 +242,7 @@ After a backup, you can export the backup file to user object storage. This is n
 <a id="export-backup-files"></a>
 #### Export Backup Files
 
-You can export backup files stored in internal backup storage to user object storage. Not supported for incremental backups.
+You can export backup files stored in internal backup storage to object storage. Not supported for incremental backups.
 
 ![db-instance-detail-backup-export-en]({{url.cdn}}/24.03.12/db-instance-detail-backup-export-en.png)
 
