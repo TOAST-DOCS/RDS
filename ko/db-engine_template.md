@@ -89,6 +89,8 @@ DB 인스턴스를 생성한 이후, DB 인스턴스 수정과 함께 DB 엔진 
 DB 엔진 버전 업그레이드 시, 메이저 버전 번호만 변경되는 경우는 메이저 버전 업그레이드로, 마이너 버전 번호만 변경되는 경우는 마이너 버전 업그레이드로 간주합니다.
 DB 엔진 메이저 버전 업그레이드 시 바로 다음 메이저 버전으로만 업그레이드할 수 있습니다.
 
+마이너 버전은 사용자가 직접 업그레이드하지 않아도 자동으로 업그레이드하도록 설정할 수 있습니다. 자세한 내용은 [마이너 버전 자동 업그레이드](db-instance/#maintenance-auto-minor-version-upgrade)를 참고합니다.
+
 {{#if (eq engine.lowerCase "mysql")}}
 <a id="manage-db-engine-version-pre-inspection-for-upgrading-from-mysql-57-to-mysql-80"></a>
 #### MySQL 5.7에서 MySQL 8.0으로 업그레이드하기 위한 사전 점검
