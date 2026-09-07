@@ -217,7 +217,7 @@ DB 인스턴스 생성 및 수정 시 백업에 적용될 설정 항목들을 �
 <a id="backup-storage-and-pricing"></a>
 ### 백업 스토리지 및 과금 { #backup-storage-and-pricing }
 
-모든 백업 파일은 내부 백업 스토리지에 업로드하여 저장합니다. 수동 백업의 경우 별도로 삭제하기 전까지 영구히 저장되며 백업 용량에 따라 백업 스토리지 과금이 발생합니다. 자동 백업의 경우 설정한 보관 기간만큼 저장되며 자동 백업 파일의 전체 크기 중 DB 인스턴스의 스토리지 크기를 초과한 용량에 대해서 과금합니다. 백업 파일이 저장된 내부 백업 스토리지에 직접 접근할 수 없으며, 백업 파일이 필요한 경우 NHN Cloud의 Object Storage로 백업 파일을 내보낼 수 있습니다.
+모든 백업 파일은 내부 백업 스토리지에 업로드하여 저장합니다. 수동 백업의 경우 별도로 삭제하기 전까지 영구적으로 저장되며 백업 용량에 따라 백업 스토리지 과금이 발생합니다. 자동 백업의 경우 설정한 보관 기간만큼 저장되며 자동 백업 파일의 전체 크기 중 DB 인스턴스의 스토리지 크기를 초과한 용량만큼 과금합니다. 백업 파일이 저장된 내부 백업 스토리지에 직접 접근할 수 없으며, 백업 파일이 필요한 경우 NHN Cloud의 Object Storage로 백업 파일을 내보낼 수 있습니다.
 
 <a id="export"></a>
 ### 백업 내보내기 { #export }
@@ -225,7 +225,7 @@ DB 인스턴스 생성 및 수정 시 백업에 적용될 설정 항목들을 �
 <a id="export-files-while-performing-backup"></a>
 #### 백업을 수행하면서 파일 내보내기
 
-백업 후 백업 파일을 Object Storage로 내보낼 수 있습니다. 증분 백업에 대해서는 지원되지 않습니다.
+백업 후 백업 파일을 Object Storage로 내보낼 수 있습니다. 증분 백업은 지원되지 않습니다.
 
 ![db-instance-list-export-obs-ko]({{url.cdn}}/24.03.12/db-instance-list-export-obs-ko.png)
 
@@ -241,7 +241,7 @@ DB 인스턴스 생성 및 수정 시 백업에 적용될 설정 항목들을 �
 <a id="export-backup-files"></a>
 #### 백업 파일 내보내기
 
-내부 백업 스토리지에 저장된 백업 파일을 Object Storage로 내보낼 수 있습니다. 증분 백업에 대해서는 지원되지 않습니다.
+내부 백업 스토리지에 저장된 백업 파일을 Object Storage로 내보낼 수 있습니다. 증분 백업은 지원되지 않습니다.
 
 ![db-instance-detail-backup-export-ko]({{url.cdn}}/24.03.12/db-instance-detail-backup-export-ko.png)
 
