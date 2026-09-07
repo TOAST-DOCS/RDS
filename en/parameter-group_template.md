@@ -1,5 +1,3 @@
-<!-- machine_translated: true -->
-
 <!-- pre-align:aligned sig=6154a9778849 -->
 
 <a id="database-rds-for-enginepascalcase-parameter-group"></a>
@@ -167,4 +165,5 @@ To apply GTID smoothly, gtid_mode (gtid application stage) and enforce_gtid_cons
     * After changing the parameter group at each step, you must always perform [Apply parameter group changes](parameter-group/#apply).
     * Changing the gtid_mode and enforce_gtid_consistency parameters may require a DB instance restart.
     * Disabling GTIDs is done in the reverse order of applying them.
+
 {{/if}}

@@ -1,5 +1,3 @@
-<!-- machine_translated: true -->
-
 <!-- pre-align:aligned sig=ca8f6a430f7f -->
 
 <a id="database-rds-for-enginepascalcase-overview"></a>

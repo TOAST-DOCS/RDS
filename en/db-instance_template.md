@@ -1,5 +1,3 @@
-<!-- machine_translated: true -->
-
 <!-- pre-align:aligned sig=6567c272c6dd -->
 
 <a id="database-rds-for-enginepascalcase-db-instance"></a>
@@ -138,13 +136,13 @@ It stores the database's data files in data storage. DB instances support two ty
 
 Because the following tasks increase the I/O usage of data storage, the performance of DB instance may be degraded during the process.
 
-* Backup of a single DB instance
-* High availability configuration of a single DB instance
+* Back up single DB instance
+* Configuring High Availability for single DB Instance
 * Create Read Replica
 * Rebuild Read Replica
 * Rebuild Standby
-* Point-in-time restore
-* Export backup files to Object Storage after backing up a single DB instance
+* Restore to a certain point in time
+* Export backup files to Object Storage after backing up from a single DB instance
 
 <a id="high-availability"></a>
 ### High Availability { #high-availability }
@@ -177,7 +175,8 @@ DB security groups are used to restrict access in case of external intrusion. Yo
 <a id="backup"></a>
 ### Backup { #backup }
 
-You can configure the database of a DB instance to be backed up periodically, or create a backup at any time from the console. Performance may be degraded during backups. We recommend that you perform backups during off-peak hours to avoid affecting the service. If you do not want backup to degrade performance, you can use a high-availability configuration, back up only increments of data since the previous backup, or perform backups from a Read Replica. Backup files are stored in the internal backup storage and are charged based on the backup capacity. If necessary, you can export them to NHN Cloud Object Storage. We recommend that you configure periodic backups to prepare for unexpected failures. For more information about backup, see [Backup and Restore](backup-and-restore/).
+You can set up periodic backups of the databases in your DB instance, or you can create backups at any time through the console. Performance may degrade during backups. To avoid affecting service, it is better to perform back up at a time when the service is under low load. If you do not want the backup to degrade performance, you can use a high-availability configuration, back up only the incremental data since the previous backup, or perform backups from a Read Replica. Backup files are stored on internal backup storage and are charged based on the
+size of backup storage. You can export to NHN Cloud Object Storage if necessary. To prepare for unexpected failures, we recommend that you set up backups to be conducted periodically. For more details on backup, see [Backup and Restore](backup-and-restore/).
 
 <a id="maintenance"></a>
 ### Maintenance { #maintenance }
@@ -725,12 +724,12 @@ If restart with failover is not enabled, the DB instance is restarted after the 
 <a id="recover-from-backup-in-object-storage"></a>
 ## Recover from backup in Object Storage { #recover-from-backup-in-object-storage }
 
-You can upload an external {{engine.pascalCase}} backup file to NHN Cloud Object Storage and restore it to the DB instance of RDS for {{engine.pascalCase}}. For more information, see [Restoration by Using External {{engine.pascalCase}} Backup](backup-and-restore/#restore-from-external).
+You can upload an external {{engine.pascalCase}} backup file to NHN Cloud Object Storage to restore it to DB instance in RDS for {{engine.pascalCase}}. For more information, refer to [Restore with External {{engine.pascalCase}} Backup](backup-and-restore/#restore-from-external).
 
 <a id="export-backup-files-to-the-object-storage-after-backup"></a>
-## Export Backup Files to Object Storage After Backup { #export-backup-files-to-the-object-storage-after-backup }
+## Export backup files to Object Storage after backup { #export-backup-files-to-the-object-storage-after-backup }
 
-After a backup, you can export the backup file to Object Storage. For more details, see [Backup export](backup-and-restore/#export).
+After backup, you can export backup files to Object Storage. Refer to [Export Backup](backup-and-restore/#export) for more information.
 
 <a id="read-replica"></a>
 ## Read Replica { #read-replica }

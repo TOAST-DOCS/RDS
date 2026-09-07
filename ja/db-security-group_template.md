@@ -1,5 +1,3 @@
-<!-- machine_translated: true -->
-
 <!-- pre-align:aligned sig=5f5b28f2bca5 -->
 
 <a id="database-rds-for-enginepascalcase-db-security-group"></a>

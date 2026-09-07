@@ -1,5 +1,3 @@
-<!-- machine_translated: true -->
-
 <!-- pre-align:aligned sig=fc4a4521d735 -->
 
 <a id="database-rds-for-enginepascalcase-backup-and-restoration"></a>
@@ -180,8 +178,8 @@ The following items apply only to auto backups.
 
 * Sets the time period for storing auto backups on storage. It can be kept for up to 730 days, and if the auto backup archive period changes, the expired auto backup files will be deleted immediately.
 
-!!! danger "Caution"
-    Incrementally created backups are deleted when the baseline backup is deleted, even if the auto backup retention period has not passed.
+  !!! danger "Caution"
+      Incrementally created backups are deleted when the baseline backup is deleted, even if the auto backup retention period has not passed.
 
 {{#if regions.[1]}}
 **Auto Backup Replication Region**
@@ -212,15 +210,15 @@ The following items apply only to auto backups.
 
 * Allows you set the time that the backup automatically takes place. It consists of the backup start time and the backup window. You can set the backup run time multiple times so that it does not overlap. Performs backup at any point in the backup window based on the start time of the backup. The backup window is not related to the total running time of the backup. Backup time is proportional to the size of the database and the service load. If the backup fails, retry the backup based on the number of backups retries if it does not exceed the backup window.
 
-!!! danger "Caution"
-    A backup might not be performed in some situations, such as when a previous backup does not terminate.
-    If no incremental baseline backup exists, a full backup might be performed even though it is the scheduled turn to perform an incremental backup.
-    For a detailed description of incremental baseline backups, see [Baseline Backup](#baseline-backup).
+  !!! danger "Caution"
+      A backup might not be performed in some situations, such as when a previous backup does not terminate.
+      If no incremental baseline backup exists, a full backup might be performed even though it is the scheduled turn to perform an incremental backup.
+      For a detailed description of incremental baseline backups, see [Baseline Backup](#baseline-backup).
 
 <a id="backup-storage-and-pricing"></a>
 ### Backup Storage and Pricing { #backup-storage-and-pricing }
 
-All backup files are uploaded to the internal backup storage and stored. For manual backups, they are stored permanently until you delete them separately, and backup storage charges are incurred depending on the backup capacity. For automatic backups, they are stored for the set retention period, and charges are incurred for the amount by which the total size of the automatic backup files exceeds the storage size of the DB instance. You cannot directly access the internal backup storage where the backup files are stored. If you need a backup file, you can export the backup file to NHN Cloud Object Storage.
+All backup files are uploaded to the internal backup storage and stored. For manual backups, they are stored permanently until you delete them separately, and backup storage charges are incurred depending on the backup capacity. For auto backups, it is stored for the set retention period and charges for the full size of the auto backup file, which exceeds the storage size of the DB instance. If you do not have direct access to the internal backup storage where the backup file is stored, and when you need backup file, you can export the backup file to Object Storage in NHN Cloud.
 
 <a id="export"></a>
 ### Export Backup { #export }
@@ -234,17 +232,17 @@ After a backup, you can export the backup file to Object Storage. This is not su
 
 ![db-instance-list-export-obs-modal-en]({{url.cdn}}/24.03.12/db-instance-list-export-obs-modal-en.png)
 
-❶ Select the DB instance to back up and click **Export backup files to Object Storage after backup** from the drop-down menu, and the settings pop-up screen will appear.
-❷ Enter the tenant ID of the Object Storage where the backup will be saved. You can find the tenant ID in the API endpoint settings.
-❸ Enter the NHN Cloud account or IAM account of the Object Storage where the backup will be saved.
-❹ Enter the API password of the Object Storage where the backup will be saved.
-❺ Enter the container of the Object Storage where the backup will be saved.
+❶ Select the DB instance to back up and click **Export backup files to Object Storage** after backup from the drop-down menu, and the settings pop-up screen will appear.
+❷ Enter the tenant ID of Object Storage where the backup will be saved. You can find the tenant ID in the API endpoint settings.
+❸ Enter the NHN Cloud member or IAM member of Object Storage where the backup will be saved.
+❹ Enter the API password of Object Storage where the backup will be saved.
+❺ Enter the container of Object Storage where the backup will be saved.
 ❻ Enter the path to the backup that will be stored in the container. The folder name can be up to 255 bytes, and the full path can be up to 1024 bytes. Certain forms (. or ..) are not allowed, and special characters (' " < > ;) and spaces are not allowed.
 
 <a id="export-backup-files"></a>
 #### Export Backup Files
 
-You can export backup files stored in internal backup storage to Object Storage. Incremental backups are not supported.
+You can export backup files stored in internal backup storage to Object Storage. Not supported for incremental backups.
 
 ![db-instance-detail-backup-export-en]({{url.cdn}}/24.03.12/db-instance-detail-backup-export-en.png)
 
@@ -252,7 +250,7 @@ You can export backup files stored in internal backup storage to Object Storage.
 
 ![backup-export-en]({{url.cdn}}/24.03.12/backup-export-en.png)
 
-❷ Or, on the **Backup** tab, select the backup file to export and click **Export Backup to Object Storage**.
+❷ Select the backup file to export from the **Backup** tab and click **Export to Object Storage**.
 
 !!! tip "Note"
     For manual backups, if the source DB instance that performed the backup was deleted, you cannot export the backup.
@@ -374,10 +372,9 @@ mariabackup --defaults-file={my.cnf path} --user {user} --password '{password}' 
 
 {{#if (eq engine.lowerCase "mysql")}}
 !!! danger "Caution"
-    In MySQL 5.7.33, restoring DB instances using the backup file of Object Storage is limited.
-    It might not work properly if you use an XtraBackup version other than the ones recommended.
-    The backup file of Object Storage and the MySQL version to restore must be the same.
-
+    In the current version of 5.7.33, restoring DB instances using backup files on Object Storage is restricted.
+    If use a version other than the recommended XtraBackup, it may not work properly.
+    The backup file on Object Storage has to be the same version of MySQL that you want to restore.
 {{/if}}
 
 <a id="restoration-by-using-rds-for-enginepascalcase-backup"></a>
@@ -392,7 +389,7 @@ You can use the backup file in RDS for MariaDB to restore the database in MariaD
 
 (1) Export backup of RDS for {{engine.pascalCase}} to Object Storage with reference to the [Export Backup](backup-and-restore/#export).
 
-(2) Download the Object Storage backup to the server on which you want to restore it.
+(2) Download the backup of Object Storage to the server on which you want to restore it.
 
 (3) Stop the {{engine.pascalCase}} service.
 

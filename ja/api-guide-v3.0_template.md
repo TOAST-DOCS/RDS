@@ -1,5 +1,3 @@
-<!-- machine_translated: true -->
-
 <!-- pre-align:aligned sig=aafe17e2e720 -->
 
 <a id="database-rds-for-enginepascalcase-api-guide"></a>
@@ -367,7 +365,7 @@ GET /v3.0/db-versions
 | dbVersions                   | Body | Array   | DBエンジンリスト             |
 | dbVersions.dbVersion         | Body | String  | DBエンジンタイプ             |
 | dbVersions.dbVersionName     | Body | String  | DBエンジン名前              |
-| dbVersions.restorableFromObs | Body | Boolean | Object Storage から復元可能かどうか |
+| dbVersions.restorableFromObs | Body | Boolean | Object Storageから復元可能かどうか |
 
 <details><summary>例</summary>
 <p>
@@ -1190,10 +1188,10 @@ POST /v3.0/db-instances/{dbInstanceId}/backup-to-object-storage
 | 名前              | 種類   | 形式     | 必須 | 説明                               |
 |-----------------|------|--------|----|----------------------------------|
 | dbInstanceId    | URL  | UUID   | O  | DBインスタンスの識別子                     |
-| tenantId        | Body | String | O  | バックアップが保存される Object Storage のテナント ID   |
+| tenantId        | Body | String | O  | バックアップが保存されるObject StorageのテナントID   |
 | username        | Body | String | O  | NHN Cloud会員またはIAMメンバーID          |
-| password        | Body | String | O  | バックアップが保存される Object Storage の API パスワード |
-| targetContainer | Body | String | O  | バックアップが保存される Object Storage のコンテナ     |
+| password        | Body | String | O  | バックアップが保存されるObject StorageのAPIパスワード |
+| targetContainer | Body | String | O  | バックアップが保存されるObject Storageのコンテナ     |
 | objectPath      | Body | String | O  | コンテナに保存されるバックアップのパス              |
 
 <details><summary>例</summary>
@@ -1682,10 +1680,10 @@ POST /v3.0/db-instances/restore-from-obs
 | 名前                       | 種類   | 形式      | 必須 | 説明                                                                  |
 |--------------------------|------|---------|----|---------------------------------------------------------------------|
 | restore                  | Body | Object  | O  | 復元情報オブジェクト                                                          |
-| restore.tenantId         | Body | String  | O  | バックアップが保存された Object Storage のテナント ID                                           |
+| restore.tenantId         | Body | String  | O  | バックアップが保存されたObject StorageのテナントID                                      |
 | restore.username         | Body | String  | O  | NHN Cloud会員またはIAMメンバーID                                             |
-| restore.password         | Body | String  | O  | バックアップが保存された Object Storage の API パスワード                                         |
-| restore.targetContainer  | Body | String  | O  | バックアップが保存された Object Storage のコンテナ                                             |
+| restore.password         | Body | String  | O  | バックアップが保存されたObject StorageのAPIパスワード                                    |
+| restore.targetContainer  | Body | String  | O  | バックアップが保存されたObject Storageのコンテナ                                        |
 | restore.objectPath       | Body | String  | O  | コンテナに保存されたバックアップのパス                                                 |
 | dbVersion                | Body | Enum    | O  | DBエンジンタイプ                                                           |
 | dbInstanceName           | Body | String  | O  | DBインスタンスを識別できる マスター名                                                |
@@ -2299,11 +2297,11 @@ POST /v3.0/db-instances/{dbInstanceId}/db-users
 | tlsOption            | Body | Enum   | X  | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                |
 
 !!! danger "注意"
-    DB インスタンスの `supportAuthenticationPlugin` の値が `true` の DB インスタンスのみ、`authenticationPlugin`、`tlsOption` の値を設定できます。
+    DBインスタンスの`supportAuthenticationPlugin`値が`true`であるDBインスタンスのみ`authenticationPlugin`、`tlsOption`の値を設定できます。
 
 {{/if}}
 {{#if (eq engine.lowerCase "mariadb")}}
-| authenticationPlugin | Body | Enum    | X  | 認証プラグイン<br/>- デフォルト値: `NATIVE`(非対応の場合は `ED25519`)<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519` |
+| authenticationPlugin | Body | Enum   | X  | 認証プラグイン<br/>- デフォルト値: `NATIVE`(未対応の場合は`ED25519`)<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519` |
 {{/if}}
 
 <details><summary>例</summary>
@@ -2358,12 +2356,12 @@ PUT /v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 | tlsOption            | Body | Enum   | X  | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                |
 
 !!! danger "注意"
-    `supportAuthenticationPlugin` の値が `true` の DB インスタンスのみ、`authenticationPlugin`、`tlsOption` の値を変更できます。
-    `authenticationPlugin` の値は `dbPassword` と同時に変更する必要があります。
+    DBインスタンスの`supportAuthenticationPlugin`値が`true`であるDBインスタンスのみ`authenticationPlugin`、`tlsOption`の値を修正できます。
+    `authenticationPlugin`の値は`dbPassword`と同時に修正する必要があります。
 
 {{/if}}
 {{#if (eq engine.lowerCase "mariadb")}}
-| authenticationPlugin | Body | Enum    | X  | 認証プラグイン<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519` |
+| authenticationPlugin | Body | Enum   | X  | 認証プラグイン<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519` |
 {{/if}}
 
 <details><summary>例</summary>
@@ -2719,10 +2717,10 @@ POST /v3.0/backups/{backupId}/export
 | 名前              | 種類   | 形式     | 必須 | 説明                               |
 |-----------------|------|--------|----|----------------------------------|
 | backupId        | URL  | UUID   | O  | バックアップの識別子                       |
-| tenantId        | Body | String | O  | バックアップが保存される Object Storage のテナント ID   |
+| tenantId        | Body | String | O  | バックアップが保存されるObject StorageのテナントID   |
 | username        | Body | String | O  | NHN Cloud会員またはIAMメンバーID          |
-| password        | Body | String | O  | バックアップが保存される Object Storage の API パスワード |
-| targetContainer | Body | String | O  | バックアップが保存される Object Storage のコンテナ     |
+| password        | Body | String | O  | バックアップが保存されるObject StorageのAPIパスワード |
+| targetContainer | Body | String | O  | バックアップが保存されるObject Storageのコンテナ     |
 | objectPath      | Body | String | O  | コンテナに保存されるバックアップのパス              |
 
 <details><summary>例</summary>
@@ -2749,7 +2747,7 @@ POST /v3.0/backups/{backupId}/export
 | jobId | Body | UUID | リクエストした作業の識別子 |
 
 !!! danger "注意"
-    手動バックアップの場合、バックアップが実行された DB インスタンスが存在しない場合は、バックアップを Object Storage にエクスポートすることはできません。
+    手動バックアップの場合、バックアップが行われたDBインスタンスが存在しない場合、バックアップをObject Storageにエクスポートすることができません。
 
 ---
 

@@ -1,5 +1,3 @@
-<!-- machine_translated: true -->
-
 <!-- pre-align:aligned sig=6154a9778849 -->
 
 <a id="database-rds-for-enginepascalcase-parameter-group"></a>
@@ -163,4 +161,5 @@ GTIDを円滑に適用するためには、gtid_mode(GTIDの適用手順)とenfo
     * 各手順でパラメータグループを変更した後は、必ず[パラメータグループの変更内容を適用](parameter-group/#apply)を実行する必要があります。
     * gtid_modeとenforce_gtid_consistencyパラメータを変更する際、DBインスタンスの再起動が必要になる場合があります。
     * GTIDの適用解除は、適用の逆の手順で進めます。
+
 {{/if}}
