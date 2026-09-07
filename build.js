@@ -15,6 +15,7 @@ const docs = [
     'notification',
     'overview',
     'parameter-group',
+    'release-notes',
     'server-dashboard'
 ];
 
@@ -89,13 +90,28 @@ for (let config of configs) {
             }
 
             // zh 는 en 템플릿을 그대로 사용
-            const template = fs.readFileSync(`${language === 'zh' ? 'en' : language}/${doc}_template.md`, 'utf-8');
+            const langDir = language === 'zh' ? 'en' : language;
+
+            // 릴리스 노트는 엔진/클라우드 환경별 원본 사용
+            const isReleaseNotes = doc === 'release-notes';
+            const suffix = config.env === 'public' ? '' : `_${config.env}`;
+            const templatePath = isReleaseNotes
+                ? `${langDir}/${doc}_${config.engine}${suffix}.md`
+                : `${langDir}/${doc}_template.md`;
+
+            // 번역되지 않은 원본은 건너뜀
+            if (!fs.existsSync(templatePath)) {
+                continue;
+            }
+
+            const template = fs.readFileSync(templatePath, 'utf-8');
 
             const fileName = config.env === 'public' ? `${doc}.md` : `${doc}-${config.env}.md`;
             const compiled = Handlebars.compile(template);
             let result = compiled(context);
 
-            if(config.env !== 'public') {
+            // 릴리스 노트는 원본에 환경별 링크 포함
+            if(config.env !== 'public' && !isReleaseNotes) {
                 // [text](link-menu/) 혹은 [text](link-menu/#tag) 형식을 [text](link-menu-env/) 형식으로 교체
                 result = result.replace(/\[(.*)]\((?!.*png)(?!#)(?!http)([^)]*?)(\/#[^)]*|\/)\)/g,`[$1]($2-${config.env}$3)`);
             }
