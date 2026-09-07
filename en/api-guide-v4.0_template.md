@@ -396,7 +396,7 @@ This API does not require a request body.
 | dbVersions                   | Body | Array   | DB engine list                                        |
 | dbVersions.dbVersion         | Body | String  | DB engine type                                        |
 | dbVersions.dbVersionName     | Body | String  | DB engine name                                        |
-| dbVersions.restorableFromObs | Body | Boolean | Restoring backup from object storage available or not |
+| dbVersions.restorableFromObs | Body | Boolean | Restoring backup from Object Storage available or not |
 
 <details><summary>Example</summary>
 <p>
@@ -1794,7 +1794,7 @@ POST /v4.0/db-instances/restore-from-obs
 
 | Permission Name                                           | Description           |
 |-------------------------------------------------------|-------------------------|
-| RDSfor{{engine.pascalCase}}:DbInstance.RestoreFromObs | Restore a DB instance from object storage |
+| RDSfor{{engine.pascalCase}}:DbInstance.RestoreFromObs | Restore a DB instance from Object Storage |
 
 <a id="restore-from-object-storage-request"></a>
 #### Request
@@ -1802,10 +1802,10 @@ POST /v4.0/db-instances/restore-from-obs
 | Name                                                | Type | Format  | Required | Description                                                                                                                                    |
 |-----------------------------------------------------|------|---------|----------|------------------------------------------------------------------------------------------------------------------------------------------------|
 | restore                                             | Body | Object  | O        | Restoration information object                                                                                                                 |
-| restore.tenantId                                    | Body | String  | O        | Tenant ID of object storage where backups are stored                                                                                           |
+| restore.tenantId                                    | Body | String  | O        | Tenant ID of Object Storage where backups are stored                                                                                           |
 | restore.username                                    | Body | String  | O        | NHN Cloud account or IAM member ID                                                                                                             |
-| restore.password                                    | Body | String  | O        | API password for object storage where backups are stored                                                                                       |
-| restore.targetContainer                             | Body | String  | O        | Container for object storage where backups are stored                                                                                          |
+| restore.password                                    | Body | String  | O        | API password for Object Storage where backups are stored                                                                                       |
+| restore.targetContainer                             | Body | String  | O        | Container for Object Storage where backups are stored                                                                                          |
 | restore.objectPath                                  | Body | String  | O        | Backup path stored in container                                                                                                                |
 | dbVersion                                           | Body | Enum    | O        | DB engine type                                                                                                                                 |
 | dbInstanceName                                      | Body | String  | O        | Master name to identify DB instances                                                                                  |
@@ -2626,8 +2626,9 @@ POST /v4.0/db-instances/{dbInstanceId}/db-users
 | authenticationPlugin | Body | Enum   | X        | Authentication Plugin<br/>- Default: `NATIVE`(`CACHING_SHA2` if not supported)<br/>- NATIVE: `mysql_native_password`<br />- SHA256: `sha256_password`<br />- CACHING_SHA2: `caching_sha2_password`                                    |
 | tlsOption            | Body | Enum   | X        | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                                                             |
 
-> [Caution]
-> Only DB instances whose `supportAuthenticationPlugin` value is true can set the values of `authenticationPlugin` and `tlsOption`.
+!!! danger "Caution"
+    Only DB instances whose `supportAuthenticationPlugin` value is `true` can set the values of `authenticationPlugin` and `tlsOption`.
+
 {{/if}}
 {{#if (eq engine.lowerCase "mariadb")}}
 | authenticationPlugin | Body | Enum   | X        | Authentication Plugin<br/>- Default: `NATIVE`(`ED25519` if not supported)<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519`                                                                                                                                                                                |
@@ -2691,9 +2692,10 @@ PUT /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 | authenticationPlugin | Body | Enum   | X        | Authentication Plugin<br/>- NATIVE: `mysql_native_password`<br />- SHA256: `sha256_password`<br />- CACHING_SHA2: `caching_sha2_password`                                    |
 | tlsOption            | Body | Enum   | X        | TLS Option<br/>- NONE<br />- SSL<br />- X509                                                                                                                             |
 
-> [Caution]
-> Only DB instances whose `supportAuthenticationPlugin` value is true can modify the values of `authenticationPlugin` and `tlsOption`.
-> The value of`authenticationPlugin`must be modified at the same time `as dbPassword`.
+!!! danger "Caution"
+    Only DB instances whose `supportAuthenticationPlugin` value is `true` can modify the values of `authenticationPlugin` and `tlsOption`.
+    The value of `authenticationPlugin` must be modified at the same time as `dbPassword`.
+
 {{/if}}
 {{#if (eq engine.lowerCase "mariadb")}}
 | authenticationPlugin | Body | Enum   | X        | Authentication Plugin<br/>- NATIVE: `mysql_native_password`<br />- ED25519: `auth_ed25519`                                                                                                                                                                                |
@@ -3011,10 +3013,10 @@ POST /v4.0/db-instances/{dbInstanceId}/log-files/export
 |-----------------|------|--------|----------|----------------------------------------------------------|
 | dbInstanceId    | URL  | UUID   | O        | DB instance identifier                                   |
 | logFileNames    | Body | Array  | O        | Log File name list<br/>- Minimum size: `1`               |
-| tenantId        | Body | String | O        | Tenant ID of object storage to store log file            |
+| tenantId        | Body | String | O        | Tenant ID of Object Storage to store log file            |
 | username        | Body | String | O        | NHN Cloud account or IAM member ID                       |
-| password        | Body | String | O        | API password for object storage where log file is stored |
-| targetContainer | Body | String | O        | Object storage container where log file is stored        |
+| password        | Body | String | O        | API password for Object Storage where log file is stored |
+| targetContainer | Body | String | O        | Object Storage container where log file is stored        |
 | objectPath      | Body | String | O        | Log file path to be stored in container                  |
 
 <details><summary>Example</summary>
@@ -3240,12 +3242,11 @@ POST /v4.0/db-instances/{dbInstanceId}/certificates/upload
 |------------------|------|--------|----|------------------------------------------------------------------------------|
 | dbInstanceId     | URL  | UUID   | O  | DB instance identifier                                                                 |
 | certificateTypes | Body | Array  | O  | Certificate type to upload<br/>- `CA_FILE`: CA certificate<br/>- `CERT_FILE`: Certificate<br/>- `KEY_FILE`: Secret key |
-| tenantId         | Body | String | O  | Tenant ID of object storage to store certificate file                                                |
+| tenantId         | Body | String | O  | Tenant ID of Object Storage to store certificate file                                                |
 | username         | Body | String | O  | NHN Cloud account or IAM account ID                                                    |
-| password         | Body | String | O  | API password for object storage where certificate file is stored                                              |
-| targetContainer  | Body | String | O  | Object storage container where certificate file is stored                                                  |
-| objectPath       | Body | String | O  |
-Certificate file path to be stored in container                                                         |
+| password         | Body | String | O  | API password for Object Storage where certificate file is stored                                              |
+| targetContainer  | Body | String | O  | Object Storage container where certificate file is stored                                                  |
+| objectPath       | Body | String | O  | Certificate file path to be stored in container                                              |
 
 <details><summary>Example</summary>
 <p>
@@ -3578,10 +3579,10 @@ POST /v4.0/backups/{backupId}/export
 | Name            | Type | Format | Required | Description                                            |
 |-----------------|------|--------|----------|--------------------------------------------------------|
 | backupId        | URL  | UUID   | O        | Backup identifier                                      |
-| tenantId        | Body | String | O        | Tenant ID of object storage to store backup            |
+| tenantId        | Body | String | O        | Tenant ID of Object Storage to store backup            |
 | username        | Body | String | O        | NHN Cloud account or IAM member ID                     |
-| password        | Body | String | O        | API password for object storage where backup is stored |
-| targetContainer | Body | String | O        | Object storage container where backup is stored        |
+| password        | Body | String | O        | API password for Object Storage where backup is stored |
+| targetContainer | Body | String | O        | Object Storage container where backup is stored        |
 | objectPath      | Body | String | O        | Backup path to be stored in container                  |
 
 <details><summary>Example</summary>
@@ -3606,6 +3607,9 @@ POST /v4.0/backups/{backupId}/export
 | Name  | Type | Format | Description                  |
 |-------|------|--------|------------------------------|
 | jobId | Body | UUID   | Identifier of requested task |
+
+!!! danger "Caution"
+    For manual backups, if the DB instance on which the backup was performed does not exist, the backup cannot be exported to Object Storage.
 
 ---
 
@@ -3939,8 +3943,8 @@ POST /v4.0/db-security-groups
 | rules.port.minPort  | Body | Number | X        | Minimum port range<br/>- Minimum value: 1                                                                                                                                                                                        |
 | rules.port.maxPort  | Body | Number | X        | Maximum port range<br/>- Maximum value: 65535                                                                                                                                                                                    |
 
-> [Caution]
-> DB port cannot be set to transmit direction.
+!!! danger "Caution"
+    DB port cannot be set to transmit direction.
 
 <details><summary>Example</summary>
 <p>
@@ -4111,8 +4115,8 @@ POST /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 | port.maxPort      | Body | Number | X        | Maximum port range<br/>- Maximum value: 65535                                                                                                                                                                                    |
 | cidr              | Body | String | O        | Remote source for traffic to allow<br/>- Example: `1.1.1.1/32`                                                                                                                                                                   |
 
-> [Caution]
-> DB port cannot be set to transmit direction.
+!!! danger "Caution"
+    DB port cannot be set to transmit direction.
 
 <details><summary>Example</summary>
 <p>
@@ -4172,8 +4176,8 @@ PUT /v4.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 | port.maxPort      | Body | Number | X        | Maximum port range<br/>- Maximum value: 65535                                                                                                                                                                                    |
 | cidr              | Body | String | O        | Remote source for traffic to allow<br/>- Example: `1.1.1.1/32`                                                                                                                                                                   |
 
-> [Caution]
-> DB port cannot be set to transmit direction.
+!!! danger "Caution"
+    DB port cannot be set to transmit direction.
 
 <details><summary>Example</summary>
 <p>

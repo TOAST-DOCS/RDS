@@ -17,5 +17,5 @@ RDS for {{engine.pascalCase}}は、{{engine.pascalCase}}データベースをク
 * データベースの状態を一目で把握できるサーバーダッシュボードを提供します。
 * サーバーダッシュボードでインスタンスやデータベースの各種指標をグラフで確認できます。
 
-> [注意]
-> RDS for {{engine.pascalCase}}は、ユーザーのCompute & Networkサービスを有効にすると使用できます。
+!!! danger "注意"
+    RDS for {{engine.pascalCase}}は、ユーザーのCompute & Networkサービスを有効にすると使用できます。
