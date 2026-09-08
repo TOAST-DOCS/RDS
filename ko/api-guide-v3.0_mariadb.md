@@ -1432,24 +1432,24 @@ PUT /v3.0/db-instances/{dbInstanceId}/backup-info
 
 ---
 
-<a id="restart-db-instance"></a>
-### DB 인스턴스 Object Storage로 백업 { #restart-db-instance }
+<a id="backup-db-instance-to-object-storage"></a>
+### DB 인스턴스 Object Storage로 백업 { #backup-db-instance-to-object-storage }
 
-<a id="restart-db-instance-request"></a>
+<a id="backup-db-instance-to-object-storage-request"></a>
 #### 요청
 
 ```http
 POST /v3.0/db-instances/{dbInstanceId}/backup-to-object-storage
 ```
 
-<a id="restart-db-instance-request-parameters"></a>
+<a id="backup-db-instance-to-object-storage-request-parameters"></a>
 #### 요청 파라미터
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
 | dbInstanceId | URL | UUID | Y | DB 인스턴스의 식별자 |
 
-<a id="restart-db-instance-request-body"></a>
+<a id="backup-db-instance-to-object-storage-request-body"></a>
 #### 요청 본문
 
 <details>
@@ -1475,7 +1475,7 @@ POST /v3.0/db-instances/{dbInstanceId}/backup-to-object-storage
 | targetContainer | String | Y | 백업이 저장될 Object Storage의 컨테이너 |
 | objectPath | String | Y | 컨테이너에 저장될 백업의 경로 |
 
-<a id="restart-db-instance-response"></a>
+<a id="backup-db-instance-to-object-storage-response"></a>
 #### 응답
 
 <details>
@@ -1990,29 +1990,29 @@ PUT /v3.0/db-instances/{dbInstanceId}/deletion-protection
 
 ---
 
-<a id="restart-db-instance-2"></a>
-### DB 인스턴스 강제 재시작하기 { #restart-db-instance-2 }
+<a id="force-restart-db-instance"></a>
+### DB 인스턴스 강제 재시작하기 { #force-restart-db-instance }
 
-<a id="restart-db-instance-2-request"></a>
+<a id="force-restart-db-instance-request"></a>
 #### 요청
 
 ```http
 POST /v3.0/db-instances/{dbInstanceId}/force-restart
 ```
 
-<a id="restart-db-instance-2-request-parameters"></a>
+<a id="force-restart-db-instance-request-parameters"></a>
 #### 요청 파라미터
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
 | dbInstanceId | URL | UUID | Y | DB 인스턴스의 식별자 |
 
-<a id="restart-db-instance-2-request-body"></a>
+<a id="force-restart-db-instance-request-body"></a>
 #### 요청 본문
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-<a id="restart-db-instance-2-response"></a>
+<a id="force-restart-db-instance-response"></a>
 #### 응답
 
 이 API는 응답 본문을 반환하지 않습니다.
@@ -2684,24 +2684,24 @@ POST /v3.0/db-instances/{dbInstanceId}/replicate
 
 ---
 
-<a id="restart-db-instance-3"></a>
-### DB 인스턴스 재시작하기 { #restart-db-instance-3 }
+<a id="restart-db-instance"></a>
+### DB 인스턴스 재시작하기 { #restart-db-instance }
 
-<a id="restart-db-instance-3-request"></a>
+<a id="restart-db-instance-request"></a>
 #### 요청
 
 ```http
 POST /v3.0/db-instances/{dbInstanceId}/restart
 ```
 
-<a id="restart-db-instance-3-request-parameters"></a>
+<a id="restart-db-instance-request-parameters"></a>
 #### 요청 파라미터
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
 | dbInstanceId | URL | UUID | Y | DB 인스턴스의 식별자 |
 
-<a id="restart-db-instance-3-request-body"></a>
+<a id="restart-db-instance-request-body"></a>
 #### 요청 본문
 
 <details>
@@ -2725,7 +2725,7 @@ POST /v3.0/db-instances/{dbInstanceId}/restart
 | waitReplicationDelay | Boolean | N | 복제 지연 해소 대기<br/>- 기본값: `false` |
 | useReadOnly | Boolean | N | 쓰기 부하 차단<br/>- 기본값: `false` |
 
-<a id="restart-db-instance-3-response"></a>
+<a id="restart-db-instance-response"></a>
 #### 응답
 
 <details>
