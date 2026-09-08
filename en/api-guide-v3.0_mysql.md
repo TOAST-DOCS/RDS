@@ -1446,24 +1446,24 @@ PUT /v3.0/db-instances/{dbInstanceId}/backup-info
 
 ---
 
-<a id="restart-db-instance"></a>
-### Export after Backing up DB Instance { #restart-db-instance }
+<a id="backup-db-instance-to-object-storage"></a>
+### Export after Backing up DB Instance { #backup-db-instance-to-object-storage }
 
-<a id="restart-db-instance-request"></a>
+<a id="backup-db-instance-to-object-storage-request"></a>
 #### Request
 
 ```http
 POST /v3.0/db-instances/{dbInstanceId}/backup-to-object-storage
 ```
 
-<a id="restart-db-instance-request-parameters"></a>
+<a id="backup-db-instance-to-object-storage-request-parameters"></a>
 #### Request Parameters
 
 | Name | Type | Format | Required | Description |
 |-----|-----|-----|-----|-----|
 | dbInstanceId | URL | UUID | Y | DB instance identifier |
 
-<a id="restart-db-instance-request-body"></a>
+<a id="backup-db-instance-to-object-storage-request-body"></a>
 #### Request Body
 
 <details>
@@ -1489,7 +1489,7 @@ POST /v3.0/db-instances/{dbInstanceId}/backup-to-object-storage
 | targetContainer | String | Y | Container of the Object Storage where the backup will be saved |
 | objectPath | String | Y | Backup path to be stored in container |
 
-<a id="restart-db-instance-response"></a>
+<a id="backup-db-instance-to-object-storage-response"></a>
 #### Response
 
 <details>
@@ -2004,29 +2004,29 @@ This API does not return a response body.
 
 ---
 
-<a id="restart-db-instance-2"></a>
-### Force Restart DB Instance { #restart-db-instance-2 }
+<a id="force-restart-db-instance"></a>
+### Force Restart DB Instance { #force-restart-db-instance }
 
-<a id="restart-db-instance-2-request"></a>
+<a id="force-restart-db-instance-request"></a>
 #### Request
 
 ```http
 POST /v3.0/db-instances/{dbInstanceId}/force-restart
 ```
 
-<a id="restart-db-instance-2-request-parameters"></a>
+<a id="force-restart-db-instance-request-parameters"></a>
 #### Request Parameters
 
 | Name | Type | Format | Required | Description |
 |-----|-----|-----|-----|-----|
 | dbInstanceId | URL | UUID | Y | DB instance identifier |
 
-<a id="restart-db-instance-2-request-body"></a>
+<a id="force-restart-db-instance-request-body"></a>
 #### Request Body
 
 This API does not require a request body.
 
-<a id="restart-db-instance-2-response"></a>
+<a id="force-restart-db-instance-response"></a>
 #### Response
 
 This API does not return a response body.
@@ -2698,24 +2698,24 @@ POST /v3.0/db-instances/{dbInstanceId}/replicate
 
 ---
 
-<a id="restart-db-instance-3"></a>
-### Restart DB Instance { #restart-db-instance-3 }
+<a id="restart-db-instance"></a>
+### Restart DB Instance { #restart-db-instance }
 
-<a id="restart-db-instance-3-request"></a>
+<a id="restart-db-instance-request"></a>
 #### Request
 
 ```http
 POST /v3.0/db-instances/{dbInstanceId}/restart
 ```
 
-<a id="restart-db-instance-3-request-parameters"></a>
+<a id="restart-db-instance-request-parameters"></a>
 #### Request Parameters
 
 | Name | Type | Format | Required | Description |
 |-----|-----|-----|-----|-----|
 | dbInstanceId | URL | UUID | Y | DB instance identifier |
 
-<a id="restart-db-instance-3-request-body"></a>
+<a id="restart-db-instance-request-body"></a>
 #### Request Body
 
 <details>
@@ -2739,7 +2739,7 @@ POST /v3.0/db-instances/{dbInstanceId}/restart
 | waitReplicationDelay | Boolean | N | Wait for replication delay to be resolved<br/>- Default: `false` |
 | useReadOnly | Boolean | N | Block write load<br/>- Default: `false` |
 
-<a id="restart-db-instance-3-response"></a>
+<a id="restart-db-instance-response"></a>
 #### Response
 
 <details>

@@ -3,6 +3,30 @@
 <a id="database-rds-for-mariadb-release-notes"></a>
 ## Database > RDS for MariaDB > 릴리스 노트 { #database-rds-for-mariadb-release-notes }
 
+## 2026. 09. 15.
+
+### 신규 기능 추가
+
+* DB 인스턴스 재시작 시, 운영체제를 재시작하는 옵션 추가
+* 고가용성 인스턴스 중지 기능 추가
+
+### 기능 개선
+
+* DB 인스턴스 타입 용어 변경
+    * 마스터 → Primary
+    * 예비 마스터 → Standby
+    * 읽기 복제본 → Read Replica
+    * 장애 조치된 마스터 → Failed Over Primary
+* DB 인스턴스 그룹으로 적용되어야 하는 속성은 DB 인스턴스 그룹을 수정하도록 개선
+* 보안 패치, OS 업그레이드 이후 과거 모니터링 지표 볼 수 있도록
+
+### 버그 수정
+
+* CloudTrail에 Object Storage의 tenant id가 그대로 노출되는 버그 수정
+* 보안 그룹 규칙이 많을 경우 보안 그룹 규칙 생성, 변경, 삭제가 간헐적으로 실패하는 버그 수정
+* 간헐적으로 네트워크 통신 실패로 인해 고가용성 DB가 부팅되지 않을 수 있던 버그 수정
+* DB 포트 변경 실패 시, 간헐적으로 가비지 보안 그룹 규칙이 남아 있는 버그 수정
+
 <a id="july-14-2026"></a>
 ## 2026. 07. 14. { #july-14-2026 }
 

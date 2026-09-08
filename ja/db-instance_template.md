@@ -812,7 +812,7 @@ Read Replicaを作成するリージョンを選択する際、リージョン�
 <a id="create-read-replications-availability-zone"></a>
 #### アベイラビリティゾーン
 
-Read Replicaのアベイラビリティゾーンを選択します。詳しい説明は[アベイラビリティゾーン](#_1)項目を参照してください。
+Read Replicaのアベイラビリティゾーンを選択します。詳しい説明は[アベイラビリティゾーン](#availability-zone)項目を参照してください。
 
 <a id="create-read-replications-db-instance-type"></a>
 #### DBインスタンスタイプ
@@ -847,12 +847,12 @@ Read Replicaのバックアップ設定を選択します。バックアップ�
 <a id="create-read-replications-default-notification"></a>
 #### 基本通知
 
-基本通知の使用有無を選択します。詳しい説明は[基本通知](#_7)の項目を参照してください。
+基本通知の使用有無を選択します。詳しい説明は[基本通知](#default-notification)の項目を参照してください。
 
 <a id="create-read-replications-deletion-protection"></a>
 #### 削除保護
 
-削除保護の使用有無を選択します。詳しい説明は[削除保護](#_8)の項目を参照してください。
+削除保護の使用有無を選択します。詳しい説明は[削除保護](#deletion-protection)の項目を参照してください。
 
 <a id="promote-read-replication"></a>
 ### Read Replicaの昇格 { #promote-read-replication }

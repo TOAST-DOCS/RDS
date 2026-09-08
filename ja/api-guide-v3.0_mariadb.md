@@ -1432,24 +1432,24 @@ PUT /v3.0/db-instances/{dbInstanceId}/backup-info
 
 ---
 
-<a id="restart-db-instance"></a>
-### DBインスタンスバックアップ後にエクスポート { #restart-db-instance }
+<a id="backup-db-instance-to-object-storage"></a>
+### DBインスタンスバックアップ後にエクスポート { #backup-db-instance-to-object-storage }
 
-<a id="restart-db-instance-request"></a>
+<a id="backup-db-instance-to-object-storage-request"></a>
 #### リクエスト
 
 ```http
 POST /v3.0/db-instances/{dbInstanceId}/backup-to-object-storage
 ```
 
-<a id="restart-db-instance-request-parameters"></a>
+<a id="backup-db-instance-to-object-storage-request-parameters"></a>
 #### リクエストパラメータ
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |-----|-----|-----|-----|-----|
 | dbInstanceId | URL | UUID | Y | DBインスタンスの識別子 |
 
-<a id="restart-db-instance-request-body"></a>
+<a id="backup-db-instance-to-object-storage-request-body"></a>
 #### リクエスト本文
 
 <details>
@@ -1475,7 +1475,7 @@ POST /v3.0/db-instances/{dbInstanceId}/backup-to-object-storage
 | targetContainer | String | Y | バックアップが保存されるオブジェクトストレージのコンテナ |
 | objectPath | String | Y | コンテナに保存されるバックアップのパス |
 
-<a id="restart-db-instance-response"></a>
+<a id="backup-db-instance-to-object-storage-response"></a>
 #### レスポンス
 
 <details>
@@ -1990,29 +1990,29 @@ PUT /v3.0/db-instances/{dbInstanceId}/deletion-protection
 
 ---
 
-<a id="restart-db-instance-2"></a>
-### DBインスタンスを強制再起動する { #restart-db-instance-2 }
+<a id="force-restart-db-instance"></a>
+### DBインスタンスを強制再起動する { #force-restart-db-instance }
 
-<a id="restart-db-instance-2-request"></a>
+<a id="force-restart-db-instance-request"></a>
 #### リクエスト
 
 ```http
 POST /v3.0/db-instances/{dbInstanceId}/force-restart
 ```
 
-<a id="restart-db-instance-2-request-parameters"></a>
+<a id="force-restart-db-instance-request-parameters"></a>
 #### リクエストパラメータ
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |-----|-----|-----|-----|-----|
 | dbInstanceId | URL | UUID | Y | DBインスタンスの識別子 |
 
-<a id="restart-db-instance-2-request-body"></a>
+<a id="force-restart-db-instance-request-body"></a>
 #### リクエスト本文
 
 このAPIはリクエスト本文を要求しません。
 
-<a id="restart-db-instance-2-response"></a>
+<a id="force-restart-db-instance-response"></a>
 #### レスポンス
 
 このAPIはレスポンス本文を返しません。
@@ -2684,24 +2684,24 @@ POST /v3.0/db-instances/{dbInstanceId}/replicate
 
 ---
 
-<a id="restart-db-instance-3"></a>
-### DBインスタンスを再起動する { #restart-db-instance-3 }
+<a id="restart-db-instance"></a>
+### DBインスタンスを再起動する { #restart-db-instance }
 
-<a id="restart-db-instance-3-request"></a>
+<a id="restart-db-instance-request"></a>
 #### リクエスト
 
 ```http
 POST /v3.0/db-instances/{dbInstanceId}/restart
 ```
 
-<a id="restart-db-instance-3-request-parameters"></a>
+<a id="restart-db-instance-request-parameters"></a>
 #### リクエストパラメータ
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |-----|-----|-----|-----|-----|
 | dbInstanceId | URL | UUID | Y | DBインスタンスの識別子 |
 
-<a id="restart-db-instance-3-request-body"></a>
+<a id="restart-db-instance-request-body"></a>
 #### リクエスト本文
 
 <details>
@@ -2725,7 +2725,7 @@ POST /v3.0/db-instances/{dbInstanceId}/restart
 | waitReplicationDelay | Boolean | N | 複製遅延の解消を待機<br/>- デフォルト値: `false` |
 | useReadOnly | Boolean | N | 書き込み負荷の遮断<br/>- デフォルト値: `false` |
 
-<a id="restart-db-instance-3-response"></a>
+<a id="restart-db-instance-response"></a>
 #### レスポンス
 
 <details>
