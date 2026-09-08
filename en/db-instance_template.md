@@ -312,19 +312,19 @@ Search conditions that can be changed are as follows.
 ❶ You can search for DB instances with filtering conditions that require parameter changes to be applied.
 
 <a id="db-instance-group-details"></a>
-## DB instance group details { #db-instance-group-details }
+## DB Instance Group Details { #db-instance-group-details }
 
-After viewing the DB instance list in the **Group** view, select a DB instance group to view its detailed information. The group details screen displays the following tabs:
+After viewing the DB instance list in the **Group** view, select a DB Instance Group to view its detailed information. The group details screen displays the following tabs:
 
 | Tab | Description |
 |---|---|
-| Basic Information | Displays the DB instance group name and ID, high availability configuration, Primary and Standby names, and Ping settings. |
-| DB Schema & Users | Manages the DB schemas and users of DB instances in the group. The DB schema and user features are provided in the DB instance group details, not in the individual DB instance details. |
+| Basic Information | Displays the DB Instance Group name and ID, high availability configuration, Primary and Standby names, and Ping settings. |
+| DB Schema and Users | Manages the DB schemas and users of DB instances in the group. The DB schema and user features are provided in the DB Instance Group details, not in the individual DB instance details. |
 
 <a id="db-schema-and-users"></a>
 ### DB Schema and Users { #db-schema-and-users }
 
-In the **DB Schema & User** tab of the DB Instance Group details, you can view and manage the schemas and users of databases that belong to the group.
+In the **DB Schema and Users** tab of the DB Instance Group details, you can view and manage the schemas and users of databases that belong to the group.
 
 <a id="db-schema-and-users-db-schema-created"></a>
 #### DB schema created
@@ -453,7 +453,7 @@ If you set TLS option for your account to X509, you need a certificate to access
 ❷ Click on **Delete** and **Confirm Delete** pop-up window will appear. You can request deletion by clicking on **Confirm**.
 
 <a id="modify-db-instance-group"></a>
-## Modify DB Instance Group { #modify-db-instance-group }
+## Update DB Instance Group { #modify-db-instance-group }
 
 On the **Basic Information** tab of the group details screen, click **Modify** to change settings at the group level. Change requests are processed asynchronously. You can check the status of the group and the ongoing operations until the changes are complete.
 
@@ -467,11 +467,11 @@ You can change the following items on the modification screen:
 | Standby Name                      | Enter when setting up high availability for the first time. Cannot be the same as the Primary name. The naming rules are the same as for the Primary.               |
 | Ping Interval                     | Set within a range of 1 to 600 seconds in a high availability configuration.                                                                                        |
 | Ping Method                       | Select either `INSERT` or `SELECT` in a high availability configuration.                                                                                            |
-| DB Schema & User Direct Control   | Changes whether to use direct control for schemas and users of DB instances in the group.                                                                           |
+| DB Schema & Direct User Control   | Changes whether to use direct control for schemas and users of DB instances in the group.                                                                           |
 
 !!! danger "Caution"
     * Disabling high availability deletes the Standby and converts to a standalone configuration. Before proceeding, make sure there is no data or configuration that exists only on the Standby.
-    * You cannot change the high availability setting for a DB instance group while failover is in progress.
+    * You cannot change the high availability setting for a DB Instance Group while failover is in progress.
     * The Primary name cannot be changed in a private network. Also, the Standby name of an existing high availability configuration cannot be changed; the Standby name can only be entered when setting up high availability for the first time.
     * In a high availability configuration, the names of the Primary and Standby must be different from each other.
 
@@ -628,10 +628,9 @@ You can easily change various items in DB instances created through console. Cha
 
 | Item           | Whether or not you can change  | Whether or not you need to restart                |
 |--------------|----------|-------------------------|
-| Availability Zone  | No  |     |
-| DB Engine          | Yes | Yes |
-| DB Instance Type   | Yes | Yes |
-| Block Storage Type | No  |     |
+| Availability Zone       | No      |                         |
+| DB Engine        | Yes        | Yes                       |
+| DB Instance Type   | Yes        | Yes                       |
 | Data Storage Type  | No      |                         |
 | Name           | Yes        | No                     |
 | Description           | Yes        | No                     |
@@ -641,6 +640,7 @@ You can easily change various items in DB instances created through console. Cha
 | Parameter group      | Yes        | Determined by whether or not to restart changed parameters |
 | DB Security Group     | Yes        | No                     |
 | Backup Settings        | Yes        | No                     |
+| Storage Auto Scale | Yes        | No                     | 
 
 For high-availability DB instances, if there are any changes to items that need to be restarted, it provides a restart capability using failover to increase stability and reduce disconnected time.
 
