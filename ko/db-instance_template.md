@@ -809,7 +809,7 @@ Read Replica를 생성할 리전을 선택할 때 리전 피어링을 지원하�
 <a id="create-read-replications-availability-zone"></a>
 #### 가용성 영역
 
-Read Replica의 가용성 영역을 선택합니다. 자세한 설명은 [가용성 영역](#_1) 항목을 참고합니다.
+Read Replica의 가용성 영역을 선택합니다. 자세한 설명은 [가용성 영역](#availability-zone) 항목을 참고합니다.
 
 <a id="create-read-replications-db-instance-type"></a>
 #### DB 인스턴스 타입
@@ -824,7 +824,7 @@ Read Replica는 Primary와 동일한 사양 또는 더 높은 사양으로 만�
 <a id="create-read-replications-floating-ip"></a>
 #### 플로팅 IP
 
-Read Replica의 플로팅 IP 사용 여부를 선택합니다. 자세한 설명은 [플로팅 IP](#ip) 항목을 참고합니다.
+Read Replica의 플로팅 IP 사용 여부를 선택합니다. 자세한 설명은 [플로팅 IP](#floating-ip) 항목을 참고합니다.
 
 <a id="create-read-replications-parameter-group"></a>
 #### 파라미터 그룹
@@ -844,12 +844,12 @@ Read Replica의 백업 설정을 선택합니다. 자세한 백업 내용은 [�
 <a id="create-read-replications-default-notification"></a>
 #### 기본 알림
 
-기본 알림 사용 여부를 선택합니다. 자세한 설명은 [기본 알림](#_7) 항목을 참고합니다.
+기본 알림 사용 여부를 선택합니다. 자세한 설명은 [기본 알림](#default-notification) 항목을 참고합니다.
 
 <a id="create-read-replications-deletion-protection"></a>
 #### 삭제 보호
 
-삭제 보호 사용 여부를 선택합니다. 자세한 설명은 [삭제 보호](#_8) 항목을 참고합니다.
+삭제 보호 사용 여부를 선택합니다. 자세한 설명은 [삭제 보호](#deletion-protection) 항목을 참고합니다.
 
 <a id="promote-read-replication"></a>
 ### Read Replica 승격 { #promote-read-replication }
