@@ -1,6 +1,6 @@
 <!-- machine_translated: true -->
 
-<!-- pre-align:aligned sig=fa6b592a4018 -->
+<!-- pre-align:aligned sig=5410a458e2ca -->
 
 <a id="database-rds-for-mysql-release-notes"></a>
 ## Database > RDS for MySQL > Release Notes { #database-rds-for-mysql-release-notes }
