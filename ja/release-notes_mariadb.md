@@ -5,15 +5,17 @@
 <a id="database-rds-for-mariadb-release-notes"></a>
 ## Database > RDS for MariaDB > リリースノート { #database-rds-for-mariadb-release-notes }
 
-<a id="july-14-2026"></a>
-## 2026. 09. 15.
+<a id="september-15-2026"></a>
+## 2026. 09. 15. { #september-15-2026 }
 
-### 新機能追加
+<a id="september-15-2026-added-features"></a>
+### 新機能追加 { #september-15-2026-added-features }
 
 * DB インスタンスの再起動時に、オペレーティングシステムを再起動するオプションを追加しました。
 * 高可用性インスタンスの停止機能を追加しました。
 
-### 機能改善
+<a id="september-15-2026-feature-updates"></a>
+### 機能改善 { #september-15-2026-feature-updates }
 
 * DB インスタンスタイプの用語変更
     * マスター → Primary
@@ -23,7 +25,8 @@
 * DB インスタンスグループに適用される属性は、DB インスタンスグループを修正するように改善
 * セキュリティパッチ、OS アップグレード後に過去のモニタリング指標を確認できるように改善
 
-### バグ修正
+<a id="september-15-2026-bug-fixes"></a>
+### バグ修正 { #september-15-2026-bug-fixes }
 
 * CloudTrail に Object Storage のテナント ID がそのまま露出されるバグを修正しました。
 * セキュリティグループルールが多い場合、セキュリティグループルールの作成・変更・削除が断続的に失敗するバグを修正しました。
