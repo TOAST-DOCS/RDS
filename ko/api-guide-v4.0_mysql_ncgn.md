@@ -1,37 +1,34 @@
 <!-- pre-align:aligned sig=d58a9ac7e400 -->
 
 <a id="database-rds-for-enginepascalcase-api-guide"></a>
-## Database > RDS for MariaDB > API 가이드 { #database-rds-for-enginepascalcase-api-guide }
+## Database > RDS for MySQL > API 가이드 { #database-rds-for-enginepascalcase-api-guide }
 
 <a id="rds-for-enginepascalcase-api-common-information"></a>
-## RDS for MariaDB API 공통 정보 { #rds-for-enginepascalcase-api-common-information }
+## RDS for MySQL API 공통 정보 { #rds-for-enginepascalcase-api-common-information }
 
 <a id="api-endpoint"></a>
 ### API 엔드포인트 { #api-endpoint }
 
 | 리전 | 엔드포인트 |
 |------|----------|
-| 한국(판교) 리전 | https://kr1-rds-mariadb.api.gov-nhncloudservice.com |
+| 한국(판교) 리전 | https://kr1-rds-mysql.api.gncloud.go.kr |
 
 
 <a id="common-authorization"></a>
 ### 인증 및 권한 { #common-authorization }
 
-RDS for MariaDB API를 사용하려면 User Access Key가 필요합니다. User Access Key는 NHN Cloud 계정 또는 IAM 계정을 기반으로 발급되는 인증 키로, Secret Access Key와 함께 사용하여 API 요청 인증 수단으로 활용됩니다.
-
-User Access Key와 Secret Access Key는 콘솔의 **API 보안 설정**에서 발급할 수 있습니다. User Access Key 발급 및 사용 방법은 [User Access Key](/nhncloud/ko/public-api/user-access-key)를 참고하세요.
-생성된 Key는 Appkey와 함께 요청 헤더에 포함해야 합니다.
+RDS for MySQL은(는) API 호출 시 인증/인가에 User Access Key 토큰을 사용합니다. User Access Key 토큰은 User Access Key를 기반으로 발급되는 Bearer 유형의 일시적 액세스 토큰입니다. User Access Key 토큰 발급 및 사용 방법은 [User Access Key 토큰](/nhncloud/ko/public-api/user-access-key-token)을 참고하세요.
+발급받은 토큰은 Appkey와 함께 요청 헤더에 포함해야 합니다.
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
-|-----|-----|-----|-----|-----|
-| X-TC-APP-KEY | Header | String | Y | RDS for MariaDB 서비스의 Appkey 또는 프로젝트 통합 Appkey |
-| X-TC-AUTHENTICATION-ID | Header | String | Y | API 보안 설정 메뉴의 User Access Key ID |
-| X-TC-AUTHENTICATION-SECRET | Header | String | Y | API 보안 설정 메뉴의 Secret Access Key |
+|-----|-----|-----|------|-----|
+| X-TC-APP-KEY | Header | String | Y    | RDS for MySQL 서비스의 Appkey 또는 프로젝트 통합 Appkey |
+| X-NHN-AUTHORIZATION | Header | String | Y    | Public API로 발급받은 Bearer 유형 토큰 |
 
-또한 프로젝트 권한에 따라 호출할 수 있는 API가 제한됩니다. `RDS for MariaDB ADMIN`, `RDS for MariaDB VIEWER` 역할에는 다음과 같이 기본 권한이 부여되어 있으며, 프로젝트 내 역할 그룹 관리 메뉴에서 필요한 권한만 부여할 수 있습니다.
+또한 프로젝트 권한에 따라 호출할 수 있는 API가 제한됩니다. `RDS for MySQL ADMIN`, `RDS for MySQL VIEWER` 역할에는 다음과 같이 기본 권한이 부여되어 있으며, 프로젝트 내 역할 그룹 관리 메뉴에서 필요한 권한만 부여할 수 있습니다.
 
-* `RDS for MariaDB ADMIN` 역할에는 API 실행에 필요한 모든 권한이 부여됩니다.
-* `RDS for MariaDB VIEWER` 역할에는 정보를 조회하는 권한만 부여됩니다.
+* `RDS for MySQL ADMIN` 역할에는 API 실행에 필요한 모든 권한이 부여됩니다.
+* `RDS for MySQL VIEWER` 역할에는 정보를 조회하는 권한만 부여됩니다.
     * DB 인스턴스를 생성, 수정, 삭제하거나, DB 인스턴스를 대상으로 하는 어떠한 기능도 사용할 수 없습니다.
     * 단, 알림 그룹과 사용자 그룹 관련 기능은 사용할 수 있습니다.
 
@@ -91,42 +88,61 @@ API 요청 시 인증에 실패하거나 권한이 없을 경우 다음과 같�
 
 | DB 엔진 버전 | 생성 가능 여부 | Object Storage에서 복원 가능 여부 | 인증 플러그인 지원 |
 |------------|----------|------------------|------------|
-| MARIADB_V10330 | N | N | ED25519, NATIVE |
-| MARIADB_V10611 | N | N | ED25519, NATIVE |
-| MARIADB_V10612 | N | N | ED25519, NATIVE |
-| MARIADB_V10616 | N | N | ED25519, NATIVE |
-| MARIADB_V10622 | N | N | ED25519, NATIVE |
-| MARIADB_V10625 | N | N | ED25519, NATIVE |
-| MARIADB_V101107 | Y | Y | ED25519, NATIVE |
-| MARIADB_V101108 | Y | Y | ED25519, NATIVE |
-| MARIADB_V101113 | Y | Y | ED25519, NATIVE |
-| MARIADB_V101116 | Y | Y | ED25519, NATIVE |
-| MARIADB_V101118 | Y | Y | ED25519, NATIVE |
-| MARIADB_V11407 | Y | Y | ED25519, NATIVE |
-| MARIADB_V11410 | Y | Y | ED25519, NATIVE |
-| MARIADB_V11412 | Y | Y | ED25519, NATIVE |
-| MARIADB_V11806 | Y | Y | ED25519, NATIVE |
-| MARIADB_V11808 | Y | Y | ED25519, NATIVE |
+| MYSQL_V5633 | N | N | NATIVE |
+| MYSQL_V5715 | Y | Y | SHA256, NATIVE |
+| MYSQL_V5719 | Y | Y | SHA256, NATIVE |
+| MYSQL_V5726 | Y | Y | SHA256, NATIVE |
+| MYSQL_V5731 | N | N | SHA256, NATIVE |
+| MYSQL_V5733 | Y | N | SHA256, NATIVE |
+| MYSQL_V5737 | Y | Y | SHA256, NATIVE |
+| MYSQL_V8018 | N | N | CACHING_SHA2, NATIVE |
+| MYSQL_V8023 | N | N | CACHING_SHA2, NATIVE |
+| MYSQL_V8028 | N | N | CACHING_SHA2, NATIVE |
+| MYSQL_V8032 | N | N | CACHING_SHA2, NATIVE |
+| MYSQL_V8033 | N | N | CACHING_SHA2, NATIVE |
+| MYSQL_V8034 | N | N | CACHING_SHA2, NATIVE |
+| MYSQL_V8035 | Y | Y | CACHING_SHA2, NATIVE |
+| MYSQL_V8036 | Y | Y | CACHING_SHA2, NATIVE |
+| MYSQL_V8040 | Y | Y | CACHING_SHA2, NATIVE |
+| MYSQL_V8041 | Y | Y | CACHING_SHA2, NATIVE |
+| MYSQL_V8042 | Y | Y | CACHING_SHA2, NATIVE |
+| MYSQL_V8043 | Y | Y | CACHING_SHA2, NATIVE |
+| MYSQL_V8044 | Y | Y | CACHING_SHA2, NATIVE |
+| MYSQL_V8045 | Y | Y | CACHING_SHA2, NATIVE |
+| MYSQL_V8046 | Y | Y | CACHING_SHA2, NATIVE |
+| MYSQL_V8405 | Y | Y | CACHING_SHA2 |
+| MYSQL_V8406 | Y | Y | CACHING_SHA2 |
+| MYSQL_V8407 | Y | Y | CACHING_SHA2 |
+| MYSQL_V8408 | Y | Y | CACHING_SHA2 |
+| MYSQL_V8409 | Y | Y | CACHING_SHA2 |
+| MYSQL_V8411 | Y | Y | CACHING_SHA2 |
 
 * Enum 유형인 dbVersion 필드에 위 값을 사용할 수 있습니다.
 * 버전에 따라 생성 또는 복원이 불가능할 수 있습니다.
 
-<a id="get-db-versions"></a>
-### DB 엔진 버전 목록 보기 { #get-db-versions }
+<a id="list-db-engines"></a>
+### DB 엔진 버전 목록 보기 { #list-db-engines }
 
-<a id="get-db-versions-request"></a>
+<a id="list-db-engines-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbVersion.List | DB 엔진 버전 목록 보기 |
+
+<a id="list-db-engines-request"></a>
 #### 요청
 
 ```http
-GET /v3.0/db-versions
+GET /v4.0/db-versions
 ```
 
-<a id="get-db-versions-request-body"></a>
+<a id="list-db-engines-request-body"></a>
 #### 요청 본문
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-<a id="get-db-versions-response"></a>
+<a id="list-db-engines-response"></a>
 #### 응답
 
 <details>
@@ -141,8 +157,8 @@ GET /v3.0/db-versions
     },
     "dbVersions": [
         {
-            "dbVersion": "MARIADB_V11808",
-            "dbVersionName": "Maria DB 11.8.8",
+            "dbVersion": "MYSQL_V8411",
+            "dbVersionName": "MySQL 8.4.11",
             "restorableFromObs": true
         }
     ]
@@ -163,22 +179,29 @@ GET /v3.0/db-versions
 <a id="project-information"></a>
 ## 프로젝트 정보 { #project-information }
 
-<a id="get-project-members"></a>
-### 프로젝트 멤버 목록 보기 { #get-project-members }
+<a id="list-project-members"></a>
+### 프로젝트 멤버 목록 보기 { #list-project-members }
 
-<a id="get-project-members-request"></a>
+<a id="list-project-members-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:Project.Get | 프로젝트 멤버 목록 보기 |
+
+<a id="list-project-members-request"></a>
 #### 요청
 
 ```http
-GET /v3.0/project/members
+GET /v4.0/project/members
 ```
 
-<a id="get-project-members-request-body"></a>
+<a id="list-project-members-request-body"></a>
 #### 요청 본문
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-<a id="get-project-members-response"></a>
+<a id="list-project-members-response"></a>
 #### 응답
 
 <details>
@@ -214,22 +237,29 @@ GET /v3.0/project/members
 
 ---
 
-<a id="get-regions"></a>
-### 리전 목록 보기 { #get-regions }
+<a id="list-regions"></a>
+### 리전 목록 보기 { #list-regions }
 
-<a id="get-regions-request"></a>
+<a id="list-regions-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:Project.Get | 리전 목록 보기 |
+
+<a id="list-regions-request"></a>
 #### 요청
 
 ```http
-GET /v3.0/project/regions
+GET /v4.0/project/regions
 ```
 
-<a id="get-regions-request-body"></a>
+<a id="list-regions-request-body"></a>
 #### 요청 본문
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-<a id="get-regions-response"></a>
+<a id="list-regions-response"></a>
 #### 응답
 
 <details>
@@ -264,22 +294,29 @@ GET /v3.0/project/regions
 <a id="specifications-of-db-instance"></a>
 ## DB 인스턴스 사양 { #specifications-of-db-instance }
 
-<a id="get-db-flavors"></a>
-### DB 인스턴스 사양 목록 보기 { #get-db-flavors }
+<a id="list-db-instance-specifications"></a>
+### DB 인스턴스 사양 목록 보기 { #list-db-instance-specifications }
 
-<a id="get-db-flavors-request"></a>
+<a id="list-db-instance-specifications-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbFlavor.List | DB 인스턴스 사양 목록 보기 |
+
+<a id="list-db-instance-specifications-request"></a>
 #### 요청
 
 ```http
-GET /v3.0/db-flavors
+GET /v4.0/db-flavors
 ```
 
-<a id="get-db-flavors-request-body"></a>
+<a id="list-db-instance-specifications-request-body"></a>
 #### 요청 본문
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-<a id="get-db-flavors-response"></a>
+<a id="list-db-instance-specifications-response"></a>
 #### 응답
 
 <details>
@@ -318,22 +355,29 @@ GET /v3.0/db-flavors
 <a id="network"></a>
 ## 네트워크 { #network }
 
-<a id="get-subnets"></a>
-### 서브넷 목록 보기 { #get-subnets }
+<a id="list-subnets"></a>
+### 서브넷 목록 보기 { #list-subnets }
 
-<a id="get-subnets-request"></a>
+<a id="list-subnets-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:Network.List | 서브넷 목록 보기 |
+
+<a id="list-subnets-request"></a>
 #### 요청
 
 ```http
-GET /v3.0/network/subnets
+GET /v4.0/network/subnets
 ```
 
-<a id="get-subnets-request-body"></a>
+<a id="list-subnets-request-body"></a>
 #### 요청 본문
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-<a id="get-subnets-response"></a>
+<a id="list-subnets-response"></a>
 #### 응답
 
 <details>
@@ -374,22 +418,29 @@ GET /v3.0/network/subnets
 <a id="storage"></a>
 ## 데이터 스토리지 { #storage }
 
-<a id="get-storage-types"></a>
-### 스토리지 유형 목록 보기 { #get-storage-types }
+<a id="list-storage-type"></a>
+### 스토리지 유형 목록 보기 { #list-storage-type }
 
-<a id="get-storage-types-request"></a>
+<a id="list-storage-type-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:Storage.List | 스토리지 유형 목록 보기 |
+
+<a id="list-storage-type-request"></a>
 #### 요청
 
 ```http
-GET /v3.0/storage-types
+GET /v4.0/storage-types
 ```
 
-<a id="get-storage-types-request-body"></a>
+<a id="list-storage-type-request-body"></a>
 #### 요청 본문
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-<a id="get-storage-types-response"></a>
+<a id="list-storage-type-response"></a>
 #### 응답
 
 <details>
@@ -417,49 +468,6 @@ GET /v3.0/storage-types
 
 ---
 
-<a id="get-storages"></a>
-### 스토리지 목록 보기 { #get-storages }
-
-<a id="get-storages-request"></a>
-#### 요청
-
-```http
-GET /v3.0/storages
-```
-
-<a id="get-storages-request-body"></a>
-#### 요청 본문
-
-이 API는 요청 본문을 요구하지 않습니다.
-
-<a id="get-storages-response"></a>
-#### 응답
-
-<details>
-  <summary><strong>예시 코드</strong></summary>
-
-```json
-{
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "storages": [
-        "General SSD",
-        "General HDD"
-    ]
-}
-```
-
-</details>
-
-| 이름 | 타입 | 설명 |
-|-----|-----|-----|
-| storages | Array | 스토리지 목록 |
-
----
-
 <a id="task-information"></a>
 ## 작업 정보 { #task-information }
 
@@ -481,29 +489,36 @@ GET /v3.0/storages
 | `DELETED`          | 작업이 삭제된 경우           |
 | `FAIL_TO_READY`    | 작업 준비에 실패한 경우        |
 
-<a id="get-job"></a>
-### 작업 정보 상세 보기 { #get-job }
+<a id="list-task-details"></a>
+### 작업 정보 상세 보기 { #list-task-details }
 
-<a id="get-job-request"></a>
+<a id="list-task-details-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:Job.Get | 작업 정보 상세 보기 |
+
+<a id="list-task-details-request"></a>
 #### 요청
 
 ```http
-GET /v3.0/jobs/{jobId}
+GET /v4.0/jobs/{jobId}
 ```
 
-<a id="get-job-request-parameters"></a>
+<a id="list-task-details-request-parameters"></a>
 #### 요청 파라미터
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
 | jobId | URL | UUID | Y | 작업의 식별자 |
 
-<a id="get-job-request-body"></a>
+<a id="list-task-details-request-body"></a>
 #### 요청 본문
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-<a id="get-job-response"></a>
+<a id="list-task-details-response"></a>
 #### 응답
 
 <details>
@@ -546,22 +561,29 @@ GET /v3.0/jobs/{jobId}
 <a id="db-instance-group"></a>
 ## DB 인스턴스 그룹 { #db-instance-group }
 
-<a id="get-db-instance-groups"></a>
-### DB 인스턴스 그룹 목록 보기 { #get-db-instance-groups }
+<a id="list-db-instance-groups"></a>
+### DB 인스턴스 그룹 목록 보기 { #list-db-instance-groups }
 
-<a id="get-db-instance-groups-request"></a>
+<a id="list-db-instance-groups-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstanceGroup.List | DB 인스턴스 그룹 목록 보기 |
+
+<a id="list-db-instance-groups-request"></a>
 #### 요청
 
 ```http
-GET /v3.0/db-instance-groups
+GET /v4.0/db-instance-groups
 ```
 
-<a id="get-db-instance-groups-request-body"></a>
+<a id="list-db-instance-groups-request-body"></a>
 #### 요청 본문
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-<a id="get-db-instance-groups-response"></a>
+<a id="list-db-instance-groups-response"></a>
 #### 응답
 
 <details>
@@ -597,29 +619,36 @@ GET /v3.0/db-instance-groups
 
 ---
 
-<a id="get-db-instance-group"></a>
-### DB 인스턴스 그룹 상세 보기 { #get-db-instance-group }
+<a id="list-db-instance-group-details"></a>
+### DB 인스턴스 그룹 상세 보기 { #list-db-instance-group-details }
 
-<a id="get-db-instance-group-request"></a>
+<a id="list-db-instance-group-details-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstanceGroup.Get | DB 인스턴스 그룹 상세 보기 |
+
+<a id="list-db-instance-group-details-request"></a>
 #### 요청
 
 ```http
-GET /v3.0/db-instance-groups/{dbInstanceGroupId}
+GET /v4.0/db-instance-groups/{dbInstanceGroupId}
 ```
 
-<a id="get-db-instance-group-request-parameters"></a>
+<a id="list-db-instance-group-details-request-parameters"></a>
 #### 요청 파라미터
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
 | dbInstanceGroupId | URL | UUID | Y | DB 인스턴스 그룹의 식별자 |
 
-<a id="get-db-instance-group-request-body"></a>
+<a id="list-db-instance-group-details-request-body"></a>
 #### 요청 본문
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-<a id="get-db-instance-group-response"></a>
+<a id="list-db-instance-group-details-response"></a>
 #### 응답
 
 <details>
@@ -711,22 +740,29 @@ GET /v3.0/db-instance-groups/{dbInstanceGroupId}
 | `SYNCING_USER`             | 사용자 동기화 중    |
 | `UPDATING_USER`            | 사용자 수정 중     |
 
-<a id="get-db-instances"></a>
-### DB 인스턴스 목록 보기 { #get-db-instances }
+<a id="list-db-instances"></a>
+### DB 인스턴스 목록 보기 { #list-db-instances }
 
-<a id="get-db-instances-request"></a>
+<a id="list-db-instances-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.List | DB 인스턴스 목록 보기 |
+
+<a id="list-db-instances-request"></a>
 #### 요청
 
 ```http
-GET /v3.0/db-instances
+GET /v4.0/db-instances
 ```
 
-<a id="get-db-instances-request-body"></a>
+<a id="list-db-instances-request-body"></a>
 #### 요청 본문
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-<a id="get-db-instances-response"></a>
+<a id="list-db-instances-response"></a>
 #### 응답
 
 <details>
@@ -745,7 +781,7 @@ GET /v3.0/db-instances
             "dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
             "dbInstanceName": "dbInstanceName-example",
             "description": "description-example",
-            "dbVersion": "MARIADB_V11808",
+            "dbVersion": "MYSQL_V8411",
             "dbPort": 13306,
             "dbInstanceType": "MASTER",
             "dbInstanceStatus": "AVAILABLE",
@@ -779,11 +815,18 @@ GET /v3.0/db-instances
 <a id="create-db-instance"></a>
 ### DB 인스턴스 생성하기 { #create-db-instance }
 
+<a id="create-db-instance-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Create | DB 인스턴스 생성하기 |
+
 <a id="create-db-instance-request"></a>
 #### 요청
 
 ```http
-POST /v3.0/db-instances
+POST /v4.0/db-instances
 ```
 
 <a id="create-db-instance-request-body"></a>
@@ -795,10 +838,9 @@ POST /v3.0/db-instances
 ```json
 {
     "dbInstanceName": "dbInstanceName",
-    "dbInstanceCandidateName": "dbInstanceCandidateName",
     "description": "description-example",
     "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
-    "dbVersion": "MARIADB_V11808",
+    "dbVersion": "MYSQL_V8411",
     "dbPort": 13306,
     "dbUserName": "dbUserName",
     "dbPassword": "dbPassword",
@@ -809,6 +851,7 @@ POST /v3.0/db-instances
     "pingInterval": 3,
     "useDefaultNotification": false,
     "useDeletionProtection": false,
+    "useSlowQueryAnalysis": true,
     "authenticationPlugin": "NATIVE",
     "tlsOption": "NONE",
     "network": {
@@ -818,7 +861,10 @@ POST /v3.0/db-instances
     },
     "storage": {
         "storageType": "General SSD",
-        "storageSize": 20
+        "storageSize": 20,
+        "storageAutoscale": {
+            "useStorageAutoscale": false
+        }
     },
     "backup": {
         "backupPeriod": 0,
@@ -841,7 +887,6 @@ POST /v3.0/db-instances
 | 이름 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|
 | dbInstanceName | String | Y | Primary DB 인스턴스를 식별할 수 있는 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
-| dbInstanceCandidateName | String | N | Standby DB 인스턴스를 식별할 수 있는 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
 | description | String | N | DB 인스턴스 추가 정보<br/>- 최대 길이: `100` |
 | dbFlavorId | UUID | Y | DB 인스턴스 사양의 식별자 |
 | dbVersion | Enum | Y | DB 엔진 버전 |
@@ -855,15 +900,18 @@ POST /v3.0/db-instances
 | pingInterval | Number | N | 고가용성 사용 시 Ping 간격(초)<br/>- 기본값: `3`<br/>- 최솟값: `1`<br/>- 최댓값: `600` |
 | useDefaultNotification | Boolean | N | 기본 알림 사용 여부<br/>- 기본값: `false` |
 | useDeletionProtection | Boolean | N | 삭제 보호 여부<br/>- 기본값: `false` |
-| authenticationPlugin | Enum | N | 인증 플러그인<br/>- `NATIVE`: mysql_native_password 인증<br/>- `ED25519`: ed25519 인증(MariaDB 전용) |
+| useSlowQueryAnalysis | Boolean | N | Slow query 분석 여부<br/>- 기본값: `true` |
+| authenticationPlugin | Enum | N | 인증 플러그인<br/>- `NATIVE`: mysql_native_password 인증<br/>- `CACHING_SHA2`: caching_sha2_password 인증(MySQL 전용)<br/>- `SHA256`: sha256_password 인증(MySQL 전용) |
 | tlsOption | Enum | N | TLS 옵션<br/>- 기본값: `NONE`<br/>- `NONE`: TLS 미사용<br/>- `SSL`: SSL 인증<br/>- `X509`: X509 인증서 인증 |
 | network | Object | Y | 네트워크 정보 객체 |
 | network.subnetId | UUID | Y | 서브넷의 식별자 |
 | network.usePublicAccess | Boolean | N | 외부 접속 가능 여부<br/>- 기본값: `false` |
 | network.availabilityZone | Enum | Y | DB 인스턴스를 생성할 가용성 영역 |
 | storage | Object | Y | 스토리지 정보 객체 |
-| storage.storageType | Enum | Y | 스토리지 유형 |
+| storage.storageType | Enum | Y | 데이터 스토리지 유형 |
 | storage.storageSize | Number | Y | 데이터 스토리지 크기(GB)<br/>- 최솟값: `20` |
+| storage.storageAutoscale | Object | N | 데이터 스토리지 자동 확장 객체 |
+| storage.storageAutoscale.useStorageAutoscale | Boolean | N | 스토리지 자동 확장 여부<br/>- 기본값: `false` |
 | backup | Object | Y | 백업 정보 객체 |
 | backup.backupPeriod | Number | Y | 백업 보관 기간(일)<br/>- 최솟값: `0`<br/>- 최댓값: `730` |
 | backup.backupRetryCount | Number | N | 백업 재시도 횟수<br/>- 최솟값: `0`<br/>- 최댓값: `10` |
@@ -873,6 +921,22 @@ POST /v3.0/db-instances
 | backup.backupSchedules | Array | Y | 백업 스케줄 목록 |
 | backup.backupSchedules.backupWndBgnTime | Time | Y | 백업 시작 시간 |
 | backup.backupSchedules.backupWndDuration | Enum | Y | 백업 윈도우<br/>- `HALF_AN_HOUR`: 30분<br/>- `ONE_HOUR`: 1시간<br/>- `ONE_HOUR_AND_HALF`: 1시간 30분<br/>- `TWO_HOURS`: 2시간<br/>- `TWO_HOURS_AND_HALF`: 2시간 30분<br/>- `THREE_HOURS`: 3시간 |
+
+<a id="create-db-instance-section"></a>
+#### 고가용성 사용 시
+
+| 이름 | 타입 | 필수 | 설명 |
+|-----|-----|-----|-----|
+| dbInstanceCandidateName | String | Y | Standby DB 인스턴스를 식별할 수 있는 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
+
+<a id="create-db-instance-section-2"></a>
+#### 스토리지 자동 확장 사용 시
+
+| 이름 | 타입 | 필수 | 설명 |
+|-----|-----|-----|-----|
+| storage.storageAutoscale.threshold | Number | Y | 자동 확장 조건(%)<br/>- 최솟값: `50`<br/>- 최댓값: `95` |
+| storage.storageAutoscale.maxStorageSize | Number | Y | 자동 확장 최대 크기(GB)<br/>- 최댓값: `4096` |
+| storage.storageAutoscale.cooldownTime | Number | Y | 자동 확장 쿨다운 시간(분)<br/>- 최솟값: `10`<br/>- 최댓값: `1440` |
 
 <a id="create-db-instance-response"></a>
 #### 응답
@@ -895,21 +959,28 @@ POST /v3.0/db-instances
 
 | 이름 | 타입 | 설명 |
 |-----|-----|-----|
-| jobId | UUID | 작업의 식별자 |
+| jobId | UUID | 요청한 작업의 식별자 |
 
 ---
 
-<a id="restore-db-instance-from-obs"></a>
-### Object Storage를 이용한 DB 인스턴스 복원 { #restore-db-instance-from-obs }
+<a id="restore-from-object-storage"></a>
+### Object Storage를 이용한 DB 인스턴스 복원 { #restore-from-object-storage }
 
-<a id="restore-db-instance-from-obs-request"></a>
+<a id="restore-from-object-storage-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.RestoreFromObs | Object Storage를 이용한 DB 인스턴스 복원 |
+
+<a id="restore-from-object-storage-request"></a>
 #### 요청
 
 ```http
-POST /v3.0/db-instances/restore-from-obs
+POST /v4.0/db-instances/restore-from-obs
 ```
 
-<a id="restore-db-instance-from-obs-request-body"></a>
+<a id="restore-from-object-storage-request-body"></a>
 #### 요청 본문
 
 <details>
@@ -918,17 +989,18 @@ POST /v3.0/db-instances/restore-from-obs
 ```json
 {
     "dbInstanceName": "dbInstanceName",
-    "dbInstanceCandidateName": "dbInstanceCandidateName",
     "description": "description-example",
     "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
     "dbPort": 13306,
-    "dbVersion": "MARIADB_V11808",
+    "dbVersion": "MYSQL_V8411",
     "useHighAvailability": false,
-    "imageId": "550e8400-e29b-41d4-a716-446655440000",
     "pingInterval": 3,
     "storage": {
         "storageType": "General SSD",
-        "storageSize": 20
+        "storageSize": 20,
+        "storageAutoscale": {
+            "useStorageAutoscale": false
+        }
     },
     "network": {
         "subnetId": "550e8400-e29b-41d4-a716-446655440000",
@@ -956,6 +1028,7 @@ POST /v3.0/db-instances/restore-from-obs
         "objectPath": "objectPath-example"
     },
     "useDefaultNotification": false,
+    "useSlowQueryAnalysis": true,
     "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
     "dbSecurityGroupIds": [],
     "userGroupIds": [],
@@ -967,18 +1040,18 @@ POST /v3.0/db-instances/restore-from-obs
 
 | 이름 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|
-| dbInstanceName | String | N | Primary DB 인스턴스를 식별할 수 있는 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
-| dbInstanceCandidateName | String | N | Standby DB 인스턴스를 식별할 수 있는 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
+| dbInstanceName | String | Y | Primary DB 인스턴스를 식별할 수 있는 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
 | description | String | N | DB 인스턴스 추가 정보<br/>- 최대 길이: `100` |
 | dbFlavorId | UUID | Y | DB 인스턴스 사양의 식별자 |
-| dbPort | Number | N | DB 포트 |
+| dbPort | Number | Y | DB 포트 |
 | dbVersion | Enum | Y | DB 엔진 버전 |
 | useHighAvailability | Boolean | N | 고가용성 사용 여부<br/>- 기본값: `false` |
-| imageId | UUID | N | 이미지의 식별자 |
 | pingInterval | Number | N | 고가용성 사용 시 Ping 간격(초)<br/>- 최솟값: `1`<br/>- 최댓값: `600` |
 | storage | Object | Y | 스토리지 정보 객체 |
 | storage.storageType | Enum | Y | 스토리지 유형 |
 | storage.storageSize | Number | Y | 데이터 스토리지 크기(GB)<br/>- 최솟값: `20` |
+| storage.storageAutoscale | Object | N | 데이터 스토리지 자동 확장 객체 |
+| storage.storageAutoscale.useStorageAutoscale | Boolean | N | 스토리지 자동 확장 여부<br/>- 기본값: `false` |
 | network | Object | Y | 네트워크 정보 객체 |
 | network.subnetId | UUID | Y | 서브넷의 식별자 |
 | network.usePublicAccess | Boolean | N | 외부 접속 가능 여부<br/>- 기본값: `false` |
@@ -999,26 +1072,68 @@ POST /v3.0/db-instances/restore-from-obs
 | restore.targetContainer | String | Y | 백업이 저장된 Object Storage의 컨테이너 |
 | restore.objectPath | String | Y | 컨테이너에 저장된 백업의 경로 |
 | useDefaultNotification | Boolean | N | 기본 알림 사용 여부<br/>- 기본값: `false` |
+| useSlowQueryAnalysis | Boolean | N | Slow query 분석 여부<br/>- 기본값: `true` |
 | parameterGroupId | UUID | Y | 파라미터 그룹의 식별자 |
 | dbSecurityGroupIds | Array | N | DB 보안 그룹의 식별자 목록 |
 | userGroupIds | Array | N | 사용자 그룹의 식별자 목록 |
 | useDeletionProtection | Boolean | N | 삭제 보호 여부<br/>- 기본값: `false` |
 
-<a id="restore-db-instance-from-obs-response"></a>
+<a id="restore-from-object-storage-section"></a>
+#### 고가용성 사용 시
+
+| 이름 | 타입 | 필수 | 설명 |
+|-----|-----|-----|-----|
+| dbInstanceCandidateName | String | Y | Standby DB 인스턴스를 식별할 수 있는 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
+
+<a id="restore-from-object-storage-section-2"></a>
+#### 스토리지 자동 확장 사용 시
+
+| 이름 | 타입 | 필수 | 설명 |
+|-----|-----|-----|-----|
+| storage.storageAutoscale.threshold | Number | Y | 자동 확장 조건(%)<br/>- 최솟값: `50`<br/>- 최댓값: `95` |
+| storage.storageAutoscale.maxStorageSize | Number | Y | 자동 확장 최대 크기(GB)<br/>- 최댓값: `4096` |
+| storage.storageAutoscale.cooldownTime | Number | Y | 자동 확장 쿨다운 시간(분)<br/>- 최솟값: `10`<br/>- 최댓값: `1440` |
+
+<a id="restore-from-object-storage-response"></a>
 #### 응답
 
-이 API는 응답 본문을 반환하지 않습니다.
+<details>
+  <summary><strong>예시 코드</strong></summary>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+}
+```
+
+</details>
+
+| 이름 | 타입 | 설명 |
+|-----|-----|-----|
+| jobId | UUID | 요청한 작업의 식별자 |
 
 ---
 
 <a id="delete-db-instance"></a>
 ### DB 인스턴스 삭제하기 { #delete-db-instance }
 
+<a id="delete-db-instance-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Delete | DB 인스턴스 삭제하기 |
+
 <a id="delete-db-instance-request"></a>
 #### 요청
 
 ```http
-DELETE /v3.0/db-instances/{dbInstanceId}
+DELETE /v4.0/db-instances/{dbInstanceId}
 ```
 
 <a id="delete-db-instance-request-parameters"></a>
@@ -1031,7 +1146,20 @@ DELETE /v3.0/db-instances/{dbInstanceId}
 <a id="delete-db-instance-request-body"></a>
 #### 요청 본문
 
-이 API는 요청 본문을 요구하지 않습니다.
+<details>
+  <summary><strong>예시 코드</strong></summary>
+
+```json
+{
+    "deleteAutoBackup": false
+}
+```
+
+</details>
+
+| 이름 | 타입 | 필수 | 설명 |
+|-----|-----|-----|-----|
+| deleteAutoBackup | Boolean | N | 자동 백업 삭제 여부<br/>- 기본값: `false` |
 
 <a id="delete-db-instance-response"></a>
 #### 응답
@@ -1054,33 +1182,40 @@ DELETE /v3.0/db-instances/{dbInstanceId}
 
 | 이름 | 타입 | 설명 |
 |-----|-----|-----|
-| jobId | UUID | 작업의 식별자 |
+| jobId | UUID | 요청한 작업의 식별자 |
 
 ---
 
-<a id="get-db-instance"></a>
-### DB 인스턴스 상세 보기 { #get-db-instance }
+<a id="list-db-instance-details"></a>
+### DB 인스턴스 상세 보기 { #list-db-instance-details }
 
-<a id="get-db-instance-request"></a>
+<a id="list-db-instance-details-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Get | DB 인스턴스 상세 보기 |
+
+<a id="list-db-instance-details-request"></a>
 #### 요청
 
 ```http
-GET /v3.0/db-instances/{dbInstanceId}
+GET /v4.0/db-instances/{dbInstanceId}
 ```
 
-<a id="get-db-instance-request-parameters"></a>
+<a id="list-db-instance-details-request-parameters"></a>
 #### 요청 파라미터
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
 | dbInstanceId | URL | UUID | Y | DB 인스턴스의 식별자 |
 
-<a id="get-db-instance-request-body"></a>
+<a id="list-db-instance-details-request-body"></a>
 #### 요청 본문
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-<a id="get-db-instance-response"></a>
+<a id="list-db-instance-details-response"></a>
 #### 응답
 
 <details>
@@ -1097,7 +1232,7 @@ GET /v3.0/db-instances/{dbInstanceId}
     "dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
     "dbInstanceName": "dbInstanceName-example",
     "description": "description-example",
-    "dbVersion": "MARIADB_V11808",
+    "dbVersion": "MYSQL_V8411",
     "dbPort": 13306,
     "dbInstanceType": "MASTER",
     "dbInstanceStatus": "AVAILABLE",
@@ -1111,6 +1246,7 @@ GET /v3.0/db-instances/{dbInstanceId}
         "550e8400-e29b-41d4-a716-446655440000"
     ],
     "useDeletionProtection": false,
+    "useSlowQueryAnalysis": false,
     "supportAuthenticationPlugin": false,
     "needToApplyParameterGroup": false,
     "needMigration": false,
@@ -1138,6 +1274,7 @@ GET /v3.0/db-instances/{dbInstanceId}
 | dbSecurityGroupIds | Array | DB 인스턴스에 적용된 DB 보안 그룹의 식별자 목록 |
 | notificationGroupIds | Array | DB 인스턴스에 적용된 알림 그룹의 식별자 목록 |
 | useDeletionProtection | Boolean | DB 인스턴스 삭제 보호 여부 |
+| useSlowQueryAnalysis | Boolean | Slow query 분석 여부 |
 | supportAuthenticationPlugin | Boolean | 인증 플러그인 지원 여부 |
 | needToApplyParameterGroup | Boolean | 최신 파라미터 그룹 적용 필요 여부 |
 | needMigration | Boolean | 마이그레이션 필요 여부 |
@@ -1147,24 +1284,31 @@ GET /v3.0/db-instances/{dbInstanceId}
 
 ---
 
-<a id="update-db-instance"></a>
-### DB 인스턴스 수정하기 { #update-db-instance }
+<a id="modify-db-instance"></a>
+### DB 인스턴스 수정하기 { #modify-db-instance }
 
-<a id="update-db-instance-request"></a>
+<a id="modify-db-instance-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Modify | DB 인스턴스 수정하기 |
+
+<a id="modify-db-instance-request"></a>
 #### 요청
 
 ```http
-PUT /v3.0/db-instances/{dbInstanceId}
+PUT /v4.0/db-instances/{dbInstanceId}
 ```
 
-<a id="update-db-instance-request-parameters"></a>
+<a id="modify-db-instance-request-parameters"></a>
 #### 요청 파라미터
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
 | dbInstanceId | URL | UUID | Y | DB 인스턴스의 식별자 |
 
-<a id="update-db-instance-request-body"></a>
+<a id="modify-db-instance-request-body"></a>
 #### 요청 본문
 
 <details>
@@ -1178,7 +1322,8 @@ PUT /v3.0/db-instances/{dbInstanceId}
     "dbPort": 13306,
     "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
     "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
-    "dbVersion": "MARIADB_V11808",
+    "dbVersion": "MYSQL_V8411",
+    "useSlowQueryAnalysis": false,
     "useDummy": false,
     "dbSecurityGroupIds": [],
     "executeBackup": false,
@@ -1199,6 +1344,7 @@ PUT /v3.0/db-instances/{dbInstanceId}
 | dbFlavorId | UUID | N | DB 인스턴스 사양의 식별자 |
 | parameterGroupId | UUID | N | 파라미터 그룹의 식별자 |
 | dbVersion | Enum | N | DB 엔진 버전 |
+| useSlowQueryAnalysis | Boolean | N | Slow query 분석 여부 |
 | useDummy | Boolean | N | 단일 DB 인스턴스의 DB 버전 업그레이드 시 더미 사용 여부<br/>- 기본값: `false` |
 | dbSecurityGroupIds | Array | N | DB 보안 그룹의 식별자 목록 |
 | executeBackup | Boolean | N | 현재 시점 백업 수행 여부<br/>- 기본값: `false` |
@@ -1206,7 +1352,7 @@ PUT /v3.0/db-instances/{dbInstanceId}
 | waitReplicationDelay | Boolean | N | 복제 지연 해소 대기<br/>- 기본값: `false` |
 | useReadOnly | Boolean | N | 쓰기 부하 차단<br/>- 기본값: `false` |
 
-<a id="update-db-instance-response"></a>
+<a id="modify-db-instance-response"></a>
 #### 응답
 
 <details>
@@ -1227,93 +1373,40 @@ PUT /v3.0/db-instances/{dbInstanceId}
 
 | 이름 | 타입 | 설명 |
 |-----|-----|-----|
-| jobId | UUID | 작업의 식별자 |
+| jobId | UUID | 요청한 작업의 식별자 |
 
 ---
 
-<a id="backup-db-instance"></a>
-### DB 인스턴스 백업하기 { #backup-db-instance }
+<a id="view-backup-information"></a>
+### 백업 정보 보기 { #view-backup-information }
 
-<a id="backup-db-instance-request"></a>
+<a id="view-backup-information-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Get | 백업 정보 보기 |
+
+<a id="view-backup-information-request"></a>
 #### 요청
 
 ```http
-POST /v3.0/db-instances/{dbInstanceId}/backup
+GET /v4.0/db-instances/{dbInstanceId}/backup-info
 ```
 
-<a id="backup-db-instance-request-parameters"></a>
+<a id="view-backup-information-request-parameters"></a>
 #### 요청 파라미터
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
 | dbInstanceId | URL | UUID | Y | DB 인스턴스의 식별자 |
 
-<a id="backup-db-instance-request-body"></a>
-#### 요청 본문
-
-<details>
-  <summary><strong>예시 코드</strong></summary>
-
-```json
-{
-    "backupName": "backupName"
-}
-```
-
-</details>
-
-| 이름 | 타입 | 필수 | 설명 |
-|-----|-----|-----|-----|
-| backupName | String | Y | 백업을 식별할 수 있는 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
-
-<a id="backup-db-instance-response"></a>
-#### 응답
-
-<details>
-  <summary><strong>예시 코드</strong></summary>
-
-```json
-{
-    "header": {
-        "resultCode": 0,
-        "resultMessage": "SUCCESS",
-        "isSuccessful": true
-    },
-    "jobId": "550e8400-e29b-41d4-a716-446655440000"
-}
-```
-
-</details>
-
-| 이름 | 타입 | 설명 |
-|-----|-----|-----|
-| jobId | UUID | 작업의 식별자 |
-
----
-
-<a id="get-backup-info"></a>
-### 백업 정보 보기 { #get-backup-info }
-
-<a id="get-backup-info-request"></a>
-#### 요청
-
-```http
-GET /v3.0/db-instances/{dbInstanceId}/backup-info
-```
-
-<a id="get-backup-info-request-parameters"></a>
-#### 요청 파라미터
-
-| 이름 | 구분 | 타입 | 필수 | 설명 |
-|-----|-----|-----|-----|-----|
-| dbInstanceId | URL | UUID | Y | DB 인스턴스의 식별자 |
-
-<a id="get-backup-info-request-body"></a>
+<a id="view-backup-information-request-body"></a>
 #### 요청 본문
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-<a id="get-backup-info-response"></a>
+<a id="view-backup-information-response"></a>
 #### 응답
 
 <details>
@@ -1355,24 +1448,31 @@ GET /v3.0/db-instances/{dbInstanceId}/backup-info
 
 ---
 
-<a id="update-backup-info"></a>
-### 백업 정보 수정하기 { #update-backup-info }
+<a id="modify-backup-information"></a>
+### 백업 정보 수정하기 { #modify-backup-information }
 
-<a id="update-backup-info-request"></a>
+<a id="modify-backup-information-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Modify | 백업 정보 수정하기 |
+
+<a id="modify-backup-information-request"></a>
 #### 요청
 
 ```http
-PUT /v3.0/db-instances/{dbInstanceId}/backup-info
+PUT /v4.0/db-instances/{dbInstanceId}/backup-info
 ```
 
-<a id="update-backup-info-request-parameters"></a>
+<a id="modify-backup-information-request-parameters"></a>
 #### 요청 파라미터
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
 | dbInstanceId | URL | UUID | Y | DB 인스턴스의 식별자 |
 
-<a id="update-backup-info-request-body"></a>
+<a id="modify-backup-information-request-body"></a>
 #### 요청 본문
 
 <details>
@@ -1407,7 +1507,7 @@ PUT /v3.0/db-instances/{dbInstanceId}/backup-info
 | backupSchedules.backupWndBgnTime | Time | Y | 백업 시작 시간 |
 | backupSchedules.backupWndDuration | Enum | Y | 백업 윈도우<br/>- `HALF_AN_HOUR`: 30분<br/>- `ONE_HOUR`: 1시간<br/>- `ONE_HOUR_AND_HALF`: 1시간 30분<br/>- `TWO_HOURS`: 2시간<br/>- `TWO_HOURS_AND_HALF`: 2시간 30분<br/>- `THREE_HOURS`: 3시간 |
 
-<a id="update-backup-info-response"></a>
+<a id="modify-backup-information-response"></a>
 #### 응답
 
 <details>
@@ -1428,28 +1528,99 @@ PUT /v3.0/db-instances/{dbInstanceId}/backup-info
 
 | 이름 | 타입 | 설명 |
 |-----|-----|-----|
-| jobId | UUID | 작업의 식별자 |
+| jobId | UUID | 요청한 작업의 식별자 |
 
 ---
 
-<a id="restart-db-instance"></a>
-### DB 인스턴스 Object Storage로 백업 { #restart-db-instance }
+<a id="view-binlog-lists"></a>
+### 바이너리 로그 목록 보기 { #view-binlog-lists }
 
-<a id="restart-db-instance-request"></a>
+<a id="view-binlog-lists-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstanceBinLog.List | 바이너리 로그 목록 보기 |
+
+<a id="view-binlog-lists-request"></a>
 #### 요청
 
 ```http
-POST /v3.0/db-instances/{dbInstanceId}/backup-to-object-storage
+GET /v4.0/db-instances/{dbInstanceId}/binlogs
 ```
 
-<a id="restart-db-instance-request-parameters"></a>
+<a id="view-binlog-lists-request-parameters"></a>
+#### 요청 파라미터
+
+| 이름 | 구분 | 타입 | 필수 | 설명 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | Y | DB 인스턴스의 식별자 |
+| deletable | Query | Boolean | N | 삭제 가능한 BinLog만 조회할지 여부(true: 마지막 BinLog 제외, false: 전체)<br/>- 기본값: `false` |
+
+<a id="view-binlog-lists-request-body"></a>
+#### 요청 본문
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+<a id="view-binlog-lists-response"></a>
+#### 응답
+
+<details>
+  <summary><strong>예시 코드</strong></summary>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "binLogs": [
+        {
+            "binLogFileName": "binLogFileName-example",
+            "binLogFileSize": 1,
+            "createdYmdt": "2023-12-31T15:00:00+09:00"
+        }
+    ]
+}
+```
+
+</details>
+
+| 이름 | 타입 | 설명 |
+|-----|-----|-----|
+| binLogs | Array | BinLog 파일 목록 |
+| binLogs.binLogFileName | String | BinLog 파일 이름 |
+| binLogs.binLogFileSize | Number | BinLog 파일 크기(Byte) |
+| binLogs.createdYmdt | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+
+---
+
+<a id="delete-binlog"></a>
+### 바이너리 로그 삭제 { #delete-binlog }
+
+<a id="delete-binlog-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstanceBinLog.Purge | 바이너리 로그 삭제 |
+
+<a id="delete-binlog-request"></a>
+#### 요청
+
+```http
+POST /v4.0/db-instances/{dbInstanceId}/binlogs/purge
+```
+
+<a id="delete-binlog-request-parameters"></a>
 #### 요청 파라미터
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
 | dbInstanceId | URL | UUID | Y | DB 인스턴스의 식별자 |
 
-<a id="restart-db-instance-request-body"></a>
+<a id="delete-binlog-request-body"></a>
 #### 요청 본문
 
 <details>
@@ -1457,8 +1628,123 @@ POST /v3.0/db-instances/{dbInstanceId}/backup-to-object-storage
 
 ```json
 {
+    "lastBinLogFileName": "mysql-bin.000010"
+}
+```
+
+</details>
+
+| 이름 | 타입 | 필수 | 설명 |
+|-----|-----|-----|-----|
+| lastBinLogFileName | String | Y | 삭제할 마지막 BinLog 파일 이름(해당 파일 직전까지 삭제됨) |
+
+<a id="delete-binlog-response"></a>
+#### 응답
+
+이 API는 응답 본문을 반환하지 않습니다.
+
+---
+
+<a id="view-certificate-file-lists"></a>
+### 인증서 파일 목록 보기 { #view-certificate-file-lists }
+
+<a id="view-certificate-file-lists-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstanceCertificate.List | 인증서 파일 목록 보기 |
+
+<a id="view-certificate-file-lists-request"></a>
+#### 요청
+
+```http
+GET /v4.0/db-instances/{dbInstanceId}/certificates
+```
+
+<a id="view-certificate-file-lists-request-parameters"></a>
+#### 요청 파라미터
+
+| 이름 | 구분 | 타입 | 필수 | 설명 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | Y | DB 인스턴스의 식별자 |
+
+<a id="view-certificate-file-lists-request-body"></a>
+#### 요청 본문
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+<a id="view-certificate-file-lists-response"></a>
+#### 응답
+
+<details>
+  <summary><strong>예시 코드</strong></summary>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "certificates": [
+        {
+            "fileName": "fileName-example",
+            "certificateType": "CA_FILE",
+            "fileSize": 1,
+            "createdYmdt": "2023-12-31T15:00:00+09:00"
+        }
+    ]
+}
+```
+
+</details>
+
+| 이름 | 타입 | 설명 |
+|-----|-----|-----|
+| certificates | Array | 인증서 파일 목록 |
+| certificates.fileName | String | 인증서 파일 이름 |
+| certificates.certificateType | Enum | 인증서 유형<br/>- `CA_FILE`<br/>- `CERT_FILE`<br/>- `KEY_FILE` |
+| certificates.fileSize | Number | 인증서 파일 크기(Byte) |
+| certificates.createdYmdt | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+
+---
+
+<a id="export-a-certificate-file"></a>
+### 인증서 파일 내보내기 { #export-a-certificate-file }
+
+<a id="export-a-certificate-file-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstanceCertificate.Export | 인증서 파일 내보내기 |
+
+<a id="export-a-certificate-file-request"></a>
+#### 요청
+
+```http
+POST /v4.0/db-instances/{dbInstanceId}/certificates/upload
+```
+
+<a id="export-a-certificate-file-request-parameters"></a>
+#### 요청 파라미터
+
+| 이름 | 구분 | 타입 | 필수 | 설명 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | Y | DB 인스턴스의 식별자 |
+
+<a id="export-a-certificate-file-request-body"></a>
+#### 요청 본문
+
+<details>
+  <summary><strong>예시 코드</strong></summary>
+
+```json
+{
+    "certificateTypes": [],
     "tenantId": "0123456789abcdef0123456789abcdef",
-    "username": "example@nhncloud.com or example",
+    "username": "username-example",
     "password": "password-example",
     "targetContainer": "targetContainer-example",
     "objectPath": "objectPath-example"
@@ -1469,13 +1755,14 @@ POST /v3.0/db-instances/{dbInstanceId}/backup-to-object-storage
 
 | 이름 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|
-| tenantId | String | Y | 백업이 저장될 Object Storage의 테넌트 ID<br/>- 최소 길이: `32`<br/>- 최대 길이: `32` |
-| username | String | Y | NHN Cloud 계정 또는 IAM 계정 ID |
-| password | String | Y | 백업이 저장될 Object Storage의 API 비밀번호 |
-| targetContainer | String | Y | 백업이 저장될 Object Storage의 컨테이너 |
-| objectPath | String | Y | 컨테이너에 저장될 백업의 경로 |
+| certificateTypes | Array | Y | 업로드할 인증서 유형 목록 |
+| tenantId | String | Y | 인증서 파일이 저장될 Object Storage의 테넌트 ID<br/>- 최소 길이: `32`<br/>- 최대 길이: `32` |
+| username | String | Y | NHN Cloud 회원 또는 IAM 계정 ID |
+| password | String | Y | 인증서 파일이 저장될 Object Storage의 API 비밀번호 |
+| targetContainer | String | Y | 인증서 파일이 저장될 Object Storage의 컨테이너 |
+| objectPath | String | Y | 컨테이너에 저장될 인증서 파일의 경로 |
 
-<a id="restart-db-instance-response"></a>
+<a id="export-a-certificate-file-response"></a>
 #### 응답
 
 <details>
@@ -1496,62 +1783,40 @@ POST /v3.0/db-instances/{dbInstanceId}/backup-to-object-storage
 
 | 이름 | 타입 | 설명 |
 |-----|-----|-----|
-| jobId | UUID | 작업의 식별자 |
+| jobId | UUID | 요청한 작업의 식별자 |
 
 ---
 
-<a id="change-image-meta"></a>
-### 테스트용 DB 이미지 메타 변경 { #change-image-meta }
+<a id="list-db-schema"></a>
+### DB 스키마 목록 보기 { #list-db-schema }
 
-<a id="change-image-meta-request"></a>
+<a id="list-db-schema-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstanceSchema.List | DB 스키마 목록 보기 |
+
+<a id="list-db-schema-request"></a>
 #### 요청
 
 ```http
-PUT /v3.0/db-instances/{dbInstanceId}/change-image-meta
+GET /v4.0/db-instances/{dbInstanceId}/db-schemas
 ```
 
-<a id="change-image-meta-request-parameters"></a>
+<a id="list-db-schema-request-parameters"></a>
 #### 요청 파라미터
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
 | dbInstanceId | URL | UUID | Y | DB 인스턴스의 식별자 |
 
-<a id="change-image-meta-request-body"></a>
+<a id="list-db-schema-request-body"></a>
 #### 요청 본문
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-<a id="change-image-meta-response"></a>
-#### 응답
-
-이 API는 응답 본문을 반환하지 않습니다.
-
----
-
-<a id="get-db-schemas"></a>
-### DB 스키마 목록 보기 { #get-db-schemas }
-
-<a id="get-db-schemas-request"></a>
-#### 요청
-
-```http
-GET /v3.0/db-instances/{dbInstanceId}/db-schemas
-```
-
-<a id="get-db-schemas-request-parameters"></a>
-#### 요청 파라미터
-
-| 이름 | 구분 | 타입 | 필수 | 설명 |
-|-----|-----|-----|-----|-----|
-| dbInstanceId | URL | UUID | Y | DB 인스턴스의 식별자 |
-
-<a id="get-db-schemas-request-body"></a>
-#### 요청 본문
-
-이 API는 요청 본문을 요구하지 않습니다.
-
-<a id="get-db-schemas-response"></a>
+<a id="list-db-schema-response"></a>
 #### 응답
 
 <details>
@@ -1590,11 +1855,18 @@ GET /v3.0/db-instances/{dbInstanceId}/db-schemas
 <a id="create-db-schema"></a>
 ### DB 스키마 생성하기 { #create-db-schema }
 
+<a id="create-db-schema-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstanceSchema.Create | DB 스키마 생성하기 |
+
 <a id="create-db-schema-request"></a>
 #### 요청
 
 ```http
-POST /v3.0/db-instances/{dbInstanceId}/db-schemas
+POST /v4.0/db-instances/{dbInstanceId}/db-schemas
 ```
 
 <a id="create-db-schema-request-parameters"></a>
@@ -1643,18 +1915,25 @@ POST /v3.0/db-instances/{dbInstanceId}/db-schemas
 
 | 이름 | 타입 | 설명 |
 |-----|-----|-----|
-| jobId | UUID | 작업의 식별자 |
+| jobId | UUID | 요청한 작업의 식별자 |
 
 ---
 
 <a id="delete-db-schema"></a>
 ### DB 스키마 삭제하기 { #delete-db-schema }
 
+<a id="delete-db-schema-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstanceSchema.Delete | DB 스키마 삭제하기 |
+
 <a id="delete-db-schema-request"></a>
 #### 요청
 
 ```http
-DELETE /v3.0/db-instances/{dbInstanceId}/db-schemas/{dbSchemaId}
+DELETE /v4.0/db-instances/{dbInstanceId}/db-schemas/{dbSchemaId}
 ```
 
 <a id="delete-db-schema-request-parameters"></a>
@@ -1691,33 +1970,40 @@ DELETE /v3.0/db-instances/{dbInstanceId}/db-schemas/{dbSchemaId}
 
 | 이름 | 타입 | 설명 |
 |-----|-----|-----|
-| jobId | UUID | 작업의 식별자 |
+| jobId | UUID | 요청한 작업의 식별자 |
 
 ---
 
-<a id="get-db-users"></a>
-### DB 사용자 목록 보기 { #get-db-users }
+<a id="list-db-users"></a>
+### DB 사용자 목록 보기 { #list-db-users }
 
-<a id="get-db-users-request"></a>
+<a id="list-db-users-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstanceUser.List | DB 사용자 목록 보기 |
+
+<a id="list-db-users-request"></a>
 #### 요청
 
 ```http
-GET /v3.0/db-instances/{dbInstanceId}/db-users
+GET /v4.0/db-instances/{dbInstanceId}/db-users
 ```
 
-<a id="get-db-users-request-parameters"></a>
+<a id="list-db-users-request-parameters"></a>
 #### 요청 파라미터
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
 | dbInstanceId | URL | UUID | Y | DB 인스턴스의 식별자 |
 
-<a id="get-db-users-request-body"></a>
+<a id="list-db-users-request-body"></a>
 #### 요청 본문
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-<a id="get-db-users-response"></a>
+<a id="list-db-users-response"></a>
 #### 응답
 
 <details>
@@ -1758,7 +2044,7 @@ GET /v3.0/db-instances/{dbInstanceId}/db-users
 | dbUsers.dbUserStatus | Enum | DB 사용자의 현재 상태<br/>- `STABLE`<br/>- `CREATING`<br/>- `UPDATING`<br/>- `SYNCING`<br/>- `DELETING`<br/>- `DELETED` |
 | dbUsers.createdYmdt | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 | dbUsers.updatedYmdt | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
-| dbUsers.authenticationPlugin | Enum | 사용자 인증 플러그인<br/>- `NATIVE`: mysql_native_password 인증<br/>- `ED25519`: ed25519 인증(MariaDB 전용) |
+| dbUsers.authenticationPlugin | Enum | 사용자 인증 플러그인<br/>- `NATIVE`: mysql_native_password 인증<br/>- `CACHING_SHA2`: caching_sha2_password 인증(MySQL 전용)<br/>- `SHA256`: sha256_password 인증(MySQL 전용) |
 | dbUsers.tlsOption | Enum | 인증서 옵션<br/>- `NONE`: TLS 미사용<br/>- `SSL`: SSL 인증<br/>- `X509`: X509 인증서 인증 |
 
 ---
@@ -1766,11 +2052,18 @@ GET /v3.0/db-instances/{dbInstanceId}/db-users
 <a id="create-db-user"></a>
 ### DB 사용자 생성하기 { #create-db-user }
 
+<a id="create-db-user-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstanceUser.Create | DB 사용자 생성하기 |
+
 <a id="create-db-user-request"></a>
 #### 요청
 
 ```http
-POST /v3.0/db-instances/{dbInstanceId}/db-users
+POST /v4.0/db-instances/{dbInstanceId}/db-users
 ```
 
 <a id="create-db-user-request-parameters"></a>
@@ -1805,7 +2098,7 @@ POST /v3.0/db-instances/{dbInstanceId}/db-users
 | dbPassword | String | Y | DB 사용자 계정 암호<br/>- 최소 길이: `4`<br/>- 최대 길이: `256` |
 | host | String | Y | DB 사용자 계정의 호스트 이름<br/>- 최대 길이: `45` |
 | authorityType | Enum | Y | DB 사용자 권한 유형<br/>- `CUSTOM`: 사용자 정의 권한<br/>- `READ`: 읽기 권한<br/>- `CRUD`: CRUD 권한<br/>- `DDL`: DDL 권한<br/>- `ALL`: 전체 권한 |
-| authenticationPlugin | Enum | N | 사용자 인증 플러그인<br/>- `NATIVE`: mysql_native_password 인증<br/>- `ED25519`: ed25519 인증(MariaDB 전용) |
+| authenticationPlugin | Enum | N | 사용자 인증 플러그인<br/>- `NATIVE`: mysql_native_password 인증<br/>- `CACHING_SHA2`: caching_sha2_password 인증(MySQL 전용)<br/>- `SHA256`: sha256_password 인증(MySQL 전용) |
 | tlsOption | Enum | N | 인증서 옵션<br/>- 기본값: `NONE`<br/>- `NONE`: TLS 미사용<br/>- `SSL`: SSL 인증<br/>- `X509`: X509 인증서 인증 |
 
 <a id="create-db-user-response"></a>
@@ -1829,18 +2122,25 @@ POST /v3.0/db-instances/{dbInstanceId}/db-users
 
 | 이름 | 타입 | 설명 |
 |-----|-----|-----|
-| jobId | UUID | 작업의 식별자 |
+| jobId | UUID | 요청한 작업의 식별자 |
 
 ---
 
 <a id="delete-db-user"></a>
 ### DB 사용자 삭제하기 { #delete-db-user }
 
+<a id="delete-db-user-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstanceUser.Delete | DB 사용자 삭제하기 |
+
 <a id="delete-db-user-request"></a>
 #### 요청
 
 ```http
-DELETE /v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
+DELETE /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 ```
 
 <a id="delete-db-user-request-parameters"></a>
@@ -1877,21 +2177,28 @@ DELETE /v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 
 | 이름 | 타입 | 설명 |
 |-----|-----|-----|
-| jobId | UUID | 작업의 식별자 |
+| jobId | UUID | 요청한 작업의 식별자 |
 
 ---
 
-<a id="update-db-user"></a>
-### DB 사용자 수정하기 { #update-db-user }
+<a id="modify-db-user"></a>
+### DB 사용자 수정하기 { #modify-db-user }
 
-<a id="update-db-user-request"></a>
+<a id="modify-db-user-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstanceUser.Modify | DB 사용자 수정하기 |
+
+<a id="modify-db-user-request"></a>
 #### 요청
 
 ```http
-PUT /v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
+PUT /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 ```
 
-<a id="update-db-user-request-parameters"></a>
+<a id="modify-db-user-request-parameters"></a>
 #### 요청 파라미터
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
@@ -1899,7 +2206,7 @@ PUT /v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 | dbInstanceId | URL | UUID | Y | DB 인스턴스의 식별자 |
 | dbUserId | URL | UUID | Y | DB 사용자의 식별자 |
 
-<a id="update-db-user-request-body"></a>
+<a id="modify-db-user-request-body"></a>
 #### 요청 본문
 
 <details>
@@ -1920,10 +2227,10 @@ PUT /v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 |-----|-----|-----|-----|
 | dbPassword | String | N | DB 사용자 계정 암호<br/>- 최소 길이: `4`<br/>- 최대 길이: `256` |
 | authorityType | Enum | N | DB 사용자 권한 유형<br/>- `CUSTOM`: 사용자 정의 권한<br/>- `READ`: 읽기 권한<br/>- `CRUD`: CRUD 권한<br/>- `DDL`: DDL 권한<br/>- `ALL`: 전체 권한 |
-| authenticationPlugin | Enum | N | 사용자 인증 플러그인<br/>- `NATIVE`: mysql_native_password 인증<br/>- `ED25519`: ed25519 인증(MariaDB 전용) |
+| authenticationPlugin | Enum | N | 사용자 인증 플러그인<br/>- `NATIVE`: mysql_native_password 인증<br/>- `CACHING_SHA2`: caching_sha2_password 인증(MySQL 전용)<br/>- `SHA256`: sha256_password 인증(MySQL 전용) |
 | tlsOption | Enum | N | 인증서 옵션<br/>- `NONE`: TLS 미사용<br/>- `SSL`: SSL 인증<br/>- `X509`: X509 인증서 인증 |
 
-<a id="update-db-user-response"></a>
+<a id="modify-db-user-response"></a>
 #### 응답
 
 <details>
@@ -1944,28 +2251,35 @@ PUT /v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 
 | 이름 | 타입 | 설명 |
 |-----|-----|-----|
-| jobId | UUID | 작업의 식별자 |
+| jobId | UUID | 요청한 작업의 식별자 |
 
 ---
 
-<a id="change-deletion-protection"></a>
-### DB 인스턴스 삭제 보호 설정 변경 { #change-deletion-protection }
+<a id="change-db-instance-deletion-protection-settings"></a>
+### DB 인스턴스 삭제 보호 설정 변경 { #change-db-instance-deletion-protection-settings }
 
-<a id="change-deletion-protection-request"></a>
+<a id="change-db-instance-deletion-protection-settings-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Modify | DB 인스턴스 삭제 보호 설정 변경 |
+
+<a id="change-db-instance-deletion-protection-settings-request"></a>
 #### 요청
 
 ```http
-PUT /v3.0/db-instances/{dbInstanceId}/deletion-protection
+PUT /v4.0/db-instances/{dbInstanceId}/deletion-protection
 ```
 
-<a id="change-deletion-protection-request-parameters"></a>
+<a id="change-db-instance-deletion-protection-settings-request-parameters"></a>
 #### 요청 파라미터
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
 | dbInstanceId | URL | UUID | Y | DB 인스턴스의 식별자 |
 
-<a id="change-deletion-protection-request-body"></a>
+<a id="change-db-instance-deletion-protection-settings-request-body"></a>
 #### 요청 본문
 
 <details>
@@ -1983,60 +2297,157 @@ PUT /v3.0/db-instances/{dbInstanceId}/deletion-protection
 |-----|-----|-----|-----|
 | useDeletionProtection | Boolean | Y | 삭제 보호 여부 |
 
-<a id="change-deletion-protection-response"></a>
+<a id="change-db-instance-deletion-protection-settings-response"></a>
 #### 응답
 
 이 API는 응답 본문을 반환하지 않습니다.
 
 ---
 
-<a id="restart-db-instance-2"></a>
-### DB 인스턴스 강제 재시작하기 { #restart-db-instance-2 }
+<a id="force-restart-db-instance"></a>
+### DB 인스턴스 강제 재시작하기 { #force-restart-db-instance }
 
-<a id="restart-db-instance-2-request"></a>
+<a id="force-restart-db-instance-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.ForceRestart | DB 인스턴스 강제 재시작하기 |
+
+<a id="force-restart-db-instance-request"></a>
 #### 요청
 
 ```http
-POST /v3.0/db-instances/{dbInstanceId}/force-restart
+POST /v4.0/db-instances/{dbInstanceId}/force-restart
 ```
 
-<a id="restart-db-instance-2-request-parameters"></a>
+<a id="force-restart-db-instance-request-parameters"></a>
 #### 요청 파라미터
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
 | dbInstanceId | URL | UUID | Y | DB 인스턴스의 식별자 |
 
-<a id="restart-db-instance-2-request-body"></a>
+<a id="force-restart-db-instance-request-body"></a>
 #### 요청 본문
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-<a id="restart-db-instance-2-response"></a>
+<a id="force-restart-db-instance-response"></a>
 #### 응답
 
 이 API는 응답 본문을 반환하지 않습니다.
 
 ---
 
-<a id="update-high-availability"></a>
-### 고가용성 수정하기 { #update-high-availability }
+<a id="high-availability-status"></a>
+### 고가용성 상태 { #high-availability-status }
 
-<a id="update-high-availability-request"></a>
+| 상태                               | 설명                              |
+|----------------------------------|---------------------------------|
+| `CREATED`                        | 고가용성이 생성된 경우                    |
+| `STABLE`                         | 고가용성이 정상인 경우                    |
+| `PAUSING`                        | 고가용성이 일시 중지 중인 경우               |
+| `PAUSED`                         | 고가용성이 일시 중지된 경우                 |
+| `PAUSED_DUE_TO_TASK`             | 작업으로 인해 고가용성이 일시 중지된 경우         |
+| `PAUSED_DUE_TO_STOP`             | DB 인스턴스 정지로 인해 고가용성이 일시 중지된 경우  |
+| `DISABLE_MASTER_IN_REPLICATION`  | Primary 비정상 복제 감지로 고가용성이 중단된 경우     |
+| `DISABLE_MHA_PROCESS`            | 고가용성 프로세스가 중단된 경우               |
+| `DISABLE_REPLICATION_STOP`       | 복제 중단으로 인해 고가용성이 중단된 경우         |
+| `DISABLE_REPLICATION_DELAY`      | 복제 지연으로 인해 고가용성이 중단된 경우         |
+| `MASTER_FAILURE_DETECTION`       | Primary 장애가 감지된 경우                  |
+| `FAILOVER_STARTED`               | 장애 조치가 시작된 경우                   |
+| `FAILOVER_FAILED`                | 장애 조치가 실패한 경우                   |
+| `FAILOVER_COMPLETED`             | 장애 조치가 완료된 경우                   |
+| `DELETED`                        | 고가용성이 삭제된 경우                    |
+
+---
+
+<a id="view-high-availability-information"></a>
+### 고가용성 정보 보기 { #view-high-availability-information }
+
+<a id="view-high-availability-information-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Get | 고가용성 정보 보기 |
+
+<a id="view-high-availability-information-request"></a>
 #### 요청
 
 ```http
-PUT /v3.0/db-instances/{dbInstanceId}/high-availability
+GET /v4.0/db-instances/{dbInstanceId}/high-availability
 ```
 
-<a id="update-high-availability-request-parameters"></a>
+<a id="view-high-availability-information-request-parameters"></a>
 #### 요청 파라미터
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
 | dbInstanceId | URL | UUID | Y | DB 인스턴스의 식별자 |
 
-<a id="update-high-availability-request-body"></a>
+<a id="view-high-availability-information-request-body"></a>
+#### 요청 본문
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+<a id="view-high-availability-information-response"></a>
+#### 응답
+
+<details>
+  <summary><strong>예시 코드</strong></summary>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "useHighAvailability": false,
+    "haStatus": "CREATED",
+    "pingInterval": 1,
+    "pingType": "CONNECTION"
+}
+```
+
+</details>
+
+| 이름 | 타입 | 설명 |
+|-----|-----|-----|
+| useHighAvailability | Boolean | 고가용성 사용 여부<br/>- 기본값: `false` |
+| haStatus | Enum | 고가용성 상태<br/>- `CREATED`: 생성됨<br/>- `STABLE`: 정상<br/>- `PAUSING`: 일시 중지 중<br/>- `DISABLE`: 정지<br/>- `DISABLE_MASTER_IN_REPLICATION`: Primary 비정상 복제 감지로 인한 고가용성 중단<br/>- `DISABLE_MHA_PROCESS`: 고가용성 프로세스 중단<br/>- `DISABLE_REPLICATION_STOP`: 복제 중단으로 인한 고가용성 중단<br/>- `DISABLE_REPLICATION_DELAY`: 복제 지연으로 인한 고가용성 중단<br/>- `FAILOVER_STARTED`: 장애 조치 시작<br/>- `FAILOVER_FAILED`: 장애 조치 실패<br/>- `FAILOVER_COMPLETED`: 장애 조치 완료<br/>- `DELETED`: 삭제됨<br/>- `PAUSED`: 일시 중지<br/>- `PAUSED_DUE_TO_TASK`: 작업으로 인한 일시 중지<br/>- `PAUSED_DUE_TO_STOP`: DB 인스턴스 정지로 인한 일시 중지<br/>- `MASTER_FAILURE_DETECTION`: Primary 장애 감지 |
+| pingInterval | Number | Ping 간격(초) |
+| pingType | Enum | Ping 방식<br/>- `CONNECTION`: CONNECTION 방식<br/>- `INSERT`: INSERT 방식<br/>- `SELECT`: SELECT 방식 |
+
+---
+
+<a id="modify-high-availability"></a>
+### 고가용성 수정하기 { #modify-high-availability }
+
+<a id="modify-high-availability-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:HighAvailability.Modify | 고가용성 수정하기 |
+
+<a id="modify-high-availability-request"></a>
+#### 요청
+
+```http
+PUT /v4.0/db-instances/{dbInstanceId}/high-availability
+```
+
+<a id="modify-high-availability-request-parameters"></a>
+#### 요청 파라미터
+
+| 이름 | 구분 | 타입 | 필수 | 설명 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | Y | DB 인스턴스의 식별자 |
+
+<a id="modify-high-availability-request-body"></a>
 #### 요청 본문
 
 <details>
@@ -2056,7 +2467,14 @@ PUT /v3.0/db-instances/{dbInstanceId}/high-availability
 | useHighAvailability | Boolean | Y | 고가용성 사용 여부 |
 | pingInterval | Number | N | 고가용성 사용 시 Ping 간격(초)<br/>- 최솟값: `1`<br/>- 최댓값: `600` |
 
-<a id="update-high-availability-response"></a>
+<a id="modify-high-availability-section"></a>
+#### 고가용성 사용 시
+
+| 이름 | 타입 | 필수 | 설명 |
+|-----|-----|-----|-----|
+| dbInstanceCandidateName | String | Y | Standby DB 인스턴스를 식별할 수 있는 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
+
+<a id="modify-high-availability-response"></a>
 #### 응답
 
 <details>
@@ -2077,18 +2495,25 @@ PUT /v3.0/db-instances/{dbInstanceId}/high-availability
 
 | 이름 | 타입 | 설명 |
 |-----|-----|-----|
-| jobId | UUID | 작업의 식별자 |
+| jobId | UUID | 요청한 작업의 식별자 |
 
 ---
 
 <a id="pause-high-availability"></a>
 ### 고가용성 일시 중지하기 { #pause-high-availability }
 
+<a id="pause-high-availability-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:HighAvailability.Pause | 고가용성 일시 중지하기 |
+
 <a id="pause-high-availability-request"></a>
 #### 요청
 
 ```http
-POST /v3.0/db-instances/{dbInstanceId}/high-availability/pause
+POST /v4.0/db-instances/{dbInstanceId}/high-availability/pause
 ```
 
 <a id="pause-high-availability-request-parameters"></a>
@@ -2124,33 +2549,40 @@ POST /v3.0/db-instances/{dbInstanceId}/high-availability/pause
 
 | 이름 | 타입 | 설명 |
 |-----|-----|-----|
-| jobId | UUID | 작업의 식별자 |
+| jobId | UUID | 요청한 작업의 식별자 |
 
 ---
 
-<a id="repair-high-availability"></a>
-### 고가용성 복구하기 { #repair-high-availability }
+<a id="recover-high-availability"></a>
+### 고가용성 복구하기 { #recover-high-availability }
 
-<a id="repair-high-availability-request"></a>
+<a id="recover-high-availability-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:HighAvailability.Repair | 고가용성 복구하기 |
+
+<a id="recover-high-availability-request"></a>
 #### 요청
 
 ```http
-POST /v3.0/db-instances/{dbInstanceId}/high-availability/repair
+POST /v4.0/db-instances/{dbInstanceId}/high-availability/repair
 ```
 
-<a id="repair-high-availability-request-parameters"></a>
+<a id="recover-high-availability-request-parameters"></a>
 #### 요청 파라미터
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
 | dbInstanceId | URL | UUID | Y | DB 인스턴스의 식별자 |
 
-<a id="repair-high-availability-request-body"></a>
+<a id="recover-high-availability-request-body"></a>
 #### 요청 본문
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-<a id="repair-high-availability-response"></a>
+<a id="recover-high-availability-response"></a>
 #### 응답
 
 <details>
@@ -2171,33 +2603,40 @@ POST /v3.0/db-instances/{dbInstanceId}/high-availability/repair
 
 | 이름 | 타입 | 설명 |
 |-----|-----|-----|
-| jobId | UUID | 작업의 식별자 |
+| jobId | UUID | 요청한 작업의 식별자 |
 
 ---
 
-<a id="resume-high-availability"></a>
-### 고가용성 다시 시작하기 { #resume-high-availability }
+<a id="restart-high-availability"></a>
+### 고가용성 다시 시작하기 { #restart-high-availability }
 
-<a id="resume-high-availability-request"></a>
+<a id="restart-high-availability-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:HighAvailability.Resume | 고가용성 다시 시작하기 |
+
+<a id="restart-high-availability-request"></a>
 #### 요청
 
 ```http
-POST /v3.0/db-instances/{dbInstanceId}/high-availability/resume
+POST /v4.0/db-instances/{dbInstanceId}/high-availability/resume
 ```
 
-<a id="resume-high-availability-request-parameters"></a>
+<a id="restart-high-availability-request-parameters"></a>
 #### 요청 파라미터
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
 | dbInstanceId | URL | UUID | Y | DB 인스턴스의 식별자 |
 
-<a id="resume-high-availability-request-body"></a>
+<a id="restart-high-availability-request-body"></a>
 #### 요청 본문
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-<a id="resume-high-availability-response"></a>
+<a id="restart-high-availability-response"></a>
 #### 응답
 
 <details>
@@ -2218,33 +2657,40 @@ POST /v3.0/db-instances/{dbInstanceId}/high-availability/resume
 
 | 이름 | 타입 | 설명 |
 |-----|-----|-----|
-| jobId | UUID | 작업의 식별자 |
+| jobId | UUID | 요청한 작업의 식별자 |
 
 ---
 
-<a id="split-high-availability"></a>
-### 고가용성 분리하기 { #split-high-availability }
+<a id="separate-high-availability"></a>
+### 고가용성 분리하기 { #separate-high-availability }
 
-<a id="split-high-availability-request"></a>
+<a id="separate-high-availability-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:HighAvailability.Split | 고가용성 분리하기 |
+
+<a id="separate-high-availability-request"></a>
 #### 요청
 
 ```http
-POST /v3.0/db-instances/{dbInstanceId}/high-availability/split
+POST /v4.0/db-instances/{dbInstanceId}/high-availability/split
 ```
 
-<a id="split-high-availability-request-parameters"></a>
+<a id="separate-high-availability-request-parameters"></a>
 #### 요청 파라미터
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
 | dbInstanceId | URL | UUID | Y | DB 인스턴스의 식별자 |
 
-<a id="split-high-availability-request-body"></a>
+<a id="separate-high-availability-request-body"></a>
 #### 요청 본문
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-<a id="split-high-availability-response"></a>
+<a id="separate-high-availability-response"></a>
 #### 응답
 
 <details>
@@ -2265,21 +2711,28 @@ POST /v3.0/db-instances/{dbInstanceId}/high-availability/split
 
 | 이름 | 타입 | 설명 |
 |-----|-----|-----|
-| jobId | UUID | 작업의 식별자 |
+| jobId | UUID | 요청한 작업의 식별자 |
 
 ---
 
-<a id="get-log-files"></a>
-### 로그 파일 목록 보기 { #get-log-files }
+<a id="list-log-files"></a>
+### 로그 파일 목록 보기 { #list-log-files }
 
-<a id="get-log-files-request"></a>
+<a id="list-log-files-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstanceLog.List | 로그 파일 목록 보기 |
+
+<a id="list-log-files-request"></a>
 #### 요청
 
 ```http
-GET /v3.0/db-instances/{dbInstanceId}/log-files
+GET /v4.0/db-instances/{dbInstanceId}/log-files
 ```
 
-<a id="get-log-files-request-parameters"></a>
+<a id="list-log-files-request-parameters"></a>
 #### 요청 파라미터
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
@@ -2287,12 +2740,12 @@ GET /v3.0/db-instances/{dbInstanceId}/log-files
 | dbInstanceId | URL | UUID | Y | DB 인스턴스의 식별자 |
 | logFileTypes | Query | Array | N | 로그 파일 유형 목록 |
 
-<a id="get-log-files-request-body"></a>
+<a id="list-log-files-request-body"></a>
 #### 요청 본문
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-<a id="get-log-files-response"></a>
+<a id="list-log-files-response"></a>
 #### 응답
 
 <details>
@@ -2328,24 +2781,31 @@ GET /v3.0/db-instances/{dbInstanceId}/log-files
 
 ---
 
-<a id="export-log-files"></a>
-### 로그 파일 내보내기 { #export-log-files }
+<a id="export-log-file"></a>
+### 로그 파일 내보내기 { #export-log-file }
 
-<a id="export-log-files-request"></a>
+<a id="export-log-file-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstanceLog.Export | 로그 파일 내보내기 |
+
+<a id="export-log-file-request"></a>
 #### 요청
 
 ```http
-POST /v3.0/db-instances/{dbInstanceId}/log-files/export
+POST /v4.0/db-instances/{dbInstanceId}/log-files/export
 ```
 
-<a id="export-log-files-request-parameters"></a>
+<a id="export-log-file-request-parameters"></a>
 #### 요청 파라미터
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
 | dbInstanceId | URL | UUID | Y | DB 인스턴스의 식별자 |
 
-<a id="export-log-files-request-body"></a>
+<a id="export-log-file-request-body"></a>
 #### 요청 본문
 
 <details>
@@ -2373,7 +2833,7 @@ POST /v3.0/db-instances/{dbInstanceId}/log-files/export
 | targetContainer | String | Y | 로그 파일이 저장될 Object Storage의 컨테이너 |
 | objectPath | String | Y | 컨테이너에 저장될 로그 파일의 경로 |
 
-<a id="export-log-files-response"></a>
+<a id="export-log-file-response"></a>
 #### 응답
 
 <details>
@@ -2394,33 +2854,356 @@ POST /v3.0/db-instances/{dbInstanceId}/log-files/export
 
 | 이름 | 타입 | 설명 |
 |-----|-----|-----|
-| jobId | UUID | 작업의 식별자 |
+| jobId | UUID | 요청한 작업의 식별자 |
 
 ---
 
-<a id="get-network-info"></a>
-### 네트워크 정보 보기 { #get-network-info }
+<a id="view-log-file-contents"></a>
+### 로그 파일 내용 보기 { #view-log-file-contents }
 
-<a id="get-network-info-request"></a>
+<a id="view-log-file-contents-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstanceLog.Get | 로그 파일 내용 보기 |
+
+<a id="view-log-file-contents-request"></a>
 #### 요청
 
 ```http
-GET /v3.0/db-instances/{dbInstanceId}/network-info
+GET /v4.0/db-instances/{dbInstanceId}/log-files/{logFileName}
 ```
 
-<a id="get-network-info-request-parameters"></a>
+<a id="view-log-file-contents-request-parameters"></a>
+#### 요청 파라미터
+
+| 이름 | 구분 | 타입 | 필수 | 설명 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | Y | DB 인스턴스의 식별자 |
+| logFileName | URL | UUID | Y | 로그 파일 이름 |
+| logFileType | Query | Enum | Y | 로그 파일 유형<br/>- `ERROR`<br/>- `BINLOG`<br/>- `GENERAL`<br/>- `SLOW_QUERY`<br/>- `AUDIT`<br/>- `BACKUP` |
+
+<a id="view-log-file-contents-request-body"></a>
+#### 요청 본문
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+<a id="view-log-file-contents-response"></a>
+#### 응답
+
+<details>
+  <summary><strong>예시 코드</strong></summary>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "content": "content-example"
+}
+```
+
+</details>
+
+| 이름 | 타입 | 설명 |
+|-----|-----|-----|
+| content | String | 로그 파일 내용(최대 65533 bytes) |
+
+---
+
+<a id="get-maintenances"></a>
+### DB 인스턴스 유지 관리 목록 보기 { #get-maintenances }
+
+<a id="get-maintenances-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Maintenance.List | DB 인스턴스 유지 관리 목록 보기 |
+
+<a id="get-maintenances-request"></a>
+#### 요청
+
+```http
+GET /v4.0/db-instances/{dbInstanceId}/maintenances
+```
+
+<a id="get-maintenances-request-parameters"></a>
+#### 요청 파라미터
+
+| 이름 | 구분 | 타입 | 필수 | 설명 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | Y | DB 인스턴스의 식별자 |
+| type | Query | String | N |  |
+| statuses | Query | String | N |  |
+| category | Query | String | N |  |
+
+<a id="get-maintenances-request-body"></a>
+#### 요청 본문
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+<a id="get-maintenances-response"></a>
+#### 응답
+
+<details>
+  <summary><strong>예시 코드</strong></summary>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "totalCounts": 1,
+    "maintenances": [
+        {
+            "maintenanceId": "550e8400-e29b-41d4-a716-446655440000",
+            "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
+            "category": "USER",
+            "description": "description-example",
+            "type": "UPDATE_DB_INSTANCE",
+            "payload": {
+            },
+            "required": false,
+            "deadlineYmdt": "2023-12-31T15:00:00+09:00",
+            "status": "PENDING",
+            "executionType": "SCHEDULED",
+            "addedYmdt": "2023-12-31T15:00:00+09:00",
+            "executionStartedYmdt": "2023-12-31T15:00:00+09:00",
+            "executionCompletedYmdt": "2023-12-31T15:00:00+09:00",
+            "haPairSynced": false
+        }
+    ]
+}
+```
+
+</details>
+
+| 이름 | 타입 | 설명 |
+|-----|-----|-----|
+| totalCounts | Number | 유지 관리 목록 개수 |
+| maintenances | Array | 유지 관리 목록 |
+| maintenances.maintenanceId | UUID | 유지 관리 아이디 |
+| maintenances.dbInstanceId | UUID | DB 인스턴스 아이디 |
+| maintenances.category | Enum | 유지 관리 카테고리<br/>- `USER`: 사용자 유지 관리 카테고리<br/>- `PROVIDER`: Provider 유지 관리 카테고리<br/>- `AUTO`: 자동 유지 관리 카테고리 |
+| maintenances.description | String | 유지 관리 설명 |
+| maintenances.type | Enum | 유지 관리 유형<br/>- `UPDATE_DB_INSTANCE`: DB 인스턴스 수정(사양 변경, 포트 변경, 파라미터 그룹 변경)<br/>- `UPGRADE_ENGINE_VERSION`: 엔진 버전 업그레이드<br/>- `APPLY_CHANGE_PARAMETER`: 파라미터 그룹의 파라미터 변경<br/>- `UPGRADE_OS`: 운영체제 버전 업그레이드<br/>- `PATCH_SECURITY`: 보안 업데이트<br/>- `MIGRATION`: 하이퍼바이저 점검을 위한 마이그레이션<br/>- `CLEANUP_STORAGE`: 스토리지 정리 |
+| maintenances.payload | Object | 유지 관리 유형에 따른 Payload |
+| maintenances.required | Boolean | 유지 관리 필수 여부 |
+| maintenances.deadlineYmdt | DateTime | 유지 관리 강제 적용 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| maintenances.status | Enum | 유지 관리 상태<br/>- `PENDING`: 대기<br/>- `READY`: 준비<br/>- `RUNNING`: 실행 중<br/>- `COMPLETED`: 완료<br/>- `FAILED`: 실패<br/>- `EXCLUDED`: 제외<br/>- `DELETED`: 삭제<br/>- `SUSPENDED`: 보류<br/>- `UNKNOWN` |
+| maintenances.executionType | Enum | 유지 관리 실행 유형<br/>- `SCHEDULED`: 예약 실행(유지 관리 기간 자동 실행)<br/>- `MANUAL`: 수동 실행(즉시 실행)<br/>- `FORCED`: 강제 실행(데드라인 초과 자동 실행) |
+| maintenances.addedYmdt | DateTime | 유지 관리 스케줄 등록 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| maintenances.executionStartedYmdt | DateTime | 유지 관리 시작 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| maintenances.executionCompletedYmdt | DateTime | 유지 관리 종료 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| maintenances.haPairSynced | Boolean | HA 페어 동기화 여부 |
+
+---
+
+<a id="execute-maintenance-now"></a>
+### DB 인스턴스 유지 관리 즉시 실행하기 { #execute-maintenance-now }
+
+<a id="execute-maintenance-now-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Maintenance.Execute | DB 인스턴스 유지 관리 즉시 실행하기 |
+
+<a id="execute-maintenance-now-request"></a>
+#### 요청
+
+```http
+POST /v4.0/db-instances/{dbInstanceId}/maintenances/execute-now
+```
+
+<a id="execute-maintenance-now-request-parameters"></a>
 #### 요청 파라미터
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
 | dbInstanceId | URL | UUID | Y | DB 인스턴스의 식별자 |
 
-<a id="get-network-info-request-body"></a>
+<a id="execute-maintenance-now-request-body"></a>
+#### 요청 본문
+
+<details>
+  <summary><strong>예시 코드</strong></summary>
+
+```json
+{
+    "configId": "configId-example",
+    "category": "USER",
+    "description": "description-example",
+    "type": "UPDATE_DB_INSTANCE",
+    "payload": "payload-example"
+}
+```
+
+</details>
+
+| 이름 | 타입 | 필수 | 설명 |
+|-----|-----|-----|-----|
+| configId | String | Y | 설정 아이디 |
+| category | Enum | Y | 유지 관리 카테고리<br/>- `USER`: 사용자 유지 관리 카테고리<br/>- `PROVIDER`: Provider 유지 관리 카테고리<br/>- `AUTO`: 자동 유지 관리 카테고리 |
+| description | String | N | 유지 관리 설명 |
+| type | Enum | Y | 유지 관리 유형<br/>- `UPDATE_DB_INSTANCE`: DB 인스턴스 수정(사양 변경, 포트 변경, 파라미터 그룹 변경)<br/>- `UPGRADE_ENGINE_VERSION`: 엔진 버전 업그레이드<br/>- `APPLY_CHANGE_PARAMETER`: 파라미터 그룹의 파라미터 변경<br/>- `UPGRADE_OS`: 운영체제 버전 업그레이드<br/>- `PATCH_SECURITY`: 보안 업데이트<br/>- `MIGRATION`: 하이퍼바이저 점검을 위한 마이그레이션<br/>- `CLEANUP_STORAGE`: 스토리지 정리 |
+| payload | String | Y | 유지 관리 유형에 따른 Payload |
+
+<a id="execute-maintenance-now-response"></a>
+#### 응답
+
+<details>
+  <summary><strong>예시 코드</strong></summary>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+}
+```
+
+</details>
+
+| 이름 | 타입 | 설명 |
+|-----|-----|-----|
+| jobId | UUID | 요청한 작업의 식별자 |
+
+---
+
+<a id="schedule-maintenance"></a>
+### DB 인스턴스 유지 관리 예약하기 { #schedule-maintenance }
+
+<a id="schedule-maintenance-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Maintenance.Update | DB 인스턴스 유지 관리 예약하기 |
+
+<a id="schedule-maintenance-request"></a>
+#### 요청
+
+```http
+POST /v4.0/db-instances/{dbInstanceId}/maintenances/schedule
+```
+
+<a id="schedule-maintenance-request-parameters"></a>
+#### 요청 파라미터
+
+| 이름 | 구분 | 타입 | 필수 | 설명 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | Y | DB 인스턴스의 식별자 |
+
+<a id="schedule-maintenance-request-body"></a>
+#### 요청 본문
+
+<details>
+  <summary><strong>예시 코드</strong></summary>
+
+```json
+{
+    "configId": "configId-example",
+    "category": "USER",
+    "description": "description-example",
+    "type": "UPDATE_DB_INSTANCE",
+    "payload": "payload-example"
+}
+```
+
+</details>
+
+| 이름 | 타입 | 필수 | 설명 |
+|-----|-----|-----|-----|
+| configId | String | Y | 설정 아이디 |
+| category | Enum | Y | 유지 관리 카테고리<br/>- `USER`: 사용자 유지 관리 카테고리<br/>- `PROVIDER`: Provider 유지 관리 카테고리<br/>- `AUTO`: 자동 유지 관리 카테고리 |
+| description | String | N | 유지 관리 설명 |
+| type | Enum | Y | 유지 관리 유형<br/>- `UPDATE_DB_INSTANCE`: DB 인스턴스 수정(사양 변경, 포트 변경, 파라미터 그룹 변경)<br/>- `UPGRADE_ENGINE_VERSION`: 엔진 버전 업그레이드<br/>- `APPLY_CHANGE_PARAMETER`: 파라미터 그룹의 파라미터 변경<br/>- `UPGRADE_OS`: 운영체제 버전 업그레이드<br/>- `PATCH_SECURITY`: 보안 업데이트<br/>- `MIGRATION`: 하이퍼바이저 점검을 위한 마이그레이션<br/>- `CLEANUP_STORAGE`: 스토리지 정리 |
+| payload | String | Y | 유지 관리 유형에 따른 Payload |
+
+<a id="schedule-maintenance-response"></a>
+#### 응답
+
+이 API는 응답 본문을 반환하지 않습니다.
+
+---
+
+<a id="delete-maintenance"></a>
+### DB 인스턴스 유지 관리 삭제하기 { #delete-maintenance }
+
+<a id="delete-maintenance-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Maintenance.Delete | DB 인스턴스 유지 관리 삭제하기 |
+
+<a id="delete-maintenance-request"></a>
+#### 요청
+
+```http
+DELETE /v4.0/db-instances/{dbInstanceId}/maintenances/{maintenanceId}
+```
+
+<a id="delete-maintenance-request-parameters"></a>
+#### 요청 파라미터
+
+| 이름 | 구분 | 타입 | 필수 | 설명 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | Y | DB 인스턴스의 식별자 |
+| maintenanceId | URL | UUID | Y | 유지 관리 아이디 |
+
+<a id="delete-maintenance-request-body"></a>
 #### 요청 본문
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-<a id="get-network-info-response"></a>
+<a id="delete-maintenance-response"></a>
+#### 응답
+
+이 API는 응답 본문을 반환하지 않습니다.
+
+---
+
+<a id="list-network-information"></a>
+### 네트워크 정보 보기 { #list-network-information }
+
+<a id="list-network-information-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Get | 네트워크 정보 보기 |
+
+<a id="list-network-information-request"></a>
+#### 요청
+
+```http
+GET /v4.0/db-instances/{dbInstanceId}/network-info
+```
+
+<a id="list-network-information-request-parameters"></a>
+#### 요청 파라미터
+
+| 이름 | 구분 | 타입 | 필수 | 설명 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | Y | DB 인스턴스의 식별자 |
+
+<a id="list-network-information-request-body"></a>
+#### 요청 본문
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+<a id="list-network-information-response"></a>
 #### 응답
 
 <details>
@@ -2465,24 +3248,31 @@ GET /v3.0/db-instances/{dbInstanceId}/network-info
 
 ---
 
-<a id="update-network-info"></a>
-### 네트워크 정보 수정하기 { #update-network-info }
+<a id="modify-network-information"></a>
+### 네트워크 정보 수정하기 { #modify-network-information }
 
-<a id="update-network-info-request"></a>
+<a id="modify-network-information-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Modify | 네트워크 정보 수정하기 |
+
+<a id="modify-network-information-request"></a>
 #### 요청
 
 ```http
-PUT /v3.0/db-instances/{dbInstanceId}/network-info
+PUT /v4.0/db-instances/{dbInstanceId}/network-info
 ```
 
-<a id="update-network-info-request-parameters"></a>
+<a id="modify-network-information-request-parameters"></a>
 #### 요청 파라미터
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
 | dbInstanceId | URL | UUID | Y | DB 인스턴스의 식별자 |
 
-<a id="update-network-info-request-body"></a>
+<a id="modify-network-information-request-body"></a>
 #### 요청 본문
 
 <details>
@@ -2500,7 +3290,7 @@ PUT /v3.0/db-instances/{dbInstanceId}/network-info
 |-----|-----|-----|-----|
 | usePublicAccess | Boolean | Y | 외부 접속 가능 여부 |
 
-<a id="update-network-info-response"></a>
+<a id="modify-network-information-response"></a>
 #### 응답
 
 <details>
@@ -2521,18 +3311,25 @@ PUT /v3.0/db-instances/{dbInstanceId}/network-info
 
 | 이름 | 타입 | 설명 |
 |-----|-----|-----|
-| jobId | UUID | 작업의 식별자 |
+| jobId | UUID | 요청한 작업의 식별자 |
 
 ---
 
 <a id="promote-db-instance"></a>
 ### DB 인스턴스 승격하기 { #promote-db-instance }
 
+<a id="promote-db-instance-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Promote | DB 인스턴스 승격하기 |
+
 <a id="promote-db-instance-request"></a>
 #### 요청
 
 ```http
-POST /v3.0/db-instances/{dbInstanceId}/promote
+POST /v4.0/db-instances/{dbInstanceId}/promote
 ```
 
 <a id="promote-db-instance-request-parameters"></a>
@@ -2568,18 +3365,79 @@ POST /v3.0/db-instances/{dbInstanceId}/promote
 
 | 이름 | 타입 | 설명 |
 |-----|-----|-----|
-| jobId | UUID | 작업의 식별자 |
+| jobId | UUID | 요청한 작업의 식별자 |
+
+---
+
+<a id="rebuild-db-instance"></a>
+### DB 인스턴스 재구축하기 { #rebuild-db-instance }
+
+<a id="rebuild-db-instance-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Rebuild | DB 인스턴스 재구축하기 |
+
+<a id="rebuild-db-instance-request"></a>
+#### 요청
+
+```http
+POST /v4.0/db-instances/{dbInstanceId}/rebuild
+```
+
+<a id="rebuild-db-instance-request-parameters"></a>
+#### 요청 파라미터
+
+| 이름 | 구분 | 타입 | 필수 | 설명 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | Y | DB 인스턴스의 식별자 |
+
+<a id="rebuild-db-instance-request-body"></a>
+#### 요청 본문
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+<a id="rebuild-db-instance-response"></a>
+#### 응답
+
+<details>
+  <summary><strong>예시 코드</strong></summary>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+}
+```
+
+</details>
+
+| 이름 | 타입 | 설명 |
+|-----|-----|-----|
+| jobId | UUID | 요청한 작업의 식별자 |
 
 ---
 
 <a id="replicate-db-instance"></a>
 ### DB 인스턴스 복제하기 { #replicate-db-instance }
 
+<a id="replicate-db-instance-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Replicate | DB 인스턴스 복제하기 |
+
 <a id="replicate-db-instance-request"></a>
 #### 요청
 
 ```http
-POST /v3.0/db-instances/{dbInstanceId}/replicate
+POST /v4.0/db-instances/{dbInstanceId}/replicate
 ```
 
 <a id="replicate-db-instance-request-parameters"></a>
@@ -2606,13 +3464,17 @@ POST /v3.0/db-instances/{dbInstanceId}/replicate
     "userGroupIds": [],
     "useDefaultNotification": false,
     "useDeletionProtection": false,
+    "useSlowQueryAnalysis": true,
     "network": {
         "usePublicAccess": false,
         "availabilityZone": "kr-pub-a"
     },
     "storage": {
         "storageType": "General SSD",
-        "storageSize": 20
+        "storageSize": 20,
+        "storageAutoscale": {
+            "useStorageAutoscale": false
+        }
     },
     "backup": {
         "backupPeriod": 0,
@@ -2637,18 +3499,21 @@ POST /v3.0/db-instances/{dbInstanceId}/replicate
 | dbInstanceName | String | Y | Primary DB 인스턴스를 식별할 수 있는 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
 | description | String | N | DB 인스턴스 추가 정보<br/>- 최대 길이: `100` |
 | dbFlavorId | UUID | N | DB 인스턴스 사양의 식별자 |
-| dbPort | Number | Y | DB 포트<br/>- 최솟값: 3306, 최댓값: 43306 |
+| dbPort | Number | N | DB 포트<br/>- 최솟값: 3306, 최댓값: 43306 |
 | parameterGroupId | UUID | N | 파라미터 그룹의 식별자 |
 | dbSecurityGroupIds | Array | N | DB 보안 그룹의 식별자 목록 |
 | userGroupIds | Array | N | 사용자 그룹의 식별자 목록 |
 | useDefaultNotification | Boolean | N | 기본 알림 사용 여부<br/>- 기본값: `false` |
 | useDeletionProtection | Boolean | N | 삭제 보호 여부<br/>- 기본값: `false` |
+| useSlowQueryAnalysis | Boolean | N | Slow query 분석 여부<br/>- 기본값: `true` |
 | network | Object | Y | 네트워크 정보 객체 |
 | network.usePublicAccess | Boolean | N | 외부 접속 가능 여부 |
 | network.availabilityZone | Enum | Y | DB 인스턴스를 생성할 가용성 영역 |
 | storage | Object | N | 스토리지 정보 객체 |
 | storage.storageType | Enum | N | 데이터 스토리지 유형 |
 | storage.storageSize | Number | N | 데이터 스토리지 크기(GB)<br/>- 최솟값: `20` |
+| storage.storageAutoscale | Object | N | 데이터 스토리지 자동 확장 객체 |
+| storage.storageAutoscale.useStorageAutoscale | Boolean | N | 스토리지 자동 확장 여부<br/>- 기본값: `false` |
 | backup | Object | N | 백업 정보 객체 |
 | backup.backupPeriod | Number | N | 백업 보관 기간(일)<br/>- 최솟값: `0`<br/>- 최댓값: `730` |
 | backup.backupRetryCount | Number | N | 백업 재시도 횟수<br/>- 최솟값: `0`<br/>- 최댓값: `10` |
@@ -2658,6 +3523,15 @@ POST /v3.0/db-instances/{dbInstanceId}/replicate
 | backup.backupSchedules | Array | N | 백업 스케줄 목록 |
 | backup.backupSchedules.backupWndBgnTime | Time | N | 백업 시작 시간 |
 | backup.backupSchedules.backupWndDuration | Enum | N | 백업 윈도우<br/>- `HALF_AN_HOUR`: 30분<br/>- `ONE_HOUR`: 1시간<br/>- `ONE_HOUR_AND_HALF`: 1시간 30분<br/>- `TWO_HOURS`: 2시간<br/>- `TWO_HOURS_AND_HALF`: 2시간 30분<br/>- `THREE_HOURS`: 3시간 |
+
+<a id="replicate-db-instance-section"></a>
+#### 스토리지 자동 확장 사용 시
+
+| 이름 | 타입 | 필수 | 설명 |
+|-----|-----|-----|-----|
+| storage.storageAutoscale.threshold | Number | Y | 자동 확장 조건(%)<br/>- 최솟값: `50`<br/>- 최댓값: `95` |
+| storage.storageAutoscale.maxStorageSize | Number | Y | 자동 확장 최대 크기(GB)<br/>- 최댓값: `4096` |
+| storage.storageAutoscale.cooldownTime | Number | Y | 자동 확장 쿨다운 시간(분)<br/>- 최솟값: `10`<br/>- 최댓값: `1440` |
 
 <a id="replicate-db-instance-response"></a>
 #### 응답
@@ -2680,28 +3554,35 @@ POST /v3.0/db-instances/{dbInstanceId}/replicate
 
 | 이름 | 타입 | 설명 |
 |-----|-----|-----|
-| jobId | UUID | 작업의 식별자 |
+| jobId | UUID | 요청한 작업의 식별자 |
 
 ---
 
-<a id="restart-db-instance-3"></a>
-### DB 인스턴스 재시작하기 { #restart-db-instance-3 }
+<a id="restart-db-instance"></a>
+### DB 인스턴스 재시작하기 { #restart-db-instance }
 
-<a id="restart-db-instance-3-request"></a>
+<a id="restart-db-instance-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Restart | DB 인스턴스 재시작하기 |
+
+<a id="restart-db-instance-request"></a>
 #### 요청
 
 ```http
-POST /v3.0/db-instances/{dbInstanceId}/restart
+POST /v4.0/db-instances/{dbInstanceId}/restart
 ```
 
-<a id="restart-db-instance-3-request-parameters"></a>
+<a id="restart-db-instance-request-parameters"></a>
 #### 요청 파라미터
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
 | dbInstanceId | URL | UUID | Y | DB 인스턴스의 식별자 |
 
-<a id="restart-db-instance-3-request-body"></a>
+<a id="restart-db-instance-request-body"></a>
 #### 요청 본문
 
 <details>
@@ -2712,7 +3593,8 @@ POST /v3.0/db-instances/{dbInstanceId}/restart
     "useOnlineFailover": false,
     "executeBackup": false,
     "waitReplicationDelay": false,
-    "useReadOnly": false
+    "useReadOnly": false,
+    "osRestart": false
 }
 ```
 
@@ -2724,8 +3606,9 @@ POST /v3.0/db-instances/{dbInstanceId}/restart
 | executeBackup | Boolean | N | 현재 시점 백업 수행 여부<br/>- 기본값: `false` |
 | waitReplicationDelay | Boolean | N | 복제 지연 해소 대기<br/>- 기본값: `false` |
 | useReadOnly | Boolean | N | 쓰기 부하 차단<br/>- 기본값: `false` |
+| osRestart | Boolean | N | 운영체제 재시작 여부<br/>- 기본값: `false` |
 
-<a id="restart-db-instance-3-response"></a>
+<a id="restart-db-instance-response"></a>
 #### 응답
 
 <details>
@@ -2746,50 +3629,122 @@ POST /v3.0/db-instances/{dbInstanceId}/restart
 
 | 이름 | 타입 | 설명 |
 |-----|-----|-----|
-| jobId | UUID | 작업의 식별자 |
+| jobId | UUID | 요청한 작업의 식별자 |
 
 ---
 
-<a id="get-restoration-info"></a>
-### DB 인스턴스 복원 정보 조회 { #get-restoration-info }
+<a id="view-restoration-information"></a>
+### DB 인스턴스 복원 정보 조회 { #view-restoration-information }
 
-<a id="get-restoration-info-request"></a>
+<a id="view-restoration-information-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Get | DB 인스턴스 복원 정보 조회 |
+
+<a id="view-restoration-information-request"></a>
 #### 요청
 
 ```http
-GET /v3.0/db-instances/{dbInstanceId}/restoration-info
+GET /v4.0/db-instances/{dbInstanceId}/restoration-info
 ```
 
-<a id="get-restoration-info-request-parameters"></a>
+<a id="view-restoration-information-request-parameters"></a>
 #### 요청 파라미터
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
 | dbInstanceId | URL | UUID | Y | DB 인스턴스의 식별자 |
 
-<a id="get-restoration-info-request-body"></a>
+<a id="view-restoration-information-request-body"></a>
 #### 요청 본문
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-<a id="get-restoration-info-response"></a>
+<a id="view-restoration-information-response"></a>
 #### 응답
 
-이 API는 응답 본문을 반환하지 않습니다.
+<details>
+  <summary><strong>예시 코드</strong></summary>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "oldestRestorableYmdt": "2023-12-31T15:00:00+09:00",
+    "latestRestorableYmdt": "2023-12-31T15:00:00+09:00",
+    "restorableBackups": [
+        {
+            "backup": {
+                "backupId": "550e8400-e29b-41d4-a716-446655440000",
+                "backupName": "backupName-example",
+                "backupStatus": "BACKING_UP",
+                "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
+                "dbInstanceName": "dbInstanceName-example",
+                "dbVersion": "MYSQL_V8411",
+                "backupType": "AUTO",
+                "backupSize": 1,
+                "useBackupLock": false,
+                "failoverCount": 1,
+                "binLogFileName": "binLogFileName-example",
+                "binLogPosition": 1,
+                "createdYmdt": "2023-12-31T15:00:00+09:00",
+                "updatedYmdt": "2023-12-31T15:00:00+09:00"
+            },
+            "restorableBinLogs": []
+        }
+    ]
+}
+```
+
+</details>
+
+| 이름 | 타입 | 설명 |
+|-----|-----|-----|
+| oldestRestorableYmdt | DateTime | 복원 가능한 가장 이른 시간 |
+| latestRestorableYmdt | DateTime | 복원 가능한 가장 최근 시간 |
+| restorableBackups | Array | 복원 가능한 백업 목록 |
+| restorableBackups.backup | Object | 백업 정보 객체 |
+| restorableBackups.backup.backupId | UUID | 백업의 식별자 |
+| restorableBackups.backup.backupName | String | 백업 이름 |
+| restorableBackups.backup.backupStatus | Enum | 백업 상태<br/>- `BACKING_UP`: 백업 중인 경우<br/>- `COMPLETED`: 백업이 완료된 경우<br/>- `DELETING`: 백업이 삭제 중인 경우<br/>- `DELETED`: 백업이 삭제된 경우<br/>- `ERROR`: 오류가 발생한 경우 |
+| restorableBackups.backup.dbInstanceId | UUID | 원본 DB 인스턴스의 식별자 |
+| restorableBackups.backup.dbInstanceName | String | 원본 DB 인스턴스의 이름 |
+| restorableBackups.backup.dbVersion | Enum | DB 엔진 버전 |
+| restorableBackups.backup.backupType | Enum | 백업 유형<br/>- `AUTO`<br/>- `MANUAL` |
+| restorableBackups.backup.backupSize | Number | 백업 크기 |
+| restorableBackups.backup.useBackupLock | Boolean | 테이블 잠금 사용 여부 |
+| restorableBackups.backup.failoverCount | Number | 장애 조치 횟수 |
+| restorableBackups.backup.binLogFileName | String | 바이너리 로그 파일 이름 |
+| restorableBackups.backup.binLogPosition | Number | 바이너리 로그 파일 위치 |
+| restorableBackups.backup.createdYmdt | DateTime | 백업 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| restorableBackups.backup.updatedYmdt | DateTime | 백업 갱신 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| restorableBackups.restorableBinLogs | Array | 해당 백업을 이용하여 복원 가능한 바이너리 로그 이름 목록 |
 
 ---
 
-<a id="get-last-query-to-restore"></a>
-### 복원될 마지막 쿼리 조회 { #get-last-query-to-restore }
+<a id="view-the-last-query-to-be-restored"></a>
+### 복원될 마지막 쿼리 조회 { #view-the-last-query-to-be-restored }
 
-<a id="get-last-query-to-restore-request"></a>
+<a id="view-the-last-query-to-be-restored-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Get | 복원될 마지막 쿼리 조회 |
+
+<a id="view-the-last-query-to-be-restored-request"></a>
 #### 요청
 
 ```http
-GET /v3.0/db-instances/{dbInstanceId}/restoration-info/last-query
+GET /v4.0/db-instances/{dbInstanceId}/restoration-info/last-query
 ```
 
-<a id="get-last-query-to-restore-request-parameters"></a>
+<a id="view-the-last-query-to-be-restored-request-parameters"></a>
 #### 요청 파라미터
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
@@ -2797,14 +3752,14 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info/last-query
 | dbInstanceId | URL | UUID | Y | DB 인스턴스의 식별자 |
 | restoreType | Query | Enum | Y | 복원 유형<br/>- `TIMESTAMP`: 복원 가능한 시간 이내의 시간을 이용한 시점 복원<br/>- `BINLOG`: 복원 가능한 바이너리 로그 위치를 이용한 시점 복원 |
 
-<a id="get-last-query-to-restore-restoretype-timestamp"></a>
+<a id="view-the-last-query-to-be-restored-restoretype-timestamp"></a>
 #### restoreType이 `TIMESTAMP`인 경우
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
 | restoreYmdt | Query | DateTime | Y | DB 인스턴스 복원 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 
-<a id="get-last-query-to-restore-restoretype-binlog"></a>
+<a id="view-the-last-query-to-be-restored-restoretype-binlog"></a>
 #### restoreType이 `BINLOG`인 경우
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
@@ -2813,12 +3768,12 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info/last-query
 | binLogFileName | Query | String | Y | 복원에 사용할 바이너리 로그 이름 |
 | binLogPosition | Query | String | Y | 복원에 사용할 바이너리 로그 위치 |
 
-<a id="get-last-query-to-restore-request-body"></a>
+<a id="view-the-last-query-to-be-restored-request-body"></a>
 #### 요청 본문
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-<a id="get-last-query-to-restore-response"></a>
+<a id="view-the-last-query-to-be-restored-response"></a>
 #### 응답
 
 <details>
@@ -2845,24 +3800,31 @@ GET /v3.0/db-instances/{dbInstanceId}/restoration-info/last-query
 
 ---
 
-<a id="restore-db-instance"></a>
-### DB 인스턴스 복원 { #restore-db-instance }
+<a id="restoration"></a>
+### DB 인스턴스 복원 { #restoration }
 
-<a id="restore-db-instance-request"></a>
+<a id="restoration-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Restore | DB 인스턴스 복원 |
+
+<a id="restoration-request"></a>
 #### 요청
 
 ```http
-POST /v3.0/db-instances/{dbInstanceId}/restore
+POST /v4.0/db-instances/{dbInstanceId}/restore
 ```
 
-<a id="restore-db-instance-request-parameters"></a>
+<a id="restoration-request-parameters"></a>
 #### 요청 파라미터
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
 | dbInstanceId | URL | UUID | Y | DB 인스턴스의 식별자 |
 
-<a id="restore-db-instance-request-body"></a>
+<a id="restoration-request-body"></a>
 #### 요청 본문
 
 <details>
@@ -2871,16 +3833,17 @@ POST /v3.0/db-instances/{dbInstanceId}/restore
 ```json
 {
     "dbInstanceName": "dbInstanceName",
-    "dbInstanceCandidateName": "dbInstanceCandidateName",
     "description": "description-example",
     "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
     "dbPort": 13306,
     "useHighAvailability": false,
-    "imageId": "550e8400-e29b-41d4-a716-446655440000",
     "pingInterval": 3,
     "storage": {
         "storageType": "General SSD",
-        "storageSize": 20
+        "storageSize": 20,
+        "storageAutoscale": {
+            "useStorageAutoscale": false
+        }
     },
     "network": {
         "subnetId": "550e8400-e29b-41d4-a716-446655440000",
@@ -2904,6 +3867,7 @@ POST /v3.0/db-instances/{dbInstanceId}/restore
         "restoreType": "TIMESTAMP"
     },
     "useDefaultNotification": false,
+    "useSlowQueryAnalysis": true,
     "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
     "dbSecurityGroupIds": [],
     "userGroupIds": [],
@@ -2915,39 +3879,56 @@ POST /v3.0/db-instances/{dbInstanceId}/restore
 
 | 이름 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|
-| dbInstanceName | String | N | Primary DB 인스턴스를 식별할 수 있는 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
-| dbInstanceCandidateName | String | N | Standby DB 인스턴스를 식별할 수 있는 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
+| dbInstanceName | String | Y | Primary DB 인스턴스를 식별할 수 있는 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
 | description | String | N | DB 인스턴스 추가 정보<br/>- 최대 길이: `100` |
-| dbFlavorId | UUID | Y | DB 인스턴스 사양의 식별자 |
+| dbFlavorId | UUID | N | DB 인스턴스 사양의 식별자. 미입력 시 원본 인스턴스의 사양이 적용됩니다. |
 | dbPort | Number | N | DB 포트 |
 | useHighAvailability | Boolean | N | 고가용성 사용 여부<br/>- 기본값: `false` |
-| imageId | UUID | N | 이미지의 식별자 |
 | pingInterval | Number | N | 고가용성 사용 시 Ping 간격(초)<br/>- 최솟값: `1`<br/>- 최댓값: `600` |
-| storage | Object | Y | 스토리지 정보 객체 |
-| storage.storageType | Enum | Y | 스토리지 유형 |
-| storage.storageSize | Number | Y | 데이터 스토리지 크기(GB)<br/>- 최솟값: `20` |
-| network | Object | Y | 네트워크 정보 객체 |
-| network.subnetId | UUID | Y | 서브넷의 식별자 |
+| storage | Object | N | 스토리지 정보 객체. 미입력 시 원본 인스턴스의 스토리지 설정이 적용됩니다. |
+| storage.storageType | Enum | N | 스토리지 유형. 미입력 시 원본 인스턴스의 스토리지 유형이 적용됩니다. |
+| storage.storageSize | Number | N | 데이터 스토리지 크기(GB). 미입력 시 원본 인스턴스의 스토리지 크기가 적용됩니다.<br/>- 최솟값: `20` |
+| storage.storageAutoscale | Object | N | 데이터 스토리지 자동 확장 객체 |
+| storage.storageAutoscale.useStorageAutoscale | Boolean | N | 스토리지 자동 확장 여부<br/>- 기본값: `false` |
+| network | Object | N | 네트워크 정보 객체. 미입력 시 원본 인스턴스의 네트워크 설정이 적용됩니다. |
+| network.subnetId | UUID | N | 서브넷의 식별자. 미입력 시 원본 인스턴스 값 사용 |
 | network.usePublicAccess | Boolean | N | 외부 접속 가능 여부<br/>- 기본값: `false` |
-| network.availabilityZone | Enum | Y | DB 인스턴스를 생성할 가용성 영역 |
-| backup | Object | Y | 백업 정보 객체 |
-| backup.backupPeriod | Number | Y | 백업 보관 기간(일)<br/>- 최솟값: `0`<br/>- 최댓값: `730` |
+| network.availabilityZone | Enum | N | DB 인스턴스를 생성할 가용성 영역. 미입력 시 랜덤 선택 |
+| backup | Object | N | 백업 정보 객체. 미입력 시 원본 인스턴스의 백업 설정이 적용됩니다. |
+| backup.backupPeriod | Number | N | 백업 보관 기간(일). 미입력 시 원본 인스턴스의 백업 보관 기간이 적용됩니다.<br/>- 최솟값: `0`<br/>- 최댓값: `730` |
 | backup.ftwrlWaitTimeout | Number | N | 쿼리 지연 대기 시간(초)<br/>- 최솟값: `0`<br/>- 최댓값: `21600` |
 | backup.backupRetryCount | Number | N | 백업 재시도 횟수<br/>- 최솟값: `0`<br/>- 최댓값: `10` |
 | backup.replicationRegion | Enum | N | 백업 복제 리전<br/>- `KR1`: 한국(판교) |
 | backup.useBackupLock | Boolean | N | 테이블 잠금 사용 여부<br/>- 기본값: `true` |
-| backup.backupSchedules | Array | Y | 백업 스케줄 목록 |
-| backup.backupSchedules.backupWndBgnTime | Time | Y | 백업 시작 시간 |
-| backup.backupSchedules.backupWndDuration | Enum | Y | 백업 윈도우<br/>- `HALF_AN_HOUR`: 30분<br/>- `ONE_HOUR`: 1시간<br/>- `ONE_HOUR_AND_HALF`: 1시간 30분<br/>- `TWO_HOURS`: 2시간<br/>- `TWO_HOURS_AND_HALF`: 2시간 30분<br/>- `THREE_HOURS`: 3시간 |
+| backup.backupSchedules | Array | N | 백업 스케줄 목록. 미입력 시 원본 인스턴스의 백업 스케줄이 적용됩니다. |
+| backup.backupSchedules.backupWndBgnTime | Time | N | 백업 시작 시간 |
+| backup.backupSchedules.backupWndDuration | Enum | N | 백업 윈도우<br/>- `HALF_AN_HOUR`: 30분<br/>- `ONE_HOUR`: 1시간<br/>- `ONE_HOUR_AND_HALF`: 1시간 30분<br/>- `TWO_HOURS`: 2시간<br/>- `TWO_HOURS_AND_HALF`: 2시간 30분<br/>- `THREE_HOURS`: 3시간 |
 | restore | Object | Y | 복원 정보 객체 |
 | restore.restoreType | Enum | Y | 복원 유형<br/>- `TIMESTAMP`: 복원 가능한 시간 이내의 시간을 이용한 시점 복원<br/>- `BINLOG`: 복원 가능한 바이너리 로그 위치를 이용한 시점 복원<br/>- `BACKUP`: 기존에 생성한 백업을 이용한 스냅숏 복원 |
 | useDefaultNotification | Boolean | N | 기본 알림 사용 여부<br/>- 기본값: `false` |
-| parameterGroupId | UUID | Y | 파라미터 그룹의 식별자 |
-| dbSecurityGroupIds | Array | N | DB 보안 그룹의 식별자 목록 |
+| useSlowQueryAnalysis | Boolean | N | Slow query 분석 여부<br/>- 기본값: `true` |
+| parameterGroupId | UUID | N | 파라미터 그룹의 식별자. 미입력 시 원본 인스턴스의 파라미터 그룹이 적용됩니다. |
+| dbSecurityGroupIds | Array | N | DB 보안 그룹의 식별자 목록. 미입력 시 원본 인스턴스의 보안 그룹이 적용됩니다. |
 | userGroupIds | Array | N | 사용자 그룹의 식별자 목록 |
 | useDeletionProtection | Boolean | N | 삭제 보호 여부<br/>- 기본값: `false` |
 
-<a id="restore-db-instance-timestamp-restoretype-timestamp"></a>
+<a id="restoration-section"></a>
+#### 고가용성 사용 시
+
+| 이름 | 타입 | 필수 | 설명 |
+|-----|-----|-----|-----|
+| dbInstanceCandidateName | String | Y | Standby DB 인스턴스를 식별할 수 있는 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
+
+<a id="restoration-section-2"></a>
+#### 스토리지 자동 확장 사용 시
+
+| 이름 | 타입 | 필수 | 설명 |
+|-----|-----|-----|-----|
+| storage.storageAutoscale.threshold | Number | Y | 자동 확장 조건(%)<br/>- 최솟값: `50`<br/>- 최댓값: `95` |
+| storage.storageAutoscale.maxStorageSize | Number | Y | 자동 확장 최대 크기(GB)<br/>- 최댓값: `4096` |
+| storage.storageAutoscale.cooldownTime | Number | Y | 자동 확장 쿨다운 시간(분)<br/>- 최솟값: `10`<br/>- 최댓값: `1440` |
+
+<a id="restoration-timestamp-restoretype-timestamp"></a>
 #### Timestamp를 이용한 시점 복원 시 요청(restoreType이 `TIMESTAMP`인 경우)
 
 | 이름 | 타입 | 필수 | 설명 |
@@ -2956,7 +3937,7 @@ POST /v3.0/db-instances/{dbInstanceId}/restore
 
 복원 정보 조회로 확인한 복원 가능한 가장 최근 시간 이전 시점만 복원할 수 있습니다.
 
-<a id="restore-db-instance-restoretype-binlog"></a>
+<a id="restoration-restoretype-binlog"></a>
 #### 바이너리 로그를 이용한 시점 복원 시 요청(restoreType이 `BINLOG`인 경우)
 
 | 이름 | 타입 | 필수 | 설명 |
@@ -2968,14 +3949,14 @@ POST /v3.0/db-instances/{dbInstanceId}/restore
 
 바이너리 로그를 이용한 시점 복원 시 기준 백업의 바이너리 로그 파일 및 위치를 기준으로 그 이후에 기록된 로그를 복원할 수 있습니다.
 
-<a id="restore-db-instance-restoretype-backup"></a>
+<a id="restoration-restoretype-backup"></a>
 #### 백업을 이용한 복원 시 요청(restoreType이 `BACKUP`인 경우)
 
 | 이름 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|
 | restore.backupId | UUID | N | 복원에 사용할 백업의 식별자 |
 
-<a id="restore-db-instance-response"></a>
+<a id="restoration-response"></a>
 #### 응답
 
 <details>
@@ -2996,18 +3977,25 @@ POST /v3.0/db-instances/{dbInstanceId}/restore
 
 | 이름 | 타입 | 설명 |
 |-----|-----|-----|
-| jobId | UUID | 작업의 식별자 |
+| jobId | UUID | 요청한 작업의 식별자 |
 
 ---
 
 <a id="start-db-instance"></a>
 ### DB 인스턴스 시작하기 { #start-db-instance }
 
+<a id="start-db-instance-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Start | DB 인스턴스 시작하기 |
+
 <a id="start-db-instance-request"></a>
 #### 요청
 
 ```http
-POST /v3.0/db-instances/{dbInstanceId}/start
+POST /v4.0/db-instances/{dbInstanceId}/start
 ```
 
 <a id="start-db-instance-request-parameters"></a>
@@ -3043,18 +4031,25 @@ POST /v3.0/db-instances/{dbInstanceId}/start
 
 | 이름 | 타입 | 설명 |
 |-----|-----|-----|
-| jobId | UUID | 작업의 식별자 |
+| jobId | UUID | 요청한 작업의 식별자 |
 
 ---
 
 <a id="stop-db-instance"></a>
 ### DB 인스턴스 정지하기 { #stop-db-instance }
 
+<a id="stop-db-instance-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Stop | DB 인스턴스 정지하기 |
+
 <a id="stop-db-instance-request"></a>
 #### 요청
 
 ```http
-POST /v3.0/db-instances/{dbInstanceId}/stop
+POST /v4.0/db-instances/{dbInstanceId}/stop
 ```
 
 <a id="stop-db-instance-request-parameters"></a>
@@ -3090,33 +4085,40 @@ POST /v3.0/db-instances/{dbInstanceId}/stop
 
 | 이름 | 타입 | 설명 |
 |-----|-----|-----|
-| jobId | UUID | 작업의 식별자 |
+| jobId | UUID | 요청한 작업의 식별자 |
 
 ---
 
-<a id="get-storage-info"></a>
-### 스토리지 정보 보기 { #get-storage-info }
+<a id="view-storage-information"></a>
+### 스토리지 정보 보기 { #view-storage-information }
 
-<a id="get-storage-info-request"></a>
+<a id="view-storage-information-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Get | 스토리지 정보 보기 |
+
+<a id="view-storage-information-request"></a>
 #### 요청
 
 ```http
-GET /v3.0/db-instances/{dbInstanceId}/storage-info
+GET /v4.0/db-instances/{dbInstanceId}/storage-info
 ```
 
-<a id="get-storage-info-request-parameters"></a>
+<a id="view-storage-information-request-parameters"></a>
 #### 요청 파라미터
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
 | dbInstanceId | URL | UUID | Y | DB 인스턴스의 식별자 |
 
-<a id="get-storage-info-request-body"></a>
+<a id="view-storage-information-request-body"></a>
 #### 요청 본문
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-<a id="get-storage-info-response"></a>
+<a id="view-storage-information-response"></a>
 #### 응답
 
 <details>
@@ -3131,7 +4133,13 @@ GET /v3.0/db-instances/{dbInstanceId}/storage-info
     },
     "storageType": "General SSD",
     "storageSize": 1,
-    "storageStatus": "DELETED"
+    "storageStatus": "DELETED",
+    "storageAutoscale": {
+        "useStorageAutoscale": false,
+        "threshold": 1,
+        "maxStorageSize": 1,
+        "cooldownTime": 1
+    }
 }
 ```
 
@@ -3139,30 +4147,42 @@ GET /v3.0/db-instances/{dbInstanceId}/storage-info
 
 | 이름 | 타입 | 설명 |
 |-----|-----|-----|
-| storageType | Enum | 데이터 스토리지 유형 |
+| storageType | String | 데이터 스토리지 유형 |
 | storageSize | Number | 데이터 스토리지 크기(GB) |
 | storageStatus | Enum | 데이터 스토리지의 현재 상태<br/>- `DELETED`: 삭제됨<br/>- `PENDING_DELETION`: 삭제 유예됨<br/>- `DELETION_RESERVED`: 삭제 예약됨(스냅숏 정리 대기)<br/>- `DETACHED`: 해제됨<br/>- `ATTACHED`: 할당됨 |
+| storageAutoscale | Object | 데이터 스토리지 자동 확장 객체 |
+| storageAutoscale.useStorageAutoscale | Boolean | 스토리지 자동 확장 여부 |
+| storageAutoscale.threshold | Number | 자동 확장 조건(%) |
+| storageAutoscale.maxStorageSize | Number | 자동 확장 최대 크기(GB) |
+| storageAutoscale.cooldownTime | Number | 자동 확장 쿨다운 시간(분) |
 
 ---
 
-<a id="update-storage-info"></a>
-### 스토리지 정보 수정하기 { #update-storage-info }
+<a id="modify-storage-information"></a>
+### 스토리지 정보 수정하기 { #modify-storage-information }
 
-<a id="update-storage-info-request"></a>
+<a id="modify-storage-information-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Modify | 스토리지 정보 수정하기 |
+
+<a id="modify-storage-information-request"></a>
 #### 요청
 
 ```http
-PUT /v3.0/db-instances/{dbInstanceId}/storage-info
+PUT /v4.0/db-instances/{dbInstanceId}/storage-info
 ```
 
-<a id="update-storage-info-request-parameters"></a>
+<a id="modify-storage-information-request-parameters"></a>
 #### 요청 파라미터
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
 | dbInstanceId | URL | UUID | Y | DB 인스턴스의 식별자 |
 
-<a id="update-storage-info-request-body"></a>
+<a id="modify-storage-information-request-body"></a>
 #### 요청 본문
 
 <details>
@@ -3170,7 +4190,10 @@ PUT /v3.0/db-instances/{dbInstanceId}/storage-info
 
 ```json
 {
-    "storageSize": 1
+    "storageSize": 1,
+    "storageAutoscale": {
+        "useStorageAutoscale": false
+    }
 }
 ```
 
@@ -3179,8 +4202,19 @@ PUT /v3.0/db-instances/{dbInstanceId}/storage-info
 | 이름 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|
 | storageSize | Number | Y | 데이터 스토리지 크기(GB)<br/>- 최댓값: `2048` |
+| storageAutoscale | Object | N | 데이터 스토리지 자동 확장 객체 |
+| storageAutoscale.useStorageAutoscale | Boolean | N | 스토리지 자동 확장 여부 |
 
-<a id="update-storage-info-response"></a>
+<a id="modify-storage-information-section"></a>
+#### 스토리지 자동 확장 사용 시
+
+| 이름 | 타입 | 필수 | 설명 |
+|-----|-----|-----|-----|
+| storageAutoscale.threshold | Number | Y | 자동 확장 조건(%)<br/>- 최솟값: `50`<br/>- 최댓값: `95` |
+| storageAutoscale.maxStorageSize | Number | Y | 자동 확장 최대 크기(GB)<br/>- 최댓값: `4096` |
+| storageAutoscale.cooldownTime | Number | Y | 자동 확장 쿨다운 시간(분)<br/>- 최솟값: `10`<br/>- 최댓값: `1440` |
+
+<a id="modify-storage-information-response"></a>
 #### 응답
 
 <details>
@@ -3201,7 +4235,7 @@ PUT /v3.0/db-instances/{dbInstanceId}/storage-info
 
 | 이름 | 타입 | 설명 |
 |-----|-----|-----|
-| jobId | UUID | 작업의 식별자 |
+| jobId | UUID | 요청한 작업의 식별자 |
 
 ---
 
@@ -3219,33 +4253,40 @@ PUT /v3.0/db-instances/{dbInstanceId}/storage-info
 | `DELETED`    | 백업이 삭제된 경우   |
 | `ERROR`      | 오류가 발생한 경우   |
 
-<a id="get-backups"></a>
-### 백업 목록 조회 { #get-backups }
+<a id="retrieve-backup-list"></a>
+### 백업 목록 조회 { #retrieve-backup-list }
 
-<a id="get-backups-request"></a>
+<a id="retrieve-backup-list-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:Backup.List | 백업 목록 조회 |
+
+<a id="retrieve-backup-list-request"></a>
 #### 요청
 
 ```http
-GET /v3.0/backups
+GET /v4.0/backups
 ```
 
-<a id="get-backups-request-parameters"></a>
+<a id="retrieve-backup-list-request-parameters"></a>
 #### 요청 파라미터
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
-| page | Query | Number | Y | 조회할 목록의 페이지<br/>- 최솟값: `1` |
-| size | Query | Number | Y | 조회할 목록의 페이지 크기<br/>- 최솟값: `1`<br/>- 최댓값: `100` |
 | backupType | Query | Enum | N | 백업 유형<br/>- `AUTO`<br/>- `MANUAL` |
 | dbInstanceId | Query | UUID | N | 원본 DB 인스턴스의 식별자 |
 | dbVersion | Query | Enum | N | DB 엔진 버전 |
+| page | Query | Number | N | 조회할 목록의 페이지(기본값: 1)<br/>- 최솟값: `1` |
+| size | Query | Number | N | 조회할 목록의 페이지 크기(기본값: 20)<br/>- 최솟값: `1`<br/>- 최댓값: `100` |
 
-<a id="get-backups-request-body"></a>
+<a id="retrieve-backup-list-request-body"></a>
 #### 요청 본문
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-<a id="get-backups-response"></a>
+<a id="retrieve-backup-list-response"></a>
 #### 응답
 
 <details>
@@ -3265,7 +4306,7 @@ GET /v3.0/backups
             "backupName": "backupName-example",
             "backupStatus": "BACKING_UP",
             "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
-            "dbVersion": "MARIADB_V11808",
+            "dbVersion": "MYSQL_V8411",
             "utilVersion": "utilVersion-example",
             "backupType": "AUTO",
             "backupSize": 1,
@@ -3295,14 +4336,104 @@ GET /v3.0/backups
 
 ---
 
+<a id="create-backup"></a>
+### 백업 생성하기 { #create-backup }
+
+<a id="create-backup-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:Backup.Create | 백업 생성하기 |
+
+<a id="create-backup-request"></a>
+#### 요청
+
+```http
+POST /v4.0/backups
+```
+
+<a id="create-backup-request-body"></a>
+#### 요청 본문
+
+<details>
+  <summary><strong>예시 코드</strong></summary>
+
+```json
+{
+    "backupName": "backupName",
+    "backupMethodType": "FULL"
+}
+```
+
+</details>
+
+| 이름 | 타입 | 필수 | 설명 |
+|-----|-----|-----|-----|
+| backupName | String | Y | 백업을 식별할 수 있는 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
+| backupMethodType | Enum | Y | 백업 방식 유형<br/>- `FULL`: 전체 백업<br/>- `INCREMENTAL`: 증분 백업<br/>- `SNAPSHOT`: 스냅숏 백업 |
+
+<a id="create-backup-backupmethodtype-incremental"></a>
+#### 증분 백업(backupMethodType이 `INCREMENTAL`인 경우)
+
+| 이름 | 타입 | 필수 | 설명 |
+|-----|-----|-----|-----|
+| baseBackupId | UUID | Y | 원본 백업의 식별자 |
+
+<a id="create-backup-backupmethodtype-full"></a>
+#### 전체 백업(backupMethodType이 `FULL`인 경우)
+
+| 이름 | 타입 | 필수 | 설명 |
+|-----|-----|-----|-----|
+| dbInstanceId | UUID | Y | DB 인스턴스의 식별자 |
+
+<a id="create-backup-backupmethodtype-snapshot"></a>
+#### 스냅숏 백업(backupMethodType이 `SNAPSHOT`인 경우)
+
+| 이름 | 타입 | 필수 | 설명 |
+|-----|-----|-----|-----|
+| dbInstanceId | UUID | Y | DB 인스턴스의 식별자 |
+
+<a id="create-backup-response"></a>
+#### 응답
+
+<details>
+  <summary><strong>예시 코드</strong></summary>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+}
+```
+
+</details>
+
+| 이름 | 타입 | 설명 |
+|-----|-----|-----|
+| jobId | UUID | 요청한 작업의 식별자 |
+
+---
+
 <a id="delete-backup"></a>
 ### 백업 삭제하기 { #delete-backup }
+
+<a id="delete-backup-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:Backup.Delete | 백업 삭제하기 |
 
 <a id="delete-backup-request"></a>
 #### 요청
 
 ```http
-DELETE /v3.0/backups/{backupId}
+DELETE /v4.0/backups/{backupId}
 ```
 
 <a id="delete-backup-request-parameters"></a>
@@ -3338,18 +4469,114 @@ DELETE /v3.0/backups/{backupId}
 
 | 이름 | 타입 | 설명 |
 |-----|-----|-----|
-| jobId | UUID | 작업의 식별자 |
+| jobId | UUID | 요청한 작업의 식별자 |
+
+---
+
+<a id="view-backup-details"></a>
+### 백업 단건 조회 { #view-backup-details }
+
+<a id="view-backup-details-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:Backup.Get | 백업 단건 조회 |
+
+<a id="view-backup-details-request"></a>
+#### 요청
+
+```http
+GET /v4.0/backups/{backupId}
+```
+
+<a id="view-backup-details-request-parameters"></a>
+#### 요청 파라미터
+
+| 이름 | 구분 | 타입 | 필수 | 설명 |
+|-----|-----|-----|-----|-----|
+| backupId | URL | UUID | Y | 백업의 식별자 |
+
+<a id="view-backup-details-request-body"></a>
+#### 요청 본문
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+<a id="view-backup-details-response"></a>
+#### 응답
+
+<details>
+  <summary><strong>예시 코드</strong></summary>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "backup": {
+        "backupId": "550e8400-e29b-41d4-a716-446655440000",
+        "regionCode": "KR1",
+        "backupName": "backupName-example",
+        "backupStatus": "BACKING_UP",
+        "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
+        "dbInstanceName": "dbInstanceName-example",
+        "dbVersion": "MYSQL_V8411",
+        "utilVersion": "utilVersion-example",
+        "backupType": "AUTO",
+        "backupMethodType": "FULL",
+        "backupFileType": "XBSTREAM",
+        "backupSize": 1,
+        "isReplicable": false,
+        "binLogFileName": "binLogFileName-example",
+        "binLogPosition": 1,
+        "createdYmdt": "2023-12-31T15:00:00+09:00",
+        "updatedYmdt": "2023-12-31T15:00:00+09:00"
+    }
+}
+```
+
+</details>
+
+| 이름 | 타입 | 설명 |
+|-----|-----|-----|
+| backup | Object | 백업 상세 정보 |
+| backup.backupId | UUID | 백업의 식별자 |
+| backup.regionCode | Enum | 리전 코드<br/>- `KR1`: 한국(판교) |
+| backup.backupName | String | 백업을 식별할 수 있는 이름 |
+| backup.backupStatus | Enum | 백업의 현재 상태<br/>- `BACKING_UP`: 백업 중(스피너)<br/>- `VERIFYING`: 검증 중(스피너)<br/>- `COMPLETED`: 사용 가능(녹색 아이콘)<br/>- `DELETING`: 삭제 중(스피너)<br/>- `DELETED`: 삭제됨(회색 아이콘)<br/>- `ERROR`: 오류(적색 아이콘) |
+| backup.dbInstanceId | UUID | 원본 DB 인스턴스의 식별자 |
+| backup.dbInstanceName | String | 원본 DB 인스턴스의 이름 |
+| backup.dbVersion | Enum | DB 엔진 버전 |
+| backup.utilVersion | String | 유틸리티 버전 |
+| backup.backupType | Enum | 백업 유형(AUTO, MANUAL)<br/>- `AUTO`<br/>- `MANUAL` |
+| backup.backupMethodType | Enum | 백업 방식(FULL, SNAPSHOT, INCREMENTAL)<br/>- `FULL`<br/>- `INCREMENTAL`<br/>- `SNAPSHOT` |
+| backup.backupFileType | Enum | 백업 파일 유형<br/>- `XBSTREAM`<br/>- `TAR_ZSTD`<br/>- `TAR_LZ4`<br/>- `TAR_GZIP`<br/>- `SNAPSHOT` |
+| backup.backupSize | Number | 백업 크기(Byte) |
+| backup.isReplicable | Boolean | 복제 가능 여부 |
+| backup.binLogFileName | String | 바이너리 로그 파일 이름 |
+| backup.binLogPosition | Number | 바이너리 로그 위치 |
+| backup.createdYmdt | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| backup.updatedYmdt | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 
 ---
 
 <a id="export-backup"></a>
 ### 백업 내보내기 { #export-backup }
 
+<a id="export-backup-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:Backup.Export | 백업 내보내기 |
+
 <a id="export-backup-request"></a>
 #### 요청
 
 ```http
-POST /v3.0/backups/{backupId}/export
+POST /v4.0/backups/{backupId}/export
 ```
 
 <a id="export-backup-request-parameters"></a>
@@ -3406,18 +4633,25 @@ POST /v3.0/backups/{backupId}/export
 
 | 이름 | 타입 | 설명 |
 |-----|-----|-----|
-| jobId | UUID | 작업의 식별자 |
+| jobId | UUID | 요청한 작업의 식별자 |
 
 ---
 
 <a id="restore-backup"></a>
 ### 백업 복원하기 { #restore-backup }
 
+<a id="restore-backup-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:Backup.Restore | 백업 복원하기 |
+
 <a id="restore-backup-request"></a>
 #### 요청
 
 ```http
-POST /v3.0/backups/{backupId}/restore
+POST /v4.0/backups/{backupId}/restore
 ```
 
 <a id="restore-backup-request-parameters"></a>
@@ -3446,6 +4680,7 @@ POST /v3.0/backups/{backupId}/restore
     "pingInterval": 3,
     "useDefaultNotification": false,
     "useDeletionProtection": false,
+    "useSlowQueryAnalysis": true,
     "network": {
         "subnetId": "550e8400-e29b-41d4-a716-446655440000",
         "usePublicAccess": false,
@@ -3453,14 +4688,17 @@ POST /v3.0/backups/{backupId}/restore
     },
     "storage": {
         "storageType": "General SSD",
-        "storageSize": 20
+        "storageSize": 20,
+        "storageAutoscale": {
+            "useStorageAutoscale": false
+        }
     },
     "backup": {
         "backupPeriod": 0,
         "backupRetryCount": 0,
-        "ftwrlWaitTimeout": 1800,
+        "ftwrlWaitTimeout": 0,
         "replicationRegion": "KR1",
-        "useBackupLock": true,
+        "useBackupLock": false,
         "backupSchedules": [
             {
                 "backupWndBgnTime": "00:00:00",
@@ -3477,31 +4715,50 @@ POST /v3.0/backups/{backupId}/restore
 |-----|-----|-----|-----|
 | dbInstanceName | String | Y | Primary DB 인스턴스를 식별할 수 있는 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
 | description | String | N | DB 인스턴스 추가 정보<br/>- 최대 길이: `100` |
-| dbFlavorId | UUID | Y | DB 인스턴스 사양의 식별자 |
-| dbPort | Number | Y | DB 포트<br/>- 최솟값: 3306, 최댓값: 43306 |
-| parameterGroupId | UUID | Y | 파라미터 그룹의 식별자 |
+| dbFlavorId | UUID | N | DB 인스턴스 사양의 식별자. 미지정 시 원본 인스턴스 값 사용 |
+| dbPort | Number | N | DB 포트. 미지정 시 원본 인스턴스 값 사용<br/>- 최솟값: 3306, 최댓값: 43306 |
+| parameterGroupId | UUID | N | 파라미터 그룹의 식별자. 미지정 시 원본 인스턴스 값 사용 |
 | dbSecurityGroupIds | Array | N | DB 보안 그룹의 식별자 목록 |
 | userGroupIds | Array | N | 사용자 그룹의 식별자 목록 |
 | useHighAvailability | Boolean | N | 고가용성 사용 여부<br/>- 기본값: `false` |
 | pingInterval | Number | N | 고가용성 사용 시 Ping 간격(초)<br/>- 기본값: `3`<br/>- 최솟값: `1`<br/>- 최댓값: `600` |
 | useDefaultNotification | Boolean | N | 기본 알림 사용 여부<br/>- 기본값: `false` |
 | useDeletionProtection | Boolean | N | 삭제 보호 여부<br/>- 기본값: `false` |
-| network | Object | Y | 네트워크 정보 객체 |
-| network.subnetId | UUID | Y | 서브넷의 식별자 |
+| useSlowQueryAnalysis | Boolean | N | Slow query 분석 여부<br/>- 기본값: `true` |
+| network | Object | N | 네트워크 정보 객체. 미지정 시 원본 인스턴스 값 사용 |
+| network.subnetId | UUID | N | 서브넷의 식별자. 미지정 시 원본 인스턴스 값 사용 |
 | network.usePublicAccess | Boolean | N | 외부 접속 가능 여부<br/>- 기본값: `false` |
-| network.availabilityZone | Enum | Y | DB 인스턴스를 생성할 가용성 영역 |
-| storage | Object | Y | 스토리지 정보 객체 |
-| storage.storageType | Enum | Y | 스토리지 유형 |
-| storage.storageSize | Number | Y | 데이터 스토리지 크기(GB)<br/>- 최솟값: `20` |
-| backup | Object | Y | 백업 정보 객체 |
-| backup.backupPeriod | Number | Y | 백업 보관 기간(일)<br/>- 최솟값: `0`<br/>- 최댓값: `730` |
-| backup.backupRetryCount | Number | N | 백업 재시도 횟수<br/>- 최솟값: `0`<br/>- 최댓값: `10` |
-| backup.ftwrlWaitTimeout | Number | N | 쿼리 지연 대기 시간(초)<br/>- 최솟값: `0`<br/>- 최댓값: `21600` |
+| network.availabilityZone | Enum | N | DB 인스턴스를 생성할 가용성 영역. 미지정 시 랜덤 선택 |
+| storage | Object | N | 스토리지 정보 객체. 미지정 시 원본 인스턴스 값 사용 |
+| storage.storageType | Enum | N | 스토리지 유형. 미지정 시 원본 인스턴스 값 사용 |
+| storage.storageSize | Number | N | 데이터 스토리지 크기(GB). 미지정 시 원본 인스턴스 값 사용<br/>- 최솟값: `20` |
+| storage.storageAutoscale | Object | N | 데이터 스토리지 자동 확장 객체. 미지정 시 원본 인스턴스 값 사용 |
+| storage.storageAutoscale.useStorageAutoscale | Boolean | N | 스토리지 자동 확장 여부<br/>- 기본값: `false` |
+| backup | Object | N | 백업 정보 객체. 미지정 시 원본 인스턴스 백업 설정 사용 |
+| backup.backupPeriod | Number | N | 백업 보관 기간(일). 미지정 시 원본 인스턴스 값 사용<br/>- 최솟값: `0`<br/>- 최댓값: `730` |
+| backup.backupRetryCount | Number | N | 백업 재시도 횟수. 미지정 시 원본 인스턴스 값 사용<br/>- 최솟값: `0`<br/>- 최댓값: `10` |
+| backup.ftwrlWaitTimeout | Number | N | 쿼리 지연 대기 시간(초). 미지정 시 원본 인스턴스 값 사용<br/>- 최솟값: `0`<br/>- 최댓값: `21600` |
 | backup.replicationRegion | Enum | N | 백업 복제 리전<br/>- `KR1`: 한국(판교) |
-| backup.useBackupLock | Boolean | N | 테이블 잠금 사용 여부<br/>- 기본값: `true` |
-| backup.backupSchedules | Array | Y | 백업 스케줄 목록 |
+| backup.useBackupLock | Boolean | N | 테이블 잠금 사용 여부. 미지정 시 원본 인스턴스 값 사용 |
+| backup.backupSchedules | Array | N | 백업 스케줄 목록. 미지정 시 원본 인스턴스 값 사용 |
 | backup.backupSchedules.backupWndBgnTime | Time | Y | 백업 시작 시간 |
 | backup.backupSchedules.backupWndDuration | Enum | Y | 백업 윈도우<br/>- `HALF_AN_HOUR`: 30분<br/>- `ONE_HOUR`: 1시간<br/>- `ONE_HOUR_AND_HALF`: 1시간 30분<br/>- `TWO_HOURS`: 2시간<br/>- `TWO_HOURS_AND_HALF`: 2시간 30분<br/>- `THREE_HOURS`: 3시간 |
+
+<a id="restore-backup-section"></a>
+#### 고가용성 사용 시
+
+| 이름 | 타입 | 필수 | 설명 |
+|-----|-----|-----|-----|
+| dbInstanceCandidateName | String | Y | Standby DB 인스턴스를 식별할 수 있는 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
+
+<a id="restore-backup-section-2"></a>
+#### 스토리지 자동 확장 사용 시
+
+| 이름 | 타입 | 필수 | 설명 |
+|-----|-----|-----|-----|
+| storage.storageAutoscale.threshold | Number | Y | 자동 확장 조건(%)<br/>- 최솟값: `50`<br/>- 최댓값: `95` |
+| storage.storageAutoscale.maxStorageSize | Number | Y | 자동 확장 최대 크기(GB)<br/>- 최댓값: `4096` |
+| storage.storageAutoscale.cooldownTime | Number | Y | 자동 확장 쿨다운 시간(분)<br/>- 최솟값: `10`<br/>- 최댓값: `1440` |
 
 <a id="restore-backup-response"></a>
 #### 응답
@@ -3524,7 +4781,7 @@ POST /v3.0/backups/{backupId}/restore
 
 | 이름 | 타입 | 설명 |
 |-----|-----|-----|
-| jobId | UUID | 작업의 식별자 |
+| jobId | UUID | 요청한 작업의 식별자 |
 
 ---
 
@@ -3541,22 +4798,37 @@ POST /v3.0/backups/{backupId}/restore
 | `UPDATING_RULE` | 규칙 정책 수정 중   |
 | `DELETING_RULE` | 규칙 정책 삭제 중   |
 
-<a id="get-db-security-groups"></a>
-### DB 보안 그룹 목록 보기 { #get-db-security-groups }
+<a id="list-db-security-groups"></a>
+### DB 보안 그룹 목록 보기 { #list-db-security-groups }
 
-<a id="get-db-security-groups-request"></a>
+<a id="list-db-security-groups-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbSecurityGroup.List | DB 보안 그룹 목록 보기 |
+
+<a id="list-db-security-groups-request"></a>
 #### 요청
 
 ```http
-GET /v3.0/db-security-groups
+GET /v4.0/db-security-groups
 ```
 
-<a id="get-db-security-groups-request-body"></a>
+<a id="list-db-security-groups-request-parameters"></a>
+#### 요청 파라미터
+
+| 이름 | 구분 | 타입 | 필수 | 설명 |
+|-----|-----|-----|-----|-----|
+| page | Query | Number | N | 조회할 목록의 페이지(기본값: 1)<br/>- 최솟값: `1` |
+| size | Query | Number | N | 조회할 목록의 페이지 크기(기본값: 20)<br/>- 최솟값: `1`<br/>- 최댓값: `100` |
+
+<a id="list-db-security-groups-request-body"></a>
 #### 요청 본문
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-<a id="get-db-security-groups-response"></a>
+<a id="list-db-security-groups-response"></a>
 #### 응답
 
 <details>
@@ -3569,6 +4841,7 @@ GET /v3.0/db-security-groups
         "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
+    "totalCounts": 1,
     "dbSecurityGroups": [
         {
             "dbSecurityGroupId": "550e8400-e29b-41d4-a716-446655440000",
@@ -3586,6 +4859,7 @@ GET /v3.0/db-security-groups
 
 | 이름 | 타입 | 설명 |
 |-----|-----|-----|
+| totalCounts | Number | 전체 DB 보안 그룹 목록 수 |
 | dbSecurityGroups | Array | DB 보안 그룹 목록 |
 | dbSecurityGroups.dbSecurityGroupId | UUID | DB 보안 그룹의 식별자 |
 | dbSecurityGroups.dbSecurityGroupName | String | DB 보안 그룹을 식별할 수 있는 이름 |
@@ -3599,11 +4873,18 @@ GET /v3.0/db-security-groups
 <a id="create-db-security-group"></a>
 ### DB 보안 그룹 생성하기 { #create-db-security-group }
 
+<a id="create-db-security-group-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbSecurityGroup.Create | DB 보안 그룹 생성하기 |
+
 <a id="create-db-security-group-request"></a>
 #### 요청
 
 ```http
-POST /v3.0/db-security-groups
+POST /v4.0/db-security-groups
 ```
 
 <a id="create-db-security-group-request-body"></a>
@@ -3676,11 +4957,18 @@ POST /v3.0/db-security-groups
 <a id="delete-db-security-group"></a>
 ### DB 보안 그룹 삭제하기 { #delete-db-security-group }
 
+<a id="delete-db-security-group-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbSecurityGroup.Delete | DB 보안 그룹 삭제하기 |
+
 <a id="delete-db-security-group-request"></a>
 #### 요청
 
 ```http
-DELETE /v3.0/db-security-groups/{dbSecurityGroupId}
+DELETE /v4.0/db-security-groups/{dbSecurityGroupId}
 ```
 
 <a id="delete-db-security-group-request-parameters"></a>
@@ -3702,29 +4990,36 @@ DELETE /v3.0/db-security-groups/{dbSecurityGroupId}
 
 ---
 
-<a id="get-db-security-group"></a>
-### DB 보안 그룹 상세 보기 { #get-db-security-group }
+<a id="list-db-security-group-details"></a>
+### DB 보안 그룹 상세 보기 { #list-db-security-group-details }
 
-<a id="get-db-security-group-request"></a>
+<a id="list-db-security-group-details-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbSecurityGroup.Get | DB 보안 그룹 상세 보기 |
+
+<a id="list-db-security-group-details-request"></a>
 #### 요청
 
 ```http
-GET /v3.0/db-security-groups/{dbSecurityGroupId}
+GET /v4.0/db-security-groups/{dbSecurityGroupId}
 ```
 
-<a id="get-db-security-group-request-parameters"></a>
+<a id="list-db-security-group-details-request-parameters"></a>
 #### 요청 파라미터
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
 | dbSecurityGroupId | URL | UUID | Y | DB 보안 그룹의 식별자 |
 
-<a id="get-db-security-group-request-body"></a>
+<a id="list-db-security-group-details-request-body"></a>
 #### 요청 본문
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-<a id="get-db-security-group-response"></a>
+<a id="list-db-security-group-details-response"></a>
 #### 응답
 
 <details>
@@ -3737,30 +5032,28 @@ GET /v3.0/db-security-groups/{dbSecurityGroupId}
         "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
-    "dbSecurityGroup": {
-        "dbSecurityGroupId": "550e8400-e29b-41d4-a716-446655440000",
-        "dbSecurityGroupName": "dbSecurityGroupName-example",
-        "description": "description-example",
-        "progressStatus": "NONE",
-        "rules": [
-            {
-                "ruleId": "550e8400-e29b-41d4-a716-446655440000",
-                "description": "description-example",
-                "direction": "INGRESS",
-                "etherType": "IPV4",
-                "port": {
-                    "portType": "ALL",
-                    "minPort": 1,
-                    "maxPort": 1
-                },
-                "cidr": "192.168.0.0/24",
-                "createdYmdt": "2023-12-31T15:00:00+09:00",
-                "updatedYmdt": "2023-12-31T15:00:00+09:00"
-            }
-        ],
-        "createdYmdt": "2023-12-31T15:00:00+09:00",
-        "updatedYmdt": "2023-12-31T15:00:00+09:00"
-    }
+    "dbSecurityGroupId": "550e8400-e29b-41d4-a716-446655440000",
+    "dbSecurityGroupName": "dbSecurityGroupName-example",
+    "description": "description-example",
+    "progressStatus": "NONE",
+    "rules": [
+        {
+            "ruleId": "550e8400-e29b-41d4-a716-446655440000",
+            "description": "description-example",
+            "direction": "INGRESS",
+            "etherType": "IPV4",
+            "port": {
+                "portType": "ALL",
+                "minPort": 1,
+                "maxPort": 1
+            },
+            "cidr": "192.168.0.0/24",
+            "createdYmdt": "2023-12-31T15:00:00+09:00",
+            "updatedYmdt": "2023-12-31T15:00:00+09:00"
+        }
+    ],
+    "createdYmdt": "2023-12-31T15:00:00+09:00",
+    "updatedYmdt": "2023-12-31T15:00:00+09:00"
 }
 ```
 
@@ -3768,46 +5061,52 @@ GET /v3.0/db-security-groups/{dbSecurityGroupId}
 
 | 이름 | 타입 | 설명 |
 |-----|-----|-----|
-| dbSecurityGroup | Object | DB 보안 그룹 |
-| dbSecurityGroup.dbSecurityGroupId | UUID | DB 보안 그룹의 식별자 |
-| dbSecurityGroup.dbSecurityGroupName | String | DB 보안 그룹을 식별할 수 있는 이름 |
-| dbSecurityGroup.description | String | DB 보안 그룹 추가 정보 |
-| dbSecurityGroup.progressStatus | Enum | DB 보안 그룹의 현재 진행 상태<br/>- `NONE`: 없음<br/>- `CREATING_RULE`: 규칙 생성 중<br/>- `UPDATING_RULE`: 규칙 수정 중<br/>- `DELETING_RULE`: 규칙 삭제 중<br/>- `APPLYING_DEFAULT_RULE`: 기본 규칙 적용 중 |
-| dbSecurityGroup.rules | Array | DB 보안 그룹 규칙 목록 |
-| dbSecurityGroup.rules.ruleId | UUID | DB 보안 그룹 규칙의 식별자 |
-| dbSecurityGroup.rules.description | String | DB 보안 그룹 규칙 추가 정보 |
-| dbSecurityGroup.rules.direction | Enum | 통신 방향<br/>- `INGRESS`: 수신<br/>- `EGRESS`: 송신 |
-| dbSecurityGroup.rules.etherType | Enum | Ether 유형<br/>- `IPV4`: IPv4 형식<br/>- `IPV6`: IPv6 형식 |
-| dbSecurityGroup.rules.port | Object | 포트 객체 |
-| dbSecurityGroup.rules.port.portType | Enum | 포트 유형<br/>- `ALL`: 포트 범위 전체(사용자 콘솔에서는 사용하지 않음)<br/>- `PORT`: 특정 포트<br/>- `DB_PORT`: DB 수신 포트<br/>- `PORT_RANGE`: 포트 범위 |
-| dbSecurityGroup.rules.port.minPort | Number | 포트 범위 최솟값 |
-| dbSecurityGroup.rules.port.maxPort | Number | 포트 범위 최댓값 |
-| dbSecurityGroup.rules.cidr | String | CIDR |
-| dbSecurityGroup.rules.createdYmdt | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
-| dbSecurityGroup.rules.updatedYmdt | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
-| dbSecurityGroup.createdYmdt | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
-| dbSecurityGroup.updatedYmdt | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| dbSecurityGroupId | UUID | DB 보안 그룹의 식별자 |
+| dbSecurityGroupName | String | DB 보안 그룹을 식별할 수 있는 이름 |
+| description | String | DB 보안 그룹 추가 정보 |
+| progressStatus | Enum | DB 보안 그룹의 현재 진행 상태<br/>- `NONE`: 없음<br/>- `CREATING_RULE`: 규칙 생성 중<br/>- `UPDATING_RULE`: 규칙 수정 중<br/>- `DELETING_RULE`: 규칙 삭제 중<br/>- `APPLYING_DEFAULT_RULE`: 기본 규칙 적용 중 |
+| rules | Array | DB 보안 그룹 규칙 목록 |
+| rules.ruleId | UUID | DB 보안 그룹 규칙의 식별자 |
+| rules.description | String | DB 보안 그룹 규칙 추가 정보 |
+| rules.direction | Enum | 통신 방향<br/>- `INGRESS`: 수신<br/>- `EGRESS`: 송신 |
+| rules.etherType | Enum | Ether 유형<br/>- `IPV4`: IPv4 형식<br/>- `IPV6`: IPv6 형식 |
+| rules.port | Object | 포트 객체 |
+| rules.port.portType | Enum | 포트 유형<br/>- `ALL`: 포트 범위 전체(사용자 콘솔에서는 사용하지 않음)<br/>- `PORT`: 특정 포트<br/>- `DB_PORT`: DB 수신 포트<br/>- `PORT_RANGE`: 포트 범위 |
+| rules.port.minPort | Number | 포트 범위 최솟값 |
+| rules.port.maxPort | Number | 포트 범위 최댓값 |
+| rules.cidr | String | CIDR |
+| rules.createdYmdt | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| rules.updatedYmdt | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| createdYmdt | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
+| updatedYmdt | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 
 ---
 
-<a id="update-db-security-group"></a>
-### DB 보안 그룹 수정하기 { #update-db-security-group }
+<a id="modify-db-security-group"></a>
+### DB 보안 그룹 수정하기 { #modify-db-security-group }
 
-<a id="update-db-security-group-request"></a>
+<a id="modify-db-security-group-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbSecurityGroup.Modify | DB 보안 그룹 수정하기 |
+
+<a id="modify-db-security-group-request"></a>
 #### 요청
 
 ```http
-PUT /v3.0/db-security-groups/{dbSecurityGroupId}
+PUT /v4.0/db-security-groups/{dbSecurityGroupId}
 ```
 
-<a id="update-db-security-group-request-parameters"></a>
+<a id="modify-db-security-group-request-parameters"></a>
 #### 요청 파라미터
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
 | dbSecurityGroupId | URL | UUID | Y | DB 보안 그룹의 식별자 |
 
-<a id="update-db-security-group-request-body"></a>
+<a id="modify-db-security-group-request-body"></a>
 #### 요청 본문
 
 <details>
@@ -3827,7 +5126,7 @@ PUT /v3.0/db-security-groups/{dbSecurityGroupId}
 | dbSecurityGroupName | String | N | DB 보안 그룹을 식별할 수 있는 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
 | description | String | N | DB 보안 그룹 추가 정보<br/>- 최대 길이: `100` |
 
-<a id="update-db-security-group-response"></a>
+<a id="modify-db-security-group-response"></a>
 #### 응답
 
 이 API는 응답 본문을 반환하지 않습니다.
@@ -3837,11 +5136,18 @@ PUT /v3.0/db-security-groups/{dbSecurityGroupId}
 <a id="delete-db-security-group-rule"></a>
 ### DB 보안 그룹 규칙 삭제하기 { #delete-db-security-group-rule }
 
+<a id="delete-db-security-group-rule-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbSecurityGroupRule.Delete | DB 보안 그룹 규칙 삭제하기 |
+
 <a id="delete-db-security-group-rule-request"></a>
 #### 요청
 
 ```http
-DELETE /v3.0/db-security-groups/{dbSecurityGroupId}/rules
+DELETE /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 ```
 
 <a id="delete-db-security-group-rule-request-parameters"></a>
@@ -3885,11 +5191,18 @@ DELETE /v3.0/db-security-groups/{dbSecurityGroupId}/rules
 <a id="create-db-security-group-rule"></a>
 ### DB 보안 그룹 규칙 생성하기 { #create-db-security-group-rule }
 
+<a id="create-db-security-group-rule-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbSecurityGroupRule.Create | DB 보안 그룹 규칙 생성하기 |
+
 <a id="create-db-security-group-rule-request"></a>
 #### 요청
 
 ```http
-POST /v3.0/db-security-groups/{dbSecurityGroupId}/rules
+POST /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 ```
 
 <a id="create-db-security-group-rule-request-parameters"></a>
@@ -3957,17 +5270,24 @@ POST /v3.0/db-security-groups/{dbSecurityGroupId}/rules
 
 ---
 
-<a id="update-db-security-group-rule"></a>
-### DB 보안 그룹 규칙 수정하기 { #update-db-security-group-rule }
+<a id="modify-db-security-group-rule"></a>
+### DB 보안 그룹 규칙 수정하기 { #modify-db-security-group-rule }
 
-<a id="update-db-security-group-rule-request"></a>
+<a id="modify-db-security-group-rule-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbSecurityGroupRule.Modify | DB 보안 그룹 규칙 수정하기 |
+
+<a id="modify-db-security-group-rule-request"></a>
 #### 요청
 
 ```http
-PUT /v3.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
+PUT /v4.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 ```
 
-<a id="update-db-security-group-rule-request-parameters"></a>
+<a id="modify-db-security-group-rule-request-parameters"></a>
 #### 요청 파라미터
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
@@ -3975,7 +5295,7 @@ PUT /v3.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 | dbSecurityGroupId | URL | UUID | Y | DB 보안 그룹의 식별자 |
 | ruleId | URL | UUID | Y | DB 보안 그룹 규칙의 식별자 |
 
-<a id="update-db-security-group-rule-request-body"></a>
+<a id="modify-db-security-group-rule-request-body"></a>
 #### 요청 본문
 
 <details>
@@ -4008,7 +5328,7 @@ PUT /v3.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 | cidr | String | Y | CIDR |
 | description | String | N | DB 보안 그룹 규칙 추가 정보<br/>- 최대 길이: `200` |
 
-<a id="update-db-security-group-rule-response"></a>
+<a id="modify-db-security-group-rule-response"></a>
 #### 응답
 
 <details>
@@ -4036,29 +5356,39 @@ PUT /v3.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 <a id="parameter-group"></a>
 ## 파라미터 그룹 { #parameter-group }
 
-<a id="get-parameter-groups"></a>
-### 파라미터 그룹 목록 보기 { #get-parameter-groups }
+<a id="list-parameter-groups"></a>
+### 파라미터 그룹 목록 보기 { #list-parameter-groups }
 
-<a id="get-parameter-groups-request"></a>
+<a id="list-parameter-groups-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:ParameterGroup.List | 파라미터 그룹 목록 보기 |
+
+<a id="list-parameter-groups-request"></a>
 #### 요청
 
 ```http
-GET /v3.0/parameter-groups
+GET /v4.0/parameter-groups
 ```
 
-<a id="get-parameter-groups-request-parameters"></a>
+<a id="list-parameter-groups-request-parameters"></a>
 #### 요청 파라미터
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
+| parameterGroupName | Query | String | N | 파라미터 그룹 이름(부분 검색) |
 | dbVersion | Query | Enum | N | DB 엔진 버전 |
+| page | Query | Number | N | 조회할 목록의 페이지(기본값: 1)<br/>- 최솟값: `1` |
+| size | Query | Number | N | 조회할 목록의 페이지 크기(기본값: 20)<br/>- 최솟값: `1`<br/>- 최댓값: `100` |
 
-<a id="get-parameter-groups-request-body"></a>
+<a id="list-parameter-groups-request-body"></a>
 #### 요청 본문
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-<a id="get-parameter-groups-response"></a>
+<a id="list-parameter-groups-response"></a>
 #### 응답
 
 <details>
@@ -4071,12 +5401,14 @@ GET /v3.0/parameter-groups
         "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
+    "totalCounts": 1,
     "parameterGroups": [
         {
             "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
             "parameterGroupName": "parameterGroupName-example",
             "description": "description-example",
-            "dbVersion": "MARIADB_V11808",
+            "dbVersion": "MYSQL_V8411",
+            "parameterGroupType": "USER",
             "parameterGroupStatus": "STABLE",
             "createdYmdt": "2023-12-31T15:00:00+09:00",
             "updatedYmdt": "2023-12-31T15:00:00+09:00"
@@ -4089,11 +5421,13 @@ GET /v3.0/parameter-groups
 
 | 이름 | 타입 | 설명 |
 |-----|-----|-----|
+| totalCounts | Number | 전체 파라미터 그룹 수 |
 | parameterGroups | Array | 파라미터 그룹 목록 |
 | parameterGroups.parameterGroupId | UUID | 파라미터 그룹의 식별자 |
 | parameterGroups.parameterGroupName | String | 파라미터 그룹을 식별할 수 있는 이름 |
 | parameterGroups.description | String | 파라미터 그룹 추가 정보 |
 | parameterGroups.dbVersion | Enum | DB 엔진 버전 |
+| parameterGroups.parameterGroupType | Enum | 파라미터 그룹 유형<br/>- `USER`<br/>- `ADMIN`<br/>- `DEFAULT` |
 | parameterGroups.parameterGroupStatus | Enum | 파라미터 그룹의 현재 상태<br/>- `STABLE`: 적용 완료<br/>- `NEED_TO_APPLY`: 적용 필요<br/>- `DELETED`: 삭제됨 |
 | parameterGroups.createdYmdt | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 | parameterGroups.updatedYmdt | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
@@ -4103,11 +5437,18 @@ GET /v3.0/parameter-groups
 <a id="create-parameter-group"></a>
 ### 파라미터 그룹 생성하기 { #create-parameter-group }
 
+<a id="create-parameter-group-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:ParameterGroup.Create | 파라미터 그룹 생성하기 |
+
 <a id="create-parameter-group-request"></a>
 #### 요청
 
 ```http
-POST /v3.0/parameter-groups
+POST /v4.0/parameter-groups
 ```
 
 <a id="create-parameter-group-request-body"></a>
@@ -4120,7 +5461,7 @@ POST /v3.0/parameter-groups
 {
     "parameterGroupName": "parameterGroupName",
     "description": "description-example",
-    "dbVersion": "MARIADB_V11808"
+    "dbVersion": "MYSQL_V8411"
 }
 ```
 
@@ -4160,11 +5501,18 @@ POST /v3.0/parameter-groups
 <a id="delete-parameter-group"></a>
 ### 파라미터 그룹 삭제하기 { #delete-parameter-group }
 
+<a id="delete-parameter-group-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:ParameterGroup.Delete | 파라미터 그룹 삭제하기 |
+
 <a id="delete-parameter-group-request"></a>
 #### 요청
 
 ```http
-DELETE /v3.0/parameter-groups/{parameterGroupId}
+DELETE /v4.0/parameter-groups/{parameterGroupId}
 ```
 
 <a id="delete-parameter-group-request-parameters"></a>
@@ -4186,29 +5534,36 @@ DELETE /v3.0/parameter-groups/{parameterGroupId}
 
 ---
 
-<a id="get-parameter-group"></a>
-### 파라미터 그룹 상세 보기 { #get-parameter-group }
+<a id="list-parameter-group-details"></a>
+### 파라미터 그룹 상세 보기 { #list-parameter-group-details }
 
-<a id="get-parameter-group-request"></a>
+<a id="list-parameter-group-details-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:ParameterGroup.Get | 파라미터 그룹 상세 보기 |
+
+<a id="list-parameter-group-details-request"></a>
 #### 요청
 
 ```http
-GET /v3.0/parameter-groups/{parameterGroupId}
+GET /v4.0/parameter-groups/{parameterGroupId}
 ```
 
-<a id="get-parameter-group-request-parameters"></a>
+<a id="list-parameter-group-details-request-parameters"></a>
 #### 요청 파라미터
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
 | parameterGroupId | URL | UUID | Y | 파라미터 그룹의 식별자 |
 
-<a id="get-parameter-group-request-body"></a>
+<a id="list-parameter-group-details-request-body"></a>
 #### 요청 본문
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-<a id="get-parameter-group-response"></a>
+<a id="list-parameter-group-details-response"></a>
 #### 응답
 
 <details>
@@ -4224,7 +5579,7 @@ GET /v3.0/parameter-groups/{parameterGroupId}
     "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
     "parameterGroupName": "parameterGroupName-example",
     "description": "description-example",
-    "dbVersion": "MARIADB_V11808",
+    "dbVersion": "MYSQL_V8411",
     "parameterGroupStatus": "STABLE",
     "parameters": [
         {
@@ -4271,11 +5626,18 @@ GET /v3.0/parameter-groups/{parameterGroupId}
 <a id="modify-parameter-group"></a>
 ### 파라미터 그룹 수정하기 { #modify-parameter-group }
 
+<a id="modify-parameter-group-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:ParameterGroup.Modify | 파라미터 그룹 수정하기 |
+
 <a id="modify-parameter-group-request"></a>
 #### 요청
 
 ```http
-PUT /v3.0/parameter-groups/{parameterGroupId}
+PUT /v4.0/parameter-groups/{parameterGroupId}
 ```
 
 <a id="modify-parameter-group-request-parameters"></a>
@@ -4315,11 +5677,18 @@ PUT /v3.0/parameter-groups/{parameterGroupId}
 <a id="copy-parameter-group"></a>
 ### 파라미터 그룹 복사하기 { #copy-parameter-group }
 
+<a id="copy-parameter-group-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:ParameterGroup.Copy | 파라미터 그룹 복사하기 |
+
 <a id="copy-parameter-group-request"></a>
 #### 요청
 
 ```http
-POST /v3.0/parameter-groups/{parameterGroupId}/copy
+POST /v4.0/parameter-groups/{parameterGroupId}/copy
 ```
 
 <a id="copy-parameter-group-request-parameters"></a>
@@ -4374,24 +5743,31 @@ POST /v3.0/parameter-groups/{parameterGroupId}/copy
 
 ---
 
-<a id="modify-parameter-group-parameters"></a>
-### 파라미터 수정하기 { #modify-parameter-group-parameters }
+<a id="modify-parameter"></a>
+### 파라미터 수정하기 { #modify-parameter }
 
-<a id="modify-parameter-group-parameters-request"></a>
+<a id="modify-parameter-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:ParameterGroup.Modify | 파라미터 수정하기 |
+
+<a id="modify-parameter-request"></a>
 #### 요청
 
 ```http
-PUT /v3.0/parameter-groups/{parameterGroupId}/parameters
+PUT /v4.0/parameter-groups/{parameterGroupId}/parameters
 ```
 
-<a id="modify-parameter-group-parameters-request-parameters"></a>
+<a id="modify-parameter-request-parameters"></a>
 #### 요청 파라미터
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
 | parameterGroupId | URL | UUID | Y | 파라미터 그룹의 식별자 |
 
-<a id="modify-parameter-group-parameters-request-body"></a>
+<a id="modify-parameter-request-body"></a>
 #### 요청 본문
 
 <details>
@@ -4416,7 +5792,7 @@ PUT /v3.0/parameter-groups/{parameterGroupId}/parameters
 | modifiedParameters.parameterId | UUID | Y | 파라미터의 식별자 |
 | modifiedParameters.value | String | Y | 변경할 파라미터 값 |
 
-<a id="modify-parameter-group-parameters-response"></a>
+<a id="modify-parameter-response"></a>
 #### 응답
 
 이 API는 응답 본문을 반환하지 않습니다.
@@ -4426,11 +5802,18 @@ PUT /v3.0/parameter-groups/{parameterGroupId}/parameters
 <a id="reset-parameter-group"></a>
 ### 파라미터 그룹 재설정하기 { #reset-parameter-group }
 
+<a id="reset-parameter-group-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:ParameterGroup.Reset | 파라미터 그룹 재설정하기 |
+
 <a id="reset-parameter-group-request"></a>
 #### 요청
 
 ```http
-PUT /v3.0/parameter-groups/{parameterGroupId}/reset
+PUT /v4.0/parameter-groups/{parameterGroupId}/reset
 ```
 
 <a id="reset-parameter-group-request-parameters"></a>
@@ -4455,22 +5838,37 @@ PUT /v3.0/parameter-groups/{parameterGroupId}/reset
 <a id="user-group"></a>
 ## 사용자 그룹 { #user-group }
 
-<a id="get-user-groups"></a>
-### 사용자 그룹 목록 보기 { #get-user-groups }
+<a id="list-user-groups"></a>
+### 사용자 그룹 목록 보기 { #list-user-groups }
 
-<a id="get-user-groups-request"></a>
+<a id="list-user-groups-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:UserGroup.List | 사용자 그룹 목록 보기 |
+
+<a id="list-user-groups-request"></a>
 #### 요청
 
 ```http
-GET /v3.0/user-groups
+GET /v4.0/user-groups
 ```
 
-<a id="get-user-groups-request-body"></a>
+<a id="list-user-groups-request-parameters"></a>
+#### 요청 파라미터
+
+| 이름 | 구분 | 타입 | 필수 | 설명 |
+|-----|-----|-----|-----|-----|
+| page | Query | Number | N | 조회할 목록의 페이지(기본값: 1)<br/>- 최솟값: `1` |
+| size | Query | Number | N | 조회할 목록의 페이지 크기(기본값: 20)<br/>- 최솟값: `1`<br/>- 최댓값: `100` |
+
+<a id="list-user-groups-request-body"></a>
 #### 요청 본문
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-<a id="get-user-groups-response"></a>
+<a id="list-user-groups-response"></a>
 #### 응답
 
 <details>
@@ -4483,6 +5881,7 @@ GET /v3.0/user-groups
         "resultMessage": "SUCCESS",
         "isSuccessful": true
     },
+    "totalCounts": 1,
     "userGroups": [
         {
             "userGroupId": "550e8400-e29b-41d4-a716-446655440000",
@@ -4498,6 +5897,7 @@ GET /v3.0/user-groups
 
 | 이름 | 타입 | 설명 |
 |-----|-----|-----|
+| totalCounts | Number | 전체 사용자 그룹 목록 수 |
 | userGroups | Array | 사용자 그룹 목록 |
 | userGroups.userGroupId | UUID | 사용자 그룹의 식별자 |
 | userGroups.userGroupName | String | 사용자 그룹을 식별할 수 있는 이름 |
@@ -4509,11 +5909,18 @@ GET /v3.0/user-groups
 <a id="create-user-group"></a>
 ### 사용자 그룹 생성하기 { #create-user-group }
 
+<a id="create-user-group-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:UserGroup.Create | 사용자 그룹 생성하기 |
+
 <a id="create-user-group-request"></a>
 #### 요청
 
 ```http
-POST /v3.0/user-groups
+POST /v4.0/user-groups
 ```
 
 <a id="create-user-group-request-body"></a>
@@ -4526,7 +5933,7 @@ POST /v3.0/user-groups
 {
     "userGroupName": "userGroupName-example",
     "memberIds": [],
-    "selectAllYN": false
+    "selectAll": false
 }
 ```
 
@@ -4536,7 +5943,7 @@ POST /v3.0/user-groups
 |-----|-----|-----|-----|
 | userGroupName | String | Y | 사용자 그룹을 식별할 수 있는 이름 |
 | memberIds | Array | Y | 프로젝트 멤버의 식별자 목록 |
-| selectAllYN | Boolean | N | 프로젝트 멤버 전체 포함 여부<br/>- 기본값: `false` |
+| selectAll | Boolean | N | 프로젝트 멤버 전체 포함 여부<br/>- 기본값: `false` |
 
 <a id="create-user-group-response"></a>
 #### 응답
@@ -4566,11 +5973,18 @@ POST /v3.0/user-groups
 <a id="delete-user-group"></a>
 ### 사용자 그룹 삭제하기 { #delete-user-group }
 
+<a id="delete-user-group-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:UserGroup.Delete | 사용자 그룹 삭제하기 |
+
 <a id="delete-user-group-request"></a>
 #### 요청
 
 ```http
-DELETE /v3.0/user-groups/{userGroupId}
+DELETE /v4.0/user-groups/{userGroupId}
 ```
 
 <a id="delete-user-group-request-parameters"></a>
@@ -4592,29 +6006,36 @@ DELETE /v3.0/user-groups/{userGroupId}
 
 ---
 
-<a id="get-user-group"></a>
-### 사용자 그룹 상세 보기 { #get-user-group }
+<a id="list-user-group-details"></a>
+### 사용자 그룹 상세 보기 { #list-user-group-details }
 
-<a id="get-user-group-request"></a>
+<a id="list-user-group-details-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:UserGroup.Get | 사용자 그룹 상세 보기 |
+
+<a id="list-user-group-details-request"></a>
 #### 요청
 
 ```http
-GET /v3.0/user-groups/{userGroupId}
+GET /v4.0/user-groups/{userGroupId}
 ```
 
-<a id="get-user-group-request-parameters"></a>
+<a id="list-user-group-details-request-parameters"></a>
 #### 요청 파라미터
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
 | userGroupId | URL | UUID | Y | 사용자 그룹의 식별자 |
 
-<a id="get-user-group-request-body"></a>
+<a id="list-user-group-details-request-body"></a>
 #### 요청 본문
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-<a id="get-user-group-response"></a>
+<a id="list-user-group-details-response"></a>
 #### 응답
 
 <details>
@@ -4654,24 +6075,31 @@ GET /v3.0/user-groups/{userGroupId}
 
 ---
 
-<a id="update-user-group"></a>
-### 사용자 그룹 수정하기 { #update-user-group }
+<a id="modify-user-group"></a>
+### 사용자 그룹 수정하기 { #modify-user-group }
 
-<a id="update-user-group-request"></a>
+<a id="modify-user-group-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:UserGroup.Modify | 사용자 그룹 수정하기 |
+
+<a id="modify-user-group-request"></a>
 #### 요청
 
 ```http
-PUT /v3.0/user-groups/{userGroupId}
+PUT /v4.0/user-groups/{userGroupId}
 ```
 
-<a id="update-user-group-request-parameters"></a>
+<a id="modify-user-group-request-parameters"></a>
 #### 요청 파라미터
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
 | userGroupId | URL | UUID | Y | 사용자 그룹의 식별자 |
 
-<a id="update-user-group-request-body"></a>
+<a id="modify-user-group-request-body"></a>
 #### 요청 본문
 
 <details>
@@ -4681,7 +6109,7 @@ PUT /v3.0/user-groups/{userGroupId}
 {
     "userGroupName": "userGroupName-example",
     "memberIds": [],
-    "selectAllYN": false
+    "selectAll": false
 }
 ```
 
@@ -4691,9 +6119,9 @@ PUT /v3.0/user-groups/{userGroupId}
 |-----|-----|-----|-----|
 | userGroupName | String | Y | 사용자 그룹을 식별할 수 있는 이름 |
 | memberIds | Array | N | 프로젝트 멤버의 식별자 목록 |
-| selectAllYN | Boolean | N | 프로젝트 멤버 전체 포함 여부<br/>- 기본값: `false` |
+| selectAll | Boolean | N | 프로젝트 멤버 전체 포함 여부<br/>- 기본값: `false` |
 
-<a id="update-user-group-response"></a>
+<a id="modify-user-group-response"></a>
 #### 응답
 
 이 API는 응답 본문을 반환하지 않습니다.
@@ -4703,22 +6131,29 @@ PUT /v3.0/user-groups/{userGroupId}
 <a id="notification-group"></a>
 ## 알림 그룹 { #notification-group }
 
-<a id="get-notification-groups"></a>
-### 알림 그룹 목록 보기 { #get-notification-groups }
+<a id="list-notification-groups"></a>
+### 알림 그룹 목록 보기 { #list-notification-groups }
 
-<a id="get-notification-groups-request"></a>
+<a id="list-notification-groups-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:NotificationGroup.List | 알림 그룹 목록 보기 |
+
+<a id="list-notification-groups-request"></a>
 #### 요청
 
 ```http
-GET /v3.0/notification-groups
+GET /v4.0/notification-groups
 ```
 
-<a id="get-notification-groups-request-body"></a>
+<a id="list-notification-groups-request-body"></a>
 #### 요청 본문
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-<a id="get-notification-groups-response"></a>
+<a id="list-notification-groups-response"></a>
 #### 응답
 
 <details>
@@ -4763,11 +6198,18 @@ GET /v3.0/notification-groups
 <a id="create-notification-group"></a>
 ### 알림 그룹 생성하기 { #create-notification-group }
 
+<a id="create-notification-group-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:NotificationGroup.Create | 알림 그룹 생성하기 |
+
 <a id="create-notification-group-request"></a>
 #### 요청
 
 ```http
-POST /v3.0/notification-groups
+POST /v4.0/notification-groups
 ```
 
 <a id="create-notification-group-request-body"></a>
@@ -4826,11 +6268,18 @@ POST /v3.0/notification-groups
 <a id="delete-notification-group"></a>
 ### 알림 그룹 삭제하기 { #delete-notification-group }
 
+<a id="delete-notification-group-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:NotificationGroup.Delete | 알림 그룹 삭제하기 |
+
 <a id="delete-notification-group-request"></a>
 #### 요청
 
 ```http
-DELETE /v3.0/notification-groups/{notificationGroupId}
+DELETE /v4.0/notification-groups/{notificationGroupId}
 ```
 
 <a id="delete-notification-group-request-parameters"></a>
@@ -4852,29 +6301,36 @@ DELETE /v3.0/notification-groups/{notificationGroupId}
 
 ---
 
-<a id="get-notification-group"></a>
-### 알림 그룹 상세 보기 { #get-notification-group }
+<a id="view-notification-group-details"></a>
+### 알림 그룹 상세 보기 { #view-notification-group-details }
 
-<a id="get-notification-group-request"></a>
+<a id="view-notification-group-details-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:NotificationGroup.Get | 알림 그룹 상세 보기 |
+
+<a id="view-notification-group-details-request"></a>
 #### 요청
 
 ```http
-GET /v3.0/notification-groups/{notificationGroupId}
+GET /v4.0/notification-groups/{notificationGroupId}
 ```
 
-<a id="get-notification-group-request-parameters"></a>
+<a id="view-notification-group-details-request-parameters"></a>
 #### 요청 파라미터
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
 | notificationGroupId | URL | UUID | Y | 알림 그룹의 식별자 |
 
-<a id="get-notification-group-request-body"></a>
+<a id="view-notification-group-details-request-body"></a>
 #### 요청 본문
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-<a id="get-notification-group-response"></a>
+<a id="view-notification-group-details-response"></a>
 #### 응답
 
 <details>
@@ -4929,24 +6385,31 @@ GET /v3.0/notification-groups/{notificationGroupId}
 
 ---
 
-<a id="update-notification-group"></a>
-### 알림 그룹 수정하기 { #update-notification-group }
+<a id="modify-notification-group"></a>
+### 알림 그룹 수정하기 { #modify-notification-group }
 
-<a id="update-notification-group-request"></a>
+<a id="modify-notification-group-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:NotificationGroup.Modify | 알림 그룹 수정하기 |
+
+<a id="modify-notification-group-request"></a>
 #### 요청
 
 ```http
-PUT /v3.0/notification-groups/{notificationGroupId}
+PUT /v4.0/notification-groups/{notificationGroupId}
 ```
 
-<a id="update-notification-group-request-parameters"></a>
+<a id="modify-notification-group-request-parameters"></a>
 #### 요청 파라미터
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
 | notificationGroupId | URL | UUID | Y | 알림 그룹의 식별자 |
 
-<a id="update-notification-group-request-body"></a>
+<a id="modify-notification-group-request-body"></a>
 #### 요청 본문
 
 <details>
@@ -4974,7 +6437,7 @@ PUT /v3.0/notification-groups/{notificationGroupId}
 | dbInstanceIds | Array | N | 감시 대상 DB 인스턴스의 식별자 목록 |
 | userGroupIds | Array | N | 사용자 그룹의 식별자 목록 |
 
-<a id="update-notification-group-response"></a>
+<a id="modify-notification-group-response"></a>
 #### 응답
 
 이 API는 응답 본문을 반환하지 않습니다.
@@ -4984,17 +6447,24 @@ PUT /v3.0/notification-groups/{notificationGroupId}
 <a id="monitoring"></a>
 ## 모니터링 { #monitoring }
 
-<a id="get-metric-statistics"></a>
-### 통계 정보 조회 { #get-metric-statistics }
+<a id="view-stats"></a>
+### 통계 정보 조회 { #view-stats }
 
-<a id="get-metric-statistics-request"></a>
+<a id="view-stats-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:Metric.List | 통계 정보 조회 |
+
+<a id="view-stats-request"></a>
 #### 요청
 
 ```http
-GET /v3.0/metric-statistics
+GET /v4.0/metric-statistics
 ```
 
-<a id="get-metric-statistics-request-parameters"></a>
+<a id="view-stats-request-parameters"></a>
 #### 요청 파라미터
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
@@ -5005,12 +6475,12 @@ GET /v3.0/metric-statistics
 | to | Query | DateTime | Y | 종료 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 | interval | Query | Number | N | 조회 간격<br/>- 단위: `분`<br/>- 기본값: 시작/종료 일시에 따라 적절한 값을 자동 선택함 |
 
-<a id="get-metric-statistics-request-body"></a>
+<a id="view-stats-request-body"></a>
 #### 요청 본문
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-<a id="get-metric-statistics-response"></a>
+<a id="view-stats-response"></a>
 #### 응답
 
 <details>
@@ -5051,22 +6521,29 @@ GET /v3.0/metric-statistics
 
 ---
 
-<a id="get-metrics"></a>
-### Metric 목록 보기 { #get-metrics }
+<a id="list-metric-list"></a>
+### Metric 목록 보기 { #list-metric-list }
 
-<a id="get-metrics-request"></a>
+<a id="list-metric-list-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:Metric.List | Metric 목록 보기 |
+
+<a id="list-metric-list-request"></a>
 #### 요청
 
 ```http
-GET /v3.0/metrics
+GET /v4.0/metrics
 ```
 
-<a id="get-metrics-request-body"></a>
+<a id="list-metric-list-request-body"></a>
 #### 요청 본문
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-<a id="get-metrics-response"></a>
+<a id="list-metric-list-response"></a>
 #### 응답
 
 <details>
@@ -5115,22 +6592,29 @@ GET /v3.0/metrics
 | TENANT      | 테넌트     |
 | MONITORING  | 모니터링    |
 
-<a id="get-event-codes"></a>
-### 구독 가능한 이벤트 코드 목록 보기 { #get-event-codes }
+<a id="list-subscribable-event-codes"></a>
+### 구독 가능한 이벤트 코드 목록 보기 { #list-subscribable-event-codes }
 
-<a id="get-event-codes-request"></a>
+<a id="list-subscribable-event-codes-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:Event.List | 구독 가능한 이벤트 코드 목록 보기 |
+
+<a id="list-subscribable-event-codes-request"></a>
 #### 요청
 
 ```http
-GET /v3.0/event-codes
+GET /v4.0/event-codes
 ```
 
-<a id="get-event-codes-request-body"></a>
+<a id="list-subscribable-event-codes-request-body"></a>
 #### 요청 본문
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-<a id="get-event-codes-response"></a>
+<a id="list-subscribable-event-codes-response"></a>
 #### 응답
 
 <details>
@@ -5162,36 +6646,43 @@ GET /v3.0/event-codes
 
 ---
 
-<a id="get-events"></a>
-### 이벤트 목록 조회 { #get-events }
+<a id="list-events"></a>
+### 이벤트 목록 조회 { #list-events }
 
-<a id="get-events-request"></a>
+<a id="list-events-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:Event.List | 이벤트 목록 조회 |
+
+<a id="list-events-request"></a>
 #### 요청
 
 ```http
-GET /v3.0/events
+GET /v4.0/events
 ```
 
-<a id="get-events-request-parameters"></a>
+<a id="list-events-request-parameters"></a>
 #### 요청 파라미터
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
-| page | Query | Number | Y | 조회할 목록의 페이지<br/>- 최솟값: `1` |
-| size | Query | Number | Y | 조회할 목록의 페이지 크기<br/>- 최솟값: `1`<br/>- 최댓값: `100` |
 | from | Query | DateTime | Y | 시작 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 | to | Query | DateTime | Y | 종료 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 | eventCategoryType | Query | Enum | Y | 조회할 이벤트 카테고리 유형<br/>- `ALL`<br/>- `INSTANCE`<br/>- `DB_SECURITY_GROUP`<br/>- `MONITORING`<br/>- `JOB`<br/>- `BACKUP`<br/>- `TENANT` |
 | sourceId | Query | UUID | N | 이벤트가 발생한 대상 리소스의 식별자 |
 | keyword | Query | String | N | 이벤트 메시지에 포함된 문자열 검색어 |
 | ascendingOrder | Query | Enum | N | 이벤트 메시지 정렬 순서<br/>- 기본값: `DESC`<br/>- `ASC`<br/>- `DESC` |
+| page | Query | Number | N | 조회할 목록의 페이지(기본값: 1)<br/>- 최솟값: `1` |
+| size | Query | Number | N | 조회할 목록의 페이지 크기(기본값: 20)<br/>- 최솟값: `1`<br/>- 최댓값: `100` |
 
-<a id="get-events-request-body"></a>
+<a id="list-events-request-body"></a>
 #### 요청 본문
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-<a id="get-events-response"></a>
+<a id="list-events-response"></a>
 #### 응답
 
 <details>
@@ -5243,33 +6734,40 @@ GET /v3.0/events
 <a id="event-subscription"></a>
 ## 이벤트 구독 { #event-subscription }
 
-<a id="get-event-subscriptions"></a>
-### 이벤트 구독 목록 조회 { #get-event-subscriptions }
+<a id="list-event-subscriptions"></a>
+### 이벤트 구독 목록 조회 { #list-event-subscriptions }
 
-<a id="get-event-subscriptions-request"></a>
+<a id="list-event-subscriptions-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:EventSubscription.List | 이벤트 구독 목록 조회 |
+
+<a id="list-event-subscriptions-request"></a>
 #### 요청
 
 ```http
-GET /v3.0/event-subscriptions
+GET /v4.0/event-subscriptions
 ```
 
-<a id="get-event-subscriptions-request-parameters"></a>
+<a id="list-event-subscriptions-request-parameters"></a>
 #### 요청 파라미터
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
-| page | Query | Number | Y | 조회할 목록의 페이지<br/>- 최솟값: `1` |
-| size | Query | Number | Y | 조회할 목록의 페이지 크기<br/>- 최솟값: `1`<br/>- 최댓값: `100` |
 | eventSubscriptionId | Query | UUID | N | 이벤트 구독의 식별자 |
 | eventSubscriptionName | Query | String | N | 이벤트 구독을 식별할 수 있는 이름 |
 | userGroupId | Query | UUID | N | 사용자 그룹의 식별자 |
+| page | Query | Number | N | 조회할 목록의 페이지(기본값: 1)<br/>- 최솟값: `1` |
+| size | Query | Number | N | 조회할 목록의 페이지 크기(기본값: 20)<br/>- 최솟값: `1`<br/>- 최댓값: `100` |
 
-<a id="get-event-subscriptions-request-body"></a>
+<a id="list-event-subscriptions-request-body"></a>
 #### 요청 본문
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-<a id="get-event-subscriptions-response"></a>
+<a id="list-event-subscriptions-response"></a>
 #### 응답
 
 <details>
@@ -5328,17 +6826,24 @@ GET /v3.0/event-subscriptions
 
 ---
 
-<a id="register-event-subscription"></a>
-### 이벤트 구독 생성하기 { #register-event-subscription }
+<a id="create-an-event-subscription"></a>
+### 이벤트 구독 생성하기 { #create-an-event-subscription }
 
-<a id="register-event-subscription-request"></a>
+<a id="create-an-event-subscription-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:EventSubscription.Create | 이벤트 구독 생성하기 |
+
+<a id="create-an-event-subscription-request"></a>
 #### 요청
 
 ```http
-POST /v3.0/event-subscriptions
+POST /v4.0/event-subscriptions
 ```
 
-<a id="register-event-subscription-request-body"></a>
+<a id="create-an-event-subscription-request-body"></a>
 #### 요청 본문
 
 <details>
@@ -5377,7 +6882,7 @@ POST /v3.0/event-subscriptions
 | sources.eventCategoryType | Enum | Y | 이벤트 카테고리 유형<br/>- `ALL`<br/>- `INSTANCE`<br/>- `DB_SECURITY_GROUP`<br/>- `MONITORING`<br/>- `JOB`<br/>- `BACKUP`<br/>- `TENANT` |
 | userGroupIds | Array | Y | 이벤트 구독할 사용자 그룹의 식별자 목록 |
 
-<a id="register-event-subscription-response"></a>
+<a id="create-an-event-subscription-response"></a>
 #### 응답
 
 <details>
@@ -5402,53 +6907,67 @@ POST /v3.0/event-subscriptions
 
 ---
 
-<a id="delete-event-subscription"></a>
-### 이벤트 구독 삭제하기 { #delete-event-subscription }
+<a id="delete-an-event-subscription"></a>
+### 이벤트 구독 삭제하기 { #delete-an-event-subscription }
 
-<a id="delete-event-subscription-request"></a>
+<a id="delete-an-event-subscription-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:EventSubscription.Delete | 이벤트 구독 삭제하기 |
+
+<a id="delete-an-event-subscription-request"></a>
 #### 요청
 
 ```http
-DELETE /v3.0/event-subscriptions/{eventSubscriptionId}
+DELETE /v4.0/event-subscriptions/{eventSubscriptionId}
 ```
 
-<a id="delete-event-subscription-request-parameters"></a>
+<a id="delete-an-event-subscription-request-parameters"></a>
 #### 요청 파라미터
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
 | eventSubscriptionId | URL | UUID | Y | 이벤트 구독의 식별자 |
 
-<a id="delete-event-subscription-request-body"></a>
+<a id="delete-an-event-subscription-request-body"></a>
 #### 요청 본문
 
 이 API는 요청 본문을 요구하지 않습니다.
 
-<a id="delete-event-subscription-response"></a>
+<a id="delete-an-event-subscription-response"></a>
 #### 응답
 
 이 API는 응답 본문을 반환하지 않습니다.
 
 ---
 
-<a id="modify-event-subscription"></a>
-### 이벤트 구독 수정하기 { #modify-event-subscription }
+<a id="modify-an-event-subscription"></a>
+### 이벤트 구독 수정하기 { #modify-an-event-subscription }
 
-<a id="modify-event-subscription-request"></a>
+<a id="modify-an-event-subscription-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:EventSubscription.Modify | 이벤트 구독 수정하기 |
+
+<a id="modify-an-event-subscription-request"></a>
 #### 요청
 
 ```http
-PUT /v3.0/event-subscriptions/{eventSubscriptionId}
+PUT /v4.0/event-subscriptions/{eventSubscriptionId}
 ```
 
-<a id="modify-event-subscription-request-parameters"></a>
+<a id="modify-an-event-subscription-request-parameters"></a>
 #### 요청 파라미터
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
 | eventSubscriptionId | URL | UUID | Y | 이벤트 구독의 식별자 |
 
-<a id="modify-event-subscription-request-body"></a>
+<a id="modify-an-event-subscription-request-body"></a>
 #### 요청 본문
 
 <details>
@@ -5487,10 +7006,70 @@ PUT /v3.0/event-subscriptions/{eventSubscriptionId}
 | sources.eventCategoryType | Enum | Y | 이벤트 카테고리 유형<br/>- `ALL`<br/>- `INSTANCE`<br/>- `DB_SECURITY_GROUP`<br/>- `MONITORING`<br/>- `JOB`<br/>- `BACKUP`<br/>- `TENANT` |
 | userGroupIds | Array | N | 이벤트 구독할 사용자 그룹의 식별자 목록 |
 
-<a id="modify-event-subscription-response"></a>
+<a id="modify-an-event-subscription-response"></a>
 #### 응답
 
 이 API는 응답 본문을 반환하지 않습니다.
+
+---
+
+<a id="availability-zones"></a>
+## 가용성 영역 { #availability-zones }
+
+<a id="get-availability-zones"></a>
+### 가용성 영역 목록 보기 { #get-availability-zones }
+
+<a id="get-availability-zones-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:AvailabilityZone.List | 가용성 영역 목록 보기 |
+
+<a id="get-availability-zones-request"></a>
+#### 요청
+
+```http
+GET /v4.0/availability-zones
+```
+
+<a id="get-availability-zones-request-body"></a>
+#### 요청 본문
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+<a id="get-availability-zones-response"></a>
+#### 응답
+
+<details>
+  <summary><strong>예시 코드</strong></summary>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "availabilityZones": [
+        {
+            "availabilityZoneName": "availabilityZoneName-example",
+            "zoneState": {
+                "available": false
+            }
+        }
+    ]
+}
+```
+
+</details>
+
+| 이름 | 타입 | 설명 |
+|-----|-----|-----|
+| availabilityZones | Array | 가용성 영역 목록 |
+| availabilityZones.availabilityZoneName | String | 가용성 영역 이름 |
+| availabilityZones.zoneState | Object | 가용성 영역 상태 |
+| availabilityZones.zoneState.available | Boolean | 가용성 영역의 사용 가능 여부 |
 
 ---
 

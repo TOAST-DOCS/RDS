@@ -26,52 +26,56 @@ const isPPP = args.length > 0 && args[0] === 'ppp';
 // PPP 환경 목록
 const pppEnvs = ['ninc', 'ngovc', 'ngoic', 'ngsc'];
 
+// 엔진/클라우드 환경별로 원본이 나뉜 문서 목록
+// 릴리스 노트와 nc-rds 코드 기반으로 생성되는 API 가이드가 해당
+const perEngineDocs = ['release-notes', 'api-guide-v3.0', 'api-guide-v4.0'];
+
 // 전체 설정 목록
 const allConfigs = [
     {
         engine: 'mysql',
         env: 'public',
-        exclusionDocs: ['api-guide-v3.0', 'api-guide-v4.0']
+        exclusionDocs: []
     },
     {
         engine: 'mysql',
         env: 'gov',
-        exclusionDocs: ['api-guide-v3.0', 'api-guide-v4.0']
+        exclusionDocs: []
     },
     {
         engine: 'mysql',
         env: 'ncgn',
-        exclusionDocs: ['api-guide-v3.0', 'api-guide-v4.0']
+        exclusionDocs: []
     },
     {
         engine: 'mysql',
         env: 'ninc',
-        exclusionDocs: ['api-guide-v2.0', 'api-guide-v3.0', 'api-guide-v4.0']
+        exclusionDocs: ['api-guide-v2.0']
     },
     {
         engine: 'mysql',
         env: 'ngovc',
-        exclusionDocs: ['api-guide-v2.0', 'api-guide-v3.0', 'api-guide-v4.0']
+        exclusionDocs: ['api-guide-v2.0']
     },
     {
         engine: 'mysql',
         env: 'ngoic',
-        exclusionDocs: ['api-guide-v2.0', 'api-guide-v3.0', 'api-guide-v4.0']
+        exclusionDocs: ['api-guide-v2.0']
     },
     {
         engine: 'mysql',
         env: 'ngsc',
-        exclusionDocs: ['api-guide-v2.0', 'api-guide-v3.0', 'api-guide-v4.0']
+        exclusionDocs: ['api-guide-v2.0']
     },
     {
         engine: 'mariadb',
         env: 'public',
-        exclusionDocs: ['api-guide-v4.0']
+        exclusionDocs: []
     },
     {
         engine: 'mariadb',
         env: 'gov',
-        exclusionDocs: ['api-guide-v4.0']
+        exclusionDocs: []
     }
 ];
 
@@ -92,10 +96,9 @@ for (let config of configs) {
             // zh 는 en 템플릿을 그대로 사용
             const langDir = language === 'zh' ? 'en' : language;
 
-            // 릴리스 노트는 엔진/클라우드 환경별 원본 사용
-            const isReleaseNotes = doc === 'release-notes';
+            const isPerEngine = perEngineDocs.indexOf(doc) >= 0;
             const suffix = config.env === 'public' ? '' : `_${config.env}`;
-            const templatePath = isReleaseNotes
+            const templatePath = isPerEngine
                 ? `${langDir}/${doc}_${config.engine}${suffix}.md`
                 : `${langDir}/${doc}_template.md`;
 
@@ -110,8 +113,8 @@ for (let config of configs) {
             const compiled = Handlebars.compile(template);
             let result = compiled(context);
 
-            // 릴리스 노트는 원본에 환경별 링크 포함
-            if(config.env !== 'public' && !isReleaseNotes) {
+            // 환경별 원본은 링크도 이미 환경에 맞게 들어 있음
+            if(config.env !== 'public' && !isPerEngine) {
                 // [text](link-menu/) 혹은 [text](link-menu/#tag) 형식을 [text](link-menu-env/) 형식으로 교체
                 result = result.replace(/\[(.*)]\((?!.*png)(?!#)(?!http)([^)]*?)(\/#[^)]*|\/)\)/g,`[$1]($2-${config.env}$3)`);
             }

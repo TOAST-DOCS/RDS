@@ -1,37 +1,37 @@
 <!-- pre-align:aligned sig=d58a9ac7e400 -->
 
 <a id="database-rds-for-enginepascalcase-api-guide"></a>
-## Database > RDS for MariaDB > API 가이드 { #database-rds-for-enginepascalcase-api-guide }
+## Database > RDS for MySQL > API 가이드 { #database-rds-for-enginepascalcase-api-guide }
 
 <a id="rds-for-enginepascalcase-api-common-information"></a>
-## RDS for MariaDB API 공통 정보 { #rds-for-enginepascalcase-api-common-information }
+## RDS for MySQL API 공통 정보 { #rds-for-enginepascalcase-api-common-information }
 
 <a id="api-endpoint"></a>
 ### API 엔드포인트 { #api-endpoint }
 
 | 리전 | 엔드포인트 |
 |------|----------|
-| 한국(판교) 리전 | https://kr1-rds-mariadb.api.gov-nhncloudservice.com |
+| 한국(판교) 리전 | https://kr1-rds-mysql.api.gncloud.go.kr |
 
 
 <a id="common-authorization"></a>
 ### 인증 및 권한 { #common-authorization }
 
-RDS for MariaDB API를 사용하려면 User Access Key가 필요합니다. User Access Key는 NHN Cloud 계정 또는 IAM 계정을 기반으로 발급되는 인증 키로, Secret Access Key와 함께 사용하여 API 요청 인증 수단으로 활용됩니다.
+RDS for MySQL API를 사용하려면 User Access Key가 필요합니다. User Access Key는 NHN Cloud 계정 또는 IAM 계정을 기반으로 발급되는 인증 키로, Secret Access Key와 함께 사용하여 API 요청 인증 수단으로 활용됩니다.
 
 User Access Key와 Secret Access Key는 콘솔의 **API 보안 설정**에서 발급할 수 있습니다. User Access Key 발급 및 사용 방법은 [User Access Key](/nhncloud/ko/public-api/user-access-key)를 참고하세요.
 생성된 Key는 Appkey와 함께 요청 헤더에 포함해야 합니다.
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
-| X-TC-APP-KEY | Header | String | Y | RDS for MariaDB 서비스의 Appkey 또는 프로젝트 통합 Appkey |
+| X-TC-APP-KEY | Header | String | Y | RDS for MySQL 서비스의 Appkey 또는 프로젝트 통합 Appkey |
 | X-TC-AUTHENTICATION-ID | Header | String | Y | API 보안 설정 메뉴의 User Access Key ID |
 | X-TC-AUTHENTICATION-SECRET | Header | String | Y | API 보안 설정 메뉴의 Secret Access Key |
 
-또한 프로젝트 권한에 따라 호출할 수 있는 API가 제한됩니다. `RDS for MariaDB ADMIN`, `RDS for MariaDB VIEWER` 역할에는 다음과 같이 기본 권한이 부여되어 있으며, 프로젝트 내 역할 그룹 관리 메뉴에서 필요한 권한만 부여할 수 있습니다.
+또한 프로젝트 권한에 따라 호출할 수 있는 API가 제한됩니다. `RDS for MySQL ADMIN`, `RDS for MySQL VIEWER` 역할에는 다음과 같이 기본 권한이 부여되어 있으며, 프로젝트 내 역할 그룹 관리 메뉴에서 필요한 권한만 부여할 수 있습니다.
 
-* `RDS for MariaDB ADMIN` 역할에는 API 실행에 필요한 모든 권한이 부여됩니다.
-* `RDS for MariaDB VIEWER` 역할에는 정보를 조회하는 권한만 부여됩니다.
+* `RDS for MySQL ADMIN` 역할에는 API 실행에 필요한 모든 권한이 부여됩니다.
+* `RDS for MySQL VIEWER` 역할에는 정보를 조회하는 권한만 부여됩니다.
     * DB 인스턴스를 생성, 수정, 삭제하거나, DB 인스턴스를 대상으로 하는 어떠한 기능도 사용할 수 없습니다.
     * 단, 알림 그룹과 사용자 그룹 관련 기능은 사용할 수 있습니다.
 
@@ -91,22 +91,34 @@ API 요청 시 인증에 실패하거나 권한이 없을 경우 다음과 같�
 
 | DB 엔진 버전 | 생성 가능 여부 | Object Storage에서 복원 가능 여부 | 인증 플러그인 지원 |
 |------------|----------|------------------|------------|
-| MARIADB_V10330 | N | N | ED25519, NATIVE |
-| MARIADB_V10611 | N | N | ED25519, NATIVE |
-| MARIADB_V10612 | N | N | ED25519, NATIVE |
-| MARIADB_V10616 | N | N | ED25519, NATIVE |
-| MARIADB_V10622 | N | N | ED25519, NATIVE |
-| MARIADB_V10625 | N | N | ED25519, NATIVE |
-| MARIADB_V101107 | Y | Y | ED25519, NATIVE |
-| MARIADB_V101108 | Y | Y | ED25519, NATIVE |
-| MARIADB_V101113 | Y | Y | ED25519, NATIVE |
-| MARIADB_V101116 | Y | Y | ED25519, NATIVE |
-| MARIADB_V101118 | Y | Y | ED25519, NATIVE |
-| MARIADB_V11407 | Y | Y | ED25519, NATIVE |
-| MARIADB_V11410 | Y | Y | ED25519, NATIVE |
-| MARIADB_V11412 | Y | Y | ED25519, NATIVE |
-| MARIADB_V11806 | Y | Y | ED25519, NATIVE |
-| MARIADB_V11808 | Y | Y | ED25519, NATIVE |
+| MYSQL_V5633 | N | N | NATIVE |
+| MYSQL_V5715 | Y | Y | SHA256, NATIVE |
+| MYSQL_V5719 | Y | Y | SHA256, NATIVE |
+| MYSQL_V5726 | Y | Y | SHA256, NATIVE |
+| MYSQL_V5731 | N | N | SHA256, NATIVE |
+| MYSQL_V5733 | Y | N | SHA256, NATIVE |
+| MYSQL_V5737 | Y | Y | SHA256, NATIVE |
+| MYSQL_V8018 | N | N | CACHING_SHA2, NATIVE |
+| MYSQL_V8023 | N | N | CACHING_SHA2, NATIVE |
+| MYSQL_V8028 | N | N | CACHING_SHA2, NATIVE |
+| MYSQL_V8032 | N | N | CACHING_SHA2, NATIVE |
+| MYSQL_V8033 | N | N | CACHING_SHA2, NATIVE |
+| MYSQL_V8034 | N | N | CACHING_SHA2, NATIVE |
+| MYSQL_V8035 | Y | Y | CACHING_SHA2, NATIVE |
+| MYSQL_V8036 | Y | Y | CACHING_SHA2, NATIVE |
+| MYSQL_V8040 | Y | Y | CACHING_SHA2, NATIVE |
+| MYSQL_V8041 | Y | Y | CACHING_SHA2, NATIVE |
+| MYSQL_V8042 | Y | Y | CACHING_SHA2, NATIVE |
+| MYSQL_V8043 | Y | Y | CACHING_SHA2, NATIVE |
+| MYSQL_V8044 | Y | Y | CACHING_SHA2, NATIVE |
+| MYSQL_V8045 | Y | Y | CACHING_SHA2, NATIVE |
+| MYSQL_V8046 | Y | Y | CACHING_SHA2, NATIVE |
+| MYSQL_V8405 | Y | Y | CACHING_SHA2 |
+| MYSQL_V8406 | Y | Y | CACHING_SHA2 |
+| MYSQL_V8407 | Y | Y | CACHING_SHA2 |
+| MYSQL_V8408 | Y | Y | CACHING_SHA2 |
+| MYSQL_V8409 | Y | Y | CACHING_SHA2 |
+| MYSQL_V8411 | Y | Y | CACHING_SHA2 |
 
 * Enum 유형인 dbVersion 필드에 위 값을 사용할 수 있습니다.
 * 버전에 따라 생성 또는 복원이 불가능할 수 있습니다.
@@ -141,8 +153,8 @@ GET /v3.0/db-versions
     },
     "dbVersions": [
         {
-            "dbVersion": "MARIADB_V11808",
-            "dbVersionName": "Maria DB 11.8.8",
+            "dbVersion": "MYSQL_V8411",
+            "dbVersionName": "MySQL 8.4.11",
             "restorableFromObs": true
         }
     ]
@@ -745,7 +757,7 @@ GET /v3.0/db-instances
             "dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
             "dbInstanceName": "dbInstanceName-example",
             "description": "description-example",
-            "dbVersion": "MARIADB_V11808",
+            "dbVersion": "MYSQL_V8411",
             "dbPort": 13306,
             "dbInstanceType": "MASTER",
             "dbInstanceStatus": "AVAILABLE",
@@ -798,7 +810,7 @@ POST /v3.0/db-instances
     "dbInstanceCandidateName": "dbInstanceCandidateName",
     "description": "description-example",
     "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
-    "dbVersion": "MARIADB_V11808",
+    "dbVersion": "MYSQL_V8411",
     "dbPort": 13306,
     "dbUserName": "dbUserName",
     "dbPassword": "dbPassword",
@@ -855,7 +867,7 @@ POST /v3.0/db-instances
 | pingInterval | Number | N | 고가용성 사용 시 Ping 간격(초)<br/>- 기본값: `3`<br/>- 최솟값: `1`<br/>- 최댓값: `600` |
 | useDefaultNotification | Boolean | N | 기본 알림 사용 여부<br/>- 기본값: `false` |
 | useDeletionProtection | Boolean | N | 삭제 보호 여부<br/>- 기본값: `false` |
-| authenticationPlugin | Enum | N | 인증 플러그인<br/>- `NATIVE`: mysql_native_password 인증<br/>- `ED25519`: ed25519 인증(MariaDB 전용) |
+| authenticationPlugin | Enum | N | 인증 플러그인<br/>- `NATIVE`: mysql_native_password 인증<br/>- `CACHING_SHA2`: caching_sha2_password 인증(MySQL 전용)<br/>- `SHA256`: sha256_password 인증(MySQL 전용) |
 | tlsOption | Enum | N | TLS 옵션<br/>- 기본값: `NONE`<br/>- `NONE`: TLS 미사용<br/>- `SSL`: SSL 인증<br/>- `X509`: X509 인증서 인증 |
 | network | Object | Y | 네트워크 정보 객체 |
 | network.subnetId | UUID | Y | 서브넷의 식별자 |
@@ -922,7 +934,7 @@ POST /v3.0/db-instances/restore-from-obs
     "description": "description-example",
     "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
     "dbPort": 13306,
-    "dbVersion": "MARIADB_V11808",
+    "dbVersion": "MYSQL_V8411",
     "useHighAvailability": false,
     "imageId": "550e8400-e29b-41d4-a716-446655440000",
     "pingInterval": 3,
@@ -1097,7 +1109,7 @@ GET /v3.0/db-instances/{dbInstanceId}
     "dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
     "dbInstanceName": "dbInstanceName-example",
     "description": "description-example",
-    "dbVersion": "MARIADB_V11808",
+    "dbVersion": "MYSQL_V8411",
     "dbPort": 13306,
     "dbInstanceType": "MASTER",
     "dbInstanceStatus": "AVAILABLE",
@@ -1178,7 +1190,7 @@ PUT /v3.0/db-instances/{dbInstanceId}
     "dbPort": 13306,
     "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
     "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
-    "dbVersion": "MARIADB_V11808",
+    "dbVersion": "MYSQL_V8411",
     "useDummy": false,
     "dbSecurityGroupIds": [],
     "executeBackup": false,
@@ -1758,7 +1770,7 @@ GET /v3.0/db-instances/{dbInstanceId}/db-users
 | dbUsers.dbUserStatus | Enum | DB 사용자의 현재 상태<br/>- `STABLE`<br/>- `CREATING`<br/>- `UPDATING`<br/>- `SYNCING`<br/>- `DELETING`<br/>- `DELETED` |
 | dbUsers.createdYmdt | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 | dbUsers.updatedYmdt | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
-| dbUsers.authenticationPlugin | Enum | 사용자 인증 플러그인<br/>- `NATIVE`: mysql_native_password 인증<br/>- `ED25519`: ed25519 인증(MariaDB 전용) |
+| dbUsers.authenticationPlugin | Enum | 사용자 인증 플러그인<br/>- `NATIVE`: mysql_native_password 인증<br/>- `CACHING_SHA2`: caching_sha2_password 인증(MySQL 전용)<br/>- `SHA256`: sha256_password 인증(MySQL 전용) |
 | dbUsers.tlsOption | Enum | 인증서 옵션<br/>- `NONE`: TLS 미사용<br/>- `SSL`: SSL 인증<br/>- `X509`: X509 인증서 인증 |
 
 ---
@@ -1805,7 +1817,7 @@ POST /v3.0/db-instances/{dbInstanceId}/db-users
 | dbPassword | String | Y | DB 사용자 계정 암호<br/>- 최소 길이: `4`<br/>- 최대 길이: `256` |
 | host | String | Y | DB 사용자 계정의 호스트 이름<br/>- 최대 길이: `45` |
 | authorityType | Enum | Y | DB 사용자 권한 유형<br/>- `CUSTOM`: 사용자 정의 권한<br/>- `READ`: 읽기 권한<br/>- `CRUD`: CRUD 권한<br/>- `DDL`: DDL 권한<br/>- `ALL`: 전체 권한 |
-| authenticationPlugin | Enum | N | 사용자 인증 플러그인<br/>- `NATIVE`: mysql_native_password 인증<br/>- `ED25519`: ed25519 인증(MariaDB 전용) |
+| authenticationPlugin | Enum | N | 사용자 인증 플러그인<br/>- `NATIVE`: mysql_native_password 인증<br/>- `CACHING_SHA2`: caching_sha2_password 인증(MySQL 전용)<br/>- `SHA256`: sha256_password 인증(MySQL 전용) |
 | tlsOption | Enum | N | 인증서 옵션<br/>- 기본값: `NONE`<br/>- `NONE`: TLS 미사용<br/>- `SSL`: SSL 인증<br/>- `X509`: X509 인증서 인증 |
 
 <a id="create-db-user-response"></a>
@@ -1920,7 +1932,7 @@ PUT /v3.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 |-----|-----|-----|-----|
 | dbPassword | String | N | DB 사용자 계정 암호<br/>- 최소 길이: `4`<br/>- 최대 길이: `256` |
 | authorityType | Enum | N | DB 사용자 권한 유형<br/>- `CUSTOM`: 사용자 정의 권한<br/>- `READ`: 읽기 권한<br/>- `CRUD`: CRUD 권한<br/>- `DDL`: DDL 권한<br/>- `ALL`: 전체 권한 |
-| authenticationPlugin | Enum | N | 사용자 인증 플러그인<br/>- `NATIVE`: mysql_native_password 인증<br/>- `ED25519`: ed25519 인증(MariaDB 전용) |
+| authenticationPlugin | Enum | N | 사용자 인증 플러그인<br/>- `NATIVE`: mysql_native_password 인증<br/>- `CACHING_SHA2`: caching_sha2_password 인증(MySQL 전용)<br/>- `SHA256`: sha256_password 인증(MySQL 전용) |
 | tlsOption | Enum | N | 인증서 옵션<br/>- `NONE`: TLS 미사용<br/>- `SSL`: SSL 인증<br/>- `X509`: X509 인증서 인증 |
 
 <a id="update-db-user-response"></a>
@@ -3265,7 +3277,7 @@ GET /v3.0/backups
             "backupName": "backupName-example",
             "backupStatus": "BACKING_UP",
             "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
-            "dbVersion": "MARIADB_V11808",
+            "dbVersion": "MYSQL_V8411",
             "utilVersion": "utilVersion-example",
             "backupType": "AUTO",
             "backupSize": 1,
@@ -4076,7 +4088,7 @@ GET /v3.0/parameter-groups
             "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
             "parameterGroupName": "parameterGroupName-example",
             "description": "description-example",
-            "dbVersion": "MARIADB_V11808",
+            "dbVersion": "MYSQL_V8411",
             "parameterGroupStatus": "STABLE",
             "createdYmdt": "2023-12-31T15:00:00+09:00",
             "updatedYmdt": "2023-12-31T15:00:00+09:00"
@@ -4120,7 +4132,7 @@ POST /v3.0/parameter-groups
 {
     "parameterGroupName": "parameterGroupName",
     "description": "description-example",
-    "dbVersion": "MARIADB_V11808"
+    "dbVersion": "MYSQL_V8411"
 }
 ```
 
@@ -4224,7 +4236,7 @@ GET /v3.0/parameter-groups/{parameterGroupId}
     "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
     "parameterGroupName": "parameterGroupName-example",
     "description": "description-example",
-    "dbVersion": "MARIADB_V11808",
+    "dbVersion": "MYSQL_V8411",
     "parameterGroupStatus": "STABLE",
     "parameters": [
         {

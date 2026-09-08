@@ -1,36 +1,34 @@
 <!-- pre-align:aligned sig=d58a9ac7e400 -->
 
 <a id="database-rds-for-enginepascalcase-api-guide"></a>
-## Database > RDS for MySQL > API 가이드 { #database-rds-for-enginepascalcase-api-guide }
+## Database > RDS for MariaDB > API 가이드 { #database-rds-for-enginepascalcase-api-guide }
 
 <a id="rds-for-enginepascalcase-api-common-information"></a>
-## RDS for MySQL API 공통 정보 { #rds-for-enginepascalcase-api-common-information }
+## RDS for MariaDB API 공통 정보 { #rds-for-enginepascalcase-api-common-information }
 
 <a id="api-endpoint"></a>
 ### API 엔드포인트 { #api-endpoint }
 
 | 리전 | 엔드포인트 |
 |------|----------|
-| 한국(판교) 리전 | https://kr1-rds-mysql.api.nhncloudservice.com |
-| 한국(평촌) 리전 | https://kr2-rds-mysql.api.nhncloudservice.com |
-| 일본 리전 | https://jp1-rds-mysql.api.nhncloudservice.com |
+| 한국(판교) 리전 | https://kr1-rds-mariadb.api.nhncloudservice.com |
 
 
 <a id="common-authorization"></a>
 ### 인증 및 권한 { #common-authorization }
 
-RDS for MySQL은(는) API 호출 시 인증/인가를 위해 User Access Key 토큰을 사용합니다. User Access Key 토큰은 User Access Key를 기반으로 발급되는 Bearer 유형의 일시적 액세스 토큰입니다. User Access Key 토큰 발급 및 사용에 대한 자세한 내용은 [User Access Key 토큰](/nhncloud/ko/public-api/user-access-key-token)을 참고하세요.
+RDS for MariaDB은(는) API 호출 시 인증/인가에 User Access Key 토큰을 사용합니다. User Access Key 토큰은 User Access Key를 기반으로 발급되는 Bearer 유형의 일시적 액세스 토큰입니다. User Access Key 토큰 발급 및 사용 방법은 [User Access Key 토큰](/nhncloud/ko/public-api/user-access-key-token)을 참고하세요.
 발급받은 토큰은 Appkey와 함께 요청 헤더에 포함해야 합니다.
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
 |-----|-----|-----|------|-----|
-| X-TC-APP-KEY | Header | String | Y    | RDS for MySQL 서비스의 Appkey 또는 프로젝트 통합 Appkey |
+| X-TC-APP-KEY | Header | String | Y    | RDS for MariaDB 서비스의 Appkey 또는 프로젝트 통합 Appkey |
 | X-NHN-AUTHORIZATION | Header | String | Y    | Public API로 발급받은 Bearer 유형 토큰 |
 
-또한 프로젝트 권한에 따라 호출할 수 있는 API가 제한됩니다. `RDS for MySQL ADMIN`, `RDS for MySQL VIEWER` 역할에는 다음과 같이 기본 권한이 부여되어 있으며, 프로젝트 내 역할 그룹 관리 메뉴에서 필요한 권한만 부여할 수 있습니다.
+또한 프로젝트 권한에 따라 호출할 수 있는 API가 제한됩니다. `RDS for MariaDB ADMIN`, `RDS for MariaDB VIEWER` 역할에는 다음과 같이 기본 권한이 부여되어 있으며, 프로젝트 내 역할 그룹 관리 메뉴에서 필요한 권한만 부여할 수 있습니다.
 
-* `RDS for MySQL ADMIN` 역할에는 API 실행에 필요한 모든 권한이 부여됩니다.
-* `RDS for MySQL VIEWER` 역할에는 정보를 조회하는 권한만 부여됩니다.
+* `RDS for MariaDB ADMIN` 역할에는 API 실행에 필요한 모든 권한이 부여됩니다.
+* `RDS for MariaDB VIEWER` 역할에는 정보를 조회하는 권한만 부여됩니다.
     * DB 인스턴스를 생성, 수정, 삭제하거나, DB 인스턴스를 대상으로 하는 어떠한 기능도 사용할 수 없습니다.
     * 단, 알림 그룹과 사용자 그룹 관련 기능은 사용할 수 있습니다.
 
@@ -51,11 +49,11 @@ API 요청 시 인증에 실패하거나 권한이 없을 경우 다음과 같�
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  }
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    }
 }
 ```
 
@@ -66,11 +64,11 @@ API 요청 시 인증에 실패하거나 권한이 없을 경우 다음과 같�
 
 ```json
 {
-  "header": {
-    "resultCode": -1,
-    "resultMessage": "FAIL",
-    "isSuccessful": false
-  }
+    "header": {
+        "resultCode": -1,
+        "resultMessage": "FAIL",
+        "isSuccessful": false
+    }
 }
 ```
 
@@ -90,34 +88,22 @@ API 요청 시 인증에 실패하거나 권한이 없을 경우 다음과 같�
 
 | DB 엔진 버전 | 생성 가능 여부 | Object Storage에서 복원 가능 여부 | 인증 플러그인 지원 |
 |------------|----------|------------------|------------|
-| MYSQL_V5633 | N | N | NATIVE |
-| MYSQL_V5715 | Y | Y | SHA256, NATIVE |
-| MYSQL_V5719 | Y | Y | SHA256, NATIVE |
-| MYSQL_V5726 | Y | Y | SHA256, NATIVE |
-| MYSQL_V5731 | N | N | SHA256, NATIVE |
-| MYSQL_V5733 | Y | N | SHA256, NATIVE |
-| MYSQL_V5737 | Y | Y | SHA256, NATIVE |
-| MYSQL_V8018 | N | N | CACHING_SHA2, NATIVE |
-| MYSQL_V8023 | N | N | CACHING_SHA2, NATIVE |
-| MYSQL_V8028 | N | N | CACHING_SHA2, NATIVE |
-| MYSQL_V8032 | N | N | CACHING_SHA2, NATIVE |
-| MYSQL_V8033 | N | N | CACHING_SHA2, NATIVE |
-| MYSQL_V8034 | N | N | CACHING_SHA2, NATIVE |
-| MYSQL_V8035 | Y | Y | CACHING_SHA2, NATIVE |
-| MYSQL_V8036 | Y | Y | CACHING_SHA2, NATIVE |
-| MYSQL_V8040 | Y | Y | CACHING_SHA2, NATIVE |
-| MYSQL_V8041 | Y | Y | CACHING_SHA2, NATIVE |
-| MYSQL_V8042 | Y | Y | CACHING_SHA2, NATIVE |
-| MYSQL_V8043 | Y | Y | CACHING_SHA2, NATIVE |
-| MYSQL_V8044 | Y | Y | CACHING_SHA2, NATIVE |
-| MYSQL_V8045 | Y | Y | CACHING_SHA2, NATIVE |
-| MYSQL_V8046 | Y | Y | CACHING_SHA2, NATIVE |
-| MYSQL_V8405 | Y | Y | CACHING_SHA2 |
-| MYSQL_V8406 | Y | Y | CACHING_SHA2 |
-| MYSQL_V8407 | Y | Y | CACHING_SHA2 |
-| MYSQL_V8408 | Y | Y | CACHING_SHA2 |
-| MYSQL_V8409 | Y | Y | CACHING_SHA2 |
-| MYSQL_V8411 | Y | Y | CACHING_SHA2 |
+| MARIADB_V10330 | N | N | ED25519, NATIVE |
+| MARIADB_V10611 | N | N | ED25519, NATIVE |
+| MARIADB_V10612 | N | N | ED25519, NATIVE |
+| MARIADB_V10616 | N | N | ED25519, NATIVE |
+| MARIADB_V10622 | N | N | ED25519, NATIVE |
+| MARIADB_V10625 | N | N | ED25519, NATIVE |
+| MARIADB_V101107 | Y | Y | ED25519, NATIVE |
+| MARIADB_V101108 | Y | Y | ED25519, NATIVE |
+| MARIADB_V101113 | Y | Y | ED25519, NATIVE |
+| MARIADB_V101116 | Y | Y | ED25519, NATIVE |
+| MARIADB_V101118 | Y | Y | ED25519, NATIVE |
+| MARIADB_V11407 | Y | Y | ED25519, NATIVE |
+| MARIADB_V11410 | Y | Y | ED25519, NATIVE |
+| MARIADB_V11412 | Y | Y | ED25519, NATIVE |
+| MARIADB_V11806 | Y | Y | ED25519, NATIVE |
+| MARIADB_V11808 | Y | Y | ED25519, NATIVE |
 
 * Enum 유형인 dbVersion 필드에 위 값을 사용할 수 있습니다.
 * 버전에 따라 생성 또는 복원이 불가능할 수 있습니다.
@@ -130,7 +116,7 @@ API 요청 시 인증에 실패하거나 권한이 없을 경우 다음과 같�
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbVersion.List | DB 엔진 버전 목록 보기 |
+| RDSforMariaDB:DbVersion.List | DB 엔진 버전 목록 보기 |
 
 <a id="list-db-engines-request"></a>
 #### 요청
@@ -152,18 +138,18 @@ GET /v4.0/db-versions
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "dbVersions": [
-    {
-      "dbVersion": "MYSQL_V8411",
-      "dbVersionName": "MySQL 8.4.11",
-      "restorableFromObs": true
-    }
-  ]
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "dbVersions": [
+        {
+            "dbVersion": "MARIADB_V11808",
+            "dbVersionName": "Maria DB 11.8.8",
+            "restorableFromObs": true
+        }
+    ]
 }
 ```
 
@@ -189,7 +175,7 @@ GET /v4.0/db-versions
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:Project.Get | 프로젝트 멤버 목록 보기 |
+| RDSforMariaDB:Project.Get | 프로젝트 멤버 목록 보기 |
 
 <a id="list-project-members-request"></a>
 #### 요청
@@ -211,19 +197,19 @@ GET /v4.0/project/members
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "members": [
-    {
-      "memberId": "550e8400-e29b-41d4-a716-446655440000",
-      "memberName": "memberName-example",
-      "emailAddress": "user@example.com",
-      "phoneNumber": "010-1234-5678"
-    }
-  ]
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "members": [
+        {
+            "memberId": "550e8400-e29b-41d4-a716-446655440000",
+            "memberName": "memberName-example",
+            "emailAddress": "user@example.com",
+            "phoneNumber": "010-1234-5678"
+        }
+    ]
 }
 ```
 
@@ -247,7 +233,7 @@ GET /v4.0/project/members
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:Project.Get | 리전 목록 보기 |
+| RDSforMariaDB:Project.Get | 리전 목록 보기 |
 
 <a id="list-regions-request"></a>
 #### 요청
@@ -269,17 +255,17 @@ GET /v4.0/project/regions
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "regions": [
-    {
-      "regionCode": "KR1",
-      "isEnabled": false
-    }
-  ]
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "regions": [
+        {
+            "regionCode": "KR1",
+            "isEnabled": false
+        }
+    ]
 }
 ```
 
@@ -288,7 +274,7 @@ GET /v4.0/project/regions
 | 이름 | 타입 | 설명 |
 |-----|-----|-----|
 | regions | Array | 리전 목록 |
-| regions.regionCode | Enum | 리전 코드<br/>- `KR1`: 한국(판교)<br/>- `KR2`: 한국(평촌)<br/>- `JP1`: 일본(도쿄) |
+| regions.regionCode | Enum | 리전 코드<br/>- `KR1`: 한국(판교) |
 | regions.isEnabled | Boolean | 리전의 활성화 여부 |
 
 ---
@@ -304,7 +290,7 @@ GET /v4.0/project/regions
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbFlavor.List | DB 인스턴스 사양 목록 보기 |
+| RDSforMariaDB:DbFlavor.List | DB 인스턴스 사양 목록 보기 |
 
 <a id="list-db-instance-specifications-request"></a>
 #### 요청
@@ -326,19 +312,19 @@ GET /v4.0/db-flavors
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "dbFlavors": [
-    {
-      "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
-      "dbFlavorName": "dbFlavorName-example",
-      "ram": 1,
-      "vcpus": 1
-    }
-  ]
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "dbFlavors": [
+        {
+            "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
+            "dbFlavorName": "dbFlavorName-example",
+            "ram": 1,
+            "vcpus": 1
+        }
+    ]
 }
 ```
 
@@ -365,7 +351,7 @@ GET /v4.0/db-flavors
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:Network.List | 서브넷 목록 보기 |
+| RDSforMariaDB:Network.List | 서브넷 목록 보기 |
 
 <a id="list-subnets-request"></a>
 #### 요청
@@ -387,20 +373,20 @@ GET /v4.0/network/subnets
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "subnets": [
-    {
-      "subnetId": "550e8400-e29b-41d4-a716-446655440000",
-      "subnetName": "subnetName-example",
-      "subnetCidr": "192.168.0.0/24",
-      "usingGateway": false,
-      "availableIpCount": 1
-    }
-  ]
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "subnets": [
+        {
+            "subnetId": "550e8400-e29b-41d4-a716-446655440000",
+            "subnetName": "subnetName-example",
+            "subnetCidr": "192.168.0.0/24",
+            "usingGateway": false,
+            "availableIpCount": 1
+        }
+    ]
 }
 ```
 
@@ -428,7 +414,7 @@ GET /v4.0/network/subnets
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:Storage.List | 스토리지 유형 목록 보기 |
+| RDSforMariaDB:Storage.List | 스토리지 유형 목록 보기 |
 
 <a id="list-storage-type-request"></a>
 #### 요청
@@ -450,15 +436,15 @@ GET /v4.0/storage-types
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "storageTypes": [
-    "General SSD",
-    "General HDD"
-  ]
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "storageTypes": [
+        "General SSD",
+        "General HDD"
+    ]
 }
 ```
 
@@ -499,7 +485,7 @@ GET /v4.0/storage-types
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:Job.Get | 작업 정보 상세 보기 |
+| RDSforMariaDB:Job.Get | 작업 정보 상세 보기 |
 
 <a id="list-task-details-request"></a>
 #### 요청
@@ -528,21 +514,21 @@ GET /v4.0/jobs/{jobId}
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "jobId": "550e8400-e29b-41d4-a716-446655440000",
-  "jobStatus": "DELETED",
-  "resourceRelations": [
-    {
-      "resourceType": "resourceType-example",
-      "resourceId": "resourceId-example"
-    }
-  ],
-  "createdYmdt": "2023-12-31T15:00:00+09:00",
-  "updatedYmdt": "2023-12-31T15:00:00+09:00"
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000",
+    "jobStatus": "DELETED",
+    "resourceRelations": [
+        {
+            "resourceType": "resourceType-example",
+            "resourceId": "resourceId-example"
+        }
+    ],
+    "createdYmdt": "2023-12-31T15:00:00+09:00",
+    "updatedYmdt": "2023-12-31T15:00:00+09:00"
 }
 ```
 
@@ -571,7 +557,7 @@ GET /v4.0/jobs/{jobId}
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbInstanceGroup.List | DB 인스턴스 그룹 목록 보기 |
+| RDSforMariaDB:DbInstanceGroup.List | DB 인스턴스 그룹 목록 보기 |
 
 <a id="list-db-instance-groups-request"></a>
 #### 요청
@@ -593,19 +579,19 @@ GET /v4.0/db-instance-groups
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "dbInstanceGroups": [
-    {
-      "dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
-      "replicationType": "STANDALONE",
-      "createdYmdt": "2023-12-31T15:00:00+09:00",
-      "updatedYmdt": "2023-12-31T15:00:00+09:00"
-    }
-  ]
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "dbInstanceGroups": [
+        {
+            "dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
+            "replicationType": "STANDALONE",
+            "createdYmdt": "2023-12-31T15:00:00+09:00",
+            "updatedYmdt": "2023-12-31T15:00:00+09:00"
+        }
+    ]
 }
 ```
 
@@ -629,7 +615,7 @@ GET /v4.0/db-instance-groups
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbInstanceGroup.Get | DB 인스턴스 그룹 상세 보기 |
+| RDSforMariaDB:DbInstanceGroup.Get | DB 인스턴스 그룹 상세 보기 |
 
 <a id="list-db-instance-group-details-request"></a>
 #### 요청
@@ -658,22 +644,22 @@ GET /v4.0/db-instance-groups/{dbInstanceGroupId}
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
-  "replicationType": "STANDALONE",
-  "dbInstances": [
-    {
-      "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
-      "dbInstanceType": "MASTER",
-      "dbInstanceStatus": "AVAILABLE"
-    }
-  ],
-  "createdYmdt": "2023-12-31T15:00:00+09:00",
-  "updatedYmdt": "2023-12-31T15:00:00+09:00"
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
+    "replicationType": "STANDALONE",
+    "dbInstances": [
+        {
+            "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
+            "dbInstanceType": "MASTER",
+            "dbInstanceStatus": "AVAILABLE"
+        }
+    ],
+    "createdYmdt": "2023-12-31T15:00:00+09:00",
+    "updatedYmdt": "2023-12-31T15:00:00+09:00"
 }
 ```
 
@@ -685,7 +671,7 @@ GET /v4.0/db-instance-groups/{dbInstanceGroupId}
 | replicationType | Enum | DB 인스턴스 그룹의 복제 형태<br/>- `STANDALONE`: 고가용성 사용 안함<br/>- `HIGH_AVAILABILITY`: 고가용성 사용 |
 | dbInstances | Array | DB 인스턴스 그룹에 속한 DB 인스턴스 목록 |
 | dbInstances.dbInstanceId | UUID | DB 인스턴스의 식별자 |
-| dbInstances.dbInstanceType | Enum | DB 인스턴스의 역할 유형<br/>- `MASTER`: 마스터<br/>- `FAILED_MASTER`: 장애 마스터<br/>- `CANDIDATE_MASTER`: 예비 마스터<br/>- `READ_ONLY_SLAVE`: 읽기 복제본 |
+| dbInstances.dbInstanceType | Enum | DB 인스턴스의 역할 유형<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`: 읽기 복제본 |
 | dbInstances.dbInstanceStatus | Enum | DB 인스턴스의 현재 상태<br/>- `BEFORE_CREATE`: 생성 이전(회색)<br/>- `AVAILABLE`: 사용 가능(녹색)<br/>- `STORAGE_FULL`: 용량 부족(적색)<br/>- `FAIL_TO_CREATE`: 생성 실패(적색)<br/>- `FAIL_TO_CONNECT`: 연결 실패(적색)<br/>- `REPLICATION_STOP`: 복제 중단(적색)<br/>- `REPLICATION_DELAY`: 복제 지연(황색)<br/>- `FAILOVER`: 장애 조치 완료(적색)<br/>- `SHUTDOWN`: 중지됨(회색)<br/>- `DELETED`: 삭제됨(회색) |
 | createdYmdt | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 | updatedYmdt | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
@@ -750,7 +736,7 @@ GET /v4.0/db-instance-groups/{dbInstanceGroupId}
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbInstance.List | DB 인스턴스 목록 보기 |
+| RDSforMariaDB:DbInstance.List | DB 인스턴스 목록 보기 |
 
 <a id="list-db-instances-request"></a>
 #### 요청
@@ -772,26 +758,26 @@ GET /v4.0/db-instances
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "dbInstances": [
-    {
-      "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
-      "dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
-      "dbInstanceName": "dbInstanceName-example",
-      "description": "description-example",
-      "dbVersion": "MYSQL_V8411",
-      "dbPort": 13306,
-      "dbInstanceType": "MASTER",
-      "dbInstanceStatus": "AVAILABLE",
-      "progressStatus": "NONE",
-      "createdYmdt": "2023-12-31T15:00:00+09:00",
-      "updatedYmdt": "2023-12-31T15:00:00+09:00"
-    }
-  ]
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "dbInstances": [
+        {
+            "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
+            "dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
+            "dbInstanceName": "dbInstanceName-example",
+            "description": "description-example",
+            "dbVersion": "MARIADB_V11808",
+            "dbPort": 13306,
+            "dbInstanceType": "MASTER",
+            "dbInstanceStatus": "AVAILABLE",
+            "progressStatus": "NONE",
+            "createdYmdt": "2023-12-31T15:00:00+09:00",
+            "updatedYmdt": "2023-12-31T15:00:00+09:00"
+        }
+    ]
 }
 ```
 
@@ -802,11 +788,11 @@ GET /v4.0/db-instances
 | dbInstances | Array | DB 인스턴스 목록 |
 | dbInstances.dbInstanceId | UUID | DB 인스턴스의 식별자 |
 | dbInstances.dbInstanceGroupId | UUID | DB 인스턴스 그룹의 식별자 |
-| dbInstances.dbInstanceName | String | DB 인스턴스를 식별할 수 있는 이름 |
-| dbInstances.description | String | DB 인스턴스에 대한 추가 정보 |
+| dbInstances.dbInstanceName | String | Primary DB 인스턴스를 식별할 수 있는 이름 |
+| dbInstances.description | String | DB 인스턴스 추가 정보 |
 | dbInstances.dbVersion | Enum | DB 엔진 버전 |
 | dbInstances.dbPort | Number | DB 포트 |
-| dbInstances.dbInstanceType | Enum | DB 인스턴스의 역할 유형<br/>- `MASTER`: 마스터<br/>- `FAILED_MASTER`: 장애 마스터<br/>- `CANDIDATE_MASTER`: 예비 마스터<br/>- `READ_ONLY_SLAVE`: 읽기 복제본 |
+| dbInstances.dbInstanceType | Enum | DB 인스턴스의 역할 유형<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`: 읽기 복제본 |
 | dbInstances.dbInstanceStatus | Enum | DB 인스턴스의 현재 상태<br/>- `BEFORE_CREATE`: 생성 이전(회색)<br/>- `AVAILABLE`: 사용 가능(녹색)<br/>- `STORAGE_FULL`: 용량 부족(적색)<br/>- `FAIL_TO_CREATE`: 생성 실패(적색)<br/>- `FAIL_TO_CONNECT`: 연결 실패(적색)<br/>- `REPLICATION_STOP`: 복제 중단(적색)<br/>- `REPLICATION_DELAY`: 복제 지연(황색)<br/>- `FAILOVER`: 장애 조치 완료(적색)<br/>- `SHUTDOWN`: 중지됨(회색)<br/>- `DELETED`: 삭제됨(회색) |
 | dbInstances.progressStatus | Enum | DB 인스턴스의 현재 진행 상태 |
 | dbInstances.createdYmdt | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
@@ -822,7 +808,7 @@ GET /v4.0/db-instances
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbInstance.Create | DB 인스턴스 생성하기 |
+| RDSforMariaDB:DbInstance.Create | DB 인스턴스 생성하기 |
 
 <a id="create-db-instance-request"></a>
 #### 요청
@@ -839,48 +825,48 @@ POST /v4.0/db-instances
 
 ```json
 {
-  "dbInstanceName": "dbInstanceName",
-  "description": "description-example",
-  "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
-  "dbVersion": "MYSQL_V8411",
-  "dbPort": 13306,
-  "dbUserName": "dbUserName",
-  "dbPassword": "dbPassword",
-  "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
-  "dbSecurityGroupIds": [],
-  "userGroupIds": [],
-  "useHighAvailability": false,
-  "pingInterval": 3,
-  "useDefaultNotification": false,
-  "useDeletionProtection": false,
-  "useSlowQueryAnalysis": true,
-  "authenticationPlugin": "NATIVE",
-  "tlsOption": "NONE",
-  "network": {
-    "subnetId": "550e8400-e29b-41d4-a716-446655440000",
-    "usePublicAccess": false,
-    "availabilityZone": "kr-pub-a"
-  },
-  "storage": {
-    "storageType": "General SSD",
-    "storageSize": 20,
-    "storageAutoscale": {
-      "useStorageAutoscale": false
+    "dbInstanceName": "dbInstanceName",
+    "description": "description-example",
+    "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
+    "dbVersion": "MARIADB_V11808",
+    "dbPort": 13306,
+    "dbUserName": "dbUserName",
+    "dbPassword": "dbPassword",
+    "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
+    "dbSecurityGroupIds": [],
+    "userGroupIds": [],
+    "useHighAvailability": false,
+    "pingInterval": 3,
+    "useDefaultNotification": false,
+    "useDeletionProtection": false,
+    "useSlowQueryAnalysis": true,
+    "authenticationPlugin": "NATIVE",
+    "tlsOption": "NONE",
+    "network": {
+        "subnetId": "550e8400-e29b-41d4-a716-446655440000",
+        "usePublicAccess": false,
+        "availabilityZone": "kr-pub-a"
+    },
+    "storage": {
+        "storageType": "General SSD",
+        "storageSize": 20,
+        "storageAutoscale": {
+            "useStorageAutoscale": false
+        }
+    },
+    "backup": {
+        "backupPeriod": 0,
+        "backupRetryCount": 0,
+        "ftwrlWaitTimeout": 1800,
+        "replicationRegion": "KR1",
+        "useBackupLock": true,
+        "backupSchedules": [
+            {
+                "backupWndBgnTime": "00:00:00",
+                "backupWndDuration": "HALF_AN_HOUR"
+            }
+        ]
     }
-  },
-  "backup": {
-    "backupPeriod": 0,
-    "backupRetryCount": 0,
-    "ftwrlWaitTimeout": 1800,
-    "replicationRegion": "KR1",
-    "useBackupLock": true,
-    "backupSchedules": [
-      {
-        "backupWndBgnTime": "00:00:00",
-        "backupWndDuration": "HALF_AN_HOUR"
-      }
-    ]
-  }
 }
 ```
 
@@ -888,8 +874,8 @@ POST /v4.0/db-instances
 
 | 이름 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|
-| dbInstanceName | String | Y | DB 인스턴스를 식별할 수 있는 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
-| description | String | N | DB 인스턴스에 대한 추가 정보<br/>- 최대 길이: `100` |
+| dbInstanceName | String | Y | Primary DB 인스턴스를 식별할 수 있는 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
+| description | String | N | DB 인스턴스 추가 정보<br/>- 최대 길이: `100` |
 | dbFlavorId | UUID | Y | DB 인스턴스 사양의 식별자 |
 | dbVersion | Enum | Y | DB 엔진 버전 |
 | dbPort | Number | Y | DB 포트<br/>- 최솟값: 3306, 최댓값: 43306 |
@@ -903,7 +889,7 @@ POST /v4.0/db-instances
 | useDefaultNotification | Boolean | N | 기본 알림 사용 여부<br/>- 기본값: `false` |
 | useDeletionProtection | Boolean | N | 삭제 보호 여부<br/>- 기본값: `false` |
 | useSlowQueryAnalysis | Boolean | N | Slow query 분석 여부<br/>- 기본값: `true` |
-| authenticationPlugin | Enum | N | 인증 플러그인<br/>- `NATIVE`: mysql_native_password 인증<br/>- `CACHING_SHA2`: caching_sha2_password 인증(MySQL 전용)<br/>- `SHA256`: sha256_password 인증(MySQL 전용) |
+| authenticationPlugin | Enum | N | 인증 플러그인<br/>- `NATIVE`: mysql_native_password 인증<br/>- `ED25519`: ed25519 인증(MariaDB 전용) |
 | tlsOption | Enum | N | TLS 옵션<br/>- 기본값: `NONE`<br/>- `NONE`: TLS 미사용<br/>- `SSL`: SSL 인증<br/>- `X509`: X509 인증서 인증 |
 | network | Object | Y | 네트워크 정보 객체 |
 | network.subnetId | UUID | Y | 서브넷의 식별자 |
@@ -918,7 +904,7 @@ POST /v4.0/db-instances
 | backup.backupPeriod | Number | Y | 백업 보관 기간(일)<br/>- 최솟값: `0`<br/>- 최댓값: `730` |
 | backup.backupRetryCount | Number | N | 백업 재시도 횟수<br/>- 최솟값: `0`<br/>- 최댓값: `10` |
 | backup.ftwrlWaitTimeout | Number | N | 쿼리 지연 대기 시간(초)<br/>- 최솟값: `0`<br/>- 최댓값: `21600` |
-| backup.replicationRegion | Enum | N | 백업 복제 리전<br/>- `KR1`: 한국(판교)<br/>- `KR2`: 한국(평촌)<br/>- `JP1`: 일본(도쿄) |
+| backup.replicationRegion | Enum | N | 백업 복제 리전<br/>- `KR1`: 한국(판교) |
 | backup.useBackupLock | Boolean | N | 테이블 잠금 사용 여부<br/>- 기본값: `true` |
 | backup.backupSchedules | Array | Y | 백업 스케줄 목록 |
 | backup.backupSchedules.backupWndBgnTime | Time | Y | 백업 시작 시간 |
@@ -929,7 +915,7 @@ POST /v4.0/db-instances
 
 | 이름 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|
-| dbInstanceCandidateName | String | Y | DB 인스턴스를 식별할 수 있는 예비 마스터 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
+| dbInstanceCandidateName | String | Y | Standby DB 인스턴스를 식별할 수 있는 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
 
 <a id="create-db-instance-section-2"></a>
 #### 스토리지 자동 확장 사용 시
@@ -948,12 +934,12 @@ POST /v4.0/db-instances
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "jobId": "550e8400-e29b-41d4-a716-446655440000"
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
@@ -973,7 +959,7 @@ POST /v4.0/db-instances
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbInstance.RestoreFromObs | Object Storage를 이용한 DB 인스턴스 복원 |
+| RDSforMariaDB:DbInstance.RestoreFromObs | Object Storage를 이용한 DB 인스턴스 복원 |
 
 <a id="restore-from-object-storage-request"></a>
 #### 요청
@@ -990,51 +976,51 @@ POST /v4.0/db-instances/restore-from-obs
 
 ```json
 {
-  "dbInstanceName": "dbInstanceName",
-  "description": "description-example",
-  "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
-  "dbPort": 13306,
-  "dbVersion": "MYSQL_V8411",
-  "useHighAvailability": false,
-  "pingInterval": 3,
-  "storage": {
-    "storageType": "General SSD",
-    "storageSize": 20,
-    "storageAutoscale": {
-      "useStorageAutoscale": false
-    }
-  },
-  "network": {
-    "subnetId": "550e8400-e29b-41d4-a716-446655440000",
-    "usePublicAccess": false,
-    "availabilityZone": "kr-pub-a"
-  },
-  "backup": {
-    "backupPeriod": 0,
-    "ftwrlWaitTimeout": 1800,
-    "backupRetryCount": 0,
-    "replicationRegion": "KR1",
-    "useBackupLock": true,
-    "backupSchedules": [
-      {
-        "backupWndBgnTime": "00:00:00",
-        "backupWndDuration": "HALF_AN_HOUR"
-      }
-    ]
-  },
-  "restore": {
-    "tenantId": "0123456789abcdef0123456789abcdef",
-    "username": "username-example",
-    "password": "password-example",
-    "targetContainer": "targetContainer-example",
-    "objectPath": "objectPath-example"
-  },
-  "useDefaultNotification": false,
-  "useSlowQueryAnalysis": true,
-  "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
-  "dbSecurityGroupIds": [],
-  "userGroupIds": [],
-  "useDeletionProtection": false
+    "dbInstanceName": "dbInstanceName",
+    "description": "description-example",
+    "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
+    "dbPort": 13306,
+    "dbVersion": "MARIADB_V11808",
+    "useHighAvailability": false,
+    "pingInterval": 3,
+    "storage": {
+        "storageType": "General SSD",
+        "storageSize": 20,
+        "storageAutoscale": {
+            "useStorageAutoscale": false
+        }
+    },
+    "network": {
+        "subnetId": "550e8400-e29b-41d4-a716-446655440000",
+        "usePublicAccess": false,
+        "availabilityZone": "kr-pub-a"
+    },
+    "backup": {
+        "backupPeriod": 0,
+        "ftwrlWaitTimeout": 1800,
+        "backupRetryCount": 0,
+        "replicationRegion": "KR1",
+        "useBackupLock": true,
+        "backupSchedules": [
+            {
+                "backupWndBgnTime": "00:00:00",
+                "backupWndDuration": "HALF_AN_HOUR"
+            }
+        ]
+    },
+    "restore": {
+        "tenantId": "0123456789abcdef0123456789abcdef",
+        "username": "username-example",
+        "password": "password-example",
+        "targetContainer": "targetContainer-example",
+        "objectPath": "objectPath-example"
+    },
+    "useDefaultNotification": false,
+    "useSlowQueryAnalysis": true,
+    "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
+    "dbSecurityGroupIds": [],
+    "userGroupIds": [],
+    "useDeletionProtection": false
 }
 ```
 
@@ -1042,8 +1028,8 @@ POST /v4.0/db-instances/restore-from-obs
 
 | 이름 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|
-| dbInstanceName | String | Y | DB 인스턴스를 식별할 수 있는 마스터 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
-| description | String | N | DB 인스턴스에 대한 추가 정보<br/>- 최대 길이: `100` |
+| dbInstanceName | String | Y | Primary DB 인스턴스를 식별할 수 있는 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
+| description | String | N | DB 인스턴스 추가 정보<br/>- 최대 길이: `100` |
 | dbFlavorId | UUID | Y | DB 인스턴스 사양의 식별자 |
 | dbPort | Number | Y | DB 포트 |
 | dbVersion | Enum | Y | DB 엔진 버전 |
@@ -1062,7 +1048,7 @@ POST /v4.0/db-instances/restore-from-obs
 | backup.backupPeriod | Number | Y | 백업 보관 기간(일)<br/>- 최솟값: `0`<br/>- 최댓값: `730` |
 | backup.ftwrlWaitTimeout | Number | N | 쿼리 지연 대기 시간(초)<br/>- 최솟값: `0`<br/>- 최댓값: `21600` |
 | backup.backupRetryCount | Number | N | 백업 재시도 횟수<br/>- 최솟값: `0`<br/>- 최댓값: `10` |
-| backup.replicationRegion | Enum | N | 백업 복제 리전<br/>- `KR1`: 한국(판교)<br/>- `KR2`: 한국(평촌)<br/>- `JP1`: 일본(도쿄) |
+| backup.replicationRegion | Enum | N | 백업 복제 리전<br/>- `KR1`: 한국(판교) |
 | backup.useBackupLock | Boolean | N | 테이블 잠금 사용 여부<br/>- 기본값: `true` |
 | backup.backupSchedules | Array | Y | 백업 스케줄 목록 |
 | backup.backupSchedules.backupWndBgnTime | Time | Y | 백업 시작 시간 |
@@ -1085,7 +1071,7 @@ POST /v4.0/db-instances/restore-from-obs
 
 | 이름 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|
-| dbInstanceCandidateName | String | Y | DB 인스턴스를 식별할 수 있는 예비 마스터 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
+| dbInstanceCandidateName | String | Y | Standby DB 인스턴스를 식별할 수 있는 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
 
 <a id="restore-from-object-storage-section-2"></a>
 #### 스토리지 자동 확장 사용 시
@@ -1104,12 +1090,12 @@ POST /v4.0/db-instances/restore-from-obs
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "jobId": "550e8400-e29b-41d4-a716-446655440000"
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
@@ -1129,7 +1115,7 @@ POST /v4.0/db-instances/restore-from-obs
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbInstance.Delete | DB 인스턴스 삭제하기 |
+| RDSforMariaDB:DbInstance.Delete | DB 인스턴스 삭제하기 |
 
 <a id="delete-db-instance-request"></a>
 #### 요청
@@ -1153,7 +1139,7 @@ DELETE /v4.0/db-instances/{dbInstanceId}
 
 ```json
 {
-  "deleteAutoBackup": false
+    "deleteAutoBackup": false
 }
 ```
 
@@ -1171,12 +1157,12 @@ DELETE /v4.0/db-instances/{dbInstanceId}
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "jobId": "550e8400-e29b-41d4-a716-446655440000"
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
@@ -1196,7 +1182,7 @@ DELETE /v4.0/db-instances/{dbInstanceId}
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbInstance.Get | DB 인스턴스 상세 보기 |
+| RDSforMariaDB:DbInstance.Get | DB 인스턴스 상세 보기 |
 
 <a id="list-db-instance-details-request"></a>
 #### 요청
@@ -1225,36 +1211,36 @@ GET /v4.0/db-instances/{dbInstanceId}
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
-  "dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
-  "dbInstanceName": "dbInstanceName-example",
-  "description": "description-example",
-  "dbVersion": "MYSQL_V8411",
-  "dbPort": 13306,
-  "dbInstanceType": "MASTER",
-  "dbInstanceStatus": "AVAILABLE",
-  "progressStatus": "NONE",
-  "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
-  "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
-  "dbSecurityGroupIds": [
-    "550e8400-e29b-41d4-a716-446655440000"
-  ],
-  "notificationGroupIds": [
-    "550e8400-e29b-41d4-a716-446655440000"
-  ],
-  "useDeletionProtection": false,
-  "useSlowQueryAnalysis": false,
-  "supportAuthenticationPlugin": false,
-  "needToApplyParameterGroup": false,
-  "needMigration": false,
-  "supportDbVersionUpgrade": false,
-  "createdYmdt": "2023-12-31T15:00:00+09:00",
-  "updatedYmdt": "2023-12-31T15:00:00+09:00"
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
+    "dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
+    "dbInstanceName": "dbInstanceName-example",
+    "description": "description-example",
+    "dbVersion": "MARIADB_V11808",
+    "dbPort": 13306,
+    "dbInstanceType": "MASTER",
+    "dbInstanceStatus": "AVAILABLE",
+    "progressStatus": "NONE",
+    "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
+    "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
+    "dbSecurityGroupIds": [
+        "550e8400-e29b-41d4-a716-446655440000"
+    ],
+    "notificationGroupIds": [
+        "550e8400-e29b-41d4-a716-446655440000"
+    ],
+    "useDeletionProtection": false,
+    "useSlowQueryAnalysis": false,
+    "supportAuthenticationPlugin": false,
+    "needToApplyParameterGroup": false,
+    "needMigration": false,
+    "supportDbVersionUpgrade": false,
+    "createdYmdt": "2023-12-31T15:00:00+09:00",
+    "updatedYmdt": "2023-12-31T15:00:00+09:00"
 }
 ```
 
@@ -1264,11 +1250,11 @@ GET /v4.0/db-instances/{dbInstanceId}
 |-----|-----|-----|
 | dbInstanceId | UUID | DB 인스턴스의 식별자 |
 | dbInstanceGroupId | UUID | DB 인스턴스 그룹의 식별자 |
-| dbInstanceName | String | DB 인스턴스를 식별할 수 있는 이름 |
-| description | String | DB 인스턴스에 대한 추가 정보 |
+| dbInstanceName | String | Primary DB 인스턴스를 식별할 수 있는 이름 |
+| description | String | DB 인스턴스 추가 정보 |
 | dbVersion | Enum | DB 엔진 버전 |
 | dbPort | Number | DB 포트 |
-| dbInstanceType | Enum | DB 인스턴스의 역할 유형<br/>- `MASTER`: 마스터<br/>- `FAILED_MASTER`: 장애 마스터<br/>- `CANDIDATE_MASTER`: 예비 마스터<br/>- `READ_ONLY_SLAVE`: 읽기 복제본 |
+| dbInstanceType | Enum | DB 인스턴스의 역할 유형<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`: 읽기 복제본 |
 | dbInstanceStatus | Enum | DB 인스턴스의 현재 상태<br/>- `BEFORE_CREATE`: 생성 이전(회색)<br/>- `AVAILABLE`: 사용 가능(녹색)<br/>- `STORAGE_FULL`: 용량 부족(적색)<br/>- `FAIL_TO_CREATE`: 생성 실패(적색)<br/>- `FAIL_TO_CONNECT`: 연결 실패(적색)<br/>- `REPLICATION_STOP`: 복제 중단(적색)<br/>- `REPLICATION_DELAY`: 복제 지연(황색)<br/>- `FAILOVER`: 장애 조치 완료(적색)<br/>- `SHUTDOWN`: 중지됨(회색)<br/>- `DELETED`: 삭제됨(회색) |
 | progressStatus | Enum | DB 인스턴스의 현재 진행 상태 |
 | dbFlavorId | UUID | DB 인스턴스 사양의 식별자 |
@@ -1294,7 +1280,7 @@ GET /v4.0/db-instances/{dbInstanceId}
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbInstance.Modify | DB 인스턴스 수정하기 |
+| RDSforMariaDB:DbInstance.Modify | DB 인스턴스 수정하기 |
 
 <a id="modify-db-instance-request"></a>
 #### 요청
@@ -1318,20 +1304,20 @@ PUT /v4.0/db-instances/{dbInstanceId}
 
 ```json
 {
-  "dbInstanceName": "dbInstanceName",
-  "dbInstanceCandidateName": "dbInstanceCandidateName",
-  "description": "description-example",
-  "dbPort": 13306,
-  "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
-  "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
-  "dbVersion": "MYSQL_V8411",
-  "useSlowQueryAnalysis": false,
-  "useDummy": false,
-  "dbSecurityGroupIds": [],
-  "executeBackup": false,
-  "useOnlineFailover": false,
-  "waitReplicationDelay": false,
-  "useReadOnly": false
+    "dbInstanceName": "dbInstanceName",
+    "dbInstanceCandidateName": "dbInstanceCandidateName",
+    "description": "description-example",
+    "dbPort": 13306,
+    "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
+    "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
+    "dbVersion": "MARIADB_V11808",
+    "useSlowQueryAnalysis": false,
+    "useDummy": false,
+    "dbSecurityGroupIds": [],
+    "executeBackup": false,
+    "useOnlineFailover": false,
+    "waitReplicationDelay": false,
+    "useReadOnly": false
 }
 ```
 
@@ -1339,9 +1325,9 @@ PUT /v4.0/db-instances/{dbInstanceId}
 
 | 이름 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|
-| dbInstanceName | String | N | DB 인스턴스를 식별할 수 있는 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
-| dbInstanceCandidateName | String | N | DB 인스턴스를 식별할 수 있는 예비 마스터 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
-| description | String | N | DB 인스턴스에 대한 추가 정보<br/>- 최대 길이: `100` |
+| dbInstanceName | String | N | Primary DB 인스턴스를 식별할 수 있는 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
+| dbInstanceCandidateName | String | N | Standby DB 인스턴스를 식별할 수 있는 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
+| description | String | N | DB 인스턴스 추가 정보<br/>- 최대 길이: `100` |
 | dbPort | Number | N | DB 포트<br/>- 최솟값: 3306, 최댓값: 43306 |
 | dbFlavorId | UUID | N | DB 인스턴스 사양의 식별자 |
 | parameterGroupId | UUID | N | 파라미터 그룹의 식별자 |
@@ -1362,12 +1348,12 @@ PUT /v4.0/db-instances/{dbInstanceId}
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "jobId": "550e8400-e29b-41d4-a716-446655440000"
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
@@ -1387,7 +1373,7 @@ PUT /v4.0/db-instances/{dbInstanceId}
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbInstance.Get | 백업 정보 보기 |
+| RDSforMariaDB:DbInstance.Get | 백업 정보 보기 |
 
 <a id="view-backup-information-request"></a>
 #### 요청
@@ -1416,22 +1402,22 @@ GET /v4.0/db-instances/{dbInstanceId}/backup-info
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "backupPeriod": 1,
-  "ftwrlWaitTimeout": 1,
-  "backupRetryCount": 1,
-  "replicationRegion": "KR1",
-  "useBackupLock": false,
-  "backupSchedules": [
-    {
-      "backupWndBgnTime": "00:00:00",
-      "backupWndDuration": "HALF_AN_HOUR"
-    }
-  ]
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "backupPeriod": 1,
+    "ftwrlWaitTimeout": 1,
+    "backupRetryCount": 1,
+    "replicationRegion": "KR1",
+    "useBackupLock": false,
+    "backupSchedules": [
+        {
+            "backupWndBgnTime": "00:00:00",
+            "backupWndDuration": "HALF_AN_HOUR"
+        }
+    ]
 }
 ```
 
@@ -1442,7 +1428,7 @@ GET /v4.0/db-instances/{dbInstanceId}/backup-info
 | backupPeriod | Number | 백업 보관 기간(일) |
 | ftwrlWaitTimeout | Number | 쿼리 지연 대기 시간(초) |
 | backupRetryCount | Number | 백업 재시도 횟수 |
-| replicationRegion | Enum | 백업 복제 리전<br/>- `KR1`: 한국(판교)<br/>- `KR2`: 한국(평촌)<br/>- `JP1`: 일본(도쿄) |
+| replicationRegion | Enum | 백업 복제 리전<br/>- `KR1`: 한국(판교) |
 | useBackupLock | Boolean | 테이블 잠금 사용 여부 |
 | backupSchedules | Array | 백업 스케줄 목록 |
 | backupSchedules.backupWndBgnTime | Time | 백업 시작 시간 |
@@ -1458,7 +1444,7 @@ GET /v4.0/db-instances/{dbInstanceId}/backup-info
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbInstance.Modify | 백업 정보 수정하기 |
+| RDSforMariaDB:DbInstance.Modify | 백업 정보 수정하기 |
 
 <a id="modify-backup-information-request"></a>
 #### 요청
@@ -1482,17 +1468,17 @@ PUT /v4.0/db-instances/{dbInstanceId}/backup-info
 
 ```json
 {
-  "backupPeriod": 0,
-  "ftwrlWaitTimeout": 0,
-  "backupRetryCount": 0,
-  "replicationRegion": "KR1",
-  "useBackupLock": false,
-  "backupSchedules": [
-    {
-      "backupWndBgnTime": "00:00:00",
-      "backupWndDuration": "HALF_AN_HOUR"
-    }
-  ]
+    "backupPeriod": 0,
+    "ftwrlWaitTimeout": 0,
+    "backupRetryCount": 0,
+    "replicationRegion": "KR1",
+    "useBackupLock": false,
+    "backupSchedules": [
+        {
+            "backupWndBgnTime": "00:00:00",
+            "backupWndDuration": "HALF_AN_HOUR"
+        }
+    ]
 }
 ```
 
@@ -1503,7 +1489,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/backup-info
 | backupPeriod | Number | N | 백업 보관 기간(일)<br/>- 최솟값: `0`<br/>- 최댓값: `730` |
 | ftwrlWaitTimeout | Number | N | 쿼리 지연 대기 시간(초)<br/>- 최솟값: `0`<br/>- 최댓값: `21600` |
 | backupRetryCount | Number | N | 백업 재시도 횟수<br/>- 최솟값: `0`<br/>- 최댓값: `10` |
-| replicationRegion | Enum | N | 백업 복제 리전<br/>- `KR1`: 한국(판교)<br/>- `KR2`: 한국(평촌)<br/>- `JP1`: 일본(도쿄) |
+| replicationRegion | Enum | N | 백업 복제 리전<br/>- `KR1`: 한국(판교) |
 | useBackupLock | Boolean | N | 테이블 잠금 사용 여부 |
 | backupSchedules | Array | N | 백업 스케줄 목록 |
 | backupSchedules.backupWndBgnTime | Time | Y | 백업 시작 시간 |
@@ -1517,12 +1503,12 @@ PUT /v4.0/db-instances/{dbInstanceId}/backup-info
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "jobId": "550e8400-e29b-41d4-a716-446655440000"
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
@@ -1542,7 +1528,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/backup-info
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbInstanceBinLog.List | 바이너리 로그 목록 보기 |
+| RDSforMariaDB:DbInstanceBinLog.List | 바이너리 로그 목록 보기 |
 
 <a id="view-binlog-lists-request"></a>
 #### 요청
@@ -1557,7 +1543,7 @@ GET /v4.0/db-instances/{dbInstanceId}/binlogs
 | 이름 | 구분 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
 | dbInstanceId | URL | UUID | Y | DB 인스턴스의 식별자 |
-| deletable | Query | Boolean | N | 삭제 가능한 BinLog만 조회할지 여부 (true: 마지막 BinLog 제외, false: 전체)<br/>- 기본값: `false` |
+| deletable | Query | Boolean | N | 삭제 가능한 BinLog만 조회할지 여부(true: 마지막 BinLog 제외, false: 전체)<br/>- 기본값: `false` |
 
 <a id="view-binlog-lists-request-body"></a>
 #### 요청 본문
@@ -1572,18 +1558,18 @@ GET /v4.0/db-instances/{dbInstanceId}/binlogs
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "binLogs": [
-    {
-      "binLogFileName": "binLogFileName-example",
-      "binLogFileSize": 1,
-      "createdYmdt": "2023-12-31T15:00:00+09:00"
-    }
-  ]
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "binLogs": [
+        {
+            "binLogFileName": "binLogFileName-example",
+            "binLogFileSize": 1,
+            "createdYmdt": "2023-12-31T15:00:00+09:00"
+        }
+    ]
 }
 ```
 
@@ -1593,7 +1579,7 @@ GET /v4.0/db-instances/{dbInstanceId}/binlogs
 |-----|-----|-----|
 | binLogs | Array | BinLog 파일 목록 |
 | binLogs.binLogFileName | String | BinLog 파일 이름 |
-| binLogs.binLogFileSize | Number | BinLog 파일 크기 (Byte) |
+| binLogs.binLogFileSize | Number | BinLog 파일 크기(Byte) |
 | binLogs.createdYmdt | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 
 ---
@@ -1606,7 +1592,7 @@ GET /v4.0/db-instances/{dbInstanceId}/binlogs
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbInstanceBinLog.Purge | 바이너리 로그 삭제 |
+| RDSforMariaDB:DbInstanceBinLog.Purge | 바이너리 로그 삭제 |
 
 <a id="delete-binlog-request"></a>
 #### 요청
@@ -1630,7 +1616,7 @@ POST /v4.0/db-instances/{dbInstanceId}/binlogs/purge
 
 ```json
 {
-  "lastBinLogFileName": "mysql-bin.000010"
+    "lastBinLogFileName": "mysql-bin.000010"
 }
 ```
 
@@ -1638,7 +1624,7 @@ POST /v4.0/db-instances/{dbInstanceId}/binlogs/purge
 
 | 이름 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|
-| lastBinLogFileName | String | Y | 삭제할 마지막 BinLog 파일 이름 (해당 파일 직전까지 삭제됨) |
+| lastBinLogFileName | String | Y | 삭제할 마지막 BinLog 파일 이름(해당 파일 직전까지 삭제됨) |
 
 <a id="delete-binlog-response"></a>
 #### 응답
@@ -1655,7 +1641,7 @@ POST /v4.0/db-instances/{dbInstanceId}/binlogs/purge
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbInstanceCertificate.List | 인증서 파일 목록 보기 |
+| RDSforMariaDB:DbInstanceCertificate.List | 인증서 파일 목록 보기 |
 
 <a id="view-certificate-file-lists-request"></a>
 #### 요청
@@ -1684,19 +1670,19 @@ GET /v4.0/db-instances/{dbInstanceId}/certificates
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "certificates": [
-    {
-      "fileName": "fileName-example",
-      "certificateType": "CA_FILE",
-      "fileSize": 1,
-      "createdYmdt": "2023-12-31T15:00:00+09:00"
-    }
-  ]
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "certificates": [
+        {
+            "fileName": "fileName-example",
+            "certificateType": "CA_FILE",
+            "fileSize": 1,
+            "createdYmdt": "2023-12-31T15:00:00+09:00"
+        }
+    ]
 }
 ```
 
@@ -1720,7 +1706,7 @@ GET /v4.0/db-instances/{dbInstanceId}/certificates
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbInstanceCertificate.Export | 인증서 파일 내보내기 |
+| RDSforMariaDB:DbInstanceCertificate.Export | 인증서 파일 내보내기 |
 
 <a id="export-a-certificate-file-request"></a>
 #### 요청
@@ -1744,12 +1730,12 @@ POST /v4.0/db-instances/{dbInstanceId}/certificates/upload
 
 ```json
 {
-  "certificateTypes": [],
-  "tenantId": "0123456789abcdef0123456789abcdef",
-  "username": "username-example",
-  "password": "password-example",
-  "targetContainer": "targetContainer-example",
-  "objectPath": "objectPath-example"
+    "certificateTypes": [],
+    "tenantId": "0123456789abcdef0123456789abcdef",
+    "username": "username-example",
+    "password": "password-example",
+    "targetContainer": "targetContainer-example",
+    "objectPath": "objectPath-example"
 }
 ```
 
@@ -1772,12 +1758,12 @@ POST /v4.0/db-instances/{dbInstanceId}/certificates/upload
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "jobId": "550e8400-e29b-41d4-a716-446655440000"
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
@@ -1797,7 +1783,7 @@ POST /v4.0/db-instances/{dbInstanceId}/certificates/upload
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbInstanceSchema.List | DB 스키마 목록 보기 |
+| RDSforMariaDB:DbInstanceSchema.List | DB 스키마 목록 보기 |
 
 <a id="list-db-schema-request"></a>
 #### 요청
@@ -1826,19 +1812,19 @@ GET /v4.0/db-instances/{dbInstanceId}/db-schemas
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "dbSchemas": [
-    {
-      "dbSchemaId": "550e8400-e29b-41d4-a716-446655440000",
-      "dbSchemaName": "dbSchemaName-example",
-      "dbSchemaStatus": "STABLE",
-      "createdYmdt": "2023-12-31T15:00:00+09:00"
-    }
-  ]
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "dbSchemas": [
+        {
+            "dbSchemaId": "550e8400-e29b-41d4-a716-446655440000",
+            "dbSchemaName": "dbSchemaName-example",
+            "dbSchemaStatus": "STABLE",
+            "createdYmdt": "2023-12-31T15:00:00+09:00"
+        }
+    ]
 }
 ```
 
@@ -1862,7 +1848,7 @@ GET /v4.0/db-instances/{dbInstanceId}/db-schemas
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbInstanceSchema.Create | DB 스키마 생성하기 |
+| RDSforMariaDB:DbInstanceSchema.Create | DB 스키마 생성하기 |
 
 <a id="create-db-schema-request"></a>
 #### 요청
@@ -1886,7 +1872,7 @@ POST /v4.0/db-instances/{dbInstanceId}/db-schemas
 
 ```json
 {
-  "dbSchemaName": "dbSchemaName-example"
+    "dbSchemaName": "dbSchemaName-example"
 }
 ```
 
@@ -1904,12 +1890,12 @@ POST /v4.0/db-instances/{dbInstanceId}/db-schemas
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "jobId": "550e8400-e29b-41d4-a716-446655440000"
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
@@ -1929,7 +1915,7 @@ POST /v4.0/db-instances/{dbInstanceId}/db-schemas
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbInstanceSchema.Delete | DB 스키마 삭제하기 |
+| RDSforMariaDB:DbInstanceSchema.Delete | DB 스키마 삭제하기 |
 
 <a id="delete-db-schema-request"></a>
 #### 요청
@@ -1959,12 +1945,12 @@ DELETE /v4.0/db-instances/{dbInstanceId}/db-schemas/{dbSchemaId}
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "jobId": "550e8400-e29b-41d4-a716-446655440000"
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
@@ -1984,7 +1970,7 @@ DELETE /v4.0/db-instances/{dbInstanceId}/db-schemas/{dbSchemaId}
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbInstanceUser.List | DB 사용자 목록 보기 |
+| RDSforMariaDB:DbInstanceUser.List | DB 사용자 목록 보기 |
 
 <a id="list-db-users-request"></a>
 #### 요청
@@ -2013,24 +1999,24 @@ GET /v4.0/db-instances/{dbInstanceId}/db-users
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "dbUsers": [
-    {
-      "dbUserId": "550e8400-e29b-41d4-a716-446655440000",
-      "dbUserName": "dbUserName-example",
-      "host": "192.168.0.1",
-      "authorityType": "CUSTOM",
-      "dbUserStatus": "STABLE",
-      "createdYmdt": "2023-12-31T15:00:00+09:00",
-      "updatedYmdt": "2023-12-31T15:00:00+09:00",
-      "authenticationPlugin": "NATIVE",
-      "tlsOption": "NONE"
-    }
-  ]
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "dbUsers": [
+        {
+            "dbUserId": "550e8400-e29b-41d4-a716-446655440000",
+            "dbUserName": "dbUserName-example",
+            "host": "192.168.0.1",
+            "authorityType": "CUSTOM",
+            "dbUserStatus": "STABLE",
+            "createdYmdt": "2023-12-31T15:00:00+09:00",
+            "updatedYmdt": "2023-12-31T15:00:00+09:00",
+            "authenticationPlugin": "NATIVE",
+            "tlsOption": "NONE"
+        }
+    ]
 }
 ```
 
@@ -2046,7 +2032,7 @@ GET /v4.0/db-instances/{dbInstanceId}/db-users
 | dbUsers.dbUserStatus | Enum | DB 사용자의 현재 상태<br/>- `STABLE`<br/>- `CREATING`<br/>- `UPDATING`<br/>- `SYNCING`<br/>- `DELETING`<br/>- `DELETED` |
 | dbUsers.createdYmdt | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 | dbUsers.updatedYmdt | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
-| dbUsers.authenticationPlugin | Enum | 사용자 인증 플러그인<br/>- `NATIVE`: mysql_native_password 인증<br/>- `CACHING_SHA2`: caching_sha2_password 인증(MySQL 전용)<br/>- `SHA256`: sha256_password 인증(MySQL 전용) |
+| dbUsers.authenticationPlugin | Enum | 사용자 인증 플러그인<br/>- `NATIVE`: mysql_native_password 인증<br/>- `ED25519`: ed25519 인증(MariaDB 전용) |
 | dbUsers.tlsOption | Enum | 인증서 옵션<br/>- `NONE`: TLS 미사용<br/>- `SSL`: SSL 인증<br/>- `X509`: X509 인증서 인증 |
 
 ---
@@ -2059,7 +2045,7 @@ GET /v4.0/db-instances/{dbInstanceId}/db-users
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbInstanceUser.Create | DB 사용자 생성하기 |
+| RDSforMariaDB:DbInstanceUser.Create | DB 사용자 생성하기 |
 
 <a id="create-db-user-request"></a>
 #### 요청
@@ -2083,12 +2069,12 @@ POST /v4.0/db-instances/{dbInstanceId}/db-users
 
 ```json
 {
-  "dbUserName": "dbUserName",
-  "dbPassword": "dbPassword",
-  "host": "192.168.0.1",
-  "authorityType": "CUSTOM",
-  "authenticationPlugin": "NATIVE",
-  "tlsOption": "NONE"
+    "dbUserName": "dbUserName",
+    "dbPassword": "dbPassword",
+    "host": "192.168.0.1",
+    "authorityType": "CUSTOM",
+    "authenticationPlugin": "NATIVE",
+    "tlsOption": "NONE"
 }
 ```
 
@@ -2100,7 +2086,7 @@ POST /v4.0/db-instances/{dbInstanceId}/db-users
 | dbPassword | String | Y | DB 사용자 계정 암호<br/>- 최소 길이: `4`<br/>- 최대 길이: `256` |
 | host | String | Y | DB 사용자 계정의 호스트 이름<br/>- 최대 길이: `45` |
 | authorityType | Enum | Y | DB 사용자 권한 유형<br/>- `CUSTOM`: 사용자 정의 권한<br/>- `READ`: 읽기 권한<br/>- `CRUD`: CRUD 권한<br/>- `DDL`: DDL 권한<br/>- `ALL`: 전체 권한 |
-| authenticationPlugin | Enum | N | 사용자 인증 플러그인<br/>- `NATIVE`: mysql_native_password 인증<br/>- `CACHING_SHA2`: caching_sha2_password 인증(MySQL 전용)<br/>- `SHA256`: sha256_password 인증(MySQL 전용) |
+| authenticationPlugin | Enum | N | 사용자 인증 플러그인<br/>- `NATIVE`: mysql_native_password 인증<br/>- `ED25519`: ed25519 인증(MariaDB 전용) |
 | tlsOption | Enum | N | 인증서 옵션<br/>- 기본값: `NONE`<br/>- `NONE`: TLS 미사용<br/>- `SSL`: SSL 인증<br/>- `X509`: X509 인증서 인증 |
 
 <a id="create-db-user-response"></a>
@@ -2111,12 +2097,12 @@ POST /v4.0/db-instances/{dbInstanceId}/db-users
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "jobId": "550e8400-e29b-41d4-a716-446655440000"
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
@@ -2136,7 +2122,7 @@ POST /v4.0/db-instances/{dbInstanceId}/db-users
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbInstanceUser.Delete | DB 사용자 삭제하기 |
+| RDSforMariaDB:DbInstanceUser.Delete | DB 사용자 삭제하기 |
 
 <a id="delete-db-user-request"></a>
 #### 요청
@@ -2166,12 +2152,12 @@ DELETE /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "jobId": "550e8400-e29b-41d4-a716-446655440000"
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
@@ -2191,7 +2177,7 @@ DELETE /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbInstanceUser.Modify | DB 사용자 수정하기 |
+| RDSforMariaDB:DbInstanceUser.Modify | DB 사용자 수정하기 |
 
 <a id="modify-db-user-request"></a>
 #### 요청
@@ -2216,10 +2202,10 @@ PUT /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 
 ```json
 {
-  "dbPassword": "dbPassword",
-  "authorityType": "CUSTOM",
-  "authenticationPlugin": "NATIVE",
-  "tlsOption": "NONE"
+    "dbPassword": "dbPassword",
+    "authorityType": "CUSTOM",
+    "authenticationPlugin": "NATIVE",
+    "tlsOption": "NONE"
 }
 ```
 
@@ -2229,7 +2215,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 |-----|-----|-----|-----|
 | dbPassword | String | N | DB 사용자 계정 암호<br/>- 최소 길이: `4`<br/>- 최대 길이: `256` |
 | authorityType | Enum | N | DB 사용자 권한 유형<br/>- `CUSTOM`: 사용자 정의 권한<br/>- `READ`: 읽기 권한<br/>- `CRUD`: CRUD 권한<br/>- `DDL`: DDL 권한<br/>- `ALL`: 전체 권한 |
-| authenticationPlugin | Enum | N | 사용자 인증 플러그인<br/>- `NATIVE`: mysql_native_password 인증<br/>- `CACHING_SHA2`: caching_sha2_password 인증(MySQL 전용)<br/>- `SHA256`: sha256_password 인증(MySQL 전용) |
+| authenticationPlugin | Enum | N | 사용자 인증 플러그인<br/>- `NATIVE`: mysql_native_password 인증<br/>- `ED25519`: ed25519 인증(MariaDB 전용) |
 | tlsOption | Enum | N | 인증서 옵션<br/>- `NONE`: TLS 미사용<br/>- `SSL`: SSL 인증<br/>- `X509`: X509 인증서 인증 |
 
 <a id="modify-db-user-response"></a>
@@ -2240,12 +2226,12 @@ PUT /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "jobId": "550e8400-e29b-41d4-a716-446655440000"
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
@@ -2265,7 +2251,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/db-users/{dbUserId}
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbInstance.Modify | DB 인스턴스 삭제 보호 설정 변경 |
+| RDSforMariaDB:DbInstance.Modify | DB 인스턴스 삭제 보호 설정 변경 |
 
 <a id="change-db-instance-deletion-protection-settings-request"></a>
 #### 요청
@@ -2289,7 +2275,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/deletion-protection
 
 ```json
 {
-  "useDeletionProtection": false
+    "useDeletionProtection": false
 }
 ```
 
@@ -2314,7 +2300,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/deletion-protection
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbInstance.ForceRestart | DB 인스턴스 강제 재시작하기 |
+| RDSforMariaDB:DbInstance.ForceRestart | DB 인스턴스 강제 재시작하기 |
 
 <a id="force-restart-db-instance-request"></a>
 #### 요청
@@ -2353,11 +2339,11 @@ POST /v4.0/db-instances/{dbInstanceId}/force-restart
 | `PAUSED`                         | 고가용성이 일시 중지된 경우                 |
 | `PAUSED_DUE_TO_TASK`             | 작업으로 인해 고가용성이 일시 중지된 경우         |
 | `PAUSED_DUE_TO_STOP`             | DB 인스턴스 정지로 인해 고가용성이 일시 중지된 경우  |
-| `DISABLE_MASTER_IN_REPLICATION`  | 마스터 비정상 복제 감지로 고가용성이 중단된 경우     |
+| `DISABLE_MASTER_IN_REPLICATION`  | Primary 비정상 복제 감지로 고가용성이 중단된 경우     |
 | `DISABLE_MHA_PROCESS`            | 고가용성 프로세스가 중단된 경우               |
 | `DISABLE_REPLICATION_STOP`       | 복제 중단으로 인해 고가용성이 중단된 경우         |
 | `DISABLE_REPLICATION_DELAY`      | 복제 지연으로 인해 고가용성이 중단된 경우         |
-| `MASTER_FAILURE_DETECTION`       | 마스터 장애가 감지된 경우                  |
+| `MASTER_FAILURE_DETECTION`       | Primary 장애가 감지된 경우                  |
 | `FAILOVER_STARTED`               | 장애 조치가 시작된 경우                   |
 | `FAILOVER_FAILED`                | 장애 조치가 실패한 경우                   |
 | `FAILOVER_COMPLETED`             | 장애 조치가 완료된 경우                   |
@@ -2373,7 +2359,7 @@ POST /v4.0/db-instances/{dbInstanceId}/force-restart
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbInstance.Get | 고가용성 정보 보기 |
+| RDSforMariaDB:DbInstance.Get | 고가용성 정보 보기 |
 
 <a id="view-high-availability-information-request"></a>
 #### 요청
@@ -2402,15 +2388,15 @@ GET /v4.0/db-instances/{dbInstanceId}/high-availability
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "useHighAvailability": false,
-  "haStatus": "CREATED",
-  "pingInterval": 1,
-  "pingType": "CONNECTION"
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "useHighAvailability": false,
+    "haStatus": "CREATED",
+    "pingInterval": 1,
+    "pingType": "CONNECTION"
 }
 ```
 
@@ -2419,7 +2405,7 @@ GET /v4.0/db-instances/{dbInstanceId}/high-availability
 | 이름 | 타입 | 설명 |
 |-----|-----|-----|
 | useHighAvailability | Boolean | 고가용성 사용 여부<br/>- 기본값: `false` |
-| haStatus | Enum | 고가용성 상태<br/>- `CREATED`: 생성됨<br/>- `STABLE`: 정상<br/>- `PAUSING`: 일시 중지 중<br/>- `DISABLE`: 정지<br/>- `DISABLE_MASTER_IN_REPLICATION`: 마스터 비정상 복제 감지로 인한 고가용성 중단<br/>- `DISABLE_MHA_PROCESS`: 고가용성 프로세스 중단<br/>- `DISABLE_REPLICATION_STOP`: 복제 중단으로 인한 고가용성 중단<br/>- `DISABLE_REPLICATION_DELAY`: 복제 지연으로 인한 고가용성 중단<br/>- `FAILOVER_STARTED`: 장애 조치 시작<br/>- `FAILOVER_FAILED`: 장애 조치 실패<br/>- `FAILOVER_COMPLETED`: 장애 조치 완료<br/>- `DELETED`: 삭제됨<br/>- `PAUSED`: 일시 중지<br/>- `PAUSED_DUE_TO_TASK`: 작업으로 인한 일시 중지<br/>- `PAUSED_DUE_TO_STOP`: DB 인스턴스 정지로 인한 일시 중지<br/>- `MASTER_FAILURE_DETECTION`: 마스터 장애 감지 |
+| haStatus | Enum | 고가용성 상태<br/>- `CREATED`: 생성됨<br/>- `STABLE`: 정상<br/>- `PAUSING`: 일시 중지 중<br/>- `DISABLE`: 정지<br/>- `DISABLE_MASTER_IN_REPLICATION`: Primary 비정상 복제 감지로 인한 고가용성 중단<br/>- `DISABLE_MHA_PROCESS`: 고가용성 프로세스 중단<br/>- `DISABLE_REPLICATION_STOP`: 복제 중단으로 인한 고가용성 중단<br/>- `DISABLE_REPLICATION_DELAY`: 복제 지연으로 인한 고가용성 중단<br/>- `FAILOVER_STARTED`: 장애 조치 시작<br/>- `FAILOVER_FAILED`: 장애 조치 실패<br/>- `FAILOVER_COMPLETED`: 장애 조치 완료<br/>- `DELETED`: 삭제됨<br/>- `PAUSED`: 일시 중지<br/>- `PAUSED_DUE_TO_TASK`: 작업으로 인한 일시 중지<br/>- `PAUSED_DUE_TO_STOP`: DB 인스턴스 정지로 인한 일시 중지<br/>- `MASTER_FAILURE_DETECTION`: Primary 장애 감지 |
 | pingInterval | Number | Ping 간격(초) |
 | pingType | Enum | Ping 방식<br/>- `CONNECTION`: CONNECTION 방식<br/>- `INSERT`: INSERT 방식<br/>- `SELECT`: SELECT 방식 |
 
@@ -2433,7 +2419,7 @@ GET /v4.0/db-instances/{dbInstanceId}/high-availability
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:HighAvailability.Modify | 고가용성 수정하기 |
+| RDSforMariaDB:HighAvailability.Modify | 고가용성 수정하기 |
 
 <a id="modify-high-availability-request"></a>
 #### 요청
@@ -2457,8 +2443,8 @@ PUT /v4.0/db-instances/{dbInstanceId}/high-availability
 
 ```json
 {
-  "useHighAvailability": false,
-  "pingInterval": 1
+    "useHighAvailability": false,
+    "pingInterval": 1
 }
 ```
 
@@ -2474,7 +2460,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/high-availability
 
 | 이름 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|
-| dbInstanceCandidateName | String | Y | DB 인스턴스를 식별할 수 있는 예비 마스터 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
+| dbInstanceCandidateName | String | Y | Standby DB 인스턴스를 식별할 수 있는 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
 
 <a id="modify-high-availability-response"></a>
 #### 응답
@@ -2484,12 +2470,12 @@ PUT /v4.0/db-instances/{dbInstanceId}/high-availability
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "jobId": "550e8400-e29b-41d4-a716-446655440000"
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
@@ -2509,7 +2495,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/high-availability
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:HighAvailability.Pause | 고가용성 일시 중지하기 |
+| RDSforMariaDB:HighAvailability.Pause | 고가용성 일시 중지하기 |
 
 <a id="pause-high-availability-request"></a>
 #### 요청
@@ -2538,12 +2524,12 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/pause
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "jobId": "550e8400-e29b-41d4-a716-446655440000"
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
@@ -2563,7 +2549,7 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/pause
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:HighAvailability.Repair | 고가용성 복구하기 |
+| RDSforMariaDB:HighAvailability.Repair | 고가용성 복구하기 |
 
 <a id="recover-high-availability-request"></a>
 #### 요청
@@ -2592,12 +2578,12 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/repair
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "jobId": "550e8400-e29b-41d4-a716-446655440000"
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
@@ -2617,7 +2603,7 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/repair
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:HighAvailability.Resume | 고가용성 다시 시작하기 |
+| RDSforMariaDB:HighAvailability.Resume | 고가용성 다시 시작하기 |
 
 <a id="restart-high-availability-request"></a>
 #### 요청
@@ -2646,12 +2632,12 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/resume
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "jobId": "550e8400-e29b-41d4-a716-446655440000"
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
@@ -2671,7 +2657,7 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/resume
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:HighAvailability.Split | 고가용성 분리하기 |
+| RDSforMariaDB:HighAvailability.Split | 고가용성 분리하기 |
 
 <a id="separate-high-availability-request"></a>
 #### 요청
@@ -2700,12 +2686,12 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/split
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "jobId": "550e8400-e29b-41d4-a716-446655440000"
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
@@ -2725,7 +2711,7 @@ POST /v4.0/db-instances/{dbInstanceId}/high-availability/split
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbInstanceLog.List | 로그 파일 목록 보기 |
+| RDSforMariaDB:DbInstanceLog.List | 로그 파일 목록 보기 |
 
 <a id="list-log-files-request"></a>
 #### 요청
@@ -2755,19 +2741,19 @@ GET /v4.0/db-instances/{dbInstanceId}/log-files
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "logFiles": [
-    {
-      "logFileName": "logFileName-example",
-      "logFileType": "ERROR",
-      "logFileSize": 1,
-      "createdYmdt": "2023-12-31T15:00:00+09:00"
-    }
-  ]
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "logFiles": [
+        {
+            "logFileName": "logFileName-example",
+            "logFileType": "ERROR",
+            "logFileSize": 1,
+            "createdYmdt": "2023-12-31T15:00:00+09:00"
+        }
+    ]
 }
 ```
 
@@ -2791,7 +2777,7 @@ GET /v4.0/db-instances/{dbInstanceId}/log-files
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbInstanceLog.Export | 로그 파일 내보내기 |
+| RDSforMariaDB:DbInstanceLog.Export | 로그 파일 내보내기 |
 
 <a id="export-log-file-request"></a>
 #### 요청
@@ -2815,12 +2801,12 @@ POST /v4.0/db-instances/{dbInstanceId}/log-files/export
 
 ```json
 {
-  "logFileNames": [],
-  "tenantId": "0123456789abcdef0123456789abcdef",
-  "username": "username-example",
-  "password": "password-example",
-  "targetContainer": "targetContainer-example",
-  "objectPath": "objectPath-example"
+    "logFileNames": [],
+    "tenantId": "0123456789abcdef0123456789abcdef",
+    "username": "username-example",
+    "password": "password-example",
+    "targetContainer": "targetContainer-example",
+    "objectPath": "objectPath-example"
 }
 ```
 
@@ -2843,12 +2829,12 @@ POST /v4.0/db-instances/{dbInstanceId}/log-files/export
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "jobId": "550e8400-e29b-41d4-a716-446655440000"
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
@@ -2868,7 +2854,7 @@ POST /v4.0/db-instances/{dbInstanceId}/log-files/export
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbInstanceLog.Get | 로그 파일 내용 보기 |
+| RDSforMariaDB:DbInstanceLog.Get | 로그 파일 내용 보기 |
 
 <a id="view-log-file-contents-request"></a>
 #### 요청
@@ -2899,12 +2885,12 @@ GET /v4.0/db-instances/{dbInstanceId}/log-files/{logFileName}
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "content": "content-example"
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "content": "content-example"
 }
 ```
 
@@ -2912,7 +2898,7 @@ GET /v4.0/db-instances/{dbInstanceId}/log-files/{logFileName}
 
 | 이름 | 타입 | 설명 |
 |-----|-----|-----|
-| content | String | 로그 파일 내용 (최대 65533 bytes) |
+| content | String | 로그 파일 내용(최대 65533 bytes) |
 
 ---
 
@@ -2924,7 +2910,7 @@ GET /v4.0/db-instances/{dbInstanceId}/log-files/{logFileName}
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbInstance.Maintenance.List | DB 인스턴스 유지 관리 목록 보기 |
+| RDSforMariaDB:DbInstance.Maintenance.List | DB 인스턴스 유지 관리 목록 보기 |
 
 <a id="get-maintenances-request"></a>
 #### 요청
@@ -2956,31 +2942,31 @@ GET /v4.0/db-instances/{dbInstanceId}/maintenances
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "totalCounts": 1,
-  "maintenances": [
-    {
-      "maintenanceId": "550e8400-e29b-41d4-a716-446655440000",
-      "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
-      "category": "USER",
-      "description": "description-example",
-      "type": "UPDATE_DB_INSTANCE",
-      "payload": {
-      },
-      "required": false,
-      "deadlineYmdt": "2023-12-31T15:00:00+09:00",
-      "status": "PENDING",
-      "executionType": "SCHEDULED",
-      "addedYmdt": "2023-12-31T15:00:00+09:00",
-      "executionStartedYmdt": "2023-12-31T15:00:00+09:00",
-      "executionCompletedYmdt": "2023-12-31T15:00:00+09:00",
-      "haPairSynced": false
-    }
-  ]
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "totalCounts": 1,
+    "maintenances": [
+        {
+            "maintenanceId": "550e8400-e29b-41d4-a716-446655440000",
+            "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
+            "category": "USER",
+            "description": "description-example",
+            "type": "UPDATE_DB_INSTANCE",
+            "payload": {
+            },
+            "required": false,
+            "deadlineYmdt": "2023-12-31T15:00:00+09:00",
+            "status": "PENDING",
+            "executionType": "SCHEDULED",
+            "addedYmdt": "2023-12-31T15:00:00+09:00",
+            "executionStartedYmdt": "2023-12-31T15:00:00+09:00",
+            "executionCompletedYmdt": "2023-12-31T15:00:00+09:00",
+            "haPairSynced": false
+        }
+    ]
 }
 ```
 
@@ -2988,7 +2974,7 @@ GET /v4.0/db-instances/{dbInstanceId}/maintenances
 
 | 이름 | 타입 | 설명 |
 |-----|-----|-----|
-| totalCounts | Number | 유지 관리 목록 갯수 |
+| totalCounts | Number | 유지 관리 목록 개수 |
 | maintenances | Array | 유지 관리 목록 |
 | maintenances.maintenanceId | UUID | 유지 관리 아이디 |
 | maintenances.dbInstanceId | UUID | DB 인스턴스 아이디 |
@@ -3003,7 +2989,7 @@ GET /v4.0/db-instances/{dbInstanceId}/maintenances
 | maintenances.addedYmdt | DateTime | 유지 관리 스케줄 등록 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 | maintenances.executionStartedYmdt | DateTime | 유지 관리 시작 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 | maintenances.executionCompletedYmdt | DateTime | 유지 관리 종료 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
-| maintenances.haPairSynced | Boolean | HA 페어 동기화 여부. |
+| maintenances.haPairSynced | Boolean | HA 페어 동기화 여부 |
 
 ---
 
@@ -3015,7 +3001,7 @@ GET /v4.0/db-instances/{dbInstanceId}/maintenances
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbInstance.Maintenance.Execute | DB 인스턴스 유지 관리 즉시 실행하기 |
+| RDSforMariaDB:DbInstance.Maintenance.Execute | DB 인스턴스 유지 관리 즉시 실행하기 |
 
 <a id="execute-maintenance-now-request"></a>
 #### 요청
@@ -3039,11 +3025,11 @@ POST /v4.0/db-instances/{dbInstanceId}/maintenances/execute-now
 
 ```json
 {
-  "configId": "configId-example",
-  "category": "USER",
-  "description": "description-example",
-  "type": "UPDATE_DB_INSTANCE",
-  "payload": "payload-example"
+    "configId": "configId-example",
+    "category": "USER",
+    "description": "description-example",
+    "type": "UPDATE_DB_INSTANCE",
+    "payload": "payload-example"
 }
 ```
 
@@ -3065,12 +3051,12 @@ POST /v4.0/db-instances/{dbInstanceId}/maintenances/execute-now
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "jobId": "550e8400-e29b-41d4-a716-446655440000"
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
@@ -3090,7 +3076,7 @@ POST /v4.0/db-instances/{dbInstanceId}/maintenances/execute-now
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbInstance.Maintenance.Update | DB 인스턴스 유지 관리 예약하기 |
+| RDSforMariaDB:DbInstance.Maintenance.Update | DB 인스턴스 유지 관리 예약하기 |
 
 <a id="schedule-maintenance-request"></a>
 #### 요청
@@ -3114,11 +3100,11 @@ POST /v4.0/db-instances/{dbInstanceId}/maintenances/schedule
 
 ```json
 {
-  "configId": "configId-example",
-  "category": "USER",
-  "description": "description-example",
-  "type": "UPDATE_DB_INSTANCE",
-  "payload": "payload-example"
+    "configId": "configId-example",
+    "category": "USER",
+    "description": "description-example",
+    "type": "UPDATE_DB_INSTANCE",
+    "payload": "payload-example"
 }
 ```
 
@@ -3147,7 +3133,7 @@ POST /v4.0/db-instances/{dbInstanceId}/maintenances/schedule
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbInstance.Maintenance.Delete | DB 인스턴스 유지 관리 삭제하기 |
+| RDSforMariaDB:DbInstance.Maintenance.Delete | DB 인스턴스 유지 관리 삭제하기 |
 
 <a id="delete-maintenance-request"></a>
 #### 요청
@@ -3184,7 +3170,7 @@ DELETE /v4.0/db-instances/{dbInstanceId}/maintenances/{maintenanceId}
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbInstance.Get | 네트워크 정보 보기 |
+| RDSforMariaDB:DbInstance.Get | 네트워크 정보 보기 |
 
 <a id="list-network-information-request"></a>
 #### 요청
@@ -3213,24 +3199,24 @@ GET /v4.0/db-instances/{dbInstanceId}/network-info
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "availabilityZone": "kr-pub-a",
-  "subnet": {
-    "subnetId": "550e8400-e29b-41d4-a716-446655440000",
-    "subnetName": "subnetName-example",
-    "subnetCidr": "192.168.0.0/24"
-  },
-  "endPoints": [
-    {
-      "domain": "domain-example",
-      "ipAddress": "192.168.0.1",
-      "endPointType": "https://example.com"
-    }
-  ]
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "availabilityZone": "kr-pub-a",
+    "subnet": {
+        "subnetId": "550e8400-e29b-41d4-a716-446655440000",
+        "subnetName": "subnetName-example",
+        "subnetCidr": "192.168.0.0/24"
+    },
+    "endPoints": [
+        {
+            "domain": "domain-example",
+            "ipAddress": "192.168.0.1",
+            "endPointType": "https://example.com"
+        }
+    ]
 }
 ```
 
@@ -3258,7 +3244,7 @@ GET /v4.0/db-instances/{dbInstanceId}/network-info
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbInstance.Modify | 네트워크 정보 수정하기 |
+| RDSforMariaDB:DbInstance.Modify | 네트워크 정보 수정하기 |
 
 <a id="modify-network-information-request"></a>
 #### 요청
@@ -3282,7 +3268,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/network-info
 
 ```json
 {
-  "usePublicAccess": false
+    "usePublicAccess": false
 }
 ```
 
@@ -3300,12 +3286,12 @@ PUT /v4.0/db-instances/{dbInstanceId}/network-info
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "jobId": "550e8400-e29b-41d4-a716-446655440000"
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
@@ -3325,7 +3311,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/network-info
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbInstance.Promote | DB 인스턴스 승격하기 |
+| RDSforMariaDB:DbInstance.Promote | DB 인스턴스 승격하기 |
 
 <a id="promote-db-instance-request"></a>
 #### 요청
@@ -3354,12 +3340,12 @@ POST /v4.0/db-instances/{dbInstanceId}/promote
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "jobId": "550e8400-e29b-41d4-a716-446655440000"
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
@@ -3379,7 +3365,7 @@ POST /v4.0/db-instances/{dbInstanceId}/promote
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbInstance.Rebuild | DB 인스턴스 재구축하기 |
+| RDSforMariaDB:DbInstance.Rebuild | DB 인스턴스 재구축하기 |
 
 <a id="rebuild-db-instance-request"></a>
 #### 요청
@@ -3408,12 +3394,12 @@ POST /v4.0/db-instances/{dbInstanceId}/rebuild
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "jobId": "550e8400-e29b-41d4-a716-446655440000"
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
@@ -3433,7 +3419,7 @@ POST /v4.0/db-instances/{dbInstanceId}/rebuild
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbInstance.Replicate | DB 인스턴스 복제하기 |
+| RDSforMariaDB:DbInstance.Replicate | DB 인스턴스 복제하기 |
 
 <a id="replicate-db-instance-request"></a>
 #### 요청
@@ -3457,40 +3443,40 @@ POST /v4.0/db-instances/{dbInstanceId}/replicate
 
 ```json
 {
-  "dbInstanceName": "dbInstanceName",
-  "description": "description-example",
-  "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
-  "dbPort": 13306,
-  "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
-  "dbSecurityGroupIds": [],
-  "userGroupIds": [],
-  "useDefaultNotification": false,
-  "useDeletionProtection": false,
-  "useSlowQueryAnalysis": true,
-  "network": {
-    "usePublicAccess": false,
-    "availabilityZone": "kr-pub-a"
-  },
-  "storage": {
-    "storageType": "General SSD",
-    "storageSize": 20,
-    "storageAutoscale": {
-      "useStorageAutoscale": false
+    "dbInstanceName": "dbInstanceName",
+    "description": "description-example",
+    "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
+    "dbPort": 13306,
+    "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
+    "dbSecurityGroupIds": [],
+    "userGroupIds": [],
+    "useDefaultNotification": false,
+    "useDeletionProtection": false,
+    "useSlowQueryAnalysis": true,
+    "network": {
+        "usePublicAccess": false,
+        "availabilityZone": "kr-pub-a"
+    },
+    "storage": {
+        "storageType": "General SSD",
+        "storageSize": 20,
+        "storageAutoscale": {
+            "useStorageAutoscale": false
+        }
+    },
+    "backup": {
+        "backupPeriod": 0,
+        "backupRetryCount": 0,
+        "ftwrlWaitTimeout": 0,
+        "replicationRegion": "KR1",
+        "useBackupLock": false,
+        "backupSchedules": [
+            {
+                "backupWndBgnTime": "00:00:00",
+                "backupWndDuration": "HALF_AN_HOUR"
+            }
+        ]
     }
-  },
-  "backup": {
-    "backupPeriod": 0,
-    "backupRetryCount": 0,
-    "ftwrlWaitTimeout": 0,
-    "replicationRegion": "KR1",
-    "useBackupLock": false,
-    "backupSchedules": [
-      {
-        "backupWndBgnTime": "00:00:00",
-        "backupWndDuration": "HALF_AN_HOUR"
-      }
-    ]
-  }
 }
 ```
 
@@ -3498,8 +3484,8 @@ POST /v4.0/db-instances/{dbInstanceId}/replicate
 
 | 이름 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|
-| dbInstanceName | String | Y | DB 인스턴스를 식별할 수 있는 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
-| description | String | N | DB 인스턴스에 대한 추가 정보<br/>- 최대 길이: `100` |
+| dbInstanceName | String | Y | Primary DB 인스턴스를 식별할 수 있는 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
+| description | String | N | DB 인스턴스 추가 정보<br/>- 최대 길이: `100` |
 | dbFlavorId | UUID | N | DB 인스턴스 사양의 식별자 |
 | dbPort | Number | N | DB 포트<br/>- 최솟값: 3306, 최댓값: 43306 |
 | parameterGroupId | UUID | N | 파라미터 그룹의 식별자 |
@@ -3520,7 +3506,7 @@ POST /v4.0/db-instances/{dbInstanceId}/replicate
 | backup.backupPeriod | Number | N | 백업 보관 기간(일)<br/>- 최솟값: `0`<br/>- 최댓값: `730` |
 | backup.backupRetryCount | Number | N | 백업 재시도 횟수<br/>- 최솟값: `0`<br/>- 최댓값: `10` |
 | backup.ftwrlWaitTimeout | Number | N | 쿼리 지연 대기 시간(초)<br/>- 최솟값: `0`<br/>- 최댓값: `21600` |
-| backup.replicationRegion | Enum | N | 백업 복제 리전<br/>- `KR1`: 한국(판교)<br/>- `KR2`: 한국(평촌)<br/>- `JP1`: 일본(도쿄) |
+| backup.replicationRegion | Enum | N | 백업 복제 리전<br/>- `KR1`: 한국(판교) |
 | backup.useBackupLock | Boolean | N | 테이블 잠금 사용 여부 |
 | backup.backupSchedules | Array | N | 백업 스케줄 목록 |
 | backup.backupSchedules.backupWndBgnTime | Time | N | 백업 시작 시간 |
@@ -3543,12 +3529,12 @@ POST /v4.0/db-instances/{dbInstanceId}/replicate
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "jobId": "550e8400-e29b-41d4-a716-446655440000"
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
@@ -3568,7 +3554,7 @@ POST /v4.0/db-instances/{dbInstanceId}/replicate
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbInstance.Restart | DB 인스턴스 재시작하기 |
+| RDSforMariaDB:DbInstance.Restart | DB 인스턴스 재시작하기 |
 
 <a id="restart-db-instance-request"></a>
 #### 요청
@@ -3592,11 +3578,11 @@ POST /v4.0/db-instances/{dbInstanceId}/restart
 
 ```json
 {
-  "useOnlineFailover": false,
-  "executeBackup": false,
-  "waitReplicationDelay": false,
-  "useReadOnly": false,
-  "osRestart": false
+    "useOnlineFailover": false,
+    "executeBackup": false,
+    "waitReplicationDelay": false,
+    "useReadOnly": false,
+    "osRestart": false
 }
 ```
 
@@ -3618,12 +3604,12 @@ POST /v4.0/db-instances/{dbInstanceId}/restart
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "jobId": "550e8400-e29b-41d4-a716-446655440000"
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
@@ -3643,7 +3629,7 @@ POST /v4.0/db-instances/{dbInstanceId}/restart
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbInstance.Get | DB 인스턴스 복원 정보 조회 |
+| RDSforMariaDB:DbInstance.Get | DB 인스턴스 복원 정보 조회 |
 
 <a id="view-restoration-information-request"></a>
 #### 요청
@@ -3672,34 +3658,34 @@ GET /v4.0/db-instances/{dbInstanceId}/restoration-info
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "oldestRestorableYmdt": "2023-12-31T15:00:00+09:00",
-  "latestRestorableYmdt": "2023-12-31T15:00:00+09:00",
-  "restorableBackups": [
-    {
-      "backup": {
-        "backupId": "550e8400-e29b-41d4-a716-446655440000",
-        "backupName": "backupName-example",
-        "backupStatus": "BACKING_UP",
-        "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
-        "dbInstanceName": "dbInstanceName-example",
-        "dbVersion": "MYSQL_V8411",
-        "backupType": "AUTO",
-        "backupSize": 1,
-        "useBackupLock": false,
-        "failoverCount": 1,
-        "binLogFileName": "binLogFileName-example",
-        "binLogPosition": 1,
-        "createdYmdt": "2023-12-31T15:00:00+09:00",
-        "updatedYmdt": "2023-12-31T15:00:00+09:00"
-      },
-      "restorableBinLogs": []
-    }
-  ]
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "oldestRestorableYmdt": "2023-12-31T15:00:00+09:00",
+    "latestRestorableYmdt": "2023-12-31T15:00:00+09:00",
+    "restorableBackups": [
+        {
+            "backup": {
+                "backupId": "550e8400-e29b-41d4-a716-446655440000",
+                "backupName": "backupName-example",
+                "backupStatus": "BACKING_UP",
+                "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
+                "dbInstanceName": "dbInstanceName-example",
+                "dbVersion": "MARIADB_V11808",
+                "backupType": "AUTO",
+                "backupSize": 1,
+                "useBackupLock": false,
+                "failoverCount": 1,
+                "binLogFileName": "binLogFileName-example",
+                "binLogPosition": 1,
+                "createdYmdt": "2023-12-31T15:00:00+09:00",
+                "updatedYmdt": "2023-12-31T15:00:00+09:00"
+            },
+            "restorableBinLogs": []
+        }
+    ]
 }
 ```
 
@@ -3737,7 +3723,7 @@ GET /v4.0/db-instances/{dbInstanceId}/restoration-info
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbInstance.Get | 복원될 마지막 쿼리 조회 |
+| RDSforMariaDB:DbInstance.Get | 복원될 마지막 쿼리 조회 |
 
 <a id="view-the-last-query-to-be-restored-request"></a>
 #### 요청
@@ -3783,13 +3769,13 @@ GET /v4.0/db-instances/{dbInstanceId}/restoration-info/last-query
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "executedYmdt": "2023-12-31T15:00:00+09:00",
-  "lastQuery": "lastQuery-example"
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "executedYmdt": "2023-12-31T15:00:00+09:00",
+    "lastQuery": "lastQuery-example"
 }
 ```
 
@@ -3810,7 +3796,7 @@ GET /v4.0/db-instances/{dbInstanceId}/restoration-info/last-query
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbInstance.Restore | DB 인스턴스 복원 |
+| RDSforMariaDB:DbInstance.Restore | DB 인스턴스 복원 |
 
 <a id="restoration-request"></a>
 #### 요청
@@ -3834,46 +3820,46 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 
 ```json
 {
-  "dbInstanceName": "dbInstanceName",
-  "description": "description-example",
-  "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
-  "dbPort": 13306,
-  "useHighAvailability": false,
-  "pingInterval": 3,
-  "storage": {
-    "storageType": "General SSD",
-    "storageSize": 20,
-    "storageAutoscale": {
-      "useStorageAutoscale": false
-    }
-  },
-  "network": {
-    "subnetId": "550e8400-e29b-41d4-a716-446655440000",
-    "usePublicAccess": false,
-    "availabilityZone": "kr-pub-a"
-  },
-  "backup": {
-    "backupPeriod": 0,
-    "ftwrlWaitTimeout": 1800,
-    "backupRetryCount": 0,
-    "replicationRegion": "KR1",
-    "useBackupLock": true,
-    "backupSchedules": [
-      {
-        "backupWndBgnTime": "00:00:00",
-        "backupWndDuration": "HALF_AN_HOUR"
-      }
-    ]
-  },
-  "restore": {
-    "restoreType": "TIMESTAMP"
-  },
-  "useDefaultNotification": false,
-  "useSlowQueryAnalysis": true,
-  "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
-  "dbSecurityGroupIds": [],
-  "userGroupIds": [],
-  "useDeletionProtection": false
+    "dbInstanceName": "dbInstanceName",
+    "description": "description-example",
+    "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
+    "dbPort": 13306,
+    "useHighAvailability": false,
+    "pingInterval": 3,
+    "storage": {
+        "storageType": "General SSD",
+        "storageSize": 20,
+        "storageAutoscale": {
+            "useStorageAutoscale": false
+        }
+    },
+    "network": {
+        "subnetId": "550e8400-e29b-41d4-a716-446655440000",
+        "usePublicAccess": false,
+        "availabilityZone": "kr-pub-a"
+    },
+    "backup": {
+        "backupPeriod": 0,
+        "ftwrlWaitTimeout": 1800,
+        "backupRetryCount": 0,
+        "replicationRegion": "KR1",
+        "useBackupLock": true,
+        "backupSchedules": [
+            {
+                "backupWndBgnTime": "00:00:00",
+                "backupWndDuration": "HALF_AN_HOUR"
+            }
+        ]
+    },
+    "restore": {
+        "restoreType": "TIMESTAMP"
+    },
+    "useDefaultNotification": false,
+    "useSlowQueryAnalysis": true,
+    "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
+    "dbSecurityGroupIds": [],
+    "userGroupIds": [],
+    "useDeletionProtection": false
 }
 ```
 
@@ -3881,8 +3867,8 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 
 | 이름 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|
-| dbInstanceName | String | Y | DB 인스턴스를 식별할 수 있는 마스터 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
-| description | String | N | DB 인스턴스에 대한 추가 정보<br/>- 최대 길이: `100` |
+| dbInstanceName | String | Y | Primary DB 인스턴스를 식별할 수 있는 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
+| description | String | N | DB 인스턴스 추가 정보<br/>- 최대 길이: `100` |
 | dbFlavorId | UUID | N | DB 인스턴스 사양의 식별자. 미입력 시 원본 인스턴스의 사양이 적용됩니다. |
 | dbPort | Number | N | DB 포트 |
 | useHighAvailability | Boolean | N | 고가용성 사용 여부<br/>- 기본값: `false` |
@@ -3900,7 +3886,7 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 | backup.backupPeriod | Number | N | 백업 보관 기간(일). 미입력 시 원본 인스턴스의 백업 보관 기간이 적용됩니다.<br/>- 최솟값: `0`<br/>- 최댓값: `730` |
 | backup.ftwrlWaitTimeout | Number | N | 쿼리 지연 대기 시간(초)<br/>- 최솟값: `0`<br/>- 최댓값: `21600` |
 | backup.backupRetryCount | Number | N | 백업 재시도 횟수<br/>- 최솟값: `0`<br/>- 최댓값: `10` |
-| backup.replicationRegion | Enum | N | 백업 복제 리전<br/>- `KR1`: 한국(판교)<br/>- `KR2`: 한국(평촌)<br/>- `JP1`: 일본(도쿄) |
+| backup.replicationRegion | Enum | N | 백업 복제 리전<br/>- `KR1`: 한국(판교) |
 | backup.useBackupLock | Boolean | N | 테이블 잠금 사용 여부<br/>- 기본값: `true` |
 | backup.backupSchedules | Array | N | 백업 스케줄 목록. 미입력 시 원본 인스턴스의 백업 스케줄이 적용됩니다. |
 | backup.backupSchedules.backupWndBgnTime | Time | N | 백업 시작 시간 |
@@ -3919,7 +3905,7 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 
 | 이름 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|
-| dbInstanceCandidateName | String | Y | DB 인스턴스를 식별할 수 있는 예비 마스터 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
+| dbInstanceCandidateName | String | Y | Standby DB 인스턴스를 식별할 수 있는 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
 
 <a id="restoration-section-2"></a>
 #### 스토리지 자동 확장 사용 시
@@ -3949,7 +3935,7 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 | restore.binLog.binLogFileName | String | N | 복원에 사용할 바이너리 로그 이름 |
 | restore.binLog.binLogPosition | Number | N | 복원에 사용할 바이너리 로그 위치 |
 
-바이너리 로그를 이용한 시점 복원 시 기준 백업의 바이너리 로그 파일 및 위치를 기준으로 그 이후에 기록된 로그에 대해 복원이 가능합니다.
+바이너리 로그를 이용한 시점 복원 시 기준 백업의 바이너리 로그 파일 및 위치를 기준으로 그 이후에 기록된 로그를 복원할 수 있습니다.
 
 <a id="restoration-restoretype-backup"></a>
 #### 백업을 이용한 복원 시 요청(restoreType이 `BACKUP`인 경우)
@@ -3966,12 +3952,12 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "jobId": "550e8400-e29b-41d4-a716-446655440000"
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
@@ -3991,7 +3977,7 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbInstance.Start | DB 인스턴스 시작하기 |
+| RDSforMariaDB:DbInstance.Start | DB 인스턴스 시작하기 |
 
 <a id="start-db-instance-request"></a>
 #### 요청
@@ -4020,12 +4006,12 @@ POST /v4.0/db-instances/{dbInstanceId}/start
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "jobId": "550e8400-e29b-41d4-a716-446655440000"
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
@@ -4045,7 +4031,7 @@ POST /v4.0/db-instances/{dbInstanceId}/start
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbInstance.Stop | DB 인스턴스 정지하기 |
+| RDSforMariaDB:DbInstance.Stop | DB 인스턴스 정지하기 |
 
 <a id="stop-db-instance-request"></a>
 #### 요청
@@ -4074,12 +4060,12 @@ POST /v4.0/db-instances/{dbInstanceId}/stop
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "jobId": "550e8400-e29b-41d4-a716-446655440000"
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
@@ -4099,7 +4085,7 @@ POST /v4.0/db-instances/{dbInstanceId}/stop
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbInstance.Get | 스토리지 정보 보기 |
+| RDSforMariaDB:DbInstance.Get | 스토리지 정보 보기 |
 
 <a id="view-storage-information-request"></a>
 #### 요청
@@ -4128,20 +4114,20 @@ GET /v4.0/db-instances/{dbInstanceId}/storage-info
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "storageType": "General SSD",
-  "storageSize": 1,
-  "storageStatus": "DELETED",
-  "storageAutoscale": {
-    "useStorageAutoscale": false,
-    "threshold": 1,
-    "maxStorageSize": 1,
-    "cooldownTime": 1
-  }
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "storageType": "General SSD",
+    "storageSize": 1,
+    "storageStatus": "DELETED",
+    "storageAutoscale": {
+        "useStorageAutoscale": false,
+        "threshold": 1,
+        "maxStorageSize": 1,
+        "cooldownTime": 1
+    }
 }
 ```
 
@@ -4168,7 +4154,7 @@ GET /v4.0/db-instances/{dbInstanceId}/storage-info
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbInstance.Modify | 스토리지 정보 수정하기 |
+| RDSforMariaDB:DbInstance.Modify | 스토리지 정보 수정하기 |
 
 <a id="modify-storage-information-request"></a>
 #### 요청
@@ -4192,10 +4178,10 @@ PUT /v4.0/db-instances/{dbInstanceId}/storage-info
 
 ```json
 {
-  "storageSize": 1,
-  "storageAutoscale": {
-    "useStorageAutoscale": false
-  }
+    "storageSize": 1,
+    "storageAutoscale": {
+        "useStorageAutoscale": false
+    }
 }
 ```
 
@@ -4224,12 +4210,12 @@ PUT /v4.0/db-instances/{dbInstanceId}/storage-info
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "jobId": "550e8400-e29b-41d4-a716-446655440000"
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
@@ -4263,7 +4249,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/storage-info
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:Backup.List | 백업 목록 조회 |
+| RDSforMariaDB:Backup.List | 백업 목록 조회 |
 
 <a id="retrieve-backup-list-request"></a>
 #### 요청
@@ -4280,8 +4266,8 @@ GET /v4.0/backups
 | backupType | Query | Enum | N | 백업 유형<br/>- `AUTO`<br/>- `MANUAL` |
 | dbInstanceId | Query | UUID | N | 원본 DB 인스턴스의 식별자 |
 | dbVersion | Query | Enum | N | DB 엔진 버전 |
-| page | Query | Number | N | 조회할 목록의 페이지 (기본값: 1)<br/>- 최솟값: `1` |
-| size | Query | Number | N | 조회할 목록의 페이지 크기 (기본값: 20)<br/>- 최솟값: `1`<br/>- 최댓값: `100` |
+| page | Query | Number | N | 조회할 목록의 페이지(기본값: 1)<br/>- 최솟값: `1` |
+| size | Query | Number | N | 조회할 목록의 페이지 크기(기본값: 20)<br/>- 최솟값: `1`<br/>- 최댓값: `100` |
 
 <a id="retrieve-backup-list-request-body"></a>
 #### 요청 본문
@@ -4296,26 +4282,26 @@ GET /v4.0/backups
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "totalCounts": 1,
-  "backups": [
-    {
-      "backupId": "550e8400-e29b-41d4-a716-446655440000",
-      "backupName": "backupName-example",
-      "backupStatus": "BACKING_UP",
-      "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
-      "dbVersion": "MYSQL_V8411",
-      "utilVersion": "utilVersion-example",
-      "backupType": "AUTO",
-      "backupSize": 1,
-      "createdYmdt": "2023-12-31T15:00:00+09:00",
-      "updatedYmdt": "2023-12-31T15:00:00+09:00"
-    }
-  ]
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "totalCounts": 1,
+    "backups": [
+        {
+            "backupId": "550e8400-e29b-41d4-a716-446655440000",
+            "backupName": "backupName-example",
+            "backupStatus": "BACKING_UP",
+            "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
+            "dbVersion": "MARIADB_V11808",
+            "utilVersion": "utilVersion-example",
+            "backupType": "AUTO",
+            "backupSize": 1,
+            "createdYmdt": "2023-12-31T15:00:00+09:00",
+            "updatedYmdt": "2023-12-31T15:00:00+09:00"
+        }
+    ]
 }
 ```
 
@@ -4346,7 +4332,7 @@ GET /v4.0/backups
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:Backup.Create | 백업 생성하기 |
+| RDSforMariaDB:Backup.Create | 백업 생성하기 |
 
 <a id="create-backup-request"></a>
 #### 요청
@@ -4363,8 +4349,8 @@ POST /v4.0/backups
 
 ```json
 {
-  "backupName": "backupName",
-  "backupMethodType": "FULL"
+    "backupName": "backupName",
+    "backupMethodType": "FULL"
 }
 ```
 
@@ -4404,12 +4390,12 @@ POST /v4.0/backups
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "jobId": "550e8400-e29b-41d4-a716-446655440000"
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
@@ -4429,7 +4415,7 @@ POST /v4.0/backups
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:Backup.Delete | 백업 삭제하기 |
+| RDSforMariaDB:Backup.Delete | 백업 삭제하기 |
 
 <a id="delete-backup-request"></a>
 #### 요청
@@ -4458,12 +4444,12 @@ DELETE /v4.0/backups/{backupId}
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "jobId": "550e8400-e29b-41d4-a716-446655440000"
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
@@ -4483,7 +4469,7 @@ DELETE /v4.0/backups/{backupId}
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:Backup.Get | 백업 단건 조회 |
+| RDSforMariaDB:Backup.Get | 백업 단건 조회 |
 
 <a id="view-backup-details-request"></a>
 #### 요청
@@ -4512,30 +4498,30 @@ GET /v4.0/backups/{backupId}
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "backup": {
-    "backupId": "550e8400-e29b-41d4-a716-446655440000",
-    "regionCode": "KR1",
-    "backupName": "backupName-example",
-    "backupStatus": "BACKING_UP",
-    "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
-    "dbInstanceName": "dbInstanceName-example",
-    "dbVersion": "MYSQL_V8411",
-    "utilVersion": "utilVersion-example",
-    "backupType": "AUTO",
-    "backupMethodType": "FULL",
-    "backupFileType": "XBSTREAM",
-    "backupSize": 1,
-    "isReplicable": false,
-    "binLogFileName": "binLogFileName-example",
-    "binLogPosition": 1,
-    "createdYmdt": "2023-12-31T15:00:00+09:00",
-    "updatedYmdt": "2023-12-31T15:00:00+09:00"
-  }
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "backup": {
+        "backupId": "550e8400-e29b-41d4-a716-446655440000",
+        "regionCode": "KR1",
+        "backupName": "backupName-example",
+        "backupStatus": "BACKING_UP",
+        "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
+        "dbInstanceName": "dbInstanceName-example",
+        "dbVersion": "MARIADB_V11808",
+        "utilVersion": "utilVersion-example",
+        "backupType": "AUTO",
+        "backupMethodType": "FULL",
+        "backupFileType": "XBSTREAM",
+        "backupSize": 1,
+        "isReplicable": false,
+        "binLogFileName": "binLogFileName-example",
+        "binLogPosition": 1,
+        "createdYmdt": "2023-12-31T15:00:00+09:00",
+        "updatedYmdt": "2023-12-31T15:00:00+09:00"
+    }
 }
 ```
 
@@ -4545,19 +4531,19 @@ GET /v4.0/backups/{backupId}
 |-----|-----|-----|
 | backup | Object | 백업 상세 정보 |
 | backup.backupId | UUID | 백업의 식별자 |
-| backup.regionCode | Enum | 리전 코드<br/>- `KR1`: 한국(판교)<br/>- `KR2`: 한국(평촌)<br/>- `JP1`: 일본(도쿄) |
+| backup.regionCode | Enum | 리전 코드<br/>- `KR1`: 한국(판교) |
 | backup.backupName | String | 백업을 식별할 수 있는 이름 |
-| backup.backupStatus | Enum | 백업의 현재 상태<br/>- `BACKING_UP`: 백업 중(스피너)<br/>- `VERIFYING`: 검증 중(스피너)<br/>- `COMPLETED`: 사용 가능(녹색 아이콘)<br/>- `DELETING`: 삭제 중(스피너)<br/>- `DELETED`: 삭제됨(회색 아이콘)<br/>- `ERROR`: 에러(적색 아이콘) |
+| backup.backupStatus | Enum | 백업의 현재 상태<br/>- `BACKING_UP`: 백업 중(스피너)<br/>- `VERIFYING`: 검증 중(스피너)<br/>- `COMPLETED`: 사용 가능(녹색 아이콘)<br/>- `DELETING`: 삭제 중(스피너)<br/>- `DELETED`: 삭제됨(회색 아이콘)<br/>- `ERROR`: 오류(적색 아이콘) |
 | backup.dbInstanceId | UUID | 원본 DB 인스턴스의 식별자 |
 | backup.dbInstanceName | String | 원본 DB 인스턴스의 이름 |
 | backup.dbVersion | Enum | DB 엔진 버전 |
 | backup.utilVersion | String | 유틸리티 버전 |
-| backup.backupType | Enum | 백업 유형 (AUTO, MANUAL)<br/>- `AUTO`<br/>- `MANUAL` |
-| backup.backupMethodType | Enum | 백업 방식 (FULL, SNAPSHOT, INCREMENTAL)<br/>- `FULL`<br/>- `INCREMENTAL`<br/>- `SNAPSHOT` |
+| backup.backupType | Enum | 백업 유형(AUTO, MANUAL)<br/>- `AUTO`<br/>- `MANUAL` |
+| backup.backupMethodType | Enum | 백업 방식(FULL, SNAPSHOT, INCREMENTAL)<br/>- `FULL`<br/>- `INCREMENTAL`<br/>- `SNAPSHOT` |
 | backup.backupFileType | Enum | 백업 파일 유형<br/>- `XBSTREAM`<br/>- `TAR_ZSTD`<br/>- `TAR_LZ4`<br/>- `TAR_GZIP`<br/>- `SNAPSHOT` |
 | backup.backupSize | Number | 백업 크기(Byte) |
 | backup.isReplicable | Boolean | 복제 가능 여부 |
-| backup.binLogFileName | String | 바이너리 로그 파일명 |
+| backup.binLogFileName | String | 바이너리 로그 파일 이름 |
 | backup.binLogPosition | Number | 바이너리 로그 위치 |
 | backup.createdYmdt | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 | backup.updatedYmdt | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
@@ -4572,7 +4558,7 @@ GET /v4.0/backups/{backupId}
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:Backup.Export | 백업 내보내기 |
+| RDSforMariaDB:Backup.Export | 백업 내보내기 |
 
 <a id="export-backup-request"></a>
 #### 요청
@@ -4596,11 +4582,11 @@ POST /v4.0/backups/{backupId}/export
 
 ```json
 {
-  "tenantId": "0123456789abcdef0123456789abcdef",
-  "username": "example@nhncloud.com or example",
-  "password": "password-example",
-  "targetContainer": "targetContainer-example",
-  "objectPath": "objectPath-example"
+    "tenantId": "0123456789abcdef0123456789abcdef",
+    "username": "example@nhncloud.com or example",
+    "password": "password-example",
+    "targetContainer": "targetContainer-example",
+    "objectPath": "objectPath-example"
 }
 ```
 
@@ -4622,12 +4608,12 @@ POST /v4.0/backups/{backupId}/export
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "jobId": "550e8400-e29b-41d4-a716-446655440000"
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
@@ -4647,7 +4633,7 @@ POST /v4.0/backups/{backupId}/export
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:Backup.Restore | 백업 복원하기 |
+| RDSforMariaDB:Backup.Restore | 백업 복원하기 |
 
 <a id="restore-backup-request"></a>
 #### 요청
@@ -4671,43 +4657,43 @@ POST /v4.0/backups/{backupId}/restore
 
 ```json
 {
-  "dbInstanceName": "dbInstanceName",
-  "description": "description-example",
-  "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
-  "dbPort": 13306,
-  "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
-  "dbSecurityGroupIds": [],
-  "userGroupIds": [],
-  "useHighAvailability": false,
-  "pingInterval": 3,
-  "useDefaultNotification": false,
-  "useDeletionProtection": false,
-  "useSlowQueryAnalysis": true,
-  "network": {
-    "subnetId": "550e8400-e29b-41d4-a716-446655440000",
-    "usePublicAccess": false,
-    "availabilityZone": "kr-pub-a"
-  },
-  "storage": {
-    "storageType": "General SSD",
-    "storageSize": 20,
-    "storageAutoscale": {
-      "useStorageAutoscale": false
+    "dbInstanceName": "dbInstanceName",
+    "description": "description-example",
+    "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
+    "dbPort": 13306,
+    "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
+    "dbSecurityGroupIds": [],
+    "userGroupIds": [],
+    "useHighAvailability": false,
+    "pingInterval": 3,
+    "useDefaultNotification": false,
+    "useDeletionProtection": false,
+    "useSlowQueryAnalysis": true,
+    "network": {
+        "subnetId": "550e8400-e29b-41d4-a716-446655440000",
+        "usePublicAccess": false,
+        "availabilityZone": "kr-pub-a"
+    },
+    "storage": {
+        "storageType": "General SSD",
+        "storageSize": 20,
+        "storageAutoscale": {
+            "useStorageAutoscale": false
+        }
+    },
+    "backup": {
+        "backupPeriod": 0,
+        "backupRetryCount": 0,
+        "ftwrlWaitTimeout": 0,
+        "replicationRegion": "KR1",
+        "useBackupLock": false,
+        "backupSchedules": [
+            {
+                "backupWndBgnTime": "00:00:00",
+                "backupWndDuration": "HALF_AN_HOUR"
+            }
+        ]
     }
-  },
-  "backup": {
-    "backupPeriod": 0,
-    "backupRetryCount": 0,
-    "ftwrlWaitTimeout": 0,
-    "replicationRegion": "KR1",
-    "useBackupLock": false,
-    "backupSchedules": [
-      {
-        "backupWndBgnTime": "00:00:00",
-        "backupWndDuration": "HALF_AN_HOUR"
-      }
-    ]
-  }
 }
 ```
 
@@ -4715,8 +4701,8 @@ POST /v4.0/backups/{backupId}/restore
 
 | 이름 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|
-| dbInstanceName | String | Y | DB 인스턴스를 식별할 수 있는 마스터 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
-| description | String | N | DB 인스턴스에 대한 추가 정보<br/>- 최대 길이: `100` |
+| dbInstanceName | String | Y | Primary DB 인스턴스를 식별할 수 있는 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
+| description | String | N | DB 인스턴스 추가 정보<br/>- 최대 길이: `100` |
 | dbFlavorId | UUID | N | DB 인스턴스 사양의 식별자. 미지정 시 원본 인스턴스 값 사용 |
 | dbPort | Number | N | DB 포트. 미지정 시 원본 인스턴스 값 사용<br/>- 최솟값: 3306, 최댓값: 43306 |
 | parameterGroupId | UUID | N | 파라미터 그룹의 식별자. 미지정 시 원본 인스턴스 값 사용 |
@@ -4740,7 +4726,7 @@ POST /v4.0/backups/{backupId}/restore
 | backup.backupPeriod | Number | N | 백업 보관 기간(일). 미지정 시 원본 인스턴스 값 사용<br/>- 최솟값: `0`<br/>- 최댓값: `730` |
 | backup.backupRetryCount | Number | N | 백업 재시도 횟수. 미지정 시 원본 인스턴스 값 사용<br/>- 최솟값: `0`<br/>- 최댓값: `10` |
 | backup.ftwrlWaitTimeout | Number | N | 쿼리 지연 대기 시간(초). 미지정 시 원본 인스턴스 값 사용<br/>- 최솟값: `0`<br/>- 최댓값: `21600` |
-| backup.replicationRegion | Enum | N | 백업 복제 리전<br/>- `KR1`: 한국(판교)<br/>- `KR2`: 한국(평촌)<br/>- `JP1`: 일본(도쿄) |
+| backup.replicationRegion | Enum | N | 백업 복제 리전<br/>- `KR1`: 한국(판교) |
 | backup.useBackupLock | Boolean | N | 테이블 잠금 사용 여부. 미지정 시 원본 인스턴스 값 사용 |
 | backup.backupSchedules | Array | N | 백업 스케줄 목록. 미지정 시 원본 인스턴스 값 사용 |
 | backup.backupSchedules.backupWndBgnTime | Time | Y | 백업 시작 시간 |
@@ -4751,7 +4737,7 @@ POST /v4.0/backups/{backupId}/restore
 
 | 이름 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|
-| dbInstanceCandidateName | String | Y | DB 인스턴스를 식별할 수 있는 예비 마스터 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
+| dbInstanceCandidateName | String | Y | Standby DB 인스턴스를 식별할 수 있는 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
 
 <a id="restore-backup-section-2"></a>
 #### 스토리지 자동 확장 사용 시
@@ -4770,12 +4756,12 @@ POST /v4.0/backups/{backupId}/restore
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "jobId": "550e8400-e29b-41d4-a716-446655440000"
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
@@ -4808,7 +4794,7 @@ POST /v4.0/backups/{backupId}/restore
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbSecurityGroup.List | DB 보안 그룹 목록 보기 |
+| RDSforMariaDB:DbSecurityGroup.List | DB 보안 그룹 목록 보기 |
 
 <a id="list-db-security-groups-request"></a>
 #### 요청
@@ -4822,8 +4808,8 @@ GET /v4.0/db-security-groups
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
-| page | Query | Number | N | 조회할 목록의 페이지 (기본값: 1)<br/>- 최솟값: `1` |
-| size | Query | Number | N | 조회할 목록의 페이지 크기 (기본값: 20)<br/>- 최솟값: `1`<br/>- 최댓값: `100` |
+| page | Query | Number | N | 조회할 목록의 페이지(기본값: 1)<br/>- 최솟값: `1` |
+| size | Query | Number | N | 조회할 목록의 페이지 크기(기본값: 20)<br/>- 최솟값: `1`<br/>- 최댓값: `100` |
 
 <a id="list-db-security-groups-request-body"></a>
 #### 요청 본문
@@ -4838,22 +4824,22 @@ GET /v4.0/db-security-groups
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "totalCounts": 1,
-  "dbSecurityGroups": [
-    {
-      "dbSecurityGroupId": "550e8400-e29b-41d4-a716-446655440000",
-      "dbSecurityGroupName": "dbSecurityGroupName-example",
-      "description": "description-example",
-      "progressStatus": "NONE",
-      "createdYmdt": "2023-12-31T15:00:00+09:00",
-      "updatedYmdt": "2023-12-31T15:00:00+09:00"
-    }
-  ]
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "totalCounts": 1,
+    "dbSecurityGroups": [
+        {
+            "dbSecurityGroupId": "550e8400-e29b-41d4-a716-446655440000",
+            "dbSecurityGroupName": "dbSecurityGroupName-example",
+            "description": "description-example",
+            "progressStatus": "NONE",
+            "createdYmdt": "2023-12-31T15:00:00+09:00",
+            "updatedYmdt": "2023-12-31T15:00:00+09:00"
+        }
+    ]
 }
 ```
 
@@ -4865,7 +4851,7 @@ GET /v4.0/db-security-groups
 | dbSecurityGroups | Array | DB 보안 그룹 목록 |
 | dbSecurityGroups.dbSecurityGroupId | UUID | DB 보안 그룹의 식별자 |
 | dbSecurityGroups.dbSecurityGroupName | String | DB 보안 그룹을 식별할 수 있는 이름 |
-| dbSecurityGroups.description | String | DB 보안 그룹에 대한 추가 정보 |
+| dbSecurityGroups.description | String | DB 보안 그룹 추가 정보 |
 | dbSecurityGroups.progressStatus | Enum | DB 보안 그룹의 현재 진행 상태<br/>- `NONE`: 없음<br/>- `CREATING_RULE`: 규칙 생성 중<br/>- `UPDATING_RULE`: 규칙 수정 중<br/>- `DELETING_RULE`: 규칙 삭제 중<br/>- `APPLYING_DEFAULT_RULE`: 기본 규칙 적용 중 |
 | dbSecurityGroups.createdYmdt | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 | dbSecurityGroups.updatedYmdt | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
@@ -4880,7 +4866,7 @@ GET /v4.0/db-security-groups
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbSecurityGroup.Create | DB 보안 그룹 생성하기 |
+| RDSforMariaDB:DbSecurityGroup.Create | DB 보안 그룹 생성하기 |
 
 <a id="create-db-security-group-request"></a>
 #### 요청
@@ -4897,21 +4883,21 @@ POST /v4.0/db-security-groups
 
 ```json
 {
-  "dbSecurityGroupName": "dbSecurityGroupName",
-  "description": "description-example",
-  "rules": [
-    {
-      "direction": "INGRESS",
-      "etherType": "IPV4",
-      "port": {
-        "portType": "ALL",
-        "minPort": 3306,
-        "maxPort": 1
-      },
-      "cidr": "192.168.0.0/24",
-      "description": "description-example"
-    }
-  ]
+    "dbSecurityGroupName": "dbSecurityGroupName",
+    "description": "description-example",
+    "rules": [
+        {
+            "direction": "INGRESS",
+            "etherType": "IPV4",
+            "port": {
+                "portType": "ALL",
+                "minPort": 3306,
+                "maxPort": 1
+            },
+            "cidr": "192.168.0.0/24",
+            "description": "description-example"
+        }
+    ]
 }
 ```
 
@@ -4920,7 +4906,7 @@ POST /v4.0/db-security-groups
 | 이름 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|
 | dbSecurityGroupName | String | Y | DB 보안 그룹을 식별할 수 있는 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
-| description | String | N | DB 보안 그룹에 대한 추가 정보<br/>- 최대 길이: `100` |
+| description | String | N | DB 보안 그룹 추가 정보<br/>- 최대 길이: `100` |
 | rules | Array | Y | DB 보안 그룹 규칙 목록 |
 | rules.direction | Enum | Y | 통신 방향<br/>- `INGRESS`: 수신<br/>- `EGRESS`: 송신 |
 | rules.etherType | Enum | Y | Ether 유형<br/>- `IPV4`: IPv4 형식<br/>- `IPV6`: IPv6 형식 |
@@ -4929,7 +4915,7 @@ POST /v4.0/db-security-groups
 | rules.port.minPort | Number | N | 포트 범위 최솟값<br/>- 최솟값: `3306` |
 | rules.port.maxPort | Number | N | 포트 범위 최댓값<br/>- 최댓값: `65535` |
 | rules.cidr | String | Y | CIDR |
-| rules.description | String | N | 보안 그룹 규칙에 대한 추가 정보 |
+| rules.description | String | N | 보안 그룹 규칙 추가 정보 |
 
 <a id="create-db-security-group-response"></a>
 #### 응답
@@ -4939,12 +4925,12 @@ POST /v4.0/db-security-groups
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "dbSecurityGroupId": "550e8400-e29b-41d4-a716-446655440000"
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "dbSecurityGroupId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
@@ -4964,7 +4950,7 @@ POST /v4.0/db-security-groups
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbSecurityGroup.Delete | DB 보안 그룹 삭제하기 |
+| RDSforMariaDB:DbSecurityGroup.Delete | DB 보안 그룹 삭제하기 |
 
 <a id="delete-db-security-group-request"></a>
 #### 요청
@@ -5000,7 +4986,7 @@ DELETE /v4.0/db-security-groups/{dbSecurityGroupId}
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbSecurityGroup.Get | DB 보안 그룹 상세 보기 |
+| RDSforMariaDB:DbSecurityGroup.Get | DB 보안 그룹 상세 보기 |
 
 <a id="list-db-security-group-details-request"></a>
 #### 요청
@@ -5029,33 +5015,33 @@ GET /v4.0/db-security-groups/{dbSecurityGroupId}
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "dbSecurityGroupId": "550e8400-e29b-41d4-a716-446655440000",
-  "dbSecurityGroupName": "dbSecurityGroupName-example",
-  "description": "description-example",
-  "progressStatus": "NONE",
-  "rules": [
-    {
-      "ruleId": "550e8400-e29b-41d4-a716-446655440000",
-      "description": "description-example",
-      "direction": "INGRESS",
-      "etherType": "IPV4",
-      "port": {
-        "portType": "ALL",
-        "minPort": 1,
-        "maxPort": 1
-      },
-      "cidr": "192.168.0.0/24",
-      "createdYmdt": "2023-12-31T15:00:00+09:00",
-      "updatedYmdt": "2023-12-31T15:00:00+09:00"
-    }
-  ],
-  "createdYmdt": "2023-12-31T15:00:00+09:00",
-  "updatedYmdt": "2023-12-31T15:00:00+09:00"
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "dbSecurityGroupId": "550e8400-e29b-41d4-a716-446655440000",
+    "dbSecurityGroupName": "dbSecurityGroupName-example",
+    "description": "description-example",
+    "progressStatus": "NONE",
+    "rules": [
+        {
+            "ruleId": "550e8400-e29b-41d4-a716-446655440000",
+            "description": "description-example",
+            "direction": "INGRESS",
+            "etherType": "IPV4",
+            "port": {
+                "portType": "ALL",
+                "minPort": 1,
+                "maxPort": 1
+            },
+            "cidr": "192.168.0.0/24",
+            "createdYmdt": "2023-12-31T15:00:00+09:00",
+            "updatedYmdt": "2023-12-31T15:00:00+09:00"
+        }
+    ],
+    "createdYmdt": "2023-12-31T15:00:00+09:00",
+    "updatedYmdt": "2023-12-31T15:00:00+09:00"
 }
 ```
 
@@ -5065,11 +5051,11 @@ GET /v4.0/db-security-groups/{dbSecurityGroupId}
 |-----|-----|-----|
 | dbSecurityGroupId | UUID | DB 보안 그룹의 식별자 |
 | dbSecurityGroupName | String | DB 보안 그룹을 식별할 수 있는 이름 |
-| description | String | DB 보안 그룹에 대한 추가 정보 |
+| description | String | DB 보안 그룹 추가 정보 |
 | progressStatus | Enum | DB 보안 그룹의 현재 진행 상태<br/>- `NONE`: 없음<br/>- `CREATING_RULE`: 규칙 생성 중<br/>- `UPDATING_RULE`: 규칙 수정 중<br/>- `DELETING_RULE`: 규칙 삭제 중<br/>- `APPLYING_DEFAULT_RULE`: 기본 규칙 적용 중 |
 | rules | Array | DB 보안 그룹 규칙 목록 |
 | rules.ruleId | UUID | DB 보안 그룹 규칙의 식별자 |
-| rules.description | String | DB 보안 그룹 규칙에 대한 추가 정보 |
+| rules.description | String | DB 보안 그룹 규칙 추가 정보 |
 | rules.direction | Enum | 통신 방향<br/>- `INGRESS`: 수신<br/>- `EGRESS`: 송신 |
 | rules.etherType | Enum | Ether 유형<br/>- `IPV4`: IPv4 형식<br/>- `IPV6`: IPv6 형식 |
 | rules.port | Object | 포트 객체 |
@@ -5092,7 +5078,7 @@ GET /v4.0/db-security-groups/{dbSecurityGroupId}
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbSecurityGroup.Modify | DB 보안 그룹 수정하기 |
+| RDSforMariaDB:DbSecurityGroup.Modify | DB 보안 그룹 수정하기 |
 
 <a id="modify-db-security-group-request"></a>
 #### 요청
@@ -5116,8 +5102,8 @@ PUT /v4.0/db-security-groups/{dbSecurityGroupId}
 
 ```json
 {
-  "dbSecurityGroupName": "dbSecurityGroupName",
-  "description": "description-example"
+    "dbSecurityGroupName": "dbSecurityGroupName",
+    "description": "description-example"
 }
 ```
 
@@ -5126,7 +5112,7 @@ PUT /v4.0/db-security-groups/{dbSecurityGroupId}
 | 이름 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|
 | dbSecurityGroupName | String | N | DB 보안 그룹을 식별할 수 있는 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
-| description | String | N | DB 보안 그룹에 대한 추가 정보<br/>- 최대 길이: `100` |
+| description | String | N | DB 보안 그룹 추가 정보<br/>- 최대 길이: `100` |
 
 <a id="modify-db-security-group-response"></a>
 #### 응답
@@ -5143,7 +5129,7 @@ PUT /v4.0/db-security-groups/{dbSecurityGroupId}
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbSecurityGroupRule.Delete | DB 보안 그룹 규칙 삭제하기 |
+| RDSforMariaDB:DbSecurityGroupRule.Delete | DB 보안 그룹 규칙 삭제하기 |
 
 <a id="delete-db-security-group-rule-request"></a>
 #### 요청
@@ -5173,12 +5159,12 @@ DELETE /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "jobId": "550e8400-e29b-41d4-a716-446655440000"
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
@@ -5198,7 +5184,7 @@ DELETE /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbSecurityGroupRule.Create | DB 보안 그룹 규칙 생성하기 |
+| RDSforMariaDB:DbSecurityGroupRule.Create | DB 보안 그룹 규칙 생성하기 |
 
 <a id="create-db-security-group-rule-request"></a>
 #### 요청
@@ -5222,15 +5208,15 @@ POST /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 
 ```json
 {
-  "direction": "INGRESS",
-  "etherType": "IPV4",
-  "port": {
-    "portType": "ALL",
-    "minPort": 3306,
-    "maxPort": 1
-  },
-  "cidr": "192.168.0.0/24",
-  "description": "description-example"
+    "direction": "INGRESS",
+    "etherType": "IPV4",
+    "port": {
+        "portType": "ALL",
+        "minPort": 3306,
+        "maxPort": 1
+    },
+    "cidr": "192.168.0.0/24",
+    "description": "description-example"
 }
 ```
 
@@ -5245,7 +5231,7 @@ POST /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 | port.minPort | Number | N | 포트 범위 최솟값<br/>- 최솟값: `3306` |
 | port.maxPort | Number | N | 포트 범위 최댓값<br/>- 최댓값: `65535` |
 | cidr | String | Y | CIDR |
-| description | String | N | DB 보안 그룹 규칙에 대한 추가 정보<br/>- 최대 길이: `200` |
+| description | String | N | DB 보안 그룹 규칙 추가 정보<br/>- 최대 길이: `200` |
 
 <a id="create-db-security-group-rule-response"></a>
 #### 응답
@@ -5255,12 +5241,12 @@ POST /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "jobId": "550e8400-e29b-41d4-a716-446655440000"
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
@@ -5280,7 +5266,7 @@ POST /v4.0/db-security-groups/{dbSecurityGroupId}/rules
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:DbSecurityGroupRule.Modify | DB 보안 그룹 규칙 수정하기 |
+| RDSforMariaDB:DbSecurityGroupRule.Modify | DB 보안 그룹 규칙 수정하기 |
 
 <a id="modify-db-security-group-rule-request"></a>
 #### 요청
@@ -5305,15 +5291,15 @@ PUT /v4.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 
 ```json
 {
-  "direction": "INGRESS",
-  "etherType": "IPV4",
-  "port": {
-    "portType": "ALL",
-    "minPort": 3306,
-    "maxPort": 1
-  },
-  "cidr": "192.168.0.0/24",
-  "description": "description-example"
+    "direction": "INGRESS",
+    "etherType": "IPV4",
+    "port": {
+        "portType": "ALL",
+        "minPort": 3306,
+        "maxPort": 1
+    },
+    "cidr": "192.168.0.0/24",
+    "description": "description-example"
 }
 ```
 
@@ -5328,7 +5314,7 @@ PUT /v4.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 | port.minPort | Number | N | 포트 범위 최솟값<br/>- 최솟값: `3306` |
 | port.maxPort | Number | N | 포트 범위 최댓값<br/>- 최댓값: `65535` |
 | cidr | String | Y | CIDR |
-| description | String | N | DB 보안 그룹 규칙에 대한 추가 정보<br/>- 최대 길이: `200` |
+| description | String | N | DB 보안 그룹 규칙 추가 정보<br/>- 최대 길이: `200` |
 
 <a id="modify-db-security-group-rule-response"></a>
 #### 응답
@@ -5338,12 +5324,12 @@ PUT /v4.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "jobId": "550e8400-e29b-41d4-a716-446655440000"
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
@@ -5366,7 +5352,7 @@ PUT /v4.0/db-security-groups/{dbSecurityGroupId}/rules/{ruleId}
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:ParameterGroup.List | 파라미터 그룹 목록 보기 |
+| RDSforMariaDB:ParameterGroup.List | 파라미터 그룹 목록 보기 |
 
 <a id="list-parameter-groups-request"></a>
 #### 요청
@@ -5380,10 +5366,10 @@ GET /v4.0/parameter-groups
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
-| parameterGroupName | Query | String | N | 파라미터 그룹 이름 (부분 검색) |
+| parameterGroupName | Query | String | N | 파라미터 그룹 이름(부분 검색) |
 | dbVersion | Query | Enum | N | DB 엔진 버전 |
-| page | Query | Number | N | 조회할 목록의 페이지 (기본값: 1)<br/>- 최솟값: `1` |
-| size | Query | Number | N | 조회할 목록의 페이지 크기 (기본값: 20)<br/>- 최솟값: `1`<br/>- 최댓값: `100` |
+| page | Query | Number | N | 조회할 목록의 페이지(기본값: 1)<br/>- 최솟값: `1` |
+| size | Query | Number | N | 조회할 목록의 페이지 크기(기본값: 20)<br/>- 최솟값: `1`<br/>- 최댓값: `100` |
 
 <a id="list-parameter-groups-request-body"></a>
 #### 요청 본문
@@ -5398,24 +5384,24 @@ GET /v4.0/parameter-groups
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "totalCounts": 1,
-  "parameterGroups": [
-    {
-      "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
-      "parameterGroupName": "parameterGroupName-example",
-      "description": "description-example",
-      "dbVersion": "MYSQL_V8411",
-      "parameterGroupType": "USER",
-      "parameterGroupStatus": "STABLE",
-      "createdYmdt": "2023-12-31T15:00:00+09:00",
-      "updatedYmdt": "2023-12-31T15:00:00+09:00"
-    }
-  ]
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "totalCounts": 1,
+    "parameterGroups": [
+        {
+            "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
+            "parameterGroupName": "parameterGroupName-example",
+            "description": "description-example",
+            "dbVersion": "MARIADB_V11808",
+            "parameterGroupType": "USER",
+            "parameterGroupStatus": "STABLE",
+            "createdYmdt": "2023-12-31T15:00:00+09:00",
+            "updatedYmdt": "2023-12-31T15:00:00+09:00"
+        }
+    ]
 }
 ```
 
@@ -5427,7 +5413,7 @@ GET /v4.0/parameter-groups
 | parameterGroups | Array | 파라미터 그룹 목록 |
 | parameterGroups.parameterGroupId | UUID | 파라미터 그룹의 식별자 |
 | parameterGroups.parameterGroupName | String | 파라미터 그룹을 식별할 수 있는 이름 |
-| parameterGroups.description | String | 파라미터 그룹에 대한 추가 정보 |
+| parameterGroups.description | String | 파라미터 그룹 추가 정보 |
 | parameterGroups.dbVersion | Enum | DB 엔진 버전 |
 | parameterGroups.parameterGroupType | Enum | 파라미터 그룹 유형<br/>- `USER`<br/>- `ADMIN`<br/>- `DEFAULT` |
 | parameterGroups.parameterGroupStatus | Enum | 파라미터 그룹의 현재 상태<br/>- `STABLE`: 적용 완료<br/>- `NEED_TO_APPLY`: 적용 필요<br/>- `DELETED`: 삭제됨 |
@@ -5444,7 +5430,7 @@ GET /v4.0/parameter-groups
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:ParameterGroup.Create | 파라미터 그룹 생성하기 |
+| RDSforMariaDB:ParameterGroup.Create | 파라미터 그룹 생성하기 |
 
 <a id="create-parameter-group-request"></a>
 #### 요청
@@ -5461,9 +5447,9 @@ POST /v4.0/parameter-groups
 
 ```json
 {
-  "parameterGroupName": "parameterGroupName",
-  "description": "description-example",
-  "dbVersion": "MYSQL_V8411"
+    "parameterGroupName": "parameterGroupName",
+    "description": "description-example",
+    "dbVersion": "MARIADB_V11808"
 }
 ```
 
@@ -5472,7 +5458,7 @@ POST /v4.0/parameter-groups
 | 이름 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|
 | parameterGroupName | String | Y | 파라미터 그룹을 식별할 수 있는 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
-| description | String | N | 파라미터 그룹에 대한 추가 정보<br/>- 최대 길이: `100` |
+| description | String | N | 파라미터 그룹 추가 정보<br/>- 최대 길이: `100` |
 | dbVersion | Enum | Y | DB 엔진 버전 |
 
 <a id="create-parameter-group-response"></a>
@@ -5483,12 +5469,12 @@ POST /v4.0/parameter-groups
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000"
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
@@ -5508,7 +5494,7 @@ POST /v4.0/parameter-groups
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:ParameterGroup.Delete | 파라미터 그룹 삭제하기 |
+| RDSforMariaDB:ParameterGroup.Delete | 파라미터 그룹 삭제하기 |
 
 <a id="delete-parameter-group-request"></a>
 #### 요청
@@ -5544,7 +5530,7 @@ DELETE /v4.0/parameter-groups/{parameterGroupId}
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:ParameterGroup.Get | 파라미터 그룹 상세 보기 |
+| RDSforMariaDB:ParameterGroup.Get | 파라미터 그룹 상세 보기 |
 
 <a id="list-parameter-group-details-request"></a>
 #### 요청
@@ -5573,31 +5559,31 @@ GET /v4.0/parameter-groups/{parameterGroupId}
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
-  "parameterGroupName": "parameterGroupName-example",
-  "description": "description-example",
-  "dbVersion": "MYSQL_V8411",
-  "parameterGroupStatus": "STABLE",
-  "parameters": [
-    {
-      "parameterId": "550e8400-e29b-41d4-a716-446655440000",
-      "parameterFileGroup": "CLIENT",
-      "parameterName": "parameterName-example",
-      "fileParameterName": "fileParameterName-example",
-      "value": "value-example",
-      "defaultValue": "defaultValue-example",
-      "allowedValue": "allowedValue-example",
-      "updateType": "VARIABLE",
-      "applyType": "BOTH"
-    }
-  ],
-  "createdYmdt": "2023-12-31T15:00:00+09:00",
-  "updatedYmdt": "2023-12-31T15:00:00+09:00"
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
+    "parameterGroupName": "parameterGroupName-example",
+    "description": "description-example",
+    "dbVersion": "MARIADB_V11808",
+    "parameterGroupStatus": "STABLE",
+    "parameters": [
+        {
+            "parameterId": "550e8400-e29b-41d4-a716-446655440000",
+            "parameterFileGroup": "CLIENT",
+            "parameterName": "parameterName-example",
+            "fileParameterName": "fileParameterName-example",
+            "value": "value-example",
+            "defaultValue": "defaultValue-example",
+            "allowedValue": "allowedValue-example",
+            "updateType": "VARIABLE",
+            "applyType": "BOTH"
+        }
+    ],
+    "createdYmdt": "2023-12-31T15:00:00+09:00",
+    "updatedYmdt": "2023-12-31T15:00:00+09:00"
 }
 ```
 
@@ -5607,7 +5593,7 @@ GET /v4.0/parameter-groups/{parameterGroupId}
 |-----|-----|-----|
 | parameterGroupId | UUID | 파라미터 그룹의 식별자 |
 | parameterGroupName | String | 파라미터 그룹을 식별할 수 있는 이름 |
-| description | String | 파라미터 그룹에 대한 추가 정보 |
+| description | String | 파라미터 그룹 추가 정보 |
 | dbVersion | Enum | DB 엔진 버전 |
 | parameterGroupStatus | Enum | 파라미터 그룹의 현재 상태<br/>- `STABLE`: 적용 완료<br/>- `NEED_TO_APPLY`: 적용 필요<br/>- `DELETED`: 삭제됨 |
 | parameters | Array | 파라미터 목록 |
@@ -5633,7 +5619,7 @@ GET /v4.0/parameter-groups/{parameterGroupId}
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:ParameterGroup.Modify | 파라미터 그룹 수정하기 |
+| RDSforMariaDB:ParameterGroup.Modify | 파라미터 그룹 수정하기 |
 
 <a id="modify-parameter-group-request"></a>
 #### 요청
@@ -5657,8 +5643,8 @@ PUT /v4.0/parameter-groups/{parameterGroupId}
 
 ```json
 {
-  "parameterGroupName": "parameterGroupName",
-  "description": "description-example"
+    "parameterGroupName": "parameterGroupName",
+    "description": "description-example"
 }
 ```
 
@@ -5667,7 +5653,7 @@ PUT /v4.0/parameter-groups/{parameterGroupId}
 | 이름 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|
 | parameterGroupName | String | N | 파라미터 그룹을 식별할 수 있는 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
-| description | String | N | 파라미터 그룹에 대한 추가 정보<br/>- 최대 길이: `100` |
+| description | String | N | 파라미터 그룹 추가 정보<br/>- 최대 길이: `100` |
 
 <a id="modify-parameter-group-response"></a>
 #### 응답
@@ -5684,7 +5670,7 @@ PUT /v4.0/parameter-groups/{parameterGroupId}
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:ParameterGroup.Copy | 파라미터 그룹 복사하기 |
+| RDSforMariaDB:ParameterGroup.Copy | 파라미터 그룹 복사하기 |
 
 <a id="copy-parameter-group-request"></a>
 #### 요청
@@ -5708,8 +5694,8 @@ POST /v4.0/parameter-groups/{parameterGroupId}/copy
 
 ```json
 {
-  "parameterGroupName": "parameterGroupName",
-  "description": "description-example"
+    "parameterGroupName": "parameterGroupName",
+    "description": "description-example"
 }
 ```
 
@@ -5718,7 +5704,7 @@ POST /v4.0/parameter-groups/{parameterGroupId}/copy
 | 이름 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|
 | parameterGroupName | String | Y | 파라미터 그룹을 식별할 수 있는 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
-| description | String | N | 파라미터 그룹에 대한 추가 정보<br/>- 최대 길이: `100` |
+| description | String | N | 파라미터 그룹 추가 정보<br/>- 최대 길이: `100` |
 
 <a id="copy-parameter-group-response"></a>
 #### 응답
@@ -5728,12 +5714,12 @@ POST /v4.0/parameter-groups/{parameterGroupId}/copy
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000"
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
@@ -5753,7 +5739,7 @@ POST /v4.0/parameter-groups/{parameterGroupId}/copy
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:ParameterGroup.Modify | 파라미터 수정하기 |
+| RDSforMariaDB:ParameterGroup.Modify | 파라미터 수정하기 |
 
 <a id="modify-parameter-request"></a>
 #### 요청
@@ -5777,12 +5763,12 @@ PUT /v4.0/parameter-groups/{parameterGroupId}/parameters
 
 ```json
 {
-  "modifiedParameters": [
-    {
-      "parameterId": "550e8400-e29b-41d4-a716-446655440000",
-      "value": "value-example"
-    }
-  ]
+    "modifiedParameters": [
+        {
+            "parameterId": "550e8400-e29b-41d4-a716-446655440000",
+            "value": "value-example"
+        }
+    ]
 }
 ```
 
@@ -5809,7 +5795,7 @@ PUT /v4.0/parameter-groups/{parameterGroupId}/parameters
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:ParameterGroup.Reset | 파라미터 그룹 재설정하기 |
+| RDSforMariaDB:ParameterGroup.Reset | 파라미터 그룹 재설정하기 |
 
 <a id="reset-parameter-group-request"></a>
 #### 요청
@@ -5848,7 +5834,7 @@ PUT /v4.0/parameter-groups/{parameterGroupId}/reset
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:UserGroup.List | 사용자 그룹 목록 보기 |
+| RDSforMariaDB:UserGroup.List | 사용자 그룹 목록 보기 |
 
 <a id="list-user-groups-request"></a>
 #### 요청
@@ -5862,8 +5848,8 @@ GET /v4.0/user-groups
 
 | 이름 | 구분 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
-| page | Query | Number | N | 조회할 목록의 페이지 (기본값: 1)<br/>- 최솟값: `1` |
-| size | Query | Number | N | 조회할 목록의 페이지 크기 (기본값: 20)<br/>- 최솟값: `1`<br/>- 최댓값: `100` |
+| page | Query | Number | N | 조회할 목록의 페이지(기본값: 1)<br/>- 최솟값: `1` |
+| size | Query | Number | N | 조회할 목록의 페이지 크기(기본값: 20)<br/>- 최솟값: `1`<br/>- 최댓값: `100` |
 
 <a id="list-user-groups-request-body"></a>
 #### 요청 본문
@@ -5878,20 +5864,20 @@ GET /v4.0/user-groups
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "totalCounts": 1,
-  "userGroups": [
-    {
-      "userGroupId": "550e8400-e29b-41d4-a716-446655440000",
-      "userGroupName": "userGroupName-example",
-      "createdYmdt": "2023-12-31T15:00:00+09:00",
-      "updatedYmdt": "2023-12-31T15:00:00+09:00"
-    }
-  ]
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "totalCounts": 1,
+    "userGroups": [
+        {
+            "userGroupId": "550e8400-e29b-41d4-a716-446655440000",
+            "userGroupName": "userGroupName-example",
+            "createdYmdt": "2023-12-31T15:00:00+09:00",
+            "updatedYmdt": "2023-12-31T15:00:00+09:00"
+        }
+    ]
 }
 ```
 
@@ -5916,7 +5902,7 @@ GET /v4.0/user-groups
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:UserGroup.Create | 사용자 그룹 생성하기 |
+| RDSforMariaDB:UserGroup.Create | 사용자 그룹 생성하기 |
 
 <a id="create-user-group-request"></a>
 #### 요청
@@ -5933,9 +5919,9 @@ POST /v4.0/user-groups
 
 ```json
 {
-  "userGroupName": "userGroupName-example",
-  "memberIds": [],
-  "selectAll": false
+    "userGroupName": "userGroupName-example",
+    "memberIds": [],
+    "selectAll": false
 }
 ```
 
@@ -5955,12 +5941,12 @@ POST /v4.0/user-groups
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "userGroupId": "550e8400-e29b-41d4-a716-446655440000"
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "userGroupId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
@@ -5980,7 +5966,7 @@ POST /v4.0/user-groups
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:UserGroup.Delete | 사용자 그룹 삭제하기 |
+| RDSforMariaDB:UserGroup.Delete | 사용자 그룹 삭제하기 |
 
 <a id="delete-user-group-request"></a>
 #### 요청
@@ -6016,7 +6002,7 @@ DELETE /v4.0/user-groups/{userGroupId}
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:UserGroup.Get | 사용자 그룹 상세 보기 |
+| RDSforMariaDB:UserGroup.Get | 사용자 그룹 상세 보기 |
 
 <a id="list-user-group-details-request"></a>
 #### 요청
@@ -6045,21 +6031,21 @@ GET /v4.0/user-groups/{userGroupId}
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "userGroupId": "550e8400-e29b-41d4-a716-446655440000",
-  "userGroupName": "userGroupName-example",
-  "userGroupTypeCode": "ENTIRE",
-  "members": [
-    {
-      "memberId": "550e8400-e29b-41d4-a716-446655440000"
-    }
-  ],
-  "createdYmdt": "2023-12-31T15:00:00+09:00",
-  "updatedYmdt": "2023-12-31T15:00:00+09:00"
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "userGroupId": "550e8400-e29b-41d4-a716-446655440000",
+    "userGroupName": "userGroupName-example",
+    "userGroupTypeCode": "ENTIRE",
+    "members": [
+        {
+            "memberId": "550e8400-e29b-41d4-a716-446655440000"
+        }
+    ],
+    "createdYmdt": "2023-12-31T15:00:00+09:00",
+    "updatedYmdt": "2023-12-31T15:00:00+09:00"
 }
 ```
 
@@ -6085,7 +6071,7 @@ GET /v4.0/user-groups/{userGroupId}
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:UserGroup.Modify | 사용자 그룹 수정하기 |
+| RDSforMariaDB:UserGroup.Modify | 사용자 그룹 수정하기 |
 
 <a id="modify-user-group-request"></a>
 #### 요청
@@ -6109,9 +6095,9 @@ PUT /v4.0/user-groups/{userGroupId}
 
 ```json
 {
-  "userGroupName": "userGroupName-example",
-  "memberIds": [],
-  "selectAll": false
+    "userGroupName": "userGroupName-example",
+    "memberIds": [],
+    "selectAll": false
 }
 ```
 
@@ -6141,7 +6127,7 @@ PUT /v4.0/user-groups/{userGroupId}
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:NotificationGroup.List | 알림 그룹 목록 보기 |
+| RDSforMariaDB:NotificationGroup.List | 알림 그룹 목록 보기 |
 
 <a id="list-notification-groups-request"></a>
 #### 요청
@@ -6163,22 +6149,22 @@ GET /v4.0/notification-groups
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "notificationGroups": [
-    {
-      "notificationGroupId": "550e8400-e29b-41d4-a716-446655440000",
-      "notificationGroupName": "notificationGroupName-example",
-      "notifyEmail": false,
-      "notifySms": false,
-      "isEnabled": false,
-      "createdYmdt": "2023-12-31T15:00:00+09:00",
-      "updatedYmdt": "2023-12-31T15:00:00+09:00"
-    }
-  ]
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "notificationGroups": [
+        {
+            "notificationGroupId": "550e8400-e29b-41d4-a716-446655440000",
+            "notificationGroupName": "notificationGroupName-example",
+            "notifyEmail": false,
+            "notifySms": false,
+            "isEnabled": false,
+            "createdYmdt": "2023-12-31T15:00:00+09:00",
+            "updatedYmdt": "2023-12-31T15:00:00+09:00"
+        }
+    ]
 }
 ```
 
@@ -6205,7 +6191,7 @@ GET /v4.0/notification-groups
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:NotificationGroup.Create | 알림 그룹 생성하기 |
+| RDSforMariaDB:NotificationGroup.Create | 알림 그룹 생성하기 |
 
 <a id="create-notification-group-request"></a>
 #### 요청
@@ -6222,12 +6208,12 @@ POST /v4.0/notification-groups
 
 ```json
 {
-  "notificationGroupName": "notificationGroupName",
-  "notifyEmail": true,
-  "notifySms": true,
-  "isEnabled": true,
-  "dbInstanceIds": [],
-  "userGroupIds": []
+    "notificationGroupName": "notificationGroupName",
+    "notifyEmail": true,
+    "notifySms": true,
+    "isEnabled": true,
+    "dbInstanceIds": [],
+    "userGroupIds": []
 }
 ```
 
@@ -6250,12 +6236,12 @@ POST /v4.0/notification-groups
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "notificationGroupId": "550e8400-e29b-41d4-a716-446655440000"
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "notificationGroupId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
@@ -6275,7 +6261,7 @@ POST /v4.0/notification-groups
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:NotificationGroup.Delete | 알림 그룹 삭제하기 |
+| RDSforMariaDB:NotificationGroup.Delete | 알림 그룹 삭제하기 |
 
 <a id="delete-notification-group-request"></a>
 #### 요청
@@ -6311,7 +6297,7 @@ DELETE /v4.0/notification-groups/{notificationGroupId}
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:NotificationGroup.Get | 알림 그룹 상세 보기 |
+| RDSforMariaDB:NotificationGroup.Get | 알림 그룹 상세 보기 |
 
 <a id="view-notification-group-details-request"></a>
 #### 요청
@@ -6340,30 +6326,30 @@ GET /v4.0/notification-groups/{notificationGroupId}
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "notificationGroupId": "550e8400-e29b-41d4-a716-446655440000",
-  "notificationGroupName": "notificationGroupName-example",
-  "notifyEmail": false,
-  "notifySms": false,
-  "isEnabled": false,
-  "dbInstances": [
-    {
-      "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
-      "dbInstanceName": "dbInstanceName-example"
-    }
-  ],
-  "userGroups": [
-    {
-      "userGroupId": "550e8400-e29b-41d4-a716-446655440000",
-      "userGroupName": "userGroupName-example"
-    }
-  ],
-  "createdYmdt": "2023-12-31T15:00:00+09:00",
-  "updatedYmdt": "2023-12-31T15:00:00+09:00"
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "notificationGroupId": "550e8400-e29b-41d4-a716-446655440000",
+    "notificationGroupName": "notificationGroupName-example",
+    "notifyEmail": false,
+    "notifySms": false,
+    "isEnabled": false,
+    "dbInstances": [
+        {
+            "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
+            "dbInstanceName": "dbInstanceName-example"
+        }
+    ],
+    "userGroups": [
+        {
+            "userGroupId": "550e8400-e29b-41d4-a716-446655440000",
+            "userGroupName": "userGroupName-example"
+        }
+    ],
+    "createdYmdt": "2023-12-31T15:00:00+09:00",
+    "updatedYmdt": "2023-12-31T15:00:00+09:00"
 }
 ```
 
@@ -6378,7 +6364,7 @@ GET /v4.0/notification-groups/{notificationGroupId}
 | isEnabled | Boolean | 활성화 여부 |
 | dbInstances | Array | 감시 대상 DB 인스턴스 목록 |
 | dbInstances.dbInstanceId | UUID | DB 인스턴스의 식별자 |
-| dbInstances.dbInstanceName | String | DB 인스턴스를 식별할 수 있는 이름 |
+| dbInstances.dbInstanceName | String | Primary DB 인스턴스를 식별할 수 있는 이름 |
 | userGroups | Array | 사용자 그룹 목록 |
 | userGroups.userGroupId | UUID | 사용자 그룹의 식별자 |
 | userGroups.userGroupName | String | 사용자 그룹을 식별할 수 있는 이름 |
@@ -6395,7 +6381,7 @@ GET /v4.0/notification-groups/{notificationGroupId}
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:NotificationGroup.Modify | 알림 그룹 수정하기 |
+| RDSforMariaDB:NotificationGroup.Modify | 알림 그룹 수정하기 |
 
 <a id="modify-notification-group-request"></a>
 #### 요청
@@ -6419,12 +6405,12 @@ PUT /v4.0/notification-groups/{notificationGroupId}
 
 ```json
 {
-  "notificationGroupName": "notificationGroupName-example",
-  "notifyEmail": false,
-  "notifySms": false,
-  "isEnabled": false,
-  "dbInstanceIds": [],
-  "userGroupIds": []
+    "notificationGroupName": "notificationGroupName-example",
+    "notifyEmail": false,
+    "notifySms": false,
+    "isEnabled": false,
+    "dbInstanceIds": [],
+    "userGroupIds": []
 }
 ```
 
@@ -6457,7 +6443,7 @@ PUT /v4.0/notification-groups/{notificationGroupId}
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:Metric.List | 통계 정보 조회 |
+| RDSforMariaDB:Metric.List | 통계 정보 조회 |
 
 <a id="view-stats-request"></a>
 #### 요청
@@ -6490,23 +6476,23 @@ GET /v4.0/metric-statistics
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "metricStatistics": [
-    {
-      "measureName": "CPU_USAGE",
-      "unit": "%",
-      "values": [
-        [
-          1679298540,
-          "7.5%"
-        ]
-      ]
-    }
-  ]
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "metricStatistics": [
+        {
+            "measureName": "CPU_USAGE",
+            "unit": "%",
+            "values": [
+                [
+                    1679298540,
+                    "7.5%"
+                ]
+            ]
+        }
+    ]
 }
 ```
 
@@ -6516,10 +6502,10 @@ GET /v4.0/metric-statistics
 |-----|-----|-----|
 | metricStatistics | Array | 통계 정보 목록 |
 | metricStatistics.measureName | Enum | 측정 항목 유형 |
-| metricStatistics.unit | String | 측정값 단위 |
-| metricStatistics.values | Array | 측정값 목록 |
+| metricStatistics.unit | String | 측정 값 단위 |
+| metricStatistics.values | Array | 측정 값 목록 |
 | metricStatistics.values.timestamp | Timestamp | 측정 시간 |
-| metricStatistics.values.value | String | 측정값 |
+| metricStatistics.values.value | String | 측정 값 |
 
 ---
 
@@ -6531,7 +6517,7 @@ GET /v4.0/metric-statistics
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:Metric.List | Metric 목록 보기 |
+| RDSforMariaDB:Metric.List | Metric 목록 보기 |
 
 <a id="list-metric-list-request"></a>
 #### 요청
@@ -6553,17 +6539,17 @@ GET /v4.0/metrics
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "metrics": [
-    {
-      "measureName": "CPU_USAGE",
-      "unit": "%"
-    }
-  ]
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "metrics": [
+        {
+            "measureName": "CPU_USAGE",
+            "unit": "%"
+        }
+    ]
 }
 ```
 
@@ -6573,7 +6559,7 @@ GET /v4.0/metrics
 |-----|-----|-----|
 | metrics | Array | Metric 목록 |
 | metrics.measureName | Enum | 조회 지표 유형 |
-| metrics.unit | String | 측정값 단위 |
+| metrics.unit | String | 측정 값 단위 |
 
 ---
 
@@ -6602,7 +6588,7 @@ GET /v4.0/metrics
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:Event.List | 구독 가능한 이벤트 코드 목록 보기 |
+| RDSforMariaDB:Event.List | 구독 가능한 이벤트 코드 목록 보기 |
 
 <a id="list-subscribable-event-codes-request"></a>
 #### 요청
@@ -6624,17 +6610,17 @@ GET /v4.0/event-codes
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "eventCodes": [
-    {
-      "eventCode": "INSTC_02_01",
-      "eventCategoryType": "ALL"
-    }
-  ]
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "eventCodes": [
+        {
+            "eventCode": "INSTC_02_01",
+            "eventCategoryType": "ALL"
+        }
+    ]
 }
 ```
 
@@ -6656,7 +6642,7 @@ GET /v4.0/event-codes
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:Event.List | 이벤트 목록 조회 |
+| RDSforMariaDB:Event.List | 이벤트 목록 조회 |
 
 <a id="list-events-request"></a>
 #### 요청
@@ -6676,8 +6662,8 @@ GET /v4.0/events
 | sourceId | Query | UUID | N | 이벤트가 발생한 대상 리소스의 식별자 |
 | keyword | Query | String | N | 이벤트 메시지에 포함된 문자열 검색어 |
 | ascendingOrder | Query | Enum | N | 이벤트 메시지 정렬 순서<br/>- 기본값: `DESC`<br/>- `ASC`<br/>- `DESC` |
-| page | Query | Number | N | 조회할 목록의 페이지 (기본값: 1)<br/>- 최솟값: `1` |
-| size | Query | Number | N | 조회할 목록의 페이지 크기 (기본값: 20)<br/>- 최솟값: `1`<br/>- 최댓값: `100` |
+| page | Query | Number | N | 조회할 목록의 페이지(기본값: 1)<br/>- 최솟값: `1` |
+| size | Query | Number | N | 조회할 목록의 페이지 크기(기본값: 20)<br/>- 최솟값: `1`<br/>- 최댓값: `100` |
 
 <a id="list-events-request-body"></a>
 #### 요청 본문
@@ -6692,27 +6678,27 @@ GET /v4.0/events
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "totalCounts": 1,
-  "events": [
-    {
-      "eventCategoryType": "ALL",
-      "eventCode": "INSTC_02_01",
-      "sourceId": "550e8400-e29b-41d4-a716-446655440000",
-      "sourceName": "sourceName-example",
-      "messages": [
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "totalCounts": 1,
+    "events": [
         {
-          "langCode": "KO",
-          "message": "message-example"
+            "eventCategoryType": "ALL",
+            "eventCode": "INSTC_02_01",
+            "sourceId": "550e8400-e29b-41d4-a716-446655440000",
+            "sourceName": "sourceName-example",
+            "messages": [
+                {
+                    "langCode": "KO",
+                    "message": "message-example"
+                }
+            ],
+            "eventYmdt": "2023-12-31T15:00:00+09:00"
         }
-      ],
-      "eventYmdt": "2023-12-31T15:00:00+09:00"
-    }
-  ]
+    ]
 }
 ```
 
@@ -6744,7 +6730,7 @@ GET /v4.0/events
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:EventSubscription.List | 이벤트 구독 목록 조회 |
+| RDSforMariaDB:EventSubscription.List | 이벤트 구독 목록 조회 |
 
 <a id="list-event-subscriptions-request"></a>
 #### 요청
@@ -6761,8 +6747,8 @@ GET /v4.0/event-subscriptions
 | eventSubscriptionId | Query | UUID | N | 이벤트 구독의 식별자 |
 | eventSubscriptionName | Query | String | N | 이벤트 구독을 식별할 수 있는 이름 |
 | userGroupId | Query | UUID | N | 사용자 그룹의 식별자 |
-| page | Query | Number | N | 조회할 목록의 페이지 (기본값: 1)<br/>- 최솟값: `1` |
-| size | Query | Number | N | 조회할 목록의 페이지 크기 (기본값: 20)<br/>- 최솟값: `1`<br/>- 최댓값: `100` |
+| page | Query | Number | N | 조회할 목록의 페이지(기본값: 1)<br/>- 최솟값: `1` |
+| size | Query | Number | N | 조회할 목록의 페이지 크기(기본값: 20)<br/>- 최솟값: `1`<br/>- 최댓값: `100` |
 
 <a id="list-event-subscriptions-request-body"></a>
 #### 요청 본문
@@ -6777,33 +6763,33 @@ GET /v4.0/event-subscriptions
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "totalCounts": 1,
-  "eventSubscriptions": [
-    {
-      "eventSubscriptionId": "550e8400-e29b-41d4-a716-446655440000",
-      "eventCategoryType": "ALL",
-      "eventSubscriptionName": "eventSubscriptionName-example",
-      "enabled": false,
-      "notifyEmail": false,
-      "notifySms": false,
-      "eventCodes": [],
-      "sources": [
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "totalCounts": 1,
+    "eventSubscriptions": [
         {
-          "sourceId": "550e8400-e29b-41d4-a716-446655440000",
-          "eventCategoryType": "ALL"
+            "eventSubscriptionId": "550e8400-e29b-41d4-a716-446655440000",
+            "eventCategoryType": "ALL",
+            "eventSubscriptionName": "eventSubscriptionName-example",
+            "enabled": false,
+            "notifyEmail": false,
+            "notifySms": false,
+            "eventCodes": [],
+            "sources": [
+                {
+                    "sourceId": "550e8400-e29b-41d4-a716-446655440000",
+                    "eventCategoryType": "ALL"
+                }
+            ],
+            "userGroupIds": [
+                "550e8400-e29b-41d4-a716-446655440000"
+            ],
+            "createdYmdt": "2023-12-31T15:00:00+09:00"
         }
-      ],
-      "userGroupIds": [
-        "550e8400-e29b-41d4-a716-446655440000"
-      ],
-      "createdYmdt": "2023-12-31T15:00:00+09:00"
-    }
-  ]
+    ]
 }
 ```
 
@@ -6836,7 +6822,7 @@ GET /v4.0/event-subscriptions
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:EventSubscription.Create | 이벤트 구독 생성하기 |
+| RDSforMariaDB:EventSubscription.Create | 이벤트 구독 생성하기 |
 
 <a id="create-an-event-subscription-request"></a>
 #### 요청
@@ -6853,19 +6839,19 @@ POST /v4.0/event-subscriptions
 
 ```json
 {
-  "eventCategoryType": "ALL",
-  "eventSubscriptionName": "eventSubscriptionName-example",
-  "enabled": false,
-  "notifyEmail": false,
-  "notifySms": false,
-  "eventCodes": [],
-  "sources": [
-    {
-      "sourceId": "550e8400-e29b-41d4-a716-446655440000",
-      "eventCategoryType": "ALL"
-    }
-  ],
-  "userGroupIds": []
+    "eventCategoryType": "ALL",
+    "eventSubscriptionName": "eventSubscriptionName-example",
+    "enabled": false,
+    "notifyEmail": false,
+    "notifySms": false,
+    "eventCodes": [],
+    "sources": [
+        {
+            "sourceId": "550e8400-e29b-41d4-a716-446655440000",
+            "eventCategoryType": "ALL"
+        }
+    ],
+    "userGroupIds": []
 }
 ```
 
@@ -6892,12 +6878,12 @@ POST /v4.0/event-subscriptions
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "eventSubscriptionId": "550e8400-e29b-41d4-a716-446655440000"
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "eventSubscriptionId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```
 
@@ -6917,7 +6903,7 @@ POST /v4.0/event-subscriptions
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:EventSubscription.Delete | 이벤트 구독 삭제하기 |
+| RDSforMariaDB:EventSubscription.Delete | 이벤트 구독 삭제하기 |
 
 <a id="delete-an-event-subscription-request"></a>
 #### 요청
@@ -6953,7 +6939,7 @@ DELETE /v4.0/event-subscriptions/{eventSubscriptionId}
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:EventSubscription.Modify | 이벤트 구독 수정하기 |
+| RDSforMariaDB:EventSubscription.Modify | 이벤트 구독 수정하기 |
 
 <a id="modify-an-event-subscription-request"></a>
 #### 요청
@@ -6977,19 +6963,19 @@ PUT /v4.0/event-subscriptions/{eventSubscriptionId}
 
 ```json
 {
-  "eventCategoryType": "ALL",
-  "eventSubscriptionName": "eventSubscriptionName-example",
-  "enabled": false,
-  "notifyEmail": false,
-  "notifySms": false,
-  "eventCodes": [],
-  "sources": [
-    {
-      "sourceId": "550e8400-e29b-41d4-a716-446655440000",
-      "eventCategoryType": "ALL"
-    }
-  ],
-  "userGroupIds": []
+    "eventCategoryType": "ALL",
+    "eventSubscriptionName": "eventSubscriptionName-example",
+    "enabled": false,
+    "notifyEmail": false,
+    "notifySms": false,
+    "eventCodes": [],
+    "sources": [
+        {
+            "sourceId": "550e8400-e29b-41d4-a716-446655440000",
+            "eventCategoryType": "ALL"
+        }
+    ],
+    "userGroupIds": []
 }
 ```
 
@@ -7026,7 +7012,7 @@ PUT /v4.0/event-subscriptions/{eventSubscriptionId}
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMySQL:AvailabilityZone.List | 가용성 영역 목록 보기 |
+| RDSforMariaDB:AvailabilityZone.List | 가용성 영역 목록 보기 |
 
 <a id="get-availability-zones-request"></a>
 #### 요청
@@ -7048,19 +7034,19 @@ GET /v4.0/availability-zones
 
 ```json
 {
-  "header": {
-    "resultCode": 0,
-    "resultMessage": "SUCCESS",
-    "isSuccessful": true
-  },
-  "availabilityZones": [
-    {
-      "availabilityZoneName": "availabilityZoneName-example",
-      "zoneState": {
-        "available": false
-      }
-    }
-  ]
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "availabilityZones": [
+        {
+            "availabilityZoneName": "availabilityZoneName-example",
+            "zoneState": {
+                "available": false
+            }
+        }
+    ]
 }
 ```
 
