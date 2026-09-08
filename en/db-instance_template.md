@@ -813,7 +813,7 @@ If you support region peering when you select a region to create a Read Replica,
 <a id="create-read-replications-availability-zone"></a>
 #### Availability Zone
 
-Select the availability zone for Read Replica. Refer to [Availability Zone](#_1) for a detailed description.
+Select the availability zone for Read Replica. Refer to [Availability Zone](#availability-zone) for a detailed description.
 
 <a id="create-read-replications-db-instance-type"></a>
 #### DB Instance Type
@@ -828,7 +828,7 @@ It is recommended to make it the same size as the source DB instance. If you set
 <a id="create-read-replications-floating-ip"></a>
 #### Floating IP
 
-Select whether or not to use floating IP for Read Replicas. Refer to [Floating IP](#ip) for a detailed description.
+Select whether or not to use floating IP for Read Replicas. Refer to [Floating IP](#floating-ip) for a detailed description.
 
 <a id="create-read-replications-parameter-group"></a>
 #### Parameter group
@@ -848,12 +848,12 @@ Select backup settings for the Read Replica. Refer to [Backup and Restore](backu
 <a id="create-read-replications-default-notification"></a>
 #### Default notification
 
-Select whether or not to enable default notifications, refer to [default notifications](#_7) for a detailed description.
+Select whether or not to enable default notifications, refer to [default notifications](#default-notification) for a detailed description.
 
 <a id="create-read-replications-deletion-protection"></a>
 #### Deletion Protection
 
-Select whether or not to enable deletion protection. Refer to [Deletion Protection](#_8) for a detailed description.
+Select whether or not to enable deletion protection. Refer to [Deletion Protection](#deletion-protection) for a detailed description.
 
 <a id="promote-read-replication"></a>
 ### Promote Read Replica { #promote-read-replication }

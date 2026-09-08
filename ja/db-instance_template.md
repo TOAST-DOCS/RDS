@@ -827,7 +827,7 @@ Read Replicaは、Primaryと同じ仕様またはより高い仕様で作成す�
 <a id="create-read-replications-floating-ip"></a>
 #### Floating IP
 
-Read ReplicaのFloating IPを使用するかどうかを選択します。詳しい説明は[Floating IP](#ip)の項目を参照してください。
+Read ReplicaのFloating IPを使用するかどうかを選択します。詳しい説明は[Floating IP](#floating-ip)の項目を参照してください。
 
 <a id="create-read-replications-parameter-group"></a>
 #### パラメータグループ

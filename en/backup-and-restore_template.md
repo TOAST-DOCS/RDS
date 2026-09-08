@@ -366,7 +366,7 @@ mariabackup --defaults-file={my.cnf path} --user {user} --password '{password}' 
 
 * The maximum file size that can be uploaded at a time is 5GB.
 * If the backup file is larger than 5GB, you have to use a utility such as split to cut the backup file to less than 5GB and upload it in multi-part.
-* For detailed information, refer to [Multipart Upload](/Storage/Object%20Storage/en/api-guide/#_45).
+* For detailed information, refer to [Multipart Upload](/Storage/Object%20Storage/en/api-guide/#multipart-upload).
 
 (4) After accessing the console of the project you want to restore, on the DB Instances tab, click the **Restore to Backup in Object Storage** button.
 

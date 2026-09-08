@@ -364,7 +364,7 @@ mariabackup --defaults-file={my.cnf 경로} --user {사용자} --password '{비�
 
 * 한 번에 업로드할 수 있는 최대 파일 크기는 5GB입니다.
 * 백업 파일의 크기가 5GB보다 클 경우 split과 같은 유틸리티를 이용해 백업 파일을 5GB 이하로 자른 뒤 멀티 파트로 업로드해야 합니다.
-* 자세한 사항은 [멀티파트 업로드](/Storage/Object%20Storage/ko/api-guide/#_45)를 참고합니다.
+* 자세한 사항은 [멀티파트 업로드](/Storage/Object%20Storage/ko/api-guide/#multipart-upload)를 참고합니다.
 
 (4) 복원할 프로젝트의 콘솔에 접속한 뒤 DB 인스턴스 탭에서 **Object Storage에 있는 백업으로 복원** 버튼을 클릭합니다.
 
