@@ -5,16 +5,18 @@
 <a id="database-rds-for-mysql-release-notes"></a>
 ## Database > RDS for MySQL > Release Notes { #database-rds-for-mysql-release-notes }
 
-<a id="july-14-2026"></a>
-## September 15, 2026
+<a id="september-15-2026"></a>
+## September 15, 2026 { #september-15-2026 }
 
-### Added Features
+<a id="september-15-2026-added-features"></a>
+### Added Features { #september-15-2026-added-features }
 
 * Added MySQL 8.4.11 version
 * Added an option to restart the operating system when restarting a DB instance
 * Added a feature to stop high availability instances
 
-### Feature Updates
+<a id="september-15-2026-feature-updates"></a>
+### Feature Updates { #september-15-2026-feature-updates }
 
 * Changed DB instance type terminology
   * Master → Primary
@@ -25,7 +27,8 @@
 * Improved to allow viewing past monitoring metrics after security patches and OS upgrades
 * Improved to allow configuring notifications by DB instance type
 
-### Bug Fixes
+<a id="september-15-2026-bug-fixes"></a>
+### Bug Fixes { #september-15-2026-bug-fixes }
 
 * Fixed a bug where the Object Storage tenant ID was exposed as-is in CloudTrail
 * Fixed a bug where point-in-time restore failed for points in time after executing a `CREATE TABLE ... SELECT` statement in version 8.4
