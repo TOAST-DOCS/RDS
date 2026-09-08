@@ -21,7 +21,7 @@
     * 읽기 복제본 → Read Replica
     * 장애 조치된 마스터 → Failed Over Primary
 * DB 인스턴스 그룹으로 적용되어야 하는 속성은 DB 인스턴스 그룹을 수정하도록 개선
-* 보안 패치, OS 업그레이드 이후 과거 모니터링 지표 볼 수 있도록
+* 보안 패치, OS 업그레이드 이후 과거 모니터링 지표 볼 수 있도록 개선
 
 <a id="september-15-2026-bug-fixes"></a>
 ### 버그 수정 { #september-15-2026-bug-fixes }
@@ -161,6 +161,7 @@
 
 <a id="february-11-2025-bug-fixes"></a>
 ### 버그 수정 { #february-11-2025-bug-fixes }
+
 * DB 인스턴스 상세 보기 화면에서 삭제된 알림 그룹 정보가 노출되는 문제 수정
 
 <a id="november-12-2024"></a>

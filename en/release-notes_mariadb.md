@@ -12,26 +12,26 @@
 ### Added Features { #september-15-2026-added-features }
 
 * Added an option to restart the operating system when restarting a DB instance
-* Added the ability to stop high availability instances
+* Added a feature to stop high availability instances
 
 <a id="september-15-2026-feature-updates"></a>
 ### Feature Updates { #september-15-2026-feature-updates }
 
-* Updated DB instance type terminology
+* Changed DB instance type terminology
     * Master → Primary
-    * Standby Master → Standby
-    * Read Replica → Read Replica
-    * Failed Over Master → Failed Over Primary
-* Improved so that attributes that must be applied to a DB instance group now modify the DB instance group
-* Added the ability to view past monitoring metrics after security patches and OS upgrades
+    * Candidate Master → Standby
+    * Read Only Slave → Read Replica
+    * Failed Master → Failed Over Primary
+* Improved so that properties that must be applied to a DB instance group are now configured by modifying the DB instance group
+* Improved to allow viewing past monitoring metrics after security patches and OS upgrades
 
 <a id="september-15-2026-bug-fixes"></a>
 ### Bug Fixes { #september-15-2026-bug-fixes }
 
-* Fixed a bug where the tenant ID of Object Storage was exposed as-is in CloudTrail
-* Fixed a bug where creating, modifying, and deleting security group rules would intermittently fail when there were many security group rules
+* Fixed a bug where the Object Storage tenant ID was exposed as-is in CloudTrail
+* Fixed a bug where creating, modifying, or deleting security group rules intermittently failed when there were many security group rules
 * Fixed a bug where a high availability DB could intermittently fail to boot due to network communication failures
-* Fixed a bug where garbage security group rules remained intermittently when a DB port change failed
+* Fixed a bug where garbage security group rules intermittently remained when a DB port change failed
 
 <a id="july-14-2026"></a>
 ## July 14, 2026 { #july-14-2026 }

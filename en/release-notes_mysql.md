@@ -19,10 +19,10 @@
 ### Feature Updates { #september-15-2026-feature-updates }
 
 * Changed DB instance type terminology
-  * Master → Primary
-  * Standby Master → Standby
-  * Read Replica → Read Replica
-  * Failed Over Master → Failed Over Primary
+    * Master → Primary
+    * Candidate Master → Standby
+    * Read Only Slave → Read Replica
+    * Failed Master → Failed Over Primary
 * Improved so that properties that must be applied to a DB instance group are now configured by modifying the DB instance group
 * Improved to allow viewing past monitoring metrics after security patches and OS upgrades
 * Improved to allow configuring notifications by DB instance type

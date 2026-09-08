@@ -17,10 +17,10 @@
 ### 기능 개선 { #september-15-2026-feature-updates }
 
 * DB 인스턴스 타입 용어 변경
-  * 마스터 → Primary
-  * 예비 마스터 → Standby
-  * 읽기 복제본 → Read Replica
-  * 장애 조치된 마스터 → Failed Over Primary
+    * 마스터 → Primary
+    * 예비 마스터 → Standby
+    * 읽기 복제본 → Read Replica
+    * 장애 조치된 마스터 → Failed Over Primary
 * DB 인스턴스 그룹으로 적용되어야 하는 속성은 DB 인스턴스 그룹을 수정하도록 개선
 * 보안 패치, OS 업그레이드 이후 과거 모니터링 지표 볼 수 있도록 개선
 * DB 인스턴스 타입별로 알림 설정할 수 있도록 개선
