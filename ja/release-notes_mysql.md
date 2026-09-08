@@ -5,16 +5,18 @@
 <a id="database-rds-for-mysql-release-notes"></a>
 ## Database > RDS for MySQL > リリースノート { #database-rds-for-mysql-release-notes }
 
-<a id="july-14-2026"></a>
-## 2026. 09. 15.
+<a id="september-15-2026"></a>
+## 2026. 09. 15. { #september-15-2026 }
 
-### 新機能追加
+<a id="september-15-2026-added-features"></a>
+### 新機能追加 { #september-15-2026-added-features }
 
 * MySQL 8.4.11 バージョンを追加しました。
 * DB インスタンス再起動時に、オペレーティングシステムを再起動するオプションを追加しました。
 * 高可用性インスタンスの停止機能を追加しました。
 
-### 機能改善
+<a id="september-15-2026-feature-updates"></a>
+### 機能改善 { #september-15-2026-feature-updates }
 
 * DB インスタンスタイプの用語変更
   * マスター → Primary
@@ -25,7 +27,8 @@
 * セキュリティパッチ、OS アップグレード後に過去のモニタリング指標を確認できるように改善
 * DB インスタンスタイプごとに通知設定できるように改善
 
-### バグ修正
+<a id="september-15-2026-bug-fixes"></a>
+### バグ修正 { #september-15-2026-bug-fixes }
 
 * CloudTrail に Object Storage のテナント ID がそのまま露出されるバグを修正しました。
 * バージョン 8.4 で CREATE TABLE ... SELECT 構文の実行後の時点への時点復元ができないバグを修正しました。
