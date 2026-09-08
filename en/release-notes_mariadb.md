@@ -1,7 +1,37 @@
-<!-- pre-align:aligned sig=c4fa2f480dec -->
+<!-- machine_translated: true -->
+
+<!-- pre-align:aligned sig=227955ea3124 -->
 
 <a id="database-rds-for-mariadb-release-notes"></a>
 ## Database > RDS for MariaDB > Release Notes { #database-rds-for-mariadb-release-notes }
+
+<a id="september-15-2026"></a>
+## September 15, 2026 { #september-15-2026 }
+
+<a id="september-15-2026-added-features"></a>
+### Added Features { #september-15-2026-added-features }
+
+* Added an option to restart the operating system when restarting a DB instance
+* Added a feature to stop high availability instances
+
+<a id="september-15-2026-feature-updates"></a>
+### Feature Updates { #september-15-2026-feature-updates }
+
+* Changed DB instance type terminology
+    * Master → Primary
+    * Candidate Master → Standby
+    * Read Only Slave → Read Replica
+    * Failed Master → Failed Over Primary
+* Improved so that properties that must be applied to a DB instance group are now configured by modifying the DB instance group
+* Improved to allow viewing past monitoring metrics after security patches and OS upgrades
+
+<a id="september-15-2026-bug-fixes"></a>
+### Bug Fixes { #september-15-2026-bug-fixes }
+
+* Fixed a bug where the Object Storage tenant ID was exposed as-is in CloudTrail
+* Fixed a bug where creating, modifying, or deleting security group rules intermittently failed when there were many security group rules
+* Fixed a bug where a high availability DB could intermittently fail to boot due to network communication failures
+* Fixed a bug where garbage security group rules intermittently remained when a DB port change failed
 
 <a id="july-14-2026"></a>
 ## July 14, 2026 { #july-14-2026 }
@@ -133,6 +163,7 @@
 
 <a id="february-11-2025-bug-fixes"></a>
 ### Bug Fixes { #february-11-2025-bug-fixes }
+
 * Fixed an issue where deleted notification group information appears on the view DB instance details screen
 
 <a id="november-12-2024"></a>

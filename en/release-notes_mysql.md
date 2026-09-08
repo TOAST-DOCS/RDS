@@ -1,7 +1,40 @@
-<!-- pre-align:aligned sig=fa6b592a4018 -->
+<!-- machine_translated: true -->
+
+<!-- pre-align:aligned sig=5410a458e2ca -->
 
 <a id="database-rds-for-mysql-release-notes"></a>
 ## Database > RDS for MySQL > Release Notes { #database-rds-for-mysql-release-notes }
+
+<a id="september-15-2026"></a>
+## September 15, 2026 { #september-15-2026 }
+
+<a id="september-15-2026-added-features"></a>
+### Added Features { #september-15-2026-added-features }
+
+* Added MySQL 8.4.11 version
+* Added an option to restart the operating system when restarting a DB instance
+* Added a feature to stop high availability instances
+
+<a id="september-15-2026-feature-updates"></a>
+### Feature Updates { #september-15-2026-feature-updates }
+
+* Changed DB instance type terminology
+    * Master → Primary
+    * Candidate Master → Standby
+    * Read Only Slave → Read Replica
+    * Failed Master → Failed Over Primary
+* Improved so that properties that must be applied to a DB instance group are now configured by modifying the DB instance group
+* Improved to allow viewing past monitoring metrics after security patches and OS upgrades
+* Improved to allow configuring notifications by DB instance type
+
+<a id="september-15-2026-bug-fixes"></a>
+### Bug Fixes { #september-15-2026-bug-fixes }
+
+* Fixed a bug where the Object Storage tenant ID was exposed as-is in CloudTrail
+* Fixed a bug where point-in-time restore failed for points in time after executing a `CREATE TABLE ... SELECT` statement in version 8.4
+* Fixed a bug where creating, modifying, or deleting security group rules intermittently failed when there were many security group rules
+* Fixed a bug where a high availability DB could intermittently fail to boot due to network communication failures
+* Fixed a bug where garbage security group rules intermittently remained when a DB port change failed
 
 <a id="july-14-2026"></a>
 ## July 14, 2026 { #july-14-2026 }

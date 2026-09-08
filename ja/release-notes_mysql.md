@@ -1,7 +1,40 @@
-<!-- pre-align:aligned sig=fa6b592a4018 -->
+<!-- machine_translated: true -->
+
+<!-- pre-align:aligned sig=5410a458e2ca -->
 
 <a id="database-rds-for-mysql-release-notes"></a>
 ## Database > RDS for MySQL > リリースノート { #database-rds-for-mysql-release-notes }
+
+<a id="september-15-2026"></a>
+## 2026. 09. 15. { #september-15-2026 }
+
+<a id="september-15-2026-added-features"></a>
+### 機能追加 { #september-15-2026-added-features }
+
+* MySQL 8.4.11バージョンを追加
+* DBインスタンス再起動時に、OSを再起動するオプションを追加
+* 高可用性インスタンスの停止機能を追加
+
+<a id="september-15-2026-feature-updates"></a>
+### 機能改善 { #september-15-2026-feature-updates }
+
+* DBインスタンスタイプの用語変更
+    * マスター → Primary
+    * 予備マスター → Standby
+    * リードレプリカ → Read Replica
+    * フェイルオーバーしたマスター → Failed Over Primary
+* DBインスタンスグループ単位で適用される属性は、DBインスタンスグループを修正するように改善
+* セキュリティパッチ、OSアップグレード後に過去のモニタリング指標を確認できるように改善
+* DBインスタンスタイプごとに通知を設定できるように改善
+
+<a id="september-15-2026-bug-fixes"></a>
+### 不具合の修正 { #september-15-2026-bug-fixes }
+
+* CloudTrailにObject StorageのテナントIDがそのまま表示されるバグを修正
+* バージョン8.4で`CREATE TABLE ... SELECT`構文の実行後の時点への時点復元ができないバグを修正
+* セキュリティグループルールが多い場合に、セキュリティグループルールの作成・変更・削除が断続的に失敗するバグを修正
+* 断続的にネットワーク通信の失敗により、高可用性DBが起動しない場合があるバグを修正
+* DBポートの変更に失敗した際、断続的にガベージセキュリティグループルールが残存するバグを修正
 
 <a id="july-14-2026"></a>
 ## 2026. 07. 14. { #july-14-2026 }
