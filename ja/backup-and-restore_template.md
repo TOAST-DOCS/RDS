@@ -361,7 +361,7 @@ mariabackup --defaults-file={my.cnfパス} --user {ユーザー} --password '{�
 
 * 一度にアップロードできる最大ファイルサイズは5GBです。
 * バックアップファイルのサイズが5GBより大きい場合、splitのようなユーティリティを利用してバックアップファイルを5GB以下に分割した後、マルチパートでアップロードする必要があります。
-* 詳細については、 [マルチパートアップロード](/Storage/Object%20Storage/ja/api-guide/#_45)を参照してください。
+* 詳細については、 [マルチパートアップロード](/Storage/Object%20Storage/ja/api-guide/#multipart-upload)を参照してください。
 
 (4)復元するプロジェクトのコンソールに接続した後、DBインスタンスタブで**Object Storageにあるバックアップで復元**ボタンをクリックします。
 
