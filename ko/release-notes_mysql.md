@@ -1,4 +1,4 @@
-<!-- pre-align:aligned sig=fa6b592a4018 -->
+<!-- pre-align:aligned sig=5410a458e2ca -->
 
 <a id="database-rds-for-mysql-release-notes"></a>
 ## Database > RDS for MySQL > 릴리스 노트 { #database-rds-for-mysql-release-notes }
