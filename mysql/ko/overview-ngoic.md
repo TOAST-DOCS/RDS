@@ -1,8 +1,12 @@
-## Database > RDS for MySQL > 개요
+<!-- pre-align:aligned sig=ca8f6a430f7f -->
+
+<a id="database-rds-for-enginepascalcase-overview"></a>
+## Database > RDS for MySQL > 개요 { #database-rds-for-enginepascalcase-overview }
 
 RDS for MySQL은 MySQL 데이터베이스를 클라우드 환경에서 사용할 수 있는 서비스입니다. 손쉽게 MySQL이 설치된 가상 장비를 사용할 수 있습니다.
 
-## 주요 기능
+<a id="main-features"></a>
+## 주요 기능 { #main-features }
 
 * 손쉽게 원하는 사양 및 볼륨 크기로 MySQL 데이터베이스를 사용할 수 있습니다.
 * 장애가 발생하더라도 가용성에 문제가 없도록 고가용성 기능을 설정할 수 있습니다.
@@ -13,5 +17,5 @@ RDS for MySQL은 MySQL 데이터베이스를 클라우드 환경에서 사용할
 * 데이터베이스의 상태를 한눈에 파악할 수 있는 서버 대시보드를 제공합니다.
 * 서버 대시보드에서 인스턴스 및 데이터베이스의 각종 지표를 그래프로 확인할 수 있습니다.
 
-> [주의]
-> RDS for MySQL은 사용자의 Compute & Network 서비스를 활성화해야만 사용할 수 있습니다.
+!!! danger "주의"
+    RDS for MySQL은 사용자의 Compute & Network 서비스를 활성화해야만 사용할 수 있습니다.

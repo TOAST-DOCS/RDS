@@ -12,12 +12,12 @@
     * Applied various DB instance modifications during your scheduled maintenance duration
 * Updated to grant ROLE_ADMIN privileges when the Direct Control for DB Schemas & Users setting is enabled
 * Added API v4.0
-    * For more information, see [API v4.0 guide](/Database/RDS%20for%20MySQL/en/api-guide-v4.0/) document.
+    * For more information, see [API v4.0 guide](/Database/RDS%20for%20MySQL/en/api-guide-v4.0-ngoic/) document.
 * Added snapshot backup feature
     * Perform backups using Cinder storage snapshots with zero impact on DB performance
 * Added security patch feature
     * Security patches for security vulnerabilities (CVEs) discovered in the OS can be performed as maintenance tasks.
-    * For more information, refer to the [Security patch](/Database/RDS%20for%20MySQL/ko/db-instance/#security-patch) documentation.
+    * For more information, refer to the [Security patch](/Database/RDS%20for%20MySQL/en/db-instance-ngoic/#security-patch) documentation.
 * Added `SELECT` option in addition to the existing `INSERT` option for high availability Ping check method
 
 ## November 28, 2025

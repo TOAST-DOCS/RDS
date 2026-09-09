@@ -9,15 +9,15 @@
 * Improved to display a warning message related to the password plugin when upgrading to version 8.4.
 * Fixed to allow creation of cross-region read replicas in subnets that do not have region peering set up.
 * Added maintenance feature
-  * Applied various DB instance modifications during your scheduled maintenance duration
+    * Applied various DB instance modifications during your scheduled maintenance duration
 * Updated to grant ROLE_ADMIN privileges when the Direct Control for DB Schemas & Users setting is enabled
 * Added API v4.0
-  * For more information, see [API v4.0 guide](/Database/RDS%20for%20MySQL/en/api-guide-v4.0/) document.
+    * For more information, see [API v4.0 guide](/Database/RDS%20for%20MySQL/en/api-guide-v4.0-ngsc/) document.
 * Added snapshot backup feature
-  * Perform backups using Cinder storage snapshots with zero impact on DB performance
+    * Perform backups using Cinder storage snapshots with zero impact on DB performance
 * Added security patch feature
-  * Security patches for security vulnerabilities (CVEs) discovered in the OS can be performed as maintenance tasks.
-  * For more information, refer to the [Security patch](/Database/RDS%20for%20MySQL/ko/db-instance/#security-patch) documentation.
+    * Security patches for security vulnerabilities (CVEs) discovered in the OS can be performed as maintenance tasks.
+    * For more information, refer to the [Security patch](/Database/RDS%20for%20MySQL/en/db-instance-ngsc/#security-patch) documentation.
 * Added `SELECT` option in addition to the existing `INSERT` option for high availability Ping check method
 
 ## November 28, 2025
@@ -69,7 +69,7 @@
 * Fixed an issue where the status of DB instances was intermittently not updated
 * Fixed an issue where an unknown error modal window was sometimes exposed
 
-## February 13, 2025
+## July 11, 2024
 
 ### Feature Updates
 

@@ -1,10 +1,15 @@
-## Database > RDS for MariaDB > Analysis
+<!-- pre-align:aligned sig=44a5340e8b3f -->
 
-## Process List, InnoDB Status
+<a id="database-rds-for-enginepascalcase-analysis"></a>
+## Database > RDS for MariaDB > Analysis { #database-rds-for-enginepascalcase-analysis }
+
+<a id="process-list-innodb-status"></a>
+## Process List, InnoDB Status { #process-list-innodb-status }
 
 Collects queries performed on the database and the status of the InnoDB engine. The results of `information_schema.processlist`and `SHOW ENGINE INNODB STATUS`are collected once per second, and you can view the last four days of data in the Analysis tab of the console.
 
-> [Note] The collected data is stored in internal backup storage and is not charged separately.
+!!! tip "Note"
+    The collected data is stored in internal backup storage and is not charged separately.
 
 The following items are collected
 
@@ -21,11 +26,13 @@ The following items are collected
 | Query         | Running queries                                              |
 | InnoDB Status | InnoDB status information                                    |
 
-## Slow Query
+<a id="slow-query"></a>
+## Slow Query { #slow-query }
 
 Analyzes the slow queries that occurred in the database and collects the results. It performs analysis once a minute using pt-query-digest, a query analysis tool provided by Percona, and you can view the last 30 days of data in the Analysis tab of the console.
 
-> [Note] You can disable the Slow Query analysis feature on the Modify DB Instance screen.
+!!! tip "Note"
+    You can disable the Slow Query analysis feature on the Modify DB Instance screen.
 
 The following items are collected.
 
@@ -39,6 +46,6 @@ The following items are collected.
 | Query Count    | Number of queries issued                                     |
 | Query          | Abstracted queries so you can group similar queries together |
 
-> [Caution]
-> If the value of the slow_query_log parameter is 0, no Slow Query logs are left and no analysis results are collected.
-> If the DB instance is heavily loaded, Slow Query analysis may be delayed or analysis results may be lost.
+!!! danger "Caution"
+    If the value of the slow_query_log parameter is 0, no Slow Query logs are left and no analysis results are collected.
+    If the DB instance is heavily loaded, Slow Query analysis may be delayed or analysis results may be lost.
