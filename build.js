@@ -96,10 +96,11 @@ for (let config of configs) {
             // zh 는 en 템플릿을 그대로 사용
             const langDir = language === 'zh' ? 'en' : language;
 
+            // 환경별 원본은 nc-rds generated-guides 구조 그대로 {lang}/{env}/ 아래에 둠
+            // api-guide-v3.0 → {env}/api-guide-mysql-v3.0.md, release-notes → {env}/release-notes-mysql.md
             const isPerEngine = perEngineDocs.indexOf(doc) >= 0;
-            const suffix = config.env === 'public' ? '' : `_${config.env}`;
             const templatePath = isPerEngine
-                ? `${langDir}/${doc}_${config.engine}${suffix}.md`
+                ? `${langDir}/${config.env}/${doc.replace(/(-v[\d.]+)?$/, `-${config.engine}$1`)}.md`
                 : `${langDir}/${doc}_template.md`;
 
             // 번역되지 않은 원본은 건너뜀
