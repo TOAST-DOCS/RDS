@@ -1,12 +1,17 @@
-## Database > RDS for MariaDB > DB 엔진
+<!-- pre-align:aligned sig=c01d6c6c712e -->
 
-## DB 엔진
+<a id="database-rds-for-enginepascalcase-db-engine"></a>
+## Database > RDS for MariaDB > DB 엔진 { #database-rds-for-enginepascalcase-db-engine }
+
+<a id="db-engine"></a>
+## DB 엔진 { #db-engine }
 
 MariaDB의 버전 번호는 `X.Y.Z` 형식으로 구성됩니다. NHN Cloud의 RDS for MariaDB에서는 `X.Y`는 메이저 버전을, `Z`는 마이너 버전을 나타냅니다.
 
-### RDS에서 제공하는 DB 엔진 버전
+<a id="db-engine-version-provided-by-rds"></a>
+### RDS에서 제공하는 DB 엔진 버전 { #db-engine-version-provided-by-rds }
 
-아래에 명시된 버전을 사용할 수 있습니다. 신규 DB 인스턴스 생성 및 읽기 복제본 추가는 메이저 버전당 상위 7개 마이너 버전까지만 지원합니다.
+아래에 명시된 버전을 사용할 수 있습니다. 신규 DB 인스턴스 생성 및 Read Replica 추가는 메이저 버전당 상위 7개 마이너 버전까지만 지원합니다.
 
 | 버전                     | 비고                            |
 |------------------------|-------------------------------|
@@ -24,24 +29,26 @@ MariaDB의 버전 번호는 `X.Y.Z` 형식으로 구성됩니다. NHN Cloud의 R
 | MariaDB 10.11.8        |                               |
 | MariaDB 10.11.7        |                               |
 | <strong>10.6</strong>  |                               |
-| MariaDB 10.6.25        | 신규로 생성하거나 읽기 복제본을 추가할 수 없습니다. |
-| MariaDB 10.6.22        | 신규로 생성하거나 읽기 복제본을 추가할 수 없습니다. |
-| MariaDB 10.6.16        | 신규로 생성하거나 읽기 복제본을 추가할 수 없습니다. |
-| MariaDB 10.6.12        | 신규로 생성하거나 읽기 복제본을 추가할 수 없습니다. |
-| MariaDB 10.6.11        | 신규로 생성하거나 읽기 복제본을 추가할 수 없습니다. |
+| MariaDB 10.6.25        | 신규로 생성하거나 Read Replica를 추가할 수 없습니다. |
+| MariaDB 10.6.22        | 신규로 생성하거나 Read Replica를 추가할 수 없습니다. |
+| MariaDB 10.6.16        | 신규로 생성하거나 Read Replica를 추가할 수 없습니다. |
+| MariaDB 10.6.12        | 신규로 생성하거나 Read Replica를 추가할 수 없습니다. |
+| MariaDB 10.6.11        | 신규로 생성하거나 Read Replica를 추가할 수 없습니다. |
 | <strong>10.3</strong>  |                               |
-| MariaDB 10.3.30        | 신규로 생성하거나 읽기 복제본을 추가할 수 없습니다. |
+| MariaDB 10.3.30        | 신규로 생성하거나 Read Replica를 추가할 수 없습니다. |
 
-### DB 엔진 버전 관리
+<a id="manage-db-engine-version"></a>
+### DB 엔진 버전 관리 { #manage-db-engine-version }
 DB 인스턴스를 생성한 이후, DB 인스턴스 수정과 함께 DB 엔진 버전을 변경할 수 있습니다.
 
-> [주의]
-> DB 버전 변경 시 업그레이드만 지원하며, 다운그레이드는 지원하지 않습니다.
+!!! danger "주의"
+    DB 버전 변경 시 업그레이드만 지원하며, 다운그레이드는 지원하지 않습니다.
 
 DB 엔진 버전 업그레이드 시, 메이저 버전 번호만 변경되는 경우는 메이저 버전 업그레이드로, 마이너 버전 번호만 변경되는 경우는 마이너 버전 업그레이드로 간주합니다.
 DB 엔진 메이저 버전 업그레이드 시 바로 다음 메이저 버전으로만 업그레이드할 수 있습니다.
 
 
+<a id="manage-db-engine-version-pre-check"></a>
 #### 사전 점검
 
 DB 엔진 메이저 버전을 업그레이드하기 전에 다음 사항을 사전에 확인하기를 권장합니다.
@@ -51,6 +58,7 @@ DB 엔진 메이저 버전을 업그레이드하기 전에 다음 사항을 사�
 
 콘솔에서 DB 버전 업그레이드 시 **DB 엔진 업그레이드 사전 확인** 버튼을 사용하여 사전 점검 결과를 확인할 수 있습니다. 개별 DB 인스턴스의 로그 탭에 생성된 `db_version_upgrade_compatibility.log` 파일에서 세부 내역을 확인할 수 있습니다.
 
+<a id="manage-db-engine-version-notes-on-upgrading-from-mariadb-114-to-mariadb-118"></a>
 #### MariaDB 11.4에서 MariaDB 11.8로 업그레이드 시 확인 사항
 
 MariaDB 11.8로 업그레이드하려면 먼저 MariaDB 11.4로 업그레이드된 상태여야 합니다. `11.4`에서 `11.8` 버전으로 메이저 버전 업그레이드를 진행하는 경우 아래 사항을 확인해야 합니다.
@@ -61,25 +69,28 @@ MariaDB 11.8로 업그레이드하려면 먼저 MariaDB 11.4로 업그레이드�
 - [MariaDB 11.4에서 11.8로 업그레이드 경로](https://mariadb.com/docs/server/server-management/install-and-upgrade-mariadb/upgrading/mariadb-community-server-upgrade-paths/upgrading-from-mariadb-11-4-to-mariadb-11-8)
 - [MariaDB 11.8 릴리스 노트](https://mariadb.com/docs/release-notes/community-server/11.8/what-is-mariadb-118#upgrading)
 
+<a id="manage-db-engine-version-upgrading-the-db-engine-version-using-a-dummy-db-instance"></a>
 #### 더미 DB 인스턴스를 사용한 DB 엔진 버전 업그레이드
 
-DB 인스턴스 수정 화면에서 DB 엔진 버전 변경을 시도할 때 더미 DB 인스턴스 사용 여부를 선택해 버전 업그레이드 중에도 고가용성을 유지할 수 있습니다. 더미 DB 인스턴스 사용을 선택하면 DB 버전 업그레이드용 예비 마스터가 생성됩니다.
+DB 인스턴스 수정 화면에서 DB 엔진 버전 변경을 시도할 때 더미 DB 인스턴스 사용 여부를 선택해 버전 업그레이드 중에도 고가용성을 유지할 수 있습니다. 더미 DB 인스턴스 사용을 선택하면 DB 버전 업그레이드용 Standby가 생성됩니다.
 
-> [주의]
-> 더미 DB 인스턴스는 업그레이드 과정 중 임시 예비 마스터를 생성하므로, 해당 옵션은 고가용성 구성이 아닌 경우에만 사용할 수 있습니다.
+!!! danger "주의"
+    더미 DB 인스턴스는 업그레이드 과정 중 임시 Standby를 생성하므로, 해당 옵션은 고가용성 구성이 아닌 경우에만 사용할 수 있습니다.
 
+<a id="manage-db-engine-version-manual-control-of-failover-when-upgrading-high-availability-db-instances"></a>
 #### 고가용성 DB 인스턴스 업그레이드 시 장애 조치 수동 제어
 
-DB 인스턴스가 고가용성으로 구성되어 있을 때 예비 마스터의 엔진 버전을 먼저 업그레이드한 뒤 장애 조치를 사용하여 예비 마스터를 마스터로 승격합니다. 장애 조치는 마스터의 서비스를 잠시 중단하기 때문에 사용자가 원하는 시점에 장애 조치를 시작할 수 있습니다.
+DB 인스턴스가 고가용성으로 구성되어 있을 때 Standby의 엔진 버전을 먼저 업그레이드한 뒤 장애 조치를 사용하여 Standby를 Primary로 전환합니다. 장애 조치는 Primary의 서비스를 잠시 중단하기 때문에 사용자가 원하는 시점에 장애 조치를 시작할 수 있습니다.
 버전 업그레이드 시 장애 조치 수동 제어 설정을 사용하면 사용자가 콘솔에서 직접 장애 조치를 시작할 수 있습니다.
 
-> [주의]
-> 장애 조치 수동 제어가 60시간 이상 트리거되지 않으면 업그레이드 작업이 자동으로 취소됩니다.
+!!! danger "주의"
+    장애 조치 수동 제어가 60시간 이상 트리거되지 않으면 업그레이드 작업이 자동으로 취소됩니다.
 
-### 노후 운영체제를 사용하는 경우
+<a id="when-using-an-outdated-operating-system"></a>
+### 노후 운영체제를 사용하는 경우 { #when-using-an-outdated-operating-system }
 
-내부 운영체제가 노후된 DB 인스턴스는 DB 버전을 업그레이드하기 전에 VM 교체를 동반한 운영체제 버전 업그레이드가 필요합니다. 알림 그룹의 감시 대상 인스턴스 및 이벤트 구독의 이벤트 소스는 변경된 식별자로 자동 교체됩니다. 단일 DB 인스턴스는 DB 버전 변경 시 더미 DB 인스턴스 사용을 권장합니다. 고가용성 DB 인스턴스는 DB 인스턴스 교체 과정에서 장애 조치를 이용하여 마스터와 예비 마스터의 역할이 변경됩니다. 마스터의 부하가 심할 경우 장애 조치에 실패할 수 있으므로 DB 버전 변경은 부하가 심하지 않은 시간에 수행하기를 권장합니다.
+내부 운영체제가 노후된 DB 인스턴스는 DB 버전을 업그레이드하기 전에 VM 교체를 동반한 운영체제 버전 업그레이드가 필요합니다. 알림 그룹의 감시 대상 인스턴스 및 이벤트 구독의 이벤트 소스는 변경된 식별자로 자동 교체됩니다. 단일 DB 인스턴스는 DB 버전 변경 시 더미 DB 인스턴스 사용을 권장합니다. 고가용성 DB 인스턴스는 DB 인스턴스 교체 과정에서 장애 조치를 이용하여 Primary와 Standby의 역할이 변경됩니다. Primary의 부하가 심할 경우 장애 조치에 실패할 수 있으므로 DB 버전 변경은 부하가 심하지 않은 시간에 수행하기를 권장합니다.
 
-> [주의]
-> IP ACL 또는 보안 그룹에서 기존 DB 인스턴스의 내부 IP를 직접 사용하는 경우 주의해야 합니다.
+!!! danger "주의"
+    IP ACL 또는 보안 그룹에서 기존 DB 인스턴스의 내부 IP를 직접 사용하는 경우 주의해야 합니다.
 

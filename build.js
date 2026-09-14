@@ -2,7 +2,7 @@ const fs = require('fs');
 const Handlebars = require('handlebars');
 require('handlebars-helpers')();
 
-const languages = ['ko', 'en', 'ja', 'zh'];
+const languages = ['ko', 'en', 'ja'];
 const docs = [
     'analysis',
     'api-guide-v2.0',
@@ -15,6 +15,7 @@ const docs = [
     'notification',
     'overview',
     'parameter-group',
+    'release-notes',
     'server-dashboard'
 ];
 
@@ -24,6 +25,10 @@ const isPPP = args.length > 0 && args[0] === 'ppp';
 
 // PPP 환경 목록
 const pppEnvs = ['ninc', 'ngovc', 'ngoic', 'ngsc'];
+
+// 엔진/클라우드 환경별로 원본이 나뉜 문서 목록
+// 릴리스 노트와 nc-rds 코드 기반으로 생성되는 API 가이드가 해당
+const perEngineDocs = ['release-notes', 'api-guide-v3.0', 'api-guide-v4.0'];
 
 // 전체 설정 목록
 const allConfigs = [
@@ -88,28 +93,35 @@ for (let config of configs) {
                 continue;
             }
 
-            let template;
+            // zh 는 en 템플릿을 그대로 사용
+            const langDir = language === 'zh' ? 'en' : language;
 
-            if (language === 'zh') {
-                template = fs.readFileSync(`template/en/${doc}_template.md`, 'utf-8');
-            } else {
-                template = fs.readFileSync(`template/${language}/${doc}_template.md`, 'utf-8');
+            // 환경별 원본은 nc-rds generated-guides 구조 그대로 {lang}/{env}/ 아래에 둠
+            // api-guide-v3.0 → {env}/api-guide-mysql-v3.0.md, release-notes → {env}/release-notes-mysql.md
+            const isPerEngine = perEngineDocs.indexOf(doc) >= 0;
+            const templatePath = isPerEngine
+                ? `${langDir}/${config.env}/${doc.replace(/(-v[\d.]+)?$/, `-${config.engine}$1`)}.md`
+                : `${langDir}/${doc}_template.md`;
+
+            // 번역되지 않은 원본은 건너뜀
+            if (!fs.existsSync(templatePath)) {
+                continue;
             }
+
+            const template = fs.readFileSync(templatePath, 'utf-8');
 
             const fileName = config.env === 'public' ? `${doc}.md` : `${doc}-${config.env}.md`;
             const compiled = Handlebars.compile(template);
             let result = compiled(context);
 
-            if(config.env !== 'public') {
+            // 환경별 원본은 링크도 이미 환경에 맞게 들어 있음
+            if(config.env !== 'public' && !isPerEngine) {
                 // [text](link-menu/) 혹은 [text](link-menu/#tag) 형식을 [text](link-menu-env/) 형식으로 교체
                 result = result.replace(/\[(.*)]\((?!.*png)(?!#)(?!http)([^)]*?)(\/#[^)]*|\/)\)/g,`[$1]($2-${config.env}$3)`);
             }
 
-            if (config.engine === 'mysql') {
-                fs.writeFileSync(`${language}/${fileName}`, result);
-            } else {
-                fs.writeFileSync(`${config.engine}/${language}/${fileName}`, result);
-            }
+            fs.mkdirSync(`${config.engine}/${language}`, { recursive: true });
+            fs.writeFileSync(`${config.engine}/${language}/${fileName}`, result);
 
             console.log(`${config.engine}/${language}/${fileName} created`);
         }
