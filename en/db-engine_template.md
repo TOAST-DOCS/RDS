@@ -1,3 +1,5 @@
+<!-- machine_translated: true -->
+
 <!-- pre-align:aligned sig=c01d6c6c712e -->
 
 <a id="database-rds-for-enginepascalcase-db-engine"></a>
@@ -89,7 +91,7 @@ After creating the DB instance, you can change the DB engine version and modify 
 When upgrading the database engine version, a major version upgrade occurs if only the major version number is changed, and a minor version upgrade occurs if only the minor version number is changed.
 When attempting to upgrade the DB engine major version, you can upgrade to the next major version of the DB engine.
 
-마이너 버전은 사용자가 직접 업그레이드하지 않아도 자동으로 업그레이드하도록 설정할 수 있습니다. 자세한 내용은 [마이너 버전 자동 업그레이드](db-instance/#maintenance-auto-minor-version-upgrade)를 참고합니다.
+You can configure the minor version to upgrade automatically without having to upgrade it manually. For more information, see [Auto Minor Version Upgrade](db-instance/#maintenance-auto-minor-version-upgrade).
 
 {{#if (eq engine.lowerCase "mysql")}}
 <a id="manage-db-engine-version-pre-inspection-for-upgrading-from-mysql-57-to-mysql-80"></a>
