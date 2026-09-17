@@ -235,7 +235,7 @@ You can check the maintenance status of each instance in the DB instance list.
 | Status | Description |
 |-------|-------------------------------------------------------------------|
 | None | There are no scheduled or pending maintenance tasks. |
-| Apply Next | There are maintenance tasks scheduled to run in the next maintenance window. |
+| Next Apply | There are maintenance tasks scheduled to run in the next maintenance duration. |
 | Applying | A maintenance task is in progress. |
 | Required | There are required maintenance tasks. They will eventually be applied even if deferred. |
 | Available | There are only maintenance tasks that do not run automatically and must be applied or scheduled by the user. This also includes tasks that have been placed on hold. |
@@ -254,12 +254,12 @@ You can find the following information on the Maintenance tab of the DB instance
 * Upcoming maintenance tasks (Scheduled for the next duration)
 * Pending maintenance tasks
 
-Scheduled maintenance tasks can be excluded from the maintenance window by clicking the **Pending** or **Delete** button. User maintenance tasks are deleted, and Provider maintenance tasks and automatic maintenance tasks are placed on hold. Pending maintenance tasks can be applied manually by selecting **Apply immediately** or **Apply at next maintenance window**.
+Scheduled maintenance tasks can be excluded from the maintenance duration by clicking the **Hold** or **Delete** button. User maintenance tasks are deleted, and Provider maintenance tasks and automatic maintenance tasks are placed on hold. Pending maintenance tasks can be applied manually by selecting **Apply Immediately** or **Apply in the Next Maintenance Duration**.
 
 <a id="maintenance-auto-minor-version-upgrade"></a>
-#### Automatic minor version upgrade
+#### Auto Minor Version Upgrade
 
-When automatic minor version upgrade is enabled, the minor version of the DB engine is upgraded automatically without any direct request from you. If there is a version eligible for automatic upgrade, an automatic maintenance task is registered and executed during the next maintenance window.
+When Auto Minor Version Upgrade is enabled, the minor version of the DB engine is upgraded automatically without any direct request from you. If there is a version eligible for automatic upgrade, an automatic maintenance task is registered and executed during the next maintenance duration.
 
 **Settings**
 
@@ -287,17 +287,17 @@ If there are remaining DB engine version upgrade tasks that were scheduled by th
 
 **Upgrade order**
 
-To maintain the replication configuration, Read Replicas are upgraded first, followed by the Primary. The Primary and Standby of a high-availability DB instance are upgraded together as a single task. Because of this order, it may take several maintenance windows for the changes to be applied to the entire DB instance group.
+To maintain the replication configuration, Read Replicas are upgraded first, followed by the Primary. The Primary and Standby of a high-availability DB instance are upgraded together as a single task. Because of this order, it may take several maintenance durations for the changes to be applied to the entire DB instance group.
 
 **Evaluation cycle**
 
-Eligibility for automatic upgrade is evaluated once per day. If eligible, an automatic maintenance task scheduled for the next maintenance window is registered.
+Eligibility for automatic upgrade is evaluated once per day. If eligible, an automatic maintenance task scheduled for the next maintenance duration is registered.
 
 **Task exclusion**
 
-If you don't want to run a registered automatic maintenance task during the current maintenance window, select **Defer** on the Maintenance tab. A deferred task is not re-registered automatically. If you select **Apply in the next maintenance duration**, it will run at that time.
+If you don't want to run a registered automatic maintenance task during the current maintenance duration, select **Hold** on the Maintenance tab. A held task is not re-registered automatically. If you select **Apply in the Next Maintenance Duration**, it will run at that time.
 
-To stop automatic upgrades entirely, modify the DB instance group and change the automatic minor version upgrade setting to disabled. When you change the setting to disabled, any automatic maintenance tasks that have not yet been executed are also deleted.
+To stop automatic upgrades entirely, modify the DB instance group and change the Auto Minor Version Upgrade setting to disabled. When you change the setting to disabled, any automatic maintenance tasks that have not yet been executed are also deleted.
 
 <a id="maintenance-execution-order"></a>
 #### Execution Order
@@ -641,14 +641,14 @@ Upcoming Maintenance is a list of tasks scheduled to be executed during the next
 | Registration Date | The date the maintenance task was registered. |
 | Mandatory Date | If the task is required, it will be automatically applied after this date. |
 
-Scheduled maintenance tasks can be excluded from a maintenance window by selecting them and clicking **Delete** or **Pending**.
-Deleted user maintenance tasks are canceled, and to reapply them to a maintenance window, you must perform the task again.
+Scheduled maintenance tasks can be excluded from the maintenance duration by selecting them and clicking **Delete** or **Hold**.
+Deleted user maintenance tasks are canceled, and to reapply them to a maintenance duration, you must perform the task again.
 Provider maintenance tasks and automatic maintenance tasks are moved to the pending maintenance list. From the pending maintenance list, you can move them back to the scheduled maintenance list.
 
 <a id="db-instance-details-maintenance-pending-maintenance"></a>
 #### Pending Maintenance
 
-Pending Maintenance is a list of provider maintenance tasks provided by NHN Cloud and automatic maintenance tasks registered automatically by the system. It includes tasks such as applying parameter group changes, migration for hypervisor inspection, and automatic minor version upgrades.
+Pending Maintenance is a list of Provider maintenance tasks provided by NHN Cloud and automatic maintenance tasks registered automatically by the system. It includes tasks such as applying parameter group changes, migration for hypervisor inspection, and Auto Minor Version Upgrade.
 
 | Item        | Description                                                                 |
 |-------------|-----------------------------------------------------------------------------|

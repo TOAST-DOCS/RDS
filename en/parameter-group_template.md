@@ -70,7 +70,7 @@ You are free to delete parameter groups except those already applied to the DB i
 A family parameter group is a parameter group that can be applied to DB instances of all minor versions belonging to the same DB engine version family — that is, the same major version. If you use the same major version, you can manage all instances with a single parameter group even if their minor versions differ, and you don't need to reselect a parameter group when you upgrade the minor version.
 
 !!! tip "Note"
-    [Automatic minor version upgrade](db-instance/#maintenance-auto-minor-version-upgrade) applies only to DB instances that use a family parameter group.
+    [Auto Minor Version Upgrade](db-instance/#maintenance-auto-minor-version-upgrade) applies only to DB instances that use a family parameter group.
 
 <a id="template-range"></a>
 ### Template Range { #template-range }
@@ -113,8 +113,7 @@ The parameter contains the following information.
 |------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| 
 | Group            | Option group of option file (my.cnf).                                                                                                                                                                             | 
 | Name             | Option name of option file (my.cnf).<br/>When the option name and system variables (System Variables) are different, they are additionally displayed in the format (**_- Variable_**: `System Variables`).         |
-| Template parameter | The range of DB engine versions to which the value applies.<br/>Displayed only for family parameter groups. |
-| 템플릿 구간           | 값이 적용되는 DB 엔진 버전의 범위입니다.<br/>패밀리 파라미터 그룹에만 표시됩니다.                                                                                                                                                              |
+| Template Range | The range of DB engine versions to which the value applies.<br/>Displayed only for family parameter groups. |
 | Value            | Value to be applied to parameters.                                                                                                                                                                                |
 | Allowed values   | Range of values applicable to parameters.<br/>                                                                                                                                                                    | 
 | Application Type | Either `Static` or `Dynamic`.<br/>For `Static`, the DB instance must be restarted to apply the parameter changes.<br/>For `Dynamic`, the parameters are applied immediately without restarting the DB instance. |
