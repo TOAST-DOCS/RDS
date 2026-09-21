@@ -703,7 +703,6 @@ For high-availability DB instances, if there are any changes to items that need 
 
 <a id="upgrade-db-instance-operating-system"></a>
 ## Upgrade DB instance operating system { #upgrade-db-instance-operating-system }
-
 Supports DB instance operating system upgrades. By upgrading the operating system, you can resolve security vulnerabilities or respond to the end of life (EOL) of the operating system.
 Caution is required when upgrading the operating system because it may result in service disruption. Highly available DB instances can minimize service disruption through failover.
 
@@ -1011,55 +1010,55 @@ from the time the new backup was performed on the new Primary.
     If the position number value of the binary log between Primary and Standby differs by more than 100,000,000, there is no failover.
     If `replicate-ignore-db` or `replicate-ignore-table` is applied, changes to that DB or table will not be replicated and failover may fail.
 
-<a id="failover-progress-phases"></a>
-### Failover Progress Phases { #failover-progress-phases }
+<a id="failover-progress-step"></a>
+### Failover Progress Step { #failover-progress-step }
 
-While a failover is in progress, the **Failover Progress Phase** and **Replication Log Apply Progress** columns appear in the DB instance list. These two columns appear only when there is a DB instance group with an ongoing failover, and values are displayed only in the DB instance group row. When the failover completes, the two columns disappear.
+While a failover is in progress, the **Failover Progress Step** and **Replication Log Apply Progress** columns appear in the DB instance list. These two columns appear only when there is a DB instance group with an ongoing failover, and values are displayed only in the DB instance group row. When the failover completes, the two columns disappear.
 
-The failover progress phases are as follows. The **Revert Failover** button appears only during phases that can be reverted.
+The failover progress steps are as follows. The **Revert Failover** button appears only during steps that can be reverted.
 
-| Progress Phase | Description | Revertible |
+| Progress Step | Description | Revertible |
 | --------------------- | --------------------------------------------------------------- | ---- |
-| Block Failed Over Primary | Blocks connections to the failed Primary and shuts down the database engine. | Yes |
-| Apply Replication Log | Applies replication logs that the Standby has not yet reflected. | Yes |
-| Switch Endpoint | Changes the internal domain and VIP to point to the Standby and allows writes. | No |
-| Reconfigure Replication | Reconfigures replication so that the remaining replicas point to the new Primary. | No |
-| Clean Up Metadata | Reflects the failover result in the DB instance information. | No |
+| Blocking Failed Over Primary | Blocks connections to the failed Primary and shuts down the database engine. | Yes |
+| Applying Replication Log | Applies replication logs that the Standby has not yet reflected. | Yes |
+| Switching Endpoint | Changes the internal domain and VIP to point to the Standby and allows writes. | No |
+| Reconfiguring Replication | Reconfigures replication so that the remaining replicas point to the new Primary. | No |
+| Cleaning Up Metadata | Reflects the failover result in the DB instance information. | No |
 | Reverting | Processes the requested failover revert. | No |
 
-During the Apply Replication Log phase, you can check how much of the replication log remains to be applied in the Replication Log Apply Progress column. The display formats are as follows.
+During the Applying Replication Log step, you can check how much of the replication log remains to be applied in the Replication Log Apply Progress column. The display formats are as follows.
 
 | Display | Meaning |
 | --------------- | ----------------------------------------------------- |
 | `62% (approx. 40 seconds remaining)` | 62% of the log has been applied, and the remaining portion will take approximately 40 seconds. |
 | `7%` | 7% of the log has been applied, but not enough samples have been collected yet to estimate the remaining time. |
 | `7% (no progress)` | 7% of the log has been applied, but no further progress has been made for more than 1 minute. |
-| `Finalizing` | All replication logs have been applied and cleanup is in progress before moving to the next phase. |
+| `Finalizing` | All replication logs have been applied and cleanup is in progress before moving to the next step. |
 
 !!! tip "Note"
     The remaining time is an estimated value calculated based on the average apply speed so far, and may differ from the actual time required.
 
-<a id="roll-back-a-failover"></a>
-### Roll Back a Failover { #roll-back-a-failover }
+<a id="revert-failover"></a>
+### Revert Failover { #revert-failover }
 
-If there are many replication logs to apply to the standby, the log application step can take a long time. In this case, rolling back the failover and restarting the failed primary may be a faster way to resume service than waiting for the failover to complete. When the progress step is Failed Over Primary blocking or replication log application, the **Roll Back Failover** button appears next to the name in the DB instance group row. Clicking the button displays a warning pop-up, after which the rollback is executed.
+If there are many replication logs to apply to the Standby, the Applying Replication Log step can take a long time. In this case, reverting the failover and restarting the failed Primary may be a faster way to resume service than waiting for the failover to complete. When the progress step is Blocking Failed Over Primary or Applying Replication Log, the **Revert Failover** button appears next to the name in the DB instance group row. Clicking the button displays a warning pop-up, after which the revert is executed.
 
-Rolling back a failover stops the ongoing failover and restarts the failed primary for use as the primary again. The connections of the blocked user security groups are restored, and replication of the replicas is restarted. Because a rollback can only be performed before the endpoint is switched, the standby has never been promoted to the new primary and has not received any writes. After the rollback, the data from the original primary is used as-is.
+Reverting a failover stops the ongoing failover and restarts the failed Primary for use as the Primary again. The connections of the blocked user security groups are restored, and replication of the replicas is restarted. Because a revert can only be performed before the Endpoint is switched, the Standby has never been promoted to the new Primary and has not received any writes. After the revert, the data from the original Primary is used as-is.
 
 !!! danger "Caution"
-    Depending on the cause of the failure, the failed primary may not start up normally. In this case, the rollback fails and the DB instance remains in the failover-in-progress state.
-    If you cannot connect to the failed primary, you must contact the customer center.
+    Depending on the cause of the failure, the failed Primary may not start up normally. In this case, the revert fails and the DB instance remains in the failover-in-progress state.
+    If you cannot connect to the failed Primary, you must contact Customer Support.
 
-After rolling back the failover, the high availability feature remains paused. Therefore, when the rollback is complete, you must either resume the high availability feature by using **Restart High Availability**, or perform [Rebuild Standby](#rebuild-candidate-master) if replication of the standby is significantly delayed. Because the high availability feature is already paused, you cannot perform a high availability pause.
+After reverting the failover, the high availability feature remains stopped. Therefore, when the revert is complete, you must either resume the high availability feature by using **Restart High Availability**, or perform [Rebuild Standby](#rebuild-candidate-master) if replication of the Standby is significantly delayed. Because the high availability feature is already stopped, you cannot suspend high availability.
 
-In the following cases, the rollback request is rejected and the reason is displayed on the screen.
+In the following cases, the revert request is rejected and the reason is displayed on the screen.
 
-| Reason                                                                                          | Action                                                                                          |
-| ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
-| The failover has already progressed to a stage that cannot be rolled back.                      | Wait until the failover is complete.                                                            |
-| A failover rollback is already in progress.                                                     | Wait until the rollback is complete.                                                            |
-| There is no failover in progress.                                                               | Refresh the screen to check the latest status.                                                  |
-| The rollback cannot be performed because the failed primary DB instance is not responding.      | Wait until the failover is complete, then recover or rebuild the failed over primary.           |
+| Reason | Action |
+| --------------------------------------------------------------- | ------------------------------------ |
+| The failover has already progressed to a step that cannot be reverted. | Wait until the failover is complete. |
+| A failover revert is already in progress. | Wait until the revert is complete. |
+| There is no failover in progress. | Refresh the screen to check the latest status. |
+| The revert cannot be performed because the failed Primary DB instance is not responding. | Wait until the failover is complete, then recover or rebuild the Failed Over Primary. |
 
 <a id="failed-over-master"></a>
 ### Failed Over Primary { #failed-over-master }
@@ -1372,7 +1371,6 @@ CALL mysql.tcrds_innodb_monitor_reset('module_dml');
 
 <a id="tcrdsforeignkeychecks"></a>
 ### tcrds_foreign_key_checks { #tcrdsforeignkeychecks }
-
 * A procedure that controls the `foreign_key_checks` variable that checks for foreign key constraints.
 * Run the following query: `SET GLOBAL foreign_key_checks ='ON|OFF';`.
 
@@ -1479,7 +1477,6 @@ mysql -h{external_db_host} -u{external_db_id} -p{external_db_password} --port={e
 * Before setting up a new replication, run the query below to initialize existing replication information that may exist. When you run RESET SLAVE, the existing replication information is initialized.
 
 ##### Before 8.4
-
 ```
 STOP SLAVE;
 
@@ -1487,7 +1484,6 @@ RESET SLAVE;
 ```
 
 ##### After 8.4
-
 ```
 STOP REPLICA;
 
@@ -1497,7 +1493,6 @@ RESET REPLICA;
 * Run the query on the external DB as shown below, using the account information to be used for replication and the MASTER_LOG_FILE and MASTER_LOG_POS that recorded earlier.
 
 ##### Before 8.4
-
 ```
 CHANGE MASTER TO master_host = '{rds_master_instance_floating_ip}', master_user='{user_id_for_replication}', master_password='{password_forreplication_user}', master_port ={rds_master_instance_port}, master_log_file ='{MASTER_LOG_FILE}', master_log_pos = {MASTER_LOG_POS};
 
@@ -1505,7 +1500,6 @@ START SLAVE;
 ```
 
 ##### After 8.4
-
 ```
 CHANGE REPLICATION SOURCE TO source_host = '{rds_master_instance_floating_ip}', source_user='{user_id_for_replication}', source_password='{password_forreplication_user}', source_port ={rds_master_instance_port}, source_log_file ='{SOURCE_LOG_FILE}', source_log_pos = {SOURCE_LOG_POS};
 
@@ -1560,14 +1554,12 @@ mysql -h{rds_master_instance_floating_ip} -u{db_id} -p{db_password} --port={db_p
 * Create an account for replication on an external {{engine.pascalCase}} instance.
 
 ##### Before 8.4
-
 ```
 {{engine.lowerCase}}> CREATE USER 'user_id_for_replication'@'{external_db_host}' IDENTIFIED BY '<password_forreplication_user>';
 {{engine.lowerCase}}> GRANT REPLICATION CLIENT, REPLICATION SLAVE ON *.* TO 'user_id_for_replication'@'{external_db_host}';
 ```
 
 ##### After 8.4
-
 ```
 {{engine.lowerCase}}> CREATE USER 'user_id_for_replication'@'{external_db_host}' IDENTIFIED BY '<password_forreplication_user>';
 {{engine.lowerCase}}> GRANT REPLICATION CLIENT, REPLICATION REPLICA ON *.* TO 'user_id_for_replication'@'{external_db_host}';
@@ -1576,13 +1568,11 @@ mysql -h{rds_master_instance_floating_ip} -u{db_id} -p{db_password} --port={db_p
 * Run a query on NHN Cloud RDS as follows, using the account information to be used for replication and the MASTER_LOG_FILE and MASTER_LOG_POS that recorded earlier.
 
 ##### Before 8.4
-
 ```
 {{engine.lowerCase}}> call mysql.tcrds_repl_changemaster ('rds_master_instance_floating_ip',rds_master_instance_port,'user_id_for_replication','password_forreplication_user','MASTER_LOG_FILE',MASTER_LOG_POS );
 ```
 
 ##### After 8.4
-
 ```
 {{engine.lowerCase}}> call mysql.tcrds_repl_changesource ('rds_master_instance_floating_ip',rds_master_instance_port,'user_id_for_replication','password_forreplication_user','SOURCE_LOG_FILE',SOURCE_LOG_POS );
 ```
@@ -1590,13 +1580,11 @@ mysql -h{rds_master_instance_floating_ip} -u{db_id} -p{db_password} --port={db_p
 * To start replication, execute the following procedure.
 
 ##### Before 8.4
-
 ```
 {{engine.lowerCase}}> call mysql.tcrds_repl_slave_start;
 ```
 
 ##### After 8.4
-
 ```
 {{engine.lowerCase}}> call mysql.tcrds_repl_replica_start;
 ```

@@ -1005,8 +1005,8 @@ Standby에서 Primary의 상태 체크에 4회 연속 실패할 경우 Primary�
     `replicate-ignore-db` 또는 `replicate-ignore-table`이 적용된 경우, 해당 DB 또는 테이블의 변경 사항은 복제되지 않으므로 장애 조치에 실패할 수 있습니다.
 
 
-<a id="failover-progress-phases"></a>
-### 장애 조치 진행 단계 { #failover-progress-phases }
+<a id="failover-progress-step"></a>
+### 장애 조치 진행 단계 { #failover-progress-step }
 
 장애 조치가 진행되는 동안 DB 인스턴스 목록에 **장애 조치 진행 단계**와 **복제 로그 반영 진행률** 열이 나타납니다. 두 열은 장애 조치가 진행 중인 DB 인스턴스 그룹이 있을 때만 나타나며, 값은 DB 인스턴스 그룹 행에만 표시됩니다. 장애 조치가 끝나면 두 열은 사라집니다.
 
@@ -1033,8 +1033,8 @@ Standby에서 Primary의 상태 체크에 4회 연속 실패할 경우 Primary�
 !!! tip "알아두기"
     남은 시간은 지금까지의 평균 반영 속도로 계산한 추정 값이므로 실제 소요 시간과 다를 수 있습니다.
 
-<a id="roll-back-a-failover"></a>
-### 장애 조치 되돌리기 { #roll-back-a-failover }
+<a id="revert-failover"></a>
+### 장애 조치 되돌리기 { #revert-failover }
 
 Standby에 반영할 복제 로그가 많으면 복제 로그 반영 단계가 길어집니다. 이때는 장애 조치를 끝까지 기다리는 것보다 장애 조치를 되돌리고 장애가 발생한 Primary를 재시작하는 편이 더 빨리 서비스를 재개하는 방법일 수 있습니다. 진행 단계가 Failed Over Primary 차단 또는 복제 로그 반영일 때 DB 인스턴스 그룹 행의 이름 옆에 **장애 조치 되돌리기** 버튼이 나타나며, 버튼을 클릭하면 경고 팝업 화면이 나타난 후 되돌리기가 실행됩니다.
 

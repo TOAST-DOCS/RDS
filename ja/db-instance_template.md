@@ -703,7 +703,6 @@ Providerメンテナンス作業と自動メンテナンス作業は、保留中
 
 <a id="upgrade-db-instance-operating-system"></a>
 ## DBインスタンスOSアップグレード { #upgrade-db-instance-operating-system }
-
 DBインスタンスOSアップグレードをサポートします。OSのアップグレードにより、セキュリティ脆弱性の解決やOSのEOL(end of life)に対応できます。 
 OSアップグレードはサービス瞬断が発生するため注意が必要です。高可用性DBインスタンスはフェイルオーバーにより、サービス瞬断を最小限に抑えることができます。
 
@@ -1011,55 +1010,55 @@ recordは障害が発生したPrimaryからStandbyに変更されるので、ア
     PrimaryとStandby間のバイナリログ(binary log)のposition numberの値が100,000,000以上差がある場合、フェイルオーバーが行われません。
     `replicate-ignore-db`または`replicate-ignore-table`が適用されている場合、該当するDBまたはテーブルの変更内容はレプリケーションされないため、フェイルオーバーに失敗する可能性があります。
 
-<a id="failover-progress-phases"></a>
-### フェイルオーバーの進行ステップ { #failover-progress-phases }
+<a id="failover-progress-step"></a>
+### フェイルオーバー進行段階 { #failover-progress-step }
 
-フェイルオーバーの進行中は、DBインスタンス一覧に**[フェイルオーバーの進行ステップ]**と**[レプリケーションログ反映進捗率]**の列が表示されます。これら2つの列は、フェイルオーバーが進行中のDBインスタンスグループがある場合にのみ表示され、値はDBインスタンスグループの行にのみ表示されます。フェイルオーバーが完了すると、これら2つの列は非表示になります。
+フェイルオーバーの進行中は、DBインスタンス一覧に**フェイルオーバー進行段階**と**レプリケーションログ反映進捗率**の列が表示されます。これら2つの列は、フェイルオーバーが進行中のDBインスタンスグループがある場合にのみ表示され、値はDBインスタンスグループの行にのみ表示されます。フェイルオーバーが完了すると、これら2つの列は非表示になります。
 
-フェイルオーバーの進行ステップは次のとおりです。ロールバック可能なステップでのみ**[フェイルオーバーのロールバック]**ボタンが表示されます。
+フェイルオーバー進行段階は次のとおりです。取り消し可能な段階でのみ**フェイルオーバーの取り消し**ボタンが表示されます。
 
-| 進行ステップ | 説明 | ロールバック |
+| 進行段階 | 説明 | 取り消し |
 | --------------------- | --------------------------------------------------------------- | ---- |
 | Failed Over Primaryの遮断 | 障害が発生したPrimaryへの接続を遮断し、データベースエンジンを停止します。 | 可能 |
 | レプリケーションログの反映 | Standbyがまだ反映していないレプリケーションログを反映します。 | 可能 |
-| Endpointの切り替え | 内部ドメインとVIPがStandbyを指すように変更し、書き込みを許可します。 | 不可 |
+| エンドポイントの切り替え | 内部ドメインとVIPがStandbyを指すように変更し、書き込みを許可します。 | 不可 |
 | レプリケーションの再構成 | 残りのレプリカが新しいPrimaryを参照するようにレプリケーションを再設定します。 | 不可 |
 | メタ情報の整理 | フェイルオーバーの結果をDBインスタンス情報に反映します。 | 不可 |
-| ロールバック中 | 要求されたフェイルオーバーのロールバックを処理します。 | 不可 |
+| 取り消し中 | 要求されたフェイルオーバーの取り消しを処理します。 | 不可 |
 
-レプリケーションログの反映ステップでは、残りの反映量を**[レプリケーションログ反映進捗率]**の列で確認できます。表示形式は次のとおりです。
+レプリケーションログの反映段階では、残りの反映量を**レプリケーションログ反映進捗率**の列で確認できます。表示形式は次のとおりです。
 
 | 表示 | 意味 |
 | --------------- | ----------------------------------------------------- |
 | `62% (約40秒残り)` | 62%まで反映済みで、残りの反映に約40秒かかります。 |
 | `7%` | 7%まで反映済みですが、残り時間を推定するためのサンプルがまだ収集されていません。 |
 | `7% (進行なし)` | 7%まで反映した後、1分以上反映が進んでいません。 |
-| `完了処理中` | レプリケーションログをすべて反映し、次のステップに進むための整理を実行中です。 |
+| `完了処理中` | レプリケーションログをすべて反映し、次の段階に進むための整理を実行中です。 |
 
-!!! tip "ヒント"
+!!! tip "参考"
     残り時間は、これまでの平均反映速度から計算した推定値であるため、実際の所要時間と異なる場合があります。
 
-<a id="roll-back-a-failover"></a>
-### フェイルオーバーの取り消し { #roll-back-a-failover }
+<a id="revert-failover"></a>
+### フェイルオーバーの取り消し { #revert-failover }
 
-Standbyに適用するレプリケーションログが多い場合、レプリケーションログの適用ステップに時間がかかります。この場合、フェイルオーバーが完了するまで待つよりも、フェイルオーバーを取り消して障害が発生したPrimaryを再起動する方が、より早くサービスを再開できる場合があります。進行ステップがFailed Over Primaryのブロックまたはレプリケーションログの適用の場合、DBインスタンスグループ行の名前の横に **[フェイルオーバーの取り消し]** ボタンが表示されます。ボタンをクリックすると、警告ポップアップが表示された後、取り消しが実行されます。
+Standbyに反映するレプリケーションログが多い場合、レプリケーションログの反映段階に時間がかかります。この場合、フェイルオーバーが完了するまで待つよりも、フェイルオーバーを取り消して障害が発生したPrimaryを再起動する方が、より早くサービスを再開できる場合があります。進行段階がFailed Over Primaryの遮断またはレプリケーションログの反映の場合、DBインスタンスグループ行の名前の横に**フェイルオーバーの取り消し**ボタンが表示されます。ボタンをクリックすると、警告ポップアップが表示された後、取り消しが実行されます。
 
-フェイルオーバーを取り消すと、進行中のフェイルオーバーを中断し、障害が発生したPrimaryを再起動して再びPrimaryとして使用します。ブロックしていたユーザーセキュリティグループの接続を復旧し、レプリカのレプリケーションを再開します。取り消しはEndpointの切り替え前までしか実行できないため、Standbyは新しいPrimaryとして切り替わって書き込みを受け付けたことはなく、取り消し後も既存のPrimaryのデータをそのまま使用します。
+フェイルオーバーを取り消すと、進行中のフェイルオーバーを中断し、障害が発生したPrimaryを再起動して再びPrimaryとして使用します。遮断していたユーザーセキュリティグループの接続を復旧し、レプリカのレプリケーションを再開します。取り消しはエンドポイントの切り替え前までしか実行できないため、Standbyは新しいPrimaryとして切り替わって書き込みを受け付けたことはなく、取り消し後も既存のPrimaryのデータをそのまま使用します。
 
 !!! danger "注意"
     障害の原因によっては、障害が発生したPrimaryを正常に起動できない場合があります。この場合、取り消しは失敗し、DBインスタンスはフェイルオーバー中の状態のまま残ります。
-    障害が発生したPrimaryに接続できない場合は、カスタマーセンターにお問い合わせください。
+    障害が発生したPrimaryに接続できない場合は、サポートにお問い合わせください。
 
-フェイルオーバーを取り消した後も、高可用性機能は停止した状態のまま残ります。そのため、取り消しが完了したら **[高可用性の再開]** で高可用性機能を再開するか、Standbyのレプリケーションが大幅に遅延している場合は [Standbyの再構築](#rebuild-candidate-master) を実施する必要があります。高可用性機能はすでに停止した状態であるため、高可用性の一時停止は実行できません。
+フェイルオーバーを取り消した後も、高可用性機能は停止した状態のまま残ります。そのため、取り消しが完了したら**高可用性の再開**で高可用性機能を再開するか、Standbyのレプリケーションが大幅に遅延している場合は[Standby再構築](#rebuild-candidate-master)を実施する必要があります。高可用性機能はすでに停止した状態であるため、高可用性の一時停止は実行できません。
 
 次の場合は取り消しリクエストが拒否され、画面に理由が表示されます。
 
-| 理由                                             | 対処                                                     |
-| ---------------------------------------------- | ------------------------------------------------------ |
-| フェイルオーバーはすでに取り消しできないステップまで進んでいます。                 | フェイルオーバーが完了するまで待ちます。                                   |
-| すでにフェイルオーバーの取り消しを処理中です。                       | 取り消しが完了するまで待ちます。                                    |
-| 進行中のフェイルオーバーがありません。                              | 画面を更新して最新の状態を確認します。                                 |
-| 障害が発生したPrimary DBインスタンスが応答しないため、取り消しできません。     | フェイルオーバーが完了するまで待ち、Failed Over Primaryを復旧または再構築します。 |
+| 理由 | 対処 |
+| --------------------------------------------------------------- | ------------------------------------ |
+| フェイルオーバーはすでに取り消しできない段階まで進んでいます。 | フェイルオーバーが完了するまで待ちます。 |
+| すでにフェイルオーバーの取り消しを処理中です。 | 取り消しが完了するまで待ちます。 |
+| 進行中のフェイルオーバーがありません。 | 画面を更新して最新の状態を確認します。 |
+| 障害が発生したPrimary DBインスタンスが応答しないため、取り消しできません。 | フェイルオーバーが完了するまで待ち、Failed Over Primaryを復旧または再構築します。 |
 
 <a id="failed-over-master"></a>
 ### Failed Over Primary { #failed-over-master }
@@ -1369,7 +1368,6 @@ CALL mysql.tcrds_innodb_monitor_reset('module_dml');
 
 <a id="tcrdsforeignkeychecks"></a>
 ### tcrds_foreign_key_checks { #tcrdsforeignkeychecks }
-
 * foreign key制約条件をチェックする'foreign_key_checks'変数を制御するプロシージャです。
 * `SET GLOBAL foreign_key_checks ='ON|OFF';`クエリを実行します。
 
@@ -1474,7 +1472,6 @@ mysql -h{external_db_host} -u{exteranl_db_id} -p{external_db_password} --port={e
 * 新しく複製を設定する前に、もしかしたら存在するかもしれない既存のレプリケーション情報を初期化するために下記のクエリを実行します。この時、RESET SLAVEを実行すると、既存の複製情報が初期化されます。
 
 ##### 8.4以前
-
 ```
 STOP SLAVE;
 
@@ -1482,7 +1479,6 @@ RESET SLAVE;
 ```
 
 ##### 8.4以降
-
 ```
 STOP REPLICA;
 
@@ -1492,7 +1488,6 @@ RESET REPLICA;
 * 複製に使うアカウント情報と、先ほど別に記録しておいたMASTER_LOG_FILEとMASTER_LOG_POSを使って外部DBに下記のようにクエリを実行します。
 
 ##### 8.4以前
-
 ```
 CHANGE MASTER TO master_host = '{rds_master_instance_floating_ip}', master_user='{user_id_for_replication}', master_password='{password_forreplication_user}', master_port ={rds_master_instance_port}, master_log_file ='{MASTER_LOG_FILE}', master_log_pos = {MASTER_LOG_POS};
 
@@ -1500,7 +1495,6 @@ START SLAVE;
 ```
 
 ##### 8.4以降
-
 ```
 CHANGE REPLICATION SOURCE TO source_host = '{rds_master_instance_floating_ip}', source_user='{user_id_for_replication}', source_password='{password_forreplication_user}', source_port ={rds_master_instance_port}, source_log_file ='{SOURCE_LOG_FILE}', source_log_pos = {SOURCE_LOG_POS};
 
@@ -1554,14 +1548,12 @@ mysql -h{rds_master_insance_floating_ip} -u{db_id} -p{db_password} --port={db_po
 * 外部{{engine.pascalCase}}インスタンスで複製に使うアカウントを作成します。
 
 ##### 8.4以前
-
 ```
 {{engine.lowerCase}}> CREATE USER 'user_id_for_replication'@'{external_db_host}' IDENTIFIED BY '<password_forreplication_user>';
 {{engine.lowerCase}}> GRANT REPLICATION CLIENT, REPLICATION SLAVE ON *.* TO 'user_id_for_replication'@'{external_db_host}';
 ```
 
 ##### 8.4以降
-
 ```
 {{engine.lowerCase}}> CREATE USER 'user_id_for_replication'@'{external_db_host}' IDENTIFIED BY '<password_forreplication_user>';
 {{engine.lowerCase}}> GRANT REPLICATION CLIENT, REPLICATION REPLICA ON *.* TO 'user_id_for_replication'@'{external_db_host}';
@@ -1570,13 +1562,11 @@ mysql -h{rds_master_insance_floating_ip} -u{db_id} -p{db_password} --port={db_po
 * レプリケーションに使うアカウント情報と先に記録しておいたMASTER_LOG_FILE, MASTER_LOG_POSを利用してNHN Cloud RDSに次のようにクエリを実行します。
 
 ##### 8.4以前
-
 ```
 {{engine.lowerCase}}> call mysql.tcrds_repl_changemaster ('rds_master_instance_floating_ip',rds_master_instance_port,'user_id_for_replication','password_forreplication_user','MASTER_LOG_FILE',MASTER_LOG_POS );
 ```
 
 ##### 8.4以降
-
 ```
 {{engine.lowerCase}}> call mysql.tcrds_repl_changesource ('rds_master_instance_floating_ip',rds_master_instance_port,'user_id_for_replication','password_forreplication_user','SOURCE_LOG_FILE',SOURCE_LOG_POS );
 ```
@@ -1584,13 +1574,11 @@ mysql -h{rds_master_insance_floating_ip} -u{db_id} -p{db_password} --port={db_po
 * レプリケーションを開始するには下記のプロシージャを実行します。
 
 ##### 8.4以前
-
 ```
 {{engine.lowerCase}}> call mysql.tcrds_repl_slave_start;
 ```
 
 ##### 8.4以降
-
 ```
 {{engine.lowerCase}}> call mysql.tcrds_repl_replica_start;
 ```
