@@ -1011,8 +1011,8 @@ from the time the new backup was performed on the new Primary.
     If the position number value of the binary log between Primary and Standby differs by more than 100,000,000, there is no failover.
     If `replicate-ignore-db` or `replicate-ignore-table` is applied, changes to that DB or table will not be replicated and failover may fail.
 
-<a id="failed-over-master"></a>
-### Failover Progress Phases
+<a id="failover-progress-phases"></a>
+### Failover Progress Phases { #failover-progress-phases }
 
 While a failover is in progress, the **Failover Progress Phase** and **Replication Log Apply Progress** columns appear in the DB instance list. These two columns appear only when there is a DB instance group with an ongoing failover, and values are displayed only in the DB instance group row. When the failover completes, the two columns disappear.
 
@@ -1039,7 +1039,8 @@ During the Apply Replication Log phase, you can check how much of the replicatio
 !!! tip "Note"
     The remaining time is an estimated value calculated based on the average apply speed so far, and may differ from the actual time required.
 
-### Roll Back a Failover
+<a id="roll-back-a-failover"></a>
+### Roll Back a Failover { #roll-back-a-failover }
 
 If there are many replication logs to apply to the standby, the log application step can take a long time. In this case, rolling back the failover and restarting the failed primary may be a faster way to resume service than waiting for the failover to complete. When the progress step is Failed Over Primary blocking or replication log application, the **Roll Back Failover** button appears next to the name in the DB instance group row. Clicking the button displays a warning pop-up, after which the rollback is executed.
 
