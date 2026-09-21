@@ -1,6 +1,6 @@
 <!-- machine_translated: true -->
 
-<!-- pre-align:aligned sig=c106203957c2 -->
+<!-- pre-align:aligned sig=997cb14cf991 -->
 
 <a id="database-rds-for-enginepascalcase-db-instance"></a>
 ## Database > RDS for {{engine.pascalCase}} > DB Instance { #database-rds-for-enginepascalcase-db-instance }
@@ -1009,6 +1009,56 @@ from the time the new backup was performed on the new Primary.
 !!! danger "Caution"
     If the position number value of the binary log between Primary and Standby differs by more than 100,000,000, there is no failover.
     If `replicate-ignore-db` or `replicate-ignore-table` is applied, changes to that DB or table will not be replicated and failover may fail.
+
+<a id="failover-progress-step"></a>
+### Failover Progress Step { #failover-progress-step }
+
+While a failover is in progress, the **Failover Progress Step** and **Replication Log Apply Progress** columns appear in the DB instance list. These two columns appear only when there is a DB instance group with an ongoing failover, and values are displayed only in the DB instance group row. When the failover completes, the two columns disappear.
+
+The failover progress steps are as follows. The **Revert Failover** button appears only during steps that can be reverted.
+
+| Progress Step | Description | Revertible |
+| --------------------- | --------------------------------------------------------------- | ---- |
+| Blocking Failed Over Primary | Blocks connections to the failed Primary and shuts down the database engine. | Yes |
+| Applying Replication Log | Applies replication logs that the Standby has not yet reflected. | Yes |
+| Switching Endpoint | Changes the internal domain and VIP to point to the Standby and allows writes. | No |
+| Reconfiguring Replication | Reconfigures replication so that the remaining replicas point to the new Primary. | No |
+| Cleaning Up Metadata | Reflects the failover result in the DB instance information. | No |
+| Reverting | Processes the requested failover revert. | No |
+
+During the Applying Replication Log step, you can check how much of the replication log remains to be applied in the Replication Log Apply Progress column. The display formats are as follows.
+
+| Display | Meaning |
+| --------------- | ----------------------------------------------------- |
+| `62% (approx. 40 seconds remaining)` | 62% of the log has been applied, and the remaining portion will take approximately 40 seconds. |
+| `7%` | 7% of the log has been applied, but not enough samples have been collected yet to estimate the remaining time. |
+| `7% (no progress)` | 7% of the log has been applied, but no further progress has been made for more than 1 minute. |
+| `Finalizing` | All replication logs have been applied and cleanup is in progress before moving to the next step. |
+
+!!! tip "Note"
+    The remaining time is an estimated value calculated based on the average apply speed so far, and may differ from the actual time required.
+
+<a id="revert-failover"></a>
+### Revert Failover { #revert-failover }
+
+If there are many replication logs to apply to the Standby, the Applying Replication Log step can take a long time. In this case, reverting the failover and restarting the failed Primary may be a faster way to resume service than waiting for the failover to complete. When the progress step is Blocking Failed Over Primary or Applying Replication Log, the **Revert Failover** button appears next to the name in the DB instance group row. Clicking the button displays a warning pop-up, after which the revert is executed.
+
+Reverting a failover stops the ongoing failover and restarts the failed Primary for use as the Primary again. The connections of the blocked user security groups are restored, and replication of the replicas is restarted. Because a revert can only be performed before the Endpoint is switched, the Standby has never been promoted to the new Primary and has not received any writes. After the revert, the data from the original Primary is used as-is.
+
+!!! danger "Caution"
+    Depending on the cause of the failure, the failed Primary may not start up normally. In this case, the revert fails and the DB instance remains in the failover-in-progress state.
+    If you cannot connect to the failed Primary, you must contact Customer Support.
+
+After reverting the failover, the high availability feature remains stopped. Therefore, when the revert is complete, you must either resume the high availability feature by using **Restart High Availability**, or perform [Rebuild Standby](#rebuild-candidate-master) if replication of the Standby is significantly delayed. Because the high availability feature is already stopped, you cannot suspend high availability.
+
+In the following cases, the revert request is rejected and the reason is displayed on the screen.
+
+| Reason | Action |
+| --------------------------------------------------------------- | ------------------------------------ |
+| The failover has already progressed to a step that cannot be reverted. | Wait until the failover is complete. |
+| A failover revert is already in progress. | Wait until the revert is complete. |
+| There is no failover in progress. | Refresh the screen to check the latest status. |
+| The revert cannot be performed because the failed Primary DB instance is not responding. | Wait until the failover is complete, then recover or rebuild the Failed Over Primary. |
 
 <a id="failed-over-master"></a>
 ### Failed Over Primary { #failed-over-master }

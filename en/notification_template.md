@@ -1,3 +1,5 @@
+<!-- machine_translated: true -->
+
 <!-- pre-align:aligned sig=ffcf287dccd2 -->
 
 <a id="database-rds-for-enginepascalcase-notification"></a>
@@ -69,6 +71,8 @@ Event refers to an important event that occurs either by RDS for {{engine.pascal
 | INSTC_26_00       | INSTANCE          | Yes          | DB instance failover occurred                                                 |
 | INSTC_26_01       | INSTANCE          | Yes          | DB instance failover completed                                                |
 | INSTC_26_04       | INSTANCE          | Yes          | DB instance failover failed                                                   |
+| INSTC_26_05       | INSTANCE          | Yes          | DB instance failover reverted                                                 |
+| INSTC_26_06       | INSTANCE          | Yes          | DB instance failover progress step changed                                    |
 | INSTC_27_01       | INSTANCE          | Yes          | DB instance storage secured                                                   |
 | INSTC_27_04       | INSTANCE          | Yes          | Securing DB instance storage failed                                           |
 | INSTC_28_01       | INSTANCE          | Yes          | High Availability DB Instance started                                         |
