@@ -5427,8 +5427,8 @@ GET /v4.0/parameter-groups
 | parameterGroups.parameterGroupId | UUID | 파라미터 그룹의 식별자 |
 | parameterGroups.parameterGroupName | String | 파라미터 그룹을 식별할 수 있는 이름 |
 | parameterGroups.description | String | 파라미터 그룹 추가 정보 |
-| parameterGroups.dbVersion | Enum | DB 엔진 버전 (패밀리 파라미터 그룹은 null) |
-| parameterGroups.dbEngineVersionFamily | String | DB 엔진 버전 패밀리 코드 (패밀리 파라미터 그룹만 값을 가진다) |
+| parameterGroups.dbVersion | Enum | DB 엔진 버전(패밀리 파라미터 그룹은 null) |
+| parameterGroups.dbEngineVersionFamily | String | DB 엔진 버전 패밀리 코드(패밀리 파라미터 그룹만 값을 가짐) |
 | parameterGroups.parameterGroupType | Enum | 파라미터 그룹 유형<br/>- `USER`<br/>- `ADMIN`<br/>- `FAMILY`<br/>- `DEFAULT` |
 | parameterGroups.parameterGroupStatus | Enum | 파라미터 그룹의 현재 상태<br/>- `STABLE`: 적용 완료<br/>- `NEED_TO_APPLY`: 적용 필요<br/>- `DELETED`: 삭제됨 |
 | parameterGroups.createdYmdt | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
@@ -5474,8 +5474,8 @@ POST /v4.0/parameter-groups
 |-----|-----|-----|-----|
 | parameterGroupName | String | Y | 파라미터 그룹을 식별할 수 있는 이름<br/>- 최소 길이: `1`<br/>- 최대 길이: `100` |
 | description | String | N | 파라미터 그룹 추가 정보<br/>- 최대 길이: `100` |
-| dbVersion | Enum | N | DB 엔진 버전 (USER 타입 생성 시 필수, FAMILY 타입 생성 시 null) |
-| dbEngineVersionFamily | String | N | DB 엔진 버전 패밀리 코드 (FAMILY 타입 생성 시 필수 — 지정하면 패밀리 파라미터 그룹이 생성되어 같은 패밀리의 모든 마이너 버전 DB 인스턴스에 공유 적용할 수 있다) |
+| dbVersion | Enum | N | DB 엔진 버전(USER 타입 생성 시 필수, FAMILY 타입 생성 시 null) |
+| dbEngineVersionFamily | String | N | DB 엔진 버전 패밀리 코드(FAMILY 타입 생성 시 필수: 지정하면 패밀리 파라미터 그룹이 생성되어 같은 패밀리의 모든 마이너 버전 DB 인스턴스에 공유 적용 가능) |
 
 <a id="create-parameter-group-response"></a>
 #### 응답
@@ -5615,8 +5615,8 @@ GET /v4.0/parameter-groups/{parameterGroupId}
 | parameterGroupId | UUID | 파라미터 그룹의 식별자 |
 | parameterGroupName | String | 파라미터 그룹을 식별할 수 있는 이름 |
 | description | String | 파라미터 그룹 추가 정보 |
-| dbVersion | Enum | DB 엔진 버전 (패밀리 파라미터 그룹은 null) |
-| dbEngineVersionFamily | String | DB 엔진 버전 패밀리 코드 (패밀리 파라미터 그룹만 값을 가진다) |
+| dbVersion | Enum | DB 엔진 버전(패밀리 파라미터 그룹은 null) |
+| dbEngineVersionFamily | String | DB 엔진 버전 패밀리 코드(패밀리 파라미터 그룹만 값을 가짐) |
 | parameterGroupStatus | Enum | 파라미터 그룹의 현재 상태<br/>- `STABLE`: 적용 완료<br/>- `NEED_TO_APPLY`: 적용 필요<br/>- `DELETED`: 삭제됨 |
 | parameters | Array | 파라미터 목록 |
 | parameters.parameterId | UUID | 파라미터의 식별자 |
@@ -5628,8 +5628,8 @@ GET /v4.0/parameter-groups/{parameterGroupId}
 | parameters.allowedValue | String | 허용된 값 |
 | parameters.updateType | Enum | 수정 유형<br/>- `VARIABLE`<br/>- `CONSTANT`<br/>- `INIT_VARIABLE` |
 | parameters.applyType | Enum | 적용 유형<br/>- `BOTH`<br/>- `SESSION`<br/>- `FILE` |
-| parameters.templateRange | Object | 파라미터 템플릿 구간 (패밀리 파라미터 그룹만 값을 가진다) |
-| parameters.templateRange.coversAllVersions | Boolean | 구간이 패밀리의 모든 DB 엔진 버전을 포함하는지 |
+| parameters.templateRange | Object | 파라미터 템플릿 구간(패밀리 파라미터 그룹만 값을 가짐) |
+| parameters.templateRange.coversAllVersions | Boolean | 구간이 패밀리의 모든 DB 엔진 버전 포함 여부 |
 | parameters.templateRange.label | String | 구간의 DB 엔진 버전 범위 |
 | createdYmdt | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 | updatedYmdt | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
