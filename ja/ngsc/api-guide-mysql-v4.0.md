@@ -5427,7 +5427,6 @@ GET /v4.0/parameter-groups
 | parameterGroups.parameterGroupName | String | パラメータグループを識別できる名前 |
 | parameterGroups.description | String | パラメータグループの追加情報 |
 | parameterGroups.dbVersion | Enum | DBエンジンバージョン |
-| parameterGroups.dbEngineVersionFamily | String | DBエンジンバージョンファミリーコード(ファミリーパラメータグループのみ値を持つ) |
 | parameterGroups.parameterGroupType | Enum | パラメータグループタイプ<br/>- `USER`<br/>- `ADMIN`<br/>- `DEFAULT` |
 | parameterGroups.parameterGroupStatus | Enum | パラメータグループの現在状態<br/>- `STABLE`:適用完了<br/>- `NEED_TO_APPLY`:適用必要<br/>- `DELETED`:削除済み |
 | parameterGroups.createdYmdt | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
@@ -5473,7 +5472,6 @@ POST /v4.0/parameter-groups
 | parameterGroupName | String | Y | パラメータグループを識別できる名前<br/>- 最小長さ: `1`<br/>- 最大長さ: `100` |
 | description | String | N | パラメータグループの追加情報<br/>- 最大長さ: `100` |
 | dbVersion | Enum | Y | DBエンジンバージョン |
-| dbEngineVersionFamily | String | N | DBエンジンバージョンファミリーコード（FAMILYタイプ作成時は必須: 指定するとファミリーパラメータグループが作成され、同じファミリーのすべてのマイナーバージョンのDBインスタンスに共有適用可能） |
 
 <a id="create-parameter-group-response"></a>
 #### レスポンス
@@ -5609,7 +5607,6 @@ GET /v4.0/parameter-groups/{parameterGroupId}
 | parameterGroupName | String | パラメータグループを識別できる名前 |
 | description | String | パラメータグループの追加情報 |
 | dbVersion | Enum | DBエンジンバージョン |
-| dbEngineVersionFamily | String | DBエンジンバージョンファミリーコード(ファミリーパラメータグループのみ値を持つ) |
 | parameterGroupStatus | Enum | パラメータグループの現在状態<br/>- `STABLE`:適用完了<br/>- `NEED_TO_APPLY`:適用必要<br/>- `DELETED`:削除済み |
 | parameters | Array | パラメータリスト |
 | parameters.parameterId | UUID | パラメータの識別子 |
@@ -5621,9 +5618,6 @@ GET /v4.0/parameter-groups/{parameterGroupId}
 | parameters.allowedValue | String | 許可された値 |
 | parameters.updateType | Enum | 修正タイプ<br/>- `VARIABLE`<br/>- `CONSTANT`<br/>- `INIT_VARIABLE` |
 | parameters.applyType | Enum | 適用タイプ<br/>- `BOTH`<br/>- `SESSION`<br/>- `FILE` |
-| parameters.templateRange | Object | パラメータテンプレート区間(ファミリーパラメータグループのみ値を持つ) |
-| parameters.templateRange.coversAllVersions | Boolean | 区間がファミリーのすべてのDBエンジンバージョンを含むかどうか |
-| parameters.templateRange.label | String | 区間のDBエンジンバージョン範囲 |
 | createdYmdt | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 | updatedYmdt | DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 

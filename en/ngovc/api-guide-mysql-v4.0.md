@@ -5427,7 +5427,6 @@ This API does not require a request body.
 | parameterGroups.parameterGroupName | String | Name to identify parameter groups |
 | parameterGroups.description | String | Additional information of parameter group |
 | parameterGroups.dbVersion | Enum | DB engine version |
-| parameterGroups.dbEngineVersionFamily | String | DB engine version family code (only family parameter groups have a value) |
 | parameterGroups.parameterGroupType | Enum | Parameter group type<br/>- `USER`<br/>- `ADMIN`<br/>- `DEFAULT` |
 | parameterGroups.parameterGroupStatus | Enum | Parameter group current status<br/>- `STABLE`: Applied<br/>- `NEED_TO_APPLY`: Need to apply<br/>- `DELETED`: Deleted |
 | parameterGroups.createdYmdt | DateTime | Created date and time (YYYY-MM-DDThh:mm:ss.SSSTZD) |
@@ -5473,7 +5472,6 @@ POST /v4.0/parameter-groups
 | parameterGroupName | String | Y | Name to identify parameter groups<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
 | description | String | N | Additional information of parameter group<br/>- Maximum length: `100` |
 | dbVersion | Enum | Y | DB engine version |
-| dbEngineVersionFamily | String | N | DB engine version family code (required when creating a FAMILY type: if specified, a family parameter group is created and can be shared and applied to all minor version DB instances in the same family) |
 
 <a id="create-parameter-group-response"></a>
 #### Response
@@ -5609,7 +5607,6 @@ This API does not require a request body.
 | parameterGroupName | String | Name to identify parameter groups |
 | description | String | Additional information of parameter group |
 | dbVersion | Enum | DB engine version |
-| dbEngineVersionFamily | String | DB engine version family code (only family parameter groups have a value) |
 | parameterGroupStatus | Enum | Parameter group current status<br/>- `STABLE`: Applied<br/>- `NEED_TO_APPLY`: Need to apply<br/>- `DELETED`: Deleted |
 | parameters | Array | Parameter list |
 | parameters.parameterId | UUID | Parameter identifier |
@@ -5621,9 +5618,6 @@ This API does not require a request body.
 | parameters.allowedValue | String | Permitted values |
 | parameters.updateType | Enum | Modification type<br/>- `VARIABLE`<br/>- `CONSTANT`<br/>- `INIT_VARIABLE` |
 | parameters.applyType | Enum | Application type<br/>- `BOTH`<br/>- `SESSION`<br/>- `FILE` |
-| parameters.templateRange | Object | Parameter template range (only family parameter groups have values) |
-| parameters.templateRange.coversAllVersions | Boolean | Whether the range covers all DB engine versions in the family |
-| parameters.templateRange.label | String | DB engine version range of the interval |
 | createdYmdt | DateTime | Created date and time (YYYY-MM-DDThh:mm:ss.SSSTZD) |
 | updatedYmdt | DateTime | Modified date and time (YYYY-MM-DDThh:mm:ss.SSSTZD) |
 
