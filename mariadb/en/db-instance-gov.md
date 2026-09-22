@@ -1200,7 +1200,7 @@ mysqldump -h{rds_instance_floating_ip} -u{db_id} -p{db_password} --port={db_port
 ```
 
 <a id="export-using-mysqldump-exporting-in-enginelowercase-db-out-of-nhn-cloud-rds"></a>
-#### Exporting in mariadb db out of NHN Cloud RDS
+#### Exporting in MariaDB db out of NHN Cloud RDS
 
 ```
 mysqldump -h{rds_instance_floating_ip} -u{db_id} -p{db_password} --port={db_port} --single-transaction --routines --events --triggers --databases {database_name1, database_name2, ...} | mysql -h{external_db_host} -u{external_db_id} -p{external_db_password} --port={external_db_port}
@@ -1321,7 +1321,7 @@ START REPLICA;
 mysqldump -h{master_instance_floating_ip} -u{db_id} -p{db_password} --port={db_port} --single-transaction --master-data=2 --routines --events --triggers --databases {database_name1, database_name2, ...} > {local_path_and_file_name}
 ```
 
-* To import data from external MySQL instance (slave)
+* To import data from external MariaDB instance (slave)
 
 ```
 mysqldump -h{slave_instance_floating_ip} -u{db_id} -p{db_password} --port={db_port} --single-transaction --dump-slave=2 --routines --events --triggers --databases {database_name1, database_name2, ...} > {local_path_and_file_name}
