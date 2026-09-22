@@ -1,3 +1,5 @@
+<!-- machine_translated: true -->
+
 <!-- pre-align:aligned sig=c01d6c6c712e -->
 
 <a id="database-rds-for-enginepascalcase-db-engine"></a>
@@ -19,6 +21,7 @@ Support for MySQL versions below 8.0.34 has ended under the MySQL LTS policy. We
 | Version              | Note                                                      |
 |----------------------|-----------------------------------------------------------|
 | <strong>8.4</strong> |                                                           |
+| MySQL 8.4.11         |                                |
 | MySQL 8.4.9          |                                                           |
 | MySQL 8.4.8          |                                                           |
 | MySQL 8.4.7          |                                                           |
@@ -53,6 +56,8 @@ After creating the DB instance, you can change the DB engine version and modify 
 
 When upgrading the database engine version, a major version upgrade occurs if only the major version number is changed, and a minor version upgrade occurs if only the minor version number is changed.
 When attempting to upgrade the DB engine major version, you can upgrade to the next major version of the DB engine.
+
+You can configure the minor version to upgrade automatically without having to upgrade it manually. For more information, see [Auto Minor Version Upgrade](db-instance-gov/#maintenance-auto-minor-version-upgrade).
 
 <a id="manage-db-engine-version-pre-inspection-for-upgrading-from-mysql-57-to-mysql-80"></a>
 #### Pre-inspection for upgrading from MySQL 5.7 to MySQL 8.0
@@ -156,6 +161,7 @@ RDS for MySQL uses the MariaDB Audit plug-in to provide an auditing plug-in for 
 | MySQL version              | Whether to support server audit plugins |
 |----------------------------|-----------------------------------------|
 | <strong>8.4</strong>       |                                         |
+| MySQL 8.4.11         | O                |
 | MySQL 8.4.9                | O                                       |
 | MySQL 8.4.8                | O                                       |
 | MySQL 8.4.7                | O                                       |

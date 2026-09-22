@@ -1,6 +1,6 @@
 <!-- machine_translated: true -->
 
-<!-- pre-align:aligned sig=6a6daf4e583d -->
+<!-- pre-align:aligned sig=3ef2788009e5 -->
 
 <a id="database-rds-for-enginepascalcase-db-instance"></a>
 ## Database > RDS for MySQL > DB Instance { #database-rds-for-enginepascalcase-db-instance }
@@ -42,6 +42,7 @@ MySQL versions below 8.0.34 have reached End of Support per the MySQL LTS policy
 | Version              | Note                                                      |
 |----------------------|-----------------------------------------------------------|
 | <strong>8.4</strong> |                                                           |
+| MySQL 8.4.11         |                                |
 | MySQL 8.4.9          |                                                           |
 | MySQL 8.4.8          |                                                           |
 | MySQL 8.4.7          |                                                           |
@@ -159,7 +160,7 @@ You can set a maintenance duration when creating or modifying a DB instance. If 
 <a id="maintenance-task"></a>
 #### Maintenance Task
 
-Maintenance tasks are categorized into User Maintenance and Provider Maintenance.
+Maintenance tasks are categorized into user maintenance tasks, Provider maintenance tasks, and automatic maintenance tasks.
 
 **User Maintenance Task**
 
@@ -176,6 +177,12 @@ A maintenance task provided by NHN Cloud.
 * Apply parameter group changes
 * Migration for hypervisor maintenance
 
+**Automatic Maintenance Task**
+
+A task that the system registers automatically according to the settings.
+
+* [Auto Minor Version Upgrade](db-instance-ncgn/#maintenance-auto-minor-version-upgrade)
+
 <a id="maintenance-execution-time"></a>
 #### Maintenance Execution Time
 
@@ -189,13 +196,13 @@ You can choose when to apply maintenance tasks.
 
 You can check the maintenance status of each instance in the DB instance list.
 
-| Status      | Description                                    |
-|---------|---------------------------------------|
+| Status | Description |
+|-------|-------------------------------------------------------------------|
 | None | There are no scheduled or pending maintenance tasks. |
-| Next Applied | A user maintenance task is scheduled to run in the next maintenance duration. |
+| Next Apply | There are maintenance tasks scheduled to run in the next maintenance duration. |
 | Applying | A maintenance task is in progress. |
-| Required | A required provider maintenance task is pending. |
-| Available | A non-required provider maintenance task is pending/in preparation. |
+| Required | There are required maintenance tasks. They will eventually be applied even if deferred. |
+| Available | There are only maintenance tasks that do not run automatically and must be applied or scheduled by the user. This also includes tasks that have been placed on hold. |
 
 !!! tip "Note"
     The maintenance status is not displayed for the Standby of High Availability (HA) DB instances.
@@ -211,7 +218,50 @@ You can find the following information on the Maintenance tab of the DB instance
 * Upcoming maintenance tasks (Scheduled for the next duration)
 * Pending maintenance tasks
 
-Upcoming maintenance tasks can be excluded from the maintenance duration clicking the **Hold** or **Delete** buttons. For pending Provider maintenance tasks, you can manually apply them by selecting either **Apply Immediately** or **Apply in the Next Maintenance Duration**.
+Scheduled maintenance tasks can be excluded from the maintenance duration by clicking the **Hold** or **Delete** button. User maintenance tasks are deleted, and Provider maintenance tasks and automatic maintenance tasks are placed on hold. Pending maintenance tasks can be applied manually by selecting **Apply Immediately** or **Apply in the Next Maintenance Duration**.
+
+<a id="maintenance-auto-minor-version-upgrade"></a>
+#### Auto Minor Version Upgrade
+
+When Auto Minor Version Upgrade is enabled, the minor version of the DB engine is upgraded automatically without any direct request from you. If there is a version eligible for automatic upgrade, an automatic maintenance task is registered and executed during the next maintenance duration.
+
+**Settings**
+
+You can configure this setting in the maintenance section when creating or restoring a DB instance. The default value is enabled. After creation, you can change this setting by selecting the DB instance group from the DB instance list and clicking **Modify**.
+
+This setting applies equally to all DB instances in the group. Primary, Standby, and Read Replica cannot have different settings, and a newly created Read Replica inherits the group's settings.
+
+**Conditions**
+
+This applies to DB instances that meet all of the following conditions:
+
+| Condition | If not met |
+|---|---|
+| Uses a family parameter group | Excluded from the upgrade target. |
+| Current DB engine version is eligible for automatic upgrade | Excluded from the upgrade target. |
+| No scheduled or pending DB engine version upgrade tasks | Deferred to the next cycle. |
+| All Read Replicas of the Primary are upgraded first | Deferred to the next cycle. |
+
+Automatic upgrade targets are limited to minor versions within the same major version. Major version upgrades are not performed automatically.
+
+If there are remaining DB engine version upgrade tasks that were scheduled by the user or registered by the provider, no automatic maintenance task is registered, and the system defers. Once those tasks are processed, the automatic maintenance task is registered again in the next cycle.
+
+!!! tip "Note"
+    This does not apply to DB instances that use a single parameter group. To use automatic upgrade, you must change to a [family parameter group](parameter-group-ncgn/#family-parameter-group).
+
+**Upgrade order**
+
+To maintain the replication configuration, Read Replicas are upgraded first, followed by the Primary. The Primary and Standby of a high-availability DB instance are upgraded together as a single task. Because of this order, it may take several maintenance durations for the changes to be applied to the entire DB instance group.
+
+**Evaluation cycle**
+
+Eligibility for automatic upgrade is evaluated once per day. If eligible, an automatic maintenance task scheduled for the next maintenance duration is registered.
+
+**Task exclusion**
+
+If you don't want to run a registered automatic maintenance task during the current maintenance duration, select **Hold** on the Maintenance tab. A held task is not re-registered automatically. If you select **Apply in the Next Maintenance Duration**, it will run at that time.
+
+To stop automatic upgrades entirely, modify the DB instance group and change the Auto Minor Version Upgrade setting to disabled. When you change the setting to disabled, any automatic maintenance tasks that have not yet been executed are also deleted.
 
 <a id="maintenance-execution-order"></a>
 #### Execution Order
@@ -548,14 +598,14 @@ Upcoming Maintenance is a list of tasks scheduled to be executed during the next
 | Registration Date | The date the maintenance task was registered. |
 | Mandatory Date | If the task is required, it will be automatically applied after this date. |
 
-Upcoming maintenance tasks can be excluded from the maintenance duration by selecting them and clicking **Delete** or **Hold**.
-If deleted, these tasks are canceled. To apply them again in a future duration, you must perform the original action once more.
-Provider maintenance tasks will be moved to the Pending Maintenance list. You can move them back to the Upcoming Maintenance list at any time from the Pending Maintenance list.
+Scheduled maintenance tasks can be excluded from the maintenance duration by selecting them and clicking **Delete** or **Hold**.
+Deleted user maintenance tasks are canceled, and to reapply them to a maintenance duration, you must perform the task again.
+Provider maintenance tasks and automatic maintenance tasks are moved to the pending maintenance list. From the pending maintenance list, you can move them back to the scheduled maintenance list.
 
 <a id="db-instance-details-maintenance-pending-maintenance"></a>
 #### Pending Maintenance
 
-Pending Maintenance is a list of Provider maintenance tasks provided by NHN Cloud. This includes operations such as applying parameter group changes and migrations for hypervisor maintenance.
+Pending Maintenance is a list of Provider maintenance tasks provided by NHN Cloud and automatic maintenance tasks registered automatically by the system. It includes tasks such as applying parameter group changes, migration for hypervisor inspection, and Auto Minor Version Upgrade.
 
 | Item        | Description                                                                 |
 |-------------|-----------------------------------------------------------------------------|
@@ -901,6 +951,56 @@ from the time the new backup was performed on the new Primary.
 !!! danger "Caution"
     If the position number value of the binary log between Primary and Standby differs by more than 100,000,000, there is no failover.
     If `replicate-ignore-db` or `replicate-ignore-table` is applied, changes to that DB or table will not be replicated and failover may fail.
+
+<a id="failover-progress-step"></a>
+### Failover Progress Step { #failover-progress-step }
+
+While a failover is in progress, the **Failover Progress Step** and **Replication Log Apply Progress** columns appear in the DB instance list. These two columns appear only when there is a DB instance group with an ongoing failover, and values are displayed only in the DB instance group row. When the failover completes, the two columns disappear.
+
+The failover progress steps are as follows. The **Revert Failover** button appears only during steps that can be reverted.
+
+| Progress Step | Description | Revertible |
+| --------------------- | --------------------------------------------------------------- | ---- |
+| Blocking Failed Over Primary | Blocks connections to the failed Primary and shuts down the database engine. | Yes |
+| Applying Replication Log | Applies replication logs that the Standby has not yet reflected. | Yes |
+| Switching Endpoint | Changes the internal domain and VIP to point to the Standby and allows writes. | No |
+| Reconfiguring Replication | Reconfigures replication so that the remaining replicas point to the new Primary. | No |
+| Cleaning Up Metadata | Reflects the failover result in the DB instance information. | No |
+| Reverting | Processes the requested failover revert. | No |
+
+During the Applying Replication Log step, you can check how much of the replication log remains to be applied in the Replication Log Apply Progress column. The display formats are as follows.
+
+| Display | Meaning |
+| --------------- | ----------------------------------------------------- |
+| `62% (approx. 40 seconds remaining)` | 62% of the log has been applied, and the remaining portion will take approximately 40 seconds. |
+| `7%` | 7% of the log has been applied, but not enough samples have been collected yet to estimate the remaining time. |
+| `7% (no progress)` | 7% of the log has been applied, but no further progress has been made for more than 1 minute. |
+| `Finalizing` | All replication logs have been applied and cleanup is in progress before moving to the next step. |
+
+!!! tip "Note"
+    The remaining time is an estimated value calculated based on the average apply speed so far, and may differ from the actual time required.
+
+<a id="revert-failover"></a>
+### Revert Failover { #revert-failover }
+
+If there are many replication logs to apply to the Standby, the Applying Replication Log step can take a long time. In this case, reverting the failover and restarting the failed Primary may be a faster way to resume service than waiting for the failover to complete. When the progress step is Blocking Failed Over Primary or Applying Replication Log, the **Revert Failover** button appears next to the name in the DB instance group row. Clicking the button displays a warning pop-up, after which the revert is executed.
+
+Reverting a failover stops the ongoing failover and restarts the failed Primary for use as the Primary again. The connections of the blocked user security groups are restored, and replication of the replicas is restarted. Because a revert can only be performed before the Endpoint is switched, the Standby has never been promoted to the new Primary and has not received any writes. After the revert, the data from the original Primary is used as-is.
+
+!!! danger "Caution"
+    Depending on the cause of the failure, the failed Primary may not start up normally. In this case, the revert fails and the DB instance remains in the failover-in-progress state.
+    If you cannot connect to the failed Primary, you must contact Customer Support.
+
+After reverting the failover, the high availability feature remains stopped. Therefore, when the revert is complete, you must either resume the high availability feature by using **Restart High Availability**, or perform [Rebuild Standby](#rebuild-candidate-master) if replication of the Standby is significantly delayed. Because the high availability feature is already stopped, you cannot suspend high availability.
+
+In the following cases, the revert request is rejected and the reason is displayed on the screen.
+
+| Reason | Action |
+| --------------------------------------------------------------- | ------------------------------------ |
+| The failover has already progressed to a step that cannot be reverted. | Wait until the failover is complete. |
+| A failover revert is already in progress. | Wait until the revert is complete. |
+| There is no failover in progress. | Refresh the screen to check the latest status. |
+| The revert cannot be performed because the failed Primary DB instance is not responding. | Wait until the failover is complete, then recover or rebuild the Failed Over Primary. |
 
 <a id="failed-over-master"></a>
 ### Failed Over Primary { #failed-over-master }

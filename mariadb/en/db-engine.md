@@ -1,3 +1,5 @@
+<!-- machine_translated: true -->
+
 <!-- pre-align:aligned sig=c01d6c6c712e -->
 
 <a id="database-rds-for-enginepascalcase-db-engine"></a>
@@ -15,14 +17,19 @@ The versions specified below are available. New DB instance creation and Read Re
 
 | Version                | Note                                   |
 |------------------------|----------------------------------------|
+| <strong>12.3</strong>  |                               |
+| MariaDB 12.3.3         |                               |
 | <strong>11.8</strong>  |                                        |
+| MariaDB 11.8.9         |                               |
 | MariaDB 11.8.8         |                                        |
 | MariaDB 11.8.6         |                                        |
 | <strong>11.4</strong>  |                                        |
-| MariaDB 11.4.14        |                                        |
+| MariaDB 11.4.13        |                               |
+| MariaDB 11.4.12        |                               |
 | MariaDB 11.4.10        |                                        |
 | MariaDB 11.4.7         |                                        |
 | <strong>10.11</strong> |                                        |
+| MariaDB 10.11.19       |                               |
 | MariaDB 10.11.18       |                                        |
 | MariaDB 10.11.16       |                                        |
 | MariaDB 10.11.13       |                                        |
@@ -46,6 +53,8 @@ After creating the DB instance, you can change the DB engine version and modify 
 
 When upgrading the database engine version, a major version upgrade occurs if only the major version number is changed, and a minor version upgrade occurs if only the minor version number is changed.
 When attempting to upgrade the DB engine major version, you can upgrade to the next major version of the DB engine.
+
+You can configure the minor version to upgrade automatically without having to upgrade it manually. For more information, see [Auto Minor Version Upgrade](db-instance/#maintenance-auto-minor-version-upgrade).
 
 
 <a id="manage-db-engine-version-pre-check"></a>

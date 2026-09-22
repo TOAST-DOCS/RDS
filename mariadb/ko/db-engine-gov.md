@@ -15,14 +15,19 @@ MariaDB의 버전 번호는 `X.Y.Z` 형식으로 구성됩니다. NHN Cloud의 R
 
 | 버전                     | 비고                            |
 |------------------------|-------------------------------|
+| <strong>12.3</strong>  |                               |
+| MariaDB 12.3.3         |                               |
 | <strong>11.8</strong>  |                               |
+| MariaDB 11.8.9         |                               |
 | MariaDB 11.8.8         |                               |
 | MariaDB 11.8.6         |                               |
 | <strong>11.4</strong>  |                               |
-| MariaDB 11.4.14        |                               |
+| MariaDB 11.4.13        |                               |
+| MariaDB 11.4.12        |                               |
 | MariaDB 11.4.10        |                               |
 | MariaDB 11.4.7         |                               |
 | <strong>10.11</strong> |                               |
+| MariaDB 10.11.19       |                               |
 | MariaDB 10.11.18       |                               |
 | MariaDB 10.11.16       |                               |
 | MariaDB 10.11.13       |                               |
@@ -46,6 +51,8 @@ DB 인스턴스를 생성한 이후, DB 인스턴스 수정과 함께 DB 엔진 
 
 DB 엔진 버전 업그레이드 시, 메이저 버전 번호만 변경되는 경우는 메이저 버전 업그레이드로, 마이너 버전 번호만 변경되는 경우는 마이너 버전 업그레이드로 간주합니다.
 DB 엔진 메이저 버전 업그레이드 시 바로 다음 메이저 버전으로만 업그레이드할 수 있습니다.
+
+마이너 버전은 사용자가 직접 업그레이드하지 않아도 자동으로 업그레이드하도록 설정할 수 있습니다. 자세한 내용은 [마이너 버전 자동 업그레이드](db-instance-gov/#maintenance-auto-minor-version-upgrade)를 참고합니다.
 
 
 <a id="manage-db-engine-version-pre-check"></a>

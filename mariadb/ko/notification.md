@@ -69,6 +69,8 @@
 | INSTC_26_00 | INSTANCE          | 예        | DB 인스턴스 장애 조치 발생                     |
 | INSTC_26_01 | INSTANCE          | 예        | DB 인스턴스 장애 조치 완료                     |
 | INSTC_26_04 | INSTANCE          | 예        | DB 인스턴스 장애 조치 실패                     |
+| INSTC_26_05 | INSTANCE          | 예        | DB 인스턴스 장애 조치 되돌림                    |
+| INSTC_26_06 | INSTANCE          | 예        | DB 인스턴스 장애 조치 진행 단계 변경                |
 | INSTC_27_01 | INSTANCE          | 예        | DB 인스턴스 용량 확보                        |
 | INSTC_27_04 | INSTANCE          | 예        | DB 인스턴스 용량 확보 실패                     |
 | INSTC_28_01 | INSTANCE          | 예        | 고가용성 DB 인스턴스 시작                      |

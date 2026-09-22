@@ -1,3 +1,5 @@
+<!-- machine_translated: true -->
+
 <!-- pre-align:aligned sig=c01d6c6c712e -->
 
 <a id="database-rds-for-enginepascalcase-db-engine"></a>
@@ -19,6 +21,7 @@ MySQL 8.0.34未満のバージョンは、MySQL LTSサポートポリシーに�
 | バージョン                | 備考                                    |
 |----------------------|---------------------------------------|
 | <strong>8.4</strong> |                                       |
+| MySQL 8.4.11         |                                |
 | MySQL 8.4.9          |                                       |
 | MySQL 8.4.8          |                                       |
 | MySQL 8.4.7          |                                       |
@@ -42,7 +45,7 @@ MySQL 8.0.34未満のバージョンは、MySQL LTSサポートポリシーに�
 | MySQL 8.0.18         | 新規に作成したりRead Replicaを追加することはできません          |
 | <strong>5.7</strong> |                                       |
 | MySQL 5.7.37         |                                       |
-| MySQL 5.7.33         | 外部のバックアップファイルからDBインスタンスを復元することはできません。 |
+| MySQL 5.7.33         | 外部バックアップからDBインスタンスを復元することはできません。 |
 
 <a id="manage-db-engine-version"></a>
 ### DBエンジンバージョン管理 { #manage-db-engine-version }
@@ -53,6 +56,8 @@ DBインスタンスの作成後、DBインスタンスの修正と一緒にDB�
 
 DBエンジンのバージョンアップグレードが行われる場合、メジャーバージョン番号のみ変更される場合はメジャーバージョンアップグレード、マイナーバージョン番号のみ変更される場合はマイナーバージョンアップグレードとみなします。
 DBエンジンのメジャーバージョンのアップグレードを試みる場合は、次のメジャーバージョンのDBエンジンのバージョンに対してアップグレードが可能です。
+
+マイナーバージョンは、ユーザーが手動でアップグレードしなくても自動的にアップグレードされるよう設定できます。詳細については、「[マイナーバージョン自動アップグレード](db-instance-ncgn/#maintenance-auto-minor-version-upgrade)」を参照してください。
 
 <a id="manage-db-engine-version-pre-inspection-for-upgrading-from-mysql-57-to-mysql-80"></a>
 #### MySQL 5.7からMySQL 8.0へのアップグレードのための事前点検
@@ -156,6 +161,7 @@ DBインスタンスが高可用性で構成されている場合、Standbyの�
 | MySQLバージョン                 | サーバー監査プラグインサポートの有無 |
 |----------------------------|--------------------|
 | <strong>8.4</strong>       |                    |
+| MySQL 8.4.11         | O                |
 | MySQL 8.4.9                | O                  |
 | MySQL 8.4.8                | O                  |
 | MySQL 8.4.7                | O                  |
@@ -183,5 +189,5 @@ DBインスタンスが高可用性で構成されている場合、Standbyの�
 | MySQL 5.7.26               | O                  |
 | MySQL 5.7.19               | O                  |
 | MySQL 5.7.15               | X                  |
-| <strong>MySQL 5.6</strong> |                    |
+| <strong>5.6</strong>       |                    |
 | MySQL 5.6.33               | O                  |
