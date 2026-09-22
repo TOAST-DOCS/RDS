@@ -102,11 +102,15 @@ The API responds with '200 OK' to all API requests. For more information on the 
 | MARIADB_V101113 | Y | Y | ED25519, NATIVE |
 | MARIADB_V101116 | Y | Y | ED25519, NATIVE |
 | MARIADB_V101118 | Y | Y | ED25519, NATIVE |
+| MARIADB_V101119 | Y | Y | ED25519, NATIVE |
 | MARIADB_V11407 | Y | Y | ED25519, NATIVE |
 | MARIADB_V11410 | Y | Y | ED25519, NATIVE |
 | MARIADB_V11412 | Y | Y | ED25519, NATIVE |
+| MARIADB_V11413 | Y | Y | ED25519, NATIVE |
 | MARIADB_V11806 | Y | Y | ED25519, NATIVE |
 | MARIADB_V11808 | Y | Y | ED25519, NATIVE |
+| MARIADB_V11809 | Y | Y | ED25519, NATIVE |
+| MARIADB_V12303 | Y | Y | ED25519, NATIVE |
 
 * The values above can be used for the dbVersion field of Enum type.
 * Depending on the version, creation or restoration may not be available.
