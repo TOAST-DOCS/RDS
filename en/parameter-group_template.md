@@ -118,6 +118,7 @@ The parameter contains the following information.
 | Allowed values   | Range of values applicable to parameters.<br/>                                                                                                                                                                    | 
 | Application Type | Either `Static` or `Dynamic`.<br/>For `Static`, the DB instance must be restarted to apply the parameter changes.<br/>For `Dynamic`, the parameters are applied immediately without restarting the DB instance. |
 | Data Format      | Format of the parameter value.                                                                                                                                                                                    |
+| Formula          | Indicates whether formulas can be used.                                                                                                                                                                           |
 
 <a id="parameter-variables-formulas-and-functions"></a>
 ### Parameter Variables, Formulas, and Functions { #parameter-variables-formulas-and-functions }
