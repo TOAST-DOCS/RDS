@@ -136,7 +136,7 @@ This API does not require a request body.
 #### Response
 
 <details>
-  <summary><strong>Example code</strong></summary>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
@@ -149,6 +149,7 @@ This API does not require a request body.
         {
             "dbVersion": "MARIADB_V12303",
             "dbVersionName": "Maria DB 12.3.3",
+            "canCreate": true,
             "restorableFromObs": true
         }
     ]
@@ -162,6 +163,7 @@ This API does not require a request body.
 | dbVersions | Array | DB engine list |
 | dbVersions.dbVersion | Enum | DB engine version |
 | dbVersions.dbVersionName | String | DB engine version name |
+| dbVersions.canCreate | Boolean | Available for creation |
 | dbVersions.restorableFromObs | Boolean | Whether restoration from Object Storage is available |
 
 ---
@@ -583,6 +585,8 @@ This API does not require a request body.
     "dbInstanceGroups": [
         {
             "dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
+            "dbInstanceGroupName": "dbInstanceGroupName-example",
+            "dbInstanceGroupStatus": "CREATED",
             "replicationType": "STANDALONE",
             "createdYmdt": "2023-12-31T15:00:00+09:00",
             "updatedYmdt": "2023-12-31T15:00:00+09:00"
@@ -597,6 +601,8 @@ This API does not require a request body.
 |-----|-----|-----|
 | dbInstanceGroups | Array | DB instance groups |
 | dbInstanceGroups.dbInstanceGroupId | UUID | DB instance group identifier |
+| dbInstanceGroups.dbInstanceGroupName | String | Name to identify DB instance groups |
+| dbInstanceGroups.dbInstanceGroupStatus | Enum | Current status of the DB instance group<br/>- `CREATED`: Created<br/>- `DELETED`: Deleted |
 | dbInstanceGroups.replicationType | Enum | DB instance group replication type<br/>- `STANDALONE`: High availability is not used<br/>- `HIGH_AVAILABILITY`: High availability is used |
 | dbInstanceGroups.createdYmdt | DateTime | Created date and time (YYYY-MM-DDThh:mm:ss.SSSTZD) |
 | dbInstanceGroups.updatedYmdt | DateTime | Modified date and time (YYYY-MM-DDThh:mm:ss.SSSTZD) |
@@ -639,6 +645,8 @@ This API does not require a request body.
         "isSuccessful": true
     },
     "dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
+    "dbInstanceGroupName": "dbInstanceGroupName-example",
+    "dbInstanceGroupStatus": "CREATED",
     "replicationType": "STANDALONE",
     "dbInstances": [
         {
@@ -657,6 +665,8 @@ This API does not require a request body.
 | Name | Format | Description |
 |-----|-----|-----|
 | dbInstanceGroupId | UUID | DB instance group identifier |
+| dbInstanceGroupName | String | Name to identify DB instance groups |
+| dbInstanceGroupStatus | Enum | Current status of the DB instance group<br/>- `CREATED`: Created<br/>- `DELETED`: Deleted |
 | replicationType | Enum | DB instance group replication type<br/>- `STANDALONE`: High availability is not used<br/>- `HIGH_AVAILABILITY`: High availability is used |
 | dbInstances | Array | DB instances belong to DB instance group |
 | dbInstances.dbInstanceId | UUID | DB instance identifier |
@@ -1209,8 +1219,8 @@ PUT /v3.0/db-instances/{dbInstanceId}
 | dbSecurityGroupIds | Array | N | DB security group identifiers |
 | executeBackup | Boolean | N | Whether to perform a backup at the current point in time<br/>- Default: `false` |
 | useOnlineFailover | Boolean | N | Whether to restart using failover<br/>- Default: `false` |
-| waitReplicationDelay | Boolean | N | Wait for replication delay to be resolved<br/>- Default: `false` |
-| useReadOnly | Boolean | N | Block write load<br/>- Default: `false` |
+| waitReplicationDelay | Boolean | N | Whether to wait for replication delay to be resolved<br/>- Default: `false` |
+| useReadOnly | Boolean | N | Whether to block write load<br/>- Default: `false` |
 
 <a id="update-db-instance-response"></a>
 #### Response
@@ -2728,8 +2738,8 @@ POST /v3.0/db-instances/{dbInstanceId}/restart
 |-----|-----|-----|-----|
 | useOnlineFailover | Boolean | N | Whether to restart using failover<br/>- Default: `false` |
 | executeBackup | Boolean | N | Whether to perform a backup at the current point in time<br/>- Default: `false` |
-| waitReplicationDelay | Boolean | N | Wait for replication delay to be resolved<br/>- Default: `false` |
-| useReadOnly | Boolean | N | Block write load<br/>- Default: `false` |
+| waitReplicationDelay | Boolean | N | Whether to wait for replication delay to be resolved<br/>- Default: `false` |
+| useReadOnly | Boolean | N | Whether to block write load<br/>- Default: `false` |
 
 <a id="restart-db-instance-response"></a>
 #### Response
