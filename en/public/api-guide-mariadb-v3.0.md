@@ -1219,8 +1219,8 @@ PUT /v3.0/db-instances/{dbInstanceId}
 | dbSecurityGroupIds | Array | N | DB security group identifiers |
 | executeBackup | Boolean | N | Whether to perform a backup at the current point in time<br/>- Default: `false` |
 | useOnlineFailover | Boolean | N | Whether to restart using failover<br/>- Default: `false` |
-| waitReplicationDelay | Boolean | N | Wait for replication lag to clear<br/>- Default: `false` |
-| useReadOnly | Boolean | N | Block write load<br/>- Default: `false` |
+| waitReplicationDelay | Boolean | N | Whether to wait for replication delay to be resolved<br/>- Default: `false` |
+| useReadOnly | Boolean | N | Whether to block write load<br/>- Default: `false` |
 
 <a id="update-db-instance-response"></a>
 #### Response
@@ -2738,8 +2738,8 @@ POST /v3.0/db-instances/{dbInstanceId}/restart
 |-----|-----|-----|-----|
 | useOnlineFailover | Boolean | N | Whether to restart using failover<br/>- Default: `false` |
 | executeBackup | Boolean | N | Whether to perform a backup at the current point in time<br/>- Default: `false` |
-| waitReplicationDelay | Boolean | N | Wait for replication lag to clear<br/>- Default: `false` |
-| useReadOnly | Boolean | N | Block write load<br/>- Default: `false` |
+| waitReplicationDelay | Boolean | N | Whether to wait for replication delay to be resolved<br/>- Default: `false` |
+| useReadOnly | Boolean | N | Whether to block write load<br/>- Default: `false` |
 
 <a id="restart-db-instance-response"></a>
 #### Response

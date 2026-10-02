@@ -167,7 +167,7 @@ GET /v4.0/db-versions
 | dbVersions | Array | DBエンジンリスト |
 | dbVersions.dbVersion | Enum | DBエンジンバージョン |
 | dbVersions.dbVersionName | String | DBエンジンバージョン名 |
-| dbVersions.canCreate | Boolean | 作成可能かどうか |
+| dbVersions.canCreate | Boolean | 作成可否 |
 | dbVersions.restorableFromObs | Boolean | オブジェクトストレージから復元できるかどうか |
 
 ---
@@ -612,7 +612,7 @@ GET /v4.0/db-instance-groups
 | dbInstanceGroups | Array | DBインスタンスグループリスト |
 | dbInstanceGroups.dbInstanceGroupId | UUID | DBインスタンスグループの識別子 |
 | dbInstanceGroups.dbInstanceGroupName | String | DBインスタンスグループを識別できる名前 |
-| dbInstanceGroups.dbInstanceGroupStatus | Enum | DBインスタンスグループの現在の状態<br/>- `CREATED`: 作成済み<br/>- `DELETED`: 削除済み |
+| dbInstanceGroups.dbInstanceGroupStatus | Enum | DBインスタンスグループの現在状態<br/>- `CREATED`: 作成済み<br/>- `DELETED`: 削除済み |
 | dbInstanceGroups.replicationType | Enum | DBインスタンスグループの複製形態<br/>- `STANDALONE`: 高可用性を使用しない<br/>- `HIGH_AVAILABILITY`: 高可用性を使用 |
 | dbInstanceGroups.createdYmdt | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 | dbInstanceGroups.updatedYmdt | DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
@@ -683,7 +683,7 @@ GET /v4.0/db-instance-groups/{dbInstanceGroupId}
 |-----|-----|-----|
 | dbInstanceGroupId | UUID | DBインスタンスグループの識別子 |
 | dbInstanceGroupName | String | DBインスタンスグループを識別できる名前 |
-| dbInstanceGroupStatus | Enum | DBインスタンスグループの現在の状態<br/>- `CREATED`: 作成済み<br/>- `DELETED`: 削除済み |
+| dbInstanceGroupStatus | Enum | DBインスタンスグループの現在状態<br/>- `CREATED`: 作成済み<br/>- `DELETED`: 削除済み |
 | replicationType | Enum | DBインスタンスグループの複製形態<br/>- `STANDALONE`: 高可用性を使用しない<br/>- `HIGH_AVAILABILITY`: 高可用性を使用 |
 | dbInstances | Array | DBインスタンスグループに属するDBインスタンスリスト |
 | dbInstances.dbInstanceId | UUID | DBインスタンスの識別子 |
@@ -1354,7 +1354,7 @@ PUT /v4.0/db-instances/{dbInstanceId}
 | executeBackup | Boolean | N | 現時点のバックアップを実行するかどうか<br/>- デフォルト値: `false` |
 | useOnlineFailover | Boolean | N | フェイルオーバーを利用した再起動を行うかどうか<br/>- デフォルト値: `false` |
 | waitReplicationDelay | Boolean | N | 複製遅延の解消を待機するかどうか<br/>- デフォルト値: `false` |
-| useReadOnly | Boolean | N | 書き込み負荷の遮断するかどうか<br/>- デフォルト値: `false` |
+| useReadOnly | Boolean | N | 書き込み負荷を遮断するかどうか<br/>- デフォルト値: `false` |
 
 <a id="modify-db-instance-response"></a>
 #### レスポンス
@@ -3609,7 +3609,7 @@ POST /v4.0/db-instances/{dbInstanceId}/restart
 | useOnlineFailover | Boolean | N | フェイルオーバーを利用した再起動を行うかどうか<br/>- デフォルト値: `false` |
 | executeBackup | Boolean | N | 現時点のバックアップを実行するかどうか<br/>- デフォルト値: `false` |
 | waitReplicationDelay | Boolean | N | 複製遅延の解消を待機するかどうか<br/>- デフォルト値: `false` |
-| useReadOnly | Boolean | N | 書き込み負荷の遮断するかどうか<br/>- デフォルト値: `false` |
+| useReadOnly | Boolean | N | 書き込み負荷を遮断するかどうか<br/>- デフォルト値: `false` |
 | osRestart | Boolean | N | OSを再起動するかどうか<br/>- デフォルト値: `false` |
 
 <a id="restart-db-instance-response"></a>
