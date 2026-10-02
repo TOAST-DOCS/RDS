@@ -147,6 +147,7 @@ GET /v3.0/db-versions
         {
             "dbVersion": "MARIADB_V12303",
             "dbVersionName": "Maria DB 12.3.3",
+            "canCreate": true,
             "restorableFromObs": true
         }
     ]
@@ -160,6 +161,7 @@ GET /v3.0/db-versions
 | dbVersions | Array | DB 엔진 목록 |
 | dbVersions.dbVersion | Enum | DB 엔진 버전 |
 | dbVersions.dbVersionName | String | DB 엔진 버전명 |
+| dbVersions.canCreate | Boolean | 생성 가능 여부 |
 | dbVersions.restorableFromObs | Boolean | Object Storage에서 복원 가능 여부 |
 
 ---
@@ -581,6 +583,8 @@ GET /v3.0/db-instance-groups
     "dbInstanceGroups": [
         {
             "dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
+            "dbInstanceGroupName": "dbInstanceGroupName-example",
+            "dbInstanceGroupStatus": "CREATED",
             "replicationType": "STANDALONE",
             "createdYmdt": "2023-12-31T15:00:00+09:00",
             "updatedYmdt": "2023-12-31T15:00:00+09:00"
@@ -595,6 +599,8 @@ GET /v3.0/db-instance-groups
 |-----|-----|-----|
 | dbInstanceGroups | Array | DB 인스턴스 그룹 목록 |
 | dbInstanceGroups.dbInstanceGroupId | UUID | DB 인스턴스 그룹의 식별자 |
+| dbInstanceGroups.dbInstanceGroupName | String | DB 인스턴스 그룹을 식별할 수 있는 이름 |
+| dbInstanceGroups.dbInstanceGroupStatus | Enum | DB 인스턴스 그룹의 현재 상태<br/>- `CREATED`: 생성됨<br/>- `DELETED`: 삭제됨 |
 | dbInstanceGroups.replicationType | Enum | DB 인스턴스 그룹의 복제 형태<br/>- `STANDALONE`: 고가용성 사용 안함<br/>- `HIGH_AVAILABILITY`: 고가용성 사용 |
 | dbInstanceGroups.createdYmdt | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 | dbInstanceGroups.updatedYmdt | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
@@ -637,6 +643,8 @@ GET /v3.0/db-instance-groups/{dbInstanceGroupId}
         "isSuccessful": true
     },
     "dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
+    "dbInstanceGroupName": "dbInstanceGroupName-example",
+    "dbInstanceGroupStatus": "CREATED",
     "replicationType": "STANDALONE",
     "dbInstances": [
         {
@@ -655,6 +663,8 @@ GET /v3.0/db-instance-groups/{dbInstanceGroupId}
 | 이름 | 타입 | 설명 |
 |-----|-----|-----|
 | dbInstanceGroupId | UUID | DB 인스턴스 그룹의 식별자 |
+| dbInstanceGroupName | String | DB 인스턴스 그룹을 식별할 수 있는 이름 |
+| dbInstanceGroupStatus | Enum | DB 인스턴스 그룹의 현재 상태<br/>- `CREATED`: 생성됨<br/>- `DELETED`: 삭제됨 |
 | replicationType | Enum | DB 인스턴스 그룹의 복제 형태<br/>- `STANDALONE`: 고가용성 사용 안함<br/>- `HIGH_AVAILABILITY`: 고가용성 사용 |
 | dbInstances | Array | DB 인스턴스 그룹에 속한 DB 인스턴스 목록 |
 | dbInstances.dbInstanceId | UUID | DB 인스턴스의 식별자 |
@@ -1207,8 +1217,8 @@ PUT /v3.0/db-instances/{dbInstanceId}
 | dbSecurityGroupIds | Array | N | DB 보안 그룹의 식별자 목록 |
 | executeBackup | Boolean | N | 현재 시점 백업 수행 여부<br/>- 기본값: `false` |
 | useOnlineFailover | Boolean | N | 장애 조치를 이용한 재시작 여부<br/>- 기본값: `false` |
-| waitReplicationDelay | Boolean | N | 복제 지연 해소 대기<br/>- 기본값: `false` |
-| useReadOnly | Boolean | N | 쓰기 부하 차단<br/>- 기본값: `false` |
+| waitReplicationDelay | Boolean | N | 복제 지연 해소 대기 여부<br/>- 기본값: `false` |
+| useReadOnly | Boolean | N | 쓰기 부하 차단 여부<br/>- 기본값: `false` |
 
 <a id="update-db-instance-response"></a>
 #### 응답
@@ -2726,8 +2736,8 @@ POST /v3.0/db-instances/{dbInstanceId}/restart
 |-----|-----|-----|-----|
 | useOnlineFailover | Boolean | N | 장애 조치를 이용한 재시작 여부<br/>- 기본값: `false` |
 | executeBackup | Boolean | N | 현재 시점 백업 수행 여부<br/>- 기본값: `false` |
-| waitReplicationDelay | Boolean | N | 복제 지연 해소 대기<br/>- 기본값: `false` |
-| useReadOnly | Boolean | N | 쓰기 부하 차단<br/>- 기본값: `false` |
+| waitReplicationDelay | Boolean | N | 복제 지연 해소 대기 여부<br/>- 기본값: `false` |
+| useReadOnly | Boolean | N | 쓰기 부하 차단 여부<br/>- 기본값: `false` |
 
 <a id="restart-db-instance-response"></a>
 #### 응답
