@@ -4,9 +4,11 @@
 
 <a id="database-rds-for-mysql-release-notes"></a>
 ## Database > RDS for MySQL > リリースノート { #database-rds-for-mysql-release-notes }
-## 2026. 11. 10.
+<a id="november-10-2026"></a>
+## 2026. 11. 10. { #november-10-2026 }
 
-### 新規機能追加
+<a id="november-10-2026-added-features"></a>
+### 新規機能追加 { #november-10-2026-added-features }
 
 * トランザクションログアーカイブ機能追加
     * バイナリログをObject Storageに保管して時点復元に使用
@@ -22,7 +24,8 @@
 * 基本モニタリングにStorageの詳細チャートを追加
     * データ、バイナリログ、残余容量をバイト単位で表示
 
-### 機能改善/変更
+<a id="november-10-2026-feature-updates"></a>
+### 機能改善/変更 { #november-10-2026-feature-updates }
 
 * DBインスタンス一覧をDBインスタンスグループ単位でのみ表示するよう改善
 * 他のリージョンにRead Replicaが存在するDBインスタンスグループを、各リージョンのDBインスタンス一覧に合わせて表示するよう改善
@@ -31,7 +34,8 @@
 * DBインスタンスタイプのCPU表記をvCPUに変更
 * 存在しないアベイラビリティゾーンやサブネットを指定した場合、リクエスト段階で即座にエラーを返すよう改善
 
-### バグ修正
+<a id="november-10-2026-bug-fixes"></a>
+### バグ修正 { #november-10-2026-bug-fixes }
 
 * 保管期間が過ぎたバイナリログが削除されないバグ修正
 * 大容量テーブルがある場合に増分バックアップが失敗するバグ修正
