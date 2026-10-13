@@ -337,17 +337,15 @@ If you activate deletion protection, you can protect DB instances from accidenta
 <a id="db-instance-list"></a>
 ## DB Instance List { #db-instance-list }
 
-You can view DB instances created from the console. It can be viewed as groups of DB instances or as individual DB instances.
+You can view DB instances created from the console grouped by DB Instance Group.
 
 ![db-instance-list_en]({{url.cdn}}/26.01.13/db-instance-list_en.png)
 
-❶ You can change DB instance screen mode.  
-❷ By clicking on the button, you can open or close a DB instance that belongs to a group.  
-❸ It displays the most recently collected monitoring indicators.  
-❹ You can view the current status.  
-❺ A spinner will appear if have any work in progress.  
-❻ You can change the search criteria.
-
+❶ By clicking on the button, you can open or close a DB instance that belongs to a group.  
+❷ It displays the most recently collected monitoring indicators.  
+❸ You can view the current status.  
+❹ A spinner will appear if have any work in progress.  
+❺ You can change the search criteria.
 
 The status of the DB instance consists of the following values and changes depending on the behavior of the user and the current status.
 
@@ -371,7 +369,7 @@ Search conditions that can be changed are as follows.
 <a id="db-instance-group-details"></a>
 ## DB Instance Group Details { #db-instance-group-details }
 
-After viewing the DB instance list in the **Group** view, select a DB Instance Group to view its detailed information. The group details screen displays the following tabs:
+Select a DB Instance Group from the DB instance list to view its detailed information. The group details screen displays the following tabs:
 
 | Tab | Description |
 |---|---|
