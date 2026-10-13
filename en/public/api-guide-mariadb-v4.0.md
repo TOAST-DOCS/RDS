@@ -1,6 +1,6 @@
 <!-- machine_translated: true -->
 
-<!-- pre-align:aligned sig=1272d3144247 -->
+<!-- pre-align:aligned sig=2f6052327104 -->
 
 <a id="database-rds-for-enginepascalcase-api-guide"></a>
 ## Database > RDS for MariaDB > API Guide { #database-rds-for-enginepascalcase-api-guide }
@@ -687,7 +687,7 @@ This API does not require a request body.
 | replicationType | Enum | DB instance group replication type<br/>- `STANDALONE`: High availability is not used<br/>- `HIGH_AVAILABILITY`: High availability is used |
 | dbInstances | Array | DB instances belong to DB instance group |
 | dbInstances.dbInstanceId | UUID | DB instance identifier |
-| dbInstances.dbInstanceType | Enum | Role type of DB instance<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`: Read replica |
+| dbInstances.dbInstanceType | Enum | Role type of DB instance<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`: Read Replica |
 | dbInstances.dbInstanceStatus | Enum | DB instance current status<br/>- `BEFORE_CREATE`: Before creation (gray)<br/>- `AVAILABLE`: Available (green)<br/>- `STORAGE_FULL`: Insufficient capacity (red)<br/>- `FAIL_TO_CREATE`: Failed to create (red)<br/>- `FAIL_TO_CONNECT`: Failed to connect (red)<br/>- `REPLICATION_STOP`: Replication stopped (red)<br/>- `REPLICATION_DELAY`: Replication delayed (yellow)<br/>- `FAILOVER`: Failover completed (red)<br/>- `SHUTDOWN`: Stopped (gray)<br/>- `DELETED`: Deleted (gray) |
 | createdYmdt | DateTime | Created date and time (YYYY-MM-DDThh:mm:ss.SSSTZD) |
 | updatedYmdt | DateTime | Modified date and time (YYYY-MM-DDThh:mm:ss.SSSTZD) |
@@ -804,11 +804,11 @@ This API does not require a request body.
 | dbInstances | Array | DB instances |
 | dbInstances.dbInstanceId | UUID | DB instance identifier |
 | dbInstances.dbInstanceGroupId | UUID | DB instance group identifier |
-| dbInstances.dbInstanceName | String | Name to identify the primary DB instance |
+| dbInstances.dbInstanceName | String | Name to identify the Primary DB instance |
 | dbInstances.description | String | Additional information of DB instance |
 | dbInstances.dbVersion | Enum | DB engine version |
 | dbInstances.dbPort | Number | DB port |
-| dbInstances.dbInstanceType | Enum | Role type of DB instance<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`: Read replica |
+| dbInstances.dbInstanceType | Enum | Role type of DB instance<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`: Read Replica |
 | dbInstances.dbInstanceStatus | Enum | DB instance current status<br/>- `BEFORE_CREATE`: Before creation (gray)<br/>- `AVAILABLE`: Available (green)<br/>- `STORAGE_FULL`: Insufficient capacity (red)<br/>- `FAIL_TO_CREATE`: Failed to create (red)<br/>- `FAIL_TO_CONNECT`: Failed to connect (red)<br/>- `REPLICATION_STOP`: Replication stopped (red)<br/>- `REPLICATION_DELAY`: Replication delayed (yellow)<br/>- `FAILOVER`: Failover completed (red)<br/>- `SHUTDOWN`: Stopped (gray)<br/>- `DELETED`: Deleted (gray) |
 | dbInstances.progressStatus | Enum | DB instance current progress status |
 | dbInstances.createdYmdt | DateTime | Created date and time (YYYY-MM-DDThh:mm:ss.SSSTZD) |
@@ -837,7 +837,7 @@ POST /v4.0/db-instances
 #### Request Body
 
 <details>
-  <summary><strong>Example code</strong></summary>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
@@ -858,6 +858,8 @@ POST /v4.0/db-instances
     "useSlowQueryAnalysis": true,
     "authenticationPlugin": "NATIVE",
     "tlsOption": "NONE",
+    "transactionLogArchivingEnabled": false,
+    "transactionLogArchivingRetentionDays": 7,
     "network": {
         "subnetId": "550e8400-e29b-41d4-a716-446655440000",
         "usePublicAccess": false,
@@ -890,7 +892,7 @@ POST /v4.0/db-instances
 
 | Name | Format | Required | Description |
 |-----|-----|-----|-----|
-| dbInstanceName | String | Y | Name to identify the primary DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
+| dbInstanceName | String | Y | Name to identify the Primary DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
 | description | String | N | Additional information of DB instance<br/>- Maximum length: `100` |
 | dbFlavorId | UUID | Y | Identifier of DB instance specifications |
 | dbVersion | Enum | Y | DB engine version |
@@ -907,6 +909,8 @@ POST /v4.0/db-instances
 | useSlowQueryAnalysis | Boolean | N | Whether to analyze slow queries<br/>- Default: `true` |
 | authenticationPlugin | Enum | N | Authentication Plugin<br/>- `NATIVE`: mysql_native_password authentication<br/>- `ED25519`: ed25519 authentication (MariaDB only) |
 | tlsOption | Enum | N | TLS option<br/>- Default: `NONE`<br/>- `NONE`: TLS is not used<br/>- `SSL`: SSL authentication<br/>- `X509`: X509 certificate authentication |
+| transactionLogArchivingEnabled | Boolean | N | Whether to enable transaction log archiving<br/>- `true`: Enables archiving on the Primary after creation is complete. Charges apply for staging buffer volume and Object Storage usage<br/>- Default: `false` |
+| transactionLogArchivingRetentionDays | Number | N | Retention period for transaction log archiving (days)<br/>- Integer from 1 to 35. If omitted, defaults to 7<br/>- Applies only when `transactionLogArchivingEnabled` is `true`<br/>- Minimum: `1`<br/>- Maximum: `35` |
 | network | Object | Y | Network information objects |
 | network.subnetId | UUID | Y | Subnet identifier |
 | network.usePublicAccess | Boolean | N | External access is available or not<br/>- Default: `false` |
@@ -1044,7 +1048,7 @@ POST /v4.0/db-instances/restore-from-obs
 
 | Name | Format | Required | Description |
 |-----|-----|-----|-----|
-| dbInstanceName | String | Y | Name to identify the primary DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
+| dbInstanceName | String | Y | Name to identify the Primary DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
 | description | String | N | Additional information of DB instance<br/>- Maximum length: `100` |
 | dbFlavorId | UUID | Y | Identifier of DB instance specifications |
 | dbPort | Number | Y | DB port |
@@ -1163,7 +1167,7 @@ DELETE /v4.0/db-instances/{dbInstanceId}
 
 | Name | Format | Required | Description |
 |-----|-----|-----|-----|
-| deleteAutoBackup | Boolean | N | Whether to delete automatic backups<br/>- Default: `false` |
+| deleteAutoBackup | Boolean | N | Whether to delete automatic backups<br/>- Backups left with `false` can only be restored to the backup point after the DB instance is deleted (point-in-time restore not supported)<br/>- Default: `false` |
 
 <a id="delete-db-instance-response"></a>
 #### Response
@@ -1266,11 +1270,11 @@ This API does not require a request body.
 |-----|-----|-----|
 | dbInstanceId | UUID | DB instance identifier |
 | dbInstanceGroupId | UUID | DB instance group identifier |
-| dbInstanceName | String | Name to identify the primary DB instance |
+| dbInstanceName | String | Name to identify the Primary DB instance |
 | description | String | Additional information of DB instance |
 | dbVersion | Enum | DB engine version |
 | dbPort | Number | DB port |
-| dbInstanceType | Enum | Role type of DB instance<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`: Read replica |
+| dbInstanceType | Enum | Role type of DB instance<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`: Read Replica |
 | dbInstanceStatus | Enum | DB instance current status<br/>- `BEFORE_CREATE`: Before creation (gray)<br/>- `AVAILABLE`: Available (green)<br/>- `STORAGE_FULL`: Insufficient capacity (red)<br/>- `FAIL_TO_CREATE`: Failed to create (red)<br/>- `FAIL_TO_CONNECT`: Failed to connect (red)<br/>- `REPLICATION_STOP`: Replication stopped (red)<br/>- `REPLICATION_DELAY`: Replication delayed (yellow)<br/>- `FAILOVER`: Failover completed (red)<br/>- `SHUTDOWN`: Stopped (gray)<br/>- `DELETED`: Deleted (gray) |
 | progressStatus | Enum | DB instance current progress status |
 | dbFlavorId | UUID | Identifier of DB instance specifications |
@@ -1341,7 +1345,7 @@ PUT /v4.0/db-instances/{dbInstanceId}
 
 | Name | Format | Required | Description |
 |-----|-----|-----|-----|
-| dbInstanceName | String | N | Name to identify the primary DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
+| dbInstanceName | String | N | Name to identify the Primary DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
 | dbInstanceCandidateName | String | N | Name to identify the standby DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
 | description | String | N | Additional information of DB instance<br/>- Maximum length: `100` |
 | dbPort | Number | N | DB port<br/>- Minimum value: 3306, Maximum value: 43306 |
@@ -2355,14 +2359,15 @@ This API does not return a response body.
 | `PAUSED`                         | High availability has been paused                 |
 | `PAUSED_DUE_TO_TASK`             | High availability has been paused due to a task         |
 | `PAUSED_DUE_TO_STOP`             | When high availability is paused because the DB instance is stopped  |
-| `DISABLE_MASTER_IN_REPLICATION`  | When high availability is suspended due to detection of abnormal replication on the primary     |
+| `DISABLE_MASTER_IN_REPLICATION`  | When high availability is suspended due to detection of abnormal replication on the Primary     |
 | `DISABLE_MHA_PROCESS`            | The high availability process has been stopped               |
 | `DISABLE_REPLICATION_STOP`       | High availability has been disabled due to replication stoppage         |
 | `DISABLE_REPLICATION_DELAY`      | High availability has been disabled due to replication delay         |
-| `MASTER_FAILURE_DETECTION`       | When a primary failure is detected                  |
+| `MASTER_FAILURE_DETECTION`       | When a Primary failure is detected                  |
 | `FAILOVER_STARTED`               | Failover has started                   |
 | `FAILOVER_FAILED`                | Failover has failed                   |
 | `FAILOVER_COMPLETED`             | Failover has been completed                   |
+| `FAILOVER_ABORTED`               | Failover was reverted                  |
 | `DELETED`                        | High availability has been deleted                    |
 
 ---
@@ -2421,7 +2426,7 @@ This API does not require a request body.
 | Name | Format | Description |
 |-----|-----|-----|
 | useHighAvailability | Boolean | Whether to use high availability<br/>- Default: `false` |
-| haStatus | Enum | High availability status<br/>- `CREATED`: Created<br/>- `STABLE`: Normal<br/>- `PAUSING`: Pausing<br/>- `DISABLE`: Stopped<br/>- `DISABLE_MASTER_IN_REPLICATION`: High availability suspended due to detection of abnormal replication on the primary<br/>- `DISABLE_MHA_PROCESS`: High availability process suspended<br/>- `DISABLE_REPLICATION_STOP`: High availability suspended due to replication stop<br/>- `DISABLE_REPLICATION_DELAY`: High availability suspended due to replication delay<br/>- `FAILOVER_STARTED`: Failover started<br/>- `FAILOVER_FAILED`: Failover failed<br/>- `FAILOVER_COMPLETED`: Failover completed<br/>- `FAILOVER_ABORTED`: Failover aborted<br/>- `DELETED`: Deleted<br/>- `PAUSED`: Paused<br/>- `PAUSED_DUE_TO_TASK`: Paused due to a task<br/>- `PAUSED_DUE_TO_STOP`: Paused due to the DB instance being stopped<br/>- `MASTER_FAILURE_DETECTION`: Primary failure detected |
+| haStatus | Enum | High availability status<br/>- `CREATED`: Created<br/>- `STABLE`: Normal<br/>- `PAUSING`: Pausing<br/>- `DISABLE`: Stopped<br/>- `DISABLE_MASTER_IN_REPLICATION`: High availability suspended due to detection of abnormal replication on the Primary<br/>- `DISABLE_MHA_PROCESS`: High availability process suspended<br/>- `DISABLE_REPLICATION_STOP`: High availability suspended due to replication stop<br/>- `DISABLE_REPLICATION_DELAY`: High availability suspended due to replication delay<br/>- `FAILOVER_STARTED`: Failover started<br/>- `FAILOVER_FAILED`: Failover failed<br/>- `FAILOVER_COMPLETED`: Failover completed<br/>- `FAILOVER_ABORTED`: Failover aborted<br/>- `DELETED`: Deleted<br/>- `PAUSED`: Paused<br/>- `PAUSED_DUE_TO_TASK`: Paused due to a task<br/>- `PAUSED_DUE_TO_STOP`: Paused due to the DB instance being stopped<br/>- `MASTER_FAILURE_DETECTION`: Primary failure detected |
 | pingInterval | Number | Ping interval (seconds) |
 | pingType | Enum | Ping method<br/>- `CONNECTION`: CONNECTION method<br/>- `INSERT`: INSERT method<br/>- `SELECT`: SELECT method |
 
@@ -3500,7 +3505,7 @@ POST /v4.0/db-instances/{dbInstanceId}/replicate
 
 | Name | Format | Required | Description |
 |-----|-----|-----|-----|
-| dbInstanceName | String | Y | Name to identify the primary DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
+| dbInstanceName | String | Y | Name to identify the Primary DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
 | description | String | N | Additional information of DB instance<br/>- Maximum length: `100` |
 | dbFlavorId | UUID | N | Identifier of DB instance specifications |
 | dbPort | Number | N | DB port<br/>- Minimum value: 3306, Maximum value: 43306 |
@@ -3710,7 +3715,7 @@ This API does not require a request body.
 | Name | Format | Description |
 |-----|-----|-----|
 | oldestRestorableYmdt | DateTime | Earliest restorable time |
-| latestRestorableYmdt | DateTime | Latest restorable time |
+| latestRestorableYmdt | DateTime | Most recent restorable time<br/>- For DB instances using transaction log archiving, null if the Primary of the DB instance or group is not in the Available (AVAILABLE) status or is in a different region |
 | restorableBackups | Array | List of restorable backups |
 | restorableBackups.backup | Object | Backup information objects |
 | restorableBackups.backup.backupId | UUID | Backup identifier |
@@ -3883,7 +3888,7 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 
 | Name | Format | Required | Description |
 |-----|-----|-----|-----|
-| dbInstanceName | String | Y | Name to identify the primary DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
+| dbInstanceName | String | Y | Name to identify the Primary DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
 | description | String | N | Additional information of DB instance<br/>- Maximum length: `100` |
 | dbFlavorId | UUID | N | Identifier of DB instance specifications. If not entered, the specifications of the original instance are applied. |
 | dbPort | Number | N | DB port |
@@ -3951,7 +3956,7 @@ You can only restore to a point in time earlier than the latest restorable time 
 | restore.binLog.binLogFileName | String | N | Binary log name to use for restoration |
 | restore.binLog.binLogPosition | Number | N | Binary log location to use for restoration |
 
-For point-in-time restoration using binary logs, you can restore the logs recorded after the binary log file and position of the reference backup.
+For point-in-time restoration using binary logs, you can restore the logs recorded after the binary log file and position of the baseline backup.
 
 <a id="restoration-restoretype-backup"></a>
 #### Request when restoring from backup (if restoreType is `BACKUP`)
@@ -3982,6 +3987,133 @@ For point-in-time restoration using binary logs, you can restore the logs record
 | Name | Format | Description |
 |-----|-----|-----|
 | jobId | UUID | Identifier of requested task |
+
+---
+
+<a id="view-restore-coverage"></a>
+### View DB Instance Restore Coverage { #view-restore-coverage }
+
+<a id="view-restore-coverage-required-permissions"></a>
+#### Required Permission
+
+| Permission Name | Description |
+|-----|-----|
+| RDSforMariaDB:DbInstance.Get | Get DB instance restore coverage |
+
+<a id="view-restore-coverage-request"></a>
+#### Request
+
+```http
+GET /v4.0/db-instances/{dbInstanceId}/restore-coverage
+```
+
+<a id="view-restore-coverage-request-parameters"></a>
+#### Request Parameters
+
+| Name | Type | Format | Required | Description |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | Y | DB instance identifier |
+
+<a id="view-restore-coverage-request-body"></a>
+#### Request Body
+
+This API does not require a request body.
+
+<a id="view-restore-coverage-response"></a>
+#### Response
+
+<details>
+  <summary><strong>Example Code</strong></summary>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "engine": "MYSQL",
+    "tier": 1,
+    "retentionFloorYmdt": "2023-12-31T15:00:00+09:00",
+    "recoverableThroughYmdt": "2023-12-31T15:00:00+09:00",
+    "recoveryTimeBasis": "recoveryTimeBasis-example",
+    "windows": [
+        {
+            "fromYmdt": "2023-12-31T15:00:00+09:00",
+            "toYmdt": "2023-12-31T15:00:00+09:00",
+            "anchorBackupId": "anchorBackupId-example",
+            "continuity": "SNAPSHOT_ONLY",
+            "confidence": "EXACT",
+            "spansLineage": false
+        }
+    ],
+    "gaps": [
+        {
+            "fromYmdt": "2023-12-31T15:00:00+09:00",
+            "toYmdt": "2023-12-31T15:00:00+09:00",
+            "cause": "CRITICAL_DROP",
+            "detectedAt": "2023-12-31T15:00:00+09:00",
+            "remediable": true,
+            "confidence": "INFORMATIONAL"
+        }
+    ],
+    "failoverBoundaries": [
+        {
+            "predecessorDbInstanceId": "predecessorDbInstanceId-example",
+            "boundaryYmdt": "2023-12-31T15:00:00+09:00",
+            "recoverable": false,
+            "gapFromYmdt": "2023-12-31T15:00:00+09:00",
+            "gapToYmdt": "2023-12-31T15:00:00+09:00",
+            "confidence": "INFORMATIONAL",
+            "unreachableWrites": true,
+            "unreachableFromYmdt": "2023-12-31T15:00:00+09:00",
+            "unreachableToYmdt": "2023-12-31T15:00:00+09:00",
+            "unreachableSegmentCount": null,
+            "noteCode": "UNREACHABLE_WRITES_DETECTED"
+        }
+    ],
+    "coverageRatio": null,
+    "asOfYmdt": "2023-12-31T15:00:00+09:00"
+}
+```
+
+</details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| engine | String | DB engine |
+| tier | Number | Step of the restorable window displayed<br/>- `0`: Displays only snapshot backup points<br/>- `1`: Displays up to continuous windows<br/>- Calculated regardless of transaction log archiving settings |
+| retentionFloorYmdt | DateTime | Earliest point in time that can be restored (start of the retention period) |
+| recoverableThroughYmdt | DateTime | Latest point in time that can be restored per policy<br/>- Log continuity and whether the target time is reached are re-verified during actual restoration<br/>- null if the upper bound of the DB time in the log cannot be determined<br/>- Does not guarantee a continuous window |
+| recoveryTimeBasis | String | Basis for calculating `recoverableThroughYmdt`<br/>- `AVAILABLE_POLICY`: Calculated based on the retention policy of DB instances in the available state<br/>- `UNKNOWN_LOG_TIME`: Cannot determine the DB time of the log. Does not mean there are no logs in Object Storage or that snapshot restore is not available |
+| windows | Array | List of restorable windows (overlapping windows are merged, sorted by time in ascending order) |
+| windows.fromYmdt | DateTime | Start time of the window |
+| windows.toYmdt | DateTime | End time of the window<br/>- Same as `fromYmdt` if `continuity` is `SNAPSHOT_ONLY` |
+| windows.anchorBackupId | String | Identifier of the baseline backup |
+| windows.continuity | String | Continuity of the window<br/>- `SNAPSHOT_ONLY`: Can only be restored to a snapshot backup point<br/>- `CONTINUOUS`: Can be restored to any point in time within the window |
+| windows.confidence | String | Confidence level of the window<br/>- `EXACT`: Confirmed restore point<br/>- `INFORMATIONAL`: For reference only. Re-verified during actual restoration |
+| windows.spansLineage | Boolean | Whether the window spans a failover boundary |
+| gaps | Array | List of archive gaps between restorable windows<br/>- Always an empty list if `tier` is `0` |
+| gaps.fromYmdt | DateTime | Always null because it is not currently calculated |
+| gaps.toYmdt | DateTime | Always null because it is not currently calculated |
+| gaps.cause | String | Cause of the archive gap<br/>- `CRITICAL_DROP`: Log ingestion delayed due to staging buffer threshold being exceeded. Resumes when the buffer recovers<br/>- `RETENTION_TRUNCATED`: Log was lost before ingestion and cannot be recovered<br/>- `RECOVERY_PENDING`: Unloaded logs remain in the staging buffer volume of the previous Primary; recovery is possible if retrieved |
+| gaps.detectedAt | DateTime | Time of detection |
+| gaps.remediable | Boolean | Whether performing a backup now can restore continuity |
+| gaps.confidence | String | Confidence level of the archive gap determination |
+| failoverBoundaries | Array | List of failover boundaries that occurred within the restoration period |
+| failoverBoundaries.predecessorDbInstanceId | String | Identifier of the Primary DB instance before failover |
+| failoverBoundaries.boundaryYmdt | DateTime | Failover boundary time (in seconds)<br/>- For reference only, as it is based on the management server time<br/>- Point-in-time restoration across the boundary is not supported |
+| failoverBoundaries.recoverable | Boolean | Whether point-in-time restoration across the failover boundary is possible<br/>- Always `false` for MySQL and MariaDB, as it is not supported |
+| failoverBoundaries.gapFromYmdt | DateTime | Always null because it is not currently calculated |
+| failoverBoundaries.gapToYmdt | DateTime | Always null because it is not currently calculated |
+| failoverBoundaries.confidence | String | Confidence level of the determination. Currently always `INFORMATIONAL` (for reference only) |
+| failoverBoundaries.unreachableWrites | Boolean | Whether there are logs that remain only in the previous Primary after failover and cannot be reached by restoration<br/>- `true`: There are such logs<br/>- `false`: There are no such logs<br/>- null: Not determined |
+| failoverBoundaries.unreachableFromYmdt | DateTime | Always null because it is not currently calculated |
+| failoverBoundaries.unreachableToYmdt | DateTime | Always null because it is not currently calculated |
+| failoverBoundaries.unreachableSegmentCount | Number | Number of segments in unreachable logs. Always null for MySQL and MariaDB |
+| failoverBoundaries.noteCode | String | Cause code of the failover boundary<br/>- `BOUNDARY_DETECTED`: Only the failover boundary is detected<br/>- `UNREACHABLE_WRITES_DETECTED`: There are logs in the previous Primary that cannot be reached |
+| coverageRatio | Number | Always null because it is not currently calculated |
+| asOfYmdt | DateTime | Time at which the response was calculated |
 
 ---
 
@@ -4238,6 +4370,75 @@ PUT /v4.0/db-instances/{dbInstanceId}/storage-info
 </details>
 
 | Name | Format | Description |
+|-----|-----|-----|
+| jobId | UUID | Identifier of requested task |
+
+---
+
+<a id="modify-transaction-log-archiving"></a>
+### Activate/Deactivate Transaction Log Archiving { #modify-transaction-log-archiving }
+
+<a id="modify-transaction-log-archiving-required-permissions"></a>
+#### Required Permission
+
+| Permission Name | Description |
+|-----|-----|
+| RDSforMariaDB:DbInstance.ModifyTransactionLogArchiving | Activate/Deactivate Transaction Log Archiving |
+
+<a id="modify-transaction-log-archiving-request"></a>
+#### Request
+
+```http
+PUT /v4.0/db-instances/{dbInstanceId}/transaction-log-archiving
+```
+
+<a id="modify-transaction-log-archiving-request-parameters"></a>
+#### Request Parameters
+
+| Name | Type | Format | Required | Description |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | Y | DB instance identifier |
+
+<a id="modify-transaction-log-archiving-request-body"></a>
+#### Request Body
+
+<details>
+  <summary><strong>Example Code</strong></summary>
+
+```json
+{
+    "enabled": false,
+    "retentionDays": 7
+}
+```
+
+</details>
+
+| Name | Type | Required | Description |
+|-----|-----|-----|-----|
+| enabled | Boolean | Y | Whether to enable transaction log archiving<br/>- `true`: Enable<br/>- `false`: Disable<br/>- If the value is the same as the current setting, no task is created (`jobId` is null) |
+| retentionDays | Number | N | Retention period for transaction log archiving (days)<br/>- An integer between 1 and 35. If omitted, the existing value is retained.<br/>- If the enabled setting is the same as the current value, only the retention period is updated immediately.<br/>- Minimum value: `1`<br/>- Maximum value: `35` |
+
+<a id="modify-transaction-log-archiving-response"></a>
+#### Response
+
+<details>
+  <summary><strong>Example Code</strong></summary>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+}
+```
+
+</details>
+
+| Name | Type | Description |
 |-----|-----|-----|
 | jobId | UUID | Identifier of requested task |
 
@@ -4717,7 +4918,7 @@ POST /v4.0/backups/{backupId}/restore
 
 | Name | Format | Required | Description |
 |-----|-----|-----|-----|
-| dbInstanceName | String | Y | Name to identify the primary DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
+| dbInstanceName | String | Y | Name to identify the Primary DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
 | description | String | N | Additional information of DB instance<br/>- Maximum length: `100` |
 | dbFlavorId | UUID | N | Identifier of DB instance specifications. If not specified, the value of the original instance is used. |
 | dbPort | Number | N | DB port. If not specified, the value of the original instance is used.<br/>- Minimum value: 3306, Maximum value: 43306 |
@@ -6392,7 +6593,7 @@ This API does not require a request body.
 | isEnabled | Boolean | Indicates whether the flavor is enabled |
 | dbInstances | Array | DB Instances to monitor |
 | dbInstances.dbInstanceId | UUID | DB instance identifier |
-| dbInstances.dbInstanceName | String | Name to identify the primary DB instance |
+| dbInstances.dbInstanceName | String | Name to identify the Primary DB instance |
 | userGroups | Array | User Groups |
 | userGroups.userGroupId | UUID | User group identifier |
 | userGroups.userGroupName | String | Name to identify user groups |

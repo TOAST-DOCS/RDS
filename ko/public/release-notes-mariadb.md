@@ -1,11 +1,13 @@
-<!-- pre-align:aligned sig=227955ea3124 -->
+<!-- pre-align:aligned sig=48660ac15bd4 -->
 
 <a id="database-rds-for-mariadb-release-notes"></a>
 ## Database > RDS for MariaDB > 릴리스 노트 { #database-rds-for-mariadb-release-notes }
 
-## 2026. 11. 10.
+<a id="november-10-2026"></a>
+## 2026. 11. 10. { #november-10-2026 }
 
-### 신규 기능 추가
+<a id="november-10-2026-added-features"></a>
+### 신규 기능 추가 { #november-10-2026-added-features }
 
 * 트랜잭션 로그 아카이빙 기능 추가
     * 바이너리 로그를 Object Storage에 보관하여 시점 복원에 사용
@@ -21,7 +23,8 @@
 * 기본 모니터링에 Storage 상세 차트 추가
     * 데이터, 바이너리 로그, 남은 용량을 바이트 단위로 표시
 
-### 기능 개선/변경
+<a id="november-10-2026-feature-updates"></a>
+### 기능 개선/변경 { #november-10-2026-feature-updates }
 
 * DB 인스턴스 목록을 DB 인스턴스 그룹 단위로만 표시하도록 개선
 * 다른 리전에 Read Replica가 있는 DB 인스턴스 그룹을 각 리전의 DB 인스턴스 목록에 함께 표시하도록 개선
@@ -30,7 +33,8 @@
 * DB 인스턴스 타입의 CPU 표기를 vCPU로 변경
 * 존재하지 않는 가용성 영역이나 서브넷을 지정하면 요청 단계에서 바로 오류를 반환하도록 개선
 
-### 버그 수정
+<a id="november-10-2026-bug-fixes"></a>
+### 버그 수정 { #november-10-2026-bug-fixes }
 
 * 보관 기간이 지난 바이너리 로그가 삭제되지 않는 버그 수정
 * 대용량 테이블이 있는 경우 증분 백업이 실패하는 버그 수정
@@ -458,7 +462,7 @@
 ## 2022. 08. 09. { #august-9-2022 }
 
 <a id="added-features"></a>
-### 기능 추가 { #added-features }
+### 신규 기능 추가 { #added-features }
 
 * 이벤트 목록을 엑셀로 내보내는 기능 추가
 
@@ -478,7 +482,7 @@
 ## 2022. 07. 12. { #july-12-2022 }
 
 <a id="july-12-2022-added-features"></a>
-### 기능 추가 { #july-12-2022-added-features }
+### 신규 기능 추가 { #july-12-2022-added-features }
 
 * 서버 대시보드에서 차트를 서버별로 그룹화하여 볼 수 있는 기능 추가
 
@@ -551,7 +555,7 @@
 ## 2022. 03. 15. { #march-15-2022 }
 
 <a id="march-15-2022-added-features"></a>
-### 기능 추가 { #march-15-2022-added-features }
+### 신규 기능 추가 { #march-15-2022-added-features }
 
 * **DB Configuration**에 변수 사용 기능 도입
 
@@ -568,7 +572,7 @@
 ## 2022. 01. 11. { #january-11-2022 }
 
 <a id="january-11-2022-added-features"></a>
-### 기능 추가 { #january-11-2022-added-features }
+### 신규 기능 추가 { #january-11-2022-added-features }
 
 * MariaDB에서 실행 중인 프로세스 리스트 및 InnoDB 상태를 확인할 수 있는 기능 추가
 

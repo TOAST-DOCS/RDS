@@ -1,9 +1,48 @@
 <!-- machine_translated: true -->
 
-<!-- pre-align:aligned sig=227955ea3124 -->
+<!-- pre-align:aligned sig=48660ac15bd4 -->
 
 <a id="database-rds-for-mariadb-release-notes"></a>
 ## Database > RDS for MariaDB > リリースノート { #database-rds-for-mariadb-release-notes }
+
+<a id="november-10-2026"></a>
+## 2026. 11. 10. { #november-10-2026 }
+
+<a id="november-10-2026-added-features"></a>
+### 機能追加 { #november-10-2026-added-features }
+
+* トランザクションログアーカイビング機能の追加
+    * バイナリログをObject Storageに保管し、時点復元に使用
+    * 保存期間は1日から35日まで設定可能
+    * ステージングバッファボリュームとObject Storageの使用量に課金
+* API v4.0の追加および変更
+    * トランザクションログアーカイビングの有効化/無効化APIの追加
+    * DBインスタンスの復元可能期間照会APIの追加
+    * DBインスタンス作成APIにトランザクションログアーカイビング設定項目を追加
+* フェイルオーバーの進行状況表示機能の追加
+    * フェイルオーバーの進行段階とレプリケーションログの反映進捗率を表示
+* フェイルオーバーの取り消し機能の追加
+* 基本モニタリングにStorageの詳細チャートを追加
+    * データ、バイナリログ、残余容量をバイト単位で表示
+
+<a id="november-10-2026-feature-updates"></a>
+### 機能改善/変更 { #november-10-2026-feature-updates }
+
+* DBインスタンス一覧をDBインスタンスグループ単位でのみ表示するように改善
+* 他のリージョンにRead ReplicaがあるDBインスタンスグループを、各リージョンのDBインスタンス一覧にも表示するように改善
+* 元のリージョンと通信できない場合、他のリージョンのDBインスタンスのリージョン情報に警告を表示
+* 準備中のメンテナンス詳細に、次のメンテナンス期間とフェイルオーバーオプションを表示
+* DBインスタンスタイプのCPU表記をvCPUに変更
+* 存在しないAvailability ZoneまたはサブネットをΑを指定した場合、リクエスト段階で即座にエラーを返すように改善
+
+<a id="november-10-2026-bug-fixes"></a>
+### 不具合の修正 { #november-10-2026-bug-fixes }
+
+* 保管期間が過ぎたバイナリログが削除されないバグを修正
+* 大容量テーブルが存在する場合に増分バックアップが失敗するバグを修正
+* モニタリング指標が収集されない場合に正常なDBインスタンスが接続失敗状態に変わるバグを修正
+* MariaDB 10.6以上のバージョンでDBユーザーにBINLOG MONITOR、SLAVE MONITOR権限が付与されないバグを修正
+* simple_password_checkパラメータを使用する場合に高可用性の切り替えとRead Replicaの作成が失敗するバグを修正
 
 <a id="september-15-2026"></a>
 ## 2026. 09. 15. { #september-15-2026 }
@@ -15,7 +54,7 @@
 * 高可用性インスタンスの停止機能を追加
 
 <a id="september-15-2026-feature-updates"></a>
-### 機能改善 { #september-15-2026-feature-updates }
+### 機能改善/変更 { #september-15-2026-feature-updates }
 
 * DBインスタンスタイプの用語変更
     * マスター → Primary
@@ -350,7 +389,7 @@
 ## 2023. 02. 14. { #february-14-2023 }
 
 <a id="february-14-2023-feature-updates"></a>
-### 機能改善 { #february-14-2023-feature-updates }
+### 機能改善/変更 { #february-14-2023-feature-updates }
 
 * サーバーダッシュボードのMariaDB指標のうち、ConnectionチャートにMax Connection値を追加で表記するように改善
 
@@ -364,7 +403,7 @@
 ## 2023. 01. 10. { #january-10-2023 }
 
 <a id="january-10-2023-feature-updates"></a>
-### 機能改善 { #january-10-2023-feature-updates }
+### 機能改善/変更 { #january-10-2023-feature-updates }
 
 * 通知グループ名の重複を許可しないように修正
 
@@ -379,7 +418,7 @@
 ## 2022. 12. 13. { #december-13-2022 }
 
 <a id="december-13-2022-feature-updates"></a>
-### 機能改善 { #december-13-2022-feature-updates }
+### 機能改善/変更 { #december-13-2022-feature-updates }
 
 * DML負荷によるバックアップ失敗時、その内容をイベントメッセージに残すように改善
 
@@ -402,7 +441,7 @@
 ## 2022. 10. 11. { #october-11-2022 }
 
 <a id="october-11-2022-feature-updates"></a>
-### 機能改善 { #october-11-2022-feature-updates }
+### 機能改善/変更 { #october-11-2022-feature-updates }
 
 * インスタンス詳細画面で表示されるドメイン変更ツールチップの文言修正
 
@@ -430,7 +469,7 @@
 * イベントリストをExcelにエクスポートする機能を追加
 
 <a id="august-9-2022-feature-updates"></a>
-### 機能改善 { #august-9-2022-feature-updates }
+### 機能改善/変更 { #august-9-2022-feature-updates }
 
 * 高可用性停止したインスタンスもDB Configurationを変更できるように修正
 * バックアップ保管周期を最大30日から最大2年に修正
@@ -450,7 +489,7 @@
 * サーバーダッシュボードでチャートをサーバーごとにグループ化して見ることができる機能を追加
 
 <a id="july-12-2022-feature-updates"></a>
-### 機能改善 { #july-12-2022-feature-updates }
+### 機能改善/変更 { #july-12-2022-feature-updates }
 
 * **レプリケーション中断**状態のリードレプリカのDB Configuration変更ができるように修正
 
@@ -465,7 +504,7 @@
 ## 2022. 06. 14. { #june-14-2022 }
 
 <a id="june-14-2022-feature-updates"></a>
-### 機能改善 { #june-14-2022-feature-updates }
+### 機能改善/変更 { #june-14-2022-feature-updates }
 
 * 複製ディレイにより再起動が失敗する場合はイベントを残すように改善
 * 接続情報ドメインがcloud.toast.comからnhncloudservice.comに変更
@@ -480,7 +519,7 @@
 ## 2022. 05. 10. { #may-10-2022 }
 
 <a id="may-10-2022-feature-updates"></a>
-### 機能改善 { #may-10-2022-feature-updates }
+### 機能改善/変更 { #may-10-2022-feature-updates }
 
 * エラーログの保存位置をデータボリュームに変更
 * エラーログが100MBサイズで最大10個まで循環するように変更
@@ -503,7 +542,7 @@
 ## 2022. 04. 12. { #april-12-2022 }
 
 <a id="april-12-2022-feature-updates"></a>
-### 機能改善 { #april-12-2022-feature-updates }
+### 機能改善/変更 { #april-12-2022-feature-updates }
 
 * 読み取りレプリカまたは一般インスタンスを高可用性インスタンスに変更するとき、使用可能な既存のバックアップがある場合、追加のバックアップなしでレプリケーションを構成するように改善
 
@@ -540,7 +579,7 @@
 * MariaDBで実行中のプロセスリストおよびInnoDB状態を確認することができる機能の追加
 
 <a id="january-11-2022-feature-updates"></a>
-### 機能改善 { #january-11-2022-feature-updates }
+### 機能改善/変更 { #january-11-2022-feature-updates }
 
 * コンソールでDBスキーマを作成する時、入力可能な名前の最小文字数をMariaDBと同じに修正
 

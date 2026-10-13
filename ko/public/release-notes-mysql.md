@@ -1,11 +1,13 @@
-<!-- pre-align:aligned sig=5410a458e2ca -->
+<!-- pre-align:aligned sig=12c64c515a01 -->
 
 <a id="database-rds-for-mysql-release-notes"></a>
 ## Database > RDS for MySQL > 릴리스 노트 { #database-rds-for-mysql-release-notes }
 
-## 2026. 11. 10.
+<a id="november-10-2026"></a>
+## 2026. 11. 10. { #november-10-2026 }
 
-### 신규 기능 추가
+<a id="november-10-2026-added-features"></a>
+### 신규 기능 추가 { #november-10-2026-added-features }
 
 * 트랜잭션 로그 아카이빙 기능 추가
     * 바이너리 로그를 Object Storage에 보관하여 시점 복원에 사용
@@ -21,7 +23,8 @@
 * 기본 모니터링에 Storage 상세 차트 추가
     * 데이터, 바이너리 로그, 남은 용량을 바이트 단위로 표시
 
-### 기능 개선/변경
+<a id="november-10-2026-feature-updates"></a>
+### 기능 개선/변경 { #november-10-2026-feature-updates }
 
 * DB 인스턴스 목록을 DB 인스턴스 그룹 단위로만 표시하도록 개선
 * 다른 리전에 Read Replica가 있는 DB 인스턴스 그룹을 각 리전의 DB 인스턴스 목록에 함께 표시하도록 개선
@@ -30,7 +33,8 @@
 * DB 인스턴스 타입의 CPU 표기를 vCPU로 변경
 * 존재하지 않는 가용성 영역이나 서브넷을 지정하면 요청 단계에서 바로 오류를 반환하도록 개선
 
-### 버그 수정
+<a id="november-10-2026-bug-fixes"></a>
+### 버그 수정 { #november-10-2026-bug-fixes }
 
 * 보관 기간이 지난 바이너리 로그가 삭제되지 않는 버그 수정
 * 대용량 테이블이 있는 경우 증분 백업이 실패하는 버그 수정
@@ -507,7 +511,7 @@
 ## 2022. 09. 14. { #september-14-2022 }
 
 <a id="added-features"></a>
-### 기능 추가 { #added-features }
+### 신규 기능 추가 { #added-features }
 
 * MySQL 5.7.37, MySQL 8.0.28 버전 추가
 
@@ -521,7 +525,7 @@
 ## 2022. 08. 09. { #august-9-2022 }
 
 <a id="august-9-2022-added-features"></a>
-### 기능 추가 { #august-9-2022-added-features }
+### 신규 기능 추가 { #august-9-2022-added-features }
 
 * 이벤트 목록을 엑셀로 내보내는 기능 추가
 
@@ -541,7 +545,7 @@
 ## 2022. 07. 12. { #july-12-2022 }
 
 <a id="july-12-2022-added-features"></a>
-### 기능 추가 { #july-12-2022-added-features }
+### 신규 기능 추가 { #july-12-2022-added-features }
 
 * 서버 대시보드에서 차트를 서버별로 그룹화하여 볼 수 있는 기능 추가
 
@@ -576,7 +580,7 @@
 ## 2022. 05. 10. { #may-10-2022 }
 
 <a id="may-10-2022-added-features"></a>
-### 기능 추가 { #may-10-2022-added-features }
+### 신규 기능 추가 { #may-10-2022-added-features }
 
 * 자동 백업의 경우, 다른 리전으로 백업 파일을 복제하여 리전의 장애에 대비할 수 있는 기능 제공
 
@@ -621,7 +625,7 @@
 ## 2022. 03. 15. { #march-15-2022 }
 
 <a id="march-15-2022-added-features"></a>
-### 기능 추가 { #march-15-2022-added-features }
+### 신규 기능 추가 { #march-15-2022-added-features }
 
 * **DB Configuration**에 변수 사용 기능 도입
 
@@ -638,7 +642,7 @@
 ## 2022. 01. 11. { #january-11-2022 }
 
 <a id="january-11-2022-added-features"></a>
-### 기능 추가 { #january-11-2022-added-features }
+### 신규 기능 추가 { #january-11-2022-added-features }
 
 * MySQL에서 실행 중인 프로세스 리스트 및 InnoDB 상태를 확인할 수 있는 기능 추가
 
@@ -669,7 +673,7 @@
 ## 2021. 11. 09. { #november-9-2021 }
 
 <a id="november-9-2021-added-features"></a>
-### 기능 추가 { #november-9-2021-added-features }
+### 신규 기능 추가 { #november-9-2021-added-features }
 
 * 자동 백업을 하루에 여러 차례 수행할 수 있도록 기능 추가
 * 시점 복원 시, 특정 binlog position으로 복원할 수 있는 기능 추가
@@ -770,7 +774,7 @@
 ## 2021. 05. 11. { #may-11-2021 }
 
 <a id="may-11-2021-added-features"></a>
-### 기능 추가 { #may-11-2021-added-features }
+### 신규 기능 추가 { #may-11-2021-added-features }
 
 * 오브젝트 스토리지를 이용한 백업 내보내기 및 가져오기 기능 제공
 * 강제 재시작 기능 제공
@@ -790,7 +794,7 @@
 ## 2021. 04. 13. { #april-13-2021 }
 
 <a id="april-13-2021-added-features"></a>
-### 기능 추가 { #april-13-2021-added-features }
+### 신규 기능 추가 { #april-13-2021-added-features }
 
 * MySQL 버전 5.6.33, 5.7.19~5.7.26에 대해 감사 로그(audit log) 기능 제공
 
@@ -827,7 +831,7 @@
 ## 2021. 02. 16. { #february-16-2021 }
 
 <a id="february-16-2021-added-features"></a>
-### 기능 추가 { #february-16-2021-added-features }
+### 신규 기능 추가 { #february-16-2021-added-features }
 
 * DB User와 DB 스키마를 콘솔을 통해서 제어할 수 있는 기능 추가
 
@@ -846,7 +850,7 @@
 ## 2021. 01. 19. { #january-19-2021 }
 
 <a id="january-19-2021-added-features"></a>
-### 기능 추가 { #january-19-2021-added-features }
+### 신규 기능 추가 { #january-19-2021-added-features }
 
 * 고가용성(HA) 기능 사용 시, Ping Interval(Master 인스턴스 상태를 확인하는 시간 간격)을 설정할 수 있도록 기능 추가
 * 고가용성(HA) 일시 중지/다시 시작 기능 추가
@@ -858,7 +862,7 @@
 ## 2020. 12. 15. { #december-15-2020 }
 
 <a id="december-15-2020-added-features"></a>
-### 기능 추가 { #december-15-2020-added-features }
+### 신규 기능 추가 { #december-15-2020-added-features }
 
 * --ftwrl-wait-timeout 옵션 값을 사용자가 설정할 수 있도록 기능 추가
 
@@ -885,7 +889,7 @@
 ## 2020. 09. 22. { #september-22-2020 }
 
 <a id="september-22-2020-added-features"></a>
-### 기능 추가 { #september-22-2020-added-features }
+### 신규 기능 추가 { #september-22-2020-added-features }
 
 * 한국(평촌) 리전 오픈
 
@@ -893,7 +897,7 @@
 ## 2020. 09. 15. { #september-15-2020 }
 
 <a id="september-15-2020-added-features"></a>
-### 기능 추가 { #september-15-2020-added-features }
+### 신규 기능 추가 { #september-15-2020-added-features }
 
 * 모니터링 API 지원
 
@@ -909,7 +913,7 @@
 ## 2020. 07. 14. { #july-14-2020 }
 
 <a id="july-14-2020-added-features"></a>
-### 기능 추가 { #july-14-2020-added-features }
+### 신규 기능 추가 { #july-14-2020-added-features }
 
 * MySQL 8.0.18 버전을 추가 지원
 
@@ -917,7 +921,7 @@
 ## 2019. 12. 10. { #december-10-2019 }
 
 <a id="december-10-2019-added-features"></a>
-### 기능 추가 { #december-10-2019-added-features }
+### 신규 기능 추가 { #december-10-2019-added-features }
 
 * DB 파일 암호화 기능 추가 (한국 리전)
 
@@ -962,7 +966,7 @@
 ## 2019. 07. 23. { #july-23-2019 }
 
 <a id="july-23-2019-added-features"></a>
-### 기능 추가 { #july-23-2019-added-features }
+### 신규 기능 추가 { #july-23-2019-added-features }
 
 * 기본 알림 기능 추가
 * 모니터링 항목 추가
@@ -976,7 +980,7 @@
 ## 2019. 06. 27. { #june-27-2019 }
 
 <a id="june-27-2019-added-features"></a>
-### 기능 추가 { #june-27-2019-added-features }
+### 신규 기능 추가 { #june-27-2019-added-features }
 
 * 일본 리전 추가
 
@@ -984,7 +988,7 @@
 ## 2019. 06. 25. { #june-25-2019 }
 
 <a id="june-25-2019-added-features"></a>
-### 기능 추가 { #june-25-2019-added-features }
+### 신규 기능 추가 { #june-25-2019-added-features }
 
 * 고가용성(HA) 기능 추가
 
@@ -1031,7 +1035,7 @@
 ## 2019. 02. 26. { #february-26-2019 }
 
 <a id="february-26-2019-added-features"></a>
-### 기능 추가 { #february-26-2019-added-features }
+### 신규 기능 추가 { #february-26-2019-added-features }
 
 * 인스턴스 데이터 저장소로 SSD 볼륨 사용 기능 추가.
 
@@ -1081,7 +1085,7 @@
 ## 2018. 10. 16. { #october-16-2018 }
 
 <a id="october-16-2018-added-features"></a>
-### 기능 추가 { #october-16-2018-added-features }
+### 신규 기능 추가 { #october-16-2018-added-features }
 
 * 인스턴스 Flavor 변경 기능 추가
 * 인스턴스 Storage 확장 기능 추가
@@ -1090,7 +1094,7 @@
 ## 2018. 08. 28. { #august-28-2018 }
 
 <a id="august-28-2018-added-features"></a>
-### 기능 추가 { #august-28-2018-added-features }
+### 신규 기능 추가 { #august-28-2018-added-features }
 
 * Binary Log 파일 삭제을 통한 인스턴스 용량 확보 기능 추가
 
@@ -1098,7 +1102,7 @@
 ## 2018. 07. 24. { #july-24-2018 }
 
 <a id="july-24-2018-added-features"></a>
-### 기능 추가 { #july-24-2018-added-features }
+### 신규 기능 추가 { #july-24-2018-added-features }
 
 * MySQL 5.7.15 버전을 추가 지원
 
@@ -1112,7 +1116,7 @@
 ## 2018. 05. 29. { #may-29-2018 }
 
 <a id="may-29-2018-added-features"></a>
-### 기능 추가 { #may-29-2018-added-features }
+### 신규 기능 추가 { #may-29-2018-added-features }
 
 * MySQL 5.7 버전 신규 지원
 

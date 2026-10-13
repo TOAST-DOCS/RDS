@@ -1,6 +1,6 @@
 <!-- machine_translated: true -->
 
-<!-- pre-align:aligned sig=1272d3144247 -->
+<!-- pre-align:aligned sig=2f6052327104 -->
 
 <a id="database-rds-for-enginepascalcase-api-guide"></a>
 ## Database > RDS for MariaDB > APIガイド { #database-rds-for-enginepascalcase-api-guide }
@@ -687,7 +687,7 @@ GET /v4.0/db-instance-groups/{dbInstanceGroupId}
 | replicationType | Enum | DBインスタンスグループの複製形態<br/>- `STANDALONE`: 高可用性を使用しない<br/>- `HIGH_AVAILABILITY`: 高可用性を使用 |
 | dbInstances | Array | DBインスタンスグループに属するDBインスタンスリスト |
 | dbInstances.dbInstanceId | UUID | DBインスタンスの識別子 |
-| dbInstances.dbInstanceType | Enum | DBインスタンスのロールタイプ<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`:リードレプリカ |
+| dbInstances.dbInstanceType | Enum | DBインスタンスのロールタイプ<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`: Read Replica |
 | dbInstances.dbInstanceStatus | Enum | DBインスタンスの現在状態<br/>- `BEFORE_CREATE`: 作成前(グレー)<br/>- `AVAILABLE`: 使用可能(緑色)<br/>- `STORAGE_FULL`: 容量不足(赤色)<br/>- `FAIL_TO_CREATE`: 作成失敗(赤色)<br/>- `FAIL_TO_CONNECT`: 接続失敗(赤色)<br/>- `REPLICATION_STOP`: 複製中断(赤色)<br/>- `REPLICATION_DELAY`: 複製遅延(黄色)<br/>- `FAILOVER`: フェイルオーバー完了(赤色)<br/>- `SHUTDOWN`: 停止済み(グレー)<br/>- `DELETED`: 削除済み(グレー) |
 | createdYmdt | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 | updatedYmdt | DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
@@ -808,7 +808,7 @@ GET /v4.0/db-instances
 | dbInstances.description | String | DBインスタンスの追加情報 |
 | dbInstances.dbVersion | Enum | DBエンジンバージョン |
 | dbInstances.dbPort | Number | DBポート |
-| dbInstances.dbInstanceType | Enum | DBインスタンスのロールタイプ<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`:リードレプリカ |
+| dbInstances.dbInstanceType | Enum | DBインスタンスのロールタイプ<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`: Read Replica |
 | dbInstances.dbInstanceStatus | Enum | DBインスタンスの現在状態<br/>- `BEFORE_CREATE`: 作成前(グレー)<br/>- `AVAILABLE`: 使用可能(緑色)<br/>- `STORAGE_FULL`: 容量不足(赤色)<br/>- `FAIL_TO_CREATE`: 作成失敗(赤色)<br/>- `FAIL_TO_CONNECT`: 接続失敗(赤色)<br/>- `REPLICATION_STOP`: 複製中断(赤色)<br/>- `REPLICATION_DELAY`: 複製遅延(黄色)<br/>- `FAILOVER`: フェイルオーバー完了(赤色)<br/>- `SHUTDOWN`: 停止済み(グレー)<br/>- `DELETED`: 削除済み(グレー) |
 | dbInstances.progressStatus | Enum | DBインスタンスの現在進行状態 |
 | dbInstances.createdYmdt | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
@@ -858,6 +858,8 @@ POST /v4.0/db-instances
     "useSlowQueryAnalysis": true,
     "authenticationPlugin": "NATIVE",
     "tlsOption": "NONE",
+    "transactionLogArchivingEnabled": false,
+    "transactionLogArchivingRetentionDays": 7,
     "network": {
         "subnetId": "550e8400-e29b-41d4-a716-446655440000",
         "usePublicAccess": false,
@@ -907,6 +909,8 @@ POST /v4.0/db-instances
 | useSlowQueryAnalysis | Boolean | N | Slow query分析を行うかどうか<br/>- デフォルト値: `true` |
 | authenticationPlugin | Enum | N | 認証プラグイン<br/>- `NATIVE`: mysql_native_password認証<br/>- `ED25519`: ed25519認証(MariaDB専用) |
 | tlsOption | Enum | N | TLSオプション<br/>- デフォルト値: `NONE`<br/>- `NONE`: TLS未使用<br/>- `SSL`: SSL認証<br/>- `X509`: X509証明書認証 |
+| transactionLogArchivingEnabled | Boolean | N | トランザクションログアーカイビングを有効にするかどうか<br/>- `true`: 作成が完了すると、Primaryでアーカイブが有効になります。ステージングバッファボリュームとObject Storageの使用量に課金されます<br/>- デフォルト値: `false` |
+| transactionLogArchivingRetentionDays | Number | N | トランザクションログアーカイビングの保存期間(日)<br/>- 1～35の整数。省略すると7<br/>- `transactionLogArchivingEnabled`が`true`の場合のみ適用<br/>- 最小値: `1`<br/>- 最大値: `35` |
 | network | Object | Y | ネットワーク情報オブジェクト |
 | network.subnetId | UUID | Y | サブネットの識別子 |
 | network.usePublicAccess | Boolean | N | 外部接続可否<br/>- デフォルト値: `false` |
@@ -1163,7 +1167,7 @@ DELETE /v4.0/db-instances/{dbInstanceId}
 
 | 名前 | 形式 | 必須 | 説明 |
 |-----|-----|-----|-----|
-| deleteAutoBackup | Boolean | N | 自動バックアップの削除有無<br/>- デフォルト値: `false` |
+| deleteAutoBackup | Boolean | N | 自動バックアップの削除有無<br/>- `false`のまま残したバックアップは、DBインスタンス削除後、該当バックアップ時点へのみ復元可能(時点復元は非対応)<br/>- デフォルト値: `false` |
 
 <a id="delete-db-instance-response"></a>
 #### レスポンス
@@ -1270,7 +1274,7 @@ GET /v4.0/db-instances/{dbInstanceId}
 | description | String | DBインスタンスの追加情報 |
 | dbVersion | Enum | DBエンジンバージョン |
 | dbPort | Number | DBポート |
-| dbInstanceType | Enum | DBインスタンスのロールタイプ<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`:リードレプリカ |
+| dbInstanceType | Enum | DBインスタンスのロールタイプ<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`: Read Replica |
 | dbInstanceStatus | Enum | DBインスタンスの現在状態<br/>- `BEFORE_CREATE`: 作成前(グレー)<br/>- `AVAILABLE`: 使用可能(緑色)<br/>- `STORAGE_FULL`: 容量不足(赤色)<br/>- `FAIL_TO_CREATE`: 作成失敗(赤色)<br/>- `FAIL_TO_CONNECT`: 接続失敗(赤色)<br/>- `REPLICATION_STOP`: 複製中断(赤色)<br/>- `REPLICATION_DELAY`: 複製遅延(黄色)<br/>- `FAILOVER`: フェイルオーバー完了(赤色)<br/>- `SHUTDOWN`: 停止済み(グレー)<br/>- `DELETED`: 削除済み(グレー) |
 | progressStatus | Enum | DBインスタンスの現在進行状態 |
 | dbFlavorId | UUID | DBインスタンス仕様の識別子 |
@@ -2363,6 +2367,7 @@ POST /v4.0/db-instances/{dbInstanceId}/force-restart
 | `FAILOVER_STARTED`               | フェイルオーバーが開始された場合                   |
 | `FAILOVER_FAILED`                | フェイルオーバーが失敗した場合                   |
 | `FAILOVER_COMPLETED`             | フェイルオーバーが完了した場合                   |
+| `FAILOVER_ABORTED`               | フェイルオーバーを元に戻した場合                  |
 | `DELETED`                        | 高可用性が削除された場合                    |
 
 ---
@@ -3710,7 +3715,7 @@ GET /v4.0/db-instances/{dbInstanceId}/restoration-info
 | 名前 | 形式 | 説明 |
 |-----|-----|-----|
 | oldestRestorableYmdt | DateTime | 復元可能な最も早い時間 |
-| latestRestorableYmdt | DateTime | 復元可能な最も遅い時間 |
+| latestRestorableYmdt | DateTime | 復元可能な最も新しい時間<br/>- トランザクションログアーカイビングを使用するDBインスタンスは、該当DBインスタンスやグループのPrimaryが使用可能(AVAILABLE)状態でない場合、または別のリージョンにある場合はnull |
 | restorableBackups | Array | 復元可能なバックアップリスト |
 | restorableBackups.backup | Object | バックアップ情報オブジェクト |
 | restorableBackups.backup.backupId | UUID | バックアップの識別子 |
@@ -3985,6 +3990,133 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 
 ---
 
+<a id="view-restore-coverage"></a>
+### DBインスタンスの復元可能期間の照会 { #view-restore-coverage }
+
+<a id="view-restore-coverage-required-permissions"></a>
+#### 必要権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:DbInstance.Get | DBインスタンスの復元可能期間の照会 |
+
+<a id="view-restore-coverage-request"></a>
+#### リクエスト
+
+```http
+GET /v4.0/db-instances/{dbInstanceId}/restore-coverage
+```
+
+<a id="view-restore-coverage-request-parameters"></a>
+#### リクエストパラメータ
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | Y | DBインスタンスの識別子 |
+
+<a id="view-restore-coverage-request-body"></a>
+#### リクエスト本文
+
+このAPIはリクエスト本文を必要としません。
+
+<a id="view-restore-coverage-response"></a>
+#### レスポンス
+
+<details>
+  <summary><strong>サンプルコード</strong></summary>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "engine": "MYSQL",
+    "tier": 1,
+    "retentionFloorYmdt": "2023-12-31T15:00:00+09:00",
+    "recoverableThroughYmdt": "2023-12-31T15:00:00+09:00",
+    "recoveryTimeBasis": "recoveryTimeBasis-example",
+    "windows": [
+        {
+            "fromYmdt": "2023-12-31T15:00:00+09:00",
+            "toYmdt": "2023-12-31T15:00:00+09:00",
+            "anchorBackupId": "anchorBackupId-example",
+            "continuity": "SNAPSHOT_ONLY",
+            "confidence": "EXACT",
+            "spansLineage": false
+        }
+    ],
+    "gaps": [
+        {
+            "fromYmdt": "2023-12-31T15:00:00+09:00",
+            "toYmdt": "2023-12-31T15:00:00+09:00",
+            "cause": "CRITICAL_DROP",
+            "detectedAt": "2023-12-31T15:00:00+09:00",
+            "remediable": true,
+            "confidence": "INFORMATIONAL"
+        }
+    ],
+    "failoverBoundaries": [
+        {
+            "predecessorDbInstanceId": "predecessorDbInstanceId-example",
+            "boundaryYmdt": "2023-12-31T15:00:00+09:00",
+            "recoverable": false,
+            "gapFromYmdt": "2023-12-31T15:00:00+09:00",
+            "gapToYmdt": "2023-12-31T15:00:00+09:00",
+            "confidence": "INFORMATIONAL",
+            "unreachableWrites": true,
+            "unreachableFromYmdt": "2023-12-31T15:00:00+09:00",
+            "unreachableToYmdt": "2023-12-31T15:00:00+09:00",
+            "unreachableSegmentCount": null,
+            "noteCode": "UNREACHABLE_WRITES_DETECTED"
+        }
+    ],
+    "coverageRatio": null,
+    "asOfYmdt": "2023-12-31T15:00:00+09:00"
+}
+```
+
+</details>
+
+| 名前 | 形式 | 説明 |
+|-----|-----|-----|
+| engine | String | DBエンジン |
+| tier | Number | 表示した復元可能期間のレベル<br/>- `0`: スナップショットバックアップ時点のみ表示<br/>- `1`: 連続期間まで表示<br/>- トランザクションログアーカイビングの設定に関わらず算出 |
+| retentionFloorYmdt | DateTime | 復元できる最も早い時刻(保管期間の開始) |
+| recoverableThroughYmdt | DateTime | ポリシー上、復元できる最も直近の時刻<br/>- 実際の復元時にログの連続性と対象時刻への到達有無を再検証<br/>- ログのDB時刻の上限を確定できない場合はnull<br/>- 連続期間を保証しない |
+| recoveryTimeBasis | String | `recoverableThroughYmdt`の算出根拠<br/>- `AVAILABLE_POLICY`: 使用可能な状態のDBインスタンスの保管ポリシーで算出<br/>- `UNKNOWN_LOG_TIME`: ログのDB時刻を確定できない。Object Storageにログがない、またはスナップショット復元が不可能であることを意味するものではない |
+| windows | Array | 復元可能期間のリスト(重複する期間は統合、時刻の昇順) |
+| windows.fromYmdt | DateTime | 期間の開始時刻 |
+| windows.toYmdt | DateTime | 期間の終了時刻<br/>- `continuity`が`SNAPSHOT_ONLY`の場合は`fromYmdt`と同じ |
+| windows.anchorBackupId | String | 基準バックアップの識別子 |
+| windows.continuity | String | 期間の連続性<br/>- `SNAPSHOT_ONLY`: スナップショットバックアップ時点のみ復元可能<br/>- `CONTINUOUS`: 期間内の時点で復元可能 |
+| windows.confidence | String | 期間の信頼度<br/>- `EXACT`: 確定した復元ポイント<br/>- `INFORMATIONAL`: 参考用。実際の復元時に再検証 |
+| windows.spansLineage | Boolean | フェイルオーバー境界をまたぐかどうか |
+| gaps | Array | 復元可能期間の間のアーカイブギャップのリスト<br/>- `tier`が`0`の場合は常に空のリスト |
+| gaps.fromYmdt | DateTime | 現在算出していないため、常にnull |
+| gaps.toYmdt | DateTime | 現在算出していないため、常にnull |
+| gaps.cause | String | アーカイブギャップの原因<br/>- `CRITICAL_DROP`: ステージングバッファの閾値超過によりログの書き込みが遅延。バッファが回復すると再開<br/>- `RETENTION_TRUNCATED`: 書き込み前にログが失われ、復旧不可<br/>- `RECOVERY_PENDING`: 以前のPrimaryのステージングバッファボリュームに未書き込みのログが残っており、回収すれば復旧可能 |
+| gaps.detectedAt | DateTime | 検出時刻 |
+| gaps.remediable | Boolean | 今すぐバックアップを実行すると連続性を再確保できるかどうか |
+| gaps.confidence | String | アーカイブギャップ判定の信頼度 |
+| failoverBoundaries | Array | 復元期間内で発生したフェイルオーバー境界のリスト |
+| failoverBoundaries.predecessorDbInstanceId | String | フェイルオーバー前のPrimary DBインスタンスの識別子 |
+| failoverBoundaries.boundaryYmdt | DateTime | フェイルオーバー境界の時刻(秒単位)<br/>- 管理サーバー基準の時刻であるため参考用<br/>- 境界を越える時点復元はサポートしていない |
+| failoverBoundaries.recoverable | Boolean | フェイルオーバー境界を越える時点復元が可能かどうか<br/>- MySQL、MariaDBはサポートしていないため、常に`false` |
+| failoverBoundaries.gapFromYmdt | DateTime | 現在算出していないため、常にnull |
+| failoverBoundaries.gapToYmdt | DateTime | 現在算出していないため、常にnull |
+| failoverBoundaries.confidence | String | 判定の信頼度。現在常に`INFORMATIONAL`(参考用) |
+| failoverBoundaries.unreachableWrites | Boolean | フェイルオーバー後、以前のPrimaryにのみ残り、復元で到達できないログがあるかどうか<br/>- `true`: ある<br/>- `false`: ない<br/>- null: 判定しない |
+| failoverBoundaries.unreachableFromYmdt | DateTime | 現在算出していないため、常にnull |
+| failoverBoundaries.unreachableToYmdt | DateTime | 現在算出していないため、常にnull |
+| failoverBoundaries.unreachableSegmentCount | Number | 到達できないログのセグメント数。MySQL、MariaDBは常にnull |
+| failoverBoundaries.noteCode | String | フェイルオーバー境界の原因コード<br/>- `BOUNDARY_DETECTED`: フェイルオーバー境界のみ検出<br/>- `UNREACHABLE_WRITES_DETECTED`: 以前のPrimaryに到達できないログがある |
+| coverageRatio | Number | 現在算出していないため、常にnull |
+| asOfYmdt | DateTime | レスポンスの算出時刻 |
+
+---
+
 <a id="start-db-instance"></a>
 ### DBインスタンスを起動する { #start-db-instance }
 
@@ -4219,6 +4351,75 @@ PUT /v4.0/db-instances/{dbInstanceId}/storage-info
 | storageAutoscale.cooldownTime | Number | Y | 自動拡張クールダウン時間(分)<br/>- 最小値: `10`<br/>- 最大値: `1440` |
 
 <a id="modify-storage-information-response"></a>
+#### レスポンス
+
+<details>
+  <summary><strong>サンプルコード</strong></summary>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+}
+```
+
+</details>
+
+| 名前 | 形式 | 説明 |
+|-----|-----|-----|
+| jobId | UUID | リクエストした作業の識別子 |
+
+---
+
+<a id="modify-transaction-log-archiving"></a>
+### トランザクションログアーカイビングの有効化/無効化 { #modify-transaction-log-archiving }
+
+<a id="modify-transaction-log-archiving-required-permissions"></a>
+#### 必要権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:DbInstance.ModifyTransactionLogArchiving | トランザクションログアーカイビングの有効化/無効化 |
+
+<a id="modify-transaction-log-archiving-request"></a>
+#### リクエスト
+
+```http
+PUT /v4.0/db-instances/{dbInstanceId}/transaction-log-archiving
+```
+
+<a id="modify-transaction-log-archiving-request-parameters"></a>
+#### リクエストパラメータ
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | Y | DBインスタンスの識別子 |
+
+<a id="modify-transaction-log-archiving-request-body"></a>
+#### リクエスト本文
+
+<details>
+  <summary><strong>サンプルコード</strong></summary>
+
+```json
+{
+    "enabled": false,
+    "retentionDays": 7
+}
+```
+
+</details>
+
+| 名前 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|
+| enabled | Boolean | Y | トランザクションログアーカイビングを有効にするかどうか<br/>- `true`: 有効<br/>- `false`: 無効<br/>- 現在の設定と同じ場合、作業を作成しない(`jobId`はnull) |
+| retentionDays | Number | N | トランザクションログアーカイビングの保存期間(日)<br/>- 1～35の整数。省略した場合は既存の値を維持<br/>- 有効・無効の状態が現在と同じ場合、保存期間のみ即時変更<br/>- 最小値: `1`<br/>- 最大値: `35` |
+
+<a id="modify-transaction-log-archiving-response"></a>
 #### レスポンス
 
 <details>
