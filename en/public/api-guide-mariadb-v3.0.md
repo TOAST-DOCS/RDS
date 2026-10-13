@@ -670,7 +670,7 @@ This API does not require a request body.
 | replicationType | Enum | DB instance group replication type<br/>- `STANDALONE`: High availability is not used<br/>- `HIGH_AVAILABILITY`: High availability is used |
 | dbInstances | Array | DB instances belong to DB instance group |
 | dbInstances.dbInstanceId | UUID | DB instance identifier |
-| dbInstances.dbInstanceType | Enum | Role type of DB instance<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`: Read replica |
+| dbInstances.dbInstanceType | Enum | Role type of DB instance<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`: Read Replica |
 | dbInstances.dbInstanceStatus | Enum | DB instance current status<br/>- `BEFORE_CREATE`: Before creation (gray)<br/>- `AVAILABLE`: Available (green)<br/>- `STORAGE_FULL`: Insufficient capacity (red)<br/>- `FAIL_TO_CREATE`: Failed to create (red)<br/>- `FAIL_TO_CONNECT`: Failed to connect (red)<br/>- `REPLICATION_STOP`: Replication stopped (red)<br/>- `REPLICATION_DELAY`: Replication delayed (yellow)<br/>- `FAILOVER`: Failover completed (red)<br/>- `SHUTDOWN`: Stopped (gray)<br/>- `DELETED`: Deleted (gray) |
 | createdYmdt | DateTime | Created date and time (YYYY-MM-DDThh:mm:ss.SSSTZD) |
 | updatedYmdt | DateTime | Modified date and time (YYYY-MM-DDThh:mm:ss.SSSTZD) |
@@ -784,7 +784,7 @@ This API does not require a request body.
 | dbInstances.description | String | Additional information of DB instance |
 | dbInstances.dbVersion | Enum | DB engine version |
 | dbInstances.dbPort | Number | DB port |
-| dbInstances.dbInstanceType | Enum | Role type of DB instance<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`: Read replica |
+| dbInstances.dbInstanceType | Enum | Role type of DB instance<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`: Read Replica |
 | dbInstances.dbInstanceStatus | Enum | DB instance current status<br/>- `BEFORE_CREATE`: Before creation (gray)<br/>- `AVAILABLE`: Available (green)<br/>- `STORAGE_FULL`: Insufficient capacity (red)<br/>- `FAIL_TO_CREATE`: Failed to create (red)<br/>- `FAIL_TO_CONNECT`: Failed to connect (red)<br/>- `REPLICATION_STOP`: Replication stopped (red)<br/>- `REPLICATION_DELAY`: Replication delayed (yellow)<br/>- `FAILOVER`: Failover completed (red)<br/>- `SHUTDOWN`: Stopped (gray)<br/>- `DELETED`: Deleted (gray) |
 | dbInstances.progressStatus | Enum | DB instance current progress status |
 | dbInstances.createdYmdt | DateTime | Created date and time (YYYY-MM-DDThh:mm:ss.SSSTZD) |
@@ -1146,7 +1146,7 @@ This API does not require a request body.
 | description | String | Additional information of DB instance |
 | dbVersion | Enum | DB engine version |
 | dbPort | Number | DB port |
-| dbInstanceType | Enum | Role type of DB instance<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`: Read replica |
+| dbInstanceType | Enum | Role type of DB instance<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`: Read Replica |
 | dbInstanceStatus | Enum | DB instance current status<br/>- `BEFORE_CREATE`: Before creation (gray)<br/>- `AVAILABLE`: Available (green)<br/>- `STORAGE_FULL`: Insufficient capacity (red)<br/>- `FAIL_TO_CREATE`: Failed to create (red)<br/>- `FAIL_TO_CONNECT`: Failed to connect (red)<br/>- `REPLICATION_STOP`: Replication stopped (red)<br/>- `REPLICATION_DELAY`: Replication delayed (yellow)<br/>- `FAILOVER`: Failover completed (red)<br/>- `SHUTDOWN`: Stopped (gray)<br/>- `DELETED`: Deleted (gray) |
 | progressStatus | Enum | DB instance current progress status |
 | dbFlavorId | UUID | Identifier of DB instance specifications |
