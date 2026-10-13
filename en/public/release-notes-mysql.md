@@ -4,9 +4,11 @@
 
 <a id="database-rds-for-mysql-release-notes"></a>
 ## Database > RDS for MySQL > Release Notes { #database-rds-for-mysql-release-notes }
-## November 10, 2026
+<a id="november-10-2026"></a>
+## November 10, 2026 { #november-10-2026 }
 
-### Added Features
+<a id="november-10-2026-added-features"></a>
+### Added Features { #november-10-2026-added-features }
 
 * Added transaction log archiving
     * Stores binary logs in Object Storage for use in point-in-time restore
@@ -22,7 +24,8 @@
 * Added Storage detail charts to basic monitoring
     * Displays data, binary log, and remaining capacity in bytes
 
-### Feature Updates
+<a id="november-10-2026-feature-updates"></a>
+### Feature Updates { #november-10-2026-feature-updates }
 
 * Improved the DB instance list to display entries only by DB instance group units.
 * Improved the display so that DB instance groups with Read Replicas in other regions are also shown in the DB instance list of each region.
@@ -31,7 +34,8 @@
 * Changed the CPU notation for DB instance types to vCPU.
 * Improved error handling so that specifying a non-existent availability zone or subnet returns an error immediately at the request stage.
 
-### Bug Fixes
+<a id="november-10-2026-bug-fixes"></a>
+### Bug Fixes { #november-10-2026-bug-fixes }
 
 * Fixed a bug where binary logs past the retention period are not deleted
 * Fixed a bug where incremental backup fails when there is a large table
