@@ -96,7 +96,7 @@
     * Security patches for security vulnerabilities (CVEs) discovered in the OS can be performed as maintenance tasks.
     * For more information, refer to the [Security patch](/Database/RDS%20for%20MySQL/en/db-instance/#security-patch) documentation.
 * Added `SELECT` option in addition to the existing `INSERT` option for high availability Ping check method
-* Added and updated API v4.0
+* Added and modified API v4.0
     * Added the View High Availability Information API.
 
 <a id="march-10-2026"></a>
