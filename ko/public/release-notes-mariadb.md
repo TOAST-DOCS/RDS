@@ -21,7 +21,7 @@
 * 기본 모니터링에 Storage 상세 차트 추가
     * 데이터, 바이너리 로그, 남은 용량을 바이트 단위로 표시
 
-### 기능 개선
+### 기능 개선/변경
 
 * DB 인스턴스 목록을 DB 인스턴스 그룹 단위로만 표시하도록 개선
 * 다른 리전에 Read Replica가 있는 DB 인스턴스 그룹을 각 리전의 DB 인스턴스 목록에 함께 표시하도록 개선
@@ -48,7 +48,7 @@
 * 고가용성 인스턴스 중지 기능 추가
 
 <a id="september-15-2026-feature-updates"></a>
-### 기능 개선 { #september-15-2026-feature-updates }
+### 기능 개선/변경 { #september-15-2026-feature-updates }
 
 * DB 인스턴스 타입 용어 변경
     * 마스터 → Primary
@@ -383,7 +383,7 @@
 ## 2023. 02. 14. { #february-14-2023 }
 
 <a id="february-14-2023-feature-updates"></a>
-### 기능 개선 { #february-14-2023-feature-updates }
+### 기능 개선/변경 { #february-14-2023-feature-updates }
 
 * 서버 대시보드의 MariaDB 지표 중 Connection 차트에 Max Connection 값을 추가로 표기하도록 개선
 
@@ -397,7 +397,7 @@
 ## 2023. 01. 10. { #january-10-2023 }
 
 <a id="january-10-2023-feature-updates"></a>
-### 기능 개선 { #january-10-2023-feature-updates }
+### 기능 개선/변경 { #january-10-2023-feature-updates }
 
 * 알림 그룹 이름의 중복을 허용하지 않도록 수정
 
@@ -412,7 +412,7 @@
 ## 2022. 12. 13. { #december-13-2022 }
 
 <a id="december-13-2022-feature-updates"></a>
-### 기능 개선 { #december-13-2022-feature-updates }
+### 기능 개선/변경 { #december-13-2022-feature-updates }
 
 * DML 부하로 인한 백업 실패 시 해당 내용을 이벤트 메시지에 남기도록 개선
 
@@ -435,7 +435,7 @@
 ## 2022. 10. 11. { #october-11-2022 }
 
 <a id="october-11-2022-feature-updates"></a>
-### 기능 개선 { #october-11-2022-feature-updates }
+### 기능 개선/변경 { #october-11-2022-feature-updates }
 
 * 인스턴스 상세 화면에서 노출되는 도메인 변경 툴팁의 문구 수정
 
@@ -463,7 +463,7 @@
 * 이벤트 목록을 엑셀로 내보내는 기능 추가
 
 <a id="august-9-2022-feature-updates"></a>
-### 기능 개선 { #august-9-2022-feature-updates }
+### 기능 개선/변경 { #august-9-2022-feature-updates }
 
 * 고가용성 중지된 인스턴스도 DB Configuration을 변경할 수 있도록 수정
 * 백업 보관 주기를 최대 30일에서 최대 2년으로 수정
@@ -483,7 +483,7 @@
 * 서버 대시보드에서 차트를 서버별로 그룹화하여 볼 수 있는 기능 추가
 
 <a id="july-12-2022-feature-updates"></a>
-### 기능 개선 { #july-12-2022-feature-updates }
+### 기능 개선/변경 { #july-12-2022-feature-updates }
 
 * **복제 중단** 상태의 읽기 복제본의 DB Configuration 변경이 가능하도록 수정
 
@@ -498,7 +498,7 @@
 ## 2022. 06. 14. { #june-14-2022 }
 
 <a id="june-14-2022-feature-updates"></a>
-### 기능 개선 { #june-14-2022-feature-updates }
+### 기능 개선/변경 { #june-14-2022-feature-updates }
 
 * 복제 딜레이로 인하여 재시작이 실패할 경우 이벤트를 남기도록 개선
 * 접속 정보 도메인이 cloud.toast.com에서 nhncloudservice.com으로 변경
@@ -513,7 +513,7 @@
 ## 2022. 05. 10. { #may-10-2022 }
 
 <a id="may-10-2022-feature-updates"></a>
-### 기능 개선 { #may-10-2022-feature-updates }
+### 기능 개선/변경 { #may-10-2022-feature-updates }
 
 * 오류 로그 저장 위치를 데이터 볼륨으로 변경
 * 오류 로그가 100MB 크기로 최대 10개까지 순환되도록 변경
@@ -536,7 +536,7 @@
 ## 2022. 04. 12. { #april-12-2022 }
 
 <a id="april-12-2022-feature-updates"></a>
-### 기능 개선 { #april-12-2022-feature-updates }
+### 기능 개선/변경 { #april-12-2022-feature-updates }
 
 * 읽기 복제본 혹은 일반 인스턴스를 고가용성 인스턴스로 변경 시 사용 가능한 기존 백업이 있을 경우 추가적인 백업 없이 복제 구성하도록 개선
 
@@ -573,7 +573,7 @@
 * MariaDB에서 실행 중인 프로세스 리스트 및 InnoDB 상태를 확인할 수 있는 기능 추가
 
 <a id="january-11-2022-feature-updates"></a>
-### 기능 개선 { #january-11-2022-feature-updates }
+### 기능 개선/변경 { #january-11-2022-feature-updates }
 
 * 콘솔에서 DB 스키마 생성 시 입력 가능한 이름의 최소 길이를 MariaDB와 동일하게 한 글자로 수정
 
