@@ -16,7 +16,7 @@ high-availability configuration or back up only increments of data since the pre
     * If you do not have a Read Replica in a situation where you need a backup taken from a DB instance other than the Standby for rebuilding the Standby
 
 {{#if (eq engine.lowerCase "mysql")}}
-RDS for MySQL uses Percona XtraBackup to back up databases. You have to use the same version of Percona XtraBackup that RDS for MySQL uses to restore to backup of external MySQL or to restore to backup of RDS for MySQL Percona XtraBackup version in line with DB engine version is as follows.
+RDS for MySQL uses Percona XtraBackup to back up databases. You have to use the same version of Percona XtraBackup that RDS for MySQL uses to restore to backup of external MySQL or to restore to backup of RDS for MySQL. Percona XtraBackup version in line with DB engine version is as follows.
 
 | MySQL version | XtraBackup version |
 |---------------|--------------------|
@@ -405,7 +405,7 @@ rm -rf {MySQL data storage path}/*
 **XtraBackup 2.4.xx Example**
 
 ``` 
-cat {backup file storage path} | xbstream -x -C {MySQL data storage  path} 
+cat {backup file storage path} | xbstream -x -C {MySQL data storage path} 
 innobackupex --decompress {MySQL data storage path} 
 innobackupex --defaults-file={my.cnf path} --apply-log {MySQL data storage path} 
 ```
@@ -413,16 +413,16 @@ innobackupex --defaults-file={my.cnf path} --apply-log {MySQL data storage path}
 **XtraBackup 8.0.xx Example**
 
 ``` 
-cat { backup file storage path } | xbstream -x -C {MySQL data storage  path } 
-xtrabackup --decompress --target-dir={MySQL data storage  path } 
-xtrabackup --prepare --target-dir={MySQL data storage  path } 
-xtrabackup --defaults-file={my.cnf path} --copy-back --target-dir={MySQL data storage  path } 
+cat {backup file storage path} | xbstream -x -C {MySQL data storage path} 
+xtrabackup --decompress --target-dir={MySQL data storage path} 
+xtrabackup --prepare --target-dir={MySQL data storage path} 
+xtrabackup --defaults-file={my.cnf path} --copy-back --target-dir={MySQL data storage path} 
 ```
 
 (6) Delete unnecessary files after unzipping files.
 
 ``` 
-find {MySQL data storage  path } -name "*.qp" -print0 | xargs -0 rm 
+find {MySQL data storage path} -name "*.qp" -print0 | xargs -0 rm 
 ```
 {{/if}}
 {{#if (eq engine.lowerCase "mariadb")}}
@@ -433,15 +433,15 @@ rm -rf {MariaDB data storage path}/*
 (5) Unzip and restore the downloaded backup files.
 
 ```
-cat {backup file storage path} | xbstream -x -C {MariaDB data storage  path} 
-mariabackup --decompress {MariaDB data storage  path}
+cat {backup file storage path} | xbstream -x -C {MariaDB data storage path} 
+mariabackup --decompress {MariaDB data storage path}
 mariabackup --defaults-file={my.cnf path} --apply-log {MariaDB data storage path}
 ```
 
 (6) Delete unnecessary files after unzipping files.
 
 ``` 
-find {MariaDB data storage  path } -name "*.qp" -print0 | xargs -0 rm 
+find {MariaDB data storage path} -name "*.qp" -print0 | xargs -0 rm 
 ```
 {{/if}}
 

@@ -400,7 +400,7 @@ rm -rf {MySQLデータ保存パス}/*
 **XtraBackup 2.4.xxの例**
 
 ```
-cat {バックアップファイル保存パス} | xbstream -x -C {MySQLデータ保存パス}
+cat {バックアップファイルの保存パス} | xbstream -x -C {MySQLデータ保存パス}
 innobackupex --decompress {MySQLデータ保存パス}
 innobackupex --defaults-file={my.cnfパス} --apply-log {MySQLデータ保存パス}
 ```

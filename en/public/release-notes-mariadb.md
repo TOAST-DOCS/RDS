@@ -16,31 +16,31 @@
     * Retention period can be set from 1 to 35 days
     * Charges apply for staging buffer volume and Object Storage usage
 * Added and modified API v4.0
-    * Added APIs to enable/disable transaction log archiving
+    * Added APIs for enabling/disabling transaction log archiving
     * Added an API to query the restore coverage of a DB instance
-    * Added transaction log archiving configuration options to the Create DB Instance API
-* Added a Failover progress display
-    * Displays the Failover progress step and Applying Replication Log progress rate
+    * Added transaction log archiving configuration fields to the DB instance creation API
+* Added a failover progress display
+    * Displays the failover progress step and the Applying Replication Log progress rate
 * Added the Revert Failover feature
-* Added Storage detail charts to the default monitoring
+* Added Storage detail charts to basic monitoring
     * Displays data, binary log, and remaining capacity in bytes
 
 <a id="november-10-2026-feature-updates"></a>
 ### Feature Updates { #november-10-2026-feature-updates }
 
-* Improved the DB instance list to display entries only by DB instance group.
-* Improved the display so that DB instance groups with a read replica in another region are shown together in the DB instance list for each region.
-* Added a warning indicator to the region information of a DB instance in another region when communication with the source region is unavailable.
-* Updated the Scheduled Maintenance details to show the next maintenance window and failover options.
-* Changed the CPU display for DB instance types to vCPU.
-* Improved the system to return an error immediately at the request step when a non-existent availability zone or subnet is specified.
+* Improved the DB instance list to display entries only by DB instance group units.
+* Improved the display so that DB instance groups with Read Replicas in other regions are also shown in the DB instance list of each region.
+* Added a warning indicator to the region information of DB instances in other regions when communication with the source region is not possible.
+* Added the next maintenance window and failover options to the Scheduled Maintenance details.
+* Changed the CPU notation for DB instance types to vCPU.
+* Improved error handling so that specifying a non-existent availability zone or subnet returns an error immediately at the request stage.
 
 <a id="november-10-2026-bug-fixes"></a>
 ### Bug Fixes { #november-10-2026-bug-fixes }
 
-* Fixed a bug where binary logs past the retention period were not deleted
-* Fixed a bug where incremental backup failed when a large table existed
-* Fixed a bug where a normal DB instance changed to a connection failed state when monitoring metrics were not collected
+* Fixed a bug where binary logs past the retention period are not deleted
+* Fixed a bug where incremental backup fails when there is a large table
+* Fixed a bug where a normal DB instance changes to a connection failed state when monitoring metrics are not collected
 * Fixed a bug where BINLOG MONITOR and SLAVE MONITOR permissions were not granted to DB users in MariaDB version 10.6 or later
 * Fixed a bug where high availability failover and read replica creation failed when the simple_password_check parameter was used
 
@@ -97,7 +97,7 @@
 * Added `SELECT` option in addition to the existing `INSERT` option for high availability Ping check method
 * Added MariaDB 10.6.25, 10.11.16, 11.4.10, 11.8.6 version
 * Restricted new creation due to MariaDB 10.3 and 10.6 EOL (End of Life)
-* Added and updated API v4.0
+* Added and modified API v4.0
     * Added the View High Availability Information API.
 
 <a id="march-10-2026"></a>
