@@ -4,9 +4,11 @@
 
 <a id="database-rds-for-mariadb-release-notes"></a>
 ## Database > RDS for MariaDB > Release Notes { #database-rds-for-mariadb-release-notes }
-## November 10, 2026
+<a id="november-10-2026"></a>
+## November 10, 2026 { #november-10-2026 }
 
-### Added Features
+<a id="november-10-2026-added-features"></a>
+### Added Features { #november-10-2026-added-features }
 
 * Added transaction log archiving
     * Stores binary logs in Object Storage for use in point-in-time restore
@@ -22,7 +24,8 @@
 * Added Storage detail charts to the default monitoring
     * Displays data, binary log, and remaining capacity in bytes
 
-### Feature Updates
+<a id="november-10-2026-feature-updates"></a>
+### Feature Updates { #november-10-2026-feature-updates }
 
 * Improved the DB instance list to display entries only by DB instance group.
 * Improved the display so that DB instance groups with a read replica in another region are shown together in the DB instance list for each region.
@@ -31,7 +34,8 @@
 * Changed the CPU display for DB instance types to vCPU.
 * Improved the system to return an error immediately at the request step when a non-existent availability zone or subnet is specified.
 
-### Bug Fixes
+<a id="november-10-2026-bug-fixes"></a>
+### Bug Fixes { #november-10-2026-bug-fixes }
 
 * Fixed a bug where binary logs past the retention period were not deleted
 * Fixed a bug where incremental backup failed when a large table existed
