@@ -4,6 +4,40 @@
 
 <a id="database-rds-for-mariadb-release-notes"></a>
 ## Database > RDS for MariaDB > Release Notes { #database-rds-for-mariadb-release-notes }
+## November 10, 2026
+
+### Added Features
+
+* Added transaction log archiving
+    * Stores binary logs in Object Storage for use in point-in-time restore
+    * Retention period can be set from 1 to 35 days
+    * Charges apply for staging buffer volume and Object Storage usage
+* Added and modified API v4.0
+    * Added APIs to enable/disable transaction log archiving
+    * Added an API to query the restorable range of a DB instance
+    * Added transaction log archiving configuration options to the Create DB Instance API
+* Added a Failover progress display
+    * Displays the Failover progress step and Applying Replication Log progress rate
+* Added the Revert Failover feature
+* Added Storage detail charts to the default monitoring
+    * Displays data, binary log, and remaining capacity in bytes
+
+### Feature Updates
+
+* Improved the DB instance list to display entries only by DB instance group.
+* Improved the display so that DB instance groups with a read replica in another region are shown together in the DB instance list for each region.
+* Added a warning indicator to the region information of a DB instance in another region when communication with the source region is unavailable.
+* Updated the Scheduled Maintenance details to show the next maintenance window and failover options.
+* Changed the CPU display for DB instance types to vCPU.
+* Improved the system to return an error immediately at the request step when a non-existent availability zone or subnet is specified.
+
+### Bug Fixes
+
+* Fixed a bug where binary logs past the retention period were not deleted
+* Fixed a bug where incremental backup failed when a large table existed
+* Fixed a bug where a normal DB instance changed to a connection failed state when monitoring metrics were not collected
+* Fixed a bug where BINLOG MONITOR and SLAVE MONITOR permissions were not granted to DB users in MariaDB version 10.6 or later
+* Fixed a bug where high availability failover and read replica creation failed when the simple_password_check parameter was used
 
 <a id="september-15-2026"></a>
 ## September 15, 2026 { #september-15-2026 }
