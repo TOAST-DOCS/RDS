@@ -4092,17 +4092,17 @@ GET /v4.0/db-instances/{dbInstanceId}/restore-coverage
 | 名前 | 形式 | 説明 |
 |-----|-----|-----|
 | engine | String | DBエンジン |
-| tier | Number | 表示した復元可能な期間のステップ<br/>- `0`: スナップショットバックアップの時点のみ表示<br/>- `1`: 連続する期間まで表示<br/>- トランザクションログアーカイブ設定に関係なく算出 |
+| tier | Number | 表示した復元可能な期間のステップ<br/>- `0`: スナップショットバックアップの時点のみ表示<br/>- `1`: 連続する期間まで表示<br/>- トランザクションログアーカイビング設定に関係なく算出 |
 | retentionFloorYmdt | DateTime | 復元できる最も早い時刻(保存期間の開始) |
 | recoverableThroughYmdt | DateTime | ポリシー上、復元できる最も新しい時刻<br/>- 実際の復元時に、ログの連続性と対象時刻への到達可否を再検証<br/>- ログのDB時刻の上限を確定できない場合はnull<br/>- 連続した期間は保証しない |
 | recoveryTimeBasis | String | `recoverableThroughYmdt`の算出根拠<br/>- `AVAILABLE_POLICY`: 使用可能な状態のDBインスタンスの保存ポリシーで算出<br/>- `UNKNOWN_LOG_TIME`: ログのDB時刻を確定できない。Object Storageにログがないか、スナップショット復元が不可能という意味ではない |
 | windows | Array | 復元可能な期間のリスト(重複する期間は結合、時刻の昇順) |
 | windows.fromYmdt | DateTime | 期間の開始時刻 |
 | windows.toYmdt | DateTime | 期間の終了時刻<br/>- `continuity`が`SNAPSHOT_ONLY`の場合は`fromYmdt`と同じ |
-| windows.anchorBackupId | String | ベースラインバックアップの識別子 |
+| windows.anchorBackupId | String | 基準バックアップの識別子 |
 | windows.continuity | String | 期間の連続性<br/>- `SNAPSHOT_ONLY`: スナップショットバックアップの時点のみ復元可能<br/>- `CONTINUOUS`: 期間内の時点に復元可能 |
 | windows.confidence | String | 期間の信頼度<br/>- `EXACT`: 確定した復元ポイント<br/>- `INFORMATIONAL`: 参考用。実際の復元時に再検証 |
-| windows.spansLineage | Boolean | フェイルオーバーの境界にまたがるかどうか |
+| windows.spansLineage | Boolean | フェイルオーバー境界にまたがるかどうか |
 | gaps | Array | 復元可能な期間の間のアーカイブギャップのリスト<br/>- `tier`が`0`の場合は常に空のリスト |
 | gaps.fromYmdt | DateTime | 現在は算出しないため、常にnull |
 | gaps.toYmdt | DateTime | 現在は算出しないため、常にnull |
@@ -4110,10 +4110,10 @@ GET /v4.0/db-instances/{dbInstanceId}/restore-coverage
 | gaps.detectedAt | DateTime | 検出時刻 |
 | gaps.remediable | Boolean | 今すぐバックアップを実行すれば連続性を再確保できるかどうか |
 | gaps.confidence | String | アーカイブギャップ判定の信頼度 |
-| failoverBoundaries | Array | 復元期間内で発生したフェイルオーバーの境界のリスト |
+| failoverBoundaries | Array | 復元期間内で発生したフェイルオーバー境界のリスト |
 | failoverBoundaries.predecessorDbInstanceId | String | フェイルオーバー前のPrimary DBインスタンスの識別子 |
-| failoverBoundaries.boundaryYmdt | DateTime | フェイルオーバーの境界時刻(秒単位)<br/>- 管理サーバー基準の時刻のため参考用<br/>- 境界を越えた時点復元はサポートしない |
-| failoverBoundaries.recoverable | Boolean | フェイルオーバーの境界を越えた時点復元の可否<br/>- MySQL、MariaDBはサポートしないため、常に`false` |
+| failoverBoundaries.boundaryYmdt | DateTime | フェイルオーバー境界時刻(秒単位)<br/>- 管理サーバー基準の時刻のため参考用<br/>- 境界を越えた時点復元はサポートしない |
+| failoverBoundaries.recoverable | Boolean | フェイルオーバー境界を越えた時点復元の可否<br/>- MySQL、MariaDBはサポートしないため、常に`false` |
 | failoverBoundaries.gapFromYmdt | DateTime | 現在は算出しないため、常にnull |
 | failoverBoundaries.gapToYmdt | DateTime | 現在は算出しないため、常にnull |
 | failoverBoundaries.confidence | String | 判定の信頼度。現在は常に`INFORMATIONAL`(参考用) |
@@ -4121,7 +4121,7 @@ GET /v4.0/db-instances/{dbInstanceId}/restore-coverage
 | failoverBoundaries.unreachableFromYmdt | DateTime | 現在は算出しないため、常にnull |
 | failoverBoundaries.unreachableToYmdt | DateTime | 現在は算出しないため、常にnull |
 | failoverBoundaries.unreachableSegmentCount | Number | 到達できないログのセグメント数。MySQL、MariaDBは常にnull |
-| failoverBoundaries.noteCode | String | フェイルオーバーの境界の原因コード<br/>- `BOUNDARY_DETECTED`: フェイルオーバーの境界のみ検出<br/>- `UNREACHABLE_WRITES_DETECTED`: 以前のPrimaryに到達できないログがある |
+| failoverBoundaries.noteCode | String | フェイルオーバー境界の原因コード<br/>- `BOUNDARY_DETECTED`: フェイルオーバー境界のみ検出<br/>- `UNREACHABLE_WRITES_DETECTED`: 以前のPrimaryに到達できないログがある |
 | coverageRatio | Number | 現在は算出しないため、常にnull |
 | asOfYmdt | DateTime | レスポンス算出時刻 |
 
@@ -4393,7 +4393,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/storage-info
 
 | 権限名 | 説明 |
 |-----|-----|
-| RDSforMySQL:DbInstance.ModifyTransactionLogArchiving | トランザクションログアーカイブの有効化/無効化 |
+| RDSforMySQL:DbInstance.ModifyTransactionLogArchiving | トランザクションログアーカイビングの有効化/無効化 |
 
 <a id="modify-transaction-log-archiving-request"></a>
 #### リクエスト
@@ -4426,8 +4426,8 @@ PUT /v4.0/db-instances/{dbInstanceId}/transaction-log-archiving
 
 | 名前 | 形式 | 必須 | 説明 |
 |-----|-----|-----|-----|
-| enabled | Boolean | Y | トランザクションログアーカイブの有効化かどうか<br/>- `true`: 有効化<br/>- `false`: 無効化<br/>- 現在の設定と同じ場合、作業を作成しません(`jobId`はnull) |
-| retentionDays | Number | N | トランザクションログアーカイブの保存期間(日)<br/>- 1～35の整数。省略した場合、既存の値を維持<br/>- 有効化の有無が現在と同じ場合、保存期間のみ即時変更<br/>- 最小値: `1`<br/>- 最大値: `35` |
+| enabled | Boolean | Y | トランザクションログアーカイビングの有効化かどうか<br/>- `true`: 有効化<br/>- `false`: 無効化<br/>- 現在の設定と同じ場合、作業を作成しません(`jobId`はnull) |
+| retentionDays | Number | N | トランザクションログアーカイビングの保存期間(日)<br/>- 1～35の整数。省略した場合、既存の値を維持<br/>- 有効化の有無が現在と同じ場合、保存期間のみ即時変更<br/>- 最小値: `1`<br/>- 最大値: `35` |
 
 <a id="modify-transaction-log-archiving-response"></a>
 #### レスポンス

@@ -58,6 +58,7 @@ DBインスタンスの各種性能指標をチャート形式で見ることが
 | スワップ使用量                    | swap used (bytes)<br> swap total (bytes)                                                                                             |                                               |
 | Storage使用量                 | storage used (%)                                                                                                                     |                                               |
 | Storageの空き容量               | storage free (%)                                                                                                                     |                                               |
+| Storage詳細                | Data (bytes)<br/>Binary Log (bytes)<br/>Free (bytes)                                                                                 | 2026年11月以降に収集された指標から表示        |
 | Storage IO                 | disk read (bytes)<br> disk write (bytes)                                                                                             |                                               |
 | ネットワークデータ送受信               | nic incoming (bytes)<br> nic outgoing (bytes)                                                                                        | {{engine.pascalCase}}で使用する基本的なネットワーク転送が発生します。 |
 | CPU平均負荷                    | 1m<br/>5m<br/>15m                                                                                                                    |                                               |

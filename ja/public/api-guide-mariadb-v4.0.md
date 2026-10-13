@@ -909,8 +909,8 @@ POST /v4.0/db-instances
 | useSlowQueryAnalysis | Boolean | N | Slow query分析を行うかどうか<br/>- デフォルト値: `true` |
 | authenticationPlugin | Enum | N | 認証プラグイン<br/>- `NATIVE`: mysql_native_password認証<br/>- `ED25519`: ed25519認証(MariaDB専用) |
 | tlsOption | Enum | N | TLSオプション<br/>- デフォルト値: `NONE`<br/>- `NONE`: TLS未使用<br/>- `SSL`: SSL認証<br/>- `X509`: X509証明書認証 |
-| transactionLogArchivingEnabled | Boolean | N | トランザクションログアーカイブを有効にするかどうか<br/>- `true`: 作成が完了すると、Primaryでアーカイブが有効になります。ステージングバッファボリュームとObject Storageの使用量に課金されます<br/>- デフォルト値: `false` |
-| transactionLogArchivingRetentionDays | Number | N | トランザクションログアーカイブの保存期間(日)<br/>- 1～35の整数。省略すると7<br/>- `transactionLogArchivingEnabled`が`true`の場合のみ適用<br/>- 最小値: `1`<br/>- 最大値: `35` |
+| transactionLogArchivingEnabled | Boolean | N | トランザクションログアーカイビングを有効にするかどうか<br/>- `true`: 作成が完了すると、Primaryでアーカイブが有効になります。ステージングバッファボリュームとObject Storageの使用量に課金されます<br/>- デフォルト値: `false` |
+| transactionLogArchivingRetentionDays | Number | N | トランザクションログアーカイビングの保存期間(日)<br/>- 1～35の整数。省略すると7<br/>- `transactionLogArchivingEnabled`が`true`の場合のみ適用<br/>- 最小値: `1`<br/>- 最大値: `35` |
 | network | Object | Y | ネットワーク情報オブジェクト |
 | network.subnetId | UUID | Y | サブネットの識別子 |
 | network.usePublicAccess | Boolean | N | 外部接続可否<br/>- デフォルト値: `false` |
@@ -4089,7 +4089,7 @@ GET /v4.0/db-instances/{dbInstanceId}/restore-coverage
 | windows | Array | 復元可能な期間のリスト(重複する期間は統合、時刻の昇順) |
 | windows.fromYmdt | DateTime | 期間の開始時刻 |
 | windows.toYmdt | DateTime | 期間の終了時刻<br/>- `continuity`が`SNAPSHOT_ONLY`の場合は`fromYmdt`と同じ |
-| windows.anchorBackupId | String | ベースラインバックアップの識別子 |
+| windows.anchorBackupId | String | 基準バックアップの識別子 |
 | windows.continuity | String | 期間の連続性<br/>- `SNAPSHOT_ONLY`: スナップショットバックアップ時点のみ復元可能<br/>- `CONTINUOUS`: 期間内の時点で復元可能 |
 | windows.confidence | String | 期間の信頼度<br/>- `EXACT`: 確定した復元ポイント<br/>- `INFORMATIONAL`: 参考用。実際の復元時に再検証 |
 | windows.spansLineage | Boolean | フェイルオーバー境界をまたぐかどうか |
@@ -4376,14 +4376,14 @@ PUT /v4.0/db-instances/{dbInstanceId}/storage-info
 ---
 
 <a id="modify-transaction-log-archiving"></a>
-### トランザクションログアーカイブの有効化/無効化 { #modify-transaction-log-archiving }
+### トランザクションログアーカイビングの有効化/無効化 { #modify-transaction-log-archiving }
 
 <a id="modify-transaction-log-archiving-required-permissions"></a>
 #### 必要権限
 
 | 権限名 | 説明 |
 |-----|-----|
-| RDSforMariaDB:DbInstance.ModifyTransactionLogArchiving | トランザクションログアーカイブの有効化/無効化 |
+| RDSforMariaDB:DbInstance.ModifyTransactionLogArchiving | トランザクションログアーカイビングの有効化/無効化 |
 
 <a id="modify-transaction-log-archiving-request"></a>
 #### リクエスト

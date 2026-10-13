@@ -462,7 +462,7 @@
 ## 2022. 08. 09. { #august-9-2022 }
 
 <a id="added-features"></a>
-### 기능 추가 { #added-features }
+### 신규 기능 추가 { #added-features }
 
 * 이벤트 목록을 엑셀로 내보내는 기능 추가
 
@@ -482,7 +482,7 @@
 ## 2022. 07. 12. { #july-12-2022 }
 
 <a id="july-12-2022-added-features"></a>
-### 기능 추가 { #july-12-2022-added-features }
+### 신규 기능 추가 { #july-12-2022-added-features }
 
 * 서버 대시보드에서 차트를 서버별로 그룹화하여 볼 수 있는 기능 추가
 
@@ -555,7 +555,7 @@
 ## 2022. 03. 15. { #march-15-2022 }
 
 <a id="march-15-2022-added-features"></a>
-### 기능 추가 { #march-15-2022-added-features }
+### 신규 기능 추가 { #march-15-2022-added-features }
 
 * **DB Configuration**에 변수 사용 기능 도입
 
@@ -572,7 +572,7 @@
 ## 2022. 01. 11. { #january-11-2022 }
 
 <a id="january-11-2022-added-features"></a>
-### 기능 추가 { #january-11-2022-added-features }
+### 신규 기능 추가 { #january-11-2022-added-features }
 
 * MariaDB에서 실행 중인 프로세스 리스트 및 InnoDB 상태를 확인할 수 있는 기능 추가
 
