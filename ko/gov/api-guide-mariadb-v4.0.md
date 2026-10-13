@@ -3989,14 +3989,14 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 ---
 
 <a id="view-restore-coverage"></a>
-### DB 인스턴스 복구 가능 구간 조회 { #view-restore-coverage }
+### DB 인스턴스 복원 가능 구간 조회 { #view-restore-coverage }
 
 <a id="view-restore-coverage-required-permissions"></a>
 #### 필요 권한
 
 | 권한명 | 설명 |
 |-----|-----|
-| RDSforMariaDB:DbInstance.Get | DB 인스턴스 복구 가능 구간 조회 |
+| RDSforMariaDB:DbInstance.Get | DB 인스턴스 복원 가능 구간 조회 |
 
 <a id="view-restore-coverage-request"></a>
 #### 요청
@@ -4087,17 +4087,17 @@ GET /v4.0/db-instances/{dbInstanceId}/restore-coverage
 | windows | Array | 복원 가능 구간 목록(겹치는 구간은 합침, 시각 오름차순) |
 | windows.fromYmdt | DateTime | 구간 시작 시각 |
 | windows.toYmdt | DateTime | 구간 끝 시각<br/>- `continuity`가 `SNAPSHOT_ONLY`이면 `fromYmdt`와 같음 |
-| windows.anchorBackupId | String | 구간의 기준이 되는 스냅샷 백업의 식별자 |
+| windows.anchorBackupId | String | 기준 백업의 식별자 |
 | windows.continuity | String | 구간의 연속성<br/>- `SNAPSHOT_ONLY`: 스냅샷 백업 시점으로만 복원 가능<br/>- `CONTINUOUS`: 구간 안의 시점으로 복원 가능 |
 | windows.confidence | String | 구간의 신뢰도<br/>- `EXACT`: 확정된 복원 지점<br/>- `INFORMATIONAL`: 참고용. 실제 복원 시 다시 검증 |
 | windows.spansLineage | Boolean | 장애 조치 경계를 걸치는지 여부 |
-| gaps | Array | 복원 가능 구간 사이의 공백 목록<br/>- `tier`가 `0`이면 항상 빈 목록 |
+| gaps | Array | 복원 가능 구간 사이의 아카이브 공백 목록<br/>- `tier`가 `0`이면 항상 빈 목록 |
 | gaps.fromYmdt | DateTime | 현재 산출하지 않으므로 항상 null |
 | gaps.toYmdt | DateTime | 현재 산출하지 않으므로 항상 null |
-| gaps.cause | String | 공백 원인<br/>- `CRITICAL_DROP`: 스테이징 버퍼 임계 초과로 로그 적재 지연. 버퍼가 회복되면 재개<br/>- `RETENTION_TRUNCATED`: 적재 전에 로그가 유실되어 복구 불가<br/>- `RECOVERY_PENDING`: 이전 Primary의 스테이징 버퍼 볼륨에 미적재 로그가 남아 있어 회수하면 복구 가능 |
+| gaps.cause | String | 아카이브 공백의 원인<br/>- `CRITICAL_DROP`: 스테이징 버퍼 임계 초과로 로그 적재 지연. 버퍼가 회복되면 재개<br/>- `RETENTION_TRUNCATED`: 적재 전에 로그가 유실되어 복구 불가<br/>- `RECOVERY_PENDING`: 이전 Primary의 스테이징 버퍼 볼륨에 미적재 로그가 남아 있어 회수하면 복구 가능 |
 | gaps.detectedAt | DateTime | 감지 시각 |
 | gaps.remediable | Boolean | 지금 백업을 수행하면 연속성을 다시 확보할 수 있는지 여부 |
-| gaps.confidence | String | 공백 판정의 신뢰도 |
+| gaps.confidence | String | 아카이브 공백 판정의 신뢰도 |
 | failoverBoundaries | Array | 복원 기간 안에서 발생한 장애 조치 경계 목록 |
 | failoverBoundaries.predecessorDbInstanceId | String | 장애 조치 이전 Primary DB 인스턴스의 식별자 |
 | failoverBoundaries.boundaryYmdt | DateTime | 장애 조치 경계 시각(초 단위)<br/>- 관리 서버 기준 시각이므로 참고용<br/>- 경계를 넘는 시점 복원은 지원하지 않음 |
