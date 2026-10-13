@@ -1,4 +1,4 @@
-<!-- pre-align:aligned sig=227955ea3124 -->
+<!-- pre-align:aligned sig=48660ac15bd4 -->
 
 <a id="database-rds-for-mariadb-release-notes"></a>
 ## Database > RDS for MariaDB > 릴리스 노트 { #database-rds-for-mariadb-release-notes }
