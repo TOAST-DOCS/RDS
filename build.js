@@ -40,12 +40,14 @@ const allConfigs = [
     {
         engine: 'mysql',
         env: 'gov',
-        exclusionDocs: []
+        exclusionDocs: [],
+        languages: ['ko']
     },
     {
         engine: 'mysql',
         env: 'ncgn',
-        exclusionDocs: []
+        exclusionDocs: [],
+        languages: ['ko']
     },
     {
         engine: 'mysql',
@@ -75,7 +77,8 @@ const allConfigs = [
     {
         engine: 'mariadb',
         env: 'gov',
-        exclusionDocs: []
+        exclusionDocs: [],
+        languages: ['ko']
     }
 ];
 
@@ -87,7 +90,7 @@ const configs = isPPP
 for (let config of configs) {
     const context = JSON.parse(fs.readFileSync(`config/${config.engine}-${config.env}.json`, 'utf-8'));
 
-    for (let language of languages) {
+    for (let language of config.languages || languages) {
         for (let doc of docs) {
             if (config.exclusionDocs.indexOf(doc) >= 0) {
                 continue;
