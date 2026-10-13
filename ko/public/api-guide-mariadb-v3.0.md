@@ -668,7 +668,7 @@ GET /v3.0/db-instance-groups/{dbInstanceGroupId}
 | replicationType | Enum | DB 인스턴스 그룹의 복제 형태<br/>- `STANDALONE`: 고가용성 사용 안함<br/>- `HIGH_AVAILABILITY`: 고가용성 사용 |
 | dbInstances | Array | DB 인스턴스 그룹에 속한 DB 인스턴스 목록 |
 | dbInstances.dbInstanceId | UUID | DB 인스턴스의 식별자 |
-| dbInstances.dbInstanceType | Enum | DB 인스턴스의 역할 유형<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`: 읽기 복제본 |
+| dbInstances.dbInstanceType | Enum | DB 인스턴스의 역할 유형<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`: Read Replica |
 | dbInstances.dbInstanceStatus | Enum | DB 인스턴스의 현재 상태<br/>- `BEFORE_CREATE`: 생성 이전(회색)<br/>- `AVAILABLE`: 사용 가능(녹색)<br/>- `STORAGE_FULL`: 용량 부족(적색)<br/>- `FAIL_TO_CREATE`: 생성 실패(적색)<br/>- `FAIL_TO_CONNECT`: 연결 실패(적색)<br/>- `REPLICATION_STOP`: 복제 중단(적색)<br/>- `REPLICATION_DELAY`: 복제 지연(황색)<br/>- `FAILOVER`: 장애 조치 완료(적색)<br/>- `SHUTDOWN`: 중지됨(회색)<br/>- `DELETED`: 삭제됨(회색) |
 | createdYmdt | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 | updatedYmdt | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
@@ -782,7 +782,7 @@ GET /v3.0/db-instances
 | dbInstances.description | String | DB 인스턴스 추가 정보 |
 | dbInstances.dbVersion | Enum | DB 엔진 버전 |
 | dbInstances.dbPort | Number | DB 포트 |
-| dbInstances.dbInstanceType | Enum | DB 인스턴스의 역할 유형<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`: 읽기 복제본 |
+| dbInstances.dbInstanceType | Enum | DB 인스턴스의 역할 유형<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`: Read Replica |
 | dbInstances.dbInstanceStatus | Enum | DB 인스턴스의 현재 상태<br/>- `BEFORE_CREATE`: 생성 이전(회색)<br/>- `AVAILABLE`: 사용 가능(녹색)<br/>- `STORAGE_FULL`: 용량 부족(적색)<br/>- `FAIL_TO_CREATE`: 생성 실패(적색)<br/>- `FAIL_TO_CONNECT`: 연결 실패(적색)<br/>- `REPLICATION_STOP`: 복제 중단(적색)<br/>- `REPLICATION_DELAY`: 복제 지연(황색)<br/>- `FAILOVER`: 장애 조치 완료(적색)<br/>- `SHUTDOWN`: 중지됨(회색)<br/>- `DELETED`: 삭제됨(회색) |
 | dbInstances.progressStatus | Enum | DB 인스턴스의 현재 진행 상태 |
 | dbInstances.createdYmdt | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
@@ -1144,7 +1144,7 @@ GET /v3.0/db-instances/{dbInstanceId}
 | description | String | DB 인스턴스 추가 정보 |
 | dbVersion | Enum | DB 엔진 버전 |
 | dbPort | Number | DB 포트 |
-| dbInstanceType | Enum | DB 인스턴스의 역할 유형<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`: 읽기 복제본 |
+| dbInstanceType | Enum | DB 인스턴스의 역할 유형<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`: Read Replica |
 | dbInstanceStatus | Enum | DB 인스턴스의 현재 상태<br/>- `BEFORE_CREATE`: 생성 이전(회색)<br/>- `AVAILABLE`: 사용 가능(녹색)<br/>- `STORAGE_FULL`: 용량 부족(적색)<br/>- `FAIL_TO_CREATE`: 생성 실패(적색)<br/>- `FAIL_TO_CONNECT`: 연결 실패(적색)<br/>- `REPLICATION_STOP`: 복제 중단(적색)<br/>- `REPLICATION_DELAY`: 복제 지연(황색)<br/>- `FAILOVER`: 장애 조치 완료(적색)<br/>- `SHUTDOWN`: 중지됨(회색)<br/>- `DELETED`: 삭제됨(회색) |
 | progressStatus | Enum | DB 인스턴스의 현재 진행 상태 |
 | dbFlavorId | UUID | DB 인스턴스 사양의 식별자 |
