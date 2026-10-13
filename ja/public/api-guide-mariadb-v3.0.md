@@ -670,7 +670,7 @@ GET /v3.0/db-instance-groups/{dbInstanceGroupId}
 | replicationType | Enum | DBインスタンスグループの複製形態<br/>- `STANDALONE`: 高可用性を使用しない<br/>- `HIGH_AVAILABILITY`: 高可用性を使用 |
 | dbInstances | Array | DBインスタンスグループに属するDBインスタンスリスト |
 | dbInstances.dbInstanceId | UUID | DBインスタンスの識別子 |
-| dbInstances.dbInstanceType | Enum | DBインスタンスのロールタイプ<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`:リードレプリカ |
+| dbInstances.dbInstanceType | Enum | DBインスタンスのロールタイプ<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`: Read Replica |
 | dbInstances.dbInstanceStatus | Enum | DBインスタンスの現在状態<br/>- `BEFORE_CREATE`: 作成前(グレー)<br/>- `AVAILABLE`: 使用可能(緑色)<br/>- `STORAGE_FULL`: 容量不足(赤色)<br/>- `FAIL_TO_CREATE`: 作成失敗(赤色)<br/>- `FAIL_TO_CONNECT`: 接続失敗(赤色)<br/>- `REPLICATION_STOP`: 複製中断(赤色)<br/>- `REPLICATION_DELAY`: 複製遅延(黄色)<br/>- `FAILOVER`: フェイルオーバー完了(赤色)<br/>- `SHUTDOWN`: 停止済み(グレー)<br/>- `DELETED`: 削除済み(グレー) |
 | createdYmdt | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 | updatedYmdt | DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
@@ -784,7 +784,7 @@ GET /v3.0/db-instances
 | dbInstances.description | String | DBインスタンスの追加情報 |
 | dbInstances.dbVersion | Enum | DBエンジンバージョン |
 | dbInstances.dbPort | Number | DBポート |
-| dbInstances.dbInstanceType | Enum | DBインスタンスのロールタイプ<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`:リードレプリカ |
+| dbInstances.dbInstanceType | Enum | DBインスタンスのロールタイプ<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`: Read Replica |
 | dbInstances.dbInstanceStatus | Enum | DBインスタンスの現在状態<br/>- `BEFORE_CREATE`: 作成前(グレー)<br/>- `AVAILABLE`: 使用可能(緑色)<br/>- `STORAGE_FULL`: 容量不足(赤色)<br/>- `FAIL_TO_CREATE`: 作成失敗(赤色)<br/>- `FAIL_TO_CONNECT`: 接続失敗(赤色)<br/>- `REPLICATION_STOP`: 複製中断(赤色)<br/>- `REPLICATION_DELAY`: 複製遅延(黄色)<br/>- `FAILOVER`: フェイルオーバー完了(赤色)<br/>- `SHUTDOWN`: 停止済み(グレー)<br/>- `DELETED`: 削除済み(グレー) |
 | dbInstances.progressStatus | Enum | DBインスタンスの現在進行状態 |
 | dbInstances.createdYmdt | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
@@ -1146,7 +1146,7 @@ GET /v3.0/db-instances/{dbInstanceId}
 | description | String | DBインスタンスの追加情報 |
 | dbVersion | Enum | DBエンジンバージョン |
 | dbPort | Number | DBポート |
-| dbInstanceType | Enum | DBインスタンスのロールタイプ<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`:リードレプリカ |
+| dbInstanceType | Enum | DBインスタンスのロールタイプ<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`: Read Replica |
 | dbInstanceStatus | Enum | DBインスタンスの現在状態<br/>- `BEFORE_CREATE`: 作成前(グレー)<br/>- `AVAILABLE`: 使用可能(緑色)<br/>- `STORAGE_FULL`: 容量不足(赤色)<br/>- `FAIL_TO_CREATE`: 作成失敗(赤色)<br/>- `FAIL_TO_CONNECT`: 接続失敗(赤色)<br/>- `REPLICATION_STOP`: 複製中断(赤色)<br/>- `REPLICATION_DELAY`: 複製遅延(黄色)<br/>- `FAILOVER`: フェイルオーバー完了(赤色)<br/>- `SHUTDOWN`: 停止済み(グレー)<br/>- `DELETED`: 削除済み(グレー) |
 | progressStatus | Enum | DBインスタンスの現在進行状態 |
 | dbFlavorId | UUID | DBインスタンス仕様の識別子 |
