@@ -3,9 +3,11 @@
 <a id="database-rds-for-mysql-release-notes"></a>
 ## Database > RDS for MySQL > 릴리스 노트 { #database-rds-for-mysql-release-notes }
 
-## 2026. 11. 10.
+<a id="november-10-2026"></a>
+## 2026. 11. 10. { #november-10-2026 }
 
-### 신규 기능 추가
+<a id="november-10-2026-added-features"></a>
+### 신규 기능 추가 { #november-10-2026-added-features }
 
 * 트랜잭션 로그 아카이빙 기능 추가
     * 바이너리 로그를 Object Storage에 보관하여 시점 복원에 사용
@@ -21,7 +23,8 @@
 * 기본 모니터링에 Storage 상세 차트 추가
     * 데이터, 바이너리 로그, 남은 용량을 바이트 단위로 표시
 
-### 기능 개선/변경
+<a id="november-10-2026-feature-updates"></a>
+### 기능 개선/변경 { #november-10-2026-feature-updates }
 
 * DB 인스턴스 목록을 DB 인스턴스 그룹 단위로만 표시하도록 개선
 * 다른 리전에 Read Replica가 있는 DB 인스턴스 그룹을 각 리전의 DB 인스턴스 목록에 함께 표시하도록 개선
@@ -30,7 +33,8 @@
 * DB 인스턴스 타입의 CPU 표기를 vCPU로 변경
 * 존재하지 않는 가용성 영역이나 서브넷을 지정하면 요청 단계에서 바로 오류를 반환하도록 개선
 
-### 버그 수정
+<a id="november-10-2026-bug-fixes"></a>
+### 버그 수정 { #november-10-2026-bug-fixes }
 
 * 보관 기간이 지난 바이너리 로그가 삭제되지 않는 버그 수정
 * 대용량 테이블이 있는 경우 증분 백업이 실패하는 버그 수정
