@@ -4,6 +4,7 @@
 
 <a id="database-rds-for-mysql-release-notes"></a>
 ## Database > RDS for MySQL > リリースノート { #database-rds-for-mysql-release-notes }
+
 <a id="november-10-2026"></a>
 ## 2026. 11. 10. { #november-10-2026 }
 

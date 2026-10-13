@@ -814,7 +814,7 @@ This API does not require a request body.
 | dbInstances | Array | DB instances |
 | dbInstances.dbInstanceId | UUID | DB instance identifier |
 | dbInstances.dbInstanceGroupId | UUID | DB instance group identifier |
-| dbInstances.dbInstanceName | String | Name to identify the primary DB instance |
+| dbInstances.dbInstanceName | String | Name to identify the Primary DB instance |
 | dbInstances.description | String | Additional information of DB instance |
 | dbInstances.dbVersion | Enum | DB engine version |
 | dbInstances.dbPort | Number | DB port |
@@ -902,7 +902,7 @@ POST /v4.0/db-instances
 
 | Name | Format | Required | Description |
 |-----|-----|-----|-----|
-| dbInstanceName | String | Y | Name to identify the primary DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
+| dbInstanceName | String | Y | Name to identify the Primary DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
 | description | String | N | Additional information of DB instance<br/>- Maximum length: `100` |
 | dbFlavorId | UUID | Y | Identifier of DB instance specifications |
 | dbVersion | Enum | Y | DB engine version |
@@ -1058,7 +1058,7 @@ POST /v4.0/db-instances/restore-from-obs
 
 | Name | Format | Required | Description |
 |-----|-----|-----|-----|
-| dbInstanceName | String | Y | Name to identify the primary DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
+| dbInstanceName | String | Y | Name to identify the Primary DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
 | description | String | N | Additional information of DB instance<br/>- Maximum length: `100` |
 | dbFlavorId | UUID | Y | Identifier of DB instance specifications |
 | dbPort | Number | Y | DB port |
@@ -1280,7 +1280,7 @@ This API does not require a request body.
 |-----|-----|-----|
 | dbInstanceId | UUID | DB instance identifier |
 | dbInstanceGroupId | UUID | DB instance group identifier |
-| dbInstanceName | String | Name to identify the primary DB instance |
+| dbInstanceName | String | Name to identify the Primary DB instance |
 | description | String | Additional information of DB instance |
 | dbVersion | Enum | DB engine version |
 | dbPort | Number | DB port |
@@ -1355,7 +1355,7 @@ PUT /v4.0/db-instances/{dbInstanceId}
 
 | Name | Format | Required | Description |
 |-----|-----|-----|-----|
-| dbInstanceName | String | N | Name to identify the primary DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
+| dbInstanceName | String | N | Name to identify the Primary DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
 | dbInstanceCandidateName | String | N | Name to identify the standby DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
 | description | String | N | Additional information of DB instance<br/>- Maximum length: `100` |
 | dbPort | Number | N | DB port<br/>- Minimum value: 3306, Maximum value: 43306 |
@@ -2369,11 +2369,11 @@ This API does not return a response body.
 | `PAUSED`                         | High availability has been paused                 |
 | `PAUSED_DUE_TO_TASK`             | High availability has been paused due to a task         |
 | `PAUSED_DUE_TO_STOP`             | When high availability is paused because the DB instance is stopped  |
-| `DISABLE_MASTER_IN_REPLICATION`  | When high availability is suspended due to detection of abnormal replication on the primary     |
+| `DISABLE_MASTER_IN_REPLICATION`  | When high availability is suspended due to detection of abnormal replication on the Primary     |
 | `DISABLE_MHA_PROCESS`            | The high availability process has been stopped               |
 | `DISABLE_REPLICATION_STOP`       | High availability has been disabled due to replication stoppage         |
 | `DISABLE_REPLICATION_DELAY`      | High availability has been disabled due to replication delay         |
-| `MASTER_FAILURE_DETECTION`       | When a primary failure is detected                  |
+| `MASTER_FAILURE_DETECTION`       | When a Primary failure is detected                  |
 | `FAILOVER_STARTED`               | Failover has started                   |
 | `FAILOVER_FAILED`                | Failover has failed                   |
 | `FAILOVER_COMPLETED`             | Failover has been completed                   |
@@ -2436,7 +2436,7 @@ This API does not require a request body.
 | Name | Format | Description |
 |-----|-----|-----|
 | useHighAvailability | Boolean | Whether to use high availability<br/>- Default: `false` |
-| haStatus | Enum | High availability status<br/>- `CREATED`: Created<br/>- `STABLE`: Normal<br/>- `PAUSING`: Pausing<br/>- `DISABLE`: Stopped<br/>- `DISABLE_MASTER_IN_REPLICATION`: High availability suspended due to detection of abnormal replication on the primary<br/>- `DISABLE_MHA_PROCESS`: High availability process suspended<br/>- `DISABLE_REPLICATION_STOP`: High availability suspended due to replication stop<br/>- `DISABLE_REPLICATION_DELAY`: High availability suspended due to replication delay<br/>- `FAILOVER_STARTED`: Failover started<br/>- `FAILOVER_FAILED`: Failover failed<br/>- `FAILOVER_COMPLETED`: Failover completed<br/>- `FAILOVER_ABORTED`: Failover reverted<br/>- `DELETED`: Deleted<br/>- `PAUSED`: Paused<br/>- `PAUSED_DUE_TO_TASK`: Paused due to a task<br/>- `PAUSED_DUE_TO_STOP`: Paused due to the DB instance being stopped<br/>- `MASTER_FAILURE_DETECTION`: Primary failure detected |
+| haStatus | Enum | High availability status<br/>- `CREATED`: Created<br/>- `STABLE`: Normal<br/>- `PAUSING`: Pausing<br/>- `DISABLE`: Stopped<br/>- `DISABLE_MASTER_IN_REPLICATION`: High availability suspended due to detection of abnormal replication on the Primary<br/>- `DISABLE_MHA_PROCESS`: High availability process suspended<br/>- `DISABLE_REPLICATION_STOP`: High availability suspended due to replication stop<br/>- `DISABLE_REPLICATION_DELAY`: High availability suspended due to replication delay<br/>- `FAILOVER_STARTED`: Failover started<br/>- `FAILOVER_FAILED`: Failover failed<br/>- `FAILOVER_COMPLETED`: Failover completed<br/>- `FAILOVER_ABORTED`: Failover reverted<br/>- `DELETED`: Deleted<br/>- `PAUSED`: Paused<br/>- `PAUSED_DUE_TO_TASK`: Paused due to a task<br/>- `PAUSED_DUE_TO_STOP`: Paused due to the DB instance being stopped<br/>- `MASTER_FAILURE_DETECTION`: Primary failure detected |
 | pingInterval | Number | Ping interval (seconds) |
 | pingType | Enum | Ping method<br/>- `CONNECTION`: CONNECTION method<br/>- `INSERT`: INSERT method<br/>- `SELECT`: SELECT method |
 
@@ -3515,7 +3515,7 @@ POST /v4.0/db-instances/{dbInstanceId}/replicate
 
 | Name | Format | Required | Description |
 |-----|-----|-----|-----|
-| dbInstanceName | String | Y | Name to identify the primary DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
+| dbInstanceName | String | Y | Name to identify the Primary DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
 | description | String | N | Additional information of DB instance<br/>- Maximum length: `100` |
 | dbFlavorId | UUID | N | Identifier of DB instance specifications |
 | dbPort | Number | N | DB port<br/>- Minimum value: 3306, Maximum value: 43306 |
@@ -3898,7 +3898,7 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 
 | Name | Format | Required | Description |
 |-----|-----|-----|-----|
-| dbInstanceName | String | Y | Name to identify the primary DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
+| dbInstanceName | String | Y | Name to identify the Primary DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
 | description | String | N | Additional information of DB instance<br/>- Maximum length: `100` |
 | dbFlavorId | UUID | N | Identifier of DB instance specifications. If not entered, the specifications of the original instance are applied. |
 | dbPort | Number | N | DB port |
@@ -3966,7 +3966,7 @@ You can only restore to a point in time earlier than the latest restorable time 
 | restore.binLog.binLogFileName | String | N | Binary log name to use for restoration |
 | restore.binLog.binLogPosition | Number | N | Binary log location to use for restoration |
 
-For point-in-time restoration using binary logs, you can restore the logs recorded after the binary log file and position of the reference backup.
+For point-in-time restoration using binary logs, you can restore the logs recorded after the binary log file and position of the baseline backup.
 
 <a id="restoration-restoretype-backup"></a>
 #### Request when restoring from backup (if restoreType is `BACKUP`)
@@ -4106,22 +4106,22 @@ This API does not require a request body.
 | gaps | Array | List of archive gaps between restorable windows<br/>- Always an empty list if `tier` is `0` |
 | gaps.fromYmdt | DateTime | Always null as it is not currently calculated |
 | gaps.toYmdt | DateTime | Always null as it is not currently calculated |
-| gaps.cause | String | Cause of the archive gap<br/>- `CRITICAL_DROP`: Log ingestion delayed due to staging buffer threshold exceeded. Resumes when the buffer recovers<br/>- `RETENTION_TRUNCATED`: Log lost before ingestion; cannot be recovered<br/>- `RECOVERY_PENDING`: Unloaded logs remain in the staging buffer volume of the previous primary; can be recovered if retrieved |
+| gaps.cause | String | Cause of the archive gap<br/>- `CRITICAL_DROP`: Log ingestion delayed due to staging buffer threshold exceeded. Resumes when the buffer recovers<br/>- `RETENTION_TRUNCATED`: Log lost before ingestion; cannot be recovered<br/>- `RECOVERY_PENDING`: Unloaded logs remain in the staging buffer volume of the previous Primary; can be recovered if retrieved |
 | gaps.detectedAt | DateTime | Time when the gap was detected |
 | gaps.remediable | Boolean | Whether performing a backup now can restore continuity |
 | gaps.confidence | String | Confidence level of the archive gap determination |
 | failoverBoundaries | Array | List of failover boundaries that occurred within the restore period |
-| failoverBoundaries.predecessorDbInstanceId | String | Identifier of the primary DB instance before failover |
+| failoverBoundaries.predecessorDbInstanceId | String | Identifier of the Primary DB instance before failover |
 | failoverBoundaries.boundaryYmdt | DateTime | Failover boundary time (in seconds)<br/>- For reference only, as it is based on the management server time<br/>- Point-in-time restore across the boundary is not supported |
 | failoverBoundaries.recoverable | Boolean | Whether point-in-time restore across the failover boundary is possible<br/>- Always `false` as MySQL and MariaDB do not support this |
 | failoverBoundaries.gapFromYmdt | DateTime | Always null as it is not currently calculated |
 | failoverBoundaries.gapToYmdt | DateTime | Always null as it is not currently calculated |
 | failoverBoundaries.confidence | String | Confidence level of the determination. Currently always `INFORMATIONAL` (for reference only) |
-| failoverBoundaries.unreachableWrites | Boolean | Whether there are logs that remain only in the previous primary after failover and cannot be reached by restoration<br/>- `true`: There are<br/>- `false`: There are not<br/>- null: Not determined |
+| failoverBoundaries.unreachableWrites | Boolean | Whether there are logs that remain only in the previous Primary after failover and cannot be reached by restoration<br/>- `true`: There are<br/>- `false`: There are not<br/>- null: Not determined |
 | failoverBoundaries.unreachableFromYmdt | DateTime | Always null as it is not currently calculated |
 | failoverBoundaries.unreachableToYmdt | DateTime | Always null as it is not currently calculated |
 | failoverBoundaries.unreachableSegmentCount | Number | Number of segments of unreachable logs. Always null for MySQL and MariaDB |
-| failoverBoundaries.noteCode | String | Cause code of the failover boundary<br/>- `BOUNDARY_DETECTED`: Only a failover boundary was detected<br/>- `UNREACHABLE_WRITES_DETECTED`: There are logs in the previous primary that cannot be reached |
+| failoverBoundaries.noteCode | String | Cause code of the failover boundary<br/>- `BOUNDARY_DETECTED`: Only a failover boundary was detected<br/>- `UNREACHABLE_WRITES_DETECTED`: There are logs in the previous Primary that cannot be reached |
 | coverageRatio | Number | Always null as it is not currently calculated |
 | asOfYmdt | DateTime | Time when the response was calculated |
 
@@ -4928,7 +4928,7 @@ POST /v4.0/backups/{backupId}/restore
 
 | Name | Format | Required | Description |
 |-----|-----|-----|-----|
-| dbInstanceName | String | Y | Name to identify the primary DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
+| dbInstanceName | String | Y | Name to identify the Primary DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
 | description | String | N | Additional information of DB instance<br/>- Maximum length: `100` |
 | dbFlavorId | UUID | N | Identifier of DB instance specifications. If not specified, the value of the original instance is used. |
 | dbPort | Number | N | DB port. If not specified, the value of the original instance is used.<br/>- Minimum value: 3306, Maximum value: 43306 |
@@ -6603,7 +6603,7 @@ This API does not require a request body.
 | isEnabled | Boolean | Indicates whether the flavor is enabled |
 | dbInstances | Array | DB Instances to monitor |
 | dbInstances.dbInstanceId | UUID | DB instance identifier |
-| dbInstances.dbInstanceName | String | Name to identify the primary DB instance |
+| dbInstances.dbInstanceName | String | Name to identify the Primary DB instance |
 | userGroups | Array | User Groups |
 | userGroups.userGroupId | UUID | User group identifier |
 | userGroups.userGroupName | String | Name to identify user groups |

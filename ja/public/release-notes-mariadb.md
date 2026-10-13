@@ -4,6 +4,7 @@
 
 <a id="database-rds-for-mariadb-release-notes"></a>
 ## Database > RDS for MariaDB > リリースノート { #database-rds-for-mariadb-release-notes }
+
 <a id="november-10-2026"></a>
 ## 2026. 11. 10. { #november-10-2026 }
 

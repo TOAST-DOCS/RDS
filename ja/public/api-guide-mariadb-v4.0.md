@@ -3998,7 +3998,7 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 
 | 権限名 | 説明 |
 |-----|-----|
-| RDSforMariaDB:DbInstance.Get | DBインスタンスの復元可能区間の照会 |
+| RDSforMariaDB:DbInstance.Get | DBインスタンスの復元可能期間の照会 |
 
 <a id="view-restore-coverage-request"></a>
 #### リクエスト
@@ -4082,18 +4082,18 @@ GET /v4.0/db-instances/{dbInstanceId}/restore-coverage
 | 名前 | 形式 | 説明 |
 |-----|-----|-----|
 | engine | String | DBエンジン |
-| tier | Number | 表示した復元可能な期間のレベル<br/>- `0`: スナップショットバックアップ時点のみ表示<br/>- `1`: 連続期間まで表示<br/>- トランザクションログアーカイビングの設定に関わらず算出 |
+| tier | Number | 表示した復元可能期間のレベル<br/>- `0`: スナップショットバックアップ時点のみ表示<br/>- `1`: 連続期間まで表示<br/>- トランザクションログアーカイビングの設定に関わらず算出 |
 | retentionFloorYmdt | DateTime | 復元できる最も早い時刻(保管期間の開始) |
 | recoverableThroughYmdt | DateTime | ポリシー上、復元できる最も直近の時刻<br/>- 実際の復元時にログの連続性と対象時刻への到達有無を再検証<br/>- ログのDB時刻の上限を確定できない場合はnull<br/>- 連続期間を保証しない |
 | recoveryTimeBasis | String | `recoverableThroughYmdt`の算出根拠<br/>- `AVAILABLE_POLICY`: 使用可能な状態のDBインスタンスの保管ポリシーで算出<br/>- `UNKNOWN_LOG_TIME`: ログのDB時刻を確定できない。Object Storageにログがない、またはスナップショット復元が不可能であることを意味するものではない |
-| windows | Array | 復元可能な期間のリスト(重複する期間は統合、時刻の昇順) |
+| windows | Array | 復元可能期間のリスト(重複する期間は統合、時刻の昇順) |
 | windows.fromYmdt | DateTime | 期間の開始時刻 |
 | windows.toYmdt | DateTime | 期間の終了時刻<br/>- `continuity`が`SNAPSHOT_ONLY`の場合は`fromYmdt`と同じ |
 | windows.anchorBackupId | String | 基準バックアップの識別子 |
 | windows.continuity | String | 期間の連続性<br/>- `SNAPSHOT_ONLY`: スナップショットバックアップ時点のみ復元可能<br/>- `CONTINUOUS`: 期間内の時点で復元可能 |
 | windows.confidence | String | 期間の信頼度<br/>- `EXACT`: 確定した復元ポイント<br/>- `INFORMATIONAL`: 参考用。実際の復元時に再検証 |
 | windows.spansLineage | Boolean | フェイルオーバー境界をまたぐかどうか |
-| gaps | Array | 復元可能な期間の間のアーカイブギャップのリスト<br/>- `tier`が`0`の場合は常に空のリスト |
+| gaps | Array | 復元可能期間の間のアーカイブギャップのリスト<br/>- `tier`が`0`の場合は常に空のリスト |
 | gaps.fromYmdt | DateTime | 現在算出していないため、常にnull |
 | gaps.toYmdt | DateTime | 現在算出していないため、常にnull |
 | gaps.cause | String | アーカイブギャップの原因<br/>- `CRITICAL_DROP`: ステージングバッファの閾値超過によりログの書き込みが遅延。バッファが回復すると再開<br/>- `RETENTION_TRUNCATED`: 書き込み前にログが失われ、復旧不可<br/>- `RECOVERY_PENDING`: 以前のPrimaryのステージングバッファボリュームに未書き込みのログが残っており、回収すれば復旧可能 |

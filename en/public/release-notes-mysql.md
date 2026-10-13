@@ -4,6 +4,7 @@
 
 <a id="database-rds-for-mysql-release-notes"></a>
 ## Database > RDS for MySQL > Release Notes { #database-rds-for-mysql-release-notes }
+
 <a id="november-10-2026"></a>
 ## November 10, 2026 { #november-10-2026 }
 
@@ -16,7 +17,7 @@
     * Charges apply for staging buffer volume and Object Storage usage
 * Added and modified API v4.0
     * Added APIs for enabling/disabling transaction log archiving
-    * Added an API to query the restorable range of a DB instance
+    * Added an API to query the restore coverage of a DB instance
     * Added transaction log archiving configuration fields to the DB instance creation API
 * Added a failover progress display
     * Displays the failover progress step and the Applying Replication Log progress rate

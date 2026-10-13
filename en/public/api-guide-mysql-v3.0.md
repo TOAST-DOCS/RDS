@@ -790,7 +790,7 @@ This API does not require a request body.
 | dbInstances | Array | DB instances |
 | dbInstances.dbInstanceId | UUID | DB instance identifier |
 | dbInstances.dbInstanceGroupId | UUID | DB instance group identifier |
-| dbInstances.dbInstanceName | String | Name to identify the primary DB instance |
+| dbInstances.dbInstanceName | String | Name to identify the Primary DB instance |
 | dbInstances.description | String | Additional information of DB instance |
 | dbInstances.dbVersion | Enum | DB engine version |
 | dbInstances.dbPort | Number | DB port |
@@ -866,7 +866,7 @@ POST /v3.0/db-instances
 
 | Name | Format | Required | Description |
 |-----|-----|-----|-----|
-| dbInstanceName | String | Y | Name to identify the primary DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
+| dbInstanceName | String | Y | Name to identify the Primary DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
 | dbInstanceCandidateName | String | N | Name to identify the standby DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
 | description | String | N | Additional information of DB instance<br/>- Maximum length: `100` |
 | dbFlavorId | UUID | Y | Identifier of DB instance specifications |
@@ -993,7 +993,7 @@ POST /v3.0/db-instances/restore-from-obs
 
 | Name | Format | Required | Description |
 |-----|-----|-----|-----|
-| dbInstanceName | String | N | Name to identify the primary DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
+| dbInstanceName | String | N | Name to identify the Primary DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
 | dbInstanceCandidateName | String | N | Name to identify the standby DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
 | description | String | N | Additional information of DB instance<br/>- Maximum length: `100` |
 | dbFlavorId | UUID | Y | Identifier of DB instance specifications |
@@ -1152,7 +1152,7 @@ This API does not require a request body.
 |-----|-----|-----|
 | dbInstanceId | UUID | DB instance identifier |
 | dbInstanceGroupId | UUID | DB instance group identifier |
-| dbInstanceName | String | Name to identify the primary DB instance |
+| dbInstanceName | String | Name to identify the Primary DB instance |
 | description | String | Additional information of DB instance |
 | dbVersion | Enum | DB engine version |
 | dbPort | Number | DB port |
@@ -1218,7 +1218,7 @@ PUT /v3.0/db-instances/{dbInstanceId}
 
 | Name | Format | Required | Description |
 |-----|-----|-----|-----|
-| dbInstanceName | String | N | Name to identify the primary DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
+| dbInstanceName | String | N | Name to identify the Primary DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
 | dbInstanceCandidateName | String | N | Name to identify the standby DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
 | description | String | N | Additional information of DB instance<br/>- Maximum length: `100` |
 | dbPort | Number | N | DB port<br/>- Minimum value: 3306, Maximum value: 43306 |
@@ -2660,7 +2660,7 @@ POST /v3.0/db-instances/{dbInstanceId}/replicate
 
 | Name | Format | Required | Description |
 |-----|-----|-----|-----|
-| dbInstanceName | String | Y | Name to identify the primary DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
+| dbInstanceName | String | Y | Name to identify the Primary DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
 | description | String | N | Additional information of DB instance<br/>- Maximum length: `100` |
 | dbFlavorId | UUID | N | Identifier of DB instance specifications |
 | dbPort | Number | Y | DB port<br/>- Minimum value: 3306, Maximum value: 43306 |
@@ -2941,7 +2941,7 @@ POST /v3.0/db-instances/{dbInstanceId}/restore
 
 | Name | Format | Required | Description |
 |-----|-----|-----|-----|
-| dbInstanceName | String | N | Name to identify the primary DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
+| dbInstanceName | String | N | Name to identify the Primary DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
 | dbInstanceCandidateName | String | N | Name to identify the standby DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
 | description | String | N | Additional information of DB instance<br/>- Maximum length: `100` |
 | dbFlavorId | UUID | Y | Identifier of DB instance specifications |
@@ -2992,7 +2992,7 @@ You can only restore to a point in time earlier than the latest restorable time 
 | restore.binLog.binLogFileName | String | N | Binary log name to use for restoration |
 | restore.binLog.binLogPosition | Number | N | Binary log location to use for restoration |
 
-For point-in-time restoration using binary logs, you can restore the logs recorded after the binary log file and position of the reference backup.
+For point-in-time restoration using binary logs, you can restore the logs recorded after the binary log file and position of the baseline backup.
 
 <a id="restore-db-instance-restoretype-backup"></a>
 #### Request when restoring from backup (if restoreType is `BACKUP`)
@@ -3501,7 +3501,7 @@ POST /v3.0/backups/{backupId}/restore
 
 | Name | Format | Required | Description |
 |-----|-----|-----|-----|
-| dbInstanceName | String | Y | Name to identify the primary DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
+| dbInstanceName | String | Y | Name to identify the Primary DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
 | description | String | N | Additional information of DB instance<br/>- Maximum length: `100` |
 | dbFlavorId | UUID | Y | Identifier of DB instance specifications |
 | dbPort | Number | Y | DB port<br/>- Minimum value: 3306, Maximum value: 43306 |
@@ -4946,7 +4946,7 @@ This API does not require a request body.
 | isEnabled | Boolean | Indicates whether the flavor is enabled |
 | dbInstances | Array | DB Instances to monitor |
 | dbInstances.dbInstanceId | UUID | DB instance identifier |
-| dbInstances.dbInstanceName | String | Name to identify the primary DB instance |
+| dbInstances.dbInstanceName | String | Name to identify the Primary DB instance |
 | userGroups | Array | User Groups |
 | userGroups.userGroupId | UUID | User group identifier |
 | userGroups.userGroupName | String | Name to identify user groups |
