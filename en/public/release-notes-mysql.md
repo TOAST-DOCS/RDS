@@ -4,6 +4,38 @@
 
 <a id="database-rds-for-mysql-release-notes"></a>
 ## Database > RDS for MySQL > Release Notes { #database-rds-for-mysql-release-notes }
+## November 10, 2026
+
+### Added Features
+
+* Added transaction log archiving
+    * Stores binary logs in Object Storage for use in point-in-time restore
+    * Retention period can be set from 1 to 35 days
+    * Charges apply for staging buffer volume and Object Storage usage
+* Added and modified API v4.0
+    * Added APIs for enabling/disabling transaction log archiving
+    * Added an API to query the restorable range of a DB instance
+    * Added transaction log archiving configuration fields to the DB instance creation API
+* Added a failover progress display
+    * Displays the failover progress step and the Applying Replication Log progress rate
+* Added the Revert Failover feature
+* Added Storage detail charts to basic monitoring
+    * Displays data, binary log, and remaining capacity in bytes
+
+### Feature Updates
+
+* Improved the DB instance list to display entries only by DB instance group units.
+* Improved the display so that DB instance groups with Read Replicas in other regions are also shown in the DB instance list of each region.
+* Added a warning indicator to the region information of DB instances in other regions when communication with the source region is not possible.
+* Added the next maintenance window and failover options to the Scheduled Maintenance details.
+* Changed the CPU notation for DB instance types to vCPU.
+* Improved error handling so that specifying a non-existent availability zone or subnet returns an error immediately at the request stage.
+
+### Bug Fixes
+
+* Fixed a bug where binary logs past the retention period are not deleted
+* Fixed a bug where incremental backup fails when there is a large table
+* Fixed a bug where a normal DB instance changes to a connection failed state when monitoring metrics are not collected
 
 <a id="september-15-2026"></a>
 ## September 15, 2026 { #september-15-2026 }
