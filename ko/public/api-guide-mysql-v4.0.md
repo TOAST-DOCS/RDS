@@ -917,8 +917,8 @@ POST /v4.0/db-instances
 | useSlowQueryAnalysis | Boolean | N | Slow query 분석 여부<br/>- 기본값: `true` |
 | authenticationPlugin | Enum | N | 인증 플러그인<br/>- `NATIVE`: mysql_native_password 인증<br/>- `CACHING_SHA2`: caching_sha2_password 인증(MySQL 전용)<br/>- `SHA256`: sha256_password 인증(MySQL 전용) |
 | tlsOption | Enum | N | TLS 옵션<br/>- 기본값: `NONE`<br/>- `NONE`: TLS 미사용<br/>- `SSL`: SSL 인증<br/>- `X509`: X509 인증서 인증 |
-| transactionLogArchivingEnabled | Boolean | N | 트랜잭션 로그 아카이빙 활성화 여부<br/>- `true`: 생성이 끝나면 Primary 에서 아카이브가 활성화됨. 스테이징 버퍼 볼륨과 Object Storage 사용량에 과금됨<br/>- 기본값: `false` |
-| transactionLogArchivingRetentionDays | Number | N | 트랜잭션 로그 아카이빙 보존 기간(일)<br/>- 1~35 정수. 생략하면 7<br/>- `transactionLogArchivingEnabled` 가 `true` 일 때만 적용<br/>- 최솟값: `1`<br/>- 최댓값: `35` |
+| transactionLogArchivingEnabled | Boolean | N | 트랜잭션 로그 아카이빙 활성화 여부<br/>- `true`: 생성이 끝나면 Primary에서 아카이빙 활성화. 스테이징 버퍼 볼륨과 Object Storage 사용량에 과금<br/>- 기본값: `false` |
+| transactionLogArchivingRetentionDays | Number | N | 트랜잭션 로그 아카이빙 보존 기간(일)<br/>- 1~35 정수. 생략하면 7<br/>- `transactionLogArchivingEnabled`가 `true`일 때만 적용<br/>- 최솟값: `1`<br/>- 최댓값: `35` |
 | network | Object | Y | 네트워크 정보 객체 |
 | network.subnetId | UUID | Y | 서브넷의 식별자 |
 | network.usePublicAccess | Boolean | N | 외부 접속 가능 여부<br/>- 기본값: `false` |
@@ -1175,7 +1175,7 @@ DELETE /v4.0/db-instances/{dbInstanceId}
 
 | 이름 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|
-| deleteAutoBackup | Boolean | N | 자동 백업 삭제 여부. false 로 남긴 백업은 인스턴스 삭제 후 그 백업 시점으로 복원(스냅샷 복원)만 가능하며, 시점 복원은 지원하지 않는다.<br/>- 기본값: `false` |
+| deleteAutoBackup | Boolean | N | 자동 백업 삭제 여부<br/>- `false`로 남긴 백업은 DB 인스턴스 삭제 후 해당 백업 시점으로만 복원 가능(시점 복원 미지원)<br/>- 기본값: `false` |
 
 <a id="delete-db-instance-response"></a>
 #### 응답
@@ -3723,7 +3723,7 @@ GET /v4.0/db-instances/{dbInstanceId}/restoration-info
 | 이름 | 타입 | 설명 |
 |-----|-----|-----|
 | oldestRestorableYmdt | DateTime | 복원 가능한 가장 이른 시간 |
-| latestRestorableYmdt | DateTime | 복원 가능한 가장 최근 시간. 트랜잭션 로그 아카이빙을 켠 DB 인스턴스는 그 인스턴스나 소속 그룹의 Primary 가 사용 가능(AVAILABLE) 상태가 아니거나 Primary 가 다른 리전 인스턴스면 null(로그의 DB 시각 상한을 확정할 수 없음) |
+| latestRestorableYmdt | DateTime | 복원 가능한 가장 최근 시간<br/>- 트랜잭션 로그 아카이빙을 사용하는 DB 인스턴스는 해당 DB 인스턴스나 그룹의 Primary가 사용 가능(AVAILABLE) 상태가 아니거나 다른 리전에 있으면 null |
 | restorableBackups | Array | 복원 가능한 백업 목록 |
 | restorableBackups.backup | Object | 백업 정보 객체 |
 | restorableBackups.backup.backupId | UUID | 백업의 식별자 |
@@ -4090,38 +4090,38 @@ GET /v4.0/db-instances/{dbInstanceId}/restore-coverage
 | 이름 | 타입 | 설명 |
 |-----|-----|-----|
 | engine | String | DB 엔진 |
-| tier | Number | 표시된 구간 단계 (0=스냅샷 지점만, 1=정보성 연속 구간 포함). 아카이빙 설정과 무관 |
-| retentionFloorYmdt | DateTime | 복원 가능 하한 (보존 정책 좌측 끝) |
-| recoverableThroughYmdt | DateTime | AVAILABLE 소스의 정책상 최신 복원 대상 시각. 실제 복원에서 체인과 대상 도달을 검증한다. null=로그의 DB 시각 상한 미상. 연속 구간 보장이 아니다 |
-| recoveryTimeBasis | String | AVAILABLE_POLICY | UNKNOWN_LOG_TIME. UNKNOWN은 OBS 로그 부재나 스냅샷 복원 불가를 뜻하지 않는다 |
-| windows | Array | 복원 가능 구간들 (합집합, 시각 오름차순) |
+| tier | Number | 표시한 복원 가능 구간의 단계<br/>- `0`: 스냅샷 백업 시점만 표시<br/>- `1`: 연속 구간까지 표시<br/>- 트랜잭션 로그 아카이빙 설정과 관계없이 산출 |
+| retentionFloorYmdt | DateTime | 복원할 수 있는 가장 이른 시각(보존 기간의 시작) |
+| recoverableThroughYmdt | DateTime | 정책상 복원할 수 있는 가장 최근 시각<br/>- 실제 복원 시 로그 연속성과 대상 시각 도달 여부를 다시 검증<br/>- 로그의 DB 시각 상한을 확정할 수 없으면 null<br/>- 연속 구간을 보장하지 않음 |
+| recoveryTimeBasis | String | `recoverableThroughYmdt`의 산출 근거<br/>- `AVAILABLE_POLICY`: 사용 가능 상태인 DB 인스턴스의 보존 정책으로 산출<br/>- `UNKNOWN_LOG_TIME`: 로그의 DB 시각을 확정할 수 없음. Object Storage에 로그가 없거나 스냅샷 복원이 불가능하다는 의미는 아님 |
+| windows | Array | 복원 가능 구간 목록(겹치는 구간은 합침, 시각 오름차순) |
 | windows.fromYmdt | DateTime | 구간 시작 시각 |
-| windows.toYmdt | DateTime | 구간 끝 시각 (SNAPSHOT_ONLY 는 fromYmdt 와 동일한 복원 지점) |
-| windows.anchorBackupId | String | 이 구간을 여는 스냅샷 백업 식별자 |
-| windows.continuity | String | 연속성 (SNAPSHOT_ONLY | CONTINUOUS) |
-| windows.confidence | String | 신뢰도 (EXACT | INFORMATIONAL) |
-| windows.spansLineage | Boolean | 장애 조치 경계를 걸치는가 |
-| gaps | Array | 복구 가능 구간 사이의 공백 목록. 연속 구간이 없으면(tier=0) 항상 빈 목록 |
-| gaps.fromYmdt | DateTime | 로그 DB 시각 경계로 검증되지 않아 항상 null |
-| gaps.toYmdt | DateTime | 로그 DB 시각 경계로 검증되지 않아 항상 null |
-| gaps.cause | String | 원인 (CRITICAL_DROP | RETENTION_TRUNCATED | RECOVERY_PENDING) |
+| windows.toYmdt | DateTime | 구간 끝 시각<br/>- `continuity`가 `SNAPSHOT_ONLY`이면 `fromYmdt`와 같음 |
+| windows.anchorBackupId | String | 구간의 기준이 되는 스냅샷 백업의 식별자 |
+| windows.continuity | String | 구간의 연속성<br/>- `SNAPSHOT_ONLY`: 스냅샷 백업 시점으로만 복원 가능<br/>- `CONTINUOUS`: 구간 안의 시점으로 복원 가능 |
+| windows.confidence | String | 구간의 신뢰도<br/>- `EXACT`: 확정된 복원 지점<br/>- `INFORMATIONAL`: 참고용. 실제 복원 시 다시 검증 |
+| windows.spansLineage | Boolean | 장애 조치 경계를 걸치는지 여부 |
+| gaps | Array | 복원 가능 구간 사이의 공백 목록<br/>- `tier`가 `0`이면 항상 빈 목록 |
+| gaps.fromYmdt | DateTime | 현재 산출하지 않으므로 항상 null |
+| gaps.toYmdt | DateTime | 현재 산출하지 않으므로 항상 null |
+| gaps.cause | String | 공백 원인<br/>- `CRITICAL_DROP`: 스테이징 버퍼 임계 초과로 로그 적재 지연. 버퍼가 회복되면 재개<br/>- `RETENTION_TRUNCATED`: 적재 전에 로그가 유실되어 복구 불가<br/>- `RECOVERY_PENDING`: 이전 Primary의 스테이징 버퍼 볼륨에 미적재 로그가 남아 있어 회수하면 복구 가능 |
 | gaps.detectedAt | DateTime | 감지 시각 |
-| gaps.remediable | Boolean | '지금 백업' 조치로 연속성 재확립 가능한가 |
-| gaps.confidence | String | gap 판정 신뢰도. fromYmdt/toYmdt 는 항상 null |
-| failoverBoundaries | Array | 복원 타임라인이 가로지르는 장애 조치 경계 목록 |
-| failoverBoundaries.predecessorDbInstanceId | String | 구 마스터(선행) 인스턴스 식별자 |
-| failoverBoundaries.boundaryYmdt | DateTime | 장애 조치 경계 기록 시각(초 단위). 관리 호스트 시각이라 정보성이며, 이 시각을 넘는 시점 복원은 지원하지 않는다 |
-| failoverBoundaries.recoverable | Boolean | MySQL/MariaDB 는 경계를 넘는 시점 복원을 지원하지 않으므로 항상 false 다 (무손실 crossing 은 GTID 선행). 경계·누락 구간은 인지용으로만 표면화한다 |
-| failoverBoundaries.gapFromYmdt | DateTime | 로그 DB 시각으로 검증된 유실 구간 시작이 없어 항상 null |
-| failoverBoundaries.gapToYmdt | DateTime | 로그 DB 시각으로 검증된 유실 구간 끝이 없어 항상 null |
-| failoverBoundaries.confidence | String | 신뢰도 — v1 은 세그먼트 granularity 정보성 |
-| failoverBoundaries.unreachableWrites | Boolean | 전환 좌표 이후 구 Primary 컨테이너에 적재분이 남아 있는가 (true=있음·현 복원 타임라인으로 도달 불가 / false=없음 / null=판정하지 않음). MySQL/MariaDB 는 적재 시각 비교로만 판정한다(전환 좌표 없음 — GTID 선행) |
-| failoverBoundaries.unreachableFromYmdt | DateTime | 세그먼트 수만 판정하며 DB 시각 범위는 산출하지 않아 항상 null |
-| failoverBoundaries.unreachableToYmdt | DateTime | 세그먼트 수만 판정하며 DB 시각 범위는 산출하지 않아 항상 null |
-| failoverBoundaries.unreachableSegmentCount | Number | 도달 불가 로그의 세그먼트 수. MySQL/MariaDB 는 전환 좌표가 없어 항상 null |
-| failoverBoundaries.noteCode | String | 경계 원인의 기계 식별자. 클라이언트가 이 값으로 분기해 문장을 그린다 |
-| coverageRatio | Number | 산출하지 않는다. 항상 null |
-| asOfYmdt | DateTime | 산출 기준 시각 |
+| gaps.remediable | Boolean | 지금 백업을 수행하면 연속성을 다시 확보할 수 있는지 여부 |
+| gaps.confidence | String | 공백 판정의 신뢰도 |
+| failoverBoundaries | Array | 복원 기간 안에서 발생한 장애 조치 경계 목록 |
+| failoverBoundaries.predecessorDbInstanceId | String | 장애 조치 이전 Primary DB 인스턴스의 식별자 |
+| failoverBoundaries.boundaryYmdt | DateTime | 장애 조치 경계 시각(초 단위)<br/>- 관리 서버 기준 시각이므로 참고용<br/>- 경계를 넘는 시점 복원은 지원하지 않음 |
+| failoverBoundaries.recoverable | Boolean | 장애 조치 경계를 넘는 시점 복원 가능 여부<br/>- MySQL, MariaDB는 지원하지 않으므로 항상 `false` |
+| failoverBoundaries.gapFromYmdt | DateTime | 현재 산출하지 않으므로 항상 null |
+| failoverBoundaries.gapToYmdt | DateTime | 현재 산출하지 않으므로 항상 null |
+| failoverBoundaries.confidence | String | 판정의 신뢰도. 현재 항상 `INFORMATIONAL`(참고용) |
+| failoverBoundaries.unreachableWrites | Boolean | 장애 조치 이후 이전 Primary에만 남아 복원으로 도달할 수 없는 로그가 있는지 여부<br/>- `true`: 있음<br/>- `false`: 없음<br/>- null: 판정하지 않음 |
+| failoverBoundaries.unreachableFromYmdt | DateTime | 현재 산출하지 않으므로 항상 null |
+| failoverBoundaries.unreachableToYmdt | DateTime | 현재 산출하지 않으므로 항상 null |
+| failoverBoundaries.unreachableSegmentCount | Number | 도달할 수 없는 로그의 세그먼트 수. MySQL, MariaDB는 항상 null |
+| failoverBoundaries.noteCode | String | 장애 조치 경계의 원인 코드<br/>- `BOUNDARY_DETECTED`: 장애 조치 경계만 감지<br/>- `UNREACHABLE_WRITES_DETECTED`: 이전 Primary에 도달할 수 없는 로그가 있음 |
+| coverageRatio | Number | 현재 산출하지 않으므로 항상 null |
+| asOfYmdt | DateTime | 응답 산출 시각 |
 
 ---
 
@@ -4424,7 +4424,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/transaction-log-archiving
 
 | 이름 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|
-| enabled | Boolean | Y | 트랜잭션 로그 아카이빙 활성화 여부 (true 활성화 / false 비활성화)<br/>- 현재와 같으면 작업 없이 처리(`jobId` 는 null) |
+| enabled | Boolean | Y | 트랜잭션 로그 아카이빙 활성화 여부<br/>- `true`: 활성화<br/>- `false`: 비활성화<br/>- 현재 설정과 같으면 작업을 생성하지 않음(`jobId`는 null) |
 | retentionDays | Number | N | 트랜잭션 로그 아카이빙 보존 기간(일)<br/>- 1~35 정수. 생략하면 기존 값 유지<br/>- 사용 여부가 현재와 같으면 보존 기간만 즉시 변경<br/>- 최솟값: `1`<br/>- 최댓값: `35` |
 
 <a id="modify-transaction-log-archiving-response"></a>
