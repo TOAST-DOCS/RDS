@@ -1,3 +1,5 @@
+<!-- machine_translated: true -->
+
 <!-- pre-align:aligned sig=6e0e3f357ac5 -->
 
 <a id="database-rds-for-enginepascalcase-server-dashboard"></a>
@@ -59,6 +61,7 @@ You can view various performance metrics for DB instance in chart form. Each per
 | Swap Usage                 | swap used (bytes)<br> swap total (bytes)                                                                                             |                                                                |
 | Storage Usage              | storage used (%)                                                                                                                     |                                                                |
 | Remaining Storage Usage    | storage free (%)                                                                                                                     |                                                                |
+| Storage Details                 | Data (bytes)<br/>Binary Log (bytes)<br/>Free (bytes)                                                                                 | Displayed for metrics collected after November 2026                          |
 | Storage IO                 | disk read (bytes)<br> disk write (bytes)                                                                                             |                                                                |
 | Network Data Transfer      | nic incoming (bytes)<br> nic outgoing (bytes)                                                                                        | Default network transfer used by {{engine.pascalCase}} occurs. |
 | CPU Average Load           | 1m<br/>5m<br/>15m                                                                                                                    |                                                                |
