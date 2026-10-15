@@ -1,38 +1,34 @@
 ---
 name: translation-review
-description: nc-rds 용어집을 기준으로 이 저장소의 en/ja/zh 번역을 검토한다. 자동 번역 PR(`[Auto-Translate]`)이나 번역 브랜치의 diff 를 받아 반드시 고칠 오류, 용어집 위반, 문서 내 일관성 훼손, ko 원문 쪽 누락으로 나눠 보고한다. "번역 검토", "이 PR 번역 봐줘", "용어집 대조", "translation review", "check translation against glossary" 같은 요청에 사용한다. 새 문서를 번역하거나 ko 원문을 고치는 작업에는 사용하지 않는다.
+description: 팀 용어집(Dooray 위키 Ubiquitous Language)을 기준으로 이 저장소의 en/ja/zh 번역을 검토한다. 자동 번역 PR(`[Auto-Translate]`)이나 번역 브랜치의 diff 를 받아 반드시 고칠 오류, 용어집 위반, 문서 내 일관성 훼손, ko 원문 쪽 누락으로 나눠 보고한다. "번역 검토", "이 PR 번역 봐줘", "용어집 대조", "translation review", "check translation against glossary" 같은 요청에 사용한다. 새 문서를 번역하거나 ko 원문을 고치는 작업에는 사용하지 않는다.
 ---
 
 # 번역 검토
 
 * `ko/` 가 원문, `en/` `ja/` `zh/` 는 번역
-* 용어의 기준은 이 저장소가 아니라 nc-rds 용어집
+* 용어의 기준은 이 저장소가 아니라 팀 용어집(Dooray 위키 Ubiquitous Language)
 
 # 용어집
 
-* 저장소: https://github.nhnent.com/TOASTCloud/nc-rds (기본 브랜치 `develop`)
-
-| 엔진 | 경로 |
-| --- | --- |
-| MySQL, MariaDB | `mysql/docs/uniq-lang/glossary.md` |
-| PostgreSQL | `postgres/docs/uniq-lang/glossary.md` |
-
-* 로컬 클론이 있으면 `~/git/nc-rds` 아래 같은 경로를 사용
-* 없으면 아래 명령으로 확보
+* 정본은 Dooray 위키 `Ubiquitous Language` 아래 서비스별 페이지와 Common 페이지
+  * 예전 위치(nc-rds `mysql/docs/uniq-lang/glossary.md`, `postgres/docs/uniq-lang/glossary.md`)는 삭제됨
+* 읽기는 rds-claude-plugins 의 dooray 플러그인 `rds-dooray` 로 한다
+* 페이지는 nc-ubiq-lang 플러그인 `scripts/mapping.json` 에서 이 저장소 행의 `pageId` 와 `commonPageId`
+  * nc-ubiq-lang 플러그인이 있으면 `ubiq-lang` 스킬의 '용어 조회' 절차를 그대로 써도 된다
 
 ```bash
-gh api -H 'Accept: application/vnd.github.raw' \
-  --hostname github.nhnent.com \
-  repos/TOASTCloud/nc-rds/contents/mysql/docs/uniq-lang/glossary.md?ref=develop \
-  > /tmp/rv-glossary.md
+M=$(ls ~/.claude/plugins/cache/rds-claude-plugins/nc-ubiq-lang/*/scripts/mapping.json | tail -1)
+python3 -c 'import json,sys; m=json.load(open(sys.argv[1])); print(m["commonPageId"], *[s["pageId"] for s in m["services"] if s["repo"]=="TOAST-DOCS/RDS"])' "$M"
+rds-dooray wiki get <서비스 pageId> | python3 -c 'import json,sys; print(json.load(sys.stdin)["body"]["content"])' > /tmp/rv-glossary.md
+rds-dooray wiki get <Common pageId> | python3 -c 'import json,sys; print(json.load(sys.stdin)["body"]["content"])' > /tmp/rv-glossary-common.md
 ```
 
 * `(공통 모듈)` 표식 항목은 양 엔진 공통
-* 용어집 상단 표기 규칙(영문과 한글 사이 공백, 영어 첫 글자 대문자, 축약어 전부 대문자)도 판정 근거
+* 서비스 페이지와 Common 페이지의 표기 규칙(영문과 한글 사이 공백, 영어 첫 글자 대문자, 축약어 전부 대문자 등)도 판정 근거
 * 한글, 영어, 일본어 열만 뽑아 대조표로 사용
 
 ```bash
-grep -E '^\| [^-]' ~/git/nc-rds/mysql/docs/uniq-lang/glossary.md | cut -d'|' -f2-4 | grep -v ' 한글 '
+grep -E '^\| [^-]' /tmp/rv-glossary.md | cut -d'|' -f2-4 | grep -v ' 한글 '
 ```
 
 * 이 문서의 코드 블록에 달러 기호와 숫자로 이루어진 위치 변수를 쓰지 않음
