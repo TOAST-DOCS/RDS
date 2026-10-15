@@ -503,8 +503,8 @@ On the details screen of a DB instance group that uses transaction log archiving
 |---|---|
 | Summary | Retention period, archive usage, and the number of pending segments for the current Primary |
 | Archive Usage Trend | Changes in archive usage per DB instance |
-| Load Status by Container | Upload status and missing segments per DB instance that was Primary |
-| Upload Delay Trend | Changes in the number of pending segments per DB instance |
+| Archive Status by Container | Upload status and missing segments per DB instance that was Primary |
+| Upload Lag Trend | Changes in the number of pending segments per DB instance |
 | Restore Coverage | The time at which a point-in-time restore can be requested |
 
 A segment refers to a single binary log file. If the upload status is displayed as **Delayed** or **Stopped**, it means the binary log is not being uploaded to Object Storage in a timely manner.
@@ -521,7 +521,7 @@ Periods during which binary logs could not be uploaded to Object Storage are dis
 
 DB instance groups that use transaction log archiving can perform a point-in-time restore to a point in time before the failover by using a backup created before the failover. In this case, use [Restore with Timestamp](#point-in-time-restoration-restore-with-timestamp). Because point-in-time restore across a failover boundary is not supported, a backup created after the failover is required to restore to a time after the failover.
 
-Depending on the failover, some points in time immediately before the failover, or the entire period before the failover, may not be restorable. If the entire period before the failover cannot be restored, **Transition Coordinates Missing** is displayed in Load Status by Container on the Transaction Log Archiving tab. You can check the available points in time in the restore coverage on the point-in-time restore screen.
+Depending on the failover, some points in time immediately before the failover, or the entire period before the failover, may not be restorable. If the entire period before the failover cannot be restored, **Transition Coordinates Missing** is displayed in Archive Status by Container on the Transaction Log Archiving tab. You can check the available points in time in the restore coverage on the point-in-time restore screen.
 
 <a id="transaction-log-archiving-pricing"></a>
 ### Transaction Log Archiving Pricing { #transaction-log-archiving-pricing }

@@ -380,7 +380,7 @@ Select a DB Instance Group from the DB instance list to view its detailed inform
 |---|---|
 | Basic Information | Displays the DB Instance Group name and ID, high availability configuration, Primary and Standby names, Ping settings, and whether transaction log archiving is enabled. |
 | DB Schema and Users | Manages the DB schemas and users of DB instances in the group. The DB schema and user features are provided in the DB Instance Group details, not in the individual DB instance details. |
-| Transaction Log Archiving | Displays the loading status, usage, and restore coverage of the transaction log archive. This is displayed only for groups that use transaction log archiving. For more information, see [Transaction Log Archiving Tab](backup-and-restore/#transaction-log-archiving-tab). |
+| Transaction Log Archiving | Displays the archiving status, usage, and restore coverage of the transaction log archive. This is displayed only for groups that use transaction log archiving. For more information, see [Transaction Log Archiving Tab](backup-and-restore/#transaction-log-archiving-tab). |
 
 <a id="db-schema-and-users"></a>
 ### DB Schema and Users { #db-schema-and-users }
