@@ -189,7 +189,7 @@ size of backup storage. You can export to NHN Cloud Object Storage if necessary.
 <a id="transaction-log-archiving"></a>
 ### Transaction Log Archiving { #transaction-log-archiving }
 
-You can configure Binary log to be stored in Object Storage for use in point-in-time restore. If you select **Enable**, enter a retention period as an integer between 1 and 35 days. The default value is **Disable**, and the default retention period is 7 days. When transaction log archiving is enabled, additional charges are incurred based on staging buffer volume and archive usage. For more information, see [Transaction Log Archiving](backup-and-restore/#transaction-log-archiving).
+You can configure binary logs to be stored in Object Storage for use in point-in-time restore. If you select **Enable**, enter a retention period as an integer between 1 and 35 days. The default value is **Disable**, and the default retention period is 7 days. When transaction log archiving is enabled, additional charges are incurred based on staging buffer volume and archive usage. For more information, see [Transaction Log Archiving](backup-and-restore/#transaction-log-archiving).
 
 <a id="maintenance"></a>
 ### Maintenance { #maintenance }
@@ -380,7 +380,7 @@ Select a DB Instance Group from the DB instance list to view its detailed inform
 |---|---|
 | Basic Information | Displays the DB Instance Group name and ID, high availability configuration, Primary and Standby names, Ping settings, and whether transaction log archiving is enabled. |
 | DB Schema and Users | Manages the DB schemas and users of DB instances in the group. The DB schema and user features are provided in the DB Instance Group details, not in the individual DB instance details. |
-| Transaction Log Archiving | Displays the loading status, usage, and restorable range of the transaction log archive. This is displayed only for groups that use transaction log archiving. For more information, see [Transaction Log Archiving Tab](backup-and-restore/#transaction-log-archiving-tab). |
+| Transaction Log Archiving | Displays the loading status, usage, and restore coverage of the transaction log archive. This is displayed only for groups that use transaction log archiving. For more information, see [Transaction Log Archiving Tab](backup-and-restore/#transaction-log-archiving-tab). |
 
 <a id="db-schema-and-users"></a>
 ### DB Schema and Users { #db-schema-and-users }
@@ -540,7 +540,7 @@ You can change the following items on the modification screen:
     * If a task is in progress in a DB Instance Group, you cannot change the transaction log archiving settings or modify the group.
 
 !!! tip "Note"
-    Whether to use transaction log archiving and the retention period are applied when you click **Modify DB Instance Group** along with other settings. For more information, see [Transaction Log Archiving](backup-and-restore/#transaction-log-archiving).
+    Whether to use transaction log archiving and the retention period are applied when you click **Update DB Instance Group** along with other settings. For more information, see [Transaction Log Archiving](backup-and-restore/#transaction-log-archiving).
 
 <a id="db-schema-direct-user-control"></a>
 ### DB Schema & Direct User Control { #db-schema-direct-user-control }
@@ -771,8 +771,8 @@ Select the binary log and press **Confirm** to delete all binary logs created pr
 {{/if}}
 
 !!! danger "Caution"
-    Depending on the deleted binary log, restoration to a specific point in time may not be available.
-    If you use transaction log archiving and delete binary logs that have not yet been uploaded to Object Storage, point-in-time restoration is not available for that interval. Before performing storage cleanup, check that the upload status is **Normal** and the number of pending upload segments is 0 on the **Transaction Log Archiving** tab in the group details screen.
+    Depending on the deleted binary logs, point-in-time restoration may not be possible.
+    If you use transaction log archiving and delete binary logs that have not yet been uploaded to Object Storage, point-in-time restoration is not available for that interval. Before using Secure Capacity, check that the upload status is **Normal** and the number of pending segments is 0 on the **Transaction Log Archiving** tab in the group details screen.
 
 <a id="expand-storage-size"></a>
 ## Expand Storage Size { #expand-storage-size }
@@ -1008,7 +1008,7 @@ You can change whether to enable transaction log archiving for a DB instance gro
 3. In the pop-up window, select **Enable** or **Disable**.
 4. Click **Confirm**.
 
-The change request is processed asynchronously, and an event is generated when it completes or fails. The retention period cannot be changed from this menu; change it in [Modify DB Instance Group](#modify-db-instance-group). For more information, see [Transaction Log Archiving](backup-and-restore/#transaction-log-archiving).
+The change request is processed asynchronously, and an event is generated when it completes or fails. The retention period cannot be changed from this menu; change it in [Update DB Instance Group](#modify-db-instance-group). For more information, see [Transaction Log Archiving](backup-and-restore/#transaction-log-archiving).
 
 !!! danger "Caution"
     * If you change it to **Enable**, additional charges apply based on staging buffer volume and archive usage.

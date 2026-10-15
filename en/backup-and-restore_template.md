@@ -313,7 +313,7 @@ When restoring with a timestamp, proceed with the restoration based on the backu
 
 ❷ Select a restore time. You can restore to the most recent point in time, or you can enter a specific point in time.
 
-For DB instance groups that use transaction log archiving, the **Restorable Range** bar is displayed when you select a restore time. Clicking a blue range allows you to select a restore time within that range, and clicking a backup (◆) sets the restore time to the time of that backup. For more information, see [Restorable Range](#restore-coverage).
+For DB instance groups that use transaction log archiving, the **Restore Coverage** bar is displayed when you select a restore time. Clicking a blue range allows you to select a restore time within that range, and clicking a backup (◆) sets the restore time to the time of that backup. For more information, see [Restore Coverage](#restore-coverage).
 
 ![point-in-time-restoration-03-en]({{url.cdn}}/24.03.12/point-in-time-restoration-03-en.png)
 
@@ -474,7 +474,7 @@ Transaction log archiving is a feature that stores Primary binary logs in Object
 <a id="transaction-log-archiving-settings"></a>
 ### Transaction Log Archiving Settings { #transaction-log-archiving-settings }
 
-When creating a DB instance, you can select **Enable** under **Transaction Log Archiving** in the backup settings. After creation, you can change it in [Modify DB Instance Group](db-instance/#modify-db-instance-group) or [Change Transaction Log Archiving](db-instance/#change-transaction-log-archiving).
+When creating a DB instance, you can select **Enable** under **Transaction Log Archiving** in the backup settings. After creation, you can change it in [Update DB Instance Group](db-instance/#modify-db-instance-group) or [Change Transaction Log Archiving](db-instance/#change-transaction-log-archiving).
 
 The retention period is the duration for which transaction log archives are stored. It can be set between 1 and 35 days, with a default of 7 days. Transaction log archives older than the retention period are automatically deleted. The point-in-time restoration range is determined by whichever is longer — the archive retention period or the DB instance's binary log retention period — and there must be a restorable backup within that range.
 
@@ -501,27 +501,27 @@ On the details screen of a DB instance group that uses transaction log archiving
 
 | Item | Description |
 |---|---|
-| Summary | Retention period, archive usage, and the number of upload-pending segments for the current Primary |
+| Summary | Retention period, archive usage, and the number of pending segments for the current Primary |
 | Archive Usage Trend | Changes in archive usage per DB instance |
 | Load Status by Container | Upload status and missing segments per DB instance that was Primary |
-| Upload Delay Trend | Changes in the number of upload-pending segments per DB instance |
-| Restorable Range | The time at which a point-in-time restore can be requested |
+| Upload Delay Trend | Changes in the number of pending segments per DB instance |
+| Restore Coverage | The time at which a point-in-time restore can be requested |
 
 A segment refers to a single binary log file. If the upload status is displayed as **Delayed** or **Stopped**, it means the binary log is not being uploaded to Object Storage in a timely manner.
 
 <a id="restore-coverage"></a>
-### Restorable Time Range { #restore-coverage }
+### Restore Coverage { #restore-coverage }
 
-The restorable time range displays a bar chart showing the times at which you can request a point-in-time restore using backups and transaction log archives. Blue sections indicate times available for point-in-time restore requests, gray sections indicate times that cannot be restored, ◆ represents backups, and numbered vertical lines represent Failovers. On the Transaction Log Archiving tab, click a blue section or a backup (◆) to open the point-in-time restore screen.
+Restore coverage displays a bar chart showing the times at which you can request a point-in-time restore using backups and transaction log archives. Blue sections indicate times available for point-in-time restore requests, gray sections indicate times that cannot be restored, ◆ represents backups, and numbered vertical lines represent failovers. On the Transaction Log Archiving tab, click a blue section or a backup (◆) to open the point-in-time restore screen.
 
-Periods during which Binary logs could not be uploaded to Object Storage are displayed as **log gaps**, and point-in-time restore is not available for times within these periods. To restore to a time after a log gap, a backup created after the log gap is required, so it is recommended to perform a backup when a log gap occurs.
+Periods during which binary logs could not be uploaded to Object Storage are displayed as **log gaps**, and point-in-time restore is not available for times within these periods. To restore to a time after a log gap, a backup created after the log gap is required, so it is recommended to perform a backup when a log gap occurs.
 
 <a id="failover-and-point-in-time-restoration"></a>
 ### Failover and Point-In-Time Restore { #failover-and-point-in-time-restoration }
 
 DB instance groups that use transaction log archiving can perform a point-in-time restore to a point in time before the failover by using a backup created before the failover. In this case, use [Restore with Timestamp](#point-in-time-restoration-restore-with-timestamp). Because point-in-time restore across a failover boundary is not supported, a backup created after the failover is required to restore to a time after the failover.
 
-Depending on the failover, some points in time immediately before the failover, or the entire period before the failover, may not be restorable. If the entire period before the failover cannot be restored, **Switchover Coordinate Not Available** is displayed in the container-specific loading status on the Transaction Log Archiving tab. You can check the available points in time in the restorable period on the point-in-time restore screen.
+Depending on the failover, some points in time immediately before the failover, or the entire period before the failover, may not be restorable. If the entire period before the failover cannot be restored, **Transition Coordinates Missing** is displayed in Load Status by Container on the Transaction Log Archiving tab. You can check the available points in time in the restore coverage on the point-in-time restore screen.
 
 <a id="transaction-log-archiving-pricing"></a>
 ### Transaction Log Archiving Pricing { #transaction-log-archiving-pricing }
@@ -535,4 +535,4 @@ When you use transaction log archiving, the following fees are charged additiona
 
 * If you disable transaction log archiving, archive usage fees are not charged from the next hour.
 * If you delete a DB instance while transaction log archiving is enabled, the transaction log archive is retained for the retention period, and archive usage fees are charged during that time.
-* If a Failover occurs, a staging buffer volume is added to the new Primary, and volume fees for the previous Primary's staging buffer volume are charged together until the remaining Binary logs are uploaded and deleted.
+* If a failover occurs, a staging buffer volume is added to the new Primary, and volume fees for the previous Primary's staging buffer volume are charged together until the remaining binary logs are uploaded and the volume is deleted.
