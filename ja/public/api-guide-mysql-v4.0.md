@@ -4001,14 +4001,14 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 ---
 
 <a id="view-restore-coverage"></a>
-### DBインスタンスの復元可能期間の照会 { #view-restore-coverage }
+### DBインスタンスの復元可能区間の照会 { #view-restore-coverage }
 
 <a id="view-restore-coverage-required-permissions"></a>
 #### 必要権限
 
 | 権限名 | 説明 |
 |-----|-----|
-| RDSforMySQL:DbInstance.Get | DBインスタンスの復元可能期間の照会 |
+| RDSforMySQL:DbInstance.Get | DBインスタンスの復元可能区間の照会 |
 
 <a id="view-restore-coverage-request"></a>
 #### リクエスト
@@ -4092,18 +4092,18 @@ GET /v4.0/db-instances/{dbInstanceId}/restore-coverage
 | 名前 | 形式 | 説明 |
 |-----|-----|-----|
 | engine | String | DBエンジン |
-| tier | Number | 表示した復元可能期間のステップ<br/>- `0`: スナップショットバックアップの時点のみ表示<br/>- `1`: 連続する期間まで表示<br/>- トランザクションログアーカイビング設定に関係なく算出 |
+| tier | Number | 表示した復元可能区間のステップ<br/>- `0`: スナップショットバックアップの時点のみ表示<br/>- `1`: 連続する区間まで表示<br/>- トランザクションログアーカイビング設定に関係なく算出 |
 | retentionFloorYmdt | DateTime | 復元できる最も早い時刻(保存期間の開始) |
-| recoverableThroughYmdt | DateTime | ポリシー上、復元できる最も新しい時刻<br/>- 実際の復元時に、ログの連続性と対象時刻への到達可否を再検証<br/>- ログのDB時刻の上限を確定できない場合はnull<br/>- 連続した期間は保証しない |
+| recoverableThroughYmdt | DateTime | ポリシー上、復元できる最も新しい時刻<br/>- 実際の復元時に、ログの連続性と対象時刻への到達可否を再検証<br/>- ログのDB時刻の上限を確定できない場合はnull<br/>- 連続した区間は保証しない |
 | recoveryTimeBasis | String | `recoverableThroughYmdt`の算出根拠<br/>- `AVAILABLE_POLICY`: 使用可能な状態のDBインスタンスの保存ポリシーで算出<br/>- `UNKNOWN_LOG_TIME`: ログのDB時刻を確定できない。Object Storageにログがないか、スナップショット復元が不可能という意味ではない |
-| windows | Array | 復元可能期間のリスト(重複する期間は結合、時刻の昇順) |
-| windows.fromYmdt | DateTime | 期間の開始時刻 |
-| windows.toYmdt | DateTime | 期間の終了時刻<br/>- `continuity`が`SNAPSHOT_ONLY`の場合は`fromYmdt`と同じ |
+| windows | Array | 復元可能区間のリスト(重複する区間は結合、時刻の昇順) |
+| windows.fromYmdt | DateTime | 区間の開始時刻 |
+| windows.toYmdt | DateTime | 区間の終了時刻<br/>- `continuity`が`SNAPSHOT_ONLY`の場合は`fromYmdt`と同じ |
 | windows.anchorBackupId | String | 基準バックアップの識別子 |
-| windows.continuity | String | 期間の連続性<br/>- `SNAPSHOT_ONLY`: スナップショットバックアップの時点のみ復元可能<br/>- `CONTINUOUS`: 期間内の時点に復元可能 |
-| windows.confidence | String | 期間の信頼度<br/>- `EXACT`: 確定した復元ポイント<br/>- `INFORMATIONAL`: 参考用。実際の復元時に再検証 |
+| windows.continuity | String | 区間の連続性<br/>- `SNAPSHOT_ONLY`: スナップショットバックアップの時点のみ復元可能<br/>- `CONTINUOUS`: 区間内の時点に復元可能 |
+| windows.confidence | String | 区間の信頼度<br/>- `EXACT`: 確定した復元ポイント<br/>- `INFORMATIONAL`: 参考用。実際の復元時に再検証 |
 | windows.spansLineage | Boolean | フェイルオーバー境界にまたがるかどうか |
-| gaps | Array | 復元可能期間の間のアーカイブギャップのリスト<br/>- `tier`が`0`の場合は常に空のリスト |
+| gaps | Array | 復元可能区間の間のアーカイブギャップのリスト<br/>- `tier`が`0`の場合は常に空のリスト |
 | gaps.fromYmdt | DateTime | 現在は算出しないため、常にnull |
 | gaps.toYmdt | DateTime | 現在は算出しないため、常にnull |
 | gaps.cause | String | アーカイブギャップの原因<br/>- `CRITICAL_DROP`: ステージングバッファのしきい値超過によりログの書き込みが遅延。バッファが回復すると再開<br/>- `RETENTION_TRUNCATED`: 書き込み前にログが消失し、復旧不可<br/>- `RECOVERY_PENDING`: 以前のPrimaryのステージングバッファボリュームに未書き込みのログが残っており、回収すれば復旧可能 |
