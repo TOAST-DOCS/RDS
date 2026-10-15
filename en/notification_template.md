@@ -178,9 +178,9 @@ Event refers to an important event that occurs either by RDS for {{engine.pascal
 | INSTC_79_04 | INSTANCE          | Yes        | Enabling transaction log archiving failed                    |
 | INSTC_80_01 | INSTANCE          | Yes        | Disabling transaction log archiving completed                    |
 | INSTC_80_04 | INSTANCE          | Yes        | Disabling transaction log archiving failed                    |
-| INSTC_81_04 | INSTANCE          | Yes        | Transaction log archiving delay or interruption detected              |
-| INSTC_81_05 | INSTANCE          | Yes        | Transaction log archive permanent gap detected                 |
-| INSTC_82_04 | INSTANCE          | Yes        | Failed to attach transaction log archive staging buffer volume         |
+| INSTC_81_04 | INSTANCE          | Yes        | Transaction log archive delay or stop detected                        |
+| INSTC_81_05 | INSTANCE          | Yes        | Transaction log archive unrecoverable gap detected             |
+| INSTC_82_04 | INSTANCE          | Yes        | Failed to connect transaction log staging buffer volume                |
 | JOB_01_04         | JOB               | Yes          | Job execution failed                                                          |
 | TENAT_01_04       | TENANT            | Yes          | CPU cores limit                                                               |
 | TENAT_02_04       | TENANT            | Yes          | RAM capacity limit	                                                           |
