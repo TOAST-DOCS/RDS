@@ -159,6 +159,7 @@ This API does not require a request body.
         {
             "dbVersion": "MYSQL_V8411",
             "dbVersionName": "MySQL 8.4.11",
+            "canCreate": true,
             "restorableFromObs": true
         }
     ]
@@ -172,6 +173,7 @@ This API does not require a request body.
 | dbVersions | Array | DB engine list |
 | dbVersions.dbVersion | Enum | DB engine version |
 | dbVersions.dbVersionName | String | DB engine version name |
+| dbVersions.canCreate | Boolean | Available for creation |
 | dbVersions.restorableFromObs | Boolean | Whether restoration from Object Storage is available |
 
 ---
@@ -593,6 +595,8 @@ This API does not require a request body.
     "dbInstanceGroups": [
         {
             "dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
+            "dbInstanceGroupName": "dbInstanceGroupName-example",
+            "dbInstanceGroupStatus": "CREATED",
             "replicationType": "STANDALONE",
             "createdYmdt": "2023-12-31T15:00:00+09:00",
             "updatedYmdt": "2023-12-31T15:00:00+09:00"
@@ -607,6 +611,8 @@ This API does not require a request body.
 |-----|-----|-----|
 | dbInstanceGroups | Array | DB instance groups |
 | dbInstanceGroups.dbInstanceGroupId | UUID | DB instance group identifier |
+| dbInstanceGroups.dbInstanceGroupName | String | Name to identify DB instance groups |
+| dbInstanceGroups.dbInstanceGroupStatus | Enum | Current status of the DB instance group<br/>- `CREATED`: Created<br/>- `DELETED`: Deleted |
 | dbInstanceGroups.replicationType | Enum | DB instance group replication type<br/>- `STANDALONE`: High availability is not used<br/>- `HIGH_AVAILABILITY`: High availability is used |
 | dbInstanceGroups.createdYmdt | DateTime | Created date and time (YYYY-MM-DDThh:mm:ss.SSSTZD) |
 | dbInstanceGroups.updatedYmdt | DateTime | Modified date and time (YYYY-MM-DDThh:mm:ss.SSSTZD) |
@@ -649,6 +655,8 @@ This API does not require a request body.
         "isSuccessful": true
     },
     "dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
+    "dbInstanceGroupName": "dbInstanceGroupName-example",
+    "dbInstanceGroupStatus": "CREATED",
     "replicationType": "STANDALONE",
     "dbInstances": [
         {
@@ -667,10 +675,12 @@ This API does not require a request body.
 | Name | Format | Description |
 |-----|-----|-----|
 | dbInstanceGroupId | UUID | DB instance group identifier |
+| dbInstanceGroupName | String | Name to identify DB instance groups |
+| dbInstanceGroupStatus | Enum | Current status of the DB instance group<br/>- `CREATED`: Created<br/>- `DELETED`: Deleted |
 | replicationType | Enum | DB instance group replication type<br/>- `STANDALONE`: High availability is not used<br/>- `HIGH_AVAILABILITY`: High availability is used |
 | dbInstances | Array | DB instances belong to DB instance group |
 | dbInstances.dbInstanceId | UUID | DB instance identifier |
-| dbInstances.dbInstanceType | Enum | Role type of DB instance<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`: Read replica |
+| dbInstances.dbInstanceType | Enum | Role type of DB instance<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`: Read Replica |
 | dbInstances.dbInstanceStatus | Enum | DB instance current status<br/>- `BEFORE_CREATE`: Before creation (gray)<br/>- `AVAILABLE`: Available (green)<br/>- `STORAGE_FULL`: Insufficient capacity (red)<br/>- `FAIL_TO_CREATE`: Failed to create (red)<br/>- `FAIL_TO_CONNECT`: Failed to connect (red)<br/>- `REPLICATION_STOP`: Replication stopped (red)<br/>- `REPLICATION_DELAY`: Replication delayed (yellow)<br/>- `FAILOVER`: Failover completed (red)<br/>- `SHUTDOWN`: Stopped (gray)<br/>- `DELETED`: Deleted (gray) |
 | createdYmdt | DateTime | Created date and time (YYYY-MM-DDThh:mm:ss.SSSTZD) |
 | updatedYmdt | DateTime | Modified date and time (YYYY-MM-DDThh:mm:ss.SSSTZD) |
@@ -780,11 +790,11 @@ This API does not require a request body.
 | dbInstances | Array | DB instances |
 | dbInstances.dbInstanceId | UUID | DB instance identifier |
 | dbInstances.dbInstanceGroupId | UUID | DB instance group identifier |
-| dbInstances.dbInstanceName | String | Name to identify the primary DB instance |
+| dbInstances.dbInstanceName | String | Name to identify the Primary DB instance |
 | dbInstances.description | String | Additional information of DB instance |
 | dbInstances.dbVersion | Enum | DB engine version |
 | dbInstances.dbPort | Number | DB port |
-| dbInstances.dbInstanceType | Enum | Role type of DB instance<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`: Read replica |
+| dbInstances.dbInstanceType | Enum | Role type of DB instance<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`: Read Replica |
 | dbInstances.dbInstanceStatus | Enum | DB instance current status<br/>- `BEFORE_CREATE`: Before creation (gray)<br/>- `AVAILABLE`: Available (green)<br/>- `STORAGE_FULL`: Insufficient capacity (red)<br/>- `FAIL_TO_CREATE`: Failed to create (red)<br/>- `FAIL_TO_CONNECT`: Failed to connect (red)<br/>- `REPLICATION_STOP`: Replication stopped (red)<br/>- `REPLICATION_DELAY`: Replication delayed (yellow)<br/>- `FAILOVER`: Failover completed (red)<br/>- `SHUTDOWN`: Stopped (gray)<br/>- `DELETED`: Deleted (gray) |
 | dbInstances.progressStatus | Enum | DB instance current progress status |
 | dbInstances.createdYmdt | DateTime | Created date and time (YYYY-MM-DDThh:mm:ss.SSSTZD) |
@@ -856,7 +866,7 @@ POST /v3.0/db-instances
 
 | Name | Format | Required | Description |
 |-----|-----|-----|-----|
-| dbInstanceName | String | Y | Name to identify the primary DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
+| dbInstanceName | String | Y | Name to identify the Primary DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
 | dbInstanceCandidateName | String | N | Name to identify the standby DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
 | description | String | N | Additional information of DB instance<br/>- Maximum length: `100` |
 | dbFlavorId | UUID | Y | Identifier of DB instance specifications |
@@ -983,7 +993,7 @@ POST /v3.0/db-instances/restore-from-obs
 
 | Name | Format | Required | Description |
 |-----|-----|-----|-----|
-| dbInstanceName | String | N | Name to identify the primary DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
+| dbInstanceName | String | N | Name to identify the Primary DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
 | dbInstanceCandidateName | String | N | Name to identify the standby DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
 | description | String | N | Additional information of DB instance<br/>- Maximum length: `100` |
 | dbFlavorId | UUID | Y | Identifier of DB instance specifications |
@@ -1142,11 +1152,11 @@ This API does not require a request body.
 |-----|-----|-----|
 | dbInstanceId | UUID | DB instance identifier |
 | dbInstanceGroupId | UUID | DB instance group identifier |
-| dbInstanceName | String | Name to identify the primary DB instance |
+| dbInstanceName | String | Name to identify the Primary DB instance |
 | description | String | Additional information of DB instance |
 | dbVersion | Enum | DB engine version |
 | dbPort | Number | DB port |
-| dbInstanceType | Enum | Role type of DB instance<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`: Read replica |
+| dbInstanceType | Enum | Role type of DB instance<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`: Read Replica |
 | dbInstanceStatus | Enum | DB instance current status<br/>- `BEFORE_CREATE`: Before creation (gray)<br/>- `AVAILABLE`: Available (green)<br/>- `STORAGE_FULL`: Insufficient capacity (red)<br/>- `FAIL_TO_CREATE`: Failed to create (red)<br/>- `FAIL_TO_CONNECT`: Failed to connect (red)<br/>- `REPLICATION_STOP`: Replication stopped (red)<br/>- `REPLICATION_DELAY`: Replication delayed (yellow)<br/>- `FAILOVER`: Failover completed (red)<br/>- `SHUTDOWN`: Stopped (gray)<br/>- `DELETED`: Deleted (gray) |
 | progressStatus | Enum | DB instance current progress status |
 | dbFlavorId | UUID | Identifier of DB instance specifications |
@@ -1208,7 +1218,7 @@ PUT /v3.0/db-instances/{dbInstanceId}
 
 | Name | Format | Required | Description |
 |-----|-----|-----|-----|
-| dbInstanceName | String | N | Name to identify the primary DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
+| dbInstanceName | String | N | Name to identify the Primary DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
 | dbInstanceCandidateName | String | N | Name to identify the standby DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
 | description | String | N | Additional information of DB instance<br/>- Maximum length: `100` |
 | dbPort | Number | N | DB port<br/>- Minimum value: 3306, Maximum value: 43306 |
@@ -1219,8 +1229,8 @@ PUT /v3.0/db-instances/{dbInstanceId}
 | dbSecurityGroupIds | Array | N | DB security group identifiers |
 | executeBackup | Boolean | N | Whether to perform a backup at the current point in time<br/>- Default: `false` |
 | useOnlineFailover | Boolean | N | Whether to restart using failover<br/>- Default: `false` |
-| waitReplicationDelay | Boolean | N | Wait for replication delay to be resolved<br/>- Default: `false` |
-| useReadOnly | Boolean | N | Block write load<br/>- Default: `false` |
+| waitReplicationDelay | Boolean | N | Whether to wait for replication delay to be resolved<br/>- Default: `false` |
+| useReadOnly | Boolean | N | Whether to block write load<br/>- Default: `false` |
 
 <a id="update-db-instance-response"></a>
 #### Response
@@ -2650,7 +2660,7 @@ POST /v3.0/db-instances/{dbInstanceId}/replicate
 
 | Name | Format | Required | Description |
 |-----|-----|-----|-----|
-| dbInstanceName | String | Y | Name to identify the primary DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
+| dbInstanceName | String | Y | Name to identify the Primary DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
 | description | String | N | Additional information of DB instance<br/>- Maximum length: `100` |
 | dbFlavorId | UUID | N | Identifier of DB instance specifications |
 | dbPort | Number | Y | DB port<br/>- Minimum value: 3306, Maximum value: 43306 |
@@ -2738,8 +2748,8 @@ POST /v3.0/db-instances/{dbInstanceId}/restart
 |-----|-----|-----|-----|
 | useOnlineFailover | Boolean | N | Whether to restart using failover<br/>- Default: `false` |
 | executeBackup | Boolean | N | Whether to perform a backup at the current point in time<br/>- Default: `false` |
-| waitReplicationDelay | Boolean | N | Wait for replication delay to be resolved<br/>- Default: `false` |
-| useReadOnly | Boolean | N | Block write load<br/>- Default: `false` |
+| waitReplicationDelay | Boolean | N | Whether to wait for replication delay to be resolved<br/>- Default: `false` |
+| useReadOnly | Boolean | N | Whether to block write load<br/>- Default: `false` |
 
 <a id="restart-db-instance-response"></a>
 #### Response
@@ -2931,7 +2941,7 @@ POST /v3.0/db-instances/{dbInstanceId}/restore
 
 | Name | Format | Required | Description |
 |-----|-----|-----|-----|
-| dbInstanceName | String | N | Name to identify the primary DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
+| dbInstanceName | String | N | Name to identify the Primary DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
 | dbInstanceCandidateName | String | N | Name to identify the standby DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
 | description | String | N | Additional information of DB instance<br/>- Maximum length: `100` |
 | dbFlavorId | UUID | Y | Identifier of DB instance specifications |
@@ -2982,7 +2992,7 @@ You can only restore to a point in time earlier than the latest restorable time 
 | restore.binLog.binLogFileName | String | N | Binary log name to use for restoration |
 | restore.binLog.binLogPosition | Number | N | Binary log location to use for restoration |
 
-For point-in-time restoration using binary logs, you can restore the logs recorded after the binary log file and position of the reference backup.
+For point-in-time restoration using binary logs, you can restore the logs recorded after the binary log file and position of the baseline backup.
 
 <a id="restore-db-instance-restoretype-backup"></a>
 #### Request when restoring from backup (if restoreType is `BACKUP`)
@@ -3491,7 +3501,7 @@ POST /v3.0/backups/{backupId}/restore
 
 | Name | Format | Required | Description |
 |-----|-----|-----|-----|
-| dbInstanceName | String | Y | Name to identify the primary DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
+| dbInstanceName | String | Y | Name to identify the Primary DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
 | description | String | N | Additional information of DB instance<br/>- Maximum length: `100` |
 | dbFlavorId | UUID | Y | Identifier of DB instance specifications |
 | dbPort | Number | Y | DB port<br/>- Minimum value: 3306, Maximum value: 43306 |
@@ -4936,7 +4946,7 @@ This API does not require a request body.
 | isEnabled | Boolean | Indicates whether the flavor is enabled |
 | dbInstances | Array | DB Instances to monitor |
 | dbInstances.dbInstanceId | UUID | DB instance identifier |
-| dbInstances.dbInstanceName | String | Name to identify the primary DB instance |
+| dbInstances.dbInstanceName | String | Name to identify the Primary DB instance |
 | userGroups | Array | User Groups |
 | userGroups.userGroupId | UUID | User group identifier |
 | userGroups.userGroupName | String | Name to identify user groups |

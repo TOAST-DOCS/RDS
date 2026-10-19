@@ -1,4 +1,4 @@
-<!-- pre-align:aligned sig=1272d3144247 -->
+<!-- pre-align:aligned sig=2f6052327104 -->
 
 <a id="database-rds-for-enginepascalcase-api-guide"></a>
 ## Database > RDS for MySQL > API 가이드 { #database-rds-for-enginepascalcase-api-guide }
@@ -161,6 +161,7 @@ GET /v4.0/db-versions
         {
             "dbVersion": "MYSQL_V8411",
             "dbVersionName": "MySQL 8.4.11",
+            "canCreate": true,
             "restorableFromObs": true
         }
     ]
@@ -174,6 +175,7 @@ GET /v4.0/db-versions
 | dbVersions | Array | DB 엔진 목록 |
 | dbVersions.dbVersion | Enum | DB 엔진 버전 |
 | dbVersions.dbVersionName | String | DB 엔진 버전명 |
+| dbVersions.canCreate | Boolean | 생성 가능 여부 |
 | dbVersions.restorableFromObs | Boolean | Object Storage에서 복원 가능 여부 |
 
 ---
@@ -601,6 +603,8 @@ GET /v4.0/db-instance-groups
     "dbInstanceGroups": [
         {
             "dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
+            "dbInstanceGroupName": "dbInstanceGroupName-example",
+            "dbInstanceGroupStatus": "CREATED",
             "replicationType": "STANDALONE",
             "createdYmdt": "2023-12-31T15:00:00+09:00",
             "updatedYmdt": "2023-12-31T15:00:00+09:00"
@@ -615,6 +619,8 @@ GET /v4.0/db-instance-groups
 |-----|-----|-----|
 | dbInstanceGroups | Array | DB 인스턴스 그룹 목록 |
 | dbInstanceGroups.dbInstanceGroupId | UUID | DB 인스턴스 그룹의 식별자 |
+| dbInstanceGroups.dbInstanceGroupName | String | DB 인스턴스 그룹을 식별할 수 있는 이름 |
+| dbInstanceGroups.dbInstanceGroupStatus | Enum | DB 인스턴스 그룹의 현재 상태<br/>- `CREATED`: 생성됨<br/>- `DELETED`: 삭제됨 |
 | dbInstanceGroups.replicationType | Enum | DB 인스턴스 그룹의 복제 형태<br/>- `STANDALONE`: 고가용성 사용 안함<br/>- `HIGH_AVAILABILITY`: 고가용성 사용 |
 | dbInstanceGroups.createdYmdt | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 | dbInstanceGroups.updatedYmdt | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
@@ -664,6 +670,8 @@ GET /v4.0/db-instance-groups/{dbInstanceGroupId}
         "isSuccessful": true
     },
     "dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
+    "dbInstanceGroupName": "dbInstanceGroupName-example",
+    "dbInstanceGroupStatus": "CREATED",
     "replicationType": "STANDALONE",
     "dbInstances": [
         {
@@ -682,10 +690,12 @@ GET /v4.0/db-instance-groups/{dbInstanceGroupId}
 | 이름 | 타입 | 설명 |
 |-----|-----|-----|
 | dbInstanceGroupId | UUID | DB 인스턴스 그룹의 식별자 |
+| dbInstanceGroupName | String | DB 인스턴스 그룹을 식별할 수 있는 이름 |
+| dbInstanceGroupStatus | Enum | DB 인스턴스 그룹의 현재 상태<br/>- `CREATED`: 생성됨<br/>- `DELETED`: 삭제됨 |
 | replicationType | Enum | DB 인스턴스 그룹의 복제 형태<br/>- `STANDALONE`: 고가용성 사용 안함<br/>- `HIGH_AVAILABILITY`: 고가용성 사용 |
 | dbInstances | Array | DB 인스턴스 그룹에 속한 DB 인스턴스 목록 |
 | dbInstances.dbInstanceId | UUID | DB 인스턴스의 식별자 |
-| dbInstances.dbInstanceType | Enum | DB 인스턴스의 역할 유형<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`: 읽기 복제본 |
+| dbInstances.dbInstanceType | Enum | DB 인스턴스의 역할 유형<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`: Read Replica |
 | dbInstances.dbInstanceStatus | Enum | DB 인스턴스의 현재 상태<br/>- `BEFORE_CREATE`: 생성 이전(회색)<br/>- `AVAILABLE`: 사용 가능(녹색)<br/>- `STORAGE_FULL`: 용량 부족(적색)<br/>- `FAIL_TO_CREATE`: 생성 실패(적색)<br/>- `FAIL_TO_CONNECT`: 연결 실패(적색)<br/>- `REPLICATION_STOP`: 복제 중단(적색)<br/>- `REPLICATION_DELAY`: 복제 지연(황색)<br/>- `FAILOVER`: 장애 조치 완료(적색)<br/>- `SHUTDOWN`: 중지됨(회색)<br/>- `DELETED`: 삭제됨(회색) |
 | createdYmdt | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 | updatedYmdt | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
@@ -806,7 +816,7 @@ GET /v4.0/db-instances
 | dbInstances.description | String | DB 인스턴스 추가 정보 |
 | dbInstances.dbVersion | Enum | DB 엔진 버전 |
 | dbInstances.dbPort | Number | DB 포트 |
-| dbInstances.dbInstanceType | Enum | DB 인스턴스의 역할 유형<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`: 읽기 복제본 |
+| dbInstances.dbInstanceType | Enum | DB 인스턴스의 역할 유형<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`: Read Replica |
 | dbInstances.dbInstanceStatus | Enum | DB 인스턴스의 현재 상태<br/>- `BEFORE_CREATE`: 생성 이전(회색)<br/>- `AVAILABLE`: 사용 가능(녹색)<br/>- `STORAGE_FULL`: 용량 부족(적색)<br/>- `FAIL_TO_CREATE`: 생성 실패(적색)<br/>- `FAIL_TO_CONNECT`: 연결 실패(적색)<br/>- `REPLICATION_STOP`: 복제 중단(적색)<br/>- `REPLICATION_DELAY`: 복제 지연(황색)<br/>- `FAILOVER`: 장애 조치 완료(적색)<br/>- `SHUTDOWN`: 중지됨(회색)<br/>- `DELETED`: 삭제됨(회색) |
 | dbInstances.progressStatus | Enum | DB 인스턴스의 현재 진행 상태 |
 | dbInstances.createdYmdt | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
@@ -856,6 +866,8 @@ POST /v4.0/db-instances
     "useSlowQueryAnalysis": true,
     "authenticationPlugin": "NATIVE",
     "tlsOption": "NONE",
+    "transactionLogArchivingEnabled": false,
+    "transactionLogArchivingRetentionDays": 7,
     "network": {
         "subnetId": "550e8400-e29b-41d4-a716-446655440000",
         "usePublicAccess": false,
@@ -905,6 +917,8 @@ POST /v4.0/db-instances
 | useSlowQueryAnalysis | Boolean | N | Slow query 분석 여부<br/>- 기본값: `true` |
 | authenticationPlugin | Enum | N | 인증 플러그인<br/>- `NATIVE`: mysql_native_password 인증<br/>- `CACHING_SHA2`: caching_sha2_password 인증(MySQL 전용)<br/>- `SHA256`: sha256_password 인증(MySQL 전용) |
 | tlsOption | Enum | N | TLS 옵션<br/>- 기본값: `NONE`<br/>- `NONE`: TLS 미사용<br/>- `SSL`: SSL 인증<br/>- `X509`: X509 인증서 인증 |
+| transactionLogArchivingEnabled | Boolean | N | 트랜잭션 로그 아카이빙 활성화 여부<br/>- `true`: 생성이 끝나면 Primary에서 아카이빙 활성화. 스테이징 버퍼 볼륨과 Object Storage 사용량에 과금<br/>- 기본값: `false` |
+| transactionLogArchivingRetentionDays | Number | N | 트랜잭션 로그 아카이빙 보존 기간(일)<br/>- 1~35 정수. 생략하면 7<br/>- `transactionLogArchivingEnabled`가 `true`일 때만 적용<br/>- 최솟값: `1`<br/>- 최댓값: `35` |
 | network | Object | Y | 네트워크 정보 객체 |
 | network.subnetId | UUID | Y | 서브넷의 식별자 |
 | network.usePublicAccess | Boolean | N | 외부 접속 가능 여부<br/>- 기본값: `false` |
@@ -1161,7 +1175,7 @@ DELETE /v4.0/db-instances/{dbInstanceId}
 
 | 이름 | 타입 | 필수 | 설명 |
 |-----|-----|-----|-----|
-| deleteAutoBackup | Boolean | N | 자동 백업 삭제 여부<br/>- 기본값: `false` |
+| deleteAutoBackup | Boolean | N | 자동 백업 삭제 여부<br/>- `false`로 남긴 백업은 DB 인스턴스 삭제 후 해당 백업 시점으로만 복원 가능(시점 복원 미지원)<br/>- 기본값: `false` |
 
 <a id="delete-db-instance-response"></a>
 #### 응답
@@ -1268,7 +1282,7 @@ GET /v4.0/db-instances/{dbInstanceId}
 | description | String | DB 인스턴스 추가 정보 |
 | dbVersion | Enum | DB 엔진 버전 |
 | dbPort | Number | DB 포트 |
-| dbInstanceType | Enum | DB 인스턴스의 역할 유형<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`: 읽기 복제본 |
+| dbInstanceType | Enum | DB 인스턴스의 역할 유형<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`: Read Replica |
 | dbInstanceStatus | Enum | DB 인스턴스의 현재 상태<br/>- `BEFORE_CREATE`: 생성 이전(회색)<br/>- `AVAILABLE`: 사용 가능(녹색)<br/>- `STORAGE_FULL`: 용량 부족(적색)<br/>- `FAIL_TO_CREATE`: 생성 실패(적색)<br/>- `FAIL_TO_CONNECT`: 연결 실패(적색)<br/>- `REPLICATION_STOP`: 복제 중단(적색)<br/>- `REPLICATION_DELAY`: 복제 지연(황색)<br/>- `FAILOVER`: 장애 조치 완료(적색)<br/>- `SHUTDOWN`: 중지됨(회색)<br/>- `DELETED`: 삭제됨(회색) |
 | progressStatus | Enum | DB 인스턴스의 현재 진행 상태 |
 | dbFlavorId | UUID | DB 인스턴스 사양의 식별자 |
@@ -1351,8 +1365,8 @@ PUT /v4.0/db-instances/{dbInstanceId}
 | dbSecurityGroupIds | Array | N | DB 보안 그룹의 식별자 목록 |
 | executeBackup | Boolean | N | 현재 시점 백업 수행 여부<br/>- 기본값: `false` |
 | useOnlineFailover | Boolean | N | 장애 조치를 이용한 재시작 여부<br/>- 기본값: `false` |
-| waitReplicationDelay | Boolean | N | 복제 지연 해소 대기<br/>- 기본값: `false` |
-| useReadOnly | Boolean | N | 쓰기 부하 차단<br/>- 기본값: `false` |
+| waitReplicationDelay | Boolean | N | 복제 지연 해소 대기 여부<br/>- 기본값: `false` |
+| useReadOnly | Boolean | N | 쓰기 부하 차단 여부<br/>- 기본값: `false` |
 
 <a id="modify-db-instance-response"></a>
 #### 응답
@@ -2361,6 +2375,7 @@ POST /v4.0/db-instances/{dbInstanceId}/force-restart
 | `FAILOVER_STARTED`               | 장애 조치가 시작된 경우                   |
 | `FAILOVER_FAILED`                | 장애 조치가 실패한 경우                   |
 | `FAILOVER_COMPLETED`             | 장애 조치가 완료된 경우                   |
+| `FAILOVER_ABORTED`               | 장애 조치를 되돌린 경우                  |
 | `DELETED`                        | 고가용성이 삭제된 경우                    |
 
 ---
@@ -3606,8 +3621,8 @@ POST /v4.0/db-instances/{dbInstanceId}/restart
 |-----|-----|-----|-----|
 | useOnlineFailover | Boolean | N | 장애 조치를 이용한 재시작 여부<br/>- 기본값: `false` |
 | executeBackup | Boolean | N | 현재 시점 백업 수행 여부<br/>- 기본값: `false` |
-| waitReplicationDelay | Boolean | N | 복제 지연 해소 대기<br/>- 기본값: `false` |
-| useReadOnly | Boolean | N | 쓰기 부하 차단<br/>- 기본값: `false` |
+| waitReplicationDelay | Boolean | N | 복제 지연 해소 대기 여부<br/>- 기본값: `false` |
+| useReadOnly | Boolean | N | 쓰기 부하 차단 여부<br/>- 기본값: `false` |
 | osRestart | Boolean | N | 운영체제 재시작 여부<br/>- 기본값: `false` |
 
 <a id="restart-db-instance-response"></a>
@@ -3708,7 +3723,7 @@ GET /v4.0/db-instances/{dbInstanceId}/restoration-info
 | 이름 | 타입 | 설명 |
 |-----|-----|-----|
 | oldestRestorableYmdt | DateTime | 복원 가능한 가장 이른 시간 |
-| latestRestorableYmdt | DateTime | 복원 가능한 가장 최근 시간 |
+| latestRestorableYmdt | DateTime | 복원 가능한 가장 최근 시간<br/>- 트랜잭션 로그 아카이빙을 사용하는 DB 인스턴스는 해당 DB 인스턴스나 그룹의 Primary가 사용 가능(AVAILABLE) 상태가 아니거나 다른 리전에 있으면 null |
 | restorableBackups | Array | 복원 가능한 백업 목록 |
 | restorableBackups.backup | Object | 백업 정보 객체 |
 | restorableBackups.backup.backupId | UUID | 백업의 식별자 |
@@ -3983,6 +3998,133 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 
 ---
 
+<a id="view-restore-coverage"></a>
+### DB 인스턴스 복원 가능 구간 조회 { #view-restore-coverage }
+
+<a id="view-restore-coverage-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Get | DB 인스턴스 복원 가능 구간 조회 |
+
+<a id="view-restore-coverage-request"></a>
+#### 요청
+
+```http
+GET /v4.0/db-instances/{dbInstanceId}/restore-coverage
+```
+
+<a id="view-restore-coverage-request-parameters"></a>
+#### 요청 파라미터
+
+| 이름 | 구분 | 타입 | 필수 | 설명 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | Y | DB 인스턴스의 식별자 |
+
+<a id="view-restore-coverage-request-body"></a>
+#### 요청 본문
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+<a id="view-restore-coverage-response"></a>
+#### 응답
+
+<details>
+  <summary><strong>예시 코드</strong></summary>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "engine": "MYSQL",
+    "tier": 1,
+    "retentionFloorYmdt": "2023-12-31T15:00:00+09:00",
+    "recoverableThroughYmdt": "2023-12-31T15:00:00+09:00",
+    "recoveryTimeBasis": "recoveryTimeBasis-example",
+    "windows": [
+        {
+            "fromYmdt": "2023-12-31T15:00:00+09:00",
+            "toYmdt": "2023-12-31T15:00:00+09:00",
+            "anchorBackupId": "anchorBackupId-example",
+            "continuity": "SNAPSHOT_ONLY",
+            "confidence": "EXACT",
+            "spansLineage": false
+        }
+    ],
+    "gaps": [
+        {
+            "fromYmdt": "2023-12-31T15:00:00+09:00",
+            "toYmdt": "2023-12-31T15:00:00+09:00",
+            "cause": "CRITICAL_DROP",
+            "detectedAt": "2023-12-31T15:00:00+09:00",
+            "remediable": true,
+            "confidence": "INFORMATIONAL"
+        }
+    ],
+    "failoverBoundaries": [
+        {
+            "predecessorDbInstanceId": "predecessorDbInstanceId-example",
+            "boundaryYmdt": "2023-12-31T15:00:00+09:00",
+            "recoverable": false,
+            "gapFromYmdt": "2023-12-31T15:00:00+09:00",
+            "gapToYmdt": "2023-12-31T15:00:00+09:00",
+            "confidence": "INFORMATIONAL",
+            "unreachableWrites": true,
+            "unreachableFromYmdt": "2023-12-31T15:00:00+09:00",
+            "unreachableToYmdt": "2023-12-31T15:00:00+09:00",
+            "unreachableSegmentCount": null,
+            "noteCode": "UNREACHABLE_WRITES_DETECTED"
+        }
+    ],
+    "coverageRatio": null,
+    "asOfYmdt": "2023-12-31T15:00:00+09:00"
+}
+```
+
+</details>
+
+| 이름 | 타입 | 설명 |
+|-----|-----|-----|
+| engine | String | DB 엔진 |
+| tier | Number | 표시한 복원 가능 구간의 단계<br/>- `0`: 스냅샷 백업 시점만 표시<br/>- `1`: 연속 구간까지 표시<br/>- 트랜잭션 로그 아카이빙 설정과 관계없이 산출 |
+| retentionFloorYmdt | DateTime | 복원할 수 있는 가장 이른 시각(보존 기간의 시작) |
+| recoverableThroughYmdt | DateTime | 정책상 복원할 수 있는 가장 최근 시각<br/>- 실제 복원 시 로그 연속성과 대상 시각 도달 여부를 다시 검증<br/>- 로그의 DB 시각 상한을 확정할 수 없으면 null<br/>- 연속 구간을 보장하지 않음 |
+| recoveryTimeBasis | String | `recoverableThroughYmdt`의 산출 근거<br/>- `AVAILABLE_POLICY`: 사용 가능 상태인 DB 인스턴스의 보존 정책으로 산출<br/>- `UNKNOWN_LOG_TIME`: 로그의 DB 시각을 확정할 수 없음. Object Storage에 로그가 없거나 스냅샷 복원이 불가능하다는 의미는 아님 |
+| windows | Array | 복원 가능 구간 목록(겹치는 구간은 합침, 시각 오름차순) |
+| windows.fromYmdt | DateTime | 구간 시작 시각 |
+| windows.toYmdt | DateTime | 구간 끝 시각<br/>- `continuity`가 `SNAPSHOT_ONLY`이면 `fromYmdt`와 같음 |
+| windows.anchorBackupId | String | 기준 백업의 식별자 |
+| windows.continuity | String | 구간의 연속성<br/>- `SNAPSHOT_ONLY`: 스냅샷 백업 시점으로만 복원 가능<br/>- `CONTINUOUS`: 구간 안의 시점으로 복원 가능 |
+| windows.confidence | String | 구간의 신뢰도<br/>- `EXACT`: 확정된 복원 지점<br/>- `INFORMATIONAL`: 참고용. 실제 복원 시 다시 검증 |
+| windows.spansLineage | Boolean | 장애 조치 경계를 걸치는지 여부 |
+| gaps | Array | 복원 가능 구간 사이의 아카이브 공백 목록<br/>- `tier`가 `0`이면 항상 빈 목록 |
+| gaps.fromYmdt | DateTime | 현재 산출하지 않으므로 항상 null |
+| gaps.toYmdt | DateTime | 현재 산출하지 않으므로 항상 null |
+| gaps.cause | String | 아카이브 공백의 원인<br/>- `CRITICAL_DROP`: 스테이징 버퍼 임계 초과로 로그 적재 지연. 버퍼가 회복되면 재개<br/>- `RETENTION_TRUNCATED`: 적재 전에 로그가 유실되어 복구 불가<br/>- `RECOVERY_PENDING`: 이전 Primary의 스테이징 버퍼 볼륨에 미적재 로그가 남아 있어 회수하면 복구 가능 |
+| gaps.detectedAt | DateTime | 감지 시각 |
+| gaps.remediable | Boolean | 지금 백업을 수행하면 연속성을 다시 확보할 수 있는지 여부 |
+| gaps.confidence | String | 아카이브 공백 판정의 신뢰도 |
+| failoverBoundaries | Array | 복원 기간 안에서 발생한 장애 조치 경계 목록 |
+| failoverBoundaries.predecessorDbInstanceId | String | 장애 조치 이전 Primary DB 인스턴스의 식별자 |
+| failoverBoundaries.boundaryYmdt | DateTime | 장애 조치 경계 시각(초 단위)<br/>- 관리 서버 기준 시각이므로 참고용<br/>- 경계를 넘는 시점 복원은 지원하지 않음 |
+| failoverBoundaries.recoverable | Boolean | 장애 조치 경계를 넘는 시점 복원 가능 여부<br/>- MySQL, MariaDB는 지원하지 않으므로 항상 `false` |
+| failoverBoundaries.gapFromYmdt | DateTime | 현재 산출하지 않으므로 항상 null |
+| failoverBoundaries.gapToYmdt | DateTime | 현재 산출하지 않으므로 항상 null |
+| failoverBoundaries.confidence | String | 판정의 신뢰도. 현재 항상 `INFORMATIONAL`(참고용) |
+| failoverBoundaries.unreachableWrites | Boolean | 장애 조치 이후 이전 Primary에만 남아 복원으로 도달할 수 없는 로그가 있는지 여부<br/>- `true`: 있음<br/>- `false`: 없음<br/>- null: 판정하지 않음 |
+| failoverBoundaries.unreachableFromYmdt | DateTime | 현재 산출하지 않으므로 항상 null |
+| failoverBoundaries.unreachableToYmdt | DateTime | 현재 산출하지 않으므로 항상 null |
+| failoverBoundaries.unreachableSegmentCount | Number | 도달할 수 없는 로그의 세그먼트 수. MySQL, MariaDB는 항상 null |
+| failoverBoundaries.noteCode | String | 장애 조치 경계의 원인 코드<br/>- `BOUNDARY_DETECTED`: 장애 조치 경계만 감지<br/>- `UNREACHABLE_WRITES_DETECTED`: 이전 Primary에 도달할 수 없는 로그가 있음 |
+| coverageRatio | Number | 현재 산출하지 않으므로 항상 null |
+| asOfYmdt | DateTime | 응답 산출 시각 |
+
+---
+
 <a id="start-db-instance"></a>
 ### DB 인스턴스 시작하기 { #start-db-instance }
 
@@ -4217,6 +4359,75 @@ PUT /v4.0/db-instances/{dbInstanceId}/storage-info
 | storageAutoscale.cooldownTime | Number | Y | 자동 확장 쿨다운 시간(분)<br/>- 최솟값: `10`<br/>- 최댓값: `1440` |
 
 <a id="modify-storage-information-response"></a>
+#### 응답
+
+<details>
+  <summary><strong>예시 코드</strong></summary>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+}
+```
+
+</details>
+
+| 이름 | 타입 | 설명 |
+|-----|-----|-----|
+| jobId | UUID | 요청한 작업의 식별자 |
+
+---
+
+<a id="modify-transaction-log-archiving"></a>
+### 트랜잭션 로그 아카이빙 활성화/비활성화하기 { #modify-transaction-log-archiving }
+
+<a id="modify-transaction-log-archiving-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.ModifyTransactionLogArchiving | 트랜잭션 로그 아카이빙 활성화/비활성화하기 |
+
+<a id="modify-transaction-log-archiving-request"></a>
+#### 요청
+
+```http
+PUT /v4.0/db-instances/{dbInstanceId}/transaction-log-archiving
+```
+
+<a id="modify-transaction-log-archiving-request-parameters"></a>
+#### 요청 파라미터
+
+| 이름 | 구분 | 타입 | 필수 | 설명 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | Y | DB 인스턴스의 식별자 |
+
+<a id="modify-transaction-log-archiving-request-body"></a>
+#### 요청 본문
+
+<details>
+  <summary><strong>예시 코드</strong></summary>
+
+```json
+{
+    "enabled": false,
+    "retentionDays": 7
+}
+```
+
+</details>
+
+| 이름 | 타입 | 필수 | 설명 |
+|-----|-----|-----|-----|
+| enabled | Boolean | Y | 트랜잭션 로그 아카이빙 활성화 여부<br/>- `true`: 활성화<br/>- `false`: 비활성화<br/>- 현재 설정과 같으면 작업을 생성하지 않음(`jobId`는 null) |
+| retentionDays | Number | N | 트랜잭션 로그 아카이빙 보존 기간(일)<br/>- 1~35 정수. 생략하면 기존 값 유지<br/>- 사용 여부가 현재와 같으면 보존 기간만 즉시 변경<br/>- 최솟값: `1`<br/>- 최댓값: `35` |
+
+<a id="modify-transaction-log-archiving-response"></a>
 #### 응답
 
 <details>

@@ -1,9 +1,46 @@
 <!-- machine_translated: true -->
 
-<!-- pre-align:aligned sig=5410a458e2ca -->
+<!-- pre-align:aligned sig=12c64c515a01 -->
 
 <a id="database-rds-for-mysql-release-notes"></a>
 ## Database > RDS for MySQL > リリースノート { #database-rds-for-mysql-release-notes }
+
+<a id="november-10-2026"></a>
+## 2026. 11. 10. { #november-10-2026 }
+
+<a id="november-10-2026-added-features"></a>
+### 機能追加 { #november-10-2026-added-features }
+
+* トランザクションログアーカイビング機能追加
+    * バイナリログをObject Storageに保管して時点復元に使用
+    * 保存期間は1日から35日まで設定可能
+    * ステージングバッファボリュームとObject Storageの使用量に対して課金
+* API v4.0追加及び変更
+    * トランザクションログアーカイビング有効化/無効化APIの追加
+    * DBインスタンスの復元可能区間照会APIの追加
+    * DBインスタンス作成APIにトランザクションログアーカイビング設定項目を追加
+* フェイルオーバーの進行状況表示機能追加
+    * フェイルオーバーの進行段階とレプリケーションログの反映進捗率を表示
+* フェイルオーバーの取り消し機能追加
+* 基本モニタリングにStorageの詳細チャートを追加
+    * データ、バイナリログ、残余容量をバイト単位で表示
+
+<a id="november-10-2026-feature-updates"></a>
+### 機能改善/変更 { #november-10-2026-feature-updates }
+
+* DBインスタンス一覧をDBインスタンスグループ単位でのみ表示するように改善
+* 他のリージョンにRead Replicaが存在するDBインスタンスグループを、各リージョンのDBインスタンス一覧に合わせて表示するように改善
+* 元のリージョンと通信できない場合、他のリージョンのDBインスタンスのリージョン情報に警告を表示
+* 準備中のメンテナンス詳細に次のメンテナンス期間とフェイルオーバーオプションを表示
+* DBインスタンスタイプのCPU表記をvCPUに変更
+* 存在しないアベイラビリティゾーンやサブネットを指定した場合、リクエスト段階で即座にエラーを返すよう改善
+
+<a id="november-10-2026-bug-fixes"></a>
+### 不具合の修正 { #november-10-2026-bug-fixes }
+
+* 保管期間が過ぎたバイナリログが削除されないバグを修正
+* 大容量テーブルがある場合に増分バックアップが失敗するバグを修正
+* モニタリング指標が収集されていない場合に正常なDBインスタンスが接続失敗状態に変わるバグを修正
 
 <a id="september-15-2026"></a>
 ## 2026. 09. 15. { #september-15-2026 }
@@ -16,7 +53,7 @@
 * 高可用性インスタンスの停止機能を追加
 
 <a id="september-15-2026-feature-updates"></a>
-### 機能改善 { #september-15-2026-feature-updates }
+### 機能改善/変更 { #september-15-2026-feature-updates }
 
 * DBインスタンスタイプの用語変更
     * マスター → Primary
@@ -59,7 +96,7 @@
     * OSで発見されたセキュリティの脆弱性(CVE)に対するセキュリティパッチを、メンテナンス作業として実行できます。
     * 詳細については、[セキュリティパッチ](/Database/RDS%20for%20MySQL/ja/db-instance/#security-patch)のドキュメントを参照してください。
 * 高可用性Pingチェック方式に、従来の`INSERT`に加えて`SELECT`オプションを追加
-* API v4.0の追加及び変更
+* API v4.0追加及び変更
     * 高可用性情報の照会APIが追加されます。
 
 <a id="march-10-2026"></a>
@@ -70,7 +107,7 @@
 
 * API v4.0の追加
     * 詳細については、[API v4.0 ガイド](/Database/RDS%20for%20MySQL/ja/api-guide-v4.0/)ドキュメントを参照してください。
-* スナップショットバックアップ機能の追加
+* スナップショットバックアップ機能追加
     * Cinderストレージスナップショットを利用して、DBのパフォーマンスに影響を与えずにバックアップを実行
 * MySQL 8.0.45, 8.4.8バージョン追加
 
@@ -98,7 +135,7 @@
 
 * MySQL 8.4.6バージョン追加
 * Lockの取得失敗によるバックアップ失敗時に、原因をイベントに残すよう改善
-* 8.4バージョンへのアップグレード時に、パスワードプラグイン関連の警告文を表示するよう改善
+* 8.4バージョンへのアップグレード時に、パスワードプラグイン関連の警告文を表示するように改善
 * リージョンピアリングを設定していないサブネットでも、リージョン間のリードレプリカを作成できるよう修正
 
 <a id="november-11-2025-bug-fixes"></a>
@@ -235,7 +272,7 @@
 <a id="june-11-2024-feature-updates"></a>
 ### 機能追加及び改善 { #june-11-2024-feature-updates }
 
-* DBインスタンスOSアップグレード機能の追加
+* DBインスタンスOSアップグレード機能追加
 
 <a id="may-14-2024"></a>
 ## 2024. 05. 14. { #may-14-2024 }
@@ -351,7 +388,7 @@
 <a id="july-11-2023-feature-updates"></a>
 ### 機能追加及び改善 { #july-11-2023-feature-updates }
 
-* DBインスタンス削除保護機能の追加
+* DBインスタンス削除保護機能追加
 
 <a id="june-13-2023"></a>
 ## 2023. 06. 13. { #june-13-2023 }
@@ -404,7 +441,7 @@
 ## 2023. 02. 14. { #february-14-2023 }
 
 <a id="february-14-2023-feature-updates"></a>
-### 機能改善 { #february-14-2023-feature-updates }
+### 機能改善/変更 { #february-14-2023-feature-updates }
 
 * サーバーダッシュボードのMySQL指標のうち、ConnectionチャートにMax Connection値を追加で表記するように改善
 
@@ -418,7 +455,7 @@
 ## 2023. 01. 10. { #january-10-2023 }
 
 <a id="january-10-2023-feature-updates"></a>
-### 機能改善 { #january-10-2023-feature-updates }
+### 機能改善/変更 { #january-10-2023-feature-updates }
 
 * 通知グループ名の重複を許可しないように修正
 
@@ -433,7 +470,7 @@
 ## 2022. 12. 13. { #december-13-2022 }
 
 <a id="december-13-2022-feature-updates"></a>
-### 機能改善 { #december-13-2022-feature-updates }
+### 機能改善/変更 { #december-13-2022-feature-updates }
 
 * DML負荷によるバックアップ失敗時、その内容をイベントメッセージに残すように改善
 
@@ -456,7 +493,7 @@
 ## 2022. 10. 11. { #october-11-2022 }
 
 <a id="october-11-2022-feature-updates"></a>
-### 機能改善 { #october-11-2022-feature-updates }
+### 機能改善/変更 { #october-11-2022-feature-updates }
 
 * DBインスタンス作成時にデフォルトで表示されるバージョンを8.0.28バージョンに変更
 * インスタンス詳細画面で表示されるドメイン変更ツールチップの文言修正
@@ -495,7 +532,7 @@
 * イベントリストをExcelにエクスポートする機能を追加
 
 <a id="august-9-2022-feature-updates"></a>
-### 機能改善 { #august-9-2022-feature-updates }
+### 機能改善/変更 { #august-9-2022-feature-updates }
 
 * 高可用性停止したインスタンスもDB Configurationを変更できるように修正
 * バックアップ保管周期を最大30日から最大2年に修正
@@ -515,7 +552,7 @@
 * サーバーダッシュボードでチャートをサーバーごとにグループ化して見ることができる機能を追加
 
 <a id="july-12-2022-feature-updates"></a>
-### 機能改善 { #july-12-2022-feature-updates }
+### 機能改善/変更 { #july-12-2022-feature-updates }
 
 * **レプリケーション中断**状態のリードレプリカのDB Configuration変更ができるように修正
 
@@ -530,7 +567,7 @@
 ## 2022. 06. 14. { #june-14-2022 }
 
 <a id="june-14-2022-feature-updates"></a>
-### 機能改善 { #june-14-2022-feature-updates }
+### 機能改善/変更 { #june-14-2022-feature-updates }
 
 * 複製ディレイにより再起動が失敗する場合はイベントを残すように改善
 * 接続情報ドメインがcloud.toast.comからnhncloudservice.comに変更
@@ -550,7 +587,7 @@
 * 自動バックアップの場合、他のリージョンにバックアップファイルを複製してリージョンの障害に備えることができる機能を提供
 
 <a id="may-10-2022-feature-updates"></a>
-### 機能改善 { #may-10-2022-feature-updates }
+### 機能改善/変更 { #may-10-2022-feature-updates }
 
 * エラーログの保存位置をデータボリュームに変更
 * エラーログが100MBサイズで最大10個まで循環するように変更
@@ -574,7 +611,7 @@
 ## 2022. 04. 12. { #april-12-2022 }
 
 <a id="april-12-2022-feature-updates"></a>
-### 機能改善 { #april-12-2022-feature-updates }
+### 機能改善/変更 { #april-12-2022-feature-updates }
 
 * 読み取りレプリカまたは一般インスタンスを高可用性インスタンスに変更するとき、使用可能な既存のバックアップがある場合、追加のバックアップなしでレプリケーションを構成するように改善
 
@@ -609,10 +646,10 @@
 <a id="january-11-2022-added-features"></a>
 ### 機能追加 { #january-11-2022-added-features }
 
-* MySQLで実行中のプロセスリストおよびInnoDB状態を確認することができる機能の追加
+* MySQLで実行中のプロセスリストおよびInnoDB状態を確認することができる機能追加
 
 <a id="january-11-2022-feature-updates"></a>
-### 機能改善 { #january-11-2022-feature-updates }
+### 機能改善/変更 { #january-11-2022-feature-updates }
 
 * コンソールでDBスキーマを作成する時、入力可能な名前の最小文字数をMySQLと同じに修正
 
@@ -620,7 +657,7 @@
 ## 2021. 12. 14. { #december-14-2021 }
 
 <a id="december-14-2021-feature-updates"></a>
-### 機能改善 { #december-14-2021-feature-updates }
+### 機能改善/変更 { #december-14-2021-feature-updates }
 
 * モニタリング照会API v1の提供中断
 * データ暗号化機能の提供中断
@@ -641,11 +678,11 @@
 ### 機能追加 { #november-9-2021-added-features }
 
 * 自動バックアップを1日に複数回実行できるように機能追加
-* 時点復元時、特定のbinlog positionに復元することができる機能の追加
-* 一般インスタンスを90日間停止することができる機能の追加
+* 時点復元時、特定のbinlog positionに復元することができる機能追加
+* 一般インスタンスを90日間停止することができる機能追加
 
 <a id="november-9-2021-feature-updates"></a>
-### 機能改善 { #november-9-2021-feature-updates }
+### 機能改善/変更 { #november-9-2021-feature-updates }
 
 * 容量不足状態でもインスタンスを修正できるように機能改善
 * 強制再起動時にMySQLが正常に動かない現象を緩和
@@ -661,7 +698,7 @@
 ## 2021. 10. 12. { #october-12-2021 }
 
 <a id="october-12-2021-feature-updates"></a>
-### 機能改善 { #october-12-2021-feature-updates }
+### 機能改善/変更 { #october-12-2021-feature-updates }
 
 * 時点復元ができない期間を表示しないように修正
 
@@ -675,7 +712,7 @@
 ## 2021. 09. 14. { #september-14-2021 }
 
 <a id="september-14-2021-feature-updates"></a>
-### 機能改善 { #september-14-2021-feature-updates }
+### 機能改善/変更 { #september-14-2021-feature-updates }
 
 * バックアップイベント開始、成功、失敗ケース改善
 * MySQL 5.7.33バージョンを追加サポート
@@ -692,7 +729,7 @@
 ## 2021. 08. 25. { #august-25-2021 }
 
 <a id="august-25-2021-feature-updates"></a>
-### 機能改善 { #august-25-2021-feature-updates }
+### 機能改善/変更 { #august-25-2021-feature-updates }
 
 * バックアップのためのボリュームディスク使用方法変更と性能改善
 * サービスを有効にする時、リージョン別情報同期を改善
@@ -708,7 +745,7 @@
 ## 2021. 07. 13. { #july-13-2021 }
 
 <a id="july-13-2021-feature-updates"></a>
-### 機能改善 { #july-13-2021-feature-updates }
+### 機能改善/変更 { #july-13-2021-feature-updates }
 
 * MySQL 8.0.23バージョンを追加サポート
 * イベント購読リストで有効になっているかどうかを確認できるように改善
@@ -725,7 +762,7 @@
 ## 2021. 06. 15. { #june-15-2021 }
 
 <a id="june-15-2021-feature-updates"></a>
-### 機能改善 { #june-15-2021-feature-updates }
+### 機能改善/変更 { #june-15-2021-feature-updates }
 
 * モニタリングシステム改編
 
@@ -745,7 +782,7 @@
 * 強制再起動機能を提供
 
 <a id="may-11-2021-feature-updates"></a>
-### 機能改善 { #may-11-2021-feature-updates }
+### 機能改善/変更 { #may-11-2021-feature-updates }
 
 * xtrabackupログファイルを確認してダウンロードできるように機能改善
 
@@ -764,7 +801,7 @@
 * MySQLバージョン5.6.33～5.7.26の監査ログ(audit log)機能を提供
 
 <a id="april-13-2021-feature-updates"></a>
-### 機能改善 { #april-13-2021-feature-updates }
+### 機能改善/変更 { #april-13-2021-feature-updates }
 
 * プロジェクトメンバーの権限をRDS for MySQL ADMIN / RDS for MySQL MEMBERに細分化
 * MySQLがダウンした状態で再起動ができないように修正
@@ -783,7 +820,7 @@
 ## 2021. 03. 09. { #march-9-2021 }
 
 <a id="march-9-2021-feature-updates"></a>
-### 機能改善 { #march-9-2021-feature-updates }
+### 機能改善/変更 { #march-9-2021-feature-updates }
 
 * プロジェクト別リソースクォーター制限機能を改善
 
@@ -801,7 +838,7 @@
 * DB UserとDBスキーマをコンソールから制御できる機能を追加
 
 <a id="february-16-2021-feature-updates"></a>
-### 機能改善 { #february-16-2021-feature-updates }
+### 機能改善/変更 { #february-16-2021-feature-updates }
 
 * DBファイル暗号化機能を選択した時、ツールチップを提供
 * クエリー遅延待機時間の値が異常な場合、検証メッセージを表示
@@ -894,7 +931,7 @@
 ## 2019. 11. 12. { #november-12-2019 }
 
 <a id="november-12-2019-feature-updates"></a>
-### 機能改善 { #november-12-2019-feature-updates }
+### 機能改善/変更 { #november-12-2019-feature-updates }
 
 * Candidate Masterの障害検知および復旧機能を高度化
 
@@ -907,7 +944,7 @@
 ## 2019. 09. 24. { #september-24-2019 }
 
 <a id="september-24-2019-feature-updates"></a>
-### 機能改善 { #september-24-2019-feature-updates }
+### 機能改善/変更 { #september-24-2019-feature-updates }
 
 * インスタンス作成速度を改善(HAインスタンス基準約28分→約13分)
 * フェイルオーバーを利用して再起動した時、時点復元のための新規バックアップを進行できるようにUXを改善
@@ -917,7 +954,7 @@
 ## 2019. 08. 13. { #august-13-2019 }
 
 <a id="august-13-2019-feature-updates"></a>
-### 機能改善 { #august-13-2019-feature-updates }
+### 機能改善/変更 { #august-13-2019-feature-updates }
 
 * 高可用性(HA)に関連するイベントログを、より直感的に確認できるように修正
 
@@ -937,7 +974,7 @@
 * モニタリング項目を追加
 
 <a id="july-23-2019-feature-updates"></a>
-### 機能改善 { #july-23-2019-feature-updates }
+### 機能改善/変更 { #july-23-2019-feature-updates }
 
 * バックアップ関連イベントはもはやアラムをサポートしません。
 
@@ -958,7 +995,7 @@
 * 高可用性(HA)機能を追加
 
 <a id="june-25-2019-feature-updates"></a>
-### 機能改善 { #june-25-2019-feature-updates }
+### 機能改善/変更 { #june-25-2019-feature-updates }
 
 * インスタンス詳細表示画面に表示されるイベント期間を 1 日から 7 日に変更
 
@@ -971,7 +1008,7 @@
 ## 2019. 05. 14. { #may-14-2019 }
 
 <a id="may-14-2019-feature-updates"></a>
-### 機能改善 { #may-14-2019-feature-updates }
+### 機能改善/変更 { #may-14-2019-feature-updates }
 
 * インスタンス作成および修正時の検証機能を強化
 * Notification 通知イベントの全体選択/解除ができる UX を追加
@@ -986,7 +1023,7 @@
 ## 2019. 03. 12. { #march-12-2019 }
 
 <a id="march-12-2019-feature-updates"></a>
-### 機能改善 { #march-12-2019-feature-updates }
+### 機能改善/変更 { #march-12-2019-feature-updates }
 
 * 意味が曖昧、あるいは、見づらいエラーメッセージの改善
 * コンソールでtransaction-isolation値を修正できるよう改善
@@ -1005,7 +1042,7 @@
 * インスタンスデータレポジトリーにSSDボリュームの機能を追加
 
 <a id="february-26-2019-feature-updates"></a>
-### 機能改善 { #february-26-2019-feature-updates }
+### 機能改善/変更 { #february-26-2019-feature-updates }
 
 * Notification受信対象をプロジェクトメンバーに設定するように機能を改善。
 * x1、u2 flavorの使用が可能になるよう機能改善。
@@ -1014,7 +1051,7 @@
 ## 2019. 01. 29. { #january-29-2019 }
 
 <a id="january-29-2019-feature-updates"></a>
-### 機能改善 { #january-29-2019-feature-updates }
+### 機能改善/変更 { #january-29-2019-feature-updates }
 
 * インスタンスボリュームサイズの最大値を1000Gに変更
 
@@ -1026,13 +1063,13 @@
 
 * r2.c8m64 flavor 非表示を修正
 * general logが見えない問題を修正
-* VPC Subnet選択時のバグ修正
+* VPC Subnet選択時のバグを修正
 
 <a id="december-11-2018"></a>
 ## 2018. 12. 11. { #december-11-2018 }
 
 <a id="december-11-2018-feature-updates"></a>
-### 機能改善 { #december-11-2018-feature-updates }
+### 機能改善/変更 { #december-11-2018-feature-updates }
 
 * Peering機能の削除
 * ユーザーVPC Subnetを利用したネットワーク通信方式え機能を改善
@@ -1041,7 +1078,7 @@
 ## 2018. 10. 23. { #october-23-2018 }
 
 <a id="october-23-2018-feature-updates"></a>
-### 機能改善 { #october-23-2018-feature-updates }
+### 機能改善/変更 { #october-23-2018-feature-updates }
 
 * インスタンス作成/復元/コピー時に入力項目の説明文を表示
 * mysql transaction_isolationオプションの表示
@@ -1089,7 +1126,7 @@
 ## 2018. 04. 24. { #april-24-2018 }
 
 <a id="april-24-2018-feature-updates"></a>
-### 機能改善 { #april-24-2018-feature-updates }
+### 機能改善/変更 { #april-24-2018-feature-updates }
 
 * masterのport変更時、read only slaveのmaster接続情報を自動変更
 * バックアップ後、残賊する不要なログを削除

@@ -149,6 +149,7 @@ GET /v3.0/db-versions
         {
             "dbVersion": "MARIADB_V12303",
             "dbVersionName": "Maria DB 12.3.3",
+            "canCreate": true,
             "restorableFromObs": true
         }
     ]
@@ -162,6 +163,7 @@ GET /v3.0/db-versions
 | dbVersions | Array | DBエンジンリスト |
 | dbVersions.dbVersion | Enum | DBエンジンバージョン |
 | dbVersions.dbVersionName | String | DBエンジンバージョン名 |
+| dbVersions.canCreate | Boolean | 作成可否 |
 | dbVersions.restorableFromObs | Boolean | オブジェクトストレージから復元できるかどうか |
 
 ---
@@ -583,6 +585,8 @@ GET /v3.0/db-instance-groups
     "dbInstanceGroups": [
         {
             "dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
+            "dbInstanceGroupName": "dbInstanceGroupName-example",
+            "dbInstanceGroupStatus": "CREATED",
             "replicationType": "STANDALONE",
             "createdYmdt": "2023-12-31T15:00:00+09:00",
             "updatedYmdt": "2023-12-31T15:00:00+09:00"
@@ -597,6 +601,8 @@ GET /v3.0/db-instance-groups
 |-----|-----|-----|
 | dbInstanceGroups | Array | DBインスタンスグループリスト |
 | dbInstanceGroups.dbInstanceGroupId | UUID | DBインスタンスグループの識別子 |
+| dbInstanceGroups.dbInstanceGroupName | String | DBインスタンスグループを識別できる名前 |
+| dbInstanceGroups.dbInstanceGroupStatus | Enum | DBインスタンスグループの現在状態<br/>- `CREATED`: 作成済み<br/>- `DELETED`: 削除済み |
 | dbInstanceGroups.replicationType | Enum | DBインスタンスグループの複製形態<br/>- `STANDALONE`: 高可用性を使用しない<br/>- `HIGH_AVAILABILITY`: 高可用性を使用 |
 | dbInstanceGroups.createdYmdt | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 | dbInstanceGroups.updatedYmdt | DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
@@ -639,6 +645,8 @@ GET /v3.0/db-instance-groups/{dbInstanceGroupId}
         "isSuccessful": true
     },
     "dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
+    "dbInstanceGroupName": "dbInstanceGroupName-example",
+    "dbInstanceGroupStatus": "CREATED",
     "replicationType": "STANDALONE",
     "dbInstances": [
         {
@@ -657,10 +665,12 @@ GET /v3.0/db-instance-groups/{dbInstanceGroupId}
 | 名前 | 形式 | 説明 |
 |-----|-----|-----|
 | dbInstanceGroupId | UUID | DBインスタンスグループの識別子 |
+| dbInstanceGroupName | String | DBインスタンスグループを識別できる名前 |
+| dbInstanceGroupStatus | Enum | DBインスタンスグループの現在状態<br/>- `CREATED`: 作成済み<br/>- `DELETED`: 削除済み |
 | replicationType | Enum | DBインスタンスグループの複製形態<br/>- `STANDALONE`: 高可用性を使用しない<br/>- `HIGH_AVAILABILITY`: 高可用性を使用 |
 | dbInstances | Array | DBインスタンスグループに属するDBインスタンスリスト |
 | dbInstances.dbInstanceId | UUID | DBインスタンスの識別子 |
-| dbInstances.dbInstanceType | Enum | DBインスタンスのロールタイプ<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`:リードレプリカ |
+| dbInstances.dbInstanceType | Enum | DBインスタンスのロールタイプ<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`: Read Replica |
 | dbInstances.dbInstanceStatus | Enum | DBインスタンスの現在状態<br/>- `BEFORE_CREATE`: 作成前(グレー)<br/>- `AVAILABLE`: 使用可能(緑色)<br/>- `STORAGE_FULL`: 容量不足(赤色)<br/>- `FAIL_TO_CREATE`: 作成失敗(赤色)<br/>- `FAIL_TO_CONNECT`: 接続失敗(赤色)<br/>- `REPLICATION_STOP`: 複製中断(赤色)<br/>- `REPLICATION_DELAY`: 複製遅延(黄色)<br/>- `FAILOVER`: フェイルオーバー完了(赤色)<br/>- `SHUTDOWN`: 停止済み(グレー)<br/>- `DELETED`: 削除済み(グレー) |
 | createdYmdt | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 | updatedYmdt | DateTime | 修正日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
@@ -774,7 +784,7 @@ GET /v3.0/db-instances
 | dbInstances.description | String | DBインスタンスの追加情報 |
 | dbInstances.dbVersion | Enum | DBエンジンバージョン |
 | dbInstances.dbPort | Number | DBポート |
-| dbInstances.dbInstanceType | Enum | DBインスタンスのロールタイプ<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`:リードレプリカ |
+| dbInstances.dbInstanceType | Enum | DBインスタンスのロールタイプ<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`: Read Replica |
 | dbInstances.dbInstanceStatus | Enum | DBインスタンスの現在状態<br/>- `BEFORE_CREATE`: 作成前(グレー)<br/>- `AVAILABLE`: 使用可能(緑色)<br/>- `STORAGE_FULL`: 容量不足(赤色)<br/>- `FAIL_TO_CREATE`: 作成失敗(赤色)<br/>- `FAIL_TO_CONNECT`: 接続失敗(赤色)<br/>- `REPLICATION_STOP`: 複製中断(赤色)<br/>- `REPLICATION_DELAY`: 複製遅延(黄色)<br/>- `FAILOVER`: フェイルオーバー完了(赤色)<br/>- `SHUTDOWN`: 停止済み(グレー)<br/>- `DELETED`: 削除済み(グレー) |
 | dbInstances.progressStatus | Enum | DBインスタンスの現在進行状態 |
 | dbInstances.createdYmdt | DateTime | 作成日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
@@ -1136,7 +1146,7 @@ GET /v3.0/db-instances/{dbInstanceId}
 | description | String | DBインスタンスの追加情報 |
 | dbVersion | Enum | DBエンジンバージョン |
 | dbPort | Number | DBポート |
-| dbInstanceType | Enum | DBインスタンスのロールタイプ<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`:リードレプリカ |
+| dbInstanceType | Enum | DBインスタンスのロールタイプ<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`: Read Replica |
 | dbInstanceStatus | Enum | DBインスタンスの現在状態<br/>- `BEFORE_CREATE`: 作成前(グレー)<br/>- `AVAILABLE`: 使用可能(緑色)<br/>- `STORAGE_FULL`: 容量不足(赤色)<br/>- `FAIL_TO_CREATE`: 作成失敗(赤色)<br/>- `FAIL_TO_CONNECT`: 接続失敗(赤色)<br/>- `REPLICATION_STOP`: 複製中断(赤色)<br/>- `REPLICATION_DELAY`: 複製遅延(黄色)<br/>- `FAILOVER`: フェイルオーバー完了(赤色)<br/>- `SHUTDOWN`: 停止済み(グレー)<br/>- `DELETED`: 削除済み(グレー) |
 | progressStatus | Enum | DBインスタンスの現在進行状態 |
 | dbFlavorId | UUID | DBインスタンス仕様の識別子 |
@@ -1209,8 +1219,8 @@ PUT /v3.0/db-instances/{dbInstanceId}
 | dbSecurityGroupIds | Array | N | DBセキュリティグループの識別子リスト |
 | executeBackup | Boolean | N | 現時点のバックアップを実行するかどうか<br/>- デフォルト値: `false` |
 | useOnlineFailover | Boolean | N | フェイルオーバーを利用した再起動を行うかどうか<br/>- デフォルト値: `false` |
-| waitReplicationDelay | Boolean | N | 複製遅延の解消を待機<br/>- デフォルト値: `false` |
-| useReadOnly | Boolean | N | 書き込み負荷の遮断<br/>- デフォルト値: `false` |
+| waitReplicationDelay | Boolean | N | 複製遅延の解消を待機するかどうか<br/>- デフォルト値: `false` |
+| useReadOnly | Boolean | N | 書き込み負荷を遮断するかどうか<br/>- デフォルト値: `false` |
 
 <a id="update-db-instance-response"></a>
 #### レスポンス
@@ -2728,8 +2738,8 @@ POST /v3.0/db-instances/{dbInstanceId}/restart
 |-----|-----|-----|-----|
 | useOnlineFailover | Boolean | N | フェイルオーバーを利用した再起動を行うかどうか<br/>- デフォルト値: `false` |
 | executeBackup | Boolean | N | 現時点のバックアップを実行するかどうか<br/>- デフォルト値: `false` |
-| waitReplicationDelay | Boolean | N | 複製遅延の解消を待機<br/>- デフォルト値: `false` |
-| useReadOnly | Boolean | N | 書き込み負荷の遮断<br/>- デフォルト値: `false` |
+| waitReplicationDelay | Boolean | N | 複製遅延の解消を待機するかどうか<br/>- デフォルト値: `false` |
+| useReadOnly | Boolean | N | 書き込み負荷を遮断するかどうか<br/>- デフォルト値: `false` |
 
 <a id="restart-db-instance-response"></a>
 #### レスポンス
