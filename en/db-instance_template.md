@@ -43,6 +43,7 @@ MySQL versions below 8.0.34 have reached End of Support per the MySQL LTS policy
 | Version              | Note                                                      |
 |----------------------|-----------------------------------------------------------|
 | <strong>8.4</strong> |                                                           |
+| MySQL 8.4.13         |                                |
 | MySQL 8.4.11         |                                |
 | MySQL 8.4.9          |                                                           |
 | MySQL 8.4.8          |                                                           |
