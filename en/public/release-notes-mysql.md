@@ -11,6 +11,7 @@
 <a id="november-10-2026-added-features"></a>
 ### Added Features { #november-10-2026-added-features }
 
+* MySQL 8.4.13 version added
 * Added transaction log archiving
     * Stores binary logs in Object Storage for use in point-in-time restore
     * Retention period can be set from 1 to 35 days
