@@ -11,6 +11,7 @@
 <a id="november-10-2026-added-features"></a>
 ### 機能追加 { #november-10-2026-added-features }
 
+* MySQL 8.4.13バージョンを追加
 * トランザクションログアーカイビング機能追加
     * バイナリログをObject Storageに保管して時点復元に使用
     * 保存期間は1日から35日まで設定可能
