@@ -9,6 +9,7 @@
 <a id="november-10-2026-added-features"></a>
 ### 신규 기능 추가 { #november-10-2026-added-features }
 
+* MySQL 8.4.13 버전 추가
 * 트랜잭션 로그 아카이빙 기능 추가
     * 바이너리 로그를 Object Storage에 보관하여 시점 복원에 사용
     * 보존 기간은 1일부터 35일까지 설정 가능
