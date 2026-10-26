@@ -182,7 +182,7 @@ GTIDモードでenforce_gtid_consistency=ONに設定すると、次の制約が�
 1. 可能な限り、MyISAMのような非トランザクションストレージエンジンは使用しないでください。使用する場合は、InnoDBのようなトランザクションストレージエンジンとの更新を一つのトランザクションで実行しないでください。
 2. CREATE TABLE ... SELECT構文(8.0.21以前のバージョンの場合)は使用しないでください。
     ```
-   例)  
+    例)  
     create table tbl_backup as select * from tbl_ori; 
     を次のように変える必要があります。
     create table tbl_backup like tbl_ori; insert tbl_backup select * from tbl_ori;
