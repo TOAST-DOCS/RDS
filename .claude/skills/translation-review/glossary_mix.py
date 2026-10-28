@@ -13,9 +13,11 @@ def git(*args):
     return subprocess.run(["git", *args], capture_output=True, text=True, check=True).stdout
 
 
-def terms(ref):
+def terms():
+    # 용어집은 검사할 ref 가 아니라 작업 트리에서 읽는다. .docs-glossary.md 가 생기기 전에 갈라진 브랜치도 같은 기준으로 검사하기 위함
     out = set()
-    for line in git("show", f"{ref}:.docs-glossary.md").splitlines():
+    root = git("rev-parse", "--show-toplevel").strip()
+    for line in open(f"{root}/.docs-glossary.md", encoding="utf-8").read().splitlines():
         cells = [c.strip() for c in line.strip().strip("|").split("|")]
         if not line.startswith("| ") or len(cells) < 3 or cells[0] in ("한글", "---"):
             continue
@@ -28,7 +30,7 @@ def terms(ref):
 
 def main():
     ref, prefixes = sys.argv[1], sys.argv[2:] or ["en/"]
-    pats = {t: re.compile(r"(?<![\w-])" + re.escape(t) + r"(?![\w-])", re.I) for t in terms(ref)}
+    pats = {t: re.compile(r"(?<![\w-])" + re.escape(t) + r"(?![\w-])", re.I) for t in terms()}
     for path in git("ls-tree", "-r", "--name-only", ref, "--", *prefixes).split():
         if not path.endswith(".md"):
             continue
