@@ -151,7 +151,7 @@ This API does not require a request body.
 #### Response
 
 <details>
-  <summary><strong>Example code</strong></summary>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
@@ -781,7 +781,7 @@ This API does not require a request body.
 #### Response
 
 <details>
-  <summary><strong>Example code</strong></summary>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
@@ -848,7 +848,7 @@ POST /v4.0/db-instances
 #### Request Body
 
 <details>
-  <summary><strong>Example code</strong></summary>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
@@ -3686,7 +3686,7 @@ This API does not require a request body.
 #### Response
 
 <details>
-  <summary><strong>Example code</strong></summary>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
@@ -4390,11 +4390,11 @@ PUT /v4.0/db-instances/{dbInstanceId}/storage-info
 ### Delete Transaction Log Archive { #delete-transaction-log-archive }
 
 <a id="delete-transaction-log-archive-required-permissions"></a>
-#### Required Permission
+#### Required Permissions
 
 | Permission Name | Description |
 |-----|-----|
-| RDSforMySQL:DbInstance.DeleteTransactionLogArchive | Delete transaction log archive |
+| RDSforMySQL:DbInstance.DeleteTransactionLogArchive | Delete Transaction Log Archive |
 
 <a id="delete-transaction-log-archive-request"></a>
 #### Request
@@ -4408,7 +4408,7 @@ DELETE /v4.0/db-instances/{dbInstanceId}/transaction-log-archive
 
 | Name | Category | Type | Required | Description |
 |-----|-----|-----|-----|-----|
-| dbInstanceId | URL | UUID | Y | Identifier of the DB instance (Primary of the group) |
+| dbInstanceId | URL | UUID | Y | DB instance (Primary of the group) identifier |
 | deletionPointId | Query | String | Y | Deletion point identifier. The `deletionPointId` in the response of List Deletion Points |
 
 <a id="delete-transaction-log-archive-request-body"></a>
@@ -4420,7 +4420,7 @@ This API does not require a request body.
 #### Response
 
 <details>
-  <summary><strong>Example code</strong></summary>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
@@ -4442,14 +4442,14 @@ This API does not require a request body.
 ---
 
 <a id="view-transaction-log-archive-deletion-points"></a>
-### Get Transaction Log Archive Deletion Points { #view-transaction-log-archive-deletion-points }
+### View Transaction Log Archive Deletion Points { #view-transaction-log-archive-deletion-points }
 
 <a id="view-transaction-log-archive-deletion-points-required-permissions"></a>
-#### Required Permission
+#### Required Permissions
 
 | Permission Name | Description |
 |-----|-----|
-| RDSforMySQL:DbInstance.Get | View transaction log archive deletion points |
+| RDSforMySQL:DbInstance.Get | View Transaction Log Archive deletion points |
 
 <a id="view-transaction-log-archive-deletion-points-request"></a>
 #### Request
@@ -4474,7 +4474,7 @@ This API does not require a request body.
 #### Response
 
 <details>
-  <summary><strong>Example code</strong></summary>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
@@ -4512,7 +4512,7 @@ This API does not require a request body.
 
 | Name | Type | Description |
 |-----|-----|-----|
-| deletionPoints | Array | List of transaction log archive deletion points (in ascending time order) |
+| deletionPoints | Array | List of Transaction Log Archive deletion points (in ascending time order) |
 | deletionPoints.deletionPointId | String | Deletion point identifier. Used as-is for the `deletionPointId` in a deletion request |
 | deletionPoints.deletionPointType | String | Deletion point type<br/>- `BACKUP`: Backup. Deletes archives before the starting binary log of that backup<br/>- `FAILOVER_BOUNDARY`: Failover boundary. Deletes archives loaded before that failover<br/>- `GAP_END`: End of log gap. Deletes the gap and archives before it |
 | deletionPoints.pointYmdt | DateTime | Deletion point time (backup creation time, failover time, or first archive load time after the gap) |
@@ -4651,7 +4651,7 @@ This API does not require a request body.
 #### Response
 
 <details>
-  <summary><strong>Example code</strong></summary>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {

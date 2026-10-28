@@ -147,7 +147,7 @@ This API does not require a request body.
 #### Response
 
 <details>
-  <summary><strong>Example code</strong></summary>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
@@ -757,7 +757,7 @@ This API does not require a request body.
 #### Response
 
 <details>
-  <summary><strong>Example code</strong></summary>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
@@ -940,7 +940,7 @@ POST /v3.0/db-instances/restore-from-obs
 #### Request Body
 
 <details>
-  <summary><strong>Example code</strong></summary>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
@@ -1111,7 +1111,7 @@ This API does not require a request body.
 #### Response
 
 <details>
-  <summary><strong>Example code</strong></summary>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
@@ -4089,7 +4089,7 @@ This API does not require a request body.
 #### Response
 
 <details>
-  <summary><strong>Example code</strong></summary>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
@@ -4239,7 +4239,7 @@ This API does not require a request body.
 #### Response
 
 <details>
-  <summary><strong>Example code</strong></summary>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {

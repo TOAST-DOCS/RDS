@@ -4390,7 +4390,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/storage-info
 ### トランザクションログアーカイブを削除する { #delete-transaction-log-archive }
 
 <a id="delete-transaction-log-archive-required-permissions"></a>
-#### 必要な権限
+#### 必要権限
 
 | 権限名 | 説明 |
 |-----|-----|
@@ -4442,10 +4442,10 @@ DELETE /v4.0/db-instances/{dbInstanceId}/transaction-log-archive
 ---
 
 <a id="view-transaction-log-archive-deletion-points"></a>
-### トランザクションログアーカイブ削除地点の照会 { #view-transaction-log-archive-deletion-points }
+### トランザクションログアーカイブ削除ポイントの照会 { #view-transaction-log-archive-deletion-points }
 
 <a id="view-transaction-log-archive-deletion-points-required-permissions"></a>
-#### 必要な権限
+#### 必要権限
 
 | 権限名 | 説明 |
 |-----|-----|

@@ -4379,11 +4379,11 @@ PUT /v4.0/db-instances/{dbInstanceId}/storage-info
 ### Delete Transaction Log Archive { #delete-transaction-log-archive }
 
 <a id="delete-transaction-log-archive-required-permissions"></a>
-#### Required Permission
+#### Required Permissions
 
 | Permission Name | Description |
 |-----|-----|
-| RDSforMariaDB:DbInstance.DeleteTransactionLogArchive | Delete transaction log archives |
+| RDSforMariaDB:DbInstance.DeleteTransactionLogArchive | Delete Transaction Log Archive |
 
 <a id="delete-transaction-log-archive-request"></a>
 #### Request
@@ -4409,7 +4409,7 @@ This API does not require a request body.
 #### Response
 
 <details>
-  <summary><strong>Example code</strong></summary>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
@@ -4434,11 +4434,11 @@ This API does not require a request body.
 ### View Transaction Log Archive Deletion Points { #view-transaction-log-archive-deletion-points }
 
 <a id="view-transaction-log-archive-deletion-points-required-permissions"></a>
-#### Required Permission
+#### Required Permissions
 
 | Permission Name | Description |
 |-----|-----|
-| RDSforMariaDB:DbInstance.Get | View transaction log archive deletion points |
+| RDSforMariaDB:DbInstance.Get | View Transaction Log Archive deletion points |
 
 <a id="view-transaction-log-archive-deletion-points-request"></a>
 #### Request
@@ -4463,7 +4463,7 @@ This API does not require a request body.
 #### Response
 
 <details>
-  <summary><strong>Example code</strong></summary>
+  <summary><strong>Example Code</strong></summary>
 
 ```json
 {
@@ -4501,7 +4501,7 @@ This API does not require a request body.
 
 | Name | Type | Description |
 |-----|-----|-----|
-| deletionPoints | Array | List of transaction log archive deletion points (in ascending order by time) |
+| deletionPoints | Array | List of Transaction Log Archive deletion points (in ascending order by time) |
 | deletionPoints.deletionPointId | String | Deletion point identifier. Used as-is for the `deletionPointId` of the deletion request |
 | deletionPoints.deletionPointType | String | Type of deletion point<br/>- `BACKUP`: Backup. Deletes archives before the starting binary log of that backup<br/>- `FAILOVER_BOUNDARY`: Failover boundary. Deletes archives loaded before that failover<br/>- `GAP_END`: End of log gap. Deletes the gap and archives before it |
 | deletionPoints.pointYmdt | DateTime | Deletion point time (backup creation time, failover time, or the time the first archive after the gap was loaded) |
