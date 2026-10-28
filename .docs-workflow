@@ -1,0 +1,6 @@
+# 문서 파이프라인(cloud-translate) 설정 — 키 설명은 대시보드 Help ▸ .docs-workflow
+# http://content-agent.cloud.toastoven.net/?tab=help&help=docs-workflow
+
+# 서비스 용어집 — 번역이 cloud-translate 의 RDS 용어집 대신 이 파일을 쓴다.
+# 원본은 Dooray 위키 Ubiquitous Language (Common + MySQL / MariaDB).
+service_glossary: .docs-glossary.md
