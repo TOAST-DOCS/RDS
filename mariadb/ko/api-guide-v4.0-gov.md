@@ -4080,15 +4080,15 @@ GET /v4.0/db-instances/{dbInstanceId}/restore-coverage
 | 이름 | 타입 | 설명 |
 |-----|-----|-----|
 | engine | String | DB 엔진 |
-| tier | Number | 표시한 복원 가능 구간의 단계<br/>- `0`: 스냅샷 백업 시점만 표시<br/>- `1`: 연속 구간까지 표시<br/>- 트랜잭션 로그 아카이빙 설정과 관계없이 산출 |
+| tier | Number | 표시한 복원 가능 구간의 단계<br/>- `0`: 스냅숏 백업 시점만 표시<br/>- `1`: 연속 구간까지 표시<br/>- 트랜잭션 로그 아카이빙 설정과 관계없이 산출 |
 | retentionFloorYmdt | DateTime | 복원할 수 있는 가장 이른 시각(보존 기간의 시작) |
 | recoverableThroughYmdt | DateTime | 정책상 복원할 수 있는 가장 최근 시각<br/>- 실제 복원 시 로그 연속성과 대상 시각 도달 여부를 다시 검증<br/>- 로그의 DB 시각 상한을 확정할 수 없으면 null<br/>- 연속 구간을 보장하지 않음 |
-| recoveryTimeBasis | String | `recoverableThroughYmdt`의 산출 근거<br/>- `AVAILABLE_POLICY`: 사용 가능 상태인 DB 인스턴스의 보존 정책으로 산출<br/>- `UNKNOWN_LOG_TIME`: 로그의 DB 시각을 확정할 수 없음. Object Storage에 로그가 없거나 스냅샷 복원이 불가능하다는 의미는 아님 |
+| recoveryTimeBasis | String | `recoverableThroughYmdt`의 산출 근거<br/>- `AVAILABLE_POLICY`: 사용 가능 상태인 DB 인스턴스의 보존 정책으로 산출<br/>- `UNKNOWN_LOG_TIME`: 로그의 DB 시각을 확정할 수 없음. Object Storage에 로그가 없거나 스냅숏 복원이 불가능하다는 의미는 아님 |
 | windows | Array | 복원 가능 구간 목록(겹치는 구간은 합침, 시각 오름차순) |
 | windows.fromYmdt | DateTime | 구간 시작 시각 |
 | windows.toYmdt | DateTime | 구간 끝 시각<br/>- `continuity`가 `SNAPSHOT_ONLY`이면 `fromYmdt`와 같음 |
 | windows.anchorBackupId | String | 기준 백업의 식별자 |
-| windows.continuity | String | 구간의 연속성<br/>- `SNAPSHOT_ONLY`: 스냅샷 백업 시점으로만 복원 가능<br/>- `CONTINUOUS`: 구간 안의 시점으로 복원 가능 |
+| windows.continuity | String | 구간의 연속성<br/>- `SNAPSHOT_ONLY`: 스냅숏 백업 시점으로만 복원 가능<br/>- `CONTINUOUS`: 구간 안의 시점으로 복원 가능 |
 | windows.confidence | String | 구간의 신뢰도<br/>- `EXACT`: 확정된 복원 지점<br/>- `INFORMATIONAL`: 참고용. 실제 복원 시 다시 검증 |
 | windows.spansLineage | Boolean | 장애 조치 경계를 걸치는지 여부 |
 | gaps | Array | 복원 가능 구간 사이의 아카이브 공백 목록<br/>- `tier`가 `0`이면 항상 빈 목록 |

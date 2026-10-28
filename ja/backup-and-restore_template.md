@@ -254,7 +254,7 @@ DBインスタンスの作成及び修正時、バックアップに適用され
 
 ![db-instance-detail-backup-export-ja]({{url.cdn}}/24.03.12/db-instance-detail-backup-export-ja.png)
 
-❶バックアップを実行した原本DBインスタンスの詳細タブでエクスポートするバックアップファイルを選択した後、**Object Storageにバックアップをエクスポート**をクリックすると、バックアップをエクスポートするためのポップアップ画面が表示されます。
+❶バックアップを実行した元のDBインスタンスの詳細タブでエクスポートするバックアップファイルを選択した後、**Object Storageにバックアップをエクスポート**をクリックすると、バックアップをエクスポートするためのポップアップ画面が表示されます。
 
 ![backup-export-ja]({{url.cdn}}/24.03.12/backup-export-ja.png)
 
@@ -274,7 +274,7 @@ DBインスタンスの作成及び修正時、バックアップに適用され
 <a id="snapshot-restoration"></a>
 ### スナップショット復元 { #snapshot-restoration }
 
-バックアップファイルだけで復元を行うため、バックアップを実行した原本DBインスタンスが必要ありません。 コンソールでスナップショットを復元するには
+バックアップファイルだけで復元を行うため、バックアップを実行した元のDBインスタンスが必要ありません。 コンソールでスナップショットを復元するには
 
 ![db-instance-snapshot-restoration-ja]({{url.cdn}}/24.03.12/db-instance-snapshot-restoration-ja.png)
 

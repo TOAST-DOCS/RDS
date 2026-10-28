@@ -1,6 +1,6 @@
 <!-- machine_translated: true -->
 
-<!-- pre-align:aligned sig=2f6052327104 -->
+<!-- pre-align:aligned sig=19574ea09fbf -->
 
 <a id="database-rds-for-enginepascalcase-api-guide"></a>
 ## Database > RDS for MySQL > API Guide { #database-rds-for-enginepascalcase-api-guide }
@@ -120,6 +120,7 @@ The API responds with '200 OK' to all API requests. For more information on the 
 | MYSQL_V8408 | Y | Y | CACHING_SHA2 |
 | MYSQL_V8409 | Y | Y | CACHING_SHA2 |
 | MYSQL_V8411 | Y | Y | CACHING_SHA2 |
+| MYSQL_V8413 | Y | Y | CACHING_SHA2 |
 
 * The values above can be used for the dbVersion field of Enum type.
 * Depending on the version, creation or restoration may not be available.
@@ -161,8 +162,8 @@ This API does not require a request body.
     },
     "dbVersions": [
         {
-            "dbVersion": "MYSQL_V8411",
-            "dbVersionName": "MySQL 8.4.11",
+            "dbVersion": "MYSQL_V8413",
+            "dbVersionName": "MySQL 8.4.13",
             "canCreate": true,
             "restorableFromObs": true
         }
@@ -795,7 +796,7 @@ This API does not require a request body.
             "dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
             "dbInstanceName": "dbInstanceName-example",
             "description": "description-example",
-            "dbVersion": "MYSQL_V8411",
+            "dbVersion": "MYSQL_V8413",
             "dbPort": 13306,
             "dbInstanceType": "MASTER",
             "dbInstanceStatus": "AVAILABLE",
@@ -854,7 +855,7 @@ POST /v4.0/db-instances
     "dbInstanceName": "dbInstanceName",
     "description": "description-example",
     "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
-    "dbVersion": "MYSQL_V8411",
+    "dbVersion": "MYSQL_V8413",
     "dbPort": 13306,
     "dbUserName": "dbUserName",
     "dbPassword": "dbPassword",
@@ -933,7 +934,7 @@ POST /v4.0/db-instances
 | backup | Object | Y | Backup information objects |
 | backup.backupPeriod | Number | Y | Backup retention period<br/>- Minimum value: `0`<br/>- Maximum value: `730` |
 | backup.backupRetryCount | Number | N | Number of backup retries<br/>- Minimum value: `0`<br/>- Maximum value: `10` |
-| backup.ftwrlWaitTimeout | Number | N | Query latency (sec)<br/>- Minimum value: `0`<br/>- Maximum value: `21600` |
+| backup.ftwrlWaitTimeout | Number | N | Query delay wait time (sec)<br/>- Minimum value: `0`<br/>- Maximum value: `21600` |
 | backup.replicationRegion | Enum | N | Backup replication region<br/>- `KR1`: Korea (Pangyo)<br/>- `KR2`: Korea (Pyeongchon)<br/>- `JP1`: Japan (Tokyo) |
 | backup.useBackupLock | Boolean | N | Whether to use table lock<br/>- Default: `true` |
 | backup.backupSchedules | Array | Y | Backup schedule list |
@@ -1010,7 +1011,7 @@ POST /v4.0/db-instances/restore-from-obs
     "description": "description-example",
     "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
     "dbPort": 13306,
-    "dbVersion": "MYSQL_V8411",
+    "dbVersion": "MYSQL_V8413",
     "useHighAvailability": false,
     "pingInterval": 3,
     "storage": {
@@ -1076,7 +1077,7 @@ POST /v4.0/db-instances/restore-from-obs
 | network.availabilityZone | Enum | Y | Availability zone where DB instance will be created |
 | backup | Object | Y | Backup information objects |
 | backup.backupPeriod | Number | Y | Backup retention period<br/>- Minimum value: `0`<br/>- Maximum value: `730` |
-| backup.ftwrlWaitTimeout | Number | N | Query latency (sec)<br/>- Minimum value: `0`<br/>- Maximum value: `21600` |
+| backup.ftwrlWaitTimeout | Number | N | Query delay wait time (sec)<br/>- Minimum value: `0`<br/>- Maximum value: `21600` |
 | backup.backupRetryCount | Number | N | Number of backup retries<br/>- Minimum value: `0`<br/>- Maximum value: `10` |
 | backup.replicationRegion | Enum | N | Backup replication region<br/>- `KR1`: Korea (Pangyo)<br/>- `KR2`: Korea (Pyeongchon)<br/>- `JP1`: Japan (Tokyo) |
 | backup.useBackupLock | Boolean | N | Whether to use table lock<br/>- Default: `true` |
@@ -1250,7 +1251,7 @@ This API does not require a request body.
     "dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
     "dbInstanceName": "dbInstanceName-example",
     "description": "description-example",
-    "dbVersion": "MYSQL_V8411",
+    "dbVersion": "MYSQL_V8413",
     "dbPort": 13306,
     "dbInstanceType": "MASTER",
     "dbInstanceStatus": "AVAILABLE",
@@ -1340,7 +1341,7 @@ PUT /v4.0/db-instances/{dbInstanceId}
     "dbPort": 13306,
     "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
     "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
-    "dbVersion": "MYSQL_V8411",
+    "dbVersion": "MYSQL_V8413",
     "useSlowQueryAnalysis": false,
     "useDummy": false,
     "dbSecurityGroupIds": [],
@@ -1456,7 +1457,7 @@ This API does not require a request body.
 | Name | Format | Description |
 |-----|-----|-----|
 | backupPeriod | Number | Backup retention period |
-| ftwrlWaitTimeout | Number | Query latency (sec) |
+| ftwrlWaitTimeout | Number | Query delay wait time (sec) |
 | backupRetryCount | Number | Number of backup retries |
 | replicationRegion | Enum | Backup replication region<br/>- `KR1`: Korea (Pangyo)<br/>- `KR2`: Korea (Pyeongchon)<br/>- `JP1`: Japan (Tokyo) |
 | useBackupLock | Boolean | Whether to use table lock |
@@ -1517,7 +1518,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/backup-info
 | Name | Format | Required | Description |
 |-----|-----|-----|-----|
 | backupPeriod | Number | N | Backup retention period<br/>- Minimum value: `0`<br/>- Maximum value: `730` |
-| ftwrlWaitTimeout | Number | N | Query latency (sec)<br/>- Minimum value: `0`<br/>- Maximum value: `21600` |
+| ftwrlWaitTimeout | Number | N | Query delay wait time (sec)<br/>- Minimum value: `0`<br/>- Maximum value: `21600` |
 | backupRetryCount | Number | N | Number of backup retries<br/>- Minimum value: `0`<br/>- Maximum value: `10` |
 | replicationRegion | Enum | N | Backup replication region<br/>- `KR1`: Korea (Pangyo)<br/>- `KR2`: Korea (Pyeongchon)<br/>- `JP1`: Japan (Tokyo) |
 | useBackupLock | Boolean | N | Whether to use table lock |
@@ -3536,7 +3537,7 @@ POST /v4.0/db-instances/{dbInstanceId}/replicate
 | backup | Object | N | Backup information objects |
 | backup.backupPeriod | Number | N | Backup retention period<br/>- Minimum value: `0`<br/>- Maximum value: `730` |
 | backup.backupRetryCount | Number | N | Number of backup retries<br/>- Minimum value: `0`<br/>- Maximum value: `10` |
-| backup.ftwrlWaitTimeout | Number | N | Query latency (sec)<br/>- Minimum value: `0`<br/>- Maximum value: `21600` |
+| backup.ftwrlWaitTimeout | Number | N | Query delay wait time (sec)<br/>- Minimum value: `0`<br/>- Maximum value: `21600` |
 | backup.replicationRegion | Enum | N | Backup replication region<br/>- `KR1`: Korea (Pangyo)<br/>- `KR2`: Korea (Pyeongchon)<br/>- `JP1`: Japan (Tokyo) |
 | backup.useBackupLock | Boolean | N | Whether to use table lock |
 | backup.backupSchedules | Array | N | Backup schedule list |
@@ -3704,7 +3705,7 @@ This API does not require a request body.
                 "backupStatus": "BACKING_UP",
                 "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
                 "dbInstanceName": "dbInstanceName-example",
-                "dbVersion": "MYSQL_V8411",
+                "dbVersion": "MYSQL_V8413",
                 "backupType": "AUTO",
                 "backupSize": 1,
                 "useBackupLock": false,
@@ -3915,7 +3916,7 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 | network.availabilityZone | Enum | N | Availability zone where DB instance will be created. If not entered, it is selected at random. |
 | backup | Object | N | Backup information object. If not entered, the backup settings of the original instance are applied. |
 | backup.backupPeriod | Number | N | Backup retention period (days). If not entered, the backup retention period of the original instance is applied.<br/>- Minimum value: `0`<br/>- Maximum value: `730` |
-| backup.ftwrlWaitTimeout | Number | N | Query latency (sec)<br/>- Minimum value: `0`<br/>- Maximum value: `21600` |
+| backup.ftwrlWaitTimeout | Number | N | Query delay wait time (sec)<br/>- Minimum value: `0`<br/>- Maximum value: `21600` |
 | backup.backupRetryCount | Number | N | Number of backup retries<br/>- Minimum value: `0`<br/>- Maximum value: `10` |
 | backup.replicationRegion | Enum | N | Backup replication region<br/>- `KR1`: Korea (Pangyo)<br/>- `KR2`: Korea (Pyeongchon)<br/>- `JP1`: Japan (Tokyo) |
 | backup.useBackupLock | Boolean | N | Whether to use table lock<br/>- Default: `true` |
@@ -4385,6 +4386,151 @@ PUT /v4.0/db-instances/{dbInstanceId}/storage-info
 
 ---
 
+<a id="delete-transaction-log-archive"></a>
+### Delete Transaction Log Archive { #delete-transaction-log-archive }
+
+<a id="delete-transaction-log-archive-required-permissions"></a>
+#### Required Permissions
+
+| Permission Name | Description |
+|-----|-----|
+| RDSforMySQL:DbInstance.DeleteTransactionLogArchive | Delete Transaction Log Archive |
+
+<a id="delete-transaction-log-archive-request"></a>
+#### Request
+
+```http
+DELETE /v4.0/db-instances/{dbInstanceId}/transaction-log-archive
+```
+
+<a id="delete-transaction-log-archive-request-parameters"></a>
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | Y | DB instance (Primary of the group) identifier |
+| deletionPointId | Query | String | Y | Deletion point identifier. The `deletionPointId` in the response of List Deletion Points |
+
+<a id="delete-transaction-log-archive-request-body"></a>
+#### Request Body
+
+This API does not require a request body.
+
+<a id="delete-transaction-log-archive-response"></a>
+#### Response
+
+<details>
+  <summary><strong>Example Code</strong></summary>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+}
+```
+
+</details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| jobId | UUID | Identifier of requested task |
+
+---
+
+<a id="view-transaction-log-archive-deletion-points"></a>
+### View Transaction Log Archive Deletion Points { #view-transaction-log-archive-deletion-points }
+
+<a id="view-transaction-log-archive-deletion-points-required-permissions"></a>
+#### Required Permissions
+
+| Permission Name | Description |
+|-----|-----|
+| RDSforMySQL:DbInstance.Get | View Transaction Log Archive deletion points |
+
+<a id="view-transaction-log-archive-deletion-points-request"></a>
+#### Request
+
+```http
+GET /v4.0/db-instances/{dbInstanceId}/transaction-log-archive/deletion-points
+```
+
+<a id="view-transaction-log-archive-deletion-points-request-parameters"></a>
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | Y | DB instance (Primary of the group) identifier |
+
+<a id="view-transaction-log-archive-deletion-points-request-body"></a>
+#### Request Body
+
+This API does not require a request body.
+
+<a id="view-transaction-log-archive-deletion-points-response"></a>
+#### Response
+
+<details>
+  <summary><strong>Example Code</strong></summary>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "deletionPoints": [
+        {
+            "deletionPointId": "deletionPointId-example",
+            "deletionPointType": "deletionPointType-example",
+            "pointYmdt": "2023-12-31T15:00:00+09:00",
+            "backupId": "backupId-example",
+            "backupName": "backupName-example",
+            "predecessorDbInstanceId": "predecessorDbInstanceId-example",
+            "successorDbInstanceId": "successorDbInstanceId-example",
+            "segmentCount": 1,
+            "sizeBytes": 1,
+            "recoverableFromYmdt": "2023-12-31T15:00:00+09:00",
+            "containers": [
+                {
+                    "dbInstanceId": "dbInstanceId-example",
+                    "containerName": "containerName-example",
+                    "segmentCount": 1,
+                    "sizeBytes": 1
+                }
+            ]
+        }
+    ]
+}
+```
+
+</details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| deletionPoints | Array | List of Transaction Log Archive deletion points (in ascending time order) |
+| deletionPoints.deletionPointId | String | Deletion point identifier. Used as-is for the `deletionPointId` in a deletion request |
+| deletionPoints.deletionPointType | String | Deletion point type<br/>- `BACKUP`: Backup. Deletes archives before the starting binary log of that backup<br/>- `FAILOVER_BOUNDARY`: Failover boundary. Deletes archives loaded before that failover<br/>- `GAP_END`: End of log gap. Deletes the gap and archives before it |
+| deletionPoints.pointYmdt | DateTime | Deletion point time (backup creation time, failover time, or first archive load time after the gap) |
+| deletionPoints.backupId | String | Backup identifier. Has a value only when `deletionPointType` is `BACKUP` |
+| deletionPoints.backupName | String | Backup name. Has a value only when `deletionPointType` is `BACKUP` |
+| deletionPoints.predecessorDbInstanceId | String | Identifier of the Primary DB instance before failover. Has a value only when `deletionPointType` is `FAILOVER_BOUNDARY` |
+| deletionPoints.successorDbInstanceId | String | Identifier of the Primary DB instance after failover. Has a value only when `deletionPointType` is `FAILOVER_BOUNDARY` |
+| deletionPoints.segmentCount | Number | Number of archive segments to delete |
+| deletionPoints.sizeBytes | Number | Size of archives to delete (in bytes) |
+| deletionPoints.recoverableFromYmdt | DateTime | Earliest backup time from which point-in-time restore using archives is possible after deletion<br/>- If null, there is no backup after this point, so point-in-time restore using archives is not possible until a new backup is created<br/>- The range recoverable using binary logs remaining on the DB instance is unaffected by deletion |
+| deletionPoints.containers | Array | Deletion details for archive storage locations (per Primary DB instance) |
+| deletionPoints.containers.dbInstanceId | String | Identifier of the DB instance where archives were stored |
+| deletionPoints.containers.containerName | String | Object Storage container name |
+| deletionPoints.containers.segmentCount | Number | Number of archive segments to delete |
+| deletionPoints.containers.sizeBytes | Number | Size of archives to delete (in bytes) |
+
+---
+
 <a id="modify-transaction-log-archiving"></a>
 ### Activate/Deactivate Transaction Log Archiving { #modify-transaction-log-archiving }
 
@@ -4521,7 +4667,7 @@ This API does not require a request body.
             "backupName": "backupName-example",
             "backupStatus": "BACKING_UP",
             "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
-            "dbVersion": "MYSQL_V8411",
+            "dbVersion": "MYSQL_V8413",
             "utilVersion": "utilVersion-example",
             "backupType": "AUTO",
             "backupSize": 1,
@@ -4737,7 +4883,7 @@ This API does not require a request body.
         "backupStatus": "BACKING_UP",
         "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
         "dbInstanceName": "dbInstanceName-example",
-        "dbVersion": "MYSQL_V8411",
+        "dbVersion": "MYSQL_V8413",
         "utilVersion": "utilVersion-example",
         "backupType": "AUTO",
         "backupMethodType": "FULL",
@@ -4952,7 +5098,7 @@ POST /v4.0/backups/{backupId}/restore
 | backup | Object | N | Backup information object. If not specified, the backup settings of the original instance are used. |
 | backup.backupPeriod | Number | N | Backup retention period (days). If not specified, the value of the original instance is used.<br/>- Minimum value: `0`<br/>- Maximum value: `730` |
 | backup.backupRetryCount | Number | N | Number of backup retries. If not specified, the value of the original instance is used.<br/>- Minimum value: `0`<br/>- Maximum value: `10` |
-| backup.ftwrlWaitTimeout | Number | N | Query latency (sec). If not specified, the value of the original instance is used.<br/>- Minimum value: `0`<br/>- Maximum value: `21600` |
+| backup.ftwrlWaitTimeout | Number | N | Query delay wait time (sec). If not specified, the value of the original instance is used.<br/>- Minimum value: `0`<br/>- Maximum value: `21600` |
 | backup.replicationRegion | Enum | N | Backup replication region<br/>- `KR1`: Korea (Pangyo)<br/>- `KR2`: Korea (Pyeongchon)<br/>- `JP1`: Japan (Tokyo) |
 | backup.useBackupLock | Boolean | N | Whether to use table lock. If not specified, the value of the original instance is used. |
 | backup.backupSchedules | Array | N | Backup schedule list. If not specified, the value of the original instance is used. |
@@ -5622,7 +5768,7 @@ This API does not require a request body.
             "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
             "parameterGroupName": "parameterGroupName-example",
             "description": "description-example",
-            "dbVersion": "MYSQL_V8411",
+            "dbVersion": "MYSQL_V8413",
             "dbEngineVersionFamily": "MYSQL_V84_FAMILY",
             "parameterGroupType": "USER",
             "parameterGroupStatus": "STABLE",
@@ -5678,7 +5824,7 @@ POST /v4.0/parameter-groups
 {
     "parameterGroupName": "parameterGroupName",
     "description": "description-example",
-    "dbVersion": "MYSQL_V8411"
+    "dbVersion": "MYSQL_V8413"
 }
 ```
 
@@ -5797,7 +5943,7 @@ This API does not require a request body.
     "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
     "parameterGroupName": "parameterGroupName-example",
     "description": "description-example",
-    "dbVersion": "MYSQL_V8411",
+    "dbVersion": "MYSQL_V8413",
     "dbEngineVersionFamily": "MYSQL_V84_FAMILY",
     "parameterGroupStatus": "STABLE",
     "parameters": [

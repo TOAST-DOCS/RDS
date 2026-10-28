@@ -58,6 +58,7 @@ Backups can be categorized into manual and automatic backups.
 
 You can perform a manual backup from the console to permanently save a database at a specific point in time. Unlike auto backups, manual backups are not deleted when the DB instance is deleted, unless you explicitly delete the backup.
 When creating a manual backup, you must specify a name for the backup, with the following limitations.
+
 * Backup name has to be unique for each region.
 * Backup names are alphabetic, numeric, and - _ between 1 and 100 Only, and the first character has to be an alphabet.
 
@@ -106,6 +107,7 @@ When restoring to an incremental backup, the restore proceeds from the first ful
 Incremental backups require a backup to baseline data changes on. An incremental backup can also be the baseline backup for a new incremental backup.
 
 The following limitations exist for backups that are the basis for incremental backups. They are common to both manual and auto incremental backups.
+
 * A backup in an error state cannot be a baseline backup.
 * A backup created before the last failover cannot be the baseline backup.
 * A backup created before the last DB Engine version upgrade cannot be a baseline backup.
@@ -114,6 +116,7 @@ The following limitations exist for backups that are the basis for incremental b
 * Backups created before the September 2024 scheduled release cannot be baseline backups.
 
 When incremental backups are scheduled according to [Auto Backup Strategy](#set-auto-backup), a baseline backup that satisfies the above constraints, plus the following additional constraints, is automatically selected. If no baseline backup satisfies the constraints, a full backup is performed regardless of the auto backup strategy.
+
 * A backup performed on a Standby, Read Replica that is in a replication down state cannot be a baseline backup.
 * A backup performed without table locks enabled cannot be a baseline backup.
 * If a new full backup was created after that backup was created, it cannot be the baseline backup.
@@ -125,6 +128,7 @@ While existing backup methods can degrade performance when run directly on the D
 Because all heavy lifting—such as validation and file conversion—is offloaded to a separate server, your database maintains peak performance even during backups.
 
 Main Features
+
 * Zero performance impact: DB instance performance is maintained at 100% even during backup operations.
 * Enhanced reliability: Rigorous verification processes ensure the reliability of your backup data.
 * Temporary High Availability (HA) suspension: HA features may be briefly paused during snapshot creation to ensure strict data consistency.
@@ -164,6 +168,7 @@ The following topics are common to both auto and manual backups.
 
 * When using table lock, set the wait time for `FLUSH TABLES WITH READ LOCK` syntax. `FLUSH TABLES WITH READ LOCK` syntax will wait for the query delay wait time. It can be set from 0 to 21,600 seconds. Longer settings reduce the likelihood of backup failures due to DML query load, but may result in longer overall backup times.
 
+* In MySQL 8.0 and later, when using table lock, the system also waits for the Query Delay Wait Time when acquiring a backup lock (`LOCK INSTANCE FOR BACKUP`) at the start of a backup. If the backup lock cannot be acquired within this time, the backup will fail. If the Query Delay Wait Time is set to 0, the system waits indefinitely until the backup lock is acquired.
 
 <a id="a-idset-auto-backupaset-auto-backup"></a>
 ### <a id="set-auto-backup"></a>Set Auto Backup { #a-idset-auto-backupaset-auto-backup }
@@ -279,7 +284,7 @@ Or
 Restoring to a particular point in time is called point-in-time restoration. You can restore to a specific position in the binary log, as well as to restore to a specific time. Point-in-time restoration requires backup file and binary log from the time you performed the backup to the time you wanted the restore. Binary logs are stored in the storage of the source DB instance where the backup is performed. Shorter binary log retention period allows you to use more storage capacity, but it may be
 difficult to restore to the desired point in time. For the cases listed below, you may not be able to restore to the desired point in time because there is no binary log required for point-in-time restoration.
 
-* When you have deleted the binary log of the source DB instance for securing capacity
+* When you have deleted the binary log of the source DB instance to free up space
 * When the binary log is automatically deleted by MySQL based on the Binary log retention period
 * When a binary log is deleted due to a failover of a high availability DB instance
 * When binary logs are corrupted or deleted for various other reasons

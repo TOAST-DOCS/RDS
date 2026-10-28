@@ -807,14 +807,14 @@ Read Replicaを作成するには、コンソールで
 
 ![db-instance-replica-create-ja](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/26.01.13/db-instance-replica-create-ja.png)
 
-❶原本DBインスタンスを選択した後、[Read Replica作成]をクリックすると
+❶元のDBインスタンスを選択した後、[Read Replica作成]をクリックすると
 
 以下の設定でRead Replicaを作成できます。
 
 <a id="create-read-replications-non-editable-items"></a>
 #### 変更不可項目
 
-Read Replicaを作成する際、下記の項目は原本DBインスタンスの設定に従うため、変更できません。
+Read Replicaを作成する際、下記の項目は元のDBインスタンスの設定に従うため、変更できません。
 
 * DBエンジン
 * データストレージの種類
@@ -834,7 +834,7 @@ Read Replicaは、Primaryと同じ仕様またはより高い仕様で作成す�
 <a id="create-read-replications-data-storage-size"></a>
 #### データストレージサイズ
 
-原本DBインスタンスと同じサイズで作成することを推奨します。サイズを小さく設定する場合、データストレージ容量不足で複製プロセスが中断される場合があります。
+元のDBインスタンスと同じサイズで作成することを推奨します。サイズを小さく設定する場合、データストレージ容量不足で複製プロセスが中断される場合があります。
 
 <a id="create-read-replications-floating-ip"></a>
 #### Floating IP

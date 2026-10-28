@@ -123,6 +123,7 @@ APIリクエスト時、認証に失敗したり権限がない場合、次の�
 | MYSQL_V8408 | Y | Y | CACHING_SHA2 |
 | MYSQL_V8409 | Y | Y | CACHING_SHA2 |
 | MYSQL_V8411 | Y | Y | CACHING_SHA2 |
+| MYSQL_V8413 | Y | Y | CACHING_SHA2 |
 
 * EnumタイプのdbVersionフィールドに上記の値を使用できます。
 * バージョンによっては作成または復元ができない場合があります。
@@ -157,8 +158,8 @@ GET /v3.0/db-versions
     },
     "dbVersions": [
         {
-            "dbVersion": "MYSQL_V8411",
-            "dbVersionName": "MySQL 8.4.11",
+            "dbVersion": "MYSQL_V8413",
+            "dbVersionName": "MySQL 8.4.13",
             "canCreate": true,
             "restorableFromObs": true
         }
@@ -771,7 +772,7 @@ GET /v3.0/db-instances
             "dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
             "dbInstanceName": "dbInstanceName-example",
             "description": "description-example",
-            "dbVersion": "MYSQL_V8411",
+            "dbVersion": "MYSQL_V8413",
             "dbPort": 13306,
             "dbInstanceType": "MASTER",
             "dbInstanceStatus": "AVAILABLE",
@@ -824,7 +825,7 @@ POST /v3.0/db-instances
     "dbInstanceCandidateName": "dbInstanceCandidateName",
     "description": "description-example",
     "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
-    "dbVersion": "MYSQL_V8411",
+    "dbVersion": "MYSQL_V8413",
     "dbPort": 13306,
     "dbUserName": "dbUserName",
     "dbPassword": "dbPassword",
@@ -948,7 +949,7 @@ POST /v3.0/db-instances/restore-from-obs
     "description": "description-example",
     "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
     "dbPort": 13306,
-    "dbVersion": "MYSQL_V8411",
+    "dbVersion": "MYSQL_V8413",
     "useHighAvailability": false,
     "imageId": "550e8400-e29b-41d4-a716-446655440000",
     "pingInterval": 3,
@@ -1123,7 +1124,7 @@ GET /v3.0/db-instances/{dbInstanceId}
     "dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
     "dbInstanceName": "dbInstanceName-example",
     "description": "description-example",
-    "dbVersion": "MYSQL_V8411",
+    "dbVersion": "MYSQL_V8413",
     "dbPort": 13306,
     "dbInstanceType": "MASTER",
     "dbInstanceStatus": "AVAILABLE",
@@ -1204,7 +1205,7 @@ PUT /v3.0/db-instances/{dbInstanceId}
     "dbPort": 13306,
     "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
     "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
-    "dbVersion": "MYSQL_V8411",
+    "dbVersion": "MYSQL_V8413",
     "useDummy": false,
     "dbSecurityGroupIds": [],
     "executeBackup": false,
@@ -3263,7 +3264,7 @@ GET /v3.0/backups
 | page | Query | Number | Y | 照会するリストのページ<br/>- 最小値: `1` |
 | size | Query | Number | Y | 照会するリストのページサイズ<br/>- 最小値: `1`<br/>- 最大値: `100` |
 | backupType | Query | Enum | N | バックアップタイプ<br/>- `AUTO`<br/>- `MANUAL` |
-| dbInstanceId | Query | UUID | N | 原本DBインスタンスの識別子 |
+| dbInstanceId | Query | UUID | N | 元のDBインスタンスの識別子 |
 | dbVersion | Query | Enum | N | DBエンジンバージョン |
 
 <a id="get-backups-request-body"></a>
@@ -3291,7 +3292,7 @@ GET /v3.0/backups
             "backupName": "backupName-example",
             "backupStatus": "BACKING_UP",
             "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
-            "dbVersion": "MYSQL_V8411",
+            "dbVersion": "MYSQL_V8413",
             "utilVersion": "utilVersion-example",
             "backupType": "AUTO",
             "backupSize": 1,
@@ -3311,7 +3312,7 @@ GET /v3.0/backups
 | backups.backupId | UUID | バックアップの識別子 |
 | backups.backupName | String | バックアップを識別できる名前 |
 | backups.backupStatus | Enum | バックアップの現在状態<br/>- `BACKING_UP`:バックアップ中の場合<br/>- `COMPLETED`:バックアップが完了している場合<br/>- `DELETING`:バックアップが削除中の場合<br/>- `DELETED`:バックアップが削除されている場合<br/>- `ERROR`:エラーが発生した場合 |
-| backups.dbInstanceId | UUID | 原本DBインスタンスの識別子 |
+| backups.dbInstanceId | UUID | 元のDBインスタンスの識別子 |
 | backups.dbVersion | Enum | DBエンジンバージョン |
 | backups.utilVersion | String | ユーティリティバージョン |
 | backups.backupType | Enum | バックアップタイプ<br/>- `AUTO`<br/>- `MANUAL` |
@@ -4102,7 +4103,7 @@ GET /v3.0/parameter-groups
             "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
             "parameterGroupName": "parameterGroupName-example",
             "description": "description-example",
-            "dbVersion": "MYSQL_V8411",
+            "dbVersion": "MYSQL_V8413",
             "parameterGroupStatus": "STABLE",
             "createdYmdt": "2023-12-31T15:00:00+09:00",
             "updatedYmdt": "2023-12-31T15:00:00+09:00"
@@ -4146,7 +4147,7 @@ POST /v3.0/parameter-groups
 {
     "parameterGroupName": "parameterGroupName",
     "description": "description-example",
-    "dbVersion": "MYSQL_V8411"
+    "dbVersion": "MYSQL_V8413"
 }
 ```
 
@@ -4250,7 +4251,7 @@ GET /v3.0/parameter-groups/{parameterGroupId}
     "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
     "parameterGroupName": "parameterGroupName-example",
     "description": "description-example",
-    "dbVersion": "MYSQL_V8411",
+    "dbVersion": "MYSQL_V8413",
     "parameterGroupStatus": "STABLE",
     "parameters": [
         {
@@ -5026,7 +5027,7 @@ GET /v3.0/metric-statistics
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |-----|-----|-----|-----|-----|
 | dbInstanceId | Query | UUID | Y | DBインスタンスの識別子 |
-| measureNames | Query | Array | Y | 照会するパフォーマンス指標リスト |
+| measureNames | Query | Array | Y | 照会する性能指標リスト |
 | from | Query | DateTime | Y | 開始日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 | to | Query | DateTime | Y | 終了日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 | interval | Query | Number | N | 照会間隔<br/>- 単位: `分`<br/>- デフォルト値: 開始/終了日時に応じて適切な値が自動的に選択されます |

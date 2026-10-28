@@ -3732,8 +3732,8 @@ GET /v4.0/db-instances/{dbInstanceId}/restoration-info
 | restorableBackups.backup.backupId | UUID | バックアップの識別子 |
 | restorableBackups.backup.backupName | String | バックアップ名 |
 | restorableBackups.backup.backupStatus | Enum | バックアップ状態<br/>- `BACKING_UP`:バックアップ中の場合<br/>- `COMPLETED`:バックアップが完了している場合<br/>- `DELETING`:バックアップが削除中の場合<br/>- `DELETED`:バックアップが削除されている場合<br/>- `ERROR`:エラーが発生した場合 |
-| restorableBackups.backup.dbInstanceId | UUID | 原本DBインスタンスの識別子 |
-| restorableBackups.backup.dbInstanceName | String | 原本DBインスタンスの名前 |
+| restorableBackups.backup.dbInstanceId | UUID | 元のDBインスタンスの識別子 |
+| restorableBackups.backup.dbInstanceName | String | 元のDBインスタンスの名前 |
 | restorableBackups.backup.dbVersion | Enum | DBエンジンバージョン |
 | restorableBackups.backup.backupType | Enum | バックアップタイプ<br/>- `AUTO`<br/>- `MANUAL` |
 | restorableBackups.backup.backupSize | Number | バックアップサイズ |
@@ -3901,34 +3901,34 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 |-----|-----|-----|-----|
 | dbInstanceName | String | Y | Primary DBインスタンスを識別できる名前<br/>- 最小長さ: `1`<br/>- 最大長さ: `100` |
 | description | String | N | DBインスタンスの追加情報<br/>- 最大長さ: `100` |
-| dbFlavorId | UUID | N | DBインスタンス仕様の識別子。未入力の場合、原本インスタンスの仕様が適用されます。 |
+| dbFlavorId | UUID | N | DBインスタンス仕様の識別子。未入力の場合、元のインスタンスの仕様が適用されます。 |
 | dbPort | Number | N | DBポート |
 | useHighAvailability | Boolean | N | 高可用性を使用するかどうか<br/>- デフォルト値: `false` |
 | pingInterval | Number | N | 高可用性使用時のPing間隔(秒)<br/>- 最小値: `1`<br/>- 最大値: `600` |
-| storage | Object | N | ストレージ情報オブジェクト。未入力の場合、原本インスタンスのストレージ設定が適用されます。 |
-| storage.storageType | Enum | N | ストレージタイプ。未入力の場合、原本インスタンスのストレージタイプが適用されます。 |
-| storage.storageSize | Number | N | データストレージサイズ(GB)。未入力の場合、原本インスタンスのストレージサイズが適用されます。<br/>- 最小値: `20` |
+| storage | Object | N | ストレージ情報オブジェクト。未入力の場合、元のインスタンスのストレージ設定が適用されます。 |
+| storage.storageType | Enum | N | ストレージタイプ。未入力の場合、元のインスタンスのストレージタイプが適用されます。 |
+| storage.storageSize | Number | N | データストレージサイズ(GB)。未入力の場合、元のインスタンスのストレージサイズが適用されます。<br/>- 最小値: `20` |
 | storage.storageAutoscale | Object | N | データストレージ自動拡張オブジェクト |
 | storage.storageAutoscale.useStorageAutoscale | Boolean | N | ストレージ自動拡張を行うかどうか<br/>- デフォルト値: `false` |
-| network | Object | N | ネットワーク情報オブジェクト。未入力の場合、原本インスタンスのネットワーク設定が適用されます。 |
-| network.subnetId | UUID | N | サブネットの識別子。未入力の場合、原本インスタンスの値を使用 |
+| network | Object | N | ネットワーク情報オブジェクト。未入力の場合、元のインスタンスのネットワーク設定が適用されます。 |
+| network.subnetId | UUID | N | サブネットの識別子。未入力の場合、元のインスタンスの値を使用 |
 | network.usePublicAccess | Boolean | N | 外部接続可否<br/>- デフォルト値: `false` |
 | network.availabilityZone | Enum | N | DBインスタンスを作成するアベイラビリティゾーン。未入力の場合、ランダムに選択 |
-| backup | Object | N | バックアップ情報オブジェクト。未入力の場合、原本インスタンスのバックアップ設定が適用されます。 |
-| backup.backupPeriod | Number | N | バックアップ保管期間(日)。未入力の場合、原本インスタンスのバックアップ保管期間が適用されます。<br/>- 最小値: `0`<br/>- 最大値: `730` |
+| backup | Object | N | バックアップ情報オブジェクト。未入力の場合、元のインスタンスのバックアップ設定が適用されます。 |
+| backup.backupPeriod | Number | N | バックアップ保管期間(日)。未入力の場合、元のインスタンスのバックアップ保管期間が適用されます。<br/>- 最小値: `0`<br/>- 最大値: `730` |
 | backup.ftwrlWaitTimeout | Number | N | クエリ遅延待機時間(秒)<br/>- 最小値: `0`<br/>- 最大値: `21600` |
 | backup.backupRetryCount | Number | N | バックアップ再試行回数<br/>- 最小値: `0`<br/>- 最大値: `10` |
 | backup.replicationRegion | Enum | N | バックアップ複製リージョン<br/>- `KR1`: 韓国(パンギョ)<br/>- `KR2`: 韓国(ピョンチョン)<br/>- `JP1`: 日本(東京) |
 | backup.useBackupLock | Boolean | N | テーブルロックを使用するかどうか<br/>- デフォルト値: `true` |
-| backup.backupSchedules | Array | N | バックアップスケジュールリスト。未入力の場合、原本インスタンスのバックアップスケジュールが適用されます。 |
+| backup.backupSchedules | Array | N | バックアップスケジュールリスト。未入力の場合、元のインスタンスのバックアップスケジュールが適用されます。 |
 | backup.backupSchedules.backupWndBgnTime | Time | N | バックアップ開始時間 |
 | backup.backupSchedules.backupWndDuration | Enum | N | バックアップウィンドウ<br/>- `HALF_AN_HOUR`: 30分<br/>- `ONE_HOUR`: 1時間<br/>- `ONE_HOUR_AND_HALF`: 1時間30分<br/>- `TWO_HOURS`: 2時間<br/>- `TWO_HOURS_AND_HALF`: 2時間30分<br/>- `THREE_HOURS`: 3時間 |
 | restore | Object | Y | 復元情報オブジェクト |
 | restore.restoreType | Enum | Y | 復元タイプ<br/>- `TIMESTAMP`: 復元可能な時間内の時間を利用した時点復元<br/>- `BINLOG`: 復元可能なバイナリログの位置を利用した時点復元<br/>- `BACKUP`: 既に作成したバックアップを利用したスナップショット復元 |
 | useDefaultNotification | Boolean | N | 基本通知の使用有無<br/>- デフォルト値: `false` |
 | useSlowQueryAnalysis | Boolean | N | Slow query分析を行うかどうか<br/>- デフォルト値: `true` |
-| parameterGroupId | UUID | N | パラメータグループの識別子。未入力の場合、原本インスタンスのパラメータグループが適用されます。 |
-| dbSecurityGroupIds | Array | N | DBセキュリティグループの識別子リスト。未入力の場合、原本インスタンスのセキュリティグループが適用されます。 |
+| parameterGroupId | UUID | N | パラメータグループの識別子。未入力の場合、元のインスタンスのパラメータグループが適用されます。 |
+| dbSecurityGroupIds | Array | N | DBセキュリティグループの識別子リスト。未入力の場合、元のインスタンスのセキュリティグループが適用されます。 |
 | userGroupIds | Array | N | ユーザーグループの識別子リスト |
 | useDeletionProtection | Boolean | N | 削除保護の有無<br/>- デフォルト値: `false` |
 
@@ -4637,7 +4637,7 @@ GET /v4.0/backups
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |-----|-----|-----|-----|-----|
 | backupType | Query | Enum | N | バックアップタイプ<br/>- `AUTO`<br/>- `MANUAL` |
-| dbInstanceId | Query | UUID | N | 原本DBインスタンスの識別子 |
+| dbInstanceId | Query | UUID | N | 元のDBインスタンスの識別子 |
 | dbVersion | Query | Enum | N | DBエンジンバージョン |
 | page | Query | Number | N | 照会するリストのページ(デフォルト値: 1)<br/>- 最小値: `1` |
 | size | Query | Number | N | 照会するリストのページサイズ(デフォルト値: 20)<br/>- 最小値: `1`<br/>- 最大値: `100` |
@@ -4687,7 +4687,7 @@ GET /v4.0/backups
 | backups.backupId | UUID | バックアップの識別子 |
 | backups.backupName | String | バックアップを識別できる名前 |
 | backups.backupStatus | Enum | バックアップの現在状態<br/>- `BACKING_UP`:バックアップ中の場合<br/>- `COMPLETED`:バックアップが完了している場合<br/>- `DELETING`:バックアップが削除中の場合<br/>- `DELETED`:バックアップが削除されている場合<br/>- `ERROR`:エラーが発生した場合 |
-| backups.dbInstanceId | UUID | 原本DBインスタンスの識別子 |
+| backups.dbInstanceId | UUID | 元のDBインスタンスの識別子 |
 | backups.dbVersion | Enum | DBエンジンバージョン |
 | backups.utilVersion | String | ユーティリティバージョン |
 | backups.backupType | Enum | バックアップタイプ<br/>- `AUTO`<br/>- `MANUAL` |
@@ -4739,7 +4739,7 @@ POST /v4.0/backups
 
 | 名前 | 形式 | 必須 | 説明 |
 |-----|-----|-----|-----|
-| baseBackupId | UUID | Y | 原本バックアップの識別子 |
+| baseBackupId | UUID | Y | 元のバックアップの識別子 |
 
 <a id="create-backup-backupmethodtype-full"></a>
 #### 全体バックアップ(backupMethodTypeが`FULL`の場合)
@@ -4907,8 +4907,8 @@ GET /v4.0/backups/{backupId}
 | backup.regionCode | Enum | リージョンコード<br/>- `KR1`: 韓国(パンギョ)<br/>- `KR2`: 韓国(ピョンチョン)<br/>- `JP1`: 日本(東京) |
 | backup.backupName | String | バックアップを識別できる名前 |
 | backup.backupStatus | Enum | バックアップの現在状態<br/>- `BACKING_UP`: バックアップ中(スピナー)<br/>- `VERIFYING`: 検証中(スピナー)<br/>- `COMPLETED`: 使用可能(緑色アイコン)<br/>- `DELETING`: 削除中(スピナー)<br/>- `DELETED`: 削除済み(グレーアイコン)<br/>- `ERROR`: エラー(赤色アイコン) |
-| backup.dbInstanceId | UUID | 原本DBインスタンスの識別子 |
-| backup.dbInstanceName | String | 原本DBインスタンスの名前 |
+| backup.dbInstanceId | UUID | 元のDBインスタンスの識別子 |
+| backup.dbInstanceName | String | 元のDBインスタンスの名前 |
 | backup.dbVersion | Enum | DBエンジンバージョン |
 | backup.utilVersion | String | ユーティリティバージョン |
 | backup.backupType | Enum | バックアップタイプ(AUTO, MANUAL)<br/>- `AUTO`<br/>- `MANUAL` |
@@ -5076,9 +5076,9 @@ POST /v4.0/backups/{backupId}/restore
 |-----|-----|-----|-----|
 | dbInstanceName | String | Y | Primary DBインスタンスを識別できる名前<br/>- 最小長さ: `1`<br/>- 最大長さ: `100` |
 | description | String | N | DBインスタンスの追加情報<br/>- 最大長さ: `100` |
-| dbFlavorId | UUID | N | DBインスタンス仕様の識別子。未指定の場合、原本インスタンスの値を使用 |
-| dbPort | Number | N | DBポート。未指定の場合、原本インスタンスの値を使用<br/>- 最小値: 3306、最大値: 43306 |
-| parameterGroupId | UUID | N | パラメータグループの識別子。未指定の場合、原本インスタンスの値を使用 |
+| dbFlavorId | UUID | N | DBインスタンス仕様の識別子。未指定の場合、元のインスタンスの値を使用 |
+| dbPort | Number | N | DBポート。未指定の場合、元のインスタンスの値を使用<br/>- 最小値: 3306、最大値: 43306 |
+| parameterGroupId | UUID | N | パラメータグループの識別子。未指定の場合、元のインスタンスの値を使用 |
 | dbSecurityGroupIds | Array | N | DBセキュリティグループの識別子リスト |
 | userGroupIds | Array | N | ユーザーグループの識別子リスト |
 | useHighAvailability | Boolean | N | 高可用性を使用するかどうか<br/>- デフォルト値: `false` |
@@ -5086,22 +5086,22 @@ POST /v4.0/backups/{backupId}/restore
 | useDefaultNotification | Boolean | N | 基本通知の使用有無<br/>- デフォルト値: `false` |
 | useDeletionProtection | Boolean | N | 削除保護の有無<br/>- デフォルト値: `false` |
 | useSlowQueryAnalysis | Boolean | N | Slow query分析を行うかどうか<br/>- デフォルト値: `true` |
-| network | Object | N | ネットワーク情報オブジェクト。未指定の場合、原本インスタンスの値を使用 |
-| network.subnetId | UUID | N | サブネットの識別子。未指定の場合、原本インスタンスの値を使用 |
+| network | Object | N | ネットワーク情報オブジェクト。未指定の場合、元のインスタンスの値を使用 |
+| network.subnetId | UUID | N | サブネットの識別子。未指定の場合、元のインスタンスの値を使用 |
 | network.usePublicAccess | Boolean | N | 外部接続可否<br/>- デフォルト値: `false` |
 | network.availabilityZone | Enum | N | DBインスタンスを作成するアベイラビリティゾーン。未指定の場合、ランダムに選択 |
-| storage | Object | N | ストレージ情報オブジェクト。未指定の場合、原本インスタンスの値を使用 |
-| storage.storageType | Enum | N | ストレージタイプ。未指定の場合、原本インスタンスの値を使用 |
-| storage.storageSize | Number | N | データストレージサイズ(GB)。未指定の場合、原本インスタンスの値を使用<br/>- 最小値: `20` |
-| storage.storageAutoscale | Object | N | データストレージ自動拡張オブジェクト。未指定の場合、原本インスタンスの値を使用 |
+| storage | Object | N | ストレージ情報オブジェクト。未指定の場合、元のインスタンスの値を使用 |
+| storage.storageType | Enum | N | ストレージタイプ。未指定の場合、元のインスタンスの値を使用 |
+| storage.storageSize | Number | N | データストレージサイズ(GB)。未指定の場合、元のインスタンスの値を使用<br/>- 最小値: `20` |
+| storage.storageAutoscale | Object | N | データストレージ自動拡張オブジェクト。未指定の場合、元のインスタンスの値を使用 |
 | storage.storageAutoscale.useStorageAutoscale | Boolean | N | ストレージ自動拡張を行うかどうか<br/>- デフォルト値: `false` |
-| backup | Object | N | バックアップ情報オブジェクト。未指定の場合、原本インスタンスのバックアップ設定を使用 |
-| backup.backupPeriod | Number | N | バックアップ保管期間(日)。未指定の場合、原本インスタンスの値を使用<br/>- 最小値: `0`<br/>- 最大値: `730` |
-| backup.backupRetryCount | Number | N | バックアップ再試行回数。未指定の場合、原本インスタンスの値を使用<br/>- 最小値: `0`<br/>- 最大値: `10` |
-| backup.ftwrlWaitTimeout | Number | N | クエリ遅延待機時間(秒)。未指定の場合、原本インスタンスの値を使用<br/>- 最小値: `0`<br/>- 最大値: `21600` |
+| backup | Object | N | バックアップ情報オブジェクト。未指定の場合、元のインスタンスのバックアップ設定を使用 |
+| backup.backupPeriod | Number | N | バックアップ保管期間(日)。未指定の場合、元のインスタンスの値を使用<br/>- 最小値: `0`<br/>- 最大値: `730` |
+| backup.backupRetryCount | Number | N | バックアップ再試行回数。未指定の場合、元のインスタンスの値を使用<br/>- 最小値: `0`<br/>- 最大値: `10` |
+| backup.ftwrlWaitTimeout | Number | N | クエリ遅延待機時間(秒)。未指定の場合、元のインスタンスの値を使用<br/>- 最小値: `0`<br/>- 最大値: `21600` |
 | backup.replicationRegion | Enum | N | バックアップ複製リージョン<br/>- `KR1`: 韓国(パンギョ)<br/>- `KR2`: 韓国(ピョンチョン)<br/>- `JP1`: 日本(東京) |
-| backup.useBackupLock | Boolean | N | テーブルロックを使用するかどうか。未指定の場合、原本インスタンスの値を使用 |
-| backup.backupSchedules | Array | N | バックアップスケジュールリスト。未指定の場合、原本インスタンスの値を使用 |
+| backup.useBackupLock | Boolean | N | テーブルロックを使用するかどうか。未指定の場合、元のインスタンスの値を使用 |
+| backup.backupSchedules | Array | N | バックアップスケジュールリスト。未指定の場合、元のインスタンスの値を使用 |
 | backup.backupSchedules.backupWndBgnTime | Time | Y | バックアップ開始時間 |
 | backup.backupSchedules.backupWndDuration | Enum | Y | バックアップウィンドウ<br/>- `HALF_AN_HOUR`: 30分<br/>- `ONE_HOUR`: 1時間<br/>- `ONE_HOUR_AND_HALF`: 1時間30分<br/>- `TWO_HOURS`: 2時間<br/>- `TWO_HOURS_AND_HALF`: 2時間30分<br/>- `THREE_HOURS`: 3時間 |
 
@@ -6843,7 +6843,7 @@ GET /v4.0/metric-statistics
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |-----|-----|-----|-----|-----|
 | dbInstanceId | Query | UUID | Y | DBインスタンスの識別子 |
-| measureNames | Query | Array | Y | 照会するパフォーマンス指標リスト |
+| measureNames | Query | Array | Y | 照会する性能指標リスト |
 | from | Query | DateTime | Y | 開始日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 | to | Query | DateTime | Y | 終了日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 | interval | Query | Number | N | 照会間隔<br/>- 単位: `分`<br/>- デフォルト値: 開始/終了日時に応じて適切な値が自動的に選択されます |

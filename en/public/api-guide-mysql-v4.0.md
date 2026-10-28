@@ -934,7 +934,7 @@ POST /v4.0/db-instances
 | backup | Object | Y | Backup information objects |
 | backup.backupPeriod | Number | Y | Backup retention period<br/>- Minimum value: `0`<br/>- Maximum value: `730` |
 | backup.backupRetryCount | Number | N | Number of backup retries<br/>- Minimum value: `0`<br/>- Maximum value: `10` |
-| backup.ftwrlWaitTimeout | Number | N | Query latency (sec)<br/>- Minimum value: `0`<br/>- Maximum value: `21600` |
+| backup.ftwrlWaitTimeout | Number | N | Query delay wait time (sec)<br/>- Minimum value: `0`<br/>- Maximum value: `21600` |
 | backup.replicationRegion | Enum | N | Backup replication region<br/>- `KR1`: Korea (Pangyo)<br/>- `KR2`: Korea (Pyeongchon)<br/>- `JP1`: Japan (Tokyo) |
 | backup.useBackupLock | Boolean | N | Whether to use table lock<br/>- Default: `true` |
 | backup.backupSchedules | Array | Y | Backup schedule list |
@@ -1077,7 +1077,7 @@ POST /v4.0/db-instances/restore-from-obs
 | network.availabilityZone | Enum | Y | Availability zone where DB instance will be created |
 | backup | Object | Y | Backup information objects |
 | backup.backupPeriod | Number | Y | Backup retention period<br/>- Minimum value: `0`<br/>- Maximum value: `730` |
-| backup.ftwrlWaitTimeout | Number | N | Query latency (sec)<br/>- Minimum value: `0`<br/>- Maximum value: `21600` |
+| backup.ftwrlWaitTimeout | Number | N | Query delay wait time (sec)<br/>- Minimum value: `0`<br/>- Maximum value: `21600` |
 | backup.backupRetryCount | Number | N | Number of backup retries<br/>- Minimum value: `0`<br/>- Maximum value: `10` |
 | backup.replicationRegion | Enum | N | Backup replication region<br/>- `KR1`: Korea (Pangyo)<br/>- `KR2`: Korea (Pyeongchon)<br/>- `JP1`: Japan (Tokyo) |
 | backup.useBackupLock | Boolean | N | Whether to use table lock<br/>- Default: `true` |
@@ -1457,7 +1457,7 @@ This API does not require a request body.
 | Name | Format | Description |
 |-----|-----|-----|
 | backupPeriod | Number | Backup retention period |
-| ftwrlWaitTimeout | Number | Query latency (sec) |
+| ftwrlWaitTimeout | Number | Query delay wait time (sec) |
 | backupRetryCount | Number | Number of backup retries |
 | replicationRegion | Enum | Backup replication region<br/>- `KR1`: Korea (Pangyo)<br/>- `KR2`: Korea (Pyeongchon)<br/>- `JP1`: Japan (Tokyo) |
 | useBackupLock | Boolean | Whether to use table lock |
@@ -1518,7 +1518,7 @@ PUT /v4.0/db-instances/{dbInstanceId}/backup-info
 | Name | Format | Required | Description |
 |-----|-----|-----|-----|
 | backupPeriod | Number | N | Backup retention period<br/>- Minimum value: `0`<br/>- Maximum value: `730` |
-| ftwrlWaitTimeout | Number | N | Query latency (sec)<br/>- Minimum value: `0`<br/>- Maximum value: `21600` |
+| ftwrlWaitTimeout | Number | N | Query delay wait time (sec)<br/>- Minimum value: `0`<br/>- Maximum value: `21600` |
 | backupRetryCount | Number | N | Number of backup retries<br/>- Minimum value: `0`<br/>- Maximum value: `10` |
 | replicationRegion | Enum | N | Backup replication region<br/>- `KR1`: Korea (Pangyo)<br/>- `KR2`: Korea (Pyeongchon)<br/>- `JP1`: Japan (Tokyo) |
 | useBackupLock | Boolean | N | Whether to use table lock |
@@ -3537,7 +3537,7 @@ POST /v4.0/db-instances/{dbInstanceId}/replicate
 | backup | Object | N | Backup information objects |
 | backup.backupPeriod | Number | N | Backup retention period<br/>- Minimum value: `0`<br/>- Maximum value: `730` |
 | backup.backupRetryCount | Number | N | Number of backup retries<br/>- Minimum value: `0`<br/>- Maximum value: `10` |
-| backup.ftwrlWaitTimeout | Number | N | Query latency (sec)<br/>- Minimum value: `0`<br/>- Maximum value: `21600` |
+| backup.ftwrlWaitTimeout | Number | N | Query delay wait time (sec)<br/>- Minimum value: `0`<br/>- Maximum value: `21600` |
 | backup.replicationRegion | Enum | N | Backup replication region<br/>- `KR1`: Korea (Pangyo)<br/>- `KR2`: Korea (Pyeongchon)<br/>- `JP1`: Japan (Tokyo) |
 | backup.useBackupLock | Boolean | N | Whether to use table lock |
 | backup.backupSchedules | Array | N | Backup schedule list |
@@ -3916,7 +3916,7 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 | network.availabilityZone | Enum | N | Availability zone where DB instance will be created. If not entered, it is selected at random. |
 | backup | Object | N | Backup information object. If not entered, the backup settings of the original instance are applied. |
 | backup.backupPeriod | Number | N | Backup retention period (days). If not entered, the backup retention period of the original instance is applied.<br/>- Minimum value: `0`<br/>- Maximum value: `730` |
-| backup.ftwrlWaitTimeout | Number | N | Query latency (sec)<br/>- Minimum value: `0`<br/>- Maximum value: `21600` |
+| backup.ftwrlWaitTimeout | Number | N | Query delay wait time (sec)<br/>- Minimum value: `0`<br/>- Maximum value: `21600` |
 | backup.backupRetryCount | Number | N | Number of backup retries<br/>- Minimum value: `0`<br/>- Maximum value: `10` |
 | backup.replicationRegion | Enum | N | Backup replication region<br/>- `KR1`: Korea (Pangyo)<br/>- `KR2`: Korea (Pyeongchon)<br/>- `JP1`: Japan (Tokyo) |
 | backup.useBackupLock | Boolean | N | Whether to use table lock<br/>- Default: `true` |
@@ -5098,7 +5098,7 @@ POST /v4.0/backups/{backupId}/restore
 | backup | Object | N | Backup information object. If not specified, the backup settings of the original instance are used. |
 | backup.backupPeriod | Number | N | Backup retention period (days). If not specified, the value of the original instance is used.<br/>- Minimum value: `0`<br/>- Maximum value: `730` |
 | backup.backupRetryCount | Number | N | Number of backup retries. If not specified, the value of the original instance is used.<br/>- Minimum value: `0`<br/>- Maximum value: `10` |
-| backup.ftwrlWaitTimeout | Number | N | Query latency (sec). If not specified, the value of the original instance is used.<br/>- Minimum value: `0`<br/>- Maximum value: `21600` |
+| backup.ftwrlWaitTimeout | Number | N | Query delay wait time (sec). If not specified, the value of the original instance is used.<br/>- Minimum value: `0`<br/>- Maximum value: `21600` |
 | backup.replicationRegion | Enum | N | Backup replication region<br/>- `KR1`: Korea (Pangyo)<br/>- `KR2`: Korea (Pyeongchon)<br/>- `JP1`: Japan (Tokyo) |
 | backup.useBackupLock | Boolean | N | Whether to use table lock. If not specified, the value of the original instance is used. |
 | backup.backupSchedules | Array | N | Backup schedule list. If not specified, the value of the original instance is used. |

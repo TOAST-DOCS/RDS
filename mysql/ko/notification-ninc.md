@@ -122,7 +122,7 @@
 | INSTC_54_00 | INSTANCE          | 예        | DB 인스턴스 복제 재구축 시작                    |
 | INSTC_54_01 | INSTANCE          | 예        | DB 인스턴스 복제 재구축 완료                    |
 | INSTC_54_04 | INSTANCE          | 예        | DB 인스턴스 복제 재구축 실패                    |
-| INSTC_55_01 | INSTANCE          | 예        | 복제 딜레이로 인한 장애 조치 재시작 실패              |
+| INSTC_55_01 | INSTANCE          | 예        | 복제 지연으로 인한 장애 조치 재시작 실패               |
 | INSTC_56_00 | INSTANCE          | 예        | DB 인스턴스 보안 그룹 변경 시작                  |
 | INSTC_56_01 | INSTANCE          | 예        | DB 인스턴스 보안 그룹 변경 완료                  |
 | INSTC_56_04 | INSTANCE          | 예        | DB 인스턴스 보안 그룹 변경 실패                  |
@@ -287,7 +287,7 @@
 | Buffer Pool Total                      | MB                 |
 | Buffer Pool Used                       | MB                 |
 | Slow Query                             | counts/min         |
-| 복제 딜레이                                 | sec                |
+| 복제 지연                                   | sec                |
 | Row Access Index                       | counts/min         |
 | Row Access Full scan                   | counts/min         |
 | Database Replication IO Thread Status  | 비정상: 0, 정상: 1      |

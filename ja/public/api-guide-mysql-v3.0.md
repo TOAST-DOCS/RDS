@@ -3264,7 +3264,7 @@ GET /v3.0/backups
 | page | Query | Number | Y | 照会するリストのページ<br/>- 最小値: `1` |
 | size | Query | Number | Y | 照会するリストのページサイズ<br/>- 最小値: `1`<br/>- 最大値: `100` |
 | backupType | Query | Enum | N | バックアップタイプ<br/>- `AUTO`<br/>- `MANUAL` |
-| dbInstanceId | Query | UUID | N | 原本DBインスタンスの識別子 |
+| dbInstanceId | Query | UUID | N | 元のDBインスタンスの識別子 |
 | dbVersion | Query | Enum | N | DBエンジンバージョン |
 
 <a id="get-backups-request-body"></a>
@@ -3312,7 +3312,7 @@ GET /v3.0/backups
 | backups.backupId | UUID | バックアップの識別子 |
 | backups.backupName | String | バックアップを識別できる名前 |
 | backups.backupStatus | Enum | バックアップの現在状態<br/>- `BACKING_UP`:バックアップ中の場合<br/>- `COMPLETED`:バックアップが完了している場合<br/>- `DELETING`:バックアップが削除中の場合<br/>- `DELETED`:バックアップが削除されている場合<br/>- `ERROR`:エラーが発生した場合 |
-| backups.dbInstanceId | UUID | 原本DBインスタンスの識別子 |
+| backups.dbInstanceId | UUID | 元のDBインスタンスの識別子 |
 | backups.dbVersion | Enum | DBエンジンバージョン |
 | backups.utilVersion | String | ユーティリティバージョン |
 | backups.backupType | Enum | バックアップタイプ<br/>- `AUTO`<br/>- `MANUAL` |
@@ -5027,7 +5027,7 @@ GET /v3.0/metric-statistics
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |-----|-----|-----|-----|-----|
 | dbInstanceId | Query | UUID | Y | DBインスタンスの識別子 |
-| measureNames | Query | Array | Y | 照会するパフォーマンス指標リスト |
+| measureNames | Query | Array | Y | 照会する性能指標リスト |
 | from | Query | DateTime | Y | 開始日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 | to | Query | DateTime | Y | 終了日時(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 | interval | Query | Number | N | 照会間隔<br/>- 単位: `分`<br/>- デフォルト値: 開始/終了日時に応じて適切な値が自動的に選択されます |

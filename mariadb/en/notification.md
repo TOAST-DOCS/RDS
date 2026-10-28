@@ -73,8 +73,8 @@ Event refers to an important event that occurs either by RDS for MariaDB or by u
 | INSTC_26_04       | INSTANCE          | Yes          | DB instance failover failed                                                   |
 | INSTC_26_05       | INSTANCE          | Yes          | DB instance failover reverted                                                 |
 | INSTC_26_06       | INSTANCE          | Yes          | DB instance failover progress step changed                                    |
-| INSTC_27_01       | INSTANCE          | Yes          | DB instance storage secured                                                   |
-| INSTC_27_04       | INSTANCE          | Yes          | Securing DB instance storage failed                                           |
+| INSTC_27_01       | INSTANCE          | Yes          | DB instance space freed up                                                 |
+| INSTC_27_04       | INSTANCE          | Yes          | Failed to free up DB instance space                                          |
 | INSTC_28_01       | INSTANCE          | Yes          | High Availability DB Instance started                                         |
 | INSTC_29_01       | INSTANCE          | Yes          | High Availability DB Instance ended                                           |
 | INSTC_30_01       | INSTANCE          | Yes          | Replication stopped                                                           |

@@ -293,7 +293,7 @@ Or
 Restoring to a particular point in time is called point-in-time restoration. You can restore to a specific position in the binary log, as well as to restore to a specific time. Point-in-time restoration requires backup file and binary log from the time you performed the backup to the time you wanted the restore. Binary logs are stored in the storage of the source DB instance where the backup is performed. Shorter binary log retention period allows you to use more storage capacity, but it may be
 difficult to restore to the desired point in time. For the cases listed below, you may not be able to restore to the desired point in time because there is no binary log required for point-in-time restoration.
 
-* When you have deleted the binary log of the source DB instance for securing capacity
+* When you have deleted the binary log of the source DB instance to free up space
 * When the binary log is automatically deleted by {{engine.pascalCase}} based on the Binary log retention period
 * When a binary log is deleted due to a failover of a high availability DB instance
 * When binary logs are corrupted or deleted for various other reasons

@@ -761,10 +761,10 @@ You can prepare in advance to recover the database of your DB instance in case o
 You can use backups to restore data to any point in time. Restore always creates a new DB instance and cannot be restored to an existing DB instance. Refer to [Restore](backup-and-restore/#restore) for more information.
 
 <a id="secure-capacity"></a>
-## Secure Capacity { #secure-capacity }
+## Free Up Space { #secure-capacity }
 
-If the capacity of the data storage is insufficient due to the excessive generation of binary logs from rapid load, you can delete the binary logs using Secure Capacity feature in console. When you select Secure Capacity in console, you will see a pop-up window where you can select the binary logs for DB instance.
-Select the binary log and press **Confirm** to delete all binary logs created prior to the selected item. The Secure Capacity is a feature that temporarily secures capacity. If you keep running out of capacity, you must set the storage period for the binary log or expand the size of the data storage to match your service load.
+If the capacity of the data storage is insufficient due to the excessive generation of binary logs from rapid load, you can delete the binary logs using the Free Up Space feature in the console. When you select Free Up Space in the console, you will see a pop-up window where you can select the binary logs for DB instance.
+Select the binary log and press **Confirm** to delete all binary logs created prior to the selected item. Free Up Space only frees up space temporarily. If you keep running out of capacity, you must set the storage period for the binary log or expand the size of the data storage to match your service load.
 
 {{#if (eq engine.lowerCase "mysql")}}
 !!! tip "Note"
@@ -777,7 +777,7 @@ Select the binary log and press **Confirm** to delete all binary logs created pr
 
 !!! danger "Caution"
     Depending on the deleted binary logs, point-in-time restoration may not be possible.
-    If you use transaction log archiving and delete binary logs that have not yet been uploaded to Object Storage, point-in-time restoration is not available for that interval. Before using Secure Capacity, check that the upload status is **Normal** and the number of pending segments is 0 on the **Transaction Log Archiving** tab in the group details screen.
+    If you use transaction log archiving and delete binary logs that have not yet been uploaded to Object Storage, point-in-time restoration is not available for that interval. Before using Free Up Space, check that the upload status is **Normal** and the number of pending segments is 0 on the **Transaction Log Archiving** tab in the group details screen.
 
 <a id="expand-storage-size"></a>
 ## Expand Storage Size { #expand-storage-size }
