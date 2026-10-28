@@ -168,9 +168,8 @@ The following topics are common to both auto and manual backups.
 
 **Query Delay Wait Time (second)**
 
-* When using table lock, set the wait time for `FLUSH TABLES WITH READ LOCK` syntax. `FLUSH TABLES WITH READ LOCK` syntax will wait for the query latency dash time. It can be set from 0 to 21,600 seconds. Longer settings reduce the likelihood of backup failures due to DML query load, but may result in longer overall backup times.
+* When using table lock, set the wait time for `FLUSH TABLES WITH READ LOCK` syntax. `FLUSH TABLES WITH READ LOCK` syntax will wait for the query delay wait time. It can be set from 0 to 21,600 seconds. Longer settings reduce the likelihood of backup failures due to DML query load, but may result in longer overall backup times.
 {{#if (eq engine.lowerCase "mysql")}}
-
 
 * In MySQL 8.0 and later, when using table lock, the system also waits for the Query Delay Wait Time when acquiring a backup lock (`LOCK INSTANCE FOR BACKUP`) at the start of a backup. If the backup lock cannot be acquired within this time, the backup will fail. If the Query Delay Wait Time is set to 0, the system waits indefinitely until the backup lock is acquired.
 {{/if}}
