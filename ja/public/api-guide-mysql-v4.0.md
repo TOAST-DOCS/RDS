@@ -1,6 +1,6 @@
 <!-- machine_translated: true -->
 
-<!-- pre-align:aligned sig=2f6052327104 -->
+<!-- pre-align:aligned sig=19574ea09fbf -->
 
 <a id="database-rds-for-enginepascalcase-api-guide"></a>
 ## Database > RDS for MySQL > APIガイド { #database-rds-for-enginepascalcase-api-guide }
@@ -120,6 +120,7 @@ APIリクエスト時、認証に失敗したり権限がない場合、次の�
 | MYSQL_V8408 | Y | Y | CACHING_SHA2 |
 | MYSQL_V8409 | Y | Y | CACHING_SHA2 |
 | MYSQL_V8411 | Y | Y | CACHING_SHA2 |
+| MYSQL_V8413 | Y | Y | CACHING_SHA2 |
 
 * EnumタイプのdbVersionフィールドに上記の値を使用できます。
 * バージョンによっては作成または復元ができない場合があります。
@@ -161,8 +162,8 @@ GET /v4.0/db-versions
     },
     "dbVersions": [
         {
-            "dbVersion": "MYSQL_V8411",
-            "dbVersionName": "MySQL 8.4.11",
+            "dbVersion": "MYSQL_V8413",
+            "dbVersionName": "MySQL 8.4.13",
             "canCreate": true,
             "restorableFromObs": true
         }
@@ -795,7 +796,7 @@ GET /v4.0/db-instances
             "dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
             "dbInstanceName": "dbInstanceName-example",
             "description": "description-example",
-            "dbVersion": "MYSQL_V8411",
+            "dbVersion": "MYSQL_V8413",
             "dbPort": 13306,
             "dbInstanceType": "MASTER",
             "dbInstanceStatus": "AVAILABLE",
@@ -854,7 +855,7 @@ POST /v4.0/db-instances
     "dbInstanceName": "dbInstanceName",
     "description": "description-example",
     "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
-    "dbVersion": "MYSQL_V8411",
+    "dbVersion": "MYSQL_V8413",
     "dbPort": 13306,
     "dbUserName": "dbUserName",
     "dbPassword": "dbPassword",
@@ -1010,7 +1011,7 @@ POST /v4.0/db-instances/restore-from-obs
     "description": "description-example",
     "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
     "dbPort": 13306,
-    "dbVersion": "MYSQL_V8411",
+    "dbVersion": "MYSQL_V8413",
     "useHighAvailability": false,
     "pingInterval": 3,
     "storage": {
@@ -1250,7 +1251,7 @@ GET /v4.0/db-instances/{dbInstanceId}
     "dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
     "dbInstanceName": "dbInstanceName-example",
     "description": "description-example",
-    "dbVersion": "MYSQL_V8411",
+    "dbVersion": "MYSQL_V8413",
     "dbPort": 13306,
     "dbInstanceType": "MASTER",
     "dbInstanceStatus": "AVAILABLE",
@@ -1340,7 +1341,7 @@ PUT /v4.0/db-instances/{dbInstanceId}
     "dbPort": 13306,
     "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
     "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
-    "dbVersion": "MYSQL_V8411",
+    "dbVersion": "MYSQL_V8413",
     "useSlowQueryAnalysis": false,
     "useDummy": false,
     "dbSecurityGroupIds": [],
@@ -3704,7 +3705,7 @@ GET /v4.0/db-instances/{dbInstanceId}/restoration-info
                 "backupStatus": "BACKING_UP",
                 "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
                 "dbInstanceName": "dbInstanceName-example",
-                "dbVersion": "MYSQL_V8411",
+                "dbVersion": "MYSQL_V8413",
                 "backupType": "AUTO",
                 "backupSize": 1,
                 "useBackupLock": false,
@@ -4385,6 +4386,151 @@ PUT /v4.0/db-instances/{dbInstanceId}/storage-info
 
 ---
 
+<a id="delete-transaction-log-archive"></a>
+### トランザクションログアーカイブを削除する { #delete-transaction-log-archive }
+
+<a id="delete-transaction-log-archive-required-permissions"></a>
+#### 必要権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMySQL:DbInstance.DeleteTransactionLogArchive | トランザクションログアーカイブの削除 |
+
+<a id="delete-transaction-log-archive-request"></a>
+#### リクエスト
+
+```http
+DELETE /v4.0/db-instances/{dbInstanceId}/transaction-log-archive
+```
+
+<a id="delete-transaction-log-archive-request-parameters"></a>
+#### リクエストパラメータ
+
+| 名前 | 区分 | タイプ | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | Y | DBインスタンス(グループのPrimary)の識別子 |
+| deletionPointId | Query | String | Y | 削除ポイント識別子。削除ポイント一覧照会レスポンスの`deletionPointId` |
+
+<a id="delete-transaction-log-archive-request-body"></a>
+#### リクエスト本文
+
+このAPIはリクエスト本文を必要としません。
+
+<a id="delete-transaction-log-archive-response"></a>
+#### レスポンス
+
+<details>
+  <summary><strong>サンプルコード</strong></summary>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+}
+```
+
+</details>
+
+| 名前 | タイプ | 説明 |
+|-----|-----|-----|
+| jobId | UUID | リクエストしたジョブの識別子 |
+
+---
+
+<a id="view-transaction-log-archive-deletion-points"></a>
+### トランザクションログアーカイブ削除ポイントの照会 { #view-transaction-log-archive-deletion-points }
+
+<a id="view-transaction-log-archive-deletion-points-required-permissions"></a>
+#### 必要権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Get | トランザクションログアーカイブ削除ポイントの照会 |
+
+<a id="view-transaction-log-archive-deletion-points-request"></a>
+#### リクエスト
+
+```http
+GET /v4.0/db-instances/{dbInstanceId}/transaction-log-archive/deletion-points
+```
+
+<a id="view-transaction-log-archive-deletion-points-request-parameters"></a>
+#### リクエストパラメータ
+
+| 名前 | 区分 | タイプ | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | Y | DBインスタンス(グループのPrimary)の識別子 |
+
+<a id="view-transaction-log-archive-deletion-points-request-body"></a>
+#### リクエスト本文
+
+このAPIはリクエスト本文を必要としません。
+
+<a id="view-transaction-log-archive-deletion-points-response"></a>
+#### レスポンス
+
+<details>
+  <summary><strong>サンプルコード</strong></summary>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "deletionPoints": [
+        {
+            "deletionPointId": "deletionPointId-example",
+            "deletionPointType": "deletionPointType-example",
+            "pointYmdt": "2023-12-31T15:00:00+09:00",
+            "backupId": "backupId-example",
+            "backupName": "backupName-example",
+            "predecessorDbInstanceId": "predecessorDbInstanceId-example",
+            "successorDbInstanceId": "successorDbInstanceId-example",
+            "segmentCount": 1,
+            "sizeBytes": 1,
+            "recoverableFromYmdt": "2023-12-31T15:00:00+09:00",
+            "containers": [
+                {
+                    "dbInstanceId": "dbInstanceId-example",
+                    "containerName": "containerName-example",
+                    "segmentCount": 1,
+                    "sizeBytes": 1
+                }
+            ]
+        }
+    ]
+}
+```
+
+</details>
+
+| 名前 | タイプ | 説明 |
+|-----|-----|-----|
+| deletionPoints | Array | トランザクションログアーカイブの削除ポイントリスト(時刻昇順) |
+| deletionPoints.deletionPointId | String | 削除ポイントの識別子。削除リクエストの`deletionPointId`としてそのまま使用 |
+| deletionPoints.deletionPointType | String | 削除ポイントの種類<br/>- `BACKUP`: バックアップ。そのバックアップの開始バイナリログより前のアーカイブを削除<br/>- `FAILOVER_BOUNDARY`: フェイルオーバー境界。そのフェイルオーバーより前に格納されたアーカイブを削除<br/>- `GAP_END`: ログギャップの末尾。ギャップとその前のアーカイブを削除 |
+| deletionPoints.pointYmdt | DateTime | 削除ポイントの時刻(バックアップ作成時刻、フェイルオーバー時刻、ギャップ後の最初のアーカイブ格納時刻) |
+| deletionPoints.backupId | String | バックアップの識別子。`deletionPointType`が`BACKUP`の場合のみ値があります |
+| deletionPoints.backupName | String | バックアップ名。`deletionPointType`が`BACKUP`の場合のみ値があります |
+| deletionPoints.predecessorDbInstanceId | String | フェイルオーバー前のPrimary DBインスタンスの識別子。`deletionPointType`が`FAILOVER_BOUNDARY`の場合のみ値があります |
+| deletionPoints.successorDbInstanceId | String | フェイルオーバー後のPrimary DBインスタンスの識別子。`deletionPointType`が`FAILOVER_BOUNDARY`の場合のみ値があります |
+| deletionPoints.segmentCount | Number | 削除するアーカイブセグメント数 |
+| deletionPoints.sizeBytes | Number | 削除するアーカイブサイズ(バイト) |
+| deletionPoints.recoverableFromYmdt | DateTime | 削除後にアーカイブで時点復元できる最も早いバックアップ時刻<br/>- nullの場合、このポイントより後にバックアップがないため、新しいバックアップが作成されるまでアーカイブで時点復元できません<br/>- DBインスタンスに残っているバイナリログで復元できる期間は削除とは無関係です |
+| deletionPoints.containers | Array | アーカイブ保存場所(Primary DBインスタンス別)の削除詳細 |
+| deletionPoints.containers.dbInstanceId | String | アーカイブを蓄積したDBインスタンスの識別子 |
+| deletionPoints.containers.containerName | String | Object Storageコンテナ名 |
+| deletionPoints.containers.segmentCount | Number | 削除するアーカイブセグメント数 |
+| deletionPoints.containers.sizeBytes | Number | 削除するアーカイブサイズ(バイト) |
+
+---
+
 <a id="modify-transaction-log-archiving"></a>
 ### トランザクションログアーカイビングの有効化/無効化 { #modify-transaction-log-archiving }
 
@@ -4521,7 +4667,7 @@ GET /v4.0/backups
             "backupName": "backupName-example",
             "backupStatus": "BACKING_UP",
             "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
-            "dbVersion": "MYSQL_V8411",
+            "dbVersion": "MYSQL_V8413",
             "utilVersion": "utilVersion-example",
             "backupType": "AUTO",
             "backupSize": 1,
@@ -4737,7 +4883,7 @@ GET /v4.0/backups/{backupId}
         "backupStatus": "BACKING_UP",
         "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
         "dbInstanceName": "dbInstanceName-example",
-        "dbVersion": "MYSQL_V8411",
+        "dbVersion": "MYSQL_V8413",
         "utilVersion": "utilVersion-example",
         "backupType": "AUTO",
         "backupMethodType": "FULL",
@@ -5622,7 +5768,7 @@ GET /v4.0/parameter-groups
             "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
             "parameterGroupName": "parameterGroupName-example",
             "description": "description-example",
-            "dbVersion": "MYSQL_V8411",
+            "dbVersion": "MYSQL_V8413",
             "dbEngineVersionFamily": "MYSQL_V84_FAMILY",
             "parameterGroupType": "USER",
             "parameterGroupStatus": "STABLE",
@@ -5678,7 +5824,7 @@ POST /v4.0/parameter-groups
 {
     "parameterGroupName": "parameterGroupName",
     "description": "description-example",
-    "dbVersion": "MYSQL_V8411"
+    "dbVersion": "MYSQL_V8413"
 }
 ```
 
@@ -5797,7 +5943,7 @@ GET /v4.0/parameter-groups/{parameterGroupId}
     "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
     "parameterGroupName": "parameterGroupName-example",
     "description": "description-example",
-    "dbVersion": "MYSQL_V8411",
+    "dbVersion": "MYSQL_V8413",
     "dbEngineVersionFamily": "MYSQL_V84_FAMILY",
     "parameterGroupStatus": "STABLE",
     "parameters": [

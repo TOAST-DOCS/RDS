@@ -123,6 +123,7 @@ The API responds with '200 OK' to all API requests. For more information on the 
 | MYSQL_V8408 | Y | Y | CACHING_SHA2 |
 | MYSQL_V8409 | Y | Y | CACHING_SHA2 |
 | MYSQL_V8411 | Y | Y | CACHING_SHA2 |
+| MYSQL_V8413 | Y | Y | CACHING_SHA2 |
 
 * The values above can be used for the dbVersion field of Enum type.
 * Depending on the version, creation or restoration may not be available.
@@ -157,8 +158,8 @@ This API does not require a request body.
     },
     "dbVersions": [
         {
-            "dbVersion": "MYSQL_V8411",
-            "dbVersionName": "MySQL 8.4.11",
+            "dbVersion": "MYSQL_V8413",
+            "dbVersionName": "MySQL 8.4.13",
             "canCreate": true,
             "restorableFromObs": true
         }
@@ -771,7 +772,7 @@ This API does not require a request body.
             "dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
             "dbInstanceName": "dbInstanceName-example",
             "description": "description-example",
-            "dbVersion": "MYSQL_V8411",
+            "dbVersion": "MYSQL_V8413",
             "dbPort": 13306,
             "dbInstanceType": "MASTER",
             "dbInstanceStatus": "AVAILABLE",
@@ -824,7 +825,7 @@ POST /v3.0/db-instances
     "dbInstanceCandidateName": "dbInstanceCandidateName",
     "description": "description-example",
     "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
-    "dbVersion": "MYSQL_V8411",
+    "dbVersion": "MYSQL_V8413",
     "dbPort": 13306,
     "dbUserName": "dbUserName",
     "dbPassword": "dbPassword",
@@ -948,7 +949,7 @@ POST /v3.0/db-instances/restore-from-obs
     "description": "description-example",
     "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
     "dbPort": 13306,
-    "dbVersion": "MYSQL_V8411",
+    "dbVersion": "MYSQL_V8413",
     "useHighAvailability": false,
     "imageId": "550e8400-e29b-41d4-a716-446655440000",
     "pingInterval": 3,
@@ -1123,7 +1124,7 @@ This API does not require a request body.
     "dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
     "dbInstanceName": "dbInstanceName-example",
     "description": "description-example",
-    "dbVersion": "MYSQL_V8411",
+    "dbVersion": "MYSQL_V8413",
     "dbPort": 13306,
     "dbInstanceType": "MASTER",
     "dbInstanceStatus": "AVAILABLE",
@@ -1204,7 +1205,7 @@ PUT /v3.0/db-instances/{dbInstanceId}
     "dbPort": 13306,
     "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
     "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
-    "dbVersion": "MYSQL_V8411",
+    "dbVersion": "MYSQL_V8413",
     "useDummy": false,
     "dbSecurityGroupIds": [],
     "executeBackup": false,
@@ -3291,7 +3292,7 @@ This API does not require a request body.
             "backupName": "backupName-example",
             "backupStatus": "BACKING_UP",
             "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
-            "dbVersion": "MYSQL_V8411",
+            "dbVersion": "MYSQL_V8413",
             "utilVersion": "utilVersion-example",
             "backupType": "AUTO",
             "backupSize": 1,
@@ -4102,7 +4103,7 @@ This API does not require a request body.
             "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
             "parameterGroupName": "parameterGroupName-example",
             "description": "description-example",
-            "dbVersion": "MYSQL_V8411",
+            "dbVersion": "MYSQL_V8413",
             "parameterGroupStatus": "STABLE",
             "createdYmdt": "2023-12-31T15:00:00+09:00",
             "updatedYmdt": "2023-12-31T15:00:00+09:00"
@@ -4146,7 +4147,7 @@ POST /v3.0/parameter-groups
 {
     "parameterGroupName": "parameterGroupName",
     "description": "description-example",
-    "dbVersion": "MYSQL_V8411"
+    "dbVersion": "MYSQL_V8413"
 }
 ```
 
@@ -4250,7 +4251,7 @@ This API does not require a request body.
     "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
     "parameterGroupName": "parameterGroupName-example",
     "description": "description-example",
-    "dbVersion": "MYSQL_V8411",
+    "dbVersion": "MYSQL_V8413",
     "parameterGroupStatus": "STABLE",
     "parameters": [
         {
