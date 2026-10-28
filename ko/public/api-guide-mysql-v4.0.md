@@ -1,4 +1,4 @@
-<!-- pre-align:aligned sig=2f6052327104 -->
+<!-- pre-align:aligned sig=d58a9ac7e400 -->
 
 <a id="database-rds-for-enginepascalcase-api-guide"></a>
 ## Database > RDS for MySQL > API 가이드 { #database-rds-for-enginepascalcase-api-guide }
@@ -118,6 +118,7 @@ API 요청 시 인증에 실패하거나 권한이 없을 경우 다음과 같�
 | MYSQL_V8408 | Y | Y | CACHING_SHA2 |
 | MYSQL_V8409 | Y | Y | CACHING_SHA2 |
 | MYSQL_V8411 | Y | Y | CACHING_SHA2 |
+| MYSQL_V8413 | Y | Y | CACHING_SHA2 |
 
 * Enum 유형인 dbVersion 필드에 위 값을 사용할 수 있습니다.
 * 버전에 따라 생성 또는 복원이 불가능할 수 있습니다.
@@ -159,8 +160,8 @@ GET /v4.0/db-versions
     },
     "dbVersions": [
         {
-            "dbVersion": "MYSQL_V8411",
-            "dbVersionName": "MySQL 8.4.11",
+            "dbVersion": "MYSQL_V8413",
+            "dbVersionName": "MySQL 8.4.13",
             "canCreate": true,
             "restorableFromObs": true
         }
@@ -793,7 +794,7 @@ GET /v4.0/db-instances
             "dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
             "dbInstanceName": "dbInstanceName-example",
             "description": "description-example",
-            "dbVersion": "MYSQL_V8411",
+            "dbVersion": "MYSQL_V8413",
             "dbPort": 13306,
             "dbInstanceType": "MASTER",
             "dbInstanceStatus": "AVAILABLE",
@@ -852,7 +853,7 @@ POST /v4.0/db-instances
     "dbInstanceName": "dbInstanceName",
     "description": "description-example",
     "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
-    "dbVersion": "MYSQL_V8411",
+    "dbVersion": "MYSQL_V8413",
     "dbPort": 13306,
     "dbUserName": "dbUserName",
     "dbPassword": "dbPassword",
@@ -1008,7 +1009,7 @@ POST /v4.0/db-instances/restore-from-obs
     "description": "description-example",
     "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
     "dbPort": 13306,
-    "dbVersion": "MYSQL_V8411",
+    "dbVersion": "MYSQL_V8413",
     "useHighAvailability": false,
     "pingInterval": 3,
     "storage": {
@@ -1248,7 +1249,7 @@ GET /v4.0/db-instances/{dbInstanceId}
     "dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
     "dbInstanceName": "dbInstanceName-example",
     "description": "description-example",
-    "dbVersion": "MYSQL_V8411",
+    "dbVersion": "MYSQL_V8413",
     "dbPort": 13306,
     "dbInstanceType": "MASTER",
     "dbInstanceStatus": "AVAILABLE",
@@ -1338,7 +1339,7 @@ PUT /v4.0/db-instances/{dbInstanceId}
     "dbPort": 13306,
     "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
     "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
-    "dbVersion": "MYSQL_V8411",
+    "dbVersion": "MYSQL_V8413",
     "useSlowQueryAnalysis": false,
     "useDummy": false,
     "dbSecurityGroupIds": [],
@@ -3702,7 +3703,7 @@ GET /v4.0/db-instances/{dbInstanceId}/restoration-info
                 "backupStatus": "BACKING_UP",
                 "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
                 "dbInstanceName": "dbInstanceName-example",
-                "dbVersion": "MYSQL_V8411",
+                "dbVersion": "MYSQL_V8413",
                 "backupType": "AUTO",
                 "backupSize": 1,
                 "useBackupLock": false,
@@ -4383,6 +4384,151 @@ PUT /v4.0/db-instances/{dbInstanceId}/storage-info
 
 ---
 
+<a id="delete-transaction-log-archive"></a>
+### 트랜잭션 로그 아카이브 삭제하기 { #delete-transaction-log-archive }
+
+<a id="delete-transaction-log-archive-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.DeleteTransactionLogArchive | 트랜잭션 로그 아카이브 삭제하기 |
+
+<a id="delete-transaction-log-archive-request"></a>
+#### 요청
+
+```http
+DELETE /v4.0/db-instances/{dbInstanceId}/transaction-log-archive
+```
+
+<a id="delete-transaction-log-archive-request-parameters"></a>
+#### 요청 파라미터
+
+| 이름 | 구분 | 타입 | 필수 | 설명 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | Y | DB 인스턴스(그룹의 Primary)의 식별자 |
+| deletionPointId | Query | String | Y | 삭제 지점 식별자. 삭제 지점 목록 조회 응답의 `deletionPointId` |
+
+<a id="delete-transaction-log-archive-request-body"></a>
+#### 요청 본문
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+<a id="delete-transaction-log-archive-response"></a>
+#### 응답
+
+<details>
+  <summary><strong>예시 코드</strong></summary>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+}
+```
+
+</details>
+
+| 이름 | 타입 | 설명 |
+|-----|-----|-----|
+| jobId | UUID | 요청한 작업의 식별자 |
+
+---
+
+<a id="view-transaction-log-archive-deletion-points"></a>
+### 트랜잭션 로그 아카이브 삭제 지점 조회하기 { #view-transaction-log-archive-deletion-points }
+
+<a id="view-transaction-log-archive-deletion-points-required-permissions"></a>
+#### 필요 권한
+
+| 권한명 | 설명 |
+|-----|-----|
+| RDSforMySQL:DbInstance.Get | 트랜잭션 로그 아카이브 삭제 지점 조회하기 |
+
+<a id="view-transaction-log-archive-deletion-points-request"></a>
+#### 요청
+
+```http
+GET /v4.0/db-instances/{dbInstanceId}/transaction-log-archive/deletion-points
+```
+
+<a id="view-transaction-log-archive-deletion-points-request-parameters"></a>
+#### 요청 파라미터
+
+| 이름 | 구분 | 타입 | 필수 | 설명 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | Y | DB 인스턴스(그룹의 Primary)의 식별자 |
+
+<a id="view-transaction-log-archive-deletion-points-request-body"></a>
+#### 요청 본문
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+<a id="view-transaction-log-archive-deletion-points-response"></a>
+#### 응답
+
+<details>
+  <summary><strong>예시 코드</strong></summary>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "deletionPoints": [
+        {
+            "deletionPointId": "deletionPointId-example",
+            "deletionPointType": "deletionPointType-example",
+            "pointYmdt": "2023-12-31T15:00:00+09:00",
+            "backupId": "backupId-example",
+            "backupName": "backupName-example",
+            "predecessorDbInstanceId": "predecessorDbInstanceId-example",
+            "successorDbInstanceId": "successorDbInstanceId-example",
+            "segmentCount": 1,
+            "sizeBytes": 1,
+            "recoverableFromYmdt": "2023-12-31T15:00:00+09:00",
+            "containers": [
+                {
+                    "dbInstanceId": "dbInstanceId-example",
+                    "containerName": "containerName-example",
+                    "segmentCount": 1,
+                    "sizeBytes": 1
+                }
+            ]
+        }
+    ]
+}
+```
+
+</details>
+
+| 이름 | 타입 | 설명 |
+|-----|-----|-----|
+| deletionPoints | Array | 트랜잭션 로그 아카이브 삭제 지점 목록(시각 오름차순) |
+| deletionPoints.deletionPointId | String | 삭제 지점 식별자. 삭제 요청의 `deletionPointId`로 그대로 사용 |
+| deletionPoints.deletionPointType | String | 삭제 지점 종류<br/>- `BACKUP`: 백업. 그 백업의 시작 바이너리 로그보다 앞의 아카이브를 삭제<br/>- `FAILOVER_BOUNDARY`: 장애 조치 경계. 그 장애 조치보다 앞에 적재된 아카이브를 삭제<br/>- `GAP_END`: 로그 공백 끝. 공백과 그 앞의 아카이브를 삭제 |
+| deletionPoints.pointYmdt | DateTime | 삭제 지점 시각(백업 생성 시각, 장애 조치 시각, 공백 뒤 첫 아카이브 적재 시각) |
+| deletionPoints.backupId | String | 백업 식별자. `deletionPointType`이 `BACKUP`일 때만 값이 있음 |
+| deletionPoints.backupName | String | 백업 이름. `deletionPointType`이 `BACKUP`일 때만 값이 있음 |
+| deletionPoints.predecessorDbInstanceId | String | 장애 조치 전 Primary DB 인스턴스의 식별자. `deletionPointType`이 `FAILOVER_BOUNDARY`일 때만 값이 있음 |
+| deletionPoints.successorDbInstanceId | String | 장애 조치 뒤 Primary DB 인스턴스의 식별자. `deletionPointType`이 `FAILOVER_BOUNDARY`일 때만 값이 있음 |
+| deletionPoints.segmentCount | Number | 삭제할 아카이브 세그먼트 수 |
+| deletionPoints.sizeBytes | Number | 삭제할 아카이브 크기(바이트) |
+| deletionPoints.recoverableFromYmdt | DateTime | 삭제 뒤 아카이브로 시점 복원할 수 있는 가장 이른 백업 시각<br/>- null이면 이 지점 뒤에 백업이 없어 새 백업 전까지 아카이브로 시점 복원할 수 없음<br/>- DB 인스턴스에 남은 바이너리 로그로 복원할 수 있는 구간은 삭제와 무관 |
+| deletionPoints.containers | Array | 아카이브 저장 위치(Primary DB 인스턴스별) 삭제 내역 |
+| deletionPoints.containers.dbInstanceId | String | 아카이브를 쌓은 DB 인스턴스의 식별자 |
+| deletionPoints.containers.containerName | String | Object Storage 컨테이너 이름 |
+| deletionPoints.containers.segmentCount | Number | 삭제할 아카이브 세그먼트 수 |
+| deletionPoints.containers.sizeBytes | Number | 삭제할 아카이브 크기(바이트) |
+
+---
+
 <a id="modify-transaction-log-archiving"></a>
 ### 트랜잭션 로그 아카이빙 활성화/비활성화하기 { #modify-transaction-log-archiving }
 
@@ -4519,7 +4665,7 @@ GET /v4.0/backups
             "backupName": "backupName-example",
             "backupStatus": "BACKING_UP",
             "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
-            "dbVersion": "MYSQL_V8411",
+            "dbVersion": "MYSQL_V8413",
             "utilVersion": "utilVersion-example",
             "backupType": "AUTO",
             "backupSize": 1,
@@ -4735,7 +4881,7 @@ GET /v4.0/backups/{backupId}
         "backupStatus": "BACKING_UP",
         "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
         "dbInstanceName": "dbInstanceName-example",
-        "dbVersion": "MYSQL_V8411",
+        "dbVersion": "MYSQL_V8413",
         "utilVersion": "utilVersion-example",
         "backupType": "AUTO",
         "backupMethodType": "FULL",
@@ -5620,7 +5766,7 @@ GET /v4.0/parameter-groups
             "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
             "parameterGroupName": "parameterGroupName-example",
             "description": "description-example",
-            "dbVersion": "MYSQL_V8411",
+            "dbVersion": "MYSQL_V8413",
             "dbEngineVersionFamily": "MYSQL_V84_FAMILY",
             "parameterGroupType": "USER",
             "parameterGroupStatus": "STABLE",
@@ -5676,7 +5822,7 @@ POST /v4.0/parameter-groups
 {
     "parameterGroupName": "parameterGroupName",
     "description": "description-example",
-    "dbVersion": "MYSQL_V8411"
+    "dbVersion": "MYSQL_V8413"
 }
 ```
 
@@ -5795,7 +5941,7 @@ GET /v4.0/parameter-groups/{parameterGroupId}
     "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
     "parameterGroupName": "parameterGroupName-example",
     "description": "description-example",
-    "dbVersion": "MYSQL_V8411",
+    "dbVersion": "MYSQL_V8413",
     "dbEngineVersionFamily": "MYSQL_V84_FAMILY",
     "parameterGroupStatus": "STABLE",
     "parameters": [
