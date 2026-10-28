@@ -4375,6 +4375,151 @@ PUT /v4.0/db-instances/{dbInstanceId}/storage-info
 
 ---
 
+<a id="delete-transaction-log-archive"></a>
+### Delete Transaction Log Archive { #delete-transaction-log-archive }
+
+<a id="delete-transaction-log-archive-required-permissions"></a>
+#### Required Permission
+
+| Permission Name | Description |
+|-----|-----|
+| RDSforMariaDB:DbInstance.DeleteTransactionLogArchive | Delete transaction log archives |
+
+<a id="delete-transaction-log-archive-request"></a>
+#### Request
+
+```http
+DELETE /v4.0/db-instances/{dbInstanceId}/transaction-log-archive
+```
+
+<a id="delete-transaction-log-archive-request-parameters"></a>
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | Y | DB instance (Primary of the group) identifier |
+| deletionPointId | Query | String | Y | Deletion point identifier. `deletionPointId` from the List Deletion Points response |
+
+<a id="delete-transaction-log-archive-request-body"></a>
+#### Request Body
+
+This API does not require a request body.
+
+<a id="delete-transaction-log-archive-response"></a>
+#### Response
+
+<details>
+  <summary><strong>Example code</strong></summary>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+}
+```
+
+</details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| jobId | UUID | Identifier of requested task |
+
+---
+
+<a id="view-transaction-log-archive-deletion-points"></a>
+### View Transaction Log Archive Deletion Points { #view-transaction-log-archive-deletion-points }
+
+<a id="view-transaction-log-archive-deletion-points-required-permissions"></a>
+#### Required Permission
+
+| Permission Name | Description |
+|-----|-----|
+| RDSforMariaDB:DbInstance.Get | View transaction log archive deletion points |
+
+<a id="view-transaction-log-archive-deletion-points-request"></a>
+#### Request
+
+```http
+GET /v4.0/db-instances/{dbInstanceId}/transaction-log-archive/deletion-points
+```
+
+<a id="view-transaction-log-archive-deletion-points-request-parameters"></a>
+#### Request Parameters
+
+| Name | Category | Type | Required | Description |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | Y | DB instance (Primary of the group) identifier |
+
+<a id="view-transaction-log-archive-deletion-points-request-body"></a>
+#### Request Body
+
+This API does not require a request body.
+
+<a id="view-transaction-log-archive-deletion-points-response"></a>
+#### Response
+
+<details>
+  <summary><strong>Example code</strong></summary>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "deletionPoints": [
+        {
+            "deletionPointId": "deletionPointId-example",
+            "deletionPointType": "deletionPointType-example",
+            "pointYmdt": "2023-12-31T15:00:00+09:00",
+            "backupId": "backupId-example",
+            "backupName": "backupName-example",
+            "predecessorDbInstanceId": "predecessorDbInstanceId-example",
+            "successorDbInstanceId": "successorDbInstanceId-example",
+            "segmentCount": 1,
+            "sizeBytes": 1,
+            "recoverableFromYmdt": "2023-12-31T15:00:00+09:00",
+            "containers": [
+                {
+                    "dbInstanceId": "dbInstanceId-example",
+                    "containerName": "containerName-example",
+                    "segmentCount": 1,
+                    "sizeBytes": 1
+                }
+            ]
+        }
+    ]
+}
+```
+
+</details>
+
+| Name | Type | Description |
+|-----|-----|-----|
+| deletionPoints | Array | List of transaction log archive deletion points (in ascending order by time) |
+| deletionPoints.deletionPointId | String | Deletion point identifier. Used as-is for the `deletionPointId` of the deletion request |
+| deletionPoints.deletionPointType | String | Type of deletion point<br/>- `BACKUP`: Backup. Deletes archives before the starting binary log of that backup<br/>- `FAILOVER_BOUNDARY`: Failover boundary. Deletes archives loaded before that failover<br/>- `GAP_END`: End of log gap. Deletes the gap and archives before it |
+| deletionPoints.pointYmdt | DateTime | Deletion point time (backup creation time, failover time, or the time the first archive after the gap was loaded) |
+| deletionPoints.backupId | String | Backup identifier. Has a value only when `deletionPointType` is `BACKUP` |
+| deletionPoints.backupName | String | Backup name. Has a value only when `deletionPointType` is `BACKUP` |
+| deletionPoints.predecessorDbInstanceId | String | Identifier of the Primary DB instance before failover. Has a value only when `deletionPointType` is `FAILOVER_BOUNDARY` |
+| deletionPoints.successorDbInstanceId | String | Identifier of the Primary DB instance after failover. Has a value only when `deletionPointType` is `FAILOVER_BOUNDARY` |
+| deletionPoints.segmentCount | Number | Number of archive segments to delete |
+| deletionPoints.sizeBytes | Number | Size of archives to delete (bytes) |
+| deletionPoints.recoverableFromYmdt | DateTime | The earliest backup time from which point-in-time restore using archives is possible after deletion<br/>- If null, there is no backup after this point, so point-in-time restore using archives is not possible until a new backup is created<br/>- The range recoverable using binary logs remaining in the DB instance is unaffected by the deletion |
+| deletionPoints.containers | Array | Deletion details of archive storage locations (per Primary DB instance) |
+| deletionPoints.containers.dbInstanceId | String | Identifier of the DB instance where the archives were accumulated |
+| deletionPoints.containers.containerName | String | Object Storage container name |
+| deletionPoints.containers.segmentCount | Number | Number of archive segments to delete |
+| deletionPoints.containers.sizeBytes | Number | Size of archives to delete (bytes) |
+
+---
+
 <a id="modify-transaction-log-archiving"></a>
 ### Activate/Deactivate Transaction Log Archiving { #modify-transaction-log-archiving }
 
