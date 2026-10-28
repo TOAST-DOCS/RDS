@@ -4375,6 +4375,151 @@ PUT /v4.0/db-instances/{dbInstanceId}/storage-info
 
 ---
 
+<a id="delete-transaction-log-archive"></a>
+### トランザクションログアーカイブを削除する { #delete-transaction-log-archive }
+
+<a id="delete-transaction-log-archive-required-permissions"></a>
+#### 必要な権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:DbInstance.DeleteTransactionLogArchive | トランザクションログアーカイブの削除 |
+
+<a id="delete-transaction-log-archive-request"></a>
+#### リクエスト
+
+```http
+DELETE /v4.0/db-instances/{dbInstanceId}/transaction-log-archive
+```
+
+<a id="delete-transaction-log-archive-request-parameters"></a>
+#### リクエストパラメータ
+
+| 名前 | 区分 | タイプ | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | Y | DBインスタンス(グループのPrimary)の識別子 |
+| deletionPointId | Query | String | Y | 削除ポイントの識別子。削除ポイント一覧照会レスポンスの`deletionPointId` |
+
+<a id="delete-transaction-log-archive-request-body"></a>
+#### リクエスト本文
+
+このAPIはリクエスト本文を必要としません。
+
+<a id="delete-transaction-log-archive-response"></a>
+#### レスポンス
+
+<details>
+  <summary><strong>サンプルコード</strong></summary>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "jobId": "550e8400-e29b-41d4-a716-446655440000"
+}
+```
+
+</details>
+
+| 名前 | タイプ | 説明 |
+|-----|-----|-----|
+| jobId | UUID | リクエストしたジョブの識別子 |
+
+---
+
+<a id="view-transaction-log-archive-deletion-points"></a>
+### トランザクションログアーカイブ削除ポイントの照会 { #view-transaction-log-archive-deletion-points }
+
+<a id="view-transaction-log-archive-deletion-points-required-permissions"></a>
+#### 必要な権限
+
+| 権限名 | 説明 |
+|-----|-----|
+| RDSforMariaDB:DbInstance.Get | トランザクションログアーカイブ削除ポイントの照会 |
+
+<a id="view-transaction-log-archive-deletion-points-request"></a>
+#### リクエスト
+
+```http
+GET /v4.0/db-instances/{dbInstanceId}/transaction-log-archive/deletion-points
+```
+
+<a id="view-transaction-log-archive-deletion-points-request-parameters"></a>
+#### リクエストパラメータ
+
+| 名前 | 区分 | タイプ | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| dbInstanceId | URL | UUID | Y | DBインスタンス(グループのPrimary)の識別子 |
+
+<a id="view-transaction-log-archive-deletion-points-request-body"></a>
+#### リクエスト本文
+
+このAPIはリクエスト本文を必要としません。
+
+<a id="view-transaction-log-archive-deletion-points-response"></a>
+#### レスポンス
+
+<details>
+  <summary><strong>サンプルコード</strong></summary>
+
+```json
+{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "SUCCESS",
+        "isSuccessful": true
+    },
+    "deletionPoints": [
+        {
+            "deletionPointId": "deletionPointId-example",
+            "deletionPointType": "deletionPointType-example",
+            "pointYmdt": "2023-12-31T15:00:00+09:00",
+            "backupId": "backupId-example",
+            "backupName": "backupName-example",
+            "predecessorDbInstanceId": "predecessorDbInstanceId-example",
+            "successorDbInstanceId": "successorDbInstanceId-example",
+            "segmentCount": 1,
+            "sizeBytes": 1,
+            "recoverableFromYmdt": "2023-12-31T15:00:00+09:00",
+            "containers": [
+                {
+                    "dbInstanceId": "dbInstanceId-example",
+                    "containerName": "containerName-example",
+                    "segmentCount": 1,
+                    "sizeBytes": 1
+                }
+            ]
+        }
+    ]
+}
+```
+
+</details>
+
+| 名前 | タイプ | 説明 |
+|-----|-----|-----|
+| deletionPoints | Array | トランザクションログアーカイブの削除ポイントリスト(時刻昇順) |
+| deletionPoints.deletionPointId | String | 削除ポイントの識別子。削除リクエストの`deletionPointId`としてそのまま使用します |
+| deletionPoints.deletionPointType | String | 削除ポイントの種類<br/>- `BACKUP`: バックアップ。そのバックアップの開始バイナリログより前のアーカイブを削除します<br/>- `FAILOVER_BOUNDARY`: フェイルオーバー境界。そのフェイルオーバーより前にロードされたアーカイブを削除します<br/>- `GAP_END`: ログギャップの末尾。ギャップとその前のアーカイブを削除します |
+| deletionPoints.pointYmdt | DateTime | 削除ポイントの時刻(バックアップ作成時刻、フェイルオーバー時刻、ギャップ後の最初のアーカイブロード時刻) |
+| deletionPoints.backupId | String | バックアップの識別子。`deletionPointType`が`BACKUP`の場合のみ値があります |
+| deletionPoints.backupName | String | バックアップ名。`deletionPointType`が`BACKUP`の場合のみ値があります |
+| deletionPoints.predecessorDbInstanceId | String | フェイルオーバー前のPrimary DBインスタンスの識別子。`deletionPointType`が`FAILOVER_BOUNDARY`の場合のみ値があります |
+| deletionPoints.successorDbInstanceId | String | フェイルオーバー後のPrimary DBインスタンスの識別子。`deletionPointType`が`FAILOVER_BOUNDARY`の場合のみ値があります |
+| deletionPoints.segmentCount | Number | 削除するアーカイブセグメント数 |
+| deletionPoints.sizeBytes | Number | 削除するアーカイブのサイズ(バイト) |
+| deletionPoints.recoverableFromYmdt | DateTime | 削除後にアーカイブで時点復元できる最も早いバックアップ時刻<br/>- nullの場合、このポイント以降にバックアップが存在しないため、新しいバックアップが作成されるまでアーカイブで時点復元することはできません<br/>- DBインスタンスに残っているバイナリログで復元できる期間は削除とは無関係です |
+| deletionPoints.containers | Array | アーカイブの保存場所(Primary DBインスタンス別)の削除内訳 |
+| deletionPoints.containers.dbInstanceId | String | アーカイブを蓄積したDBインスタンスの識別子 |
+| deletionPoints.containers.containerName | String | Object Storageコンテナ名 |
+| deletionPoints.containers.segmentCount | Number | 削除するアーカイブセグメント数 |
+| deletionPoints.containers.sizeBytes | Number | 削除するアーカイブのサイズ(バイト) |
+
+---
+
 <a id="modify-transaction-log-archiving"></a>
 ### トランザクションログアーカイビングの有効化/無効化 { #modify-transaction-log-archiving }
 
