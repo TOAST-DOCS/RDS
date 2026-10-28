@@ -1,3 +1,5 @@
+<!-- machine_translated: true -->
+
 <!-- pre-align:aligned sig=c01d6c6c712e -->
 
 <a id="database-rds-for-enginepascalcase-db-engine"></a>
@@ -19,6 +21,8 @@ Support for MySQL versions below 8.0.34 has ended under the MySQL LTS policy. We
 | Version              | Note                                                      |
 |----------------------|-----------------------------------------------------------|
 | <strong>8.4</strong> |                                                           |
+| MySQL 8.4.13         |                                |
+| MySQL 8.4.11         |                                |
 | MySQL 8.4.9          |                                                           |
 | MySQL 8.4.8          |                                                           |
 | MySQL 8.4.7          |                                                           |
@@ -54,6 +58,8 @@ After creating the DB instance, you can change the DB engine version and modify 
 When upgrading the database engine version, a major version upgrade occurs if only the major version number is changed, and a minor version upgrade occurs if only the minor version number is changed.
 When attempting to upgrade the DB engine major version, you can upgrade to the next major version of the DB engine.
 
+You can configure the minor version to upgrade automatically without having to upgrade it manually. For more information, see [Auto Minor Version Upgrade](db-instance-ngsc/#maintenance-auto-minor-version-upgrade).
+
 <a id="manage-db-engine-version-pre-inspection-for-upgrading-from-mysql-57-to-mysql-80"></a>
 #### Pre-inspection for upgrading from MySQL 5.7 to MySQL 8.0
 
@@ -70,11 +76,13 @@ MySQL 8.0 and MySQL 5.7 have several incompatibilities. So if you are doing a ma
 - No table partitions must reside in shared tablespaces, including the InnoDB system tablespace and regular tablespaces.
 
 For DB version upgrade pre-check, you can check the result in the following ways.
+
 - Check for `the detailed checklist for upgrading from 5.7 to 8.0`(https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/23.08.17/Check_5.7_to_8.0_en.xlsx)
 - When attempting to upgrade the DB version in the console, check the result using the `DB Engine Upgrade Pre-Check` button.
 - Check the results of DB version upgrade attempts
 
 For the results of `DB Engine upgrade pre-check`in the console and the results of DB version upgrade attempts, you can check the details through `db_version_upgrade_compatibility.log`generated on the Log tab of each DB instance. The detailed history items have the following meanings, respectively.
+
 - `CHECK_BY_MYSQL_CHECK`:  There must be no version upgrade disqualifications via `mysqlcheck`.
 - `COLUMN_LENGHT_LIMIT_CHECK`: When checked through INFORMATION_SCHEMA.VIEWS, the column name must not exceed 64 characters.
 - `DUPLICATE_NAME_WITH_DATA_DICT`: No table should have the same name as a table used in the data dictionary.
@@ -86,6 +94,7 @@ For the results of `DB Engine upgrade pre-check`in the console and the results o
 - `PROPERTY_LENGTH_LIMIT_CHECK`: No table partitions must reside in shared tablespaces, including the InnoDB system tablespace and regular tablespaces.
 
 Also, you must check items that have been removed or changed in 8.0.
+
 - [Changes in SQL](https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-sql-changes)
 - [Features Removed in MySQL 8.0](https://dev.mysql.com/doc/refman/8.0/en/mysql-nutshell.html#mysql-nutshell-removals)
 
@@ -96,9 +105,11 @@ Also, you must check items that have been removed or changed in 8.0.
 To upgrade to MySQL 8.4, you must have already upgraded to MySQL 8.0. When upgrading a major version of the DB engine from `8.0` to `8.4`, a pre-check is required for certain items that are expected to cause problems.
 
 You can check the items detected by the upgrade checker through `DB Engine Upgrade Pre-Check` in the console, and any items detected as errors must be addressed. For more details, please refer to the MySQL homepage.
+
 - [Upgrade Checker Guide](https://dev.mysql.com/doc/mysql-shell/8.4/en/mysql-shell-utilities-upgrade.html#mysql-utilities-upgrade-checks)
 
 Also, you must check what has been removed or changed in 8.4.
+
 - [Guide to Incompatible Changes](https://dev.mysql.com/doc/refman/8.4/en/upgrading-from-previous-series.html#upgrade-incompatible-changes)
 - [Guide to Features Removed in 8.4](https://dev.mysql.com/doc/refman/8.4/en/mysql-nutshell.html#mysql-nutshell-removals)
 
@@ -109,6 +120,7 @@ Direct upgrade from version 8.0.18 to MySQL 8.4 is not supported.
 The following conditions must be met to upgrade from 8.0.18 to 8.4:
 
 Upgrade Path
+
 1. First, upgrade to MySQL 8.0.23 or higher
 2. Then, upgrade to MySQL 8.4
 
@@ -156,6 +168,8 @@ RDS for MySQL uses the MariaDB Audit plug-in to provide an auditing plug-in for 
 | MySQL version              | Whether to support server audit plugins |
 |----------------------------|-----------------------------------------|
 | <strong>8.4</strong>       |                                         |
+| MySQL 8.4.13         | O                |
+| MySQL 8.4.11         | O                |
 | MySQL 8.4.9                | O                                       |
 | MySQL 8.4.8                | O                                       |
 | MySQL 8.4.7                | O                                       |

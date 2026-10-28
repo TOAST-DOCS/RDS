@@ -75,6 +75,7 @@ To upgrade to MariaDB 11.8, the instance must first be upgraded to MariaDB 11.4.
 - **System-Versioned tables**: If System-Versioned tables exist, the upgrade is possible, but the upgrade time may be longer due to the need to update to the extended timestamp range.
 
 For more information, refer to the official documentation below:
+
 - [Upgrade path from MariaDB 11.4 to 11.8](https://mariadb.com/docs/server/server-management/install-and-upgrade-mariadb/upgrading/mariadb-community-server-upgrade-paths/upgrading-from-mariadb-11-4-to-mariadb-11-8)
 - [MariaDB 11.8 release notes](https://mariadb.com/docs/release-notes/community-server/11.8/what-is-mariadb-118#upgrading)
 

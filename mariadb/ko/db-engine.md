@@ -73,6 +73,7 @@ MariaDB 11.8로 업그레이드하려면 먼저 MariaDB 11.4로 업그레이드�
 - **System-Versioned 테이블**: System-Versioned 테이블이 존재하는 경우 업그레이드는 가능하지만, 확장된 타임스탬프 범위로의 업데이트가 필요하여 업그레이드 시간이 길어질 수 있습니다.
 
 자세한 내용은 아래 공식 문서를 참고합니다.
+
 - [MariaDB 11.4에서 11.8로 업그레이드 경로](https://mariadb.com/docs/server/server-management/install-and-upgrade-mariadb/upgrading/mariadb-community-server-upgrade-paths/upgrading-from-mariadb-11-4-to-mariadb-11-8)
 - [MariaDB 11.8 릴리스 노트](https://mariadb.com/docs/release-notes/community-server/11.8/what-is-mariadb-118#upgrading)
 

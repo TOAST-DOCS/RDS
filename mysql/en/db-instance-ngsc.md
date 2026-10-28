@@ -1,6 +1,6 @@
 <!-- machine_translated: true -->
 
-<!-- pre-align:aligned sig=6a6daf4e583d -->
+<!-- pre-align:aligned sig=b09b6c9f887c -->
 
 <a id="database-rds-for-enginepascalcase-db-instance"></a>
 ## Database > RDS for MySQL > DB Instance { #database-rds-for-enginepascalcase-db-instance }
@@ -42,6 +42,8 @@ MySQL versions below 8.0.34 have reached End of Support per the MySQL LTS policy
 | Version              | Note                                                      |
 |----------------------|-----------------------------------------------------------|
 | <strong>8.4</strong> |                                                           |
+| MySQL 8.4.13         |                                |
+| MySQL 8.4.11         |                                |
 | MySQL 8.4.9          |                                                           |
 | MySQL 8.4.8          |                                                           |
 | MySQL 8.4.7          |                                                           |
@@ -143,6 +145,11 @@ DB security groups are used to restrict access in case of external intrusion. Yo
 You can set up periodic backups of the databases in your DB instance, or you can create backups at any time through the console. Performance may degrade during backups. To avoid affecting service, it is better to perform back up at a time when the service is under low load. If you do not want the backup to degrade performance, you can use a high-availability configuration, back up only the incremental data since the previous backup, or perform backups from a Read Replica. Backup files are stored on internal backup storage and are charged based on the
 size of backup storage. You can export to NHN Cloud Object Storage if necessary. To prepare for unexpected failures, we recommend that you set up backups to be conducted periodically. For more details on backup, see [Backup and Restore](backup-and-restore-ngsc/).
 
+<a id="transaction-log-archiving"></a>
+### Transaction Log Archiving { #transaction-log-archiving }
+
+You can configure binary logs to be stored in Object Storage for use in point-in-time restore. If you select **Enable**, enter a retention period as an integer between 1 and 35 days. The default value is **Disable**, and the default retention period is 7 days. When transaction log archiving is enabled, additional charges are incurred based on staging buffer volume and archive usage. For more information, see [Transaction Log Archiving](backup-and-restore-ngsc/#transaction-log-archiving).
+
 <a id="maintenance"></a>
 ### Maintenance { #maintenance }
 
@@ -159,7 +166,7 @@ You can set a maintenance duration when creating or modifying a DB instance. If 
 <a id="maintenance-task"></a>
 #### Maintenance Task
 
-Maintenance tasks are categorized into User Maintenance and Provider Maintenance.
+Maintenance tasks are categorized into user maintenance tasks, Provider maintenance tasks, and automatic maintenance tasks.
 
 **User Maintenance Task**
 
@@ -176,6 +183,12 @@ A maintenance task provided by NHN Cloud.
 * Apply parameter group changes
 * Migration for hypervisor maintenance
 
+**Automatic Maintenance Task**
+
+A task that the system registers automatically according to the settings.
+
+* [Auto Minor Version Upgrade](db-instance-ngsc/#maintenance-auto-minor-version-upgrade)
+
 <a id="maintenance-execution-time"></a>
 #### Maintenance Execution Time
 
@@ -189,13 +202,13 @@ You can choose when to apply maintenance tasks.
 
 You can check the maintenance status of each instance in the DB instance list.
 
-| Status      | Description                                    |
-|---------|---------------------------------------|
+| Status | Description |
+|-------|-------------------------------------------------------------------|
 | None | There are no scheduled or pending maintenance tasks. |
-| Next Applied | A user maintenance task is scheduled to run in the next maintenance duration. |
+| Next Apply | There are maintenance tasks scheduled to run in the next maintenance duration. |
 | Applying | A maintenance task is in progress. |
-| Required | A required provider maintenance task is pending. |
-| Available | A non-required provider maintenance task is pending/in preparation. |
+| Required | There are required maintenance tasks. They will eventually be applied even if deferred. |
+| Available | There are only maintenance tasks that do not run automatically and must be applied or scheduled by the user. This also includes tasks that have been placed on hold. |
 
 !!! tip "Note"
     The maintenance status is not displayed for the Standby of High Availability (HA) DB instances.
@@ -211,7 +224,50 @@ You can find the following information on the Maintenance tab of the DB instance
 * Upcoming maintenance tasks (Scheduled for the next duration)
 * Pending maintenance tasks
 
-Upcoming maintenance tasks can be excluded from the maintenance duration clicking the **Hold** or **Delete** buttons. For pending Provider maintenance tasks, you can manually apply them by selecting either **Apply Immediately** or **Apply in the Next Maintenance Duration**.
+Scheduled maintenance tasks can be excluded from the maintenance duration by clicking the **Hold** or **Delete** button. User maintenance tasks are deleted, and Provider maintenance tasks and automatic maintenance tasks are placed on hold. Pending maintenance tasks can be applied manually by selecting **Apply Immediately** or **Apply in the Next Maintenance Duration**.
+
+<a id="maintenance-auto-minor-version-upgrade"></a>
+#### Auto Minor Version Upgrade
+
+When Auto Minor Version Upgrade is enabled, the minor version of the DB engine is upgraded automatically without any direct request from you. If there is a version eligible for automatic upgrade, an automatic maintenance task is registered and executed during the next maintenance duration.
+
+**Settings**
+
+You can configure this setting in the maintenance section when creating or restoring a DB instance. The default value is enabled. After creation, you can change this setting by selecting the DB instance group from the DB instance list and clicking **Modify**.
+
+This setting applies equally to all DB instances in the group. Primary, Standby, and Read Replica cannot have different settings, and a newly created Read Replica inherits the group's settings.
+
+**Conditions**
+
+This applies to DB instances that meet all of the following conditions:
+
+| Condition | If not met |
+|---|---|
+| Uses a family parameter group | Excluded from the upgrade target. |
+| Current DB engine version is eligible for automatic upgrade | Excluded from the upgrade target. |
+| No scheduled or pending DB engine version upgrade tasks | Deferred to the next cycle. |
+| All Read Replicas of the Primary are upgraded first | Deferred to the next cycle. |
+
+Automatic upgrade targets are limited to minor versions within the same major version. Major version upgrades are not performed automatically.
+
+If there are remaining DB engine version upgrade tasks that were scheduled by the user or registered by the provider, no automatic maintenance task is registered, and the system defers. Once those tasks are processed, the automatic maintenance task is registered again in the next cycle.
+
+!!! tip "Note"
+    This does not apply to DB instances that use a single parameter group. To use automatic upgrade, you must change to a [family parameter group](parameter-group-ngsc/#family-parameter-group).
+
+**Upgrade order**
+
+To maintain the replication configuration, Read Replicas are upgraded first, followed by the Primary. The Primary and Standby of a high-availability DB instance are upgraded together as a single task. Because of this order, it may take several maintenance durations for the changes to be applied to the entire DB instance group.
+
+**Evaluation cycle**
+
+Eligibility for automatic upgrade is evaluated once per day. If eligible, an automatic maintenance task scheduled for the next maintenance duration is registered.
+
+**Task exclusion**
+
+If you don't want to run a registered automatic maintenance task during the current maintenance duration, select **Hold** on the Maintenance tab. A held task is not re-registered automatically. If you select **Apply in the Next Maintenance Duration**, it will run at that time.
+
+To stop automatic upgrades entirely, modify the DB instance group and change the Auto Minor Version Upgrade setting to disabled. When you change the setting to disabled, any automatic maintenance tasks that have not yet been executed are also deleted.
 
 <a id="maintenance-execution-order"></a>
 #### Execution Order
@@ -245,17 +301,15 @@ If you activate deletion protection, you can protect DB instances from accidenta
 <a id="db-instance-list"></a>
 ## DB Instance List { #db-instance-list }
 
-You can view DB instances created from the console. It can be viewed as groups of DB instances or as individual DB instances.
+You can view DB instances created from the console grouped by DB Instance Group.
 
 ![db-instance-list_en](https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/26.01.13/db-instance-list_en.png)
 
-❶ You can change DB instance screen mode.  
-❷ By clicking on the button, you can open or close a DB instance that belongs to a group.  
-❸ It displays the most recently collected monitoring indicators.  
-❹ You can view the current status.  
-❺ A spinner will appear if have any work in progress.  
-❻ You can change the search criteria.
-
+❶ By clicking on the button, you can open or close a DB instance that belongs to a group.  
+❷ It displays the most recently collected monitoring indicators.  
+❸ You can view the current status.  
+❹ A spinner will appear if have any work in progress.  
+❺ You can change the search criteria.
 
 The status of the DB instance consists of the following values and changes depending on the behavior of the user and the current status.
 
@@ -279,12 +333,13 @@ Search conditions that can be changed are as follows.
 <a id="db-instance-group-details"></a>
 ## DB Instance Group Details { #db-instance-group-details }
 
-After viewing the DB instance list in the **Group** view, select a DB Instance Group to view its detailed information. The group details screen displays the following tabs:
+Select a DB Instance Group from the DB instance list to view its detailed information. The group details screen displays the following tabs:
 
 | Tab | Description |
 |---|---|
-| Basic Information | Displays the DB Instance Group name and ID, high availability configuration, Primary and Standby names, and Ping settings. |
+| Basic Information | Displays the DB Instance Group name and ID, high availability configuration, Primary and Standby names, Ping settings, and whether transaction log archiving is enabled. |
 | DB Schema and Users | Manages the DB schemas and users of DB instances in the group. The DB schema and user features are provided in the DB Instance Group details, not in the individual DB instance details. |
+| Transaction Log Archiving | Displays the archiving status, usage, and restore coverage of the transaction log archive. This is displayed only for groups that use transaction log archiving. For more information, see [Transaction Log Archiving Tab](backup-and-restore-ngsc/#transaction-log-archiving-tab). |
 
 <a id="db-schema-and-users"></a>
 ### DB Schema and Users { #db-schema-and-users }
@@ -332,6 +387,7 @@ User ID has the following restrictions.
 ❺ Select the permissions that you want to grant to users. The permissions and descriptions that you can grant are as follows.
 
 **READ**
+
 * You have permission to view.
 
 ```sql
@@ -342,6 +398,7 @@ GRANT SELECT ON `performance_schema`.* TO '{user_id}'@'{host}';
 ```
 
 **CRUD**
+
 * Includes READ permission, and has permission to modify data.
 
 ```sql
@@ -349,6 +406,7 @@ GRANT INSERT, UPDATE, DELETE, CREATE TEMPORARY TABLES, LOCK TABLES, EXECUTE ON *
 ```
 
 **DDL**
+
 * Includes CRUD permissions and has permissions to execute DDL queries.
 
 ```sql
@@ -357,6 +415,7 @@ GRANT EXECUTE ON `mysql`.* TO '{user_id}'@'{host}';
 ```
 
 **CUSTOM**
+
 * When restoring a DB instance from an external database backup, all users that exist in the database are represented with the CUSTOM permission.
 * You cannot check what permissions are in the CUSTOM permission template.
 * If you change from one CUSTOM permission template to another permission template, you cannot change back to a CUSTOM permission template.
@@ -431,12 +490,18 @@ You can change the following items on the modification screen:
 | Ping Interval                     | Set within a range of 1 to 600 seconds in a high availability configuration.                                                                                        |
 | Ping Method                       | Select either `INSERT` or `SELECT` in a high availability configuration.                                                                                            |
 | DB Schema & Direct User Control   | Changes whether to use direct control for schemas and users of DB instances in the group.                                                                           |
+| Transaction log archiving      | Changes whether to use transaction log archiving. If changed to **Enable**, a pricing notice is displayed on the confirmation screen.        |
+| Retention period              | Sets the retention period of the transaction log archive to an integer between 1 and 35 days when transaction log archiving is enabled.     |
 
 !!! danger "Caution"
     * Disabling high availability deletes the Standby and converts to a standalone configuration. Before proceeding, make sure there is no data or configuration that exists only on the Standby.
     * You cannot change the high availability setting for a DB Instance Group while failover is in progress.
     * The Primary name cannot be changed in a private network. Also, the Standby name of an existing high availability configuration cannot be changed; the Standby name can only be entered when setting up high availability for the first time.
     * In a high availability configuration, the names of the Primary and Standby must be different from each other.
+    * If a task is in progress in a DB Instance Group, you cannot change the transaction log archiving settings or modify the group.
+
+!!! tip "Note"
+    Whether to use transaction log archiving and the retention period are applied when you click **Update DB Instance Group** along with other settings. For more information, see [Transaction Log Archiving](backup-and-restore-ngsc/#transaction-log-archiving).
 
 <a id="db-schema-direct-user-control"></a>
 ### DB Schema & Direct User Control { #db-schema-direct-user-control }
@@ -548,14 +613,14 @@ Upcoming Maintenance is a list of tasks scheduled to be executed during the next
 | Registration Date | The date the maintenance task was registered. |
 | Mandatory Date | If the task is required, it will be automatically applied after this date. |
 
-Upcoming maintenance tasks can be excluded from the maintenance duration by selecting them and clicking **Delete** or **Hold**.
-If deleted, these tasks are canceled. To apply them again in a future duration, you must perform the original action once more.
-Provider maintenance tasks will be moved to the Pending Maintenance list. You can move them back to the Upcoming Maintenance list at any time from the Pending Maintenance list.
+Scheduled maintenance tasks can be excluded from the maintenance duration by selecting them and clicking **Delete** or **Hold**.
+Deleted user maintenance tasks are canceled, and to reapply them to a maintenance duration, you must perform the task again.
+Provider maintenance tasks and automatic maintenance tasks are moved to the pending maintenance list. From the pending maintenance list, you can move them back to the scheduled maintenance list.
 
 <a id="db-instance-details-maintenance-pending-maintenance"></a>
 #### Pending Maintenance
 
-Pending Maintenance is a list of Provider maintenance tasks provided by NHN Cloud. This includes operations such as applying parameter group changes and migrations for hypervisor maintenance.
+Pending Maintenance is a list of Provider maintenance tasks provided by NHN Cloud and automatic maintenance tasks registered automatically by the system. It includes tasks such as applying parameter group changes, migration for hypervisor inspection, and Auto Minor Version Upgrade.
 
 | Item        | Description                                                                 |
 |-------------|-----------------------------------------------------------------------------|
@@ -657,6 +722,7 @@ Select the binary log and press **Confirm** to delete all binary logs created pr
 
 !!! danger "Caution"
     Depending on the deleted binary logs, point-in-time restoration may not be possible.
+    If you use transaction log archiving and delete binary logs that have not yet been uploaded to Object Storage, point-in-time restoration is not available for that interval. Before using Secure Capacity, check that the upload status is **Normal** and the number of pending segments is 0 on the **Transaction Log Archiving** tab in the group details screen.
 
 <a id="expand-storage-size"></a>
 ## Expand Storage Size { #expand-storage-size }
@@ -668,14 +734,16 @@ You can scale up the data storage size of a DB instance. The expansion takes eff
 
 You can automatically scale the data storage size of a DB instance. With auto storage expansion, you can maintain the availability of your database by automatically scaling up when data storage runs out of capacity.
 
-To use auto storage scaling, you must enable ** Auto Scale Storage** when creating and modifying DB instances. 
+To use auto storage scaling, you must enable **Auto Scale Storage** when creating and modifying DB instances. 
 
 When you enable auto scale storage, you can set three options
+
 * Storage Auto Scale Conditions: Automatically expand storage when storage utilization is above a set value for more than 5 minutes.
 * Storage Auto Scale Max: The maximum size that storage auto-scale can grow to.
 * Storage Auto Scale Cooldown: Set the amount of time after storage auto scale cooldown runs once before the feature is enabled again.
 
 The amount of increase when the auto scale storage feature runs is set to the largest of the following values
+
 * 10 GB
 * 10% of storage size
 * Data storage usage growth in the last hour * cooldown (in hours)
@@ -873,6 +941,22 @@ Enabling Delete Protection protects DB instances from being accidentally deleted
 
 ❷ Change the Delete Protection settings and click on **Confirm**.
 
+<a id="change-transaction-log-archiving"></a>
+## Change Transaction Log Archiving { #change-transaction-log-archiving }
+
+You can change whether to enable transaction log archiving for a DB instance group. To change the transaction log archiving setting, follow the steps below:
+
+1. In the DB instance list, select a DB instance group or the Primary of the group.
+2. In the dropdown menu, click **Change Transaction Log Archiving**.
+3. In the pop-up window, select **Enable** or **Disable**.
+4. Click **Confirm**.
+
+The change request is processed asynchronously, and an event is generated when it completes or fails. The retention period cannot be changed from this menu; change it in [Update DB Instance Group](#modify-db-instance-group). For more information, see [Transaction Log Archiving](backup-and-restore-ngsc/#transaction-log-archiving).
+
+!!! danger "Caution"
+    * If you change it to **Enable**, additional charges apply based on staging buffer volume and archive usage.
+    * You cannot change the transaction log archiving setting while a task is in progress in the DB instance group.
+
 <a id="ha-db-instance"></a>
 ## High Availability DB Instances { #ha-db-instance }
 
@@ -892,15 +976,65 @@ Standby has a process for detecting failures, which periodically detects the sta
 <a id="automatic-failover"></a>
 ### Automatic Failover { #automatic-failover }
 
-When the Standby fails the Primary's health check four times in a row, it determines that the Primary is unable to provide service and automatically performs a failover. In order to prevent split brains, disconnect all user security groups assigned to the failed Primary to block external connections, and the Standby will take over the role of the Primary. A record in the internal domain for access are changed from the failed Primary to the Standby, so no changes to the application are required. When failover is completed, the type of the failed Primary changes to Failed Over Primary and the type of Standby changes to the Primary. No failover is performed until the Failed Over Primary is recovered or rebuilt. The new Primary takes over all automatic backups of the Failed Over Primary. Point-in-time restoration using existing backups is not supported because the Primary changes during failover and all binary logs are deleted. You can restore point-in-time
-from the time the new backup was performed on the new Primary.
+When the Standby fails the Primary's health check four times in a row, it determines that the Primary is unable to provide service and automatically performs a failover. In order to prevent split brains, disconnect all user security groups assigned to the failed Primary to block external connections, and the Standby will take over the role of the Primary. A record in the internal domain for access are changed from the failed Primary to the Standby, so no changes to the application are required. When failover is completed, the type of the failed Primary changes to Failed Over Primary and the type of Standby changes to the Primary. No failover is performed until the Failed Over Primary is recovered or rebuilt. The new Primary takes over all automatic backups of the Failed Over Primary. Point-in-time restoration using existing backups is not supported for DB instance groups that do not use transaction log archiving, because all binary logs are deleted when the Primary changes during failover. You can restore point-in-time from the time the new backup was performed on the new Primary.
 
 !!! tip "Note"
     As the high availability feature is based on a domain, if a client trying to connect is in a network environment where the DNS server cannot be reached, the DB instance cannot be accessed through the domain, and normal connection is not possible in the event of failover. It takes approximately 3 seconds for the changes to A record in the internal domain to take effect, but may vary depending on the DNS Cache policy in the client environment where attempting to connect.
+    DB instance groups that use transaction log archiving can perform a point-in-time restore to a point in time before the failover, using a backup taken before the failover. For more information, see [Failover and Point-in-time Restore](backup-and-restore-ngsc/#failover-and-point-in-time-restoration).
 
 !!! danger "Caution"
     If the position number value of the binary log between Primary and Standby differs by more than 100,000,000, there is no failover.
     If `replicate-ignore-db` or `replicate-ignore-table` is applied, changes to that DB or table will not be replicated and failover may fail.
+
+<a id="failover-progress-step"></a>
+### Failover Progress Step { #failover-progress-step }
+
+While a failover is in progress, the **Failover Progress Step** and **Replication Log Apply Progress** columns appear in the DB instance list. These two columns appear only when there is a DB instance group with an ongoing failover, and values are displayed only in the DB instance group row. When the failover completes, the two columns disappear.
+
+The failover progress steps are as follows. The **Revert Failover** button appears only during steps that can be reverted.
+
+| Progress Step | Description | Revertible |
+| --------------------- | --------------------------------------------------------------- | ---- |
+| Blocking Failed Over Primary | Blocks connections to the failed Primary and shuts down the database engine. | Yes |
+| Applying Replication Log | Applies replication logs that the Standby has not yet reflected. | Yes |
+| Switching Endpoint | Changes the internal domain and VIP to point to the Standby and allows writes. | No |
+| Reconfiguring Replication | Reconfigures replication so that the remaining replicas point to the new Primary. | No |
+| Cleaning Up Metadata | Reflects the failover result in the DB instance information. | No |
+| Reverting | Processes the requested failover revert. | No |
+
+During the Applying Replication Log step, you can check how much of the replication log remains to be applied in the Replication Log Apply Progress column. The display formats are as follows.
+
+| Display | Meaning |
+| --------------- | ----------------------------------------------------- |
+| `62% (approx. 40 seconds remaining)` | 62% of the log has been applied, and the remaining portion will take approximately 40 seconds. |
+| `7%` | 7% of the log has been applied, but not enough samples have been collected yet to estimate the remaining time. |
+| `7% (no progress)` | 7% of the log has been applied, but no further progress has been made for more than 1 minute. |
+| `Finalizing` | All replication logs have been applied and cleanup is in progress before moving to the next step. |
+
+!!! tip "Note"
+    The remaining time is an estimated value calculated based on the average apply speed so far, and may differ from the actual time required.
+
+<a id="revert-failover"></a>
+### Revert Failover { #revert-failover }
+
+If there are many replication logs to apply to the Standby, the Applying Replication Log step can take a long time. In this case, reverting the failover and restarting the failed Primary may be a faster way to resume service than waiting for the failover to complete. When the progress step is Blocking Failed Over Primary or Applying Replication Log, the **Revert Failover** button appears next to the name in the DB instance group row. Clicking the button displays a warning pop-up, after which the revert is executed.
+
+Reverting a failover stops the ongoing failover and restarts the failed Primary for use as the Primary again. The connections of the blocked user security groups are restored, and replication of the replicas is restarted. Because a revert can only be performed before the Endpoint is switched, the Standby has never been promoted to the new Primary and has not received any writes. After the revert, the data from the original Primary is used as-is.
+
+!!! danger "Caution"
+    Depending on the cause of the failure, the failed Primary may not start up normally. In this case, the revert fails and the DB instance remains in the failover-in-progress state.
+    If you cannot connect to the failed Primary, you must contact Customer Support.
+
+After reverting the failover, the high availability feature remains stopped. Therefore, when the revert is complete, you must either resume the high availability feature by using **Restart High Availability**, or perform [Rebuild Standby](#rebuild-candidate-master) if replication of the Standby is significantly delayed. Because the high availability feature is already stopped, you cannot suspend high availability.
+
+In the following cases, the revert request is rejected and the reason is displayed on the screen.
+
+| Reason | Action |
+| --------------------------------------------------------------- | ------------------------------------ |
+| The failover has already progressed to a step that cannot be reverted. | Wait until the failover is complete. |
+| A failover revert is already in progress. | Wait until the revert is complete. |
+| There is no failover in progress. | Refresh the screen to check the latest status. |
+| The revert cannot be performed because the failed Primary DB instance is not responding. | Wait until the failover is complete, then recover or rebuild the Failed Over Primary. |
 
 <a id="failed-over-master"></a>
 ### Failed Over Primary { #failed-over-master }
@@ -968,11 +1102,12 @@ For a high availability DB instance, you can select whether or not to restart wi
 * Apply changes to parameters that require restart
 * DB Instances migration for Hypervisor Check
 
-After a restart using failover, the Standby will be restarted first. After that, the Standby becomes the Primary through failover, and the existing Primary will act as the Standby. At this point, the A record in the internal domain for the connection will be changed from Primary to Standby, so no application changes are required. The new Primary succeeds to all automatic backups of the old Primary. Point-in-time restoration with existing backups is not supported because the Primary changes during the failover and all binary logs are deleted. You can restore points-in-time from the time when the new backup is performed on the new Primary.
+After a restart using failover, the Standby will be restarted first. After that, the Standby becomes the Primary through failover, and the existing Primary will act as the Standby. At this point, the A record in the internal domain for the connection will be changed from Primary to Standby, so no application changes are required. The new Primary succeeds to all automatic backups of the old Primary. Point-in-time restoration with existing backups is not supported for DB instance groups that do not use transaction log archiving, because the Primary changes during the failover and all binary logs are deleted. You can restore points-in-time from the time when the new backup is performed on the new Primary.
 
 !!! tip "Note"
     Because the high availability feature is domain-based, if the client attempting to connect is in a network environment where the DNS server cannot be accessed, the DB instance cannot be accessed through the domain, and successful connection is not possible in the event of a failover.
     It takes approximately 3 seconds to reflect changes in the A record in the internal domain. The time required may vary depending on the DNS Cache policy of the client environment attempting to connect.
+    DB instance groups that use transaction log archiving can perform a point-in-time restore to any point before the failover, using a backup taken before the failover. For more information, see [Failover and Point-in-time Restore](backup-and-restore-ngsc/#failover-and-point-in-time-restoration).
 
 !!! danger "Caution"
     If the Seconds_Behind_Master value of the Read Replica included in the replication group with the Standby is greater than or equal to 1, replication delay is considered to have occurred and a manual failover will fail. It is recommended that you perform manual failover during off-peak hours. Restart failures due to replication delays can be verified through the Events screen.

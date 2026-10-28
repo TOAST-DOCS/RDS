@@ -36,6 +36,13 @@ grep -E '^\| [^-]' /tmp/rv-glossary.md | cut -d'|' -f2-4 | grep -v ' 한글 '
 
 * 용어집에 없는 낱말은 위반으로 잡지 않음. 기존 문서 표기를 기준으로 일관성만 확인
 
+## 번역 파이프라인이 읽는 사본
+
+* 번역 파이프라인(cloud-translate)은 위키가 아니라 저장소 루트의 `.docs-glossary.md` 를 읽음. `.docs-workflow` 의 `service_glossary` 가 이 파일의 경로를 지정
+* 내용은 위키 Common 과 서비스 페이지의 사본에 `운영 번역 용어` 절을 덧붙인 것
+  * `운영 번역 용어` 는 위키에 없는 용어라 검토할 때 이 파일에서 함께 읽음
+* 위키와 이 파일이 다르면 번역은 이 파일을 따름. 차이를 발견하면 보고에 적음
+
 # 검토 순서
 
 ## 1. 대상 확보
@@ -83,6 +90,45 @@ git grep -n '^  !!! ' <ref> -- ko/ en/ ja/     # 중첩 admonition 위치 대조
 git grep -c 'read replica' origin/<base> -- en/
 git grep -c 'read replica' <head> -- en/
 ```
+
+### 새 용어집 표기와 기존 표기의 혼재
+
+* 바뀐 용어집 표기는 새로 번역한 문장에만 들어가고, ko 가 바뀌지 않은 문장은 기존 번역을 재사용함
+  * 그래서 한 문서 안에 `Auto Backup` 과 `auto backup` 이 함께 남을 수 있음
+* 대소문자만 다른 혼재는 `glossary_mix.py` 로 찾음. 두 낱말 이상인 영어 역어만 검사
+* base 와 head 결과를 diff 해서 이번 PR 이 새로 만든 혼재만 보고. base 에 이미 있던 혼재는 대상이 아님
+
+```bash
+P=.claude/skills/translation-review/glossary_mix.py
+python3 "$P" origin/<base> en/ > /tmp/rv-mix-base.tsv
+python3 "$P" origin/<head> en/ > /tmp/rv-mix-head.tsv
+diff /tmp/rv-mix-base.tsv /tmp/rv-mix-head.tsv
+```
+
+* 출력 열은 파일, 용어집 표기, 용어집 표기 수, 다른 표기와 수
+* 낱말 자체가 바뀐 역어는 스크립트가 잡지 못하므로 아래 표의 이전 표기를 base 와 head 에서 세어 비교
+  * 2026-10-28 에 용어집이 cloud-translate `RDS_glossary.md` 에서 `.docs-glossary.md` 로 바뀌며 생긴 차이
+
+| 한글 | 언어 | 용어집 표기 | 이전 표기 |
+| --- | --- | --- | --- |
+| 시점 복원 | en | Point In Time Recovery (PITR) | point-in-time restore |
+| 바이너리 로그 | en | Binary Log (BinLog) | binary log |
+| 기준 백업 | ja | 基準バックアップ | ベースラインバックアップ |
+| 스냅숏 복원 | en | Snapshot Restoration | snapshot restore |
+| 백업 내보내기 | en | Export Backup | backup export |
+| 백업 내보내기 | ja | バックアップのエクスポート | バックアップエクスポート |
+| 복제 중단 | en | Replication Stopped | replication down |
+| 유지 관리 기간 | en | Maintenance Duration | maintenance window |
+| 데이터 스토리지 결함 | en | Data Storage Defect | data storage fault |
+| 즉시 적용 | ja | 即時適用 | 即座に適用 |
+
+```bash
+git grep -ci 'point-in-time restore' origin/<base> -- en/
+git grep -ci 'point-in-time restore' origin/<head> -- en/
+```
+
+* head 에서 이전 표기가 늘었으면 용어집을 따르지 않은 것이므로 용어집 위반으로 보고
+* 한 파일에 두 표기가 함께 있으면 문서 내 일관성 항목으로 보고하고, 기존 문장까지 맞출지는 담당자 판단으로 남김
 
 ## 4. 문서 내 일관성
 

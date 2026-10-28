@@ -58,6 +58,7 @@ DB 인스턴스의 각종 성능 지표를 차트 형태로 볼 수 있습니다
 | 스왑 사용량                     | swap used (bytes)<br> swap total (bytes)                                                                                             |                                                   |
 | Storage 사용량                | storage used (%)                                                                                                                     |                                                   |
 | Storage 남은 사용량             | storage free (%)                                                                                                                     |                                                   |
+| Storage 상세                 | Data (bytes)<br/>Binary Log (bytes)<br/>Free (bytes)                                                                                 | 2026년 11월 이후 수집된 지표부터 표시                          |
 | Storage IO                 | disk read (bytes)<br> disk write (bytes)                                                                                             |                                                   |
 | 네트워크 데이터 송수신               | nic incoming (bytes)<br> nic outgoing (bytes)                                                                                        | MySQL에서 사용하는 기본적인 네트워크 전송이 발생합니다. |
 | CPU 평균 부하                  | 1m<br/>5m<br/>15m                                                                                                                    |                                                   |

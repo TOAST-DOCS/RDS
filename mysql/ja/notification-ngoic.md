@@ -1,3 +1,5 @@
+<!-- machine_translated: true -->
+
 <!-- pre-align:aligned sig=ffcf287dccd2 -->
 
 <a id="database-rds-for-enginepascalcase-notification"></a>
@@ -69,6 +71,8 @@
 | INSTC_26_00 | INSTANCE          | はい     | DBインスタンスフェイルオーバー発生                    |
 | INSTC_26_01 | INSTANCE          | はい     | DBインスタンスのフェイルオーバー完了                   |
 | INSTC_26_04 | INSTANCE          | はい     | DBインスタンスのフェイルオーバー失敗                   |
+| INSTC_26_05 | INSTANCE          | はい     | DBインスタンスフェイルオーバーの取り消し               |
+| INSTC_26_06 | INSTANCE          | はい     | DBインスタンスフェイルオーバー進行段階の変更           |
 | INSTC_27_01 | INSTANCE          | はい     | DBインスタンスの容量を確保                        |
 | INSTC_27_04 | INSTANCE          | はい     | DBインスタンスの容量確保失敗                       |
 | INSTC_28_01 | INSTANCE          | はい     | 高可用性DBインスタンスの起動                       |
@@ -170,6 +174,13 @@
 | INSTC_76_02 | INSTANCE          | はい      | メンテナンススキップ                              |
 | INSTC_76_04 | INSTANCE          | はい      | メンテナンス失敗                              |
 | INSTC_76_05 | INSTANCE          | はい      | メンテナンス登録失敗                           |
+| INSTC_79_01 | INSTANCE          | はい        | トランザクションログアーカイビングの有効化完了                 |
+| INSTC_79_04 | INSTANCE          | はい        | トランザクションログアーカイビングの有効化失敗                 |
+| INSTC_80_01 | INSTANCE          | はい        | トランザクションログアーカイビングの無効化完了                |
+| INSTC_80_04 | INSTANCE          | はい        | トランザクションログアーカイビングの無効化失敗                |
+| INSTC_81_04 | INSTANCE          | はい        | トランザクションログアーカイブの遅延または中断を検知              |
+| INSTC_81_05 | INSTANCE          | はい        | トランザクションログアーカイブ復旧不可区間検知                     |
+| INSTC_82_04 | INSTANCE          | はい        | トランザクションログステージングバッファボリューム接続失敗            |
 | JOB_01_04   | JOB               | はい     | Job実行失敗                               |
 | TENAT_01_04 | TENANT            | はい     | CPUコア数制限                              |
 | TENAT_02_04 | TENANT            | はい     | RAM容量制限	                              |

@@ -119,6 +119,7 @@ API 요청 시 인증에 실패하거나 권한이 없을 경우 다음과 같�
 | MYSQL_V8408 | Y | Y | CACHING_SHA2 |
 | MYSQL_V8409 | Y | Y | CACHING_SHA2 |
 | MYSQL_V8411 | Y | Y | CACHING_SHA2 |
+| MYSQL_V8413 | Y | Y | CACHING_SHA2 |
 
 * Enum 유형인 dbVersion 필드에 위 값을 사용할 수 있습니다.
 * 버전에 따라 생성 또는 복원이 불가능할 수 있습니다.
@@ -153,8 +154,9 @@ GET /v3.0/db-versions
     },
     "dbVersions": [
         {
-            "dbVersion": "MYSQL_V8411",
-            "dbVersionName": "MySQL 8.4.11",
+            "dbVersion": "MYSQL_V8413",
+            "dbVersionName": "MySQL 8.4.13",
+            "canCreate": true,
             "restorableFromObs": true
         }
     ]
@@ -168,6 +170,7 @@ GET /v3.0/db-versions
 | dbVersions | Array | DB 엔진 목록 |
 | dbVersions.dbVersion | Enum | DB 엔진 버전 |
 | dbVersions.dbVersionName | String | DB 엔진 버전명 |
+| dbVersions.canCreate | Boolean | 생성 가능 여부 |
 | dbVersions.restorableFromObs | Boolean | Object Storage에서 복원 가능 여부 |
 
 ---
@@ -589,6 +592,8 @@ GET /v3.0/db-instance-groups
     "dbInstanceGroups": [
         {
             "dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
+            "dbInstanceGroupName": "dbInstanceGroupName-example",
+            "dbInstanceGroupStatus": "CREATED",
             "replicationType": "STANDALONE",
             "createdYmdt": "2023-12-31T15:00:00+09:00",
             "updatedYmdt": "2023-12-31T15:00:00+09:00"
@@ -603,6 +608,8 @@ GET /v3.0/db-instance-groups
 |-----|-----|-----|
 | dbInstanceGroups | Array | DB 인스턴스 그룹 목록 |
 | dbInstanceGroups.dbInstanceGroupId | UUID | DB 인스턴스 그룹의 식별자 |
+| dbInstanceGroups.dbInstanceGroupName | String | DB 인스턴스 그룹을 식별할 수 있는 이름 |
+| dbInstanceGroups.dbInstanceGroupStatus | Enum | DB 인스턴스 그룹의 현재 상태<br/>- `CREATED`: 생성됨<br/>- `DELETED`: 삭제됨 |
 | dbInstanceGroups.replicationType | Enum | DB 인스턴스 그룹의 복제 형태<br/>- `STANDALONE`: 고가용성 사용 안함<br/>- `HIGH_AVAILABILITY`: 고가용성 사용 |
 | dbInstanceGroups.createdYmdt | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 | dbInstanceGroups.updatedYmdt | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
@@ -645,6 +652,8 @@ GET /v3.0/db-instance-groups/{dbInstanceGroupId}
         "isSuccessful": true
     },
     "dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
+    "dbInstanceGroupName": "dbInstanceGroupName-example",
+    "dbInstanceGroupStatus": "CREATED",
     "replicationType": "STANDALONE",
     "dbInstances": [
         {
@@ -663,10 +672,12 @@ GET /v3.0/db-instance-groups/{dbInstanceGroupId}
 | 이름 | 타입 | 설명 |
 |-----|-----|-----|
 | dbInstanceGroupId | UUID | DB 인스턴스 그룹의 식별자 |
+| dbInstanceGroupName | String | DB 인스턴스 그룹을 식별할 수 있는 이름 |
+| dbInstanceGroupStatus | Enum | DB 인스턴스 그룹의 현재 상태<br/>- `CREATED`: 생성됨<br/>- `DELETED`: 삭제됨 |
 | replicationType | Enum | DB 인스턴스 그룹의 복제 형태<br/>- `STANDALONE`: 고가용성 사용 안함<br/>- `HIGH_AVAILABILITY`: 고가용성 사용 |
 | dbInstances | Array | DB 인스턴스 그룹에 속한 DB 인스턴스 목록 |
 | dbInstances.dbInstanceId | UUID | DB 인스턴스의 식별자 |
-| dbInstances.dbInstanceType | Enum | DB 인스턴스의 역할 유형<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`: 읽기 복제본 |
+| dbInstances.dbInstanceType | Enum | DB 인스턴스의 역할 유형<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`: Read Replica |
 | dbInstances.dbInstanceStatus | Enum | DB 인스턴스의 현재 상태<br/>- `BEFORE_CREATE`: 생성 이전(회색)<br/>- `AVAILABLE`: 사용 가능(녹색)<br/>- `STORAGE_FULL`: 용량 부족(적색)<br/>- `FAIL_TO_CREATE`: 생성 실패(적색)<br/>- `FAIL_TO_CONNECT`: 연결 실패(적색)<br/>- `REPLICATION_STOP`: 복제 중단(적색)<br/>- `REPLICATION_DELAY`: 복제 지연(황색)<br/>- `FAILOVER`: 장애 조치 완료(적색)<br/>- `SHUTDOWN`: 중지됨(회색)<br/>- `DELETED`: 삭제됨(회색) |
 | createdYmdt | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
 | updatedYmdt | DateTime | 수정 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
@@ -757,7 +768,7 @@ GET /v3.0/db-instances
             "dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
             "dbInstanceName": "dbInstanceName-example",
             "description": "description-example",
-            "dbVersion": "MYSQL_V8411",
+            "dbVersion": "MYSQL_V8413",
             "dbPort": 13306,
             "dbInstanceType": "MASTER",
             "dbInstanceStatus": "AVAILABLE",
@@ -780,7 +791,7 @@ GET /v3.0/db-instances
 | dbInstances.description | String | DB 인스턴스 추가 정보 |
 | dbInstances.dbVersion | Enum | DB 엔진 버전 |
 | dbInstances.dbPort | Number | DB 포트 |
-| dbInstances.dbInstanceType | Enum | DB 인스턴스의 역할 유형<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`: 읽기 복제본 |
+| dbInstances.dbInstanceType | Enum | DB 인스턴스의 역할 유형<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`: Read Replica |
 | dbInstances.dbInstanceStatus | Enum | DB 인스턴스의 현재 상태<br/>- `BEFORE_CREATE`: 생성 이전(회색)<br/>- `AVAILABLE`: 사용 가능(녹색)<br/>- `STORAGE_FULL`: 용량 부족(적색)<br/>- `FAIL_TO_CREATE`: 생성 실패(적색)<br/>- `FAIL_TO_CONNECT`: 연결 실패(적색)<br/>- `REPLICATION_STOP`: 복제 중단(적색)<br/>- `REPLICATION_DELAY`: 복제 지연(황색)<br/>- `FAILOVER`: 장애 조치 완료(적색)<br/>- `SHUTDOWN`: 중지됨(회색)<br/>- `DELETED`: 삭제됨(회색) |
 | dbInstances.progressStatus | Enum | DB 인스턴스의 현재 진행 상태 |
 | dbInstances.createdYmdt | DateTime | 생성 일시(YYYY-MM-DDThh:mm:ss.SSSTZD) |
@@ -810,7 +821,7 @@ POST /v3.0/db-instances
     "dbInstanceCandidateName": "dbInstanceCandidateName",
     "description": "description-example",
     "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
-    "dbVersion": "MYSQL_V8411",
+    "dbVersion": "MYSQL_V8413",
     "dbPort": 13306,
     "dbUserName": "dbUserName",
     "dbPassword": "dbPassword",
@@ -934,7 +945,7 @@ POST /v3.0/db-instances/restore-from-obs
     "description": "description-example",
     "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
     "dbPort": 13306,
-    "dbVersion": "MYSQL_V8411",
+    "dbVersion": "MYSQL_V8413",
     "useHighAvailability": false,
     "imageId": "550e8400-e29b-41d4-a716-446655440000",
     "pingInterval": 3,
@@ -1109,7 +1120,7 @@ GET /v3.0/db-instances/{dbInstanceId}
     "dbInstanceGroupId": "550e8400-e29b-41d4-a716-446655440000",
     "dbInstanceName": "dbInstanceName-example",
     "description": "description-example",
-    "dbVersion": "MYSQL_V8411",
+    "dbVersion": "MYSQL_V8413",
     "dbPort": 13306,
     "dbInstanceType": "MASTER",
     "dbInstanceStatus": "AVAILABLE",
@@ -1142,7 +1153,7 @@ GET /v3.0/db-instances/{dbInstanceId}
 | description | String | DB 인스턴스 추가 정보 |
 | dbVersion | Enum | DB 엔진 버전 |
 | dbPort | Number | DB 포트 |
-| dbInstanceType | Enum | DB 인스턴스의 역할 유형<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`: 읽기 복제본 |
+| dbInstanceType | Enum | DB 인스턴스의 역할 유형<br/>- `MASTER`: Primary<br/>- `FAILED_MASTER`: Failed Over Primary<br/>- `CANDIDATE_MASTER`: Standby<br/>- `READ_ONLY_SLAVE`: Read Replica |
 | dbInstanceStatus | Enum | DB 인스턴스의 현재 상태<br/>- `BEFORE_CREATE`: 생성 이전(회색)<br/>- `AVAILABLE`: 사용 가능(녹색)<br/>- `STORAGE_FULL`: 용량 부족(적색)<br/>- `FAIL_TO_CREATE`: 생성 실패(적색)<br/>- `FAIL_TO_CONNECT`: 연결 실패(적색)<br/>- `REPLICATION_STOP`: 복제 중단(적색)<br/>- `REPLICATION_DELAY`: 복제 지연(황색)<br/>- `FAILOVER`: 장애 조치 완료(적색)<br/>- `SHUTDOWN`: 중지됨(회색)<br/>- `DELETED`: 삭제됨(회색) |
 | progressStatus | Enum | DB 인스턴스의 현재 진행 상태 |
 | dbFlavorId | UUID | DB 인스턴스 사양의 식별자 |
@@ -1190,7 +1201,7 @@ PUT /v3.0/db-instances/{dbInstanceId}
     "dbPort": 13306,
     "dbFlavorId": "550e8400-e29b-41d4-a716-446655440000",
     "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
-    "dbVersion": "MYSQL_V8411",
+    "dbVersion": "MYSQL_V8413",
     "useDummy": false,
     "dbSecurityGroupIds": [],
     "executeBackup": false,
@@ -1215,8 +1226,8 @@ PUT /v3.0/db-instances/{dbInstanceId}
 | dbSecurityGroupIds | Array | N | DB 보안 그룹의 식별자 목록 |
 | executeBackup | Boolean | N | 현재 시점 백업 수행 여부<br/>- 기본값: `false` |
 | useOnlineFailover | Boolean | N | 장애 조치를 이용한 재시작 여부<br/>- 기본값: `false` |
-| waitReplicationDelay | Boolean | N | 복제 지연 해소 대기<br/>- 기본값: `false` |
-| useReadOnly | Boolean | N | 쓰기 부하 차단<br/>- 기본값: `false` |
+| waitReplicationDelay | Boolean | N | 복제 지연 해소 대기 여부<br/>- 기본값: `false` |
+| useReadOnly | Boolean | N | 쓰기 부하 차단 여부<br/>- 기본값: `false` |
 
 <a id="update-db-instance-response"></a>
 #### 응답
@@ -2734,8 +2745,8 @@ POST /v3.0/db-instances/{dbInstanceId}/restart
 |-----|-----|-----|-----|
 | useOnlineFailover | Boolean | N | 장애 조치를 이용한 재시작 여부<br/>- 기본값: `false` |
 | executeBackup | Boolean | N | 현재 시점 백업 수행 여부<br/>- 기본값: `false` |
-| waitReplicationDelay | Boolean | N | 복제 지연 해소 대기<br/>- 기본값: `false` |
-| useReadOnly | Boolean | N | 쓰기 부하 차단<br/>- 기본값: `false` |
+| waitReplicationDelay | Boolean | N | 복제 지연 해소 대기 여부<br/>- 기본값: `false` |
+| useReadOnly | Boolean | N | 쓰기 부하 차단 여부<br/>- 기본값: `false` |
 
 <a id="restart-db-instance-response"></a>
 #### 응답
@@ -3277,7 +3288,7 @@ GET /v3.0/backups
             "backupName": "backupName-example",
             "backupStatus": "BACKING_UP",
             "dbInstanceId": "550e8400-e29b-41d4-a716-446655440000",
-            "dbVersion": "MYSQL_V8411",
+            "dbVersion": "MYSQL_V8413",
             "utilVersion": "utilVersion-example",
             "backupType": "AUTO",
             "backupSize": 1,
@@ -4088,7 +4099,7 @@ GET /v3.0/parameter-groups
             "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
             "parameterGroupName": "parameterGroupName-example",
             "description": "description-example",
-            "dbVersion": "MYSQL_V8411",
+            "dbVersion": "MYSQL_V8413",
             "parameterGroupStatus": "STABLE",
             "createdYmdt": "2023-12-31T15:00:00+09:00",
             "updatedYmdt": "2023-12-31T15:00:00+09:00"
@@ -4132,7 +4143,7 @@ POST /v3.0/parameter-groups
 {
     "parameterGroupName": "parameterGroupName",
     "description": "description-example",
-    "dbVersion": "MYSQL_V8411"
+    "dbVersion": "MYSQL_V8413"
 }
 ```
 
@@ -4236,7 +4247,7 @@ GET /v3.0/parameter-groups/{parameterGroupId}
     "parameterGroupId": "550e8400-e29b-41d4-a716-446655440000",
     "parameterGroupName": "parameterGroupName-example",
     "description": "description-example",
-    "dbVersion": "MYSQL_V8411",
+    "dbVersion": "MYSQL_V8413",
     "parameterGroupStatus": "STABLE",
     "parameters": [
         {

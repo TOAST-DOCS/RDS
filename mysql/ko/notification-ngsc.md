@@ -69,6 +69,8 @@
 | INSTC_26_00 | INSTANCE          | 예        | DB 인스턴스 장애 조치 발생                     |
 | INSTC_26_01 | INSTANCE          | 예        | DB 인스턴스 장애 조치 완료                     |
 | INSTC_26_04 | INSTANCE          | 예        | DB 인스턴스 장애 조치 실패                     |
+| INSTC_26_05 | INSTANCE          | 예        | DB 인스턴스 장애 조치 되돌림                    |
+| INSTC_26_06 | INSTANCE          | 예        | DB 인스턴스 장애 조치 진행 단계 변경                |
 | INSTC_27_01 | INSTANCE          | 예        | DB 인스턴스 용량 확보                        |
 | INSTC_27_04 | INSTANCE          | 예        | DB 인스턴스 용량 확보 실패                     |
 | INSTC_28_01 | INSTANCE          | 예        | 고가용성 DB 인스턴스 시작                      |
@@ -170,6 +172,13 @@
 | INSTC_76_02 | INSTANCE          | 예        | 유지 관리 스킵                             |
 | INSTC_76_04 | INSTANCE          | 예        | 유지 관리 실패                             |
 | INSTC_76_05 | INSTANCE          | 예        | 유지 관리 등록 실패                          |
+| INSTC_79_01 | INSTANCE          | 예        | 트랜잭션 로그 아카이빙 활성화 완료                  |
+| INSTC_79_04 | INSTANCE          | 예        | 트랜잭션 로그 아카이빙 활성화 실패                  |
+| INSTC_80_01 | INSTANCE          | 예        | 트랜잭션 로그 아카이빙 비활성화 완료                 |
+| INSTC_80_04 | INSTANCE          | 예        | 트랜잭션 로그 아카이빙 비활성화 실패                 |
+| INSTC_81_04 | INSTANCE          | 예        | 트랜잭션 로그 아카이브 지연 또는 중단 감지              |
+| INSTC_81_05 | INSTANCE          | 예        | 트랜잭션 로그 아카이브 복구 불가 구간 감지              |
+| INSTC_82_04 | INSTANCE          | 예        | 트랜잭션 로그 스테이징 버퍼 볼륨 연결 실패              |
 | JOB_01_04   | JOB               | 예        | Job 실행 실패                            |
 | TENAT_01_04 | TENANT            | 예        | CPU 코어 수 제한                          |
 | TENAT_02_04 | TENANT            | 예        | RAM 용량 제한	                           |

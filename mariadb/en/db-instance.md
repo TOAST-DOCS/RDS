@@ -384,6 +384,7 @@ User ID has the following restrictions.
 ❺ Select the permissions that you want to grant to users. The permissions and descriptions that you can grant are as follows.
 
 **READ**
+
 * You have permission to view.
 
 ```sql
@@ -394,6 +395,7 @@ GRANT SELECT ON `performance_schema`.* TO '{user_id}'@'{host}';
 ```
 
 **CRUD**
+
 * Includes READ permission, and has permission to modify data.
 
 ```sql
@@ -401,6 +403,7 @@ GRANT INSERT, UPDATE, DELETE, CREATE TEMPORARY TABLES, LOCK TABLES, EXECUTE ON *
 ```
 
 **DDL**
+
 * Includes CRUD permissions and has permissions to execute DDL queries.
 
 ```sql
@@ -409,6 +412,7 @@ GRANT EXECUTE ON `mysql`.* TO '{user_id}'@'{host}';
 ```
 
 **CUSTOM**
+
 * When restoring a DB instance from an external database backup, all users that exist in the database are represented with the CUSTOM permission.
 * You cannot check what permissions are in the CUSTOM permission template.
 * If you change from one CUSTOM permission template to another permission template, you cannot change back to a CUSTOM permission template.
@@ -691,14 +695,16 @@ You can scale up the data storage size of a DB instance. The expansion takes eff
 
 You can automatically scale the data storage size of a DB instance. With auto storage expansion, you can maintain the availability of your database by automatically scaling up when data storage runs out of capacity.
 
-To use auto storage scaling, you must enable ** Auto Scale Storage** when creating and modifying DB instances. 
+To use auto storage scaling, you must enable **Auto Scale Storage** when creating and modifying DB instances. 
 
 When you enable auto scale storage, you can set three options
+
 * Storage Auto Scale Conditions: Automatically expand storage when storage utilization is above a set value for more than 5 minutes.
 * Storage Auto Scale Max: The maximum size that storage auto-scale can grow to.
 * Storage Auto Scale Cooldown: Set the amount of time after storage auto scale cooldown runs once before the feature is enabled again.
 
 The amount of increase when the auto scale storage feature runs is set to the largest of the following values
+
 * 10 GB
 * 10% of storage size
 * Data storage usage growth in the last hour * cooldown (in hours)

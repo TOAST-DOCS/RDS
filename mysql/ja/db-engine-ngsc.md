@@ -1,3 +1,5 @@
+<!-- machine_translated: true -->
+
 <!-- pre-align:aligned sig=c01d6c6c712e -->
 
 <a id="database-rds-for-enginepascalcase-db-engine"></a>
@@ -19,6 +21,8 @@ MySQL 8.0.34未満のバージョンは、MySQL LTSサポートポリシーに�
 | バージョン                | 備考                                    |
 |----------------------|---------------------------------------|
 | <strong>8.4</strong> |                                       |
+| MySQL 8.4.13         |                                |
+| MySQL 8.4.11         |                                |
 | MySQL 8.4.9          |                                       |
 | MySQL 8.4.8          |                                       |
 | MySQL 8.4.7          |                                       |
@@ -42,7 +46,7 @@ MySQL 8.0.34未満のバージョンは、MySQL LTSサポートポリシーに�
 | MySQL 8.0.18         | 新規に作成したりRead Replicaを追加することはできません          |
 | <strong>5.7</strong> |                                       |
 | MySQL 5.7.37         |                                       |
-| MySQL 5.7.33         | 外部のバックアップファイルからDBインスタンスを復元することはできません。 |
+| MySQL 5.7.33         | 外部バックアップからDBインスタンスを復元することはできません。 |
 
 <a id="manage-db-engine-version"></a>
 ### DBエンジンバージョン管理 { #manage-db-engine-version }
@@ -53,6 +57,8 @@ DBインスタンスの作成後、DBインスタンスの修正と一緒にDB�
 
 DBエンジンのバージョンアップグレードが行われる場合、メジャーバージョン番号のみ変更される場合はメジャーバージョンアップグレード、マイナーバージョン番号のみ変更される場合はマイナーバージョンアップグレードとみなします。
 DBエンジンのメジャーバージョンのアップグレードを試みる場合は、次のメジャーバージョンのDBエンジンのバージョンに対してアップグレードが可能です。
+
+マイナーバージョンは、ユーザーが手動でアップグレードしなくても自動的にアップグレードされるよう設定できます。詳細については、「[マイナーバージョン自動アップグレード](db-instance-ngsc/#maintenance-auto-minor-version-upgrade)」を参照してください。
 
 <a id="manage-db-engine-version-pre-inspection-for-upgrading-from-mysql-57-to-mysql-80"></a>
 #### MySQL 5.7からMySQL 8.0へのアップグレードのための事前点検
@@ -70,11 +76,13 @@ MySQL 8.0とMySQL 5.7は相当数の非互換性要素が含まれています�
 - InnoDBシステムテーブルスペースと一般テーブルスペースを含む共有テーブルスペースに常駐するテーブルパーティションがないこと。
 
 DBバージョンアップグレードの事前点検については、次の方法で結果の確認が可能です。
+
 - `5.7から8.0にアップグレードするためのチェックリストの詳細`(https://static-station.ngsc.go.kr/v1/AUTH_0673c1d9b6df4215bb6bf112dfa03805/cdn/prod_rds/mysql/23.08.17/Check_5.7_to_8.0_ja.xlsx)を活用して直接確認
 - コンソールでDBバージョンをアップグレードする場合は、`DBエンジンアップグレード事前確認`ボタンを利用して結果を確認
 - DBバージョンアップグレードの試行による結果の確認
 
 コンソールで`DBエンジンアップグレード事前確認`による結果および、DBバージョンアップグレードの試行による結果は、個別DBインスタンスのログタブに作成された`db_version_upgrade_compatibility.log`を通じて詳細を確認できます。詳細項目はそれぞれ次の意味を持ちます。
+
 - `CHECK_BY_MYSQL_CHECK`: `mysqlcheck`を通じたバージョンアップグレードの欠格事項がないこと。
 - `COLUMN_LENGHT_LIMIT_CHECK`: `INFORMATION_SCHEMA.VIEWS`で確認した時、カラム名が64文字を超える内容がないこと。
 - `DUPLICATE_NAME_WITH_DATA_DICT` :データ辞書で使用されるテーブルと同じ名称のテーブルがないこと。
@@ -86,6 +94,7 @@ DBバージョンアップグレードの事前点検については、次の方
 - `PROPERTY_LENGTH_LIMIT_CHECK`: InnoDBシステムテーブルスペースと一般テーブルスペースを含む共有テーブルスペースに常駐するテーブルパーティションがないこと。
 
 また、5.7では使用されたが、8.0では削除または変更された事項について確認が必要です。
+
 - [SQL変更項目ガイド](https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-sql-changes)
 - [8.0で削除された機能ガイド](https://dev.mysql.com/doc/refman/8.0/en/mysql-nutshell.html#mysql-nutshell-removals)
 
@@ -96,9 +105,11 @@ DBバージョンアップグレードの事前点検については、次の方
 MySQL 8.4にアップグレードするためには、MySQL 8.0へのアップグレードが完了している必要があります。`8.0`から`8.4`バージョンへのメジャーバージョンDBエンジンのアップグレードを行う場合、問題の発生が予想される一部の項目について、事前のチェックが必要です。
 
 コンソールで`DBエンジンアップグレードの事前確認`を通じてアップグレードチェッカーで検出された項目を確認でき、エラーとして検出された項目は必ず対処する必要があります。詳細な説明はMySQLのWebサイトをご参照ください。
+
 - [アップグレードチェッカーガイド](https://dev.mysql.com/doc/mysql-shell/8.4/en/mysql-shell-utilities-upgrade.html#mysql-utilities-upgrade-checks)
 
 また、8.4で削除または変更された事項について確認が必要です。
+
 - [互換性のない変更項目ガイド](https://dev.mysql.com/doc/refman/8.4/en/upgrading-from-previous-series.html#upgrade-incompatible-changes)
 - [8.4で削除された機能ガイド](https://dev.mysql.com/doc/refman/8.4/en/mysql-nutshell.html#mysql-nutshell-removals)
 
@@ -109,6 +120,7 @@ MySQL 8.0.18バージョンは、直接MySQL 8.4にアップグレードでき�
 8.0.18から8.4へのアップグレードを実行するには、次の条件を満たす必要があります。
 
 アップグレードパス
+
 1.	MySQL 8.0.23以上にまずアップグレード
 2.	その後、MySQL 8.4バージョンにアップグレード
 
@@ -156,6 +168,8 @@ DBインスタンスが高可用性で構成されている場合、Standbyの�
 | MySQLバージョン                 | サーバー監査プラグインサポートの有無 |
 |----------------------------|--------------------|
 | <strong>8.4</strong>       |                    |
+| MySQL 8.4.13         | O                |
+| MySQL 8.4.11         | O                |
 | MySQL 8.4.9                | O                  |
 | MySQL 8.4.8                | O                  |
 | MySQL 8.4.7                | O                  |
@@ -183,5 +197,5 @@ DBインスタンスが高可用性で構成されている場合、Standbyの�
 | MySQL 5.7.26               | O                  |
 | MySQL 5.7.19               | O                  |
 | MySQL 5.7.15               | X                  |
-| <strong>MySQL 5.6</strong> |                    |
+| <strong>5.6</strong>       |                    |
 | MySQL 5.6.33               | O                  |

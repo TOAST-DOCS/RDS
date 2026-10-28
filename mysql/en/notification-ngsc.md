@@ -1,3 +1,5 @@
+<!-- machine_translated: true -->
+
 <!-- pre-align:aligned sig=ffcf287dccd2 -->
 
 <a id="database-rds-for-enginepascalcase-notification"></a>
@@ -69,6 +71,8 @@ Event refers to an important event that occurs either by RDS for MySQL or by use
 | INSTC_26_00       | INSTANCE          | Yes          | DB instance failover occurred                                                 |
 | INSTC_26_01       | INSTANCE          | Yes          | DB instance failover completed                                                |
 | INSTC_26_04       | INSTANCE          | Yes          | DB instance failover failed                                                   |
+| INSTC_26_05       | INSTANCE          | Yes          | DB instance failover reverted                                                 |
+| INSTC_26_06       | INSTANCE          | Yes          | DB instance failover progress step changed                                    |
 | INSTC_27_01       | INSTANCE          | Yes          | DB instance storage secured                                                   |
 | INSTC_27_04       | INSTANCE          | Yes          | Securing DB instance storage failed                                           |
 | INSTC_28_01       | INSTANCE          | Yes          | High Availability DB Instance started                                         |
@@ -170,6 +174,13 @@ Event refers to an important event that occurs either by RDS for MySQL or by use
 | INSTC_76_02       | INSTANCE          | Yes          | Maintenance skipped                                                           |
 | INSTC_76_04       | INSTANCE          | Yes          | Maintenance failed                                                            |
 | INSTC_76_05       | INSTANCE          | Yes          | Failed to schedule maintenance                                                |
+| INSTC_79_01 | INSTANCE          | Yes        | Enabling transaction log archiving completed                    |
+| INSTC_79_04 | INSTANCE          | Yes        | Enabling transaction log archiving failed                    |
+| INSTC_80_01 | INSTANCE          | Yes        | Disabling transaction log archiving completed                    |
+| INSTC_80_04 | INSTANCE          | Yes        | Disabling transaction log archiving failed                    |
+| INSTC_81_04 | INSTANCE          | Yes        | Transaction log archive delay or stop detected                        |
+| INSTC_81_05 | INSTANCE          | Yes        | Transaction log archive unrecoverable gap detected             |
+| INSTC_82_04 | INSTANCE          | Yes        | Failed to connect transaction log staging buffer volume                |
 | JOB_01_04         | JOB               | Yes          | Job execution failed                                                          |
 | TENAT_01_04       | TENANT            | Yes          | CPU cores limit                                                               |
 | TENAT_02_04       | TENANT            | Yes          | RAM capacity limit	                                                           |

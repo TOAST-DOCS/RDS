@@ -74,11 +74,13 @@ MySQL 8.0과 MySQL 5.7 사이에는 상당수의 비호환 요소가 있습니�
 - InnoDB 시스템 테이블 스페이스와 일반 테이블 스페이스를 포함하는 공유 테이블 스페이스에 상주하는 테이블 파티션이 없어야 합니다.
 
 DB 버전 업그레이드 사전 점검 결과는 다음과 같은 방법으로 확인할 수 있습니다.
+
 - `5.7에서 8.0으로 업그레이드하기 위한 체크리스트 세부사항`(https://static.toastoven.net/prod_rds/mysql/23.08.17/Check_5.7_to_8.0_ko.xlsx) 파일로 직접 확인
 - 콘솔에서 DB 버전 업그레이드 시 **DB 엔진 업그레이드 사전 확인** 버튼을 클릭한 결과 확인
 - DB 버전 업그레이드 시도 결과 확인
 
 콘솔의 **DB 엔진 업그레이드 사전 확인** 결과와 DB 버전 업그레이드 시도 결과는 개별 DB 인스턴스의 로그 탭에 생성된 `db_version_upgrade_compatibility.log` 파일에서 세부 내역을 확인할 수 있습니다. 세부 내역 항목의 의미는 다음과 같습니다.
+
 - `CHECK_BY_MYSQL_CHECK`: `mysqlcheck`로 확인했을 때 버전 업그레이드 결격 사항이 없어야 합니다.
 - `COLUMN_LENGTH_LIMIT_CHECK`: `INFORMATION_SCHEMA.VIEWS`로 확인했을 때 컬럼명이 64자를 초과하는 내용이 없어야 합니다.
 - `DUPLICATE_NAME_WITH_DATA_DICT`: 데이터 사전에서 사용되는 테이블과 동일한 명칭의 테이블이 없어야 합니다.
@@ -90,6 +92,7 @@ DB 버전 업그레이드 사전 점검 결과는 다음과 같은 방법으로 
 - `PROPERTY_LENGTH_LIMIT_CHECK`: InnoDB 시스템 테이블 스페이스와 일반 테이블 스페이스를 포함하는 공유 테이블 스페이스에 상주하는 테이블 파티션이 없어야 합니다.
 
 또한 5.7에서는 사용되었지만 8.0에서는 제거 또는 변경된 사항을 확인해야 합니다.
+
 - [SQL 변경 항목 가이드](https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-sql-changes)
 - [8.0에서 제거된 기능 가이드](https://dev.mysql.com/doc/refman/8.0/en/mysql-nutshell.html#mysql-nutshell-removals)
 
@@ -100,9 +103,11 @@ DB 버전 업그레이드 사전 점검 결과는 다음과 같은 방법으로 
 MySQL 8.4로 업그레이드하려면 먼저 MySQL 8.0으로 업그레이드된 상태여야 합니다. `8.0`에서 `8.4` 버전으로 메이저 버전 DB 엔진을 업그레이드하면 문제 발생이 예상되는 일부 항목을 사전에 점검해야 합니다.
 
 콘솔의 **DB 엔진 업그레이드 사전 확인**에서 업그레이드 체커로 검출된 항목을 확인할 수 있으며, 오류로 검출된 항목은 반드시 처리해야 합니다. 자세한 설명은 MySQL 홈페이지를 참고합니다.
+
 - [업그레이드 체커 가이드](https://dev.mysql.com/doc/mysql-shell/8.4/en/mysql-shell-utilities-upgrade.html#mysql-utilities-upgrade-checks)
 
 또한 8.4 버전에서 제거 또는 변경된 사항을 확인해야 합니다.
+
 - [비호환 변경 항목 가이드](https://dev.mysql.com/doc/refman/8.4/en/upgrading-from-previous-series.html#upgrade-incompatible-changes)
 - [8.4에서 제거된 기능 가이드](https://dev.mysql.com/doc/refman/8.4/en/mysql-nutshell.html#mysql-nutshell-removals)
 
@@ -113,6 +118,7 @@ MySQL 8.0.18 버전은 직접 MySQL 8.4로 업그레이드할 수 없습니다.
 8.0.18에서 8.4로 업그레이드하려면 다음 조건을 충족해야 합니다.
 
 업그레이드 경로
+
 1. MySQL 8.0.23 이상으로 먼저 업그레이드
 2. 이후 MySQL 8.4 버전으로 업그레이드
 
