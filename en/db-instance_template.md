@@ -879,7 +879,7 @@ When you create a Read Replica, you cannot change the items listed below because
 <a id="create-read-replications-read-replica-region"></a>
 #### Read Replica Region
 
-If you support region peering when you select a region to create a Read Replica, you can create a Read Replica on a sub-net belonging to a different region VPC by connecting region peering between VPCs that exist in different regions. However, selecting a region that is different from the region of the original DB instance might cause replication delays and does not support DB version upgrades.
+If you support region peering when you select a region to create a Read Replica, you can create a Read Replica on a sub-net belonging to a different region VPC by connecting region peering between VPCs that exist in different regions. However, selecting a region that is different from the region of the source DB instance might cause replication delays and does not support DB version upgrades.
 
 !!! danger "Caution"
     If the route settings are incorrect, even if the region peering is connected, the creation of a Read Replica might fail or the replication might be interrupted.
@@ -908,7 +908,7 @@ Select whether or not to use floating IP for Read Replicas. Refer to [Floating I
 <a id="create-read-replications-parameter-group"></a>
 #### Parameter group
 
-If you do not need to change replication-related settings when selecting a parameter group for a Read Replica, we recommend that you select the same parameter group as the original DB instance. Refer to [Parameter Group](parameter-group/) for a detailed description of the parameter groups.
+If you do not need to change replication-related settings when selecting a parameter group for a Read Replica, we recommend that you select the same parameter group as the source DB instance. Refer to [Parameter Group](parameter-group/) for a detailed description of the parameter groups.
 
 <a id="create-read-replications-db-security-group"></a>
 #### DB Security Group

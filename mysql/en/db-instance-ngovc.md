@@ -844,7 +844,7 @@ Select whether or not to use floating IP for Read Replicas. Refer to [Floating I
 <a id="create-read-replications-parameter-group"></a>
 #### Parameter group
 
-If you do not need to change replication-related settings when selecting a parameter group for a Read Replica, we recommend that you select the same parameter group as the original DB instance. Refer to [Parameter Group](parameter-group-ngovc/) for a detailed description of the parameter groups.
+If you do not need to change replication-related settings when selecting a parameter group for a Read Replica, we recommend that you select the same parameter group as the source DB instance. Refer to [Parameter Group](parameter-group-ngovc/) for a detailed description of the parameter groups.
 
 <a id="create-read-replications-db-security-group"></a>
 #### DB Security Group

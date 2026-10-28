@@ -3264,7 +3264,7 @@ GET /v3.0/backups
 | page | Query | Number | Y | Page to retrieve<br/>- Minimum value: `1` |
 | size | Query | Number | Y | Page size to retrieve<br/>- Minimum value: `1`<br/>- Maximum value: `100` |
 | backupType | Query | Enum | N | Backup type<br/>- `AUTO`<br/>- `MANUAL` |
-| dbInstanceId | Query | UUID | N | Original DB instance identifier |
+| dbInstanceId | Query | UUID | N | Source DB instance identifier |
 | dbVersion | Query | Enum | N | DB engine version |
 
 <a id="get-backups-request-body"></a>
@@ -3312,7 +3312,7 @@ This API does not require a request body.
 | backups.backupId | UUID | Backup identifier |
 | backups.backupName | String | Name to identify backups |
 | backups.backupStatus | Enum | Backup current status<br/>- `BACKING_UP`: Backup in progress<br/>- `COMPLETED`: Backup completed<br/>- `DELETING`: Backup being deleted<br/>- `DELETED`: Backup deleted<br/>- `ERROR`: Error occurred |
-| backups.dbInstanceId | UUID | Original DB instance identifier |
+| backups.dbInstanceId | UUID | Source DB instance identifier |
 | backups.dbVersion | Enum | DB engine version |
 | backups.utilVersion | String | Utility version |
 | backups.backupType | Enum | Backup type<br/>- `AUTO`<br/>- `MANUAL` |

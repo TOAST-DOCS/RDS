@@ -3722,8 +3722,8 @@ This API does not require a request body.
 | restorableBackups.backup.backupId | UUID | Backup identifier |
 | restorableBackups.backup.backupName | String | Backup name |
 | restorableBackups.backup.backupStatus | Enum | Backup Status<br/>- `BACKING_UP`: Backup in progress<br/>- `COMPLETED`: Backup completed<br/>- `DELETING`: Backup being deleted<br/>- `DELETED`: Backup deleted<br/>- `ERROR`: Error occurred |
-| restorableBackups.backup.dbInstanceId | UUID | Original DB instance identifier |
-| restorableBackups.backup.dbInstanceName | String | Original DB instance name |
+| restorableBackups.backup.dbInstanceId | UUID | Source DB instance identifier |
+| restorableBackups.backup.dbInstanceName | String | Source DB instance name |
 | restorableBackups.backup.dbVersion | Enum | DB engine version |
 | restorableBackups.backup.backupType | Enum | Backup type<br/>- `AUTO`<br/>- `MANUAL` |
 | restorableBackups.backup.backupSize | Number | Backup size |
@@ -3891,34 +3891,34 @@ POST /v4.0/db-instances/{dbInstanceId}/restore
 |-----|-----|-----|-----|
 | dbInstanceName | String | Y | Name to identify the primary DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
 | description | String | N | Additional information of DB instance<br/>- Maximum length: `100` |
-| dbFlavorId | UUID | N | Identifier of DB instance specifications. If not entered, the specifications of the original instance are applied. |
+| dbFlavorId | UUID | N | Identifier of DB instance specifications. If not entered, the specifications of the source instance are applied. |
 | dbPort | Number | N | DB port |
 | useHighAvailability | Boolean | N | Whether to use high availability<br/>- Default: `false` |
 | pingInterval | Number | N | Ping interval (sec) when using high availability<br/>- Minimum value: `1`<br/>- Maximum value: `600` |
-| storage | Object | N | Storage information object. If not entered, the storage settings of the original instance are applied. |
-| storage.storageType | Enum | N | Storage type. If not entered, the storage type of the original instance is applied. |
-| storage.storageSize | Number | N | Data storage size (GB). If not entered, the storage size of the original instance is applied.<br/>- Minimum value: `20` |
+| storage | Object | N | Storage information object. If not entered, the storage settings of the source instance are applied. |
+| storage.storageType | Enum | N | Storage type. If not entered, the storage type of the source instance is applied. |
+| storage.storageSize | Number | N | Data storage size (GB). If not entered, the storage size of the source instance is applied.<br/>- Minimum value: `20` |
 | storage.storageAutoscale | Object | N | Block Storage Auto Scaling Objects |
 | storage.storageAutoscale.useStorageAutoscale | Boolean | N | Whether to enable storage auto scaling<br/>- Default: `false` |
-| network | Object | N | Network information object. If not entered, the network settings of the original instance are applied. |
-| network.subnetId | UUID | N | Subnet identifier. If not entered, the value of the original instance is used. |
+| network | Object | N | Network information object. If not entered, the network settings of the source instance are applied. |
+| network.subnetId | UUID | N | Subnet identifier. If not entered, the value of the source instance is used. |
 | network.usePublicAccess | Boolean | N | External access is available or not<br/>- Default: `false` |
 | network.availabilityZone | Enum | N | Availability zone where DB instance will be created. If not entered, it is selected at random. |
-| backup | Object | N | Backup information object. If not entered, the backup settings of the original instance are applied. |
-| backup.backupPeriod | Number | N | Backup retention period (days). If not entered, the backup retention period of the original instance is applied.<br/>- Minimum value: `0`<br/>- Maximum value: `730` |
+| backup | Object | N | Backup information object. If not entered, the backup settings of the source instance are applied. |
+| backup.backupPeriod | Number | N | Backup retention period (days). If not entered, the backup retention period of the source instance is applied.<br/>- Minimum value: `0`<br/>- Maximum value: `730` |
 | backup.ftwrlWaitTimeout | Number | N | Query delay wait time (sec)<br/>- Minimum value: `0`<br/>- Maximum value: `21600` |
 | backup.backupRetryCount | Number | N | Number of backup retries<br/>- Minimum value: `0`<br/>- Maximum value: `10` |
 | backup.replicationRegion | Enum | N | Backup replication region<br/>- `KR4`: Korea (Daegu) |
 | backup.useBackupLock | Boolean | N | Whether to use table lock<br/>- Default: `true` |
-| backup.backupSchedules | Array | N | Backup schedule list. If not entered, the backup schedule of the original instance is applied. |
+| backup.backupSchedules | Array | N | Backup schedule list. If not entered, the backup schedule of the source instance is applied. |
 | backup.backupSchedules.backupWndBgnTime | Time | N | Backup start time |
 | backup.backupSchedules.backupWndDuration | Enum | N | Backup window<br/>- `HALF_AN_HOUR`: 30 minutes<br/>- `ONE_HOUR`: 1 hour<br/>- `ONE_HOUR_AND_HALF`: 1.5 hour<br/>- `TWO_HOURS`: 2 hour<br/>- `TWO_HOURS_AND_HALF`: 2.5 hour<br/>- `THREE_HOURS`: 3 hour |
 | restore | Object | Y | Restoration information object |
 | restore.restoreType | Enum | Y | Restoration type<br/>- `TIMESTAMP`: Point-in-time restoration using a time within the restorable period<br/>- `BINLOG`: Point-in-time restoration using a restorable binary log position<br/>- `BACKUP`: Snapshot restoration using a previously created backup |
 | useDefaultNotification | Boolean | N | Whether to use default notification<br/>- Default: `false` |
 | useSlowQueryAnalysis | Boolean | N | Whether to analyze slow queries<br/>- Default: `true` |
-| parameterGroupId | UUID | N | Parameter group identifier. If not entered, the parameter group of the original instance is applied. |
-| dbSecurityGroupIds | Array | N | DB security group identifiers. If not entered, the security groups of the original instance are applied. |
+| parameterGroupId | UUID | N | Parameter group identifier. If not entered, the parameter group of the source instance is applied. |
+| dbSecurityGroupIds | Array | N | DB security group identifiers. If not entered, the security groups of the source instance are applied. |
 | userGroupIds | Array | N | User group identifiers |
 | useDeletionProtection | Boolean | N | Whether to protect against deletion<br/>- Default: `false` |
 
@@ -4286,7 +4286,7 @@ GET /v4.0/backups
 | Name | Type | Format | Required | Description |
 |-----|-----|-----|-----|-----|
 | backupType | Query | Enum | N | Backup type<br/>- `AUTO`<br/>- `MANUAL` |
-| dbInstanceId | Query | UUID | N | Original DB instance identifier |
+| dbInstanceId | Query | UUID | N | Source DB instance identifier |
 | dbVersion | Query | Enum | N | DB engine version |
 | page | Query | Number | N | Page of the list to query (default: 1)<br/>- Minimum value: `1` |
 | size | Query | Number | N | Page size of the list to query (default: 20)<br/>- Minimum value: `1`<br/>- Maximum value: `100` |
@@ -4336,7 +4336,7 @@ This API does not require a request body.
 | backups.backupId | UUID | Backup identifier |
 | backups.backupName | String | Name to identify backups |
 | backups.backupStatus | Enum | Backup current status<br/>- `BACKING_UP`: Backup in progress<br/>- `COMPLETED`: Backup completed<br/>- `DELETING`: Backup being deleted<br/>- `DELETED`: Backup deleted<br/>- `ERROR`: Error occurred |
-| backups.dbInstanceId | UUID | Original DB instance identifier |
+| backups.dbInstanceId | UUID | Source DB instance identifier |
 | backups.dbVersion | Enum | DB engine version |
 | backups.utilVersion | String | Utility version |
 | backups.backupType | Enum | Backup type<br/>- `AUTO`<br/>- `MANUAL` |
@@ -4388,7 +4388,7 @@ POST /v4.0/backups
 
 | Name | Format | Required | Description |
 |-----|-----|-----|-----|
-| baseBackupId | UUID | Y | Identifier of the original backup |
+| baseBackupId | UUID | Y | Identifier of the source backup |
 
 <a id="create-backup-backupmethodtype-full"></a>
 #### If backupMethodType is `FULL`
@@ -4556,8 +4556,8 @@ This API does not require a request body.
 | backup.regionCode | Enum | Region code<br/>- `KR4`: Korea (Daegu) |
 | backup.backupName | String | Name to identify backups |
 | backup.backupStatus | Enum | Backup current status<br/>- `BACKING_UP`: Backing up (spinner)<br/>- `VERIFYING`: Verifying (spinner)<br/>- `COMPLETED`: Available (green icon)<br/>- `DELETING`: Deleting (spinner)<br/>- `DELETED`: Deleted (gray icon)<br/>- `ERROR`: Error (red icon) |
-| backup.dbInstanceId | UUID | Original DB instance identifier |
-| backup.dbInstanceName | String | Original DB instance name |
+| backup.dbInstanceId | UUID | Source DB instance identifier |
+| backup.dbInstanceName | String | Source DB instance name |
 | backup.dbVersion | Enum | DB engine version |
 | backup.utilVersion | String | Utility version |
 | backup.backupType | Enum | Backup type (AUTO, MANUAL)<br/>- `AUTO`<br/>- `MANUAL` |
@@ -4725,9 +4725,9 @@ POST /v4.0/backups/{backupId}/restore
 |-----|-----|-----|-----|
 | dbInstanceName | String | Y | Name to identify the primary DB instance<br/>- Minimum length: `1`<br/>- Maximum length: `100` |
 | description | String | N | Additional information of DB instance<br/>- Maximum length: `100` |
-| dbFlavorId | UUID | N | Identifier of DB instance specifications. If not specified, the value of the original instance is used. |
-| dbPort | Number | N | DB port. If not specified, the value of the original instance is used.<br/>- Minimum value: 3306, Maximum value: 43306 |
-| parameterGroupId | UUID | N | Parameter group identifier. If not specified, the value of the original instance is used. |
+| dbFlavorId | UUID | N | Identifier of DB instance specifications. If not specified, the value of the source instance is used. |
+| dbPort | Number | N | DB port. If not specified, the value of the source instance is used.<br/>- Minimum value: 3306, Maximum value: 43306 |
+| parameterGroupId | UUID | N | Parameter group identifier. If not specified, the value of the source instance is used. |
 | dbSecurityGroupIds | Array | N | DB security group identifiers |
 | userGroupIds | Array | N | User group identifiers |
 | useHighAvailability | Boolean | N | Whether to use high availability<br/>- Default: `false` |
@@ -4735,22 +4735,22 @@ POST /v4.0/backups/{backupId}/restore
 | useDefaultNotification | Boolean | N | Whether to use default notification<br/>- Default: `false` |
 | useDeletionProtection | Boolean | N | Whether to protect against deletion<br/>- Default: `false` |
 | useSlowQueryAnalysis | Boolean | N | Whether to analyze slow queries<br/>- Default: `true` |
-| network | Object | N | Network information object. If not specified, the value of the original instance is used. |
-| network.subnetId | UUID | N | Subnet identifier. If not specified, the value of the original instance is used. |
+| network | Object | N | Network information object. If not specified, the value of the source instance is used. |
+| network.subnetId | UUID | N | Subnet identifier. If not specified, the value of the source instance is used. |
 | network.usePublicAccess | Boolean | N | External access is available or not<br/>- Default: `false` |
 | network.availabilityZone | Enum | N | Availability zone where DB instance will be created. If not specified, it is selected at random. |
-| storage | Object | N | Storage information object. If not specified, the value of the original instance is used. |
-| storage.storageType | Enum | N | Storage type. If not specified, the value of the original instance is used. |
-| storage.storageSize | Number | N | Data storage size (GB). If not specified, the value of the original instance is used.<br/>- Minimum value: `20` |
-| storage.storageAutoscale | Object | N | Data storage auto scaling object. If not specified, the value of the original instance is used. |
+| storage | Object | N | Storage information object. If not specified, the value of the source instance is used. |
+| storage.storageType | Enum | N | Storage type. If not specified, the value of the source instance is used. |
+| storage.storageSize | Number | N | Data storage size (GB). If not specified, the value of the source instance is used.<br/>- Minimum value: `20` |
+| storage.storageAutoscale | Object | N | Data storage auto scaling object. If not specified, the value of the source instance is used. |
 | storage.storageAutoscale.useStorageAutoscale | Boolean | N | Whether to enable storage auto scaling<br/>- Default: `false` |
-| backup | Object | N | Backup information object. If not specified, the backup settings of the original instance are used. |
-| backup.backupPeriod | Number | N | Backup retention period (days). If not specified, the value of the original instance is used.<br/>- Minimum value: `0`<br/>- Maximum value: `730` |
-| backup.backupRetryCount | Number | N | Number of backup retries. If not specified, the value of the original instance is used.<br/>- Minimum value: `0`<br/>- Maximum value: `10` |
-| backup.ftwrlWaitTimeout | Number | N | Query delay wait time (sec). If not specified, the value of the original instance is used.<br/>- Minimum value: `0`<br/>- Maximum value: `21600` |
+| backup | Object | N | Backup information object. If not specified, the backup settings of the source instance are used. |
+| backup.backupPeriod | Number | N | Backup retention period (days). If not specified, the value of the source instance is used.<br/>- Minimum value: `0`<br/>- Maximum value: `730` |
+| backup.backupRetryCount | Number | N | Number of backup retries. If not specified, the value of the source instance is used.<br/>- Minimum value: `0`<br/>- Maximum value: `10` |
+| backup.ftwrlWaitTimeout | Number | N | Query delay wait time (sec). If not specified, the value of the source instance is used.<br/>- Minimum value: `0`<br/>- Maximum value: `21600` |
 | backup.replicationRegion | Enum | N | Backup replication region<br/>- `KR4`: Korea (Daegu) |
-| backup.useBackupLock | Boolean | N | Whether to use table lock. If not specified, the value of the original instance is used. |
-| backup.backupSchedules | Array | N | Backup schedule list. If not specified, the value of the original instance is used. |
+| backup.useBackupLock | Boolean | N | Whether to use table lock. If not specified, the value of the source instance is used. |
+| backup.backupSchedules | Array | N | Backup schedule list. If not specified, the value of the source instance is used. |
 | backup.backupSchedules.backupWndBgnTime | Time | Y | Backup start time |
 | backup.backupSchedules.backupWndDuration | Enum | Y | Backup window<br/>- `HALF_AN_HOUR`: 30 minutes<br/>- `ONE_HOUR`: 1 hour<br/>- `ONE_HOUR_AND_HALF`: 1.5 hour<br/>- `TWO_HOURS`: 2 hour<br/>- `TWO_HOURS_AND_HALF`: 2.5 hour<br/>- `THREE_HOURS`: 3 hour |
 

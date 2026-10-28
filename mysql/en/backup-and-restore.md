@@ -269,7 +269,7 @@ Backups allow you to restore data to any point in time. Restoration always creat
 <a id="snapshot-restoration"></a>
 ### Snapshot Restoration { #snapshot-restoration }
 
-You can restore using only the backup file, so you don't need the original DB instance from which the backup was taken. To restore a snapshot from the console,
+You can restore using only the backup file, so you don't need the source DB instance from which the backup was taken. To restore a snapshot from the console,
 
 ![db-instance-snapshot-restoration-en](https://static.toastoven.net/prod_rds/mysql/24.03.12/db-instance-snapshot-restoration-en.png)
 
