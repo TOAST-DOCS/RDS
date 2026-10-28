@@ -163,6 +163,9 @@ DB 인스턴스 생성 및 수정 시 백업에 적용될 설정 항목들을 �
 **쿼리 지연 대기 시간(초)**
 
 * 테이블 잠금 사용 시 `FLUSH TABLES WITH READ LOCK` 구문의 대기 시간을 설정합니다. 쿼리 지연 대기 시간만큼 `FLUSH TABLES WITH READ LOCK` 구문이 대기하게 됩니다. 0~21,600초까지 설정 가능합니다. 길게 설정할 수록 DML 쿼리 부하로 인한 백업 실패 가능성을 줄일 수 있으나, 전체 백업 시간이 길어질 수 있습니다.
+{{#if (eq engine.lowerCase "mysql")}}
+* MySQL 8.0 이상에서 테이블 잠금을 사용하면 백업을 시작할 때 백업 잠금(`LOCK INSTANCE FOR BACKUP`)을 얻을 때까지도 쿼리 지연 대기 시간만큼 대기합니다. 이 시간 안에 백업 잠금을 얻지 못하면 백업에 실패합니다. 쿼리 지연 대기 시간을 0으로 설정하면 백업 잠금을 얻을 때까지 제한 없이 대기합니다.
+{{/if}}
 
 <a id="a-idset-auto-backupaset-auto-backup"></a>
 ### <a id="set-auto-backup"></a>자동 백업 설정 { #a-idset-auto-backupaset-auto-backup }
